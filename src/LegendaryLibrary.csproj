@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2351B5C1-6E28-4B79-A1D9-90FDA53B5417}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LegendaryLibraryNS</RootNamespace>
+    <AssemblyName>LegendaryLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <LangVersion>7.3</LangVersion>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Playnite.SDK, Version=6.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\PlayniteSDK.6.8.0\lib\net462\Playnite.SDK.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Playnite\source\playnite\native\Fileapi.cs">
+      <Link>Shared\Native\Fileapi.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\native\Gdi32.cs">
+      <Link>Shared\Native\Gdi32.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\native\Kernel32.cs">
+      <Link>Shared\Native\Kernel32.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\native\Ntdll.cs">
+      <Link>Shared\Native\Ntdll.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\native\Powrprof.cs">
+      <Link>Shared\Native\Powrprof.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\native\Processthreadsapi.cs">
+      <Link>Shared\Native\Processthreadsapi.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\native\Psapi.cs">
+      <Link>Shared\Native\Psapi.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\native\Shell32.cs">
+      <Link>Shared\Native\Shell32.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\native\Shlwapi.cs">
+      <Link>Shared\Native\Shlwapi.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\native\User32.cs">
+      <Link>Shared\Native\User32.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\native\Winbase.cs">
+      <Link>Shared\Native\Winbase.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\native\Windef.cs">
+      <Link>Shared\Native\Windef.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\native\WinError.cs">
+      <Link>Shared\Native\WinError.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\native\Wingdi.cs">
+      <Link>Shared\Native\Wingdi.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\native\Winnt.cs">
+      <Link>Shared\Native\Winnt.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\native\winuser.cs">
+      <Link>Shared\Native\winuser.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\common\extensions\Enums.cs">
+      <Link>Shared\Enums.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\common\extensions\ObjectExtensions.cs">
+      <Link>Shared\ObjectExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\common\extensions\ProcessExtensions.cs">
+      <Link>Shared\ProcessExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\common\extensions\StringExtensions.cs">
+      <Link>Shared\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\common\FileSystem.cs">
+      <Link>Shared\FileSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\common\GlobalRandom.cs">
+      <Link>Shared\GlobalRandom.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\Playnite\Common\IniParser.cs">
+      <Link>Shared\IniParser.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\common\Paths.cs">
+      <Link>Shared\Paths.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\common\ProcessMonitor.cs">
+      <Link>Shared\ProcessMonitor.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\common\ProcessStarter.cs">
+      <Link>Shared\ProcessStarter.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\common\Programs.cs">
+      <Link>Shared\Programs.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\common\web\Downloader.cs">
+      <Link>Shared\Downloader.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\common\web\HttpDownloader.cs">
+      <Link>Shared\HttpDownloader.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\Playnite\Converters\InvertableBooleanToVisibilityConverter.cs">
+      <Link>Shared\InvertableBooleanToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\converters\NegateConverter.cs">
+      <Link>Shared\NegateConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Playnite\source\playnite\converters\ObjectToStringConverter.cs">
+      <Link>Shared\ObjectToStringConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions\source\Generic\PlayniteExtensions.Common\Encryption.cs">
+      <Link>Shared\Encryption.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions\source\Generic\PlayniteExtensions.Common\GlobalCommands.cs">
+      <Link>Shared\GlobalCommands.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions\source\Generic\PlayniteExtensions.Common\PluginBase.cs">
+      <Link>Shared\PluginBase.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions\source\Generic\PlayniteExtensions.Common\PluginSettingsViewModel.cs">
+      <Link>Shared\PluginSettingsViewModel.cs</Link>
+    </Compile>
+    <Compile Include="LegendaryClient.cs" />
+    <Compile Include="LegendaryExcludeOnlineGames.xaml.cs">
+      <DependentUpon>LegendaryExcludeOnlineGames.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LegendaryGameController.cs" />
+    <Compile Include="LegendaryGameInstaller.xaml.cs">
+      <DependentUpon>LegendaryGameInstaller.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LegendaryLauncher.cs" />
+    <Compile Include="LegendaryLibrary.cs" />
+    <Compile Include="LegendaryLibrarySettingsViewModel.cs" />
+    <Compile Include="LegendaryLibrarySettingsView.xaml.cs">
+      <DependentUpon>LegendaryLibrarySettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizationKeys.cs" />
+    <Compile Include="Models\AccountResponse.cs" />
+    <Compile Include="Models\AssetsResponse.cs" />
+    <Compile Include="Models\CatalogResponse.cs" />
+    <Compile Include="Models\ErrorResponse.cs" />
+    <Compile Include="Models\Installed.cs" />
+    <Compile Include="Models\LegendaryGameInfo.cs" />
+    <Compile Include="Models\OauthResponse.cs" />
+    <Compile Include="EpicMetadataProvider.cs" />
+    <Compile Include="Models\PlaytimesResponse.cs" />
+    <Compile Include="Models\WebStoreModels.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\EpicAccountClient.cs" />
+    <Compile Include="Services\WebStoreClient.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="extension.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\legendary_icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Localization\*.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Page Include="..\Playnite\source\Playnite\Localization\LocSource.xaml">
+      <Link>Shared\LocSource.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LegendaryExcludeOnlineGames.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LegendaryGameInstaller.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LegendaryLibrarySettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
