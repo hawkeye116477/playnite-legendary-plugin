@@ -25,12 +25,9 @@
                 </DockPanel>
 
                 <CheckBox DockPanel.Dock="Top" Name="CheckEpicImportInstalled"
-                  Margin="0,0,0,10"
+                  Margin="0,0,0,15"
                   IsChecked="{Binding Settings.ImportInstalledGames}"
                   Content="{DynamicResource LOCEpicSettingsImportInstalledLabel}"/>
-                <StackPanel DockPanel.Dock="Top" Margin="40,0,0,15" IsEnabled="{Binding Settings.ImportInstalledGames}">
-                    <Button Content="{DynamicResource LOCLegendaryImportEGL}" HorizontalAlignment="Left" Name="ImportEGL" Click="ImportEGL_Click" IsEnabled="{Binding Settings.ImportInstalledGames}"></Button>
-                </StackPanel>
 
                 <CheckBox DockPanel.Dock="Top" Name="CheckEpicConnectAccount"
                   IsChecked="{Binding Settings.ConnectAccount}"

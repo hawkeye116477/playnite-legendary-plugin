@@ -47,6 +47,7 @@ namespace LegendaryLibraryNS
                 }
                 cancelButton.IsEnabled = true;
                 installButton.IsEnabled = true;
+                importButton.IsEnabled = true;
             }));
         }
 
@@ -108,6 +109,18 @@ namespace LegendaryLibraryNS
                 i++;
             }
             return string.Format("{0:n2} {1}", number, suffixes[i]);
+        }
+
+        private void ImportButton_Click(object sender, RoutedEventArgs e)
+        {
+            var path = playniteAPI.Dialogs.SelectFolder();
+            if (path != "")
+            {
+                var gameID = DataContext.ToString();
+                ProcessStarter.StartProcessWait(LegendaryLauncher.ClientExecPath, "-y import " + gameID + " " + path, null, false);
+                ProcessStarter.StartProcessWait(LegendaryLauncher.ClientExecPath, "-y repair " + gameID, null, false);
+                Window.GetWindow(this).Close();
+            }
         }
     }
 }

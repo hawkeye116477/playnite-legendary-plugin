@@ -108,15 +108,5 @@ namespace LegendaryLibraryNS
                 }
             }
         }
-
-        private void ImportEGL_Click(object sender, RoutedEventArgs e)
-        {
-            var path = playniteAPI.Dialogs.SelectFolder();
-            if (path != "")
-            {
-                ProcessStarter.StartProcessWait(LegendaryLauncher.ClientExecPath, "-y import "+ new System.IO.DirectoryInfo(path).Name + " "+path, null, false);
-                ProcessStarter.StartProcessWait(LegendaryLauncher.ClientExecPath, "-y repair " + new System.IO.DirectoryInfo(path).Name, null, false);
-            }
-        }
     }
 }

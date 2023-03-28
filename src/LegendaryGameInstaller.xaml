@@ -26,6 +26,7 @@
         </StackPanel>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0" VerticalAlignment="Bottom">
             <Button DockPanel.Dock="Bottom" x:Name="cancelButton" Content="{DynamicResource LOCCancelLabel}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0" Click="CancelButton_Click" IsCancel="True" IsEnabled="False"/>
+            <Button DockPanel.Dock="Bottom" x:Name="importButton" Content="{DynamicResource LOCLegendaryImportEGL}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0" IsEnabled="False" Click="ImportButton_Click"/>
             <Button DockPanel.Dock="Bottom" x:Name="installButton" Content="{DynamicResource LOCInstallGame}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="InstallButton_Click" IsEnabled="False"/>
         </StackPanel>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Bottom">
