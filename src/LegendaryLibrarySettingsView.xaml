@@ -7,7 +7,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:pcon="clr-namespace:Playnite.Converters"
              xmlns:pcmd="clr-namespace:Playnite.Commands"
-             mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="600" Name="LegendarySettingsUC">
+             mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="600" Name="LegendarySettingsUC" Loaded="LegendarySettingsUC_Loaded">
 
     <UserControl.Resources>
         <pcon:NegateConverter x:Key="NegateConverter" />
@@ -127,8 +127,8 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <Button Content="{DynamicResource LOCInstallGame}" Grid.Row="0" Grid.Column="0" Name="EOSOInstallBtn" Visibility="Hidden" Click="EOSOInstallBtn_Click"></Button>
-                        <Button Content="{DynamicResource LOCLegendaryEnable}" Grid.Row="0" Grid.Column="0" Margin="10,0,0,0" Name="EOSOEnableBtn" Visibility="Hidden"></Button>
-                        <Button Content="{DynamicResource LOCLegendaryDisable}" Grid.Row="0" Grid.Column="0" Margin="10,0,0,0" Name="EOSODisableBtn"></Button>
+                        <Button Content="{DynamicResource LOCLegendaryEnable}" Grid.Row="0" Grid.Column="0" Margin="10,0,0,0" Name="EOSOEnableBtn" Visibility="Hidden" Click="EOSOEnableBtn_Click"></Button>
+                        <Button Content="{DynamicResource LOCLegendaryDisable}" Grid.Row="0" Grid.Column="0" Margin="10,0,0,0" Name="EOSODisableBtn" Click="EOSODisableBtn_Click"></Button>
                         <Button Content="{DynamicResource LOCUninstallGame}" Name="EOSOUninstallBtn" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" Click="EOSOUninstallBtn_Click"></Button>
                     </Grid>
                 </StackPanel>

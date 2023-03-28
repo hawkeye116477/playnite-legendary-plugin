@@ -27,12 +27,6 @@ namespace LegendaryLibraryNS
         public LegendaryLibrarySettingsView()
         {
             InitializeComponent();
-            if (!LegendaryLauncher.IsEOSOverlayInstalled)
-            {
-                EOSOInstallBtn.Visibility = Visibility.Visible;
-                EOSODisableBtn.Visibility = Visibility.Hidden;
-                EOSOUninstallBtn.Visibility = Visibility.Hidden;
-            }
         }
 
         private void ChooseLauncherBtn_Click(object sender, RoutedEventArgs e)
@@ -106,6 +100,42 @@ namespace LegendaryLibraryNS
                     EOSOUninstallBtn.Visibility = Visibility.Visible;
                     EOSODisableBtn.Visibility = Visibility.Visible;
                 }
+            }
+        }
+
+        private void EOSODisableBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ProcessStarter.StartProcessWait(LegendaryLauncher.ClientExecPath, "-y eos-overlay disable", null, false);
+            EOSODisableBtn.Visibility = Visibility.Hidden;
+            EOSOEnableBtn.Visibility = Visibility.Visible;
+        }
+
+        private void EOSOEnableBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ProcessStarter.StartProcessWait(LegendaryLauncher.ClientExecPath, "-y eos-overlay enable", null, false);
+            EOSOEnableBtn.Visibility = Visibility.Hidden;
+            EOSODisableBtn.Visibility = Visibility.Visible;
+        }
+
+        private void LegendarySettingsUC_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (!LegendaryLauncher.IsEOSOverlayInstalled)
+            {
+                EOSOInstallBtn.Visibility = Visibility.Visible;
+                EOSODisableBtn.Visibility = Visibility.Hidden;
+                EOSOUninstallBtn.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    ProcessStarter.StartProcessWait(LegendaryLauncher.ClientExecPath, "eos-overlay info", null, out var stdOut, out var stdErr);
+                    if (stdErr.Contains("Overlay enabled: No"))
+                    {
+                        EOSODisableBtn.Visibility = Visibility.Hidden;
+                        EOSOEnableBtn.Visibility = Visibility.Visible;
+                    }
+                }));
             }
         }
     }
