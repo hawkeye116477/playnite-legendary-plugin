@@ -39,15 +39,18 @@ namespace LegendaryLibraryNS
                     var manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>(stdOut.ToString());
                     downloadSize.Content = FormatSize(manifest.Manifest.Download_size);
                     installSize.Content = FormatSize(manifest.Manifest.Disk_size);
+                    importButton.IsEnabled = true;
                 }
                 else
                 {
                     ISizePanel.Visibility = Visibility.Hidden;
                     DSizePanel.Visibility = Visibility.Hidden;
+                    importButton.Visibility = Visibility.Hidden;
+                    importButton.Width = 0;
+                    importButton.Height = 0;
                 }
                 cancelButton.IsEnabled = true;
                 installButton.IsEnabled = true;
-                importButton.IsEnabled = true;
             }));
         }
 
