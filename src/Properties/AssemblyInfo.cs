@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("LegendaryLibraryNS")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("LegendaryLibrary")]
+[assembly: AssemblyDescription("Epic Games Store library integration with Legendary Launcher for Playnite")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("LegendaryLibraryNS")]
-[assembly: AssemblyCopyright("Copyright ©  2023")]
+[assembly: AssemblyProduct("LegendaryLibrary")]
+[assembly: AssemblyCopyright("Copyright © 2023 hawkeye116477\n Copyright © 2018 Josef Nemec")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("FAE04EC0-301F-11D3-BF4B-00C04F79EFBC")]
+[assembly: Guid("EAD65C3B-2F8F-4E37-B4E6-B3DE6BE540C6")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -33,4 +33,3 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
