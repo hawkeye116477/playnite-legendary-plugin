@@ -91,13 +91,14 @@ namespace LegendaryLibraryNS
             {
                 installCommand += " --no-https";
             }
-            var proc = ProcessStarter.StartProcess(LegendaryLauncher.ClientExecPath, installCommand);
             if (gameID == "eos-overlay")
             {
                 installPath = System.IO.Path.Combine(SelectedGamePathTxtBox.Text, ".overlay");
                 installCommand = "-y eos-overlay install --path " + installPath;
-                proc.WaitForExit();
             }
+            var proc = ProcessStarter.StartProcess(LegendaryLauncher.ClientExecPath, installCommand);
+            if (gameID == "eos-overlay")
+                proc.WaitForExit();
             Window.GetWindow(this).Close();
         }
 
