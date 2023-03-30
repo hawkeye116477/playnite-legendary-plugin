@@ -127,8 +127,7 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <Button Content="{DynamicResource LOCInstallGame}" Grid.Row="0" Grid.Column="0" Name="EOSOInstallBtn" Visibility="Hidden" Click="EOSOInstallBtn_Click"></Button>
-                        <Button Content="{DynamicResource LOCLegendaryEnable}" Grid.Row="0" Grid.Column="0" Margin="10,0,0,0" Name="EOSOEnableBtn" Visibility="Hidden" Click="EOSOEnableBtn_Click"></Button>
-                        <Button Content="{DynamicResource LOCLegendaryDisable}" Grid.Row="0" Grid.Column="0" Margin="10,0,0,0" Name="EOSODisableBtn" Click="EOSODisableBtn_Click"></Button>
+                        <Button Content="{DynamicResource LOCLegendaryDisable}" Grid.Row="0" Grid.Column="0" Margin="10,0,0,0" Name="EOSOToggleBtn" Click="EOSOToggleBtn_Click"></Button>
                         <Button Content="{DynamicResource LOCUninstallGame}" Name="EOSOUninstallBtn" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" Click="EOSOUninstallBtn_Click"></Button>
                     </Grid>
                 </StackPanel>

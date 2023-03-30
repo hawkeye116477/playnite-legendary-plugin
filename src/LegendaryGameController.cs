@@ -45,7 +45,7 @@ namespace LegendaryLibraryNS
             });
             window.Title = Game.Name;
             window.DataContext = Game.GameId.ToString();
-            window.Content = new LegendaryGameInstaller(Game.GameId.ToString());
+            window.Content = new LegendaryGameInstaller();
             window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
             window.Height = 180;
             window.Width = 600;

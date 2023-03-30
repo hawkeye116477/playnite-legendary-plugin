@@ -7,7 +7,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:pcon="clr-namespace:Playnite.Converters"
              xmlns:pcmd="clr-namespace:Playnite.Commands"
-             mc:Ignorable="d" d:DesignHeight="180" d:DesignWidth="600" Name="LegendaryGameInstallerUC">
+             mc:Ignorable="d" d:DesignHeight="180" d:DesignWidth="600" Name="LegendaryGameInstallerUC" Loaded="LegendaryGameInstallerUC_Loaded">
 
     <UserControl.Resources>
         <pcon:NegateConverter x:Key="NegateConverter" />
@@ -25,8 +25,8 @@
             </DockPanel>
         </StackPanel>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0" VerticalAlignment="Bottom">
-            <Button DockPanel.Dock="Bottom" x:Name="cancelButton" Content="{DynamicResource LOCCancelLabel}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0" Click="CancelButton_Click" IsCancel="True" IsEnabled="False"/>
-            <Button DockPanel.Dock="Bottom" x:Name="importButton" Content="{DynamicResource LOCLegendaryImportEGL}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0" IsEnabled="False" Click="ImportButton_Click"/>
+            <Button DockPanel.Dock="Bottom" x:Name="cancelButton" Content="{DynamicResource LOCCancelLabel}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0" Click="CancelButton_Click" IsCancel="True"/>
+            <Button DockPanel.Dock="Bottom" x:Name="importButton" Content="{DynamicResource LOCLegendaryImportEGL}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0" Click="ImportButton_Click"/>
             <Button DockPanel.Dock="Bottom" x:Name="installButton" Content="{DynamicResource LOCInstallGame}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="InstallButton_Click" IsEnabled="False"/>
         </StackPanel>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Bottom">

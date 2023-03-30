@@ -1,4 +1,5 @@
 ﻿using LegendaryLibraryNS.Models;
+using Microsoft.Win32;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
@@ -119,6 +120,20 @@ namespace LegendaryLibraryNS
             }
         }
 
+        public static bool IsEOSOverlayEnabled
+        {
+            get
+            {
+                bool enabled = false;
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Epic Games\EOS");
+                if (key?.GetValueNames().Contains("OverlayPath") == true)
+                {
+                    enabled = true;
+                }
+                return enabled;
+            }
+        }
+  
         public static string Icon => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Resources\legendary_icon.ico");
 
         public static void StartClient()

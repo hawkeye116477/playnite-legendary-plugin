@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CliWrap;
+using CliWrap.Buffered;
 using LegendaryLibraryNS.Models;
 using Playnite.Common;
 using Playnite.SDK;
@@ -28,30 +31,9 @@ namespace LegendaryLibraryNS
     {
         private IPlayniteAPI playniteAPI = API.Instance;
 
-        public LegendaryGameInstaller(string gameID)
+        public LegendaryGameInstaller()
         {
             InitializeComponent();
-            SelectedGamePathTxtBox.Text = LegendaryLibrary.GetSettings().GamesInstallationPath;
-            this.Dispatcher.BeginInvoke((Action)(() => {
-                if (gameID != "eos-overlay")
-                {
-                    ProcessStarter.StartProcessWait(LegendaryLauncher.ClientExecPath, "info " + gameID + " --json", null, out var stdOut, out var stdErr);
-                    var manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>(stdOut.ToString());
-                    downloadSize.Content = FormatSize(manifest.Manifest.Download_size);
-                    installSize.Content = FormatSize(manifest.Manifest.Disk_size);
-                    importButton.IsEnabled = true;
-                }
-                else
-                {
-                    ISizePanel.Visibility = Visibility.Hidden;
-                    DSizePanel.Visibility = Visibility.Hidden;
-                    importButton.Visibility = Visibility.Hidden;
-                    importButton.Width = 0;
-                    importButton.Height = 0;
-                }
-                cancelButton.IsEnabled = true;
-                installButton.IsEnabled = true;
-            }));
         }
 
         private void ChooseGamePath_Click(object sender, RoutedEventArgs e)
@@ -125,6 +107,48 @@ namespace LegendaryLibraryNS
                 ProcessStarter.StartProcessWait(LegendaryLauncher.ClientExecPath, "-y repair " + gameID, null, false);
                 Window.GetWindow(this).Close();
             }
+        }
+
+        private async void LegendaryGameInstallerUC_Loaded(object sender, RoutedEventArgs e)
+        {
+            SelectedGamePathTxtBox.Text = LegendaryLibrary.GetSettings().GamesInstallationPath;
+            var gameID = DataContext.ToString();
+            if (gameID != "eos-overlay")
+            {
+                var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                    .WithArguments(new[] { "info", gameID, "--json" })
+                    .ExecuteBufferedAsync();
+                var manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>(result.StandardOutput);
+                downloadSize.Content = FormatSize(manifest.Manifest.Download_size);
+                installSize.Content = FormatSize(manifest.Manifest.Disk_size);
+            }
+            else
+            {
+                importButton.IsEnabled = false;
+                importButton.Visibility = Visibility.Hidden;
+                importButton.Width = 0;
+                importButton.Height = 0;
+
+                var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                    .WithArguments(new[] { gameID, "install" })
+                    .WithStandardInputPipe(PipeSource.FromString("n"))
+                    .ExecuteBufferedAsync();
+                string[] lines = result.StandardError.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                foreach (var line in lines)
+                {
+                    if (line.Contains("Download size:"))
+                    {
+                        var downloadSizeValue = double.Parse(line.Substring(line.IndexOf("Download size:") + 15).Replace(" MiB", ""), CultureInfo.InvariantCulture) * 1024 * 1024;
+                        downloadSize.Content = FormatSize(downloadSizeValue);
+                    }
+                    if (line.Contains("Install size:"))
+                    {
+                        var installSizeValue = double.Parse(line.Substring(line.IndexOf("Install size:") + 14).Replace(" MiB", ""), CultureInfo.InvariantCulture) * 1024 * 1024;
+                        installSize.Content = FormatSize(installSizeValue);
+                    }
+                }
+            }
+            installButton.IsEnabled = true;
         }
     }
 }
