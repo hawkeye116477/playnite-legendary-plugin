@@ -1,8 +1,9 @@
-﻿using Playnite;
+﻿using LegendaryLibraryNS.Models;
+using Playnite;
 using Playnite.Common;
 using Playnite.SDK;
-using Playnite.SDK.Plugins;
 using Playnite.SDK.Models;
+using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using LegendaryLibraryNS.Models;
 using System.Windows;
 
 namespace LegendaryLibraryNS
@@ -114,8 +114,8 @@ namespace LegendaryLibraryNS
 
             Dispose();
             var result = playniteAPI.Dialogs.ShowMessage(
-                string.Format(ResourceProvider.GetString("LOCLegendaryUninstallGame"), Game.Name), 
-                ResourceProvider.GetString("LOCUninstallGame"), 
+                string.Format(ResourceProvider.GetString("LOCLegendaryUninstallGame"), Game.Name),
+                ResourceProvider.GetString("LOCUninstallGame"),
                 MessageBoxButton.YesNo);
             if (result == MessageBoxResult.No)
             {

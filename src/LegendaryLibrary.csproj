@@ -84,6 +84,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\PlayniteExtensions\PlayniteRepo\source\Playnite\Common\Xaml.cs">
+      <Link>Shared\Xaml.cs</Link>
+    </Compile>
     <Compile Include="..\..\PlayniteExtensions\PlayniteRepo\source\playnite\native\Fileapi.cs">
       <Link>Shared\Native\Fileapi.cs</Link>
     </Compile>
@@ -243,11 +246,17 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Page Include="..\..\PlayniteExtensions\PlayniteRepo\source\Playnite\Localization\LocSource.xaml">
+    <None Include="..\..\PlayniteExtensions\source\Libraries\EpicLibrary\Localization\*.xaml">
+      <Link>Localization\Epic\%(Filename)%(Extension)</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\PlayniteExtensions\PlayniteRepo\source\Playnite\Localization\LocSource.xaml">
       <Link>Shared\LocSource.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
+    </None>
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -1,7 +1,8 @@
 ﻿using LegendaryLibraryNS.Services;
 using Playnite;
-using Playnite.SDK;
 using Playnite.Commands;
+using Playnite.SDK;
+using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,9 +12,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Media;
-using Playnite.SDK.Data;
 using System.Windows;
+using System.Windows.Media;
 
 namespace LegendaryLibraryNS
 {

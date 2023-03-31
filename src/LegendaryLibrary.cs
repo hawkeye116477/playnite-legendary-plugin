@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace LegendaryLibraryNS
@@ -36,13 +37,14 @@ namespace LegendaryLibraryNS
             Instance = this;
             SettingsViewModel = new LegendaryLibrarySettingsViewModel(this, api);
             TokensPath = Path.Combine(GetPluginUserDataPath(), "tokens.json");
+            LoadEpicLocalization();
         }
 
         public static LegendaryLibrarySettings GetSettings()
         {
             return Instance.SettingsViewModel.Settings;
         }
-  
+
         internal Dictionary<string, GameMetadata> GetInstalledGames()
         {
             var games = new Dictionary<string, GameMetadata>();
@@ -258,9 +260,9 @@ namespace LegendaryLibraryNS
             foreach (KeyValuePair<string, Installed> d in appList)
             {
                 var app = d.Value;
-                if(app.App_name == args.Game.GameId)
+                if (app.App_name == args.Game.GameId)
                 {
-                    if(app.Can_run_offline && !SettingsViewModel.Settings.OnlineList.Contains(app.App_name))
+                    if (app.Can_run_offline && !SettingsViewModel.Settings.OnlineList.Contains(app.App_name))
                     {
                         canRunOffline = true;
                     }
@@ -286,6 +288,71 @@ namespace LegendaryLibraryNS
         public override LibraryMetadataProvider GetMetadataDownloader()
         {
             return new EpicMetadataProvider(PlayniteApi);
+        }
+
+        public void LoadEpicLocalization()
+        {
+            var currentLanguage = PlayniteApi.ApplicationSettings.Language;
+            var dictionaries = Application.Current.Resources.MergedDictionaries;
+
+            void loadString(string xamlPath)
+            {
+                ResourceDictionary res = null;
+                try
+                {
+                    res = Xaml.FromFile<ResourceDictionary>(xamlPath);
+                    res.Source = new Uri(xamlPath, UriKind.Absolute);
+                    foreach (var key in res.Keys)
+                    {
+                        if (res[key] is string locString)
+                        {
+                            if (locString.IsNullOrEmpty())
+                            {
+                                res.Remove(key);
+                            }
+                        }
+                        else
+                        {
+                            res.Remove(key);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    logger.Error(e, $"Failed to parse localization file {xamlPath}");
+                    return;
+                }
+                dictionaries.Add(res);
+            }
+
+            var extraLocDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Localization\Epic");
+            if (!Directory.Exists(extraLocDir))
+            {
+                return;
+            }
+
+            var enXaml = Path.Combine(extraLocDir, "en_US.xaml");
+            if (!File.Exists(enXaml))
+            {
+                return;
+            }
+
+            if (currentLanguage != "en_US")
+            {
+                var langXaml = Path.Combine(extraLocDir, $"{currentLanguage}.xaml");
+                if (File.Exists(langXaml))
+                {
+                    loadString(langXaml);
+                }
+                else
+                {
+                    loadString(enXaml);
+                }
+            }
+            else
+            {
+                loadString(enXaml);
+            }
         }
     }
 }

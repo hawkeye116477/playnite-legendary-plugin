@@ -1,4 +1,10 @@
-﻿using System;
+﻿using CliWrap;
+using CliWrap.Buffered;
+using LegendaryLibraryNS.Models;
+using Playnite.Common;
+using Playnite.SDK;
+using Playnite.SDK.Data;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -15,12 +21,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using CliWrap;
-using CliWrap.Buffered;
-using LegendaryLibraryNS.Models;
-using Playnite.Common;
-using Playnite.SDK;
-using Playnite.SDK.Data;
 
 namespace LegendaryLibraryNS
 {
@@ -80,7 +80,10 @@ namespace LegendaryLibraryNS
             }
             var proc = ProcessStarter.StartProcess(LegendaryLauncher.ClientExecPath, installCommand);
             if (gameID == "eos-overlay")
+            {
                 proc.WaitForExit();
+            }
+
             Window.GetWindow(this).Close();
         }
 

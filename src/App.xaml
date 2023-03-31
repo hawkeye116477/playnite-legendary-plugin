@@ -4,6 +4,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Localization/Epic/en_US.xaml"/>
                 <ResourceDictionary Source="Localization/en_US.xaml"/>
                 <ResourceDictionary Source="Shared/LocSource.xaml"/>
             </ResourceDictionary.MergedDictionaries>

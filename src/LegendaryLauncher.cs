@@ -133,7 +133,7 @@ namespace LegendaryLibraryNS
                 return enabled;
             }
         }
-  
+
         public static string Icon => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Resources\legendary_icon.ico");
 
         public static void StartClient()
