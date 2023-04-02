@@ -41,7 +41,6 @@ namespace LegendaryLibraryNS
             var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
             {
                 ShowMinimizeButton = false,
-                ShowCloseButton = false,
             });
             window.Title = Game.Name;
             window.DataContext = Game.GameId.ToString();
@@ -50,9 +49,18 @@ namespace LegendaryLibraryNS
             window.Height = 180;
             window.Width = 600;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            window.ShowDialog();
+            var result = window.ShowDialog();
             Dispose();
             StartInstallWatcher();
+            if (result == false)
+            {
+                CancelInstall();
+            }
+        }
+
+        private void CancelInstall()
+        {
+            throw new OperationCanceledException();
         }
 
         public async void StartInstallWatcher()

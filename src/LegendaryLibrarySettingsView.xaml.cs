@@ -80,8 +80,7 @@ namespace LegendaryLibraryNS
         {
             var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
             {
-                ShowMinimizeButton = false,
-                ShowCloseButton = false,
+                ShowMinimizeButton = false
             });
             window.Title = ResourceProvider.GetString("LOCLegendaryEOSOverlay");
             window.DataContext = "eos-overlay";
@@ -91,7 +90,7 @@ namespace LegendaryLibraryNS
             window.Width = 600;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             var result = window.ShowDialog();
-            if (result == false)
+            if (result == true)
             {
                 if (LegendaryLauncher.IsEOSOverlayInstalled)
                 {

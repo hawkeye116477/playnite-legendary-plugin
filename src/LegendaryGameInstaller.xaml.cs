@@ -4,6 +4,7 @@ using LegendaryLibraryNS.Models;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
+using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,6 +30,7 @@ namespace LegendaryLibraryNS
     /// </summary>
     public partial class LegendaryGameInstaller : UserControl
     {
+        private ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI playniteAPI = API.Instance;
 
         public LegendaryGameInstaller()
@@ -48,14 +50,11 @@ namespace LegendaryLibraryNS
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             Window.GetWindow(this).Close();
-            if (DataContext.ToString() != "eos-overlay")
-            {
-                throw new OperationCanceledException();
-            }
         }
 
         private void InstallButton_Click(object sender, RoutedEventArgs e)
         {
+            var installerWindow = Window.GetWindow(this);
             var settings = LegendaryLibrary.GetSettings();
             var installPath = settings.GamesInstallationPath;
             if (SelectedGamePathTxtBox.Text != "")
@@ -83,8 +82,8 @@ namespace LegendaryLibraryNS
             {
                 proc.WaitForExit();
             }
-
-            Window.GetWindow(this).Close();
+            installerWindow.DialogResult = true;
+            installerWindow.Close();
         }
 
         static readonly string[] suffixes = { "B", "KB", "MB", "GB", "TB" };
@@ -102,13 +101,15 @@ namespace LegendaryLibraryNS
 
         private void ImportButton_Click(object sender, RoutedEventArgs e)
         {
+            var installerWindow = Window.GetWindow(this);
             var path = playniteAPI.Dialogs.SelectFolder();
             if (path != "")
             {
                 var gameID = DataContext.ToString();
                 ProcessStarter.StartProcessWait(LegendaryLauncher.ClientExecPath, "-y import " + gameID + " " + path, null, false);
                 ProcessStarter.StartProcessWait(LegendaryLauncher.ClientExecPath, "-y repair " + gameID, null, false);
-                Window.GetWindow(this).Close();
+                installerWindow.DialogResult = true;
+                installerWindow.Close();
             }
         }
 
@@ -120,10 +121,19 @@ namespace LegendaryLibraryNS
             {
                 var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                     .WithArguments(new[] { "info", gameID, "--json" })
+                    .WithValidation(CommandResultValidation.None)
                     .ExecuteBufferedAsync();
-                var manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>(result.StandardOutput);
-                downloadSize.Content = FormatSize(manifest.Manifest.Download_size);
-                installSize.Content = FormatSize(manifest.Manifest.Disk_size);
+                if (result.ExitCode != 0)
+                {
+                    logger.Error(result.StandardError);
+                    Window.GetWindow(this).Close();
+                }
+                else
+                {
+                    var manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>(result.StandardOutput);
+                    downloadSize.Content = FormatSize(manifest.Manifest.Download_size);
+                    installSize.Content = FormatSize(manifest.Manifest.Disk_size);
+                }
             }
             else
             {
