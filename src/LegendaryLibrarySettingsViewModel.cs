@@ -38,7 +38,7 @@ namespace LegendaryLibraryNS
         {
             get
             {
-                return new EpicAccountClient(PlayniteApi, Plugin.TokensPath).GetIsUserLoggedIn();
+                return new EpicAccountClient(PlayniteApi, LegendaryLauncher.TokensPath).GetIsUserLoggedIn();
             }
         }
 
@@ -73,12 +73,12 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private void Login()
+        private async void Login()
         {
             try
             {
-                var clientApi = new EpicAccountClient(PlayniteApi, Plugin.TokensPath);
-                clientApi.Login();
+                var clientApi = new EpicAccountClient(PlayniteApi, LegendaryLauncher.TokensPath);
+                await clientApi.Login();
                 OnPropertyChanged(nameof(IsUserLoggedIn));
             }
             catch (Exception e) when (!Debugger.IsAttached)

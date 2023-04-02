@@ -21,7 +21,6 @@ namespace LegendaryLibraryNS
     public class LegendaryLibrary : LibraryPluginBase<LegendaryLibrarySettingsViewModel>
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        internal readonly string TokensPath;
         public static LegendaryLibrary Instance { get; set; }
         public static bool LegendaryGameInstaller { get; internal set; }
 
@@ -36,7 +35,6 @@ namespace LegendaryLibraryNS
         {
             Instance = this;
             SettingsViewModel = new LegendaryLibrarySettingsViewModel(this, api);
-            TokensPath = Path.Combine(GetPluginUserDataPath(), "tokens.json");
             LoadEpicLocalization();
         }
 
@@ -101,7 +99,7 @@ namespace LegendaryLibraryNS
         {
             var cacheDir = GetCachePath("catalogcache");
             var games = new List<GameMetadata>();
-            var accountApi = new EpicAccountClient(PlayniteApi, TokensPath);
+            var accountApi = new EpicAccountClient(PlayniteApi, LegendaryLauncher.TokensPath);
             var assets = accountApi.GetAssets();
             if (!assets?.Any() == true)
             {

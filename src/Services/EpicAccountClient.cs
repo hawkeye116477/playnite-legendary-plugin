@@ -1,4 +1,5 @@
-﻿using LegendaryLibraryNS.Models;
+﻿using CliWrap;
+using LegendaryLibraryNS.Models;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
@@ -85,7 +86,7 @@ namespace LegendaryLibraryNS.Services
             }
         }
 
-        public void Login()
+        public async Task Login()
         {
             var loggedIn = false;
             var apiRedirectContent = string.Empty;
@@ -132,23 +133,17 @@ namespace LegendaryLibraryNS.Services
                 return;
             }
 
-            using (var httpClient = new HttpClient())
+            var stdErrBuffer = new StringBuilder();
+            var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                .WithArguments(new[] { "auth", "--code", authorizationCode })
+                .WithValidation(CommandResultValidation.None)
+                .WithStandardErrorPipe(PipeTarget.ToStringBuilder(stdErrBuffer))
+                .ExecuteAsync();
+            var errorMsg = stdErrBuffer.ToString();
+            if (result.ExitCode != 0 && !errorMsg.Contains("Successfully"))
             {
-                httpClient.DefaultRequestHeaders.Clear();
-                httpClient.DefaultRequestHeaders.Add("Authorization", "basic " + authEncodedString);
-                using (var content = new StringContent($"grant_type=authorization_code&code={authorizationCode}&token_type=eg1"))
-                {
-                    content.Headers.Clear();
-                    content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-                    var response = httpClient.PostAsync(oauthUrl, content).GetAwaiter().GetResult();
-                    var respContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                    FileSystem.CreateDirectory(Path.GetDirectoryName(tokensPath));
-                    Encryption.EncryptToFile(
-                        tokensPath,
-                        respContent,
-                        Encoding.UTF8,
-                        WindowsIdentity.GetCurrent().User.Value);
-                }
+                logger.Error($"[Legendary] Failed to authenticate with the Epic Games Store. Error: {errorMsg}");
+                return;
             }
         }
 
@@ -167,23 +162,8 @@ namespace LegendaryLibraryNS.Services
             }
             catch (Exception e)
             {
-                if (e is TokenException)
-                {
-                    renewTokens(tokens.refresh_token);
-                    tokens = loadTokens();
-                    if (tokens.account_id.IsNullOrEmpty() || tokens.access_token.IsNullOrEmpty())
-                    {
-                        return false;
-                    }
-
-                    var account = InvokeRequest<AccountResponse>(accountUrl + tokens.account_id, tokens).GetAwaiter().GetResult().Item2;
-                    return account.id == tokens.account_id;
-                }
-                else
-                {
-                    logger.Error(e, "Failed to validation Epic authentication.");
-                    return false;
-                }
+                logger.Error(e, "Failed to validation Epic authentication.");
+                return false;
             }
         }
 
@@ -299,11 +279,7 @@ namespace LegendaryLibraryNS.Services
             {
                 try
                 {
-                    return Serialization.FromJson<OauthResponse>(
-                        Encryption.DecryptFromFile(
-                            tokensPath,
-                            Encoding.UTF8,
-                            WindowsIdentity.GetCurrent().User.Value));
+                    return Serialization.FromJson<OauthResponse>(FileSystem.ReadFileAsStringSafe(tokensPath));
                 }
                 catch (Exception e)
                 {

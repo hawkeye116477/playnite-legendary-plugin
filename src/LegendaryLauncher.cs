@@ -152,5 +152,13 @@ namespace LegendaryLibraryNS
             var list = Serialization.FromJson<Dictionary<string, Installed>>(FileSystem.ReadFileAsStringSafe(installListPath));
             return list;
         }
+
+        public static string TokensPath
+        {
+            get
+            {
+                return Path.Combine(ConfigPath, "user.json");
+            }
+        }
     }
 }
