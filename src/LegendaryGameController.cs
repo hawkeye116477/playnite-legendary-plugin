@@ -122,7 +122,7 @@ namespace LegendaryLibraryNS
 
             Dispose();
             var result = playniteAPI.Dialogs.ShowMessage(
-                string.Format(ResourceProvider.GetString("LOCLegendaryUninstallGame"), Game.Name),
+                string.Format(ResourceProvider.GetString(LOC.LegendaryUninstallGameConfirm), Game.Name),
                 ResourceProvider.GetString("LOCUninstallGame"),
                 MessageBoxButton.YesNo);
             if (result == MessageBoxResult.No)

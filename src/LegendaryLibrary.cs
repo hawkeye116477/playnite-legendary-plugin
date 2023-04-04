@@ -335,6 +335,7 @@ namespace LegendaryLibraryNS
                 return;
             }
 
+            loadString(enXaml);
             if (currentLanguage != "en_US")
             {
                 var langXaml = Path.Combine(extraLocDir, $"{currentLanguage}.xaml");
@@ -342,14 +343,6 @@ namespace LegendaryLibraryNS
                 {
                     loadString(langXaml);
                 }
-                else
-                {
-                    loadString(enXaml);
-                }
-            }
-            else
-            {
-                loadString(enXaml);
             }
         }
     }

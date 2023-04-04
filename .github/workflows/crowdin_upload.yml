@@ -1,0 +1,21 @@
+name: Upload translations to Crowdin
+
+on: workflow_dispatch
+
+jobs:
+  upload-to-crowdin:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Crowdin Action
+      uses: crowdin/github-action@v1
+      with:
+        upload_sources: true
+        upload_translations: true
+        download_translations: false
+        config: 'crowdin.yml'
+        dryrun_action: false
+        project_id: ${{ secrets.CROWDIN_PROJECT_ID }}
+        token: ${{ secrets.CROWDIN_TOKEN }}

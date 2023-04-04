@@ -1,6 +1,6 @@
 ///
-/// DO NOT MODIFY! Automatically generated via UpdateLocExtFiles.ps1 script.
-/// 
+/// DO NOT MODIFY! Automatically generated via update_localization_keys.py script.
+///
 namespace System
 {
     public static class LOC
@@ -81,5 +81,73 @@ namespace System
         /// Metadata language:
         /// </summary>
         public const string EpicMetadataLanguageLabel = "LOCEpicMetadataLanguageLabel";
+        /// <summary>
+        /// Use custom launcher path
+        /// </summary>
+        public const string LegendaryLauncherCustomPath = "LOCLegendaryLauncherCustomPath";
+        /// <summary>
+        /// Games Installation Path
+        /// </summary>
+        public const string LegendaryGamesInstallationPath = "LOCLegendaryGamesInstallationPath";
+        /// <summary>
+        /// Download Size:
+        /// </summary>
+        public const string LegendaryDownloadSize = "LOCLegendaryDownloadSize";
+        /// <summary>
+        /// Install Size:
+        /// </summary>
+        public const string LegendaryInstallSize = "LOCLegendaryInstallSize";
+        /// <summary>
+        /// Are you sure you want to uninstall {0}?
+        /// </summary>
+        public const string LegendaryUninstallGameConfirm = "LOCLegendaryUninstallGameConfirm";
+        /// <summary>
+        /// Launch games in offline mode if possible
+        /// </summary>
+        public const string LegendaryLaunchOffline = "LOCLegendaryLaunchOffline";
+        /// <summary>
+        /// Exclude games
+        /// </summary>
+        public const string LegendaryExcludeGames = "LOCLegendaryExcludeGames";
+        /// <summary>
+        /// Offline games
+        /// </summary>
+        public const string LegendaryOfflineGames = "LOCLegendaryOfflineGames";
+        /// <summary>
+        /// Online games
+        /// </summary>
+        public const string LegendaryOnlineGames = "LOCLegendaryOnlineGames";
+        /// <summary>
+        /// Download Settings
+        /// </summary>
+        public const string LegendaryDownloadSettings = "LOCLegendaryDownloadSettings";
+        /// <summary>
+        /// Preferred CDN
+        /// </summary>
+        public const string LegendaryPreferredCDN = "LOCLegendaryPreferredCDN";
+        /// <summary>
+        /// Disable HTTPS (useful for CDNs e.g. LanCache)
+        /// </summary>
+        public const string LegendaryHttpOnlyDownload = "LOCLegendaryHttpOnlyDownload";
+        /// <summary>
+        /// EOS Overlay
+        /// </summary>
+        public const string LegendaryEOSOverlay = "LOCLegendaryEOSOverlay";
+        /// <summary>
+        /// Disable
+        /// </summary>
+        public const string LegendaryDisable = "LOCLegendaryDisable";
+        /// <summary>
+        /// Enable
+        /// </summary>
+        public const string LegendaryEnable = "LOCLegendaryEnable";
+        /// <summary>
+        /// Import game
+        /// </summary>
+        public const string LegendaryImportEGL = "LOCLegendaryImportEGL";
+        /// <summary>
+        /// Choose Game Folder to import
+        /// </summary>
+        public const string LegendaryChooseImport = "LOCLegendaryChooseImport";
     }
 }
