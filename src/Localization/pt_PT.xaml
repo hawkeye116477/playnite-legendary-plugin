@@ -16,5 +16,4 @@
   <sys:String x:Key="LOCLegendaryDisable"></sys:String>
   <sys:String x:Key="LOCLegendaryEnable"></sys:String>
   <sys:String x:Key="LOCLegendaryImportEGL"></sys:String>
-  <sys:String x:Key="LOCLegendaryChooseImport"></sys:String>
 </ResourceDictionary>

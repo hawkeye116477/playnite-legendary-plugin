@@ -4,8 +4,8 @@
   <sys:String x:Key="LOCLegendaryGamesInstallationPath">Ścieżka instalacji gier</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSize">Rozmiar pobierania:</sys:String>
   <sys:String x:Key="LOCLegendaryInstallSize">Rozmiar instalacji:</sys:String>
-  <sys:String x:Key="LOCLegendaryUninstallGameConfirm">Czy na pewno chcesz odinstalować {0}?</sys:String>
-  <sys:String x:Key="LOCLegendaryLaunchOffline">Uruchomiaj gry w trybie offline, jeśli to możliwe</sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallGameConfirm">Czy na pewno chcesz odinstalować program {0}?</sys:String>
+  <sys:String x:Key="LOCLegendaryLaunchOffline">Uruchamiaj gry w trybie offline, jeśli to możliwe</sys:String>
   <sys:String x:Key="LOCLegendaryExcludeGames">Wyklucz gry</sys:String>
   <sys:String x:Key="LOCLegendaryOfflineGames">Gry offline</sys:String>
   <sys:String x:Key="LOCLegendaryOnlineGames">Gry online</sys:String>
@@ -16,5 +16,4 @@
   <sys:String x:Key="LOCLegendaryDisable">Wyłącz</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Włącz</sys:String>
   <sys:String x:Key="LOCLegendaryImportEGL">Importuj grę</sys:String>
-  <sys:String x:Key="LOCLegendaryChooseImport"></sys:String>
 </ResourceDictionary>
