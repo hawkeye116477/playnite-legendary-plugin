@@ -15,5 +15,4 @@
   <sys:String x:Key="LOCLegendaryDisable">Disable</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Enable</sys:String>
   <sys:String x:Key="LOCLegendaryImportEGL">Import game</sys:String>
-  <sys:String x:Key="LOCLegendaryChooseImport">Choose Game Folder to import</sys:String>
 </ResourceDictionary>
