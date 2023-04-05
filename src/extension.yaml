@@ -1,10 +1,16 @@
 Id: LegendaryLibrary
 Name: Legendary (Epic Games) library integration
 Author: hawkeye116477
-Version: 1.0
+Version: _version_
 Module: LegendaryLibrary.dll
 Type: GameLibrary
-Icon: icon.png
+Icon: Resources\legendary_icon.ico
 Links:
+  - Name: Source code
+    Url: https://github.com/hawkeye116477/playnite-legendary-plugin
+  - Name: Help
+    Url: https://github.com/hawkeye116477/playnite-legendary-plugin/wiki
+  - Name: Forum
+    Url: https://github.com/hawkeye116477/playnite-legendary-plugin/discussions
   - Name: Translate
     Url: https://crowdin.com/project/playnite-legendary-plugin

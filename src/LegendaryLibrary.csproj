@@ -281,4 +281,7 @@
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>"$(ProjectDir)..\make_scripts\after_build.py" $(TargetDir)</PostBuildEvent>
+  </PropertyGroup>
 </Project>
