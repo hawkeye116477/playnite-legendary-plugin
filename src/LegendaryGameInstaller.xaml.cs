@@ -44,6 +44,7 @@ namespace LegendaryLibraryNS
             if (path != "")
             {
                 SelectedGamePathTxtBox.Text = path;
+                UpdateSpaceInfo(path);
             }
         }
 
@@ -116,6 +117,7 @@ namespace LegendaryLibraryNS
         private async void LegendaryGameInstallerUC_Loaded(object sender, RoutedEventArgs e)
         {
             SelectedGamePathTxtBox.Text = LegendaryLibrary.GetSettings().GamesInstallationPath;
+            UpdateSpaceInfo(SelectedGamePathTxtBox.Text);
             var gameID = DataContext.ToString();
             if (gameID != "eos-overlay")
             {
@@ -162,6 +164,15 @@ namespace LegendaryLibraryNS
                 }
             }
             installButton.IsEnabled = true;
+        }
+
+        private void UpdateSpaceInfo(string path)
+        {
+            DriveInfo dDrive = new DriveInfo(path);
+            if (dDrive.IsReady)
+            {
+                spaceLabel.Content = FormatSize(dDrive.AvailableFreeSpace);
+            }
         }
     }
 }

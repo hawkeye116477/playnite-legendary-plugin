@@ -146,8 +146,8 @@ namespace System
         /// </summary>
         public const string LegendaryImportEGL = "LOCLegendaryImportEGL";
         /// <summary>
-        /// Choose Game Folder to import
+        /// Space Available:
         /// </summary>
-        public const string LegendaryChooseImport = "LOCLegendaryChooseImport";
+        public const string LegendarySpaceAvailable = "LOCLegendarySpaceAvailable";
     }
 }

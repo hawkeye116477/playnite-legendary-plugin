@@ -3,6 +3,7 @@ using Playnite.Common;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -80,13 +81,14 @@ namespace LegendaryLibraryNS
         {
             var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
             {
-                ShowMinimizeButton = false
+                ShowMinimizeButton = false,
+                ShowMaximizeButton = false
             });
             window.Title = ResourceProvider.GetString(LOC.LegendaryEOSOverlay);
             window.DataContext = "eos-overlay";
             window.Content = new LegendaryGameInstaller();
             window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
-            window.Height = 180;
+            window.SizeToContent = SizeToContent.Height;
             window.Width = 600;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             var result = window.ShowDialog();
