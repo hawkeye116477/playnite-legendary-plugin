@@ -140,9 +140,7 @@ namespace LegendaryLibraryNS
             else
             {
                 importButton.IsEnabled = false;
-                importButton.Visibility = Visibility.Hidden;
-                importButton.Width = 0;
-                importButton.Height = 0;
+                importButton.Visibility = Visibility.Collapsed;
 
                 var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                     .WithArguments(new[] { gameID, "install" })

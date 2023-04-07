@@ -72,8 +72,8 @@ namespace LegendaryLibraryNS
             {
                 ProcessStarter.StartProcessWait(LegendaryLauncher.ClientExecPath, "-y eos-overlay remove", null, false);
                 EOSOInstallBtn.Visibility = Visibility.Visible;
-                EOSOUninstallBtn.Visibility = Visibility.Hidden;
-                EOSOToggleBtn.Visibility = Visibility.Hidden;
+                EOSOUninstallBtn.Visibility = Visibility.Collapsed;
+                EOSOToggleBtn.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -96,7 +96,7 @@ namespace LegendaryLibraryNS
             {
                 if (LegendaryLauncher.IsEOSOverlayInstalled)
                 {
-                    EOSOInstallBtn.Visibility = Visibility.Hidden;
+                    EOSOInstallBtn.Visibility = Visibility.Collapsed;
                     EOSOUninstallBtn.Visibility = Visibility.Visible;
                     EOSOToggleBtn.Content = ResourceProvider.GetString(LOC.LegendaryDisable);
                 }
@@ -124,8 +124,8 @@ namespace LegendaryLibraryNS
             if (!LegendaryLauncher.IsEOSOverlayInstalled)
             {
                 EOSOInstallBtn.Visibility = Visibility.Visible;
-                EOSOToggleBtn.Visibility = Visibility.Hidden;
-                EOSOUninstallBtn.Visibility = Visibility.Hidden;
+                EOSOToggleBtn.Visibility = Visibility.Collapsed;
+                EOSOUninstallBtn.Visibility = Visibility.Collapsed;
             }
             else
             {

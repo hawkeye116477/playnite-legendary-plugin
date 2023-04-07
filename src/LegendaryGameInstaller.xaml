@@ -36,15 +36,15 @@
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0" Name="DSizePanel" Grid.Column="0">
                 <Label Content="{DynamicResource LOCLegendaryDownloadSize}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,0,0,5"/>
-                <Label x:Name="downloadSize" Content="{DynamicResource LOCDownloadingLabel}" VerticalAlignment="Top" Margin="5,0,0,0"/>
+                <Label x:Name="downloadSize" Content="{DynamicResource LOCLoadingLabel}" VerticalAlignment="Top" Margin="5,0,0,0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Name="ISizePanel" Grid.Row="1" Grid.Column="0">
                 <Label VerticalAlignment="Top" Content="{DynamicResource LOCLegendaryInstallSize}"/>
-                <Label x:Name="installSize" Content="{DynamicResource LOCDownloadingLabel}" VerticalAlignment="Top" Margin="5,0,0,0"/>
+                <Label x:Name="installSize" Content="{DynamicResource LOCLoadingLabel}" VerticalAlignment="Top" Margin="5,0,0,0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1">
                 <Label VerticalAlignment="Top" Content="{DynamicResource LOCLegendarySpaceAvailable}"/>
-                <Label VerticalAlignment="Top" Content="" Margin="5,0,0,0" Name="spaceLabel"/>
+                <Label VerticalAlignment="Top" Content="{DynamicResource LOCLoadingLabel}" Margin="5,0,0,0" Name="spaceLabel"/>
             </StackPanel>
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0" VerticalAlignment="Bottom" Grid.Row="3" Grid.Column="2" Name="SAPanel">
                 <Button DockPanel.Dock="Bottom" x:Name="cancelButton" Content="{DynamicResource LOCCancelLabel}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0" Click="CancelButton_Click" IsCancel="True"/>
