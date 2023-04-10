@@ -35,6 +35,8 @@ namespace LegendaryLibraryNS
         private ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI playniteAPI = API.Instance;
         private CancellationTokenSource installerCTS;
+        private bool downloadPaused;
+        private string installCommand;
 
         public LegendaryGameInstaller()
         {
@@ -62,7 +64,30 @@ namespace LegendaryLibraryNS
 
         private async void InstallButton_Click(object sender, RoutedEventArgs e)
         {
-            await Install();
+            var settings = LegendaryLibrary.GetSettings();
+            var installPath = settings.GamesInstallationPath;
+            if (SelectedGamePathTxtBox.Text != "")
+            {
+                installPath = SelectedGamePathTxtBox.Text;
+            }
+            installCommand = "-y install " + GameID + " --base-path " + installPath;
+            var prefferedCDN = settings.PreferredCDN;
+            if (prefferedCDN != "")
+            {
+                installCommand += " --preferred-cdn " + prefferedCDN;
+            }
+            if (settings.NoHttps)
+            {
+                installCommand += " --no-https";
+            }
+            if (GameID == "eos-overlay")
+            {
+                installPath = System.IO.Path.Combine(SelectedGamePathTxtBox.Text, ".overlay");
+                installCommand = "-y eos-overlay install --path " + installPath;
+            }
+            InstallerPage.Visibility = Visibility.Collapsed;
+            DownloaderPage.Visibility = Visibility.Visible;
+            await Install(installCommand);
         }
 
         static readonly string[] suffixes = { "B", "KB", "MB", "GB", "TB" };
@@ -150,7 +175,7 @@ namespace LegendaryLibraryNS
 
         private async void PauseButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ETALabel.Content.ToString() != ResourceProvider.GetString(LOC.LegendaryDownloadPaused))
+            if (!downloadPaused)
             {
                 installerCTS.Cancel();
                 installerCTS.Dispose();
@@ -160,36 +185,14 @@ namespace LegendaryLibraryNS
             else
             {
                 PauseButton.Content = ResourceProvider.GetString(LOC.LegendaryPauseDownload);
-                await Install();
+                await Install(installCommand);
             }
         }
 
-        public async Task Install()
+        public async Task Install(string installComand)
         {
+            downloadPaused = false;
             installerCTS = new CancellationTokenSource();
-            var settings = LegendaryLibrary.GetSettings();
-            var installPath = settings.GamesInstallationPath;
-            if (SelectedGamePathTxtBox.Text != "")
-            {
-                installPath = SelectedGamePathTxtBox.Text;
-            }
-            var installCommand = "-y install " + GameID + " --base-path " + installPath;
-            var prefferedCDN = settings.PreferredCDN;
-            if (prefferedCDN != "")
-            {
-                installCommand += " --preferred-cdn " + prefferedCDN;
-            }
-            if (settings.NoHttps)
-            {
-                installCommand += " --no-https";
-            }
-            if (GameID == "eos-overlay")
-            {
-                installPath = System.IO.Path.Combine(SelectedGamePathTxtBox.Text, ".overlay");
-                installCommand = "-y eos-overlay install --path " + installPath;
-            }
-            InstallerPage.Visibility = Visibility.Collapsed;
-            DownloaderPage.Visibility = Visibility.Visible;
             try
             {
                 var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath).WithArguments(installCommand);
@@ -250,17 +253,17 @@ namespace LegendaryLibraryNS
             catch (OperationCanceledException)
             {
                 // Command was canceled
+                downloadPaused = true;
             }
         }
 
         private void CancelDownloadButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ETALabel.Content.ToString() == ResourceProvider.GetString(LOC.LegendaryDownloadPaused))
+            if (ETALabel.Content.ToString() != ResourceProvider.GetString(LOC.LegendaryDownloadPaused))
             {
-                installerCTS = new CancellationTokenSource();
+                installerCTS.Cancel();
+                installerCTS.Dispose();
             }
-            installerCTS.Cancel();
-            installerCTS.Dispose();
             var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", GameID + ".resume");
             if (File.Exists(resumeFile))
             {

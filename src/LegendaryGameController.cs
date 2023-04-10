@@ -18,17 +18,11 @@ namespace LegendaryLibraryNS
 {
     public class LegendaryInstallController : InstallController
     {
-        private CancellationTokenSource watcherToken;
         private IPlayniteAPI playniteAPI = API.Instance;
 
         public LegendaryInstallController(Game game) : base(game)
         {
             Name = "Install using Legendary client";
-        }
-
-        public override void Dispose()
-        {
-            watcherToken?.Cancel();
         }
 
         public override void Install(InstallActionArgs args)
@@ -40,7 +34,6 @@ namespace LegendaryLibraryNS
 
             var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
             {
-                ShowMinimizeButton = false,
                 ShowMaximizeButton = false,
             });
             window.Title = Game.Name;
@@ -51,31 +44,19 @@ namespace LegendaryLibraryNS
             window.Width = 600;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             var result = window.ShowDialog();
-            Dispose();
-            StartInstallWatcher();
             if (result == false)
             {
-                CancelInstall();
-            }
-        }
-
-        private void CancelInstall()
-        {
-            throw new OperationCanceledException();
-        }
-
-        public async void StartInstallWatcher()
-        {
-            watcherToken = new CancellationTokenSource();
-            await Task.Run(async () =>
-            {
-                while (true)
+                InvokeOnInstalled(new GameInstalledEventArgs(new GameInstallationData()));
+                Game.IsInstalled = false;
+                _ = (Application.Current.Dispatcher?.BeginInvoke((Action)delegate
                 {
-                    if (watcherToken.IsCancellationRequested)
-                    {
-                        return;
-                    }
-
+                    playniteAPI.Database.Games.Update(Game);
+                }));
+            }
+            else
+            {
+                _ = (Application.Current.Dispatcher?.BeginInvoke((Action)delegate
+                {
                     var installed = LegendaryLauncher.GetInstalledAppList();
                     if (installed != null)
                     {
@@ -93,9 +74,8 @@ namespace LegendaryLibraryNS
                             }
                         }
                     }
-                    await Task.Delay(10000);
-                }
-            });
+                }));
+            }
         }
     }
 

@@ -6,7 +6,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Localization/Epic/en_US.xaml"/>
                 <ResourceDictionary Source="Localization/en_US.xaml"/>
-                <ResourceDictionary Source="Shared/LocSource.xaml"/>
+                <ResourceDictionary Source="third_party/PlayniteExtensions/PlayniteRepo/source/Playnite/Localization/LocSource.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

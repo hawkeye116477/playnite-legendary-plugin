@@ -53,7 +53,6 @@ namespace LegendaryLibraryNS
             var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
             {
                 ShowMinimizeButton = false,
-                ShowCloseButton = false,
             });
             window.Content = new LegendaryExcludeOnlineGames();
             window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
@@ -81,7 +80,6 @@ namespace LegendaryLibraryNS
         {
             var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
             {
-                ShowMinimizeButton = false,
                 ShowMaximizeButton = false
             });
             window.Title = ResourceProvider.GetString(LOC.LegendaryEOSOverlay);
