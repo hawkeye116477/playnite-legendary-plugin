@@ -162,6 +162,10 @@ namespace System
         /// </summary>
         public const string LegendaryDownloadSpeed = "LOCLegendaryDownloadSpeed";
         /// <summary>
+        /// Elapsed:
+        /// </summary>
+        public const string LegendaryElapsed = "LOCLegendaryElapsed";
+        /// <summary>
         /// Pause
         /// </summary>
         public const string LegendaryPauseDownload = "LOCLegendaryPauseDownload";
@@ -170,12 +174,12 @@ namespace System
         /// </summary>
         public const string LegendaryResumeDownload = "LOCLegendaryResumeDownload";
         /// <summary>
-        /// Installation finished. Have fun.
-        /// </summary>
-        public const string LegendaryInstallationFinished = "LOCLegendaryInstallationFinished";
-        /// <summary>
         /// Paused
         /// </summary>
         public const string LegendaryDownloadPaused = "LOCLegendaryDownloadPaused";
+        /// <summary>
+        /// Installation finished. Have fun.
+        /// </summary>
+        public const string LegendaryInstallationFinished = "LOCLegendaryInstallationFinished";
     }
 }

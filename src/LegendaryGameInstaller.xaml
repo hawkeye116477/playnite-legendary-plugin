@@ -78,6 +78,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="0,5,0,10">
                 <ProgressBar Value="0" Name="DProgressBar"/>
@@ -95,10 +96,14 @@
                 <Label Name="DownloadedLabel" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0"></Label>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Top">
-                <Label Content="{DynamicResource LOCLegendaryETA}"></Label>
-                <Label Name="ETALabel" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left"  Margin="5,0,0,0"></Label>
+                <Label Content="{DynamicResource LOCLegendaryElapsed}"></Label>
+                <Label Name="ElapsedLabel" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0"></Label>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="6" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="0" Margin="0,0,5,5" VerticalAlignment="Top">
+                <Label Content="{DynamicResource LOCLegendaryETA}"></Label>
+                <Label Name="ETALabel" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left"  Margin="5,0,0,0"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="7" Grid.Column="1">
                 <Button x:Name="CancelDownloadButton" Content="{DynamicResource LOCCancelLabel}"
                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0" IsCancel="True" Click="CancelDownloadButton_Click" />
                 <Button x:Name="PauseButton" Content="{DynamicResource LOCLegendaryPauseDownload}"

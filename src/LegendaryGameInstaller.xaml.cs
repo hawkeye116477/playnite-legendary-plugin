@@ -209,6 +209,11 @@ namespace LegendaryLibraryNS
                             {
                                 ETALabel.Content = ETAMatch.Groups[1].Value;
                             }
+                            var elapsedMatch = Regex.Match(stdErr.Text, @"Running for (\d\d:\d\d:\d\d)");
+                            if (elapsedMatch.Length >= 2)
+                            {
+                                ElapsedLabel.Content = elapsedMatch.Groups[1].Value;
+                            }
                             var downloadedMatch = Regex.Match(stdErr.Text, @"Downloaded: (\S+.) MiB");
                             if (downloadedMatch.Length >= 2)
                             {
