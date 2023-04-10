@@ -16,4 +16,11 @@
   <sys:String x:Key="LOCLegendaryEnable">Enable</sys:String>
   <sys:String x:Key="LOCLegendaryImportEGL">Import game</sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable">Space Available:</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloaded">Downloaded:</sys:String>
+  <sys:String x:Key="LOCLegendaryETA">ETA:</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadSpeed">Download Speed:</sys:String>
+  <sys:String x:Key="LOCLegendaryPauseDownload">Pause</sys:String>
+  <sys:String x:Key="LOCLegendaryResumeDownload">Resume</sys:String>
+  <sys:String x:Key="LOCLegendaryInstallationFinished">Installation finished. Have fun.</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadPaused">Paused</sys:String>
 </ResourceDictionary>

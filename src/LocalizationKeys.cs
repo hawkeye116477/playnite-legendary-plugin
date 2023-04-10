@@ -149,5 +149,33 @@ namespace System
         /// Space Available:
         /// </summary>
         public const string LegendarySpaceAvailable = "LOCLegendarySpaceAvailable";
+        /// <summary>
+        /// Downloaded:
+        /// </summary>
+        public const string LegendaryDownloaded = "LOCLegendaryDownloaded";
+        /// <summary>
+        /// ETA:
+        /// </summary>
+        public const string LegendaryETA = "LOCLegendaryETA";
+        /// <summary>
+        /// Download Speed:
+        /// </summary>
+        public const string LegendaryDownloadSpeed = "LOCLegendaryDownloadSpeed";
+        /// <summary>
+        /// Pause
+        /// </summary>
+        public const string LegendaryPauseDownload = "LOCLegendaryPauseDownload";
+        /// <summary>
+        /// Resume
+        /// </summary>
+        public const string LegendaryResumeDownload = "LOCLegendaryResumeDownload";
+        /// <summary>
+        /// Installation finished. Have fun.
+        /// </summary>
+        public const string LegendaryInstallationFinished = "LOCLegendaryInstallationFinished";
+        /// <summary>
+        /// Paused
+        /// </summary>
+        public const string LegendaryDownloadPaused = "LOCLegendaryDownloadPaused";
     }
 }
