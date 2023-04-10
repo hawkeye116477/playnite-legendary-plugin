@@ -37,6 +37,7 @@ namespace LegendaryLibraryNS
         private CancellationTokenSource installerCTS;
         private bool downloadPaused;
         private string installCommand;
+        private string fullInstallPath;
 
         public LegendaryGameInstaller()
         {
@@ -82,7 +83,7 @@ namespace LegendaryLibraryNS
             }
             if (GameID == "eos-overlay")
             {
-                installPath = System.IO.Path.Combine(SelectedGamePathTxtBox.Text, ".overlay");
+                installPath = Path.Combine(SelectedGamePathTxtBox.Text, ".overlay");
                 installCommand = "-y eos-overlay install --path " + installPath;
             }
             InstallerPage.Visibility = Visibility.Collapsed;
@@ -177,8 +178,8 @@ namespace LegendaryLibraryNS
         {
             if (!downloadPaused)
             {
-                installerCTS.Cancel();
-                installerCTS.Dispose();
+                installerCTS?.Cancel();
+                installerCTS?.Dispose();
                 PauseButton.Content = ResourceProvider.GetString(LOC.LegendaryResumeDownload);
                 ETALabel.Content = ResourceProvider.GetString(LOC.LegendaryDownloadPaused);
             }
@@ -229,6 +230,11 @@ namespace LegendaryLibraryNS
                                 var downloadSpeed = FormatSize(double.Parse(downloadSpeedMatch.Groups[1].Value, CultureInfo.InvariantCulture) * 1024 * 1024);
                                 DownloadSpeedLabel.Content = downloadSpeed + "/s";
                             }
+                            var fullInstallPathMatch = Regex.Match(stdErr.Text, @"Install path: (\S+)");
+                            if (fullInstallPathMatch.Length >= 2)
+                            {
+                                fullInstallPath = fullInstallPathMatch.Groups[1].Value;
+                            }
                             logger.Debug("[Legendary]: " + stdErr);
                             break;
                         case ExitedCommandEvent exited:
@@ -243,7 +249,7 @@ namespace LegendaryLibraryNS
                                 logger.Error("[Legendary] exit code: " + exited.ExitCode);
                             }
                             InstallerWindow.Close();
-                            installerCTS.Dispose();
+                            installerCTS?.Dispose();
                             break;
                         default:
                             break;
@@ -259,15 +265,22 @@ namespace LegendaryLibraryNS
 
         private void CancelDownloadButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ETALabel.Content.ToString() != ResourceProvider.GetString(LOC.LegendaryDownloadPaused))
+            if (!downloadPaused)
             {
-                installerCTS.Cancel();
-                installerCTS.Dispose();
+                installerCTS?.Cancel();
+                installerCTS?.Dispose();
             }
             var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", GameID + ".resume");
             if (File.Exists(resumeFile))
             {
                 File.Delete(resumeFile);
+            }
+            if (fullInstallPath != null)
+            {
+                if (Directory.Exists(fullInstallPath))
+                {
+                    Directory.Delete(fullInstallPath, true);
+                }
             }
             InstallerWindow.Close();
         }
