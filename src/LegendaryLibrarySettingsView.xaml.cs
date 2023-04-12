@@ -35,16 +35,16 @@ namespace LegendaryLibraryNS
             var path = playniteAPI.Dialogs.SelectFolder();
             if (path != "")
             {
-                SelectedLauncherPathTxtBox.Text = path;
+                SelectedLauncherPathTxt.Text = path;
             }
         }
 
-        private void ChooseGamePath_Click(object sender, RoutedEventArgs e)
+        private void ChooseGamePathBtn_Click(object sender, RoutedEventArgs e)
         {
             var path = playniteAPI.Dialogs.SelectFolder();
             if (path != "")
             {
-                SelectedGamePathTxtBox.Text = path;
+                SelectedGamePathTxt.Text = path;
             }
         }
 

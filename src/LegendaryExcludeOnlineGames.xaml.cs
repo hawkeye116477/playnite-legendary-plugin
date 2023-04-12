@@ -41,46 +41,46 @@ namespace LegendaryLibraryNS
                         offList.Add(new KeyValuePair<string, string>(app.App_name, app.Title));
                     }
                 }
-                OfflineListbox.ItemsSource = offList;
-                OnlineListbox.ItemsSource = onList;
+                OfflineLB.ItemsSource = offList;
+                OnlineLB.ItemsSource = onList;
             }));
         }
 
         private void OnlineBtn_Click(object sender, RoutedEventArgs e)
         {
-            var selectedKeyValuePairs = OfflineListbox.SelectedItems.Cast<KeyValuePair<string, string>>().ToList();
-            var offListItems = OfflineListbox.Items.Cast<KeyValuePair<string, string>>().ToList();
-            var onListItems = OnlineListbox.Items.Cast<KeyValuePair<string, string>>().ToList();
+            var selectedKeyValuePairs = OfflineLB.SelectedItems.Cast<KeyValuePair<string, string>>().ToList();
+            var offListItems = OfflineLB.Items.Cast<KeyValuePair<string, string>>().ToList();
+            var onListItems = OnlineLB.Items.Cast<KeyValuePair<string, string>>().ToList();
             foreach (var sel in selectedKeyValuePairs)
             {
                 onListItems.Add(new KeyValuePair<string, string>(sel.Key, sel.Value));
                 offListItems.Remove(new KeyValuePair<string, string>(sel.Key, sel.Value));
             }
-            OfflineListbox.ItemsSource = offListItems;
-            OnlineListbox.ItemsSource = onListItems;
+            OfflineLB.ItemsSource = offListItems;
+            OnlineLB.ItemsSource = onListItems;
         }
 
         private void OfflineBtn_Click(object sender, RoutedEventArgs e)
         {
-            var selectedKeyValuePairs = OnlineListbox.SelectedItems.Cast<KeyValuePair<string, string>>().ToList();
-            var offListItems = OfflineListbox.Items.Cast<KeyValuePair<string, string>>().ToList();
-            var onListItems = OnlineListbox.Items.Cast<KeyValuePair<string, string>>().ToList();
+            var selectedKeyValuePairs = OnlineLB.SelectedItems.Cast<KeyValuePair<string, string>>().ToList();
+            var offListItems = OfflineLB.Items.Cast<KeyValuePair<string, string>>().ToList();
+            var onListItems = OnlineLB.Items.Cast<KeyValuePair<string, string>>().ToList();
             foreach (var sel in selectedKeyValuePairs)
             {
                 onListItems.Remove(new KeyValuePair<string, string>(sel.Key, sel.Value));
                 offListItems.Add(new KeyValuePair<string, string>(sel.Key, sel.Value));
             }
-            OfflineListbox.ItemsSource = offListItems;
-            OnlineListbox.ItemsSource = onListItems;
+            OfflineLB.ItemsSource = offListItems;
+            OnlineLB.ItemsSource = onListItems;
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            LegendaryLibrary.GetSettings().OnlineList = OnlineListbox.Items.Cast<KeyValuePair<string, string>>().ToList().Select(a => a.Key).ToList();
+            LegendaryLibrary.GetSettings().OnlineList = OnlineLB.Items.Cast<KeyValuePair<string, string>>().ToList().Select(a => a.Key).ToList();
             Window.GetWindow(this).Close();
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
             Window.GetWindow(this).Close();
         }
