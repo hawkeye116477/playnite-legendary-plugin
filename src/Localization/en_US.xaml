@@ -29,5 +29,4 @@
   <sys:String x:Key="LOCLegendaryRebootComputer">Reboot my computer</sys:String>
   <sys:String x:Key="LOCLegendaryHibernateComputer">Hibernate my computer</sys:String>
   <sys:String x:Key="LOCLegendarySleepComputer">Put my computer into sleep mode</sys:String>
-  <sys:String x:Key="LOCLegendaryDoNothing">Do nothing</sys:String>
 </ResourceDictionary>

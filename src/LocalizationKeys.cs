@@ -201,9 +201,5 @@ namespace System
         /// Put my computer into sleep mode
         /// </summary>
         public const string LegendarySleepComputer = "LOCLegendarySleepComputer";
-        /// <summary>
-        /// Do nothing
-        /// </summary>
-        public const string LegendaryDoNothing = "LOCLegendaryDoNothing";
     }
 }
