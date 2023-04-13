@@ -132,6 +132,17 @@ namespace LegendaryLibraryNS
                     EOSOToggleBtn.Content = ResourceProvider.GetString(LOC.LegendaryEnable);
                 }
             }
+
+            var downloadCompleteActions = new Dictionary<int, string>
+            {
+                { (int)DownloadCompleteAction.Nothing, ResourceProvider.GetString(LOC.LegendaryDoNothing) },
+                { (int)DownloadCompleteAction.ShutDown, ResourceProvider.GetString(LOC.LegendaryShutDownComputer) },
+                { (int)DownloadCompleteAction.Reboot, ResourceProvider.GetString(LOC.LegendaryRebootComputer) },
+                { (int)DownloadCompleteAction.Hibernate, ResourceProvider.GetString(LOC.LegendaryHibernateComputer) },
+                { (int)DownloadCompleteAction.Sleep, ResourceProvider.GetString(LOC.LegendarySleepComputer) },
+            };
+            AfterDownloadCompleteCBo.ItemsSource = downloadCompleteActions;
         }
+
     }
 }

@@ -13,6 +13,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -38,6 +39,9 @@ namespace LegendaryLibraryNS
         private CancellationTokenSource installerCTS;
         private string installCommand;
         private string fullInstallPath;
+
+        [DllImport("PowrProf.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        public static extern bool SetSuspendState(bool hiberate, bool forceCritical, bool disableWakeEvent);
 
         public LegendaryGameInstaller()
         {
@@ -242,6 +246,23 @@ namespace LegendaryLibraryNS
                                 SystemSounds.Hand.Play();
                                 playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryInstallationFinished), InstallerWindow.Title);
                                 InstallerWindow.DialogResult = true;
+                                var downloadCompleteSettings = LegendaryLibrary.GetSettings().DoActionAfterDownloadComplete;
+                                if (downloadCompleteSettings == (int)DownloadCompleteAction.ShutDown)
+                                {
+                                    Process.Start("shutdown", "/s /t 0");
+                                }
+                                else if (downloadCompleteSettings == (int)DownloadCompleteAction.Reboot)
+                                {
+                                    Process.Start("shutdown", "/r /t 0");
+                                }
+                                else if (downloadCompleteSettings == (int)DownloadCompleteAction.Hibernate)
+                                {
+                                    SetSuspendState(true, true, true);
+                                }
+                                else if (downloadCompleteSettings == (int)DownloadCompleteAction.Sleep)
+                                {
+                                    SetSuspendState(false, true, true);
+                                }
                             }
                             else if (exited.ExitCode != 0)
                             {

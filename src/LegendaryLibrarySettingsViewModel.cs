@@ -30,6 +30,7 @@ namespace LegendaryLibraryNS
         public List<string> OnlineList { get; set; } = new List<string>();
         public string PreferredCDN { get; set; } = "";
         public bool NoHttps { get; set; } = false;
+        public int DoActionAfterDownloadComplete { get; set; } = (int)DownloadCompleteAction.Nothing;
     }
 
     public class LegendaryLibrarySettingsViewModel : PluginSettingsViewModel<LegendaryLibrarySettings, LegendaryLibrary>
@@ -88,4 +89,13 @@ namespace LegendaryLibraryNS
             }
         }
     }
+
+    public enum DownloadCompleteAction
+    {
+        Nothing,
+        ShutDown,
+        Reboot,
+        Hibernate,
+        Sleep
+    };
 }
