@@ -199,6 +199,7 @@ namespace LegendaryLibraryNS
             installerCTS = new CancellationTokenSource();
             try
             {
+                var stdOutBuffer = new StringBuilder();
                 var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath).WithArguments(installCommand);
                 await foreach (CommandEvent cmdEvent in cmd.ListenAsync(installerCTS.Token))
                 {
@@ -238,35 +239,35 @@ namespace LegendaryLibraryNS
                             {
                                 fullInstallPath = fullInstallPathMatch.Groups[1].Value;
                             }
-                            logger.Debug("[Legendary]: " + stdErr);
+                            stdOutBuffer.AppendLine("[Legendary]: " + stdErr);
                             break;
                         case ExitedCommandEvent exited:
                             if (exited.ExitCode == 0)
                             {
-                                SystemSounds.Hand.Play();
-                                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryInstallationFinished), InstallerWindow.Title);
+                                Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), InstallerWindow.Title, ResourceProvider.GetString(LOC.LegendaryInstallationFinished), null);
                                 InstallerWindow.DialogResult = true;
-                                var downloadCompleteSettings = LegendaryLibrary.GetSettings().DoActionAfterDownloadComplete;
-                                if (downloadCompleteSettings == (int)DownloadCompleteAction.ShutDown)
-                                {
-                                    Process.Start("shutdown", "/s /t 0");
-                                }
-                                else if (downloadCompleteSettings == (int)DownloadCompleteAction.Reboot)
-                                {
-                                    Process.Start("shutdown", "/r /t 0");
-                                }
-                                else if (downloadCompleteSettings == (int)DownloadCompleteAction.Hibernate)
-                                {
-                                    SetSuspendState(true, true, true);
-                                }
-                                else if (downloadCompleteSettings == (int)DownloadCompleteAction.Sleep)
-                                {
-                                    SetSuspendState(false, true, true);
-                                }
                             }
                             else if (exited.ExitCode != 0)
                             {
+                                logger.Debug(stdOutBuffer.ToString());
                                 logger.Error("[Legendary] exit code: " + exited.ExitCode);
+                            }
+                            var downloadCompleteSettings = LegendaryLibrary.GetSettings().DoActionAfterDownloadComplete;
+                            if (downloadCompleteSettings == (int)DownloadCompleteAction.ShutDown)
+                            {
+                                Process.Start("shutdown", "/s /t 0");
+                            }
+                            else if (downloadCompleteSettings == (int)DownloadCompleteAction.Reboot)
+                            {
+                                Process.Start("shutdown", "/r /t 0");
+                            }
+                            else if (downloadCompleteSettings == (int)DownloadCompleteAction.Hibernate)
+                            {
+                                SetSuspendState(true, true, true);
+                            }
+                            else if (downloadCompleteSettings == (int)DownloadCompleteAction.Sleep)
+                            {
+                                SetSuspendState(false, true, true);
                             }
                             InstallerWindow.Close();
                             installerCTS?.Dispose();
