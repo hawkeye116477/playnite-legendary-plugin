@@ -358,7 +358,7 @@ namespace LegendaryLibraryNS
                 if (File.Exists(metadataFile))
                 {
                     var metadata = Serialization.FromJson<LegendaryMetadata.Rootobject>(FileSystem.ReadFileAsStringSafe(Path.Combine(LegendaryLauncher.ConfigPath, "metadata", gameID + ".json")));
-                    var cloudSaveFolder = metadata.metadata.customAttributes.CloudSaveFolder;
+                    var cloudSaveFolder = metadata.metadata.customAttributes.CloudSaveFolder.value;
                     if (cloudSaveFolder != null)
                     {
                         GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendarySyncing).Format(gameName), false);
@@ -373,7 +373,7 @@ namespace LegendaryLibraryNS
                             }
                             var stdOutBuffer = new StringBuilder();
                             var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                .WithArguments(new[] { "-y", "sync-saves", gameID, skippedActivity, "--save-path", cloudSaveFolder.ToString() });
+                                .WithArguments(new[] { "-y", "sync-saves", gameID, skippedActivity, "--save-path", cloudSaveFolder });
                             await foreach (var cmdEvent in cmd.ListenAsync())
                             {
                                 switch (cmdEvent)
