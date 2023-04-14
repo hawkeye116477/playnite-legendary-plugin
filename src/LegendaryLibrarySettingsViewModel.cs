@@ -31,6 +31,7 @@ namespace LegendaryLibraryNS
         public string PreferredCDN { get; set; } = "";
         public bool NoHttps { get; set; } = false;
         public int DoActionAfterDownloadComplete { get; set; } = (int)DownloadCompleteAction.Nothing;
+        public bool SyncGameSaves { get; set; } = false;
     }
 
     public class LegendaryLibrarySettingsViewModel : PluginSettingsViewModel<LegendaryLibrarySettings, LegendaryLibrary>

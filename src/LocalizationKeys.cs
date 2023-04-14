@@ -201,5 +201,17 @@ namespace System
         /// Put my computer into sleep mode
         /// </summary>
         public const string LegendarySleepComputer = "LOCLegendarySleepComputer";
+        /// <summary>
+        /// Sync game saves to the cloud
+        /// </summary>
+        public const string LegendarySyncGameSaves = "LOCLegendarySyncGameSaves";
+        /// <summary>
+        /// Syncing {0} game saves to the cloud...
+        /// </summary>
+        public const string LegendarySyncing = "LOCLegendarySyncing";
+        /// <summary>
+        /// An error occurred while syncing {0} game saves to the cloud.
+        /// </summary>
+        public const string LegendarySyncError = "LOCLegendarySyncError";
     }
 }

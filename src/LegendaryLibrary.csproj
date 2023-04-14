@@ -219,6 +219,7 @@
     <Compile Include="Models\ErrorResponse.cs" />
     <Compile Include="Models\Installed.cs" />
     <Compile Include="Models\LegendaryGameInfo.cs" />
+    <Compile Include="Models\LegendaryMetadata.cs" />
     <Compile Include="Models\OauthResponse.cs" />
     <Compile Include="EpicMetadataProvider.cs" />
     <Compile Include="Models\PlaytimesResponse.cs" />

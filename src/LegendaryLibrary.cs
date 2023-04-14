@@ -1,7 +1,11 @@
-﻿using LegendaryLibraryNS.Models;
+﻿using CliWrap;
+using CliWrap.EventStream;
+using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
 using Playnite.Common;
 using Playnite.SDK;
+using Playnite.SDK.Data;
+using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
@@ -345,5 +349,69 @@ namespace LegendaryLibraryNS
                 }
             }
         }
+
+        public void SyncGameSaves(string gameName, string gameID, bool download)
+        {
+            if (GetSettings().SyncGameSaves)
+            {
+                var metadataFile = Path.Combine(LegendaryLauncher.ConfigPath, "metadata", gameID + ".json");
+                if (File.Exists(metadataFile))
+                {
+                    var metadata = Serialization.FromJson<LegendaryMetadata.Rootobject>(FileSystem.ReadFileAsStringSafe(Path.Combine(LegendaryLauncher.ConfigPath, "metadata", gameID + ".json")));
+                    var cloudSaveFolder = metadata.metadata.customAttributes.CloudSaveFolder;
+                    if (cloudSaveFolder != null)
+                    {
+                        GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendarySyncing).Format(gameName), false);
+                        PlayniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
+                        {
+                            a.ProgressMaxValue = 100;
+                            a.CurrentProgressValue = 0;
+                            var skippedActivity = "--skip-upload";
+                            if (download == false)
+                            {
+                                skippedActivity = "--skip-download";
+                            }
+                            var stdOutBuffer = new StringBuilder();
+                            var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                .WithArguments(new[] { "-y", "sync-saves", gameID, skippedActivity, "--save-path", cloudSaveFolder.ToString() });
+                            await foreach (var cmdEvent in cmd.ListenAsync())
+                            {
+                                switch (cmdEvent)
+                                {
+                                    case StartedCommandEvent started:
+                                        a.CurrentProgressValue = 1;
+                                        break;
+                                    case StandardErrorCommandEvent stdErr:
+                                        stdOutBuffer.AppendLine("[Legendary]: " + stdErr);
+                                        break;
+                                    case ExitedCommandEvent exited:
+                                        a.CurrentProgressValue = 100;
+                                        if (exited.ExitCode != 0)
+                                        {
+                                            logger.Debug(stdOutBuffer.ToString());
+                                            logger.Error("[Legendary] exit code: " + exited.ExitCode);
+                                            PlayniteApi.Dialogs.ShowErrorMessage(PlayniteApi.Resources.GetString(LOC.LegendarySyncError).Format(gameName));
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+
+                        }, globalProgressOptions);
+                    }
+                }
+            }
+        }
+        public override void OnGameStarting(OnGameStartingEventArgs args)
+        {
+            SyncGameSaves(args.Game.Name, args.Game.GameId, true);
+        }
+
+        public override void OnGameStopped(OnGameStoppedEventArgs args)
+        {
+            SyncGameSaves(args.Game.Name, args.Game.GameId, false);
+        }
+
     }
 }

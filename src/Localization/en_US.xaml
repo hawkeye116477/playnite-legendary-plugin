@@ -29,4 +29,7 @@
   <sys:String x:Key="LOCLegendaryRebootComputer">Reboot my computer</sys:String>
   <sys:String x:Key="LOCLegendaryHibernateComputer">Hibernate my computer</sys:String>
   <sys:String x:Key="LOCLegendarySleepComputer">Put my computer into sleep mode</sys:String>
+  <sys:String x:Key="LOCLegendarySyncGameSaves">Sync game saves to the cloud</sys:String>
+  <sys:String x:Key="LOCLegendarySyncing">Syncing {0} game saves to the cloud...</sys:String>
+  <sys:String x:Key="LOCLegendarySyncError">An error occurred while syncing {0} game saves to the cloud.</sys:String>
 </ResourceDictionary>
