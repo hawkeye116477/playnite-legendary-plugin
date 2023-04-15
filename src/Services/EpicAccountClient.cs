@@ -135,10 +135,10 @@ namespace LegendaryLibraryNS.Services
 
             var stdErrBuffer = new StringBuilder();
             var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                .WithArguments(new[] { "auth", "--code", authorizationCode })
-                .WithValidation(CommandResultValidation.None)
-                .WithStandardErrorPipe(PipeTarget.ToStringBuilder(stdErrBuffer))
-                .ExecuteAsync();
+                                  .WithArguments(new[] { "auth", "--code", authorizationCode })
+                                  .WithValidation(CommandResultValidation.None)
+                                  .WithStandardErrorPipe(PipeTarget.ToStringBuilder(stdErrBuffer))
+                                  .ExecuteAsync();
             var errorMsg = stdErrBuffer.ToString();
             if (result.ExitCode != 0 && !errorMsg.Contains("Successfully"))
             {

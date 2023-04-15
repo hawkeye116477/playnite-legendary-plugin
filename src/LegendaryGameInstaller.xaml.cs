@@ -127,9 +127,9 @@ namespace LegendaryLibraryNS
             if (GameID != "eos-overlay")
             {
                 var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                    .WithArguments(new[] { "info", GameID, "--json" })
-                    .WithValidation(CommandResultValidation.None)
-                    .ExecuteBufferedAsync();
+                                      .WithArguments(new[] { "info", GameID, "--json" })
+                                      .WithValidation(CommandResultValidation.None)
+                                      .ExecuteBufferedAsync();
                 if (result.ExitCode != 0)
                 {
                     logger.Error(result.StandardError);
@@ -148,9 +148,9 @@ namespace LegendaryLibraryNS
                 ImportBtn.Visibility = Visibility.Collapsed;
 
                 var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                    .WithArguments(new[] { GameID, "install" })
-                    .WithStandardInputPipe(PipeSource.FromString("n"))
-                    .ExecuteBufferedAsync();
+                                      .WithArguments(new[] { GameID, "install" })
+                                      .WithStandardInputPipe(PipeSource.FromString("n"))
+                                      .ExecuteBufferedAsync();
                 string[] lines = result.StandardError.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
                 foreach (var line in lines)
                 {
