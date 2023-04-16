@@ -28,14 +28,6 @@ namespace LegendaryLibraryNS
             }
         }
 
-        public static string PortalConfigPath
-        {
-            get
-            {
-                return null;
-            }
-        }
-
         public static string DefaultLauncherPath
         {
             get

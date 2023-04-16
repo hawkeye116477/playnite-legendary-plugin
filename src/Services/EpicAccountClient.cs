@@ -58,23 +58,6 @@ namespace LegendaryLibraryNS.Services
             var playtimeUrlMask = @"https://{0}/library/api/public/playtime/account/{1}/all";
 
             var loadedFromConfig = false;
-            if (!string.IsNullOrEmpty(LegendaryLauncher.PortalConfigPath) && File.Exists(LegendaryLauncher.PortalConfigPath))
-            {
-                try
-                {
-                    var config = IniParser.Parse(File.ReadAllLines(LegendaryLauncher.PortalConfigPath));
-                    oauthUrl = string.Format(oauthUrlMask, config["Portal.OnlineSubsystemMcp.OnlineIdentityMcp Prod"]["Domain"].TrimEnd('/'));
-                    accountUrl = string.Format(accountUrlMask, config["Portal.OnlineSubsystemMcp.OnlineIdentityMcp Prod"]["Domain"].TrimEnd('/'));
-                    assetsUrl = string.Format(assetsUrlMask, config["Portal.OnlineSubsystemMcp.BaseServiceMcp Prod"]["Domain"].TrimEnd('/'));
-                    catalogUrl = string.Format(catalogUrlMask, config["Portal.OnlineSubsystemMcp.OnlineCatalogServiceMcp Prod"]["Domain"].TrimEnd('/'));
-                    playtimeUrl = string.Format(playtimeUrlMask, config["Portal.OnlineSubsystemMcp.OnlineLibraryServiceMcp Prod"]["Domain"].TrimEnd('/'), "{0}");
-                    loadedFromConfig = true;
-                }
-                catch (Exception e) when (!Debugger.IsAttached)
-                {
-                    logger.Error(e, "Failed to parse portal config, using default API endpoints.");
-                }
-            }
 
             if (!loadedFromConfig)
             {
