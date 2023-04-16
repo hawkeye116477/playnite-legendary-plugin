@@ -186,22 +186,6 @@ namespace System
         /// </summary>
         public const string LegendaryAfterDownloadComplete = "LOCLegendaryAfterDownloadComplete";
         /// <summary>
-        /// Shut down my computer
-        /// </summary>
-        public const string LegendaryShutDownComputer = "LOCLegendaryShutDownComputer";
-        /// <summary>
-        /// Reboot my computer
-        /// </summary>
-        public const string LegendaryRebootComputer = "LOCLegendaryRebootComputer";
-        /// <summary>
-        /// Hibernate my computer
-        /// </summary>
-        public const string LegendaryHibernateComputer = "LOCLegendaryHibernateComputer";
-        /// <summary>
-        /// Put my computer into sleep mode
-        /// </summary>
-        public const string LegendarySleepComputer = "LOCLegendarySleepComputer";
-        /// <summary>
         /// Sync game saves to the cloud
         /// </summary>
         public const string LegendarySyncGameSaves = "LOCLegendarySyncGameSaves";

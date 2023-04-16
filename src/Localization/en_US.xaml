@@ -25,10 +25,6 @@
   <sys:String x:Key="LOCLegendaryDownloadPaused">Paused</sys:String>
   <sys:String x:Key="LOCLegendaryInstallationFinished">Installation finished. Have fun.</sys:String>
   <sys:String x:Key="LOCLegendaryAfterDownloadComplete">After download is complete:</sys:String>
-  <sys:String x:Key="LOCLegendaryShutDownComputer">Shut down my computer</sys:String>
-  <sys:String x:Key="LOCLegendaryRebootComputer">Reboot my computer</sys:String>
-  <sys:String x:Key="LOCLegendaryHibernateComputer">Hibernate my computer</sys:String>
-  <sys:String x:Key="LOCLegendarySleepComputer">Put my computer into sleep mode</sys:String>
   <sys:String x:Key="LOCLegendarySyncGameSaves">Sync game saves to the cloud</sys:String>
   <sys:String x:Key="LOCLegendarySyncing">Syncing {0} game saves to the cloud...</sys:String>
   <sys:String x:Key="LOCLegendarySyncError">An error occurred while syncing {0} game saves to the cloud.</sys:String>
