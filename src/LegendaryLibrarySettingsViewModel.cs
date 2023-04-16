@@ -28,8 +28,8 @@ namespace LegendaryLibraryNS
         public string GamesInstallationPath { get; set; } = LegendaryLauncher.DefaultGamesInstallationPath;
         public bool LaunchOffline { get; set; } = false;
         public List<string> OnlineList { get; set; } = new List<string>();
-        public string PreferredCDN { get; set; } = "";
-        public bool NoHttps { get; set; } = false;
+        public string PreferredCDN { get; set; } = LegendaryLauncher.DefaultPreferredCDN;
+        public bool NoHttps { get; set; } = LegendaryLauncher.DefaultNoHttps;
         public int DoActionAfterDownloadComplete { get; set; } = (int)DownloadCompleteAction.Nothing;
         public bool SyncGameSaves { get; set; } = false;
     }

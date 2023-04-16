@@ -1,4 +1,6 @@
-﻿using LegendaryLibraryNS.Models;
+﻿using IniParser;
+using IniParser.Model;
+using LegendaryLibraryNS.Models;
 using Microsoft.Win32;
 using Playnite.Common;
 using Playnite.SDK;
@@ -94,7 +96,12 @@ namespace LegendaryLibraryNS
         {
             get
             {
-                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Games");
+                var installPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Games");
+                if (IniConfig != null && !IniConfig["Legendary"]["install_dir"].IsNullOrEmpty())
+                {
+                    installPath = Path.GetFullPath(IniConfig["Legendary"]["install_dir"]);
+                }
+                return installPath;
             }
         }
 
@@ -150,6 +157,47 @@ namespace LegendaryLibraryNS
             get
             {
                 return Path.Combine(ConfigPath, "user.json");
+            }
+        }
+
+        public static IniData IniConfig
+        {
+            get
+            {
+                var configIniPath = Path.Combine(ConfigPath, "config.ini");
+                IniData data = null;
+                if (File.Exists(configIniPath))
+                {
+                    var parser = new FileIniDataParser();
+                    data = parser.ReadFile(Path.Combine(ConfigPath, "config.ini"));
+                }
+                return data;
+            }
+        }
+
+        public static string DefaultPreferredCDN
+        {
+            get
+            {
+                var cdn = "";
+                if (IniConfig != null && !IniConfig["Legendary"]["preferred_cdn"].IsNullOrEmpty())
+                {
+                    cdn = IniConfig["Legendary"]["preferred_cdn"];
+                }
+                return cdn;
+            }
+        }
+
+        public static bool DefaultNoHttps
+        {
+            get
+            {
+                bool noHttps = false;
+                if (IniConfig != null && !IniConfig["Legendary"]["disable_https"].IsNullOrEmpty())
+                {
+                    noHttps = Convert.ToBoolean(IniConfig["Legendary"]["disable_https"]);
+                }
+                return noHttps;
             }
         }
     }
