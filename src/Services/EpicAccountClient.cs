@@ -122,10 +122,10 @@ namespace LegendaryLibraryNS.Services
                                   .WithValidation(CommandResultValidation.None)
                                   .WithStandardErrorPipe(PipeTarget.ToStringBuilder(stdErrBuffer))
                                   .ExecuteAsync();
-            var errorMsg = stdErrBuffer.ToString();
-            if (result.ExitCode != 0 && !errorMsg.Contains("Successfully"))
+            var stdErr = stdErrBuffer.ToString();
+            if (result.ExitCode != 0 && !stdErr.Contains("Successfully"))
             {
-                logger.Error($"[Legendary] Failed to authenticate with the Epic Games Store. Error: {errorMsg}");
+                logger.Error($"[Legendary] Failed to authenticate with the Epic Games Store. Error: {stdErr}");
                 return;
             }
         }

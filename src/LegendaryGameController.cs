@@ -1,4 +1,5 @@
-﻿using LegendaryLibraryNS.Models;
+﻿using CliWrap;
+using LegendaryLibraryNS.Models;
 using Playnite;
 using Playnite.Common;
 using Playnite.SDK;
@@ -46,12 +47,7 @@ namespace LegendaryLibraryNS
             var result = window.ShowDialog();
             if (result == false)
             {
-                InvokeOnInstalled(new GameInstalledEventArgs(new GameInstallationData()));
-                Game.IsInstalled = false;
-                _ = (Application.Current.Dispatcher?.BeginInvoke((Action)delegate
-                {
-                    playniteAPI.Database.Games.Update(Game);
-                }));
+                Game.IsInstalling = false;
             }
             else
             {
@@ -81,20 +77,15 @@ namespace LegendaryLibraryNS
 
     public class LegendaryUninstallController : UninstallController
     {
-        private CancellationTokenSource watcherToken;
         private IPlayniteAPI playniteAPI = API.Instance;
+        private static readonly ILogger logger = LogManager.GetLogger();
 
         public LegendaryUninstallController(Game game) : base(game)
         {
             Name = "Uninstall";
         }
 
-        public override void Dispose()
-        {
-            watcherToken?.Cancel();
-        }
-
-        public override void Uninstall(UninstallActionArgs args)
+        public override async void Uninstall(UninstallActionArgs args)
         {
             if (!LegendaryLauncher.IsInstalled)
             {
@@ -108,34 +99,27 @@ namespace LegendaryLibraryNS
                 MessageBoxButton.YesNo);
             if (result == MessageBoxResult.No)
             {
-                throw new OperationCanceledException();
+                Game.IsUninstalling = false;
             }
             else
             {
-                ProcessStarter.StartProcess(LegendaryLauncher.ClientExecPath, string.Format(LegendaryLauncher.GameUninstallCommand, Game.GameId));
-                StartUninstallWatcher();
-            }
-        }
-
-        public async void StartUninstallWatcher()
-        {
-            watcherToken = new CancellationTokenSource();
-
-            while (true)
-            {
-                if (watcherToken.IsCancellationRequested)
-                {
-                    return;
-                }
-
-                var installed = LegendaryLauncher.GetInstalledAppList();
-                if (!installed.ContainsKey(Game.GameId))
+                var stdErrBuffer = new StringBuilder();
+                var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                   .WithArguments(new[] { "-y", "uninstall", Game.GameId })
+                                   .WithValidation(CommandResultValidation.None)
+                                   .WithStandardErrorPipe(PipeTarget.ToStringBuilder(stdErrBuffer))
+                                   .ExecuteAsync();
+                var stdErr = stdErrBuffer.ToString();
+                if (stdErr.Contains("has been uninstalled"))
                 {
                     InvokeOnUninstalled(new GameUninstalledEventArgs());
-                    return;
                 }
-
-                await Task.Delay(2000);
+                else
+                {
+                    logger.Debug("[Legendary] " + stdErr);
+                    logger.Error("[Legendary] exit code: " + cmd.ExitCode);
+                    Game.IsUninstalling = false;
+                }
             }
         }
 

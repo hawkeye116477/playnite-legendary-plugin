@@ -17,8 +17,6 @@ namespace LegendaryLibraryNS
 {
     public class LegendaryLauncher
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
-        public static string GameUninstallCommand = "-y uninstall {0}";
         public static string ConfigPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".config", "legendary");
 
         public static string ClientExecPath
@@ -30,22 +28,24 @@ namespace LegendaryLibraryNS
             }
         }
 
-        public static string DefaultLauncherPath
+        public static string LauncherPath
         {
             get
             {
                 var launcherPath = "";
                 var envPath = Environment.GetEnvironmentVariable("PATH")
-                    .Split(';')
-                    .Select(x => Path.Combine(x))
-                    .Where(x => File.Exists(Path.Combine(x, "legendary.exe"))).FirstOrDefault();
+                                         .Split(';')
+                                         .Select(x => Path.Combine(x))
+                                         .FirstOrDefault(x => File.Exists(Path.Combine(x, "legendary.exe")));
                 if (string.IsNullOrWhiteSpace(envPath) == false)
                 {
                     launcherPath = envPath;
                 }
-                else if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Programs\heroic\resources\app.asar.unpacked\build\bin\win32\legendary.exe")))
+                else if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                                                  @"Programs\heroic\resources\app.asar.unpacked\build\bin\win32\legendary.exe")))
                 {
-                    launcherPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Programs\heroic\resources\app.asar.unpacked\build\bin\win32\");
+                    launcherPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                                                @"Programs\heroic\resources\app.asar.unpacked\build\bin\win32\");
                 }
                 else
                 {
@@ -56,19 +56,14 @@ namespace LegendaryLibraryNS
                     }
                     launcherPath = Path.Combine(pf64, "Legendary");
                 }
-                return launcherPath;
-            }
-        }
-
-        public static string LauncherPath
-        {
-            get
-            {
-                var launcherPath = DefaultLauncherPath;
-                var savedLauncherPath = LegendaryLibrary.GetSettings().SelectedLauncherPath;
-                if (savedLauncherPath != "" && Directory.Exists(savedLauncherPath) && LegendaryLibrary.GetSettings().UseCustomLauncherPath)
+                var savedSettings = LegendaryLibrary.GetSettings();
+                if (savedSettings != null)
                 {
-                    launcherPath = savedLauncherPath;
+                    var savedLauncherPath = LegendaryLibrary.GetSettings().SelectedLauncherPath;
+                    if (savedLauncherPath != "" && Directory.Exists(savedLauncherPath) && LegendaryLibrary.GetSettings().UseCustomLauncherPath)
+                    {
+                        launcherPath = savedLauncherPath;
+                    }
                 }
                 return launcherPath;
             }
@@ -79,15 +74,6 @@ namespace LegendaryLibraryNS
             get
             {
                 var path = LauncherPath;
-                return !string.IsNullOrEmpty(path) && Directory.Exists(path);
-            }
-        }
-
-        public static bool IsInstalledInDefaultPath
-        {
-            get
-            {
-                var path = DefaultLauncherPath;
                 return !string.IsNullOrEmpty(path) && Directory.Exists(path);
             }
         }
@@ -137,7 +123,7 @@ namespace LegendaryLibraryNS
 
         public static void StartClient()
         {
-            ProcessStarter.StartProcess(ClientExecPath, string.Empty);
+            ProcessStarter.StartProcess(ClientExecPath);
         }
 
         internal static string GetExecutablePath(string rootPath)

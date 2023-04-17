@@ -40,9 +40,6 @@ namespace LegendaryLibraryNS
         private string installCommand;
         private string fullInstallPath;
 
-        [DllImport("PowrProf.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
-        public static extern bool SetSuspendState(bool hiberate, bool forceCritical, bool disableWakeEvent);
-
         public LegendaryGameInstaller()
         {
             InitializeComponent();
@@ -102,7 +99,7 @@ namespace LegendaryLibraryNS
             decimal number = (decimal)size;
             while (Math.Round(number / 1024) >= 1)
             {
-                number = number / 1024;
+                number /= 1024;
                 i++;
             }
             return string.Format("{0:n2} {1}", number, suffixes[i]);
@@ -263,11 +260,11 @@ namespace LegendaryLibraryNS
                             }
                             else if (downloadCompleteSettings == (int)DownloadCompleteAction.Hibernate)
                             {
-                                SetSuspendState(true, true, true);
+                                Playnite.Native.Powrprof.SetSuspendState(true, true, false);
                             }
                             else if (downloadCompleteSettings == (int)DownloadCompleteAction.Sleep)
                             {
-                                SetSuspendState(false, true, true);
+                                Playnite.Native.Powrprof.SetSuspendState(false, true, false);
                             }
                             InstallerWindow.Close();
                             installerCTS?.Dispose();

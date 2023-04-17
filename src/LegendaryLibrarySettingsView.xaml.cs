@@ -136,10 +136,10 @@ namespace LegendaryLibraryNS
             var downloadCompleteActions = new Dictionary<int, string>
             {
                 { (int)DownloadCompleteAction.Nothing, ResourceProvider.GetString("LOCDoNothing") },
-                { (int)DownloadCompleteAction.ShutDown, ResourceProvider.GetString(LOC.LegendaryShutDownComputer) },
-                { (int)DownloadCompleteAction.Reboot, ResourceProvider.GetString(LOC.LegendaryRebootComputer) },
-                { (int)DownloadCompleteAction.Hibernate, ResourceProvider.GetString(LOC.LegendaryHibernateComputer) },
-                { (int)DownloadCompleteAction.Sleep, ResourceProvider.GetString(LOC.LegendarySleepComputer) },
+                { (int)DownloadCompleteAction.ShutDown, ResourceProvider.GetString("LOCMenuShutdownSystem") },
+                { (int)DownloadCompleteAction.Reboot, ResourceProvider.GetString("LOCMenuRestartSystem") },
+                { (int)DownloadCompleteAction.Hibernate, ResourceProvider.GetString("LOCMenuHibernateSystem") },
+                { (int)DownloadCompleteAction.Sleep, ResourceProvider.GetString("LOCMenuSuspendSystem") },
             };
             AfterDownloadCompleteCBo.ItemsSource = downloadCompleteActions;
         }

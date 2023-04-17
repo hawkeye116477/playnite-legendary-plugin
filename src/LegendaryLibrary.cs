@@ -44,7 +44,7 @@ namespace LegendaryLibraryNS
 
         public static LegendaryLibrarySettings GetSettings()
         {
-            return Instance.SettingsViewModel.Settings;
+            return Instance.SettingsViewModel?.Settings ?? null;
         }
 
         internal Dictionary<string, GameMetadata> GetInstalledGames()

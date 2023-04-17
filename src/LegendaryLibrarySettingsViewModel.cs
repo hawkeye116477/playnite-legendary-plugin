@@ -20,7 +20,7 @@ namespace LegendaryLibraryNS
     public class LegendaryLibrarySettings
     {
         public int Version { get; set; }
-        public bool ImportInstalledGames { get; set; } = LegendaryLauncher.IsInstalledInDefaultPath;
+        public bool ImportInstalledGames { get; set; } = LegendaryLauncher.IsInstalled;
         public bool ConnectAccount { get; set; } = false;
         public bool ImportUninstalledGames { get; set; } = false;
         public string SelectedLauncherPath { get; set; } = "";
@@ -46,36 +46,18 @@ namespace LegendaryLibraryNS
 
         public RelayCommand<object> LoginCommand
         {
-            get => new RelayCommand<object>((a) =>
+            get => new RelayCommand<object>(async (a) =>
             {
-                Login();
+                await Login();
             });
         }
 
         public LegendaryLibrarySettingsViewModel(LegendaryLibrary library, IPlayniteAPI api) : base(library, api)
         {
-            var savedSettings = LoadSavedSettings();
-            if (savedSettings != null)
-            {
-                if (savedSettings.Version == 0)
-                {
-                    Logger.Debug("Updating Epic settings from version 0.");
-                    if (savedSettings.ImportUninstalledGames)
-                    {
-                        savedSettings.ConnectAccount = true;
-                    }
-                }
-
-                savedSettings.Version = 1;
-                Settings = savedSettings;
-            }
-            else
-            {
-                Settings = new LegendaryLibrarySettings { Version = 1 };
-            }
+            Settings = LoadSavedSettings() ?? new LegendaryLibrarySettings();
         }
 
-        private async void Login()
+        private async Task Login()
         {
             try
             {
