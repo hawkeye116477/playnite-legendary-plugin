@@ -210,7 +210,7 @@ namespace LegendaryLibraryNS
                 PlayniteApi.Notifications.Add(new NotificationMessage(
                     ImportErrorMessageId,
                     string.Format(PlayniteApi.Resources.GetString("LOCLibraryImportError"), Name) +
-                    System.Environment.NewLine + importError.Message,
+                    Environment.NewLine + importError.Message,
                     NotificationType.Error,
                     () => OpenSettingsView()));
             }
@@ -372,12 +372,11 @@ namespace LegendaryLibraryNS
                             { "{userprofile}", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) },
                             { "{usersavedgames}", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Saved Games") }
                         };
-                        cloudSaveFolder = cloudSaveFolder.ToLower();
                         foreach (var pathVar in pathVariables)
                         {
-                            if (cloudSaveFolder.Contains(pathVar.Key))
+                            if (cloudSaveFolder.Contains(pathVar.Key, StringComparison.OrdinalIgnoreCase))
                             {
-                                cloudSaveFolder = cloudSaveFolder.Replace(pathVar.Key, pathVar.Value);
+                                cloudSaveFolder = cloudSaveFolder.Replace(pathVar.Key, pathVar.Value, StringComparison.OrdinalIgnoreCase);
                             }
                         }
                         cloudSaveFolder = Path.GetFullPath(cloudSaveFolder);
