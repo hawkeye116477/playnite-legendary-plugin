@@ -1,4 +1,5 @@
 ﻿using CliWrap;
+using CliWrap.Buffered;
 using LegendaryLibraryNS.Models;
 using Playnite.Common;
 using Playnite.SDK;
@@ -116,16 +117,13 @@ namespace LegendaryLibraryNS.Services
                 return;
             }
 
-            var stdErrBuffer = new StringBuilder();
             var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                   .WithArguments(new[] { "auth", "--code", authorizationCode })
                                   .WithValidation(CommandResultValidation.None)
-                                  .WithStandardErrorPipe(PipeTarget.ToStringBuilder(stdErrBuffer))
-                                  .ExecuteAsync();
-            var stdErr = stdErrBuffer.ToString();
-            if (result.ExitCode != 0 && !stdErr.Contains("Successfully"))
+                                  .ExecuteBufferedAsync();
+            if (result.ExitCode != 0 && !result.StandardError.Contains("Successfully"))
             {
-                logger.Error($"[Legendary] Failed to authenticate with the Epic Games Store. Error: {stdErr}");
+                logger.Error($"[Legendary] Failed to authenticate with the Epic Games Store. Error: {result.StandardError}");
                 return;
             }
         }

@@ -1,4 +1,6 @@
-﻿using Playnite;
+﻿using CliWrap;
+using CliWrap.Buffered;
+using Playnite;
 using Playnite.Common;
 using Playnite.SDK;
 using System;
@@ -63,16 +65,22 @@ namespace LegendaryLibraryNS
             window.ShowDialog();
         }
 
-        private void EOSOUninstallBtn_Click(object sender, RoutedEventArgs e)
+        private async void EOSOUninstallBtn_Click(object sender, RoutedEventArgs e)
         {
             var result = playniteAPI.Dialogs.ShowMessage(
                 string.Format(ResourceProvider.GetString(LOC.LegendaryUninstallGameConfirm), ResourceProvider.GetString(LOC.LegendaryEOSOverlay)), ResourceProvider.GetString("LOCUninstallGame"), MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
-                ProcessStarter.StartProcessWait(LegendaryLauncher.ClientExecPath, "-y eos-overlay remove", null, false);
-                EOSOInstallBtn.Visibility = Visibility.Visible;
-                EOSOUninstallBtn.Visibility = Visibility.Collapsed;
-                EOSOToggleBtn.Visibility = Visibility.Collapsed;
+                var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                   .WithValidation(CommandResultValidation.None)
+                                   .WithArguments(new[] { "-y", "eos-overlay", "remove" })
+                                   .ExecuteBufferedAsync();
+                if (cmd.StandardError.Contains("Done"))
+                {
+                    EOSOInstallBtn.Visibility = Visibility.Visible;
+                    EOSOUninstallBtn.Visibility = Visibility.Collapsed;
+                    EOSOToggleBtn.Visibility = Visibility.Collapsed;
+                }
             }
         }
 
@@ -97,18 +105,22 @@ namespace LegendaryLibraryNS
                     EOSOInstallBtn.Visibility = Visibility.Collapsed;
                     EOSOUninstallBtn.Visibility = Visibility.Visible;
                     EOSOToggleBtn.Content = ResourceProvider.GetString(LOC.LegendaryDisable);
+                    EOSOToggleBtn.Visibility = Visibility.Visible;
                 }
             }
         }
 
-        private void EOSOToggleBtn_Click(object sender, RoutedEventArgs e)
+        private async void EOSOToggleBtn_Click(object sender, RoutedEventArgs e)
         {
             var toggleCommand = "disable";
             if (!LegendaryLauncher.IsEOSOverlayEnabled)
             {
                 toggleCommand = "enable";
             }
-            ProcessStarter.StartProcessWait(LegendaryLauncher.ClientExecPath, "-y eos-overlay " + toggleCommand, null, false);
+            await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                     .WithArguments(new[] { "-y", "eos-overlay", toggleCommand })
+                     .WithValidation(CommandResultValidation.None)
+                     .ExecuteAsync();
             var toggleTxt = LOC.LegendaryEnable;
             if (LegendaryLauncher.IsEOSOverlayEnabled)
             {

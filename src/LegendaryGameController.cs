@@ -1,4 +1,5 @@
 ﻿using CliWrap;
+using CliWrap.Buffered;
 using LegendaryLibraryNS.Models;
 using Playnite;
 using Playnite.Common;
@@ -103,20 +104,17 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                var stdErrBuffer = new StringBuilder();
                 var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                    .WithArguments(new[] { "-y", "uninstall", Game.GameId })
                                    .WithValidation(CommandResultValidation.None)
-                                   .WithStandardErrorPipe(PipeTarget.ToStringBuilder(stdErrBuffer))
-                                   .ExecuteAsync();
-                var stdErr = stdErrBuffer.ToString();
-                if (stdErr.Contains("has been uninstalled"))
+                                   .ExecuteBufferedAsync();
+                if (cmd.StandardError.Contains("has been uninstalled"))
                 {
                     InvokeOnUninstalled(new GameUninstalledEventArgs());
                 }
                 else
                 {
-                    logger.Debug("[Legendary] " + stdErr);
+                    logger.Debug("[Legendary] " + cmd.StandardError);
                     logger.Error("[Legendary] exit code: " + cmd.ExitCode);
                     Game.IsUninstalling = false;
                 }

@@ -105,15 +105,108 @@ namespace LegendaryLibraryNS
             return string.Format("{0:n2} {1}", number, suffixes[i]);
         }
 
-        private void ImportBtn_Click(object sender, RoutedEventArgs e)
+        private async void ImportBtn_Click(object sender, RoutedEventArgs e)
         {
             var path = playniteAPI.Dialogs.SelectFolder();
             if (path != "")
             {
-                ProcessStarter.StartProcessWait(LegendaryLauncher.ClientExecPath, "-y import " + GameID + " " + path, null, false);
-                ProcessStarter.StartProcessWait(LegendaryLauncher.ClientExecPath, "-y repair " + GameID, null, false);
-                InstallerWindow.DialogResult = true;
+                InstallerPage.Visibility = Visibility.Collapsed;
+                DownloaderPage.Visibility = Visibility.Visible;
+                var importCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                         .WithArguments(new[] { "-y", "import", GameID, path })
+                                         .WithValidation(CommandResultValidation.None)
+                                         .ExecuteBufferedAsync();
+                if (importCmd.StandardError.Contains("has been imported"))
+                {
+                    CancelDownloadBtn.Visibility = Visibility.Collapsed;
+                    PauseBtn.Visibility = Visibility.Collapsed;
+                    await Repair();
+                } 
+                else
+                {
+                    logger.Debug("[Legendary] " + importCmd.StandardError);
+                    logger.Error("[Legendary] exit code: " + importCmd.ExitCode);
+                }
                 InstallerWindow.Close();
+            }
+        }
+
+        public async Task Repair()
+        {
+            installerCTS = new CancellationTokenSource();
+            try
+            {
+                var stdOutBuffer = new StringBuilder();
+                var repairCmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                         .WithArguments(new[] { "-y", "repair", GameID })
+                                         .WithValidation(CommandResultValidation.None);
+                await foreach (var cmdEvent in repairCmd.ListenAsync())
+                {
+                    switch (cmdEvent)
+                    {
+                        case StartedCommandEvent started:
+                            break;
+                        case StandardErrorCommandEvent stdErr:
+                            var verificationProgressMatch = Regex.Match(stdErr.Text, @"Verification progress:.*\((\d.*%)");
+                            var progressMatch = Regex.Match(stdErr.Text, @"Progress: (\d.*%)");
+                            if (verificationProgressMatch.Length >= 2)
+                            {
+                                double progress = double.Parse(verificationProgressMatch.Groups[1].Value.Replace("%", ""), CultureInfo.InvariantCulture);
+                                DownloadPB.Value = progress;
+                            }
+                            else if (progressMatch.Length >= 2)
+                            {
+                               double progress = double.Parse(progressMatch.Groups[1].Value.Replace("%", ""), CultureInfo.InvariantCulture);
+                               DownloadPB.Value = progress;
+                            }
+                            var ETAMatch = Regex.Match(stdErr.Text, @"ETA: (\d\d:\d\d:\d\d)");
+                            if (ETAMatch.Length >= 2)
+                            {
+                                EtaTB.Text = ETAMatch.Groups[1].Value;
+                            }
+                            var elapsedMatch = Regex.Match(stdErr.Text, @"Running for (\d\d:\d\d:\d\d)");
+                            if (elapsedMatch.Length >= 2)
+                            {
+                                ElapsedTB.Text = elapsedMatch.Groups[1].Value;
+                            }
+                            var downloadedMatch = Regex.Match(stdErr.Text, @"Downloaded: (\S+.) MiB");
+                            if (downloadedMatch.Length >= 2)
+                            {
+                                string downloaded = FormatSize(double.Parse(downloadedMatch.Groups[1].Value, CultureInfo.InvariantCulture) * 1024 * 1024);
+                                DownloadedTB.Text = downloaded + " / " + DownloadSizeTB.Text;
+                            }
+                            var downloadSpeedMatch = Regex.Match(stdErr.Text, @"Download\t- (\S+.) MiB");
+                            if (downloadSpeedMatch.Length >= 2)
+                            {
+                                string downloadSpeed = FormatSize(double.Parse(downloadSpeedMatch.Groups[1].Value, CultureInfo.InvariantCulture) * 1024 * 1024);
+                                DownloadSpeedTB.Text = downloadSpeed + "/s";
+                            }
+                            var fullInstallPathMatch = Regex.Match(stdErr.Text, @"Install path: (\S+)");
+                            if (fullInstallPathMatch.Length >= 2)
+                            {
+                                fullInstallPath = fullInstallPathMatch.Groups[1].Value;
+                            }
+                            stdOutBuffer.AppendLine("[Legendary]: " + stdErr);
+                            break;
+                        case ExitedCommandEvent exited:
+                            if (exited.ExitCode == 0)
+                            {
+                                Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), InstallerWindow.Title, ResourceProvider.GetString(LOC.LegendaryImportFinished), null);
+                                InstallerWindow.DialogResult = true;
+                            }
+                            else if (exited.ExitCode != 0)
+                            {
+                                logger.Debug(stdOutBuffer.ToString());
+                                logger.Error("[Legendary] exit code: " + exited.ExitCode);
+                            }
+                            installerCTS?.Dispose();
+                            break;
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // Command was canceled
             }
         }
 

@@ -197,5 +197,13 @@ namespace System
         /// An error occurred while syncing {0} game saves to the cloud.
         /// </summary>
         public const string LegendarySyncError = "LOCLegendarySyncError";
+        /// <summary>
+        /// Importing {0}...
+        /// </summary>
+        public const string LegendaryImportingGame = "LOCLegendaryImportingGame";
+        /// <summary>
+        /// Import finished. Have fun.
+        /// </summary>
+        public const string LegendaryImportFinished = "LOCLegendaryImportFinished";
     }
 }
