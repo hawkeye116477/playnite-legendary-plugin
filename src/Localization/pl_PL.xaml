@@ -16,4 +16,19 @@
   <sys:String x:Key="LOCLegendaryDisable">Wyłącz</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Włącz</sys:String>
   <sys:String x:Key="LOCLegendaryImportEGL">Importuj grę</sys:String>
+  <sys:String x:Key="LOCLegendarySpaceAvailable">Dostępne miejsce:</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloaded">Pobrano:</sys:String>
+  <sys:String x:Key="LOCLegendaryETA">Pozostało:</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadSpeed">Prędkość pobierania:</sys:String>
+  <sys:String x:Key="LOCLegendaryElapsed">Upłynęło:</sys:String>
+  <sys:String x:Key="LOCLegendaryPauseDownload">Wstrzymaj</sys:String>
+  <sys:String x:Key="LOCLegendaryResumeDownload">Wznów</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadPaused">Wstrzymane</sys:String>
+  <sys:String x:Key="LOCLegendaryInstallationFinished">Instalacja została zakończona. Dobrej zabawy.</sys:String>
+  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Po zakończeniu pobierania:</sys:String>
+  <sys:String x:Key="LOCLegendarySyncGameSaves">Synchronizuj zapisy gier z chmurą</sys:String>
+  <sys:String x:Key="LOCLegendarySyncing">Synchronizowanie zapisów gry {0} z chmurą...</sys:String>
+  <sys:String x:Key="LOCLegendarySyncError">Wystąpił błąd podczas synchronizacji zapisów gry {0} z chmurą.</sys:String>
+  <sys:String x:Key="LOCLegendaryImportingGame">Importowanie gry {0}...</sys:String>
+  <sys:String x:Key="LOCLegendaryImportFinished">Importowanie zakończone. Dobrej zabawy.</sys:String>
 </ResourceDictionary>
