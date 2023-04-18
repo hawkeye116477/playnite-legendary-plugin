@@ -112,16 +112,16 @@ namespace LegendaryLibraryNS
             {
                 InstallerPage.Visibility = Visibility.Collapsed;
                 DownloaderPage.Visibility = Visibility.Visible;
+                CancelDownloadBtn.Visibility = Visibility.Collapsed;
+                PauseBtn.Visibility = Visibility.Collapsed;
                 var importCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                          .WithArguments(new[] { "-y", "import", GameID, path })
                                          .WithValidation(CommandResultValidation.None)
                                          .ExecuteBufferedAsync();
                 if (importCmd.StandardError.Contains("has been imported"))
                 {
-                    CancelDownloadBtn.Visibility = Visibility.Collapsed;
-                    PauseBtn.Visibility = Visibility.Collapsed;
                     await Repair();
-                } 
+                }
                 else
                 {
                     logger.Debug("[Legendary] " + importCmd.StandardError);
@@ -138,9 +138,9 @@ namespace LegendaryLibraryNS
             {
                 var stdOutBuffer = new StringBuilder();
                 var repairCmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                         .WithArguments(new[] { "-y", "repair", GameID })
-                                         .WithValidation(CommandResultValidation.None);
-                await foreach (var cmdEvent in repairCmd.ListenAsync())
+                                   .WithArguments(new[] { "-y", "repair", GameID })
+                                   .WithValidation(CommandResultValidation.None);
+                await foreach (var cmdEvent in repairCmd.ListenAsync(installerCTS.Token))
                 {
                     switch (cmdEvent)
                     {
@@ -156,8 +156,8 @@ namespace LegendaryLibraryNS
                             }
                             else if (progressMatch.Length >= 2)
                             {
-                               double progress = double.Parse(progressMatch.Groups[1].Value.Replace("%", ""), CultureInfo.InvariantCulture);
-                               DownloadPB.Value = progress;
+                                double progress = double.Parse(progressMatch.Groups[1].Value.Replace("%", ""), CultureInfo.InvariantCulture);
+                                DownloadPB.Value = progress;
                             }
                             var ETAMatch = Regex.Match(stdErr.Text, @"ETA: (\d\d:\d\d:\d\d)");
                             if (ETAMatch.Length >= 2)
