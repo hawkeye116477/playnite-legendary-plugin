@@ -16,4 +16,19 @@
   <sys:String x:Key="LOCLegendaryDisable"></sys:String>
   <sys:String x:Key="LOCLegendaryEnable"></sys:String>
   <sys:String x:Key="LOCLegendaryImportEGL"></sys:String>
+  <sys:String x:Key="LOCLegendarySpaceAvailable"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloaded"></sys:String>
+  <sys:String x:Key="LOCLegendaryETA"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadSpeed"></sys:String>
+  <sys:String x:Key="LOCLegendaryElapsed"></sys:String>
+  <sys:String x:Key="LOCLegendaryPauseDownload"></sys:String>
+  <sys:String x:Key="LOCLegendaryResumeDownload"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadPaused"></sys:String>
+  <sys:String x:Key="LOCLegendaryInstallationFinished"></sys:String>
+  <sys:String x:Key="LOCLegendaryAfterDownloadComplete"></sys:String>
+  <sys:String x:Key="LOCLegendarySyncGameSaves"></sys:String>
+  <sys:String x:Key="LOCLegendarySyncing"></sys:String>
+  <sys:String x:Key="LOCLegendarySyncError"></sys:String>
+  <sys:String x:Key="LOCLegendaryImportingGame"></sys:String>
+  <sys:String x:Key="LOCLegendaryImportFinished"></sys:String>
 </ResourceDictionary>
