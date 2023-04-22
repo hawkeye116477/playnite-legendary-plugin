@@ -84,11 +84,11 @@ namespace LegendaryLibraryNS
             }
             if (settings.MaxWorkers != 0)
             {
-                installCommand += " --max-workers";
+                installCommand += " --max-workers " + settings.MaxWorkers;
             }
             if (settings.MaxSharedMemory != 0)
             {
-                installCommand += " --max-shared-memory";
+                installCommand += " --max-shared-memory " + settings.MaxSharedMemory;
             }
             if (GameID == "eos-overlay")
             {
