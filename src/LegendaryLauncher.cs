@@ -186,5 +186,31 @@ namespace LegendaryLibraryNS
                 return noHttps;
             }
         }
+
+        public static int DefaultMaxWorkers
+        {
+            get
+            {
+                int maxWorkers = 0;
+                if (IniConfig != null && !IniConfig["Legendary"]["max_workers"].IsNullOrEmpty())
+                {
+                    maxWorkers = Convert.ToInt32(IniConfig["Legendary"]["max_workers"]);
+                }
+                return maxWorkers;
+            }
+        }
+
+        public static int DefaultMaxSharedMemory
+        {
+            get
+            {
+                int maxSharedMemory = 0;
+                if (IniConfig != null && !IniConfig["Legendary"]["max_memory"].IsNullOrEmpty())
+                {
+                    maxSharedMemory = Convert.ToInt32(IniConfig["Legendary"]["max_memory"]);
+                }
+                return maxSharedMemory;
+            }
+        }
     }
 }

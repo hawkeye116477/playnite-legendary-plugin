@@ -30,4 +30,6 @@
   <sys:String x:Key="LOCLegendarySyncError">An error occurred while syncing {0} game saves to the cloud.</sys:String>
   <sys:String x:Key="LOCLegendaryImportingGame">Importing {0}...</sys:String>
   <sys:String x:Key="LOCLegendaryImportFinished">Import finished. Have fun.</sys:String>
+  <sys:String x:Key="LOCLegendaryMaxWorkers">Maximum number of worker processes</sys:String>
+  <sys:String x:Key="LOCLegendaryMaxSharedMemory">Maximum amount of shared memory (MB)</sys:String>
 </ResourceDictionary>

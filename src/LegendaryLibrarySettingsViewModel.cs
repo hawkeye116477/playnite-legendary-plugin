@@ -32,6 +32,8 @@ namespace LegendaryLibraryNS
         public bool NoHttps { get; set; } = LegendaryLauncher.DefaultNoHttps;
         public int DoActionAfterDownloadComplete { get; set; } = (int)DownloadCompleteAction.Nothing;
         public bool SyncGameSaves { get; set; } = false;
+        public int MaxWorkers { get; set; } = LegendaryLauncher.DefaultMaxWorkers;
+        public int MaxSharedMemory { get; set; } = LegendaryLauncher.DefaultMaxSharedMemory;
     }
 
     public class LegendaryLibrarySettingsViewModel : PluginSettingsViewModel<LegendaryLibrarySettings, LegendaryLibrary>

@@ -82,6 +82,14 @@ namespace LegendaryLibraryNS
             {
                 installCommand += " --no-https";
             }
+            if (settings.MaxWorkers != 0)
+            {
+                installCommand += " --max-workers";
+            }
+            if (settings.MaxSharedMemory != 0)
+            {
+                installCommand += " --max-shared-memory";
+            }
             if (GameID == "eos-overlay")
             {
                 installPath = Path.Combine(SelectedGamePathTxt.Text, ".overlay");

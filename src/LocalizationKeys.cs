@@ -205,5 +205,13 @@ namespace System
         /// Import finished. Have fun.
         /// </summary>
         public const string LegendaryImportFinished = "LOCLegendaryImportFinished";
+        /// <summary>
+        /// Maximum number of worker processes
+        /// </summary>
+        public const string LegendaryMaxWorkers = "LOCLegendaryMaxWorkers";
+        /// <summary>
+        /// Maximum amount of shared memory (MB)
+        /// </summary>
+        public const string LegendaryMaxSharedMemory = "LOCLegendaryMaxSharedMemory";
     }
 }
