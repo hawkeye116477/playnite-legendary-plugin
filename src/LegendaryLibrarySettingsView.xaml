@@ -138,34 +138,10 @@
                             IsChecked="{Binding Settings.NoHttps}" Margin="0,0,0,5" />
                         <TextBlock Text="{DynamicResource LOCLegendaryMaxWorkers}" Grid.Column="0"
                             Grid.Row="1" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        <Grid Grid.Row="1" Grid.Column="1" Margin="0,0,0,5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="auto"  />
-                            </Grid.ColumnDefinitions>
-                            <TextBox Text="{Binding Settings.MaxWorkers}" Grid.Column="0" Grid.RowSpan="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Name="WorkersTxt" TextChanged="WorkersTxt_TextChanged" />
-                            <RepeatButton Grid.Column="1" Grid.Row="0" Content="▲" FontSize="10" Margin="0" Padding="1" Name="MoreWorkersRpt" Click="MoreWorkersRpt_Click"/>
-                            <RepeatButton Grid.Column="1" Grid.Row="1" Content="▼" FontSize="10" Margin="0" Padding="1" Name="LessWorkersRpt" Click="LessWorkersRpt_Click"/>
-                        </Grid>
+                        <local:NumericInput Grid.Row="1" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="16" Value="{Binding Settings.MaxWorkers}"/>
                         <TextBlock Text="{DynamicResource LOCLegendaryMaxSharedMemory}" Grid.Column="0"
                             Grid.Row="2" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        <Grid Grid.Row="2" Grid.Column="1" Margin="0,0,0,5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="auto"  />
-                            </Grid.ColumnDefinitions>
-                            <TextBox Text="{Binding Settings.MaxSharedMemory}" Grid.Column="0" Grid.RowSpan="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Name="SharedMemoryTxt" TextChanged="SharedMemoryTxt_TextChanged" />
-                            <RepeatButton Grid.Column="1" Grid.Row="0" Content="▲" FontSize="10" Margin="0" Padding="1" Name="MoreSharedMemoryRpt" Click="MoreSharedMemoryRpt_Click"/>
-                            <RepeatButton Grid.Column="1" Grid.Row="1" Content="▼" FontSize="10" Margin="0" Padding="1" Name="LessSharedMemoryRpt" Click="LessSharedMemoryRpt_Click"/>
-                        </Grid>
+                        <local:NumericInput Grid.Row="2" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="{Binding TotalRAM}" StepSize="128" Value="{Binding Settings.MaxSharedMemory}"/>
                         <TextBlock Text="{DynamicResource LOCLegendaryPreferredCDN}" Grid.Column="0"
                             Grid.Row="3" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         <TextBox

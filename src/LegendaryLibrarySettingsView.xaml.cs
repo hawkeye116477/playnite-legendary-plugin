@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Management;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -155,109 +154,6 @@ namespace LegendaryLibraryNS
                 { (int)DownloadCompleteAction.Sleep, ResourceProvider.GetString("LOCMenuSuspendSystem") },
             };
             AfterDownloadCompleteCBo.ItemsSource = downloadCompleteActions;
-        }
-
-        private void Increment(TextBox textBox, int defaultValue, int maxValue, int stepValue)
-        {
-            int number;
-            if (textBox.Text != "")
-            {
-                number = Convert.ToInt32(textBox.Text);
-            }
-            else
-            {
-                number = defaultValue;
-            }
-            if (number < maxValue)
-            {
-                textBox.Text = Convert.ToString(number + stepValue);
-            }
-        }
-
-        private void Decrement(TextBox textBox, int defaultValue, int minValue, int stepValue)
-        {
-            int number;
-            if (textBox.Text != "")
-            {
-                number = Convert.ToInt32(textBox.Text);
-            }
-            else
-            {
-                number = defaultValue;
-            }
-            if (number > minValue)
-            {
-                textBox.Text = Convert.ToString(number - stepValue);
-            }
-        }
-
-        private void NumericTextChanged(TextBox textBox, int defaultValue, int minValue, int maxValue)
-        {
-            int number;
-            if (textBox.Text != "")
-            {
-                if (!int.TryParse(textBox.Text, out number))
-                {
-                    textBox.Text = defaultValue.ToString();
-                }
-                if (number > maxValue)
-                {
-                    textBox.Text = maxValue.ToString();
-                }
-                if (number < minValue)
-                {
-                    textBox.Text = minValue.ToString();
-                }
-                textBox.SelectionStart = textBox.Text.Length;
-            }
-
-        }
-
-        private void MoreWorkersRpt_Click(object sender, RoutedEventArgs e)
-        {
-            Increment(WorkersTxt, LegendaryLibrary.GetSettings().MaxWorkers, 16, 1);
-        }
-
-        private void LessWorkersRpt_Click(object sender, RoutedEventArgs e)
-        {
-            Decrement(WorkersTxt, LegendaryLibrary.GetSettings().MaxWorkers, 0, 1);
-        }
-
-        private void WorkersTxt_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            NumericTextChanged(WorkersTxt, LegendaryLibrary.GetSettings().MaxWorkers, 0, 16);
-        }
-
-        private int TotalRAM
-        {
-            get
-            {
-                ObjectQuery wql = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher(wql);
-                ManagementObjectCollection results = searcher.Get();
-                double ram = 0.0;
-                foreach (ManagementObject result in results)
-                {
-                    ram = Convert.ToDouble(result["TotalVisibleMemorySize"].ToString().Replace("KB", ""));
-                }
-                ram = Math.Round(ram / 1024);
-                return Convert.ToInt32(ram);
-            }
-        }
-
-        private void MoreSharedMemoryRpt_Click(object sender, RoutedEventArgs e)
-        {
-            Increment(SharedMemoryTxt, LegendaryLibrary.GetSettings().MaxSharedMemory, TotalRAM, 128);
-        }
-
-        private void LessSharedMemoryRpt_Click(object sender, RoutedEventArgs e)
-        {
-            Decrement(SharedMemoryTxt, LegendaryLibrary.GetSettings().MaxSharedMemory, 0, 128);
-        }
-
-        private void SharedMemoryTxt_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            NumericTextChanged(SharedMemoryTxt, LegendaryLibrary.GetSettings().MaxSharedMemory, 0, TotalRAM);
         }
     }
 }
