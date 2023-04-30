@@ -32,4 +32,5 @@
   <sys:String x:Key="LOCLegendaryImportFinished">Import finished. Have fun.</sys:String>
   <sys:String x:Key="LOCLegendaryMaxWorkers">Maximum number of worker processes</sys:String>
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">Maximum amount of shared memory (MB)</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadManager">Download Manager (Legendary)</sys:String>
 </ResourceDictionary>

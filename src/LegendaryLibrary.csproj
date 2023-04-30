@@ -198,7 +198,11 @@
     <Compile Include="..\third_party\PlayniteExtensions\source\Generic\PlayniteExtensions.Common\PluginSettingsViewModel.cs">
       <Link>Shared\Playnite\PluginSettingsViewModel.cs</Link>
     </Compile>
+    <Compile Include="Helpers.cs" />
     <Compile Include="LegendaryClient.cs" />
+    <Compile Include="LegendaryDownloadManager.xaml.cs">
+      <DependentUpon>LegendaryDownloadManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LegendaryExcludeOnlineGames.xaml.cs">
       <DependentUpon>LegendaryExcludeOnlineGames.xaml</DependentUpon>
     </Compile>
@@ -232,6 +236,9 @@
     <Compile Include="Services\WebStoreClient.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\..\..\Program Files\Playnite\Templates\Themes\Fonts\icofont.ttf">
+      <Link>Fonts/icofont.ttf</Link>
+    </None>
     <None Include="..\LICENSE">
       <Link>LICENSE</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -267,6 +274,10 @@
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LegendaryDownloadManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LegendaryExcludeOnlineGames.xaml">
       <SubType>Designer</SubType>

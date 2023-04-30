@@ -27,6 +27,7 @@ namespace LegendaryLibraryNS
         private static readonly ILogger logger = LogManager.GetLogger();
         public static LegendaryLibrary Instance { get; set; }
         public static bool LegendaryGameInstaller { get; internal set; }
+        public LegendaryDownloadManager LegendaryDownloadManager { get; set; }
 
         public LegendaryLibrary(IPlayniteAPI api) : base(
             "Legendary (Epic)",
@@ -45,6 +46,15 @@ namespace LegendaryLibraryNS
         public static LegendaryLibrarySettings GetSettings()
         {
             return Instance.SettingsViewModel?.Settings ?? null;
+        }
+
+        public static LegendaryDownloadManager GetLegendaryDownloadManager()
+        {
+            if (Instance.LegendaryDownloadManager == null)
+            {
+                Instance.LegendaryDownloadManager = new LegendaryDownloadManager();
+            }
+            return Instance.LegendaryDownloadManager;
         }
 
         internal Dictionary<string, GameMetadata> GetInstalledGames()
@@ -422,6 +432,7 @@ namespace LegendaryLibraryNS
                 }
             }
         }
+
         public override void OnGameStarting(OnGameStartingEventArgs args)
         {
             SyncGameSaves(args.Game.Name, args.Game.GameId, args.Game.InstallDirectory, true);
@@ -430,6 +441,17 @@ namespace LegendaryLibraryNS
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
             SyncGameSaves(args.Game.Name, args.Game.GameId, args.Game.InstallDirectory, false);
+        }
+
+        public override IEnumerable<SidebarItem> GetSidebarItems()
+        {
+            yield return new SidebarItem
+            {
+                Title = ResourceProvider.GetString(LOC.LegendaryDownloadManager),
+                Icon = LegendaryLauncher.Icon,
+                Type = SiderbarItemType.View,
+                Opened = () => GetLegendaryDownloadManager()
+            };
         }
 
     }

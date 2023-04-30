@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="LegendaryLibraryNS.LegendaryDownloadManager"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LegendaryLibraryNS"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:pcon="clr-namespace:Playnite.Converters"
+             xmlns:pcmd="clr-namespace:Playnite.Commands"
+             mc:Ignorable="d" 
+             d:DesignHeight="210" d:DesignWidth="800" DataContext="{Binding RelativeSource={RelativeSource Self}}" Name="LegendaryDownloadManagerUC">
+   
+    <UserControl.Resources>
+        <pcon:NegateConverter x:Key="NegateConverter" />
+        <sys:Boolean x:Key="True">True</sys:Boolean>
+        <sys:Boolean x:Key="False">False</sys:Boolean>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}"/>
+        <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
+    </UserControl.Resources>
+    <Grid Name="DownloaderPage" VerticalAlignment="Top" Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Margin="0" DockPanel.Dock="Top" Grid.Column="0" Grid.Row="0">
+            <TextBlock VerticalAlignment="Center" WindowChrome.IsHitTestVisibleInChrome="True" Style="{x:Null}">
+                <Hyperlink Command="{Binding NavigateBackCommand}">
+                    <TextBlock Text="&#xea5c;" FontFamily="{DynamicResource FontIcoFont}" FontSize="26" Style="{x:Null}" />
+                </Hyperlink>
+            </TextBlock>
+            <TextBlock Text="{DynamicResource LOCLegendaryDownloadManager}" VerticalAlignment="Center"
+                       Margin="10,0,0,0" FontSize="18"/>
+        </StackPanel>
+        <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="0,5,0,10">
+            <ProgressBar Value="0" Name="DownloadPB"/>
+            <TextBlock Text="{Binding ElementName=DownloadPB, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5">
+            </TextBlock>
+        </Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="0" Margin="0,0,0,5" VerticalAlignment="Top">
+            <TextBlock Text="{DynamicResource LOCLegendaryDownloadSpeed}"></TextBlock>
+            <TextBlock Name="DownloadSpeedTB" HorizontalAlignment="Left" Margin="5,0,0,0"></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="0" Margin="0,0,0,5" VerticalAlignment="Top">
+            <TextBlock Text="{DynamicResource LOCLegendaryDownloaded}"></TextBlock>
+            <TextBlock Name="DownloadedTB" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0"></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="0" Margin="0,0,0,5" VerticalAlignment="Top">
+            <TextBlock Text="{DynamicResource LOCLegendaryElapsed}"></TextBlock>
+            <TextBlock Name="ElapsedTB" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0"></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="6" Grid.Column="0" Margin="0,0,0,5" VerticalAlignment="Top">
+            <TextBlock Text="{DynamicResource LOCLegendaryETA}"></TextBlock>
+            <TextBlock Name="EtaTB" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left"  Margin="5,0,0,0"></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="8" Grid.Column="1">
+            <Button x:Name="CancelDownloadBtn" Content="{DynamicResource LOCCancelLabel}"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0" IsCancel="True" Click="CancelDownloadBtn_Click"/>
+            <ToggleButton x:Name="PauseBtn" Content="{DynamicResource LOCLegendaryPauseDownload}"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Checked="PauseBtn_IsCheckedChanged" Unchecked="PauseBtn_IsCheckedChanged">
+            </ToggleButton>
+        </StackPanel>
+    </Grid>
+</UserControl>

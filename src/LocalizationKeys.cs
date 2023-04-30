@@ -213,5 +213,9 @@ namespace System
         /// Maximum amount of shared memory (MB)
         /// </summary>
         public const string LegendaryMaxSharedMemory = "LOCLegendaryMaxSharedMemory";
+        /// <summary>
+        /// Download Manager (Legendary)
+        /// </summary>
+        public const string LegendaryDownloadManager = "LOCLegendaryDownloadManager";
     }
 }

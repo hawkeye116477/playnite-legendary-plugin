@@ -36,9 +36,8 @@ namespace LegendaryLibraryNS
     {
         private ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI playniteAPI = API.Instance;
-        private CancellationTokenSource installerCTS;
-        private string installCommand;
-        private string fullInstallPath;
+        public string installCommand;
+        public string downloadSize;
 
         public LegendaryGameInstaller()
         {
@@ -72,45 +71,13 @@ namespace LegendaryLibraryNS
             {
                 installPath = SelectedGamePathTxt.Text;
             }
-            installCommand = "-y install " + GameID + " --base-path " + installPath;
-            var prefferedCDN = settings.PreferredCDN;
-            if (prefferedCDN != "")
-            {
-                installCommand += " --preferred-cdn " + prefferedCDN;
-            }
-            if (settings.NoHttps)
-            {
-                installCommand += " --no-https";
-            }
-            if (settings.MaxWorkers != 0)
-            {
-                installCommand += " --max-workers " + settings.MaxWorkers;
-            }
-            if (settings.MaxSharedMemory != 0)
-            {
-                installCommand += " --max-shared-memory " + settings.MaxSharedMemory;
-            }
             if (GameID == "eos-overlay")
             {
                 installPath = Path.Combine(SelectedGamePathTxt.Text, ".overlay");
-                installCommand = "-y eos-overlay install --path " + installPath;
             }
-            InstallerPage.Visibility = Visibility.Collapsed;
-            DownloaderPage.Visibility = Visibility.Visible;
-            await Install();
-        }
-
-        static readonly string[] suffixes = { "B", "KB", "MB", "GB", "TB" };
-        public static string FormatSize(double size)
-        {
-            int i = 0;
-            decimal number = (decimal)size;
-            while (Math.Round(number / 1024) >= 1)
-            {
-                number /= 1024;
-                i++;
-            }
-            return string.Format("{0:n2} {1}", number, suffixes[i]);
+            InstallerWindow.Close();
+            LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
+            await downloadManager.Install(GameID, installPath, downloadSize, InstallerWindow.Title);
         }
 
         private async void ImportBtn_Click(object sender, RoutedEventArgs e)
@@ -119,102 +86,23 @@ namespace LegendaryLibraryNS
             if (path != "")
             {
                 InstallerPage.Visibility = Visibility.Collapsed;
-                DownloaderPage.Visibility = Visibility.Visible;
-                CancelDownloadBtn.Visibility = Visibility.Collapsed;
-                PauseBtn.Visibility = Visibility.Collapsed;
+                LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
+                downloadManager.CancelDownloadBtn.Visibility = Visibility.Collapsed;
+                downloadManager.PauseBtn.Visibility = Visibility.Collapsed;
+                InstallerWindow.Close();
                 var importCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                          .WithArguments(new[] { "-y", "import", GameID, path })
                                          .WithValidation(CommandResultValidation.None)
                                          .ExecuteBufferedAsync();
                 if (importCmd.StandardError.Contains("has been imported"))
                 {
-                    await Repair();
+                    await downloadManager.Repair(GameID, downloadSize, InstallerWindow.Title);
                 }
                 else
                 {
                     logger.Debug("[Legendary] " + importCmd.StandardError);
                     logger.Error("[Legendary] exit code: " + importCmd.ExitCode);
                 }
-                InstallerWindow.Close();
-            }
-        }
-
-        public async Task Repair()
-        {
-            installerCTS = new CancellationTokenSource();
-            try
-            {
-                var stdOutBuffer = new StringBuilder();
-                var repairCmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                   .WithArguments(new[] { "-y", "repair", GameID })
-                                   .WithValidation(CommandResultValidation.None);
-                await foreach (var cmdEvent in repairCmd.ListenAsync(installerCTS.Token))
-                {
-                    switch (cmdEvent)
-                    {
-                        case StartedCommandEvent started:
-                            break;
-                        case StandardErrorCommandEvent stdErr:
-                            var verificationProgressMatch = Regex.Match(stdErr.Text, @"Verification progress:.*\((\d.*%)");
-                            var progressMatch = Regex.Match(stdErr.Text, @"Progress: (\d.*%)");
-                            if (verificationProgressMatch.Length >= 2)
-                            {
-                                double progress = double.Parse(verificationProgressMatch.Groups[1].Value.Replace("%", ""), CultureInfo.InvariantCulture);
-                                DownloadPB.Value = progress;
-                            }
-                            else if (progressMatch.Length >= 2)
-                            {
-                                double progress = double.Parse(progressMatch.Groups[1].Value.Replace("%", ""), CultureInfo.InvariantCulture);
-                                DownloadPB.Value = progress;
-                            }
-                            var ETAMatch = Regex.Match(stdErr.Text, @"ETA: (\d\d:\d\d:\d\d)");
-                            if (ETAMatch.Length >= 2)
-                            {
-                                EtaTB.Text = ETAMatch.Groups[1].Value;
-                            }
-                            var elapsedMatch = Regex.Match(stdErr.Text, @"Running for (\d\d:\d\d:\d\d)");
-                            if (elapsedMatch.Length >= 2)
-                            {
-                                ElapsedTB.Text = elapsedMatch.Groups[1].Value;
-                            }
-                            var downloadedMatch = Regex.Match(stdErr.Text, @"Downloaded: (\S+.) MiB");
-                            if (downloadedMatch.Length >= 2)
-                            {
-                                string downloaded = FormatSize(double.Parse(downloadedMatch.Groups[1].Value, CultureInfo.InvariantCulture) * 1024 * 1024);
-                                DownloadedTB.Text = downloaded + " / " + DownloadSizeTB.Text;
-                            }
-                            var downloadSpeedMatch = Regex.Match(stdErr.Text, @"Download\t- (\S+.) MiB");
-                            if (downloadSpeedMatch.Length >= 2)
-                            {
-                                string downloadSpeed = FormatSize(double.Parse(downloadSpeedMatch.Groups[1].Value, CultureInfo.InvariantCulture) * 1024 * 1024);
-                                DownloadSpeedTB.Text = downloadSpeed + "/s";
-                            }
-                            var fullInstallPathMatch = Regex.Match(stdErr.Text, @"Install path: (\S+)");
-                            if (fullInstallPathMatch.Length >= 2)
-                            {
-                                fullInstallPath = fullInstallPathMatch.Groups[1].Value;
-                            }
-                            stdOutBuffer.AppendLine("[Legendary]: " + stdErr);
-                            break;
-                        case ExitedCommandEvent exited:
-                            if (exited.ExitCode == 0)
-                            {
-                                Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), InstallerWindow.Title, ResourceProvider.GetString(LOC.LegendaryImportFinished), null);
-                                InstallerWindow.DialogResult = true;
-                            }
-                            else if (exited.ExitCode != 0)
-                            {
-                                logger.Debug(stdOutBuffer.ToString());
-                                logger.Error("[Legendary] exit code: " + exited.ExitCode);
-                            }
-                            installerCTS?.Dispose();
-                            break;
-                    }
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                // Command was canceled
             }
         }
 
@@ -236,8 +124,9 @@ namespace LegendaryLibraryNS
                 else
                 {
                     var manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>(result.StandardOutput);
-                    DownloadSizeTB.Text = FormatSize(manifest.Manifest.Download_size);
-                    InstallSizeTB.Text = FormatSize(manifest.Manifest.Disk_size);
+                    downloadSize = Helpers.FormatSize(manifest.Manifest.Download_size);
+                    DownloadSizeTB.Text = downloadSize;
+                    InstallSizeTB.Text = Helpers.FormatSize(manifest.Manifest.Disk_size);
                 }
             }
             else
@@ -255,12 +144,13 @@ namespace LegendaryLibraryNS
                     if (line.Contains("Download size:"))
                     {
                         var downloadSizeValue = double.Parse(line.Substring(line.IndexOf("Download size:") + 15).Replace(" MiB", ""), CultureInfo.InvariantCulture) * 1024 * 1024;
-                        DownloadSizeTB.Text = FormatSize(downloadSizeValue);
+                        downloadSize = Helpers.FormatSize(downloadSizeValue);
+                        DownloadSizeTB.Text = downloadSize;
                     }
                     if (line.Contains("Install size:"))
                     {
                         var installSizeValue = double.Parse(line.Substring(line.IndexOf("Install size:") + 14).Replace(" MiB", ""), CultureInfo.InvariantCulture) * 1024 * 1024;
-                        InstallSizeTB.Text = FormatSize(installSizeValue);
+                        InstallSizeTB.Text = Helpers.FormatSize(installSizeValue);
                     }
                 }
             }
@@ -272,135 +162,8 @@ namespace LegendaryLibraryNS
             DriveInfo dDrive = new DriveInfo(path);
             if (dDrive.IsReady)
             {
-                SpaceTB.Text = FormatSize(dDrive.AvailableFreeSpace);
+                SpaceTB.Text = Helpers.FormatSize(dDrive.AvailableFreeSpace);
             }
-        }
-
-        private async void PauseBtn_IsCheckedChanged(object sender, RoutedEventArgs e)
-        {
-            if (PauseBtn.IsChecked == true)
-            {
-                installerCTS?.Cancel();
-                installerCTS?.Dispose();
-                PauseBtn.Content = ResourceProvider.GetString(LOC.LegendaryResumeDownload);
-                EtaTB.Text = ResourceProvider.GetString(LOC.LegendaryDownloadPaused);
-            }
-            else
-            {
-                PauseBtn.Content = ResourceProvider.GetString(LOC.LegendaryPauseDownload);
-                await Install();
-            }
-        }
-
-        public async Task Install()
-        {
-            installerCTS = new CancellationTokenSource();
-            try
-            {
-                var stdOutBuffer = new StringBuilder();
-                var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath).WithArguments(installCommand);
-                await foreach (CommandEvent cmdEvent in cmd.ListenAsync(installerCTS.Token))
-                {
-                    switch (cmdEvent)
-                    {
-                        case StandardErrorCommandEvent stdErr:
-                            var progressMatch = Regex.Match(stdErr.Text, @"Progress: (\d.*%)");
-                            if (progressMatch.Length >= 2)
-                            {
-                                double progress = double.Parse(progressMatch.Groups[1].Value.Replace("%", ""), CultureInfo.InvariantCulture);
-                                DownloadPB.Value = progress;
-                            }
-                            var ETAMatch = Regex.Match(stdErr.Text, @"ETA: (\d\d:\d\d:\d\d)");
-                            if (ETAMatch.Length >= 2)
-                            {
-                                EtaTB.Text = ETAMatch.Groups[1].Value;
-                            }
-                            var elapsedMatch = Regex.Match(stdErr.Text, @"Running for (\d\d:\d\d:\d\d)");
-                            if (elapsedMatch.Length >= 2)
-                            {
-                                ElapsedTB.Text = elapsedMatch.Groups[1].Value;
-                            }
-                            var downloadedMatch = Regex.Match(stdErr.Text, @"Downloaded: (\S+.) MiB");
-                            if (downloadedMatch.Length >= 2)
-                            {
-                                string downloaded = FormatSize(double.Parse(downloadedMatch.Groups[1].Value, CultureInfo.InvariantCulture) * 1024 * 1024);
-                                DownloadedTB.Text = downloaded + " / " + DownloadSizeTB.Text;
-                            }
-                            var downloadSpeedMatch = Regex.Match(stdErr.Text, @"Download\t- (\S+.) MiB");
-                            if (downloadSpeedMatch.Length >= 2)
-                            {
-                                string downloadSpeed = FormatSize(double.Parse(downloadSpeedMatch.Groups[1].Value, CultureInfo.InvariantCulture) * 1024 * 1024);
-                                DownloadSpeedTB.Text = downloadSpeed + "/s";
-                            }
-                            var fullInstallPathMatch = Regex.Match(stdErr.Text, @"Install path: (\S+)");
-                            if (fullInstallPathMatch.Length >= 2)
-                            {
-                                fullInstallPath = fullInstallPathMatch.Groups[1].Value;
-                            }
-                            stdOutBuffer.AppendLine("[Legendary]: " + stdErr);
-                            break;
-                        case ExitedCommandEvent exited:
-                            if (exited.ExitCode == 0)
-                            {
-                                Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), InstallerWindow.Title, ResourceProvider.GetString(LOC.LegendaryInstallationFinished), null);
-                                InstallerWindow.DialogResult = true;
-                            }
-                            else if (exited.ExitCode != 0)
-                            {
-                                logger.Debug(stdOutBuffer.ToString());
-                                logger.Error("[Legendary] exit code: " + exited.ExitCode);
-                            }
-                            var downloadCompleteSettings = LegendaryLibrary.GetSettings().DoActionAfterDownloadComplete;
-                            if (downloadCompleteSettings == (int)DownloadCompleteAction.ShutDown)
-                            {
-                                Process.Start("shutdown", "/s /t 0");
-                            }
-                            else if (downloadCompleteSettings == (int)DownloadCompleteAction.Reboot)
-                            {
-                                Process.Start("shutdown", "/r /t 0");
-                            }
-                            else if (downloadCompleteSettings == (int)DownloadCompleteAction.Hibernate)
-                            {
-                                Playnite.Native.Powrprof.SetSuspendState(true, true, false);
-                            }
-                            else if (downloadCompleteSettings == (int)DownloadCompleteAction.Sleep)
-                            {
-                                Playnite.Native.Powrprof.SetSuspendState(false, true, false);
-                            }
-                            InstallerWindow.Close();
-                            installerCTS?.Dispose();
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                // Command was canceled
-            }
-        }
-
-        private void CancelDownloadBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (PauseBtn.IsChecked == false)
-            {
-                installerCTS?.Cancel();
-                installerCTS?.Dispose();
-            }
-            var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", GameID + ".resume");
-            if (File.Exists(resumeFile))
-            {
-                File.Delete(resumeFile);
-            }
-            if (fullInstallPath != null)
-            {
-                if (Directory.Exists(fullInstallPath))
-                {
-                    Directory.Delete(fullInstallPath, true);
-                }
-            }
-            InstallerWindow.Close();
         }
     }
 }

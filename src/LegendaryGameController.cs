@@ -21,10 +21,17 @@ namespace LegendaryLibraryNS
     public class LegendaryInstallController : InstallController
     {
         private IPlayniteAPI playniteAPI = API.Instance;
+        private static LegendaryInstallController Instance { get; set; }
 
         public LegendaryInstallController(Game game) : base(game)
         {
             Name = "Install using Legendary client";
+            Instance = this;
+        }
+
+        public static void CompleteInstall(GameInstalledEventArgs installArgs)
+        {
+            Instance.InvokeOnInstalled(installArgs);
         }
 
         public override void Install(InstallActionArgs args)
