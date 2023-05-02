@@ -1,5 +1,6 @@
 ﻿using CliWrap;
 using CliWrap.Buffered;
+using CliWrap.EventStream;
 using LegendaryLibraryNS.Models;
 using Playnite.Common;
 using Playnite.SDK;
@@ -15,6 +16,7 @@ using System.Net.Http;
 using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
@@ -143,8 +145,22 @@ namespace LegendaryLibraryNS.Services
             }
             catch (Exception e)
             {
-                logger.Error(e, "Failed to validation Epic authentication.");
-                return false;
+                if (e is TokenException)
+                {
+                    renewTokens().GetAwaiter().GetResult();
+                    tokens = loadTokens();
+                    if (tokens is null)
+                    {
+                        return false;
+                    }
+                    var account = InvokeRequest<AccountResponse>(accountUrl + tokens.account_id, tokens).GetAwaiter().GetResult().Item2;
+                    return account.id == tokens.account_id;
+                }
+                else
+                {
+                    logger.Error(e, "Failed to validation Epic authentication.");
+                    return false;
+                }
             }
         }
 
@@ -203,25 +219,37 @@ namespace LegendaryLibraryNS.Services
             }
         }
 
-        private void renewTokens(string refreshToken)
+        private async Task renewTokens()
         {
-            using (var httpClient = new HttpClient())
+            var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                         .WithArguments("auth");
+            var cts = new CancellationTokenSource();
+            try
             {
-                httpClient.DefaultRequestHeaders.Clear();
-                httpClient.DefaultRequestHeaders.Add("Authorization", "basic " + authEncodedString);
-                using (var content = new StringContent($"grant_type=refresh_token&refresh_token={refreshToken}&token_type=eg1"))
+                await foreach (CommandEvent cmdEvent in cmd.ListenAsync(cts.Token))
                 {
-                    content.Headers.Clear();
-                    content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-                    var response = httpClient.PostAsync(oauthUrl, content).GetAwaiter().GetResult();
-                    var respContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                    FileSystem.CreateDirectory(Path.GetDirectoryName(tokensPath));
-                    Encryption.EncryptToFile(
-                        tokensPath,
-                        respContent,
-                        Encoding.UTF8,
-                        WindowsIdentity.GetCurrent().User.Value);
+                    switch (cmdEvent)
+                    {
+                        case StandardErrorCommandEvent stdErr:
+                            // If tokens can't be renewed, Legendary will try to open web browser
+                            // and demand an answer from user,
+                            // so we need to prevent that.
+                            if (stdErr.Text.Contains("no longer valid"))
+                            {
+                                cts.Cancel();
+                            }
+                            break;
+                        case ExitedCommandEvent exited:
+                            cts?.Dispose();
+                            break;
+                        default:
+                            break;
+                    }
                 }
+            }
+            catch (OperationCanceledException)
+            {
+                // Command was canceled
             }
         }
 
