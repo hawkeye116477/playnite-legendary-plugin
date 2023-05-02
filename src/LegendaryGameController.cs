@@ -41,6 +41,11 @@ namespace LegendaryLibraryNS
                 throw new Exception("Legendary Launcher is not installed.");
             }
 
+            if (!LegendaryLibrary.Instance.SettingsViewModel.IsUserLoggedIn)
+            {
+                throw new Exception(ResourceProvider.GetString("LOCLoginRequired"));
+            }
+
             var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
             {
                 ShowMaximizeButton = false,
