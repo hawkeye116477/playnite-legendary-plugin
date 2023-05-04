@@ -1,5 +1,6 @@
 ﻿using CliWrap;
 using CliWrap.Buffered;
+using LegendaryLibraryNS.Enums;
 using Playnite;
 using Playnite.Common;
 using Playnite.SDK;

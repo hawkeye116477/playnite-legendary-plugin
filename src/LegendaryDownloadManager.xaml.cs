@@ -21,6 +21,7 @@ using System.Windows.Navigation;
 using System.IO;
 using LegendaryLibraryNS.Models;
 using Playnite.SDK.Plugins;
+using LegendaryLibraryNS.Enums;
 
 namespace LegendaryLibraryNS
 {

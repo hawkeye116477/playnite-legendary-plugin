@@ -1,4 +1,5 @@
-﻿using LegendaryLibraryNS.Services;
+﻿using LegendaryLibraryNS.Enums;
+using LegendaryLibraryNS.Services;
 using Playnite;
 using Playnite.Commands;
 using Playnite.SDK;
@@ -92,13 +93,4 @@ namespace LegendaryLibraryNS
             }
         }
     }
-
-    public enum DownloadCompleteAction
-    {
-        Nothing,
-        ShutDown,
-        Reboot,
-        Hibernate,
-        Sleep
-    };
 }
