@@ -214,7 +214,7 @@ namespace System
         /// </summary>
         public const string LegendaryMaxSharedMemory = "LOCLegendaryMaxSharedMemory";
         /// <summary>
-        /// Download Manager (Legendary)
+        /// Download Manager
         /// </summary>
         public const string LegendaryDownloadManager = "LOCLegendaryDownloadManager";
         /// <summary>
@@ -258,11 +258,11 @@ namespace System
         /// </summary>
         public const string LegendaryDownloadSizeColumn = "LOCLegendaryDownloadSizeColumn";
         /// <summary>
-        /// The download will start soon. You can see its status by accessing Legendary's Panel via Menu => View or sidebar.
+        /// The download will start soon. You can see its status by accessing Legendary Panel via Menu => View or sidebar.
         /// </summary>
         public const string LegendaryDownloadManagerWhatsUp = "LOCLegendaryDownloadManagerWhatsUp";
         /// <summary>
-        /// Legendary's Panel
+        /// Legendary Panel
         /// </summary>
         public const string LegendaryPanel = "LOCLegendaryPanel";
     }
