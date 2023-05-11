@@ -58,33 +58,7 @@ namespace LegendaryLibraryNS
             window.Width = 600;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             var result = window.ShowDialog();
-            if (result == false)
-            {
-                Game.IsInstalling = false;
-            }
-            else
-            {
-                _ = (Application.Current.Dispatcher?.BeginInvoke((Action)delegate
-                {
-                    var installed = LegendaryLauncher.GetInstalledAppList();
-                    if (installed != null)
-                    {
-                        foreach (KeyValuePair<string, Installed> app in installed)
-                        {
-                            if (app.Value.App_name == Game.GameId)
-                            {
-                                var installInfo = new GameInstallationData
-                                {
-                                    InstallDirectory = app.Value.Install_path
-                                };
-
-                                InvokeOnInstalled(new GameInstalledEventArgs(installInfo));
-                                return;
-                            }
-                        }
-                    }
-                }));
-            }
+            Game.IsInstalling = false;
         }
     }
 

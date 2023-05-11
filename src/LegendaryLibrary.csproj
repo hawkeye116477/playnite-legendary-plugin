@@ -195,7 +195,10 @@
     <Compile Include="..\third_party\PlayniteExtensions\source\Generic\PlayniteExtensions.Common\PluginSettingsViewModel.cs">
       <Link>Shared\Playnite\PluginSettingsViewModel.cs</Link>
     </Compile>
+    <Compile Include="Converters\DownloadStatusEnumToStringConverter.cs" />
+    <Compile Include="Enums\DownloadAction.cs" />
     <Compile Include="Enums\DownloadCompleteAction.cs" />
+    <Compile Include="Enums\DownloadStatus.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="LegendaryClient.cs" />
     <Compile Include="LegendaryDownloadManager.xaml.cs">
@@ -215,9 +218,11 @@
       <DependentUpon>LegendaryLibrarySettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="LocalizationKeys.cs" />
+    <Compile Include="Converters\LongToDateConverter.cs" />
     <Compile Include="Models\AccountResponse.cs" />
     <Compile Include="Models\AssetsResponse.cs" />
     <Compile Include="Models\CatalogResponse.cs" />
+    <Compile Include="Models\DownloadManagerData.cs" />
     <Compile Include="Models\ErrorResponse.cs" />
     <Compile Include="Models\Installed.cs" />
     <Compile Include="Models\LegendaryGameInfo.cs" />
@@ -256,7 +261,7 @@
     <None Include="Localization\*.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\third_party\PlayniteExtensions\source\Libraries\EpicLibrary\Localization\*.xaml">
       <Link>Localization\Epic\%(Filename)%(Extension)</Link>

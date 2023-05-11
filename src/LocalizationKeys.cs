@@ -217,5 +217,53 @@ namespace System
         /// Download Manager (Legendary)
         /// </summary>
         public const string LegendaryDownloadManager = "LOCLegendaryDownloadManager";
+        /// <summary>
+        /// Status
+        /// </summary>
+        public const string LegendaryDownloadStatus = "LOCLegendaryDownloadStatus";
+        /// <summary>
+        /// Completed
+        /// </summary>
+        public const string LegendaryDownloadCompletedColumn = "LOCLegendaryDownloadCompletedColumn";
+        /// <summary>
+        /// Queued
+        /// </summary>
+        public const string LegendaryDownloadQueued = "LOCLegendaryDownloadQueued";
+        /// <summary>
+        /// Running
+        /// </summary>
+        public const string LegendaryDownloadRunning = "LOCLegendaryDownloadRunning";
+        /// <summary>
+        /// Stopped
+        /// </summary>
+        public const string LegendaryDownloadStopped = "LOCLegendaryDownloadStopped";
+        /// <summary>
+        /// Completed
+        /// </summary>
+        public const string LegendaryDownloadCompleted = "LOCLegendaryDownloadCompleted";
+        /// <summary>
+        /// Summary of the current download
+        /// </summary>
+        public const string LegendaryCurrentDownloadSummary = "LOCLegendaryCurrentDownloadSummary";
+        /// <summary>
+        /// Remove entry
+        /// </summary>
+        public const string LegendaryRemoveEntry = "LOCLegendaryRemoveEntry";
+        /// <summary>
+        /// Are you sure you want to remove {0} from list?
+        /// </summary>
+        public const string LegendaryRemoveEntryConfirm = "LOCLegendaryRemoveEntryConfirm";
+        /// <summary>
+        /// Download Size
+        /// </summary>
+        public const string LegendaryDownloadSizeColumn = "LOCLegendaryDownloadSizeColumn";
+        /// <summary>
+        /// The download will start soon. You can see its status by accessing Legendary's Panel via Menu => View or sidebar.
+        /// </summary>
+        public const string LegendaryDownloadManagerWhatsUp = "LOCLegendaryDownloadManagerWhatsUp";
+        /// <summary>
+        /// Legendary's Panel
+        /// </summary>
+        public const string LegendaryPanel = "LOCLegendaryPanel";
     }
 }

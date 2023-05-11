@@ -454,7 +454,7 @@ namespace LegendaryLibraryNS
         {
             yield return new SidebarItem
             {
-                Title = ResourceProvider.GetString(LOC.LegendaryDownloadManager),
+                Title = ResourceProvider.GetString(LOC.LegendaryPanel),
                 Icon = LegendaryLauncher.Icon,
                 Type = SiderbarItemType.View,
                 Opened = () => GetLegendaryDownloadManager()

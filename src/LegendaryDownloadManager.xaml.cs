@@ -22,6 +22,9 @@ using System.IO;
 using LegendaryLibraryNS.Models;
 using Playnite.SDK.Plugins;
 using LegendaryLibraryNS.Enums;
+using Playnite.SDK.Data;
+using Playnite.Common;
+using System.Collections.ObjectModel;
 
 namespace LegendaryLibraryNS
 {
@@ -34,14 +37,12 @@ namespace LegendaryLibraryNS
         private ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI playniteAPI = API.Instance;
         private string fullInstallPath;
-        public string savedGameID;
-        public string savedInstallPath;
-        public string savedDownloadSize;
-        public string savedGameTitle;
+        public DownloadManagerData.Rootobject downloadManagerData;
 
         public LegendaryDownloadManager()
         {
             InitializeComponent();
+            LoadSavedData();
         }
 
         public RelayCommand<object> NavigateBackCommand
@@ -52,192 +53,141 @@ namespace LegendaryLibraryNS
             });
         }
 
-        public async Task Install(string gameID, string installPath, string downloadSize, string gameTitle)
+        public DownloadManagerData.Rootobject LoadSavedData()
         {
-            savedGameID = gameID;
-            savedInstallPath = installPath;
-            savedDownloadSize = downloadSize;
-            savedGameTitle = gameTitle;
-            string installCommand = "-y install " + gameID + " --base-path " + installPath;
-            var settings = LegendaryLibrary.GetSettings();
-            var prefferedCDN = settings.PreferredCDN;
-            if (prefferedCDN != "")
+            var dataDir = LegendaryLibrary.Instance.GetPluginUserDataPath();
+            var dataFile = Path.Combine(dataDir, "downloadManager.json");
+            if (!File.Exists(dataFile))
             {
-                installCommand += " --preferred-cdn " + prefferedCDN;
+                downloadManagerData = new DownloadManagerData.Rootobject
+                {
+                    downloads = new ObservableCollection<DownloadManagerData.Download>()
+                };
+            }
+            else
+            {
+                downloadManagerData = Serialization.FromJson<DownloadManagerData.Rootobject>(FileSystem.ReadFileAsStringSafe(dataFile));
+            }
+            downloadsDG.ItemsSource = downloadManagerData.downloads;
+            return downloadManagerData;
+        }
+
+        public void SaveData()
+        {
+            var dataDir = LegendaryLibrary.Instance.GetPluginUserDataPath();
+            var dataFile = Path.Combine(dataDir, "downloadManager.json");
+            if (!Directory.Exists(dataDir))
+            {
+                Directory.CreateDirectory(dataDir);
+            }
+            var strConf = Serialization.ToJson(downloadManagerData, true);
+            File.WriteAllText(dataFile, strConf);
+        }
+
+        public async void DoNextJobInQueue(object _, System.ComponentModel.PropertyChangedEventArgs arg)
+        {
+            var running = downloadManagerData.downloads.Any(item => item.status == (int)DownloadStatus.Running);
+            var queuedList = downloadManagerData.downloads.Where(i => i.status == (int)DownloadStatus.Queued).ToList();
+            if (!running && queuedList.Count > 0)
+            {
+                await Install(queuedList[0].gameID, queuedList[0].installPath, queuedList[0].downloadSize, queuedList[0].name, queuedList[0].downloadAction);
+            }
+            else if (!running)
+            {
+                DownloadPB.Value = 0;
+                var downloadCompleteSettings = LegendaryLibrary.GetSettings().DoActionAfterDownloadComplete;
+                switch (downloadCompleteSettings)
+                {
+                    case (int)DownloadCompleteAction.ShutDown:
+                        Process.Start("shutdown", "/s /t 0");
+                        break;
+                    case (int)DownloadCompleteAction.Reboot:
+                        Process.Start("shutdown", "/r /t 0");
+                        break;
+                    case (int)DownloadCompleteAction.Hibernate:
+                        Playnite.Native.Powrprof.SetSuspendState(true, true, false);
+                        break;
+                    case (int)DownloadCompleteAction.Sleep:
+                        Playnite.Native.Powrprof.SetSuspendState(false, true, false);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        public async Task EnqueueJob(string gameID, string installPath, string downloadSize, string installSize, string gameTitle, int downloadAction)
+        {
+            var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameID);
+            if (wantedItem == null)
+            {
+                DateTimeOffset now = DateTime.UtcNow;
+                downloadManagerData.downloads.Add(new DownloadManagerData.Download
+                { gameID = gameID, installPath = installPath, downloadSize = downloadSize, installSize = installSize, name = gameTitle, status = (int)DownloadStatus.Queued, addedTime = now.ToUnixTimeSeconds(), downloadAction = downloadAction });
+                SaveData();
+            }
+            else
+            {
+                wantedItem.status = (int)DownloadStatus.Queued;
+                SaveData();
+            }
+            var running = downloadManagerData.downloads.Any(item => item.status == (int)DownloadStatus.Running);
+            if (!running)
+            {
+                await Install(gameID, installPath, downloadSize, gameTitle, downloadAction);
+            }
+            foreach (DownloadManagerData.Download download in downloadManagerData.downloads)
+            {
+                download.PropertyChanged -= DoNextJobInQueue;
+                download.PropertyChanged += DoNextJobInQueue;
+            }
+        }
+
+        public async Task Install(string gameID, string installPath, string downloadSize, string gameTitle, int downloadAction)
+        {
+            var installCommand = new List<string>() { "-y", "install", gameID, "--base-path", installPath };
+            var settings = LegendaryLibrary.GetSettings();
+            if (settings.PreferredCDN != "")
+            {
+                installCommand.AddRange(new[] { "--preferred-cdn", settings.PreferredCDN });
             }
             if (settings.NoHttps)
             {
-                installCommand += " --no-https";
+                installCommand.Add("--no-https");
             }
             if (settings.MaxWorkers != 0)
             {
-                installCommand += " --max-workers " + settings.MaxWorkers;
+                installCommand.AddRange(new[] { "--max-workers", settings.MaxWorkers.ToString() });
             }
             if (settings.MaxSharedMemory != 0)
             {
-                installCommand += " --max-shared-memory " + settings.MaxSharedMemory;
+                installCommand.AddRange(new[] { "--max-shared-memory", settings.MaxSharedMemory.ToString() });
+            }
+            if (downloadAction == (int)DownloadAction.Repair)
+            {
+                installCommand.Add("--repair");
             }
             if (gameID == "eos-overlay")
             {
-                installCommand = "-y eos-overlay install --path " + installPath;
+                installCommand = new List<string>() { "-y", "eos-overlay", "install", "--path", installPath };
             }
             installerCTS = new CancellationTokenSource();
             try
             {
                 var stdOutBuffer = new StringBuilder();
                 var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath).WithArguments(installCommand);
+                var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameID);
                 await foreach (CommandEvent cmdEvent in cmd.ListenAsync(installerCTS.Token))
                 {
                     switch (cmdEvent)
                     {
-                        case StandardErrorCommandEvent stdErr:
-                            var progressMatch = Regex.Match(stdErr.Text, @"Progress: (\d.*%)");
-                            if (progressMatch.Length >= 2)
-                            {
-                                double progress = double.Parse(progressMatch.Groups[1].Value.Replace("%", ""), CultureInfo.InvariantCulture);
-                                DownloadPB.Value = progress;
-                            }
-                            var ETAMatch = Regex.Match(stdErr.Text, @"ETA: (\d\d:\d\d:\d\d)");
-                            if (ETAMatch.Length >= 2)
-                            {
-                                EtaTB.Text = ETAMatch.Groups[1].Value;
-                            }
-                            var elapsedMatch = Regex.Match(stdErr.Text, @"Running for (\d\d:\d\d:\d\d)");
-                            if (elapsedMatch.Length >= 2)
-                            {
-                                ElapsedTB.Text = elapsedMatch.Groups[1].Value;
-                            }
-                            var downloadedMatch = Regex.Match(stdErr.Text, @"Downloaded: (\S+.) MiB");
-                            if (downloadedMatch.Length >= 2)
-                            {
-                                string downloaded = Helpers.FormatSize(double.Parse(downloadedMatch.Groups[1].Value, CultureInfo.InvariantCulture) * 1024 * 1024);
-                                DownloadedTB.Text = downloaded + " / " + downloadSize;
-                            }
-                            var downloadSpeedMatch = Regex.Match(stdErr.Text, @"Download\t- (\S+.) MiB");
-                            if (downloadSpeedMatch.Length >= 2)
-                            {
-                                string downloadSpeed = Helpers.FormatSize(double.Parse(downloadSpeedMatch.Groups[1].Value, CultureInfo.InvariantCulture) * 1024 * 1024);
-                                DownloadSpeedTB.Text = downloadSpeed + "/s";
-                            }
-                            var fullInstallPathMatch = Regex.Match(stdErr.Text, @"Install path: (\S+)");
-                            if (fullInstallPathMatch.Length >= 2)
-                            {
-                                fullInstallPath = fullInstallPathMatch.Groups[1].Value;
-                            }
-                            stdOutBuffer.AppendLine("[Legendary]: " + stdErr);
-                            break;
-                        case ExitedCommandEvent exited:
-                            if (exited.ExitCode == 0)
-                            {
-                                _ = (Application.Current.Dispatcher?.BeginInvoke((Action)delegate
-                                {
-                                    var installed = LegendaryLauncher.GetInstalledAppList();
-                                    if (installed != null)
-                                    {
-                                        foreach (KeyValuePair<string, Installed> app in installed)
-                                        {
-                                            if (app.Value.App_name == gameID)
-                                            {
-                                                var installInfo = new GameInstallationData
-                                                {
-                                                    InstallDirectory = app.Value.Install_path
-                                                };
-
-                                                LegendaryInstallController.CompleteInstall(new GameInstalledEventArgs(installInfo));
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }));
-                                Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), gameTitle, ResourceProvider.GetString(LOC.LegendaryInstallationFinished), null);
-                            }
-                            else if (exited.ExitCode != 0)
-                            {
-                                logger.Debug(stdOutBuffer.ToString());
-                                logger.Error("[Legendary] exit code: " + exited.ExitCode);
-                            }
-                            var downloadCompleteSettings = LegendaryLibrary.GetSettings().DoActionAfterDownloadComplete;
-                            if (downloadCompleteSettings == (int)DownloadCompleteAction.ShutDown)
-                            {
-                                Process.Start("shutdown", "/s /t 0");
-                            }
-                            else if (downloadCompleteSettings == (int)DownloadCompleteAction.Reboot)
-                            {
-                                Process.Start("shutdown", "/r /t 0");
-                            }
-                            else if (downloadCompleteSettings == (int)DownloadCompleteAction.Hibernate)
-                            {
-                                Playnite.Native.Powrprof.SetSuspendState(true, true, false);
-                            }
-                            else if (downloadCompleteSettings == (int)DownloadCompleteAction.Sleep)
-                            {
-                                Playnite.Native.Powrprof.SetSuspendState(false, true, false);
-                            }
-                            installerCTS?.Dispose();
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                // Command was canceled
-            }
-        }
-
-
-        private async void PauseBtn_IsCheckedChanged(object sender, RoutedEventArgs e)
-        {
-            if (PauseBtn.IsChecked == true)
-            {
-                installerCTS?.Cancel();
-                installerCTS?.Dispose();
-                PauseBtn.Content = ResourceProvider.GetString(LOC.LegendaryResumeDownload);
-                EtaTB.Text = ResourceProvider.GetString(LOC.LegendaryDownloadPaused);
-            }
-            else
-            {
-                PauseBtn.Content = ResourceProvider.GetString(LOC.LegendaryPauseDownload);
-                await Install(savedGameID, savedInstallPath, savedDownloadSize, savedGameTitle);
-            }
-        }
-
-        private void CancelDownloadBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (PauseBtn.IsChecked == false)
-            {
-                installerCTS?.Cancel();
-                installerCTS?.Dispose();
-            }
-            var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", savedGameID + ".resume");
-            if (File.Exists(resumeFile))
-            {
-                File.Delete(resumeFile);
-            }
-            if (fullInstallPath != null)
-            {
-                if (Directory.Exists(fullInstallPath))
-                {
-                    Directory.Delete(fullInstallPath, true);
-                }
-            }
-        }
-
-        public async Task Repair(string gameID, string downloadSize, string gameTitle)
-        {
-            installerCTS = new CancellationTokenSource();
-            try
-            {
-                var stdOutBuffer = new StringBuilder();
-                var repairCmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                   .WithArguments(new[] { "-y", "repair", gameID })
-                                   .WithValidation(CommandResultValidation.None);
-                await foreach (var cmdEvent in repairCmd.ListenAsync(installerCTS.Token))
-                {
-                    switch (cmdEvent)
-                    {
                         case StartedCommandEvent started:
+                            wantedItem.status = (int)DownloadStatus.Running;
+                            DownloadPB.Value = 0;
+                            EtaTB.Text = "";
+                            ElapsedTB.Text = "";
+                            DownloadedTB.Text = "";
+                            DownloadSpeedTB.Text = "";
                             break;
                         case StandardErrorCommandEvent stdErr:
                             var verificationProgressMatch = Regex.Match(stdErr.Text, @"Verification progress:.*\((\d.*%)");
@@ -284,6 +234,10 @@ namespace LegendaryLibraryNS
                         case ExitedCommandEvent exited:
                             if (exited.ExitCode == 0)
                             {
+                                wantedItem.status = (int)DownloadStatus.Completed;
+                                DateTimeOffset now = DateTime.UtcNow;
+                                wantedItem.completedTime = now.ToUnixTimeSeconds();
+                                SaveData();
                                 _ = (Application.Current.Dispatcher?.BeginInvoke((Action)delegate
                                 {
                                     var installed = LegendaryLauncher.GetInstalledAppList();
@@ -298,13 +252,18 @@ namespace LegendaryLibraryNS
                                                     InstallDirectory = app.Value.Install_path
                                                 };
 
-                                                LegendaryInstallController.CompleteInstall(new GameInstalledEventArgs(installInfo));
+                                                var game = playniteAPI.Database.Games.FirstOrDefault(
+                                                    item => item.PluginId == LegendaryLibrary.Instance.Id && item.GameId == gameID);
+                                                game.InstallDirectory = app.Value.Install_path;
+                                                game.Version = app.Value.Version;
+                                                game.IsInstalled = true;
+                                                playniteAPI.Database.Games.Update(game);
                                                 break;
                                             }
                                         }
                                     }
                                 }));
-                                Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), gameTitle, ResourceProvider.GetString(LOC.LegendaryImportFinished), null);
+                                Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), gameTitle, ResourceProvider.GetString(LOC.LegendaryInstallationFinished), null);
                             }
                             else if (exited.ExitCode != 0)
                             {
@@ -313,12 +272,108 @@ namespace LegendaryLibraryNS
                             }
                             installerCTS?.Dispose();
                             break;
+                        default:
+                            break;
                     }
                 }
             }
             catch (OperationCanceledException)
             {
                 // Command was canceled
+            }
+        }
+
+        private void PauseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (downloadsDG.SelectedIndex != -1)
+            {
+                foreach (var selectedRow in downloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
+                {
+                    if (selectedRow.status == (int)DownloadStatus.Running ||
+                        selectedRow.status == (int)DownloadStatus.Queued)
+                    {
+                        if (selectedRow.status == (int)DownloadStatus.Running)
+                        {
+                            installerCTS?.Cancel();
+                            installerCTS?.Dispose();
+                            EtaTB.Text = ResourceProvider.GetString(LOC.LegendaryDownloadPaused);
+                        }
+                        selectedRow.status = (int)DownloadStatus.Paused;
+                        SaveData();
+                    }
+                }
+            }
+        }
+
+        private async void ResumeDownloadBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (downloadsDG.SelectedIndex != -1)
+            {
+                foreach (var selectedRow in downloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
+                {
+                    if (selectedRow.status == (int)DownloadStatus.Stopped ||
+                        selectedRow.status == (int)DownloadStatus.Paused)
+                    {
+                        await EnqueueJob(selectedRow.gameID, selectedRow.installPath, selectedRow.downloadSize, selectedRow.installSize, selectedRow.name, selectedRow.downloadAction);
+                    }
+                }
+            }
+        }
+
+        private void CancelDownloadBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (downloadsDG.SelectedIndex != -1)
+            {
+                foreach (var selectedRow in downloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
+                {
+                    if (selectedRow.status == (int)DownloadStatus.Running ||
+                        selectedRow.status == (int)DownloadStatus.Queued ||
+                        selectedRow.status == (int)DownloadStatus.Paused)
+                    {
+                        if (selectedRow.status != (int)DownloadStatus.Paused)
+                        {
+                            installerCTS?.Cancel();
+                            installerCTS?.Dispose();
+                        }
+                        var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", selectedRow.gameID + ".resume");
+                        if (File.Exists(resumeFile))
+                        {
+                            File.Delete(resumeFile);
+                        }
+                        var repairFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", selectedRow.gameID + ".repair");
+                        if (File.Exists(repairFile))
+                        {
+                            File.Delete(repairFile);
+                        }
+                        if (fullInstallPath != null)
+                        {
+                            if (Directory.Exists(fullInstallPath))
+                            {
+                                Directory.Delete(fullInstallPath, true);
+                            }
+                        }
+                        selectedRow.status = (int)DownloadStatus.Stopped;
+                        SaveData();
+                    }
+                }
+            }
+        }
+
+        private void RemoveDownloadBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (downloadsDG.SelectedIndex != -1)
+            {
+                foreach (var selectedRow in downloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
+                {
+                    var result = playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryRemoveEntryConfirm), selectedRow.name), ResourceProvider.GetString(LOC.LegendaryRemoveEntry), MessageBoxButton.YesNo);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == selectedRow.gameID);
+                        wantedItem.PropertyChanged -= DoNextJobInQueue;
+                        downloadManagerData.downloads.Remove(selectedRow);
+                        SaveData();
+                    }
+                }
             }
         }
 

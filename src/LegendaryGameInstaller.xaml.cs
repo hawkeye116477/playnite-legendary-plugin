@@ -1,6 +1,7 @@
 ﻿using CliWrap;
 using CliWrap.Buffered;
 using CliWrap.EventStream;
+using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
 using Playnite.Common;
 using Playnite.SDK;
@@ -38,6 +39,7 @@ namespace LegendaryLibraryNS
         private IPlayniteAPI playniteAPI = API.Instance;
         public string installCommand;
         public string downloadSize;
+        public string installSize;
 
         public LegendaryGameInstaller()
         {
@@ -75,9 +77,10 @@ namespace LegendaryLibraryNS
             {
                 installPath = Path.Combine(SelectedGamePathTxt.Text, ".overlay");
             }
+            playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp));
             InstallerWindow.Close();
             LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
-            await downloadManager.Install(GameID, installPath, downloadSize, InstallerWindow.Title);
+            await downloadManager.EnqueueJob(GameID, installPath, downloadSize, installSize, InstallerWindow.Title, (int)DownloadAction.Install);
         }
 
         private async void ImportBtn_Click(object sender, RoutedEventArgs e)
@@ -96,7 +99,7 @@ namespace LegendaryLibraryNS
                                          .ExecuteBufferedAsync();
                 if (importCmd.StandardError.Contains("has been imported"))
                 {
-                    await downloadManager.Repair(GameID, downloadSize, InstallerWindow.Title);
+                    await downloadManager.EnqueueJob(GameID, path, downloadSize, installSize, InstallerWindow.Title, (int)DownloadAction.Repair);
                 }
                 else
                 {
@@ -126,7 +129,8 @@ namespace LegendaryLibraryNS
                     var manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>(result.StandardOutput);
                     downloadSize = Helpers.FormatSize(manifest.Manifest.Download_size);
                     DownloadSizeTB.Text = downloadSize;
-                    InstallSizeTB.Text = Helpers.FormatSize(manifest.Manifest.Disk_size);
+                    installSize = Helpers.FormatSize(manifest.Manifest.Disk_size);
+                    InstallSizeTB.Text = installSize;
                 }
             }
             else
@@ -150,7 +154,8 @@ namespace LegendaryLibraryNS
                     if (line.Contains("Install size:"))
                     {
                         var installSizeValue = double.Parse(line.Substring(line.IndexOf("Install size:") + 14).Replace(" MiB", ""), CultureInfo.InvariantCulture) * 1024 * 1024;
-                        InstallSizeTB.Text = Helpers.FormatSize(installSizeValue);
+                        installSize = Helpers.FormatSize(installSizeValue);
+                        InstallSizeTB.Text = installSize;
                     }
                 }
             }
