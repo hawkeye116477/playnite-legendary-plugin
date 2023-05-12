@@ -121,7 +121,14 @@ namespace LegendaryLibraryNS
                                       .ExecuteBufferedAsync();
                 if (result.ExitCode != 0)
                 {
-                    logger.Error(result.StandardError);
+                    logger.Error("[Legendary]" + result.StandardError);
+                    if (result.StandardError.Contains("Log in failed"))
+                    {
+                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), ResourceProvider.GetString("LOCLoginRequired")));
+                    } else
+                    {
+                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), result.StandardError));
+                    }
                     Window.GetWindow(this).Close();
                 }
                 else

@@ -435,13 +435,6 @@ namespace LegendaryLibraryNS
 
         public override void OnGameStarting(OnGameStartingEventArgs args)
         {
-            if (!SettingsViewModel.IsUserLoggedIn && !GetSettings().LaunchOffline)
-            {
-                PlayniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOCLoginRequired"));
-                args.CancelStartup = true;
-                return;
-            }
-
             SyncGameSaves(args.Game.Name, args.Game.GameId, args.Game.InstallDirectory, true);
         }
 
