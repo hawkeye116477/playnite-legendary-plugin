@@ -25,6 +25,7 @@ using LegendaryLibraryNS.Enums;
 using Playnite.SDK.Data;
 using Playnite.Common;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace LegendaryLibraryNS
 {
@@ -33,7 +34,7 @@ namespace LegendaryLibraryNS
     /// </summary>
     public partial class LegendaryDownloadManager : UserControl
     {
-        private CancellationTokenSource installerCTS;
+        public CancellationTokenSource installerCTS;
         private ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI playniteAPI = API.Instance;
         private string fullInstallPath;
@@ -43,6 +44,16 @@ namespace LegendaryLibraryNS
         {
             InitializeComponent();
             LoadSavedData();
+            var runningAndQueuedDownloads = downloadManagerData.downloads.Where(i => i.status == (int)DownloadStatus.Running
+                                                                                     || i.status == (int)DownloadStatus.Queued).ToList();
+            if (runningAndQueuedDownloads.Count > 0)
+            {
+                foreach (var download in runningAndQueuedDownloads)
+                {
+                    download.status = (int)DownloadStatus.Paused;
+                }
+            }
+            SaveData();
         }
 
         public RelayCommand<object> NavigateBackCommand
@@ -68,7 +79,7 @@ namespace LegendaryLibraryNS
             {
                 downloadManagerData = Serialization.FromJson<DownloadManagerData.Rootobject>(FileSystem.ReadFileAsStringSafe(dataFile));
             }
-            downloadsDG.ItemsSource = downloadManagerData.downloads;
+            DownloadsDG.ItemsSource = downloadManagerData.downloads;
             return downloadManagerData;
         }
 
@@ -84,7 +95,7 @@ namespace LegendaryLibraryNS
             File.WriteAllText(dataFile, strConf);
         }
 
-        public async void DoNextJobInQueue(object _, System.ComponentModel.PropertyChangedEventArgs arg)
+        public async void DoNextJobInQueue(object _, PropertyChangedEventArgs arg)
         {
             var running = downloadManagerData.downloads.Any(item => item.status == (int)DownloadStatus.Running);
             var queuedList = downloadManagerData.downloads.Where(i => i.status == (int)DownloadStatus.Queued).ToList();
@@ -285,9 +296,9 @@ namespace LegendaryLibraryNS
 
         private void PauseBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (downloadsDG.SelectedIndex != -1)
+            if (DownloadsDG.SelectedIndex != -1)
             {
-                foreach (var selectedRow in downloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
+                foreach (var selectedRow in DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
                 {
                     if (selectedRow.status == (int)DownloadStatus.Running ||
                         selectedRow.status == (int)DownloadStatus.Queued)
@@ -307,11 +318,11 @@ namespace LegendaryLibraryNS
 
         private async void ResumeDownloadBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (downloadsDG.SelectedIndex != -1)
+            if (DownloadsDG.SelectedIndex != -1)
             {
-                foreach (var selectedRow in downloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
+                foreach (var selectedRow in DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
                 {
-                    if (selectedRow.status == (int)DownloadStatus.Stopped ||
+                    if (selectedRow.status == (int)DownloadStatus.Canceled ||
                         selectedRow.status == (int)DownloadStatus.Paused)
                     {
                         await EnqueueJob(selectedRow.gameID, selectedRow.installPath, selectedRow.downloadSize, selectedRow.installSize, selectedRow.name, selectedRow.downloadAction);
@@ -322,15 +333,15 @@ namespace LegendaryLibraryNS
 
         private void CancelDownloadBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (downloadsDG.SelectedIndex != -1)
+            if (DownloadsDG.SelectedIndex != -1)
             {
-                foreach (var selectedRow in downloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
+                foreach (var selectedRow in DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
                 {
                     if (selectedRow.status == (int)DownloadStatus.Running ||
                         selectedRow.status == (int)DownloadStatus.Queued ||
                         selectedRow.status == (int)DownloadStatus.Paused)
                     {
-                        if (selectedRow.status != (int)DownloadStatus.Paused)
+                        if (selectedRow.status == (int)DownloadStatus.Running)
                         {
                             installerCTS?.Cancel();
                             installerCTS?.Dispose();
@@ -352,7 +363,7 @@ namespace LegendaryLibraryNS
                                 Directory.Delete(fullInstallPath, true);
                             }
                         }
-                        selectedRow.status = (int)DownloadStatus.Stopped;
+                        selectedRow.status = (int)DownloadStatus.Canceled;
                         SaveData();
                     }
                 }
@@ -361,19 +372,82 @@ namespace LegendaryLibraryNS
 
         private void RemoveDownloadBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (downloadsDG.SelectedIndex != -1)
+            if (DownloadsDG.SelectedIndex != -1)
             {
-                foreach (var selectedRow in downloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
+                foreach (var selectedRow in DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
                 {
                     var result = playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryRemoveEntryConfirm), selectedRow.name), ResourceProvider.GetString(LOC.LegendaryRemoveEntry), MessageBoxButton.YesNo);
                     if (result == MessageBoxResult.Yes)
                     {
                         var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == selectedRow.gameID);
                         wantedItem.PropertyChanged -= DoNextJobInQueue;
+                        if (wantedItem.status != (int)DownloadStatus.Completed &&
+                            wantedItem.status != (int)DownloadStatus.Canceled)
+                        {
+                            if (wantedItem.status == (int)DownloadStatus.Running)
+                            {
+                                installerCTS?.Cancel();
+                                installerCTS?.Dispose();
+                            }
+                            selectedRow.status = (int)DownloadStatus.Canceled;
+                        }
+                        var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", selectedRow.gameID + ".resume");
+                        if (File.Exists(resumeFile))
+                        {
+                            File.Delete(resumeFile);
+                        }
+                        var repairFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", selectedRow.gameID + ".repair");
+                        if (File.Exists(repairFile))
+                        {
+                            File.Delete(repairFile);
+                        }
+                        if (fullInstallPath != null)
+                        {
+                            if (Directory.Exists(fullInstallPath))
+                            {
+                                Directory.Delete(fullInstallPath, true);
+                            }
+                        }
                         downloadManagerData.downloads.Remove(selectedRow);
                         SaveData();
                     }
                 }
+            }
+        }
+
+        private void FilterDownloadBtn_Checked(object sender, RoutedEventArgs e)
+        {
+            FilterPop.IsOpen = true;
+        }
+
+        private void FilterDownloadBtn_Unchecked(object sender, RoutedEventArgs e)
+        {
+            FilterPop.IsOpen = false;
+        }
+
+        private void DownloadFiltersChk_IsCheckedChanged(object sender, RoutedEventArgs e)
+        {
+            ICollectionView downloadsView = CollectionViewSource.GetDefaultView(downloadManagerData.downloads);
+            var checkedStatus = new List<int>();
+            foreach (CheckBox checkBox in FilterStatusSP.Children)
+            {
+                var downloadStatus = (int)Enum.Parse(typeof(DownloadStatus), checkBox.Name.Replace("Chk", ""));
+                if (checkBox.IsChecked == true)
+                {
+                    checkedStatus.Add(downloadStatus);
+                }
+                else
+                {
+                    checkedStatus.Remove(downloadStatus);
+                }
+            }
+            if (checkedStatus.Count > 0)
+            {
+                downloadsView.Filter = item => checkedStatus.Contains((item as DownloadManagerData.Download).status);
+            }
+            else
+            {
+                downloadsView.Filter = null;
             }
         }
 

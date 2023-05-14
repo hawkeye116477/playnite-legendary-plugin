@@ -23,8 +23,8 @@ namespace LegendaryLibraryNS.Converters
                 case (int)DownloadStatus.Running:
                     value = ResourceProvider.GetString(LOC.LegendaryDownloadRunning);
                     break;
-                case (int)DownloadStatus.Stopped:
-                    value = ResourceProvider.GetString(LOC.LegendaryDownloadStopped);
+                case (int)DownloadStatus.Canceled:
+                    value = ResourceProvider.GetString(LOC.LegendaryDownloadCanceled);
                     break;
                 case (int)DownloadStatus.Paused:
                     value = ResourceProvider.GetString(LOC.LegendaryDownloadPaused);

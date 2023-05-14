@@ -11,7 +11,7 @@ namespace LegendaryLibraryNS.Enums
         Queued,
         Running,
         Paused,
-        Stopped,
+        Canceled,
         Completed
     }
 }

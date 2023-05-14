@@ -48,15 +48,17 @@
                        Margin="10,0,0,0" FontSize="18"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Button x:Name="ResumeDownloadBtn" Content="&#xec74;" ToolTip="{DynamicResource LOCLegendaryResumeDownload}" FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0" Click="ResumeDownloadBtn_Click" />
-            <Button x:Name="PauseBtn" ToolTip="{DynamicResource LOCLegendaryPauseDownload}" Content="&#xec72;" FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="PauseBtn_Click" Margin="0,0,5,0" />
+            <Button x:Name="ResumeDownloadBtn" Content="&#xec74;" ToolTip="{DynamicResource LOCLegendaryResumeDownload}" FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="ResumeDownloadBtn_Click" />
+            <Button x:Name="PauseBtn" ToolTip="{DynamicResource LOCLegendaryPauseDownload}" Content="&#xec72;" FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="PauseBtn_Click" Margin="5,0,0,0" />
             <Button x:Name="CancelDownloadBtn" Content="&#xec73;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCCancelLabel}"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0" IsCancel="True" Click="CancelDownloadBtn_Click" />
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5,0,0,0" IsCancel="True" Click="CancelDownloadBtn_Click" />
             <Button x:Name="RemoveDownloadBtn" Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendaryRemoveEntry}"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0" Click="RemoveDownloadBtn_Click" />
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5,0,0,0" Click="RemoveDownloadBtn_Click" />
+            <ToggleButton x:Name="FilterDownloadBtn" Content="&#xef29;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCFilters}"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5,0,0,0" Checked="FilterDownloadBtn_Checked" Unchecked="FilterDownloadBtn_Unchecked" />
         </StackPanel>
         <Separator Grid.Row="2" Grid.ColumnSpan="2" Margin="0,5,0,5"></Separator>
-        <DataGrid x:Name="downloadsDG" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Margin="0,0,0,10" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="2" ColumnWidth="*" CanUserSortColumns="True" CanUserResizeColumns="True">
+        <DataGrid x:Name="DownloadsDG" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Margin="0,0,0,10" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="2" ColumnWidth="*" CanUserSortColumns="True" CanUserResizeColumns="True" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{DynamicResource LOCGameNameTitle}" Binding="{Binding name}"></DataGridTextColumn>
                 <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloadStatus}" Binding="{Binding status, Converter={StaticResource DownloadStatusEnumToStringConverter}}"/>
@@ -66,6 +68,45 @@
                 <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloadCompletedColumn}" Binding="{Binding completedTime, Converter={StaticResource LongToDateConverter}, StringFormat='dd.MM.yyyy HH:mm:ss'}"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Popup Name="FilterPop" HorizontalAlignment="Left" VerticalAlignment="Top" IsOpen="False" Grid.Row="3" Grid.Column="2" Placement="MousePoint" AllowsTransparency="False" AllowDrop="False" Margin="0" HorizontalOffset="20">
+            <Border Margin="0 0 0 0">
+                <Border.Effect>
+                    <DropShadowEffect />
+                </Border.Effect>
+                <StackPanel Margin="10" Name="FilterStatusSP">
+                    <CheckBox DockPanel.Dock="Top"
+                              Margin="0,0,0,0"
+                              Content="{DynamicResource LOCLegendaryDownloadRunning}"
+                              Name="RunningChk"
+                              Checked="DownloadFiltersChk_IsCheckedChanged"
+                              Unchecked="DownloadFiltersChk_IsCheckedChanged" />
+                    <CheckBox DockPanel.Dock="Top"
+                              Margin="0,5,0,0"
+                              Content="{DynamicResource LOCLegendaryDownloadQueued}"
+                              Name="QueuedChk"
+                              Checked="DownloadFiltersChk_IsCheckedChanged"
+                              Unchecked="DownloadFiltersChk_IsCheckedChanged"/>
+                    <CheckBox DockPanel.Dock="Top"
+                              Margin="0,5,0,0"
+                              Content="{DynamicResource LOCLegendaryDownloadPaused}"
+                              Name="PausedChk"
+                              Checked="DownloadFiltersChk_IsCheckedChanged"
+                              Unchecked="DownloadFiltersChk_IsCheckedChanged"/>
+                    <CheckBox DockPanel.Dock="Top"
+                              Margin="0,5,0,0"
+                              Content="{DynamicResource LOCLegendaryDownloadCanceled}"
+                              Name="StoppedChk"
+                              Checked="DownloadFiltersChk_IsCheckedChanged"
+                              Unchecked="DownloadFiltersChk_IsCheckedChanged"/>
+                    <CheckBox DockPanel.Dock="Top"
+                              Margin="0,5,0,0"
+                              Content="{DynamicResource LOCLegendaryDownloadCompleted}"
+                              Name="CompletedChk"
+                              Checked="DownloadFiltersChk_IsCheckedChanged"
+                              Unchecked="DownloadFiltersChk_IsCheckedChanged"/>
+                </StackPanel>
+            </Border>
+        </Popup>
 
         <Separator Grid.Row="4" Grid.ColumnSpan="2" Margin="0,15,0,5"></Separator>
         <TextBlock Text="{DynamicResource LOCLegendaryCurrentDownloadSummary}" Grid.Row="5" Margin="0,0,0,5" VerticalAlignment="Bottom"></TextBlock>
@@ -76,11 +117,11 @@
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="7" Grid.Column="0" Margin="0,0,0,5" VerticalAlignment="Top">
             <TextBlock Text="{DynamicResource LOCLegendaryDownloadSpeed}"></TextBlock>
-            <TextBlock Name="DownloadSpeedTB" HorizontalAlignment="Left" Margin="5,0,0,0"></TextBlock>
+            <TextBlock Name="DownloadSpeedTB" HorizontalAlignment="Left" Margin="5,0,30,0"></TextBlock>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="8" Grid.Column="0" Margin="0,0,0,5" VerticalAlignment="Top">
             <TextBlock Text="{DynamicResource LOCLegendaryDownloaded}"></TextBlock>
-            <TextBlock Name="DownloadedTB" HorizontalAlignment="Left" Margin="5,0,0,0"></TextBlock>
+            <TextBlock Name="DownloadedTB" HorizontalAlignment="Left" Margin="5,0,30,0"></TextBlock>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="7" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Top">
             <TextBlock Text="{DynamicResource LOCLegendaryElapsed}"></TextBlock>

@@ -77,10 +77,18 @@ namespace LegendaryLibraryNS
             {
                 installPath = Path.Combine(SelectedGamePathTxt.Text, ".overlay");
             }
-            playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp));
-            InstallerWindow.Close();
             LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
-            await downloadManager.EnqueueJob(GameID, installPath, downloadSize, installSize, InstallerWindow.Title, (int)DownloadAction.Install);
+            InstallerWindow.Close();
+            var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == GameID);
+            if (wantedItem != null)
+            {
+                playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), wantedItem.name));
+            }
+            else
+            {
+                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp));
+                await downloadManager.EnqueueJob(GameID, installPath, downloadSize, installSize, InstallerWindow.Title, (int)DownloadAction.Install);
+            }
         }
 
         private async void ImportBtn_Click(object sender, RoutedEventArgs e)
@@ -125,7 +133,8 @@ namespace LegendaryLibraryNS
                     if (result.StandardError.Contains("Log in failed"))
                     {
                         playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), ResourceProvider.GetString("LOCLoginRequired")));
-                    } else
+                    }
+                    else
                     {
                         playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), result.StandardError));
                     }

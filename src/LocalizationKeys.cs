@@ -234,9 +234,9 @@ namespace System
         /// </summary>
         public const string LegendaryDownloadRunning = "LOCLegendaryDownloadRunning";
         /// <summary>
-        /// Stopped
+        /// Canceled
         /// </summary>
-        public const string LegendaryDownloadStopped = "LOCLegendaryDownloadStopped";
+        public const string LegendaryDownloadCanceled = "LOCLegendaryDownloadCanceled";
         /// <summary>
         /// Completed
         /// </summary>
@@ -265,5 +265,9 @@ namespace System
         /// Legendary Panel
         /// </summary>
         public const string LegendaryPanel = "LOCLegendaryPanel";
+        /// <summary>
+        /// {0} is already in the download list. You can see status of the download by accessing Legendary Panel via Menu => View or sidebar.
+        /// </summary>
+        public const string LegendaryDownloadAlreadyExists = "LOCLegendaryDownloadAlreadyExists";
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CliWrap;
 using CliWrap.EventStream;
+using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
 using Playnite.Common;
@@ -452,6 +453,26 @@ namespace LegendaryLibraryNS
                 Type = SiderbarItemType.View,
                 Opened = () => GetLegendaryDownloadManager()
             };
+        }
+
+        public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
+        {
+            LegendaryDownloadManager downloadManager = GetLegendaryDownloadManager();
+            var runningAndQueuedDownloads = downloadManager.downloadManagerData.downloads.Where(i => i.status == (int)DownloadStatus.Running
+                                                                                                     || i.status == (int)DownloadStatus.Queued).ToList();
+            if (runningAndQueuedDownloads.Count > 0)
+            {
+                foreach (var download in runningAndQueuedDownloads)
+                {
+                    if (download.status == (int)DownloadStatus.Running)
+                    {
+                        downloadManager.installerCTS?.Cancel();
+                        downloadManager.installerCTS?.Dispose();
+                    }
+                    download.status = (int)DownloadStatus.Paused;
+                }
+                downloadManager.SaveData();
+            }
         }
 
     }
