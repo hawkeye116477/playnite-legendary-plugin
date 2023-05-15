@@ -269,5 +269,17 @@ namespace System
         /// {0} is already in the download list. You can see status of the download by accessing Legendary Panel via Menu => View or sidebar.
         /// </summary>
         public const string LegendaryDownloadAlreadyExists = "LOCLegendaryDownloadAlreadyExists";
+        /// <summary>
+        /// Repair
+        /// </summary>
+        public const string LegendaryRepair = "LOCLegendaryRepair";
+        /// <summary>
+        /// Advanced Options
+        /// </summary>
+        public const string LegendaryAdvancedOptions = "LOCLegendaryAdvancedOptions";
+        /// <summary>
+        /// Enable reordering optimization
+        /// </summary>
+        public const string LegendaryEnableReordering = "LOCLegendaryEnableReordering";
     }
 }

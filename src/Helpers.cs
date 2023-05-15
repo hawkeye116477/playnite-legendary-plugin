@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LegendaryLibraryNS
 {
-    class Helpers
+    public class Helpers
     {
         static readonly string[] suffixes = { "B", "KB", "MB", "GB", "TB" };
         public static string FormatSize(double size)
@@ -19,6 +20,23 @@ namespace LegendaryLibraryNS
                 i++;
             }
             return string.Format("{0:n2} {1}", number, suffixes[i]);
+        }
+
+        public static int TotalRAM
+        {
+            get
+            {
+                ObjectQuery wql = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher(wql);
+                ManagementObjectCollection results = searcher.Get();
+                double ram = 0.0;
+                foreach (ManagementObject result in results)
+                {
+                    ram = Convert.ToDouble(result["TotalVisibleMemorySize"].ToString().Replace("KB", ""));
+                }
+                ram = Math.Round(ram / 1024);
+                return Convert.ToInt32(ram);
+            }
         }
     }
 }

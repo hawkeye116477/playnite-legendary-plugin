@@ -7,13 +7,14 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:pcon="clr-namespace:Playnite.Converters"
     xmlns:pcmd="clr-namespace:Playnite.Commands"
-    mc:Ignorable="d" d:DesignHeight="420" d:DesignWidth="600" Name="LegendarySettingsUC"
+    mc:Ignorable="d" d:DesignHeight="440" d:DesignWidth="600" Name="LegendarySettingsUC"
     Loaded="LegendarySettingsUC_Loaded">
 
     <UserControl.Resources>
         <pcon:NegateConverter x:Key="NegateConverter" />
         <sys:Boolean x:Key="True">True</sys:Boolean>
         <sys:Boolean x:Key="False">False</sys:Boolean>
+        <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
     </UserControl.Resources>
     <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled"
         HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
@@ -23,7 +24,7 @@
                     Margin="0,0,0,2"></TextBlock>
                 <DockPanel Margin="0,0,0,10">
                     <Button DockPanel.Dock="Right" Padding="5" Margin="5 0 0 0"
-                        Content="&#128193;" Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" />
+                        Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" Content="&#xec5b;" FontFamily="{DynamicResource FontIcoFont}"/>
                     <TextBox Name="SelectedGamePathTxt"
                         Text="{Binding Settings.GamesInstallationPath, UpdateSourceTrigger=PropertyChanged}"
                         VerticalAlignment="Center" />
@@ -112,7 +113,7 @@
                     Content="{DynamicResource LOCLegendaryLauncherCustomPath}" Margin="0,5" />
                 <DockPanel IsEnabled="{Binding Settings.UseCustomLauncherPath}">
                     <Button Name="ChooseLauncherBtn" DockPanel.Dock="Right" Padding="5"
-                        Margin="5 0 0 0" Content="&#128193;" Click="ChooseLauncherBtn_Click" />
+                        Margin="5 0 0 0" Content="&#xec5b;" FontFamily="{DynamicResource FontIcoFont}" Click="ChooseLauncherBtn_Click" />
                     <TextBox
                         Text="{Binding Settings.SelectedLauncherPath, UpdateSourceTrigger=PropertyChanged}"
                         VerticalAlignment="Center" x:Name="SelectedLauncherPathTxt" />
@@ -132,24 +133,28 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <CheckBox Grid.Column="0" Grid.Row="0"
                             Content="{DynamicResource LOCLegendaryHttpOnlyDownload}"
-                            IsChecked="{Binding Settings.NoHttps}" Margin="0,0,0,5" />
+                            IsChecked="{Binding Settings.NoHttps}" Margin="0,0,0,10" />
+                        <CheckBox Grid.Column="0" Grid.Row="1"
+                            Content="{DynamicResource LOCLegendaryEnableReordering}"
+                            IsChecked="{Binding Settings.EnableReordering}" Margin="0,0,0,5"/>
                         <TextBlock Text="{DynamicResource LOCLegendaryMaxWorkers}" Grid.Column="0"
-                            Grid.Row="1" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        <local:NumericInput Grid.Row="1" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="16" Value="{Binding Settings.MaxWorkers}"/>
-                        <TextBlock Text="{DynamicResource LOCLegendaryMaxSharedMemory}" Grid.Column="0"
                             Grid.Row="2" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        <local:NumericInput Grid.Row="2" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="{Binding TotalRAM}" StepSize="128" Value="{Binding Settings.MaxSharedMemory}"/>
-                        <TextBlock Text="{DynamicResource LOCLegendaryPreferredCDN}" Grid.Column="0"
+                        <local:NumericInput Grid.Row="2" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="16" Value="{Binding Settings.MaxWorkers}"/>
+                        <TextBlock Text="{DynamicResource LOCLegendaryMaxSharedMemory}" Grid.Column="0"
                             Grid.Row="3" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        <local:NumericInput Grid.Row="3" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" Value="{Binding Settings.MaxSharedMemory}"/>
+                        <TextBlock Text="{DynamicResource LOCLegendaryPreferredCDN}" Grid.Column="0"
+                            Grid.Row="4" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         <TextBox
                             Text="{Binding Settings.PreferredCDN, UpdateSourceTrigger=PropertyChanged}"
-                            Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" />
-                        <TextBlock Grid.Column="0" Grid.Row="4"
+                            Grid.Column="1" Grid.Row="4" Margin="0,0,0,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" />
+                        <TextBlock Grid.Column="0" Grid.Row="5"
                             Text="{DynamicResource LOCLegendaryAfterDownloadComplete}" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"  />
-                        <ComboBox Grid.Column="1" Grid.Row="4" x:Name="AfterDownloadCompleteCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.DoActionAfterDownloadComplete}" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  Margin="0,0,0,5"/>
+                        <ComboBox Grid.Column="1" Grid.Row="5" x:Name="AfterDownloadCompleteCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.DoActionAfterDownloadComplete}" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  Margin="0,0,0,5"/>
                     </Grid>
                 </StackPanel>
                 <StackPanel Margin="0,20,0,0">

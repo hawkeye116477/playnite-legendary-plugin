@@ -8,13 +8,14 @@
     xmlns:pcon="clr-namespace:Playnite.Converters"
     xmlns:pcmd="clr-namespace:Playnite.Commands"
     mc:Ignorable="d" Name="LegendaryGameInstallerUC" Loaded="LegendaryGameInstallerUC_Loaded"
-    d:DesignHeight="220" d:DesignWidth="600">
+    d:DesignHeight="300" d:DesignWidth="600">
 
     <UserControl.Resources>
         <pcon:NegateConverter x:Key="NegateConverter" />
         <sys:Boolean x:Key="True">True</sys:Boolean>
         <sys:Boolean x:Key="False">False</sys:Boolean>
         <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}"/>
+        <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
     </UserControl.Resources>
     <DockPanel Margin="10">
         <Grid VerticalAlignment="Top" DockPanel.Dock="Top" Name="InstallerPage">
@@ -28,11 +29,12 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Text="{DynamicResource LOCGameInstallDirTitle}" Grid.Row="0"></TextBlock>
             <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,0,15">
-                <Button DockPanel.Dock="Right" Padding="5" Margin="5 0 0 0" Content="&#128193;"
-                    Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" />
+                <Button DockPanel.Dock="Right" Padding="5" Margin="5 0 0 0" Content="&#xec5b;"
+                    Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" FontFamily="{DynamicResource FontIcoFont}"/>
                 <TextBox Name="SelectedGamePathTxt" Text="" VerticalAlignment="Top" Margin="0,5" />
             </DockPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="0">
@@ -53,8 +55,32 @@
                 <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLoadingLabel}"
                     Margin="5,0,0,0" Name="SpaceTB" />
             </StackPanel>
+            <Border Grid.Row="4" Grid.Column="0" BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,15,0,0" Grid.ColumnSpan="2">
+                <Expander Header="{DynamicResource LOCLegendaryAdvancedOptions}" Margin="2" HorizontalAlignment="Left">
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <CheckBox Grid.Column="0" Grid.Row="0"
+                            Content="{DynamicResource LOCLegendaryEnableReordering}" Margin="0,0,0,5" Name="ReorderingChk"/>
+                        <TextBlock Text="{DynamicResource LOCLegendaryMaxWorkers}"
+                            Grid.Row="1" Grid.Column="0" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        <local:NumericInput Grid.Row="1" Grid.Column="1" Margin="15,0,0,5" MinValue="0" MaxValue="16" x:Name="MaxWorkersNI"/>
+                        <TextBlock Text="{DynamicResource LOCLegendaryMaxSharedMemory}" Grid.Row="2" Grid.Column="0" 
+                                   Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        <local:NumericInput Grid.Row="2" Grid.Column="1" Margin="15,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" x:Name="MaxSharedMemoryNI"/>
+                    </Grid>
+                </Expander>
+            </Border>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0"
-                VerticalAlignment="Bottom" Grid.Row="4" Grid.Column="2">
+                VerticalAlignment="Bottom" Grid.Row="5" Grid.Column="2">
                 <Button x:Name="CancelBtn" Content="{DynamicResource LOCCancelLabel}"
                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
                     Click="CancelBtn_Click" IsCancel="True" />

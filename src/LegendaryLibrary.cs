@@ -475,5 +475,23 @@ namespace LegendaryLibraryNS
             }
         }
 
+        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
+        {
+            foreach (var game in args.Games)
+            {
+                if (game.PluginId == Id)
+                {
+                    yield return new GameMenuItem
+                    {
+                        Description = ResourceProvider.GetString(LOC.LegendaryRepair),
+                        Action = async (args) =>
+                        {
+                            await GetLegendaryDownloadManager().EnqueueJob(game.GameId, "", "", "", game.Name, (int)DownloadAction.Repair, GetSettings().MaxWorkers, GetSettings().MaxSharedMemory, GetSettings().EnableReordering);
+                        }
+                    };
+                }
+            }
+        }
+
     }
 }

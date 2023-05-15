@@ -77,6 +77,17 @@ namespace LegendaryLibraryNS
             {
                 installPath = Path.Combine(SelectedGamePathTxt.Text, ".overlay");
             }
+            int maxWorkers = settings.MaxWorkers;
+            if (MaxWorkersNI.Value != "")
+            {
+                maxWorkers = int.Parse(MaxWorkersNI.Value);
+            }
+            int maxSharedMemory = settings.MaxSharedMemory;
+            if (MaxSharedMemoryNI.Value != "")
+            {
+                maxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
+            }
+            bool enableReordering = Convert.ToBoolean(ReorderingChk.IsChecked);
             LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
             InstallerWindow.Close();
             var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == GameID);
@@ -87,7 +98,7 @@ namespace LegendaryLibraryNS
             else
             {
                 playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp));
-                await downloadManager.EnqueueJob(GameID, installPath, downloadSize, installSize, InstallerWindow.Title, (int)DownloadAction.Install);
+                await downloadManager.EnqueueJob(GameID, installPath, downloadSize, installSize, InstallerWindow.Title, (int)DownloadAction.Install, maxWorkers, maxSharedMemory, enableReordering);
             }
         }
 
@@ -96,30 +107,30 @@ namespace LegendaryLibraryNS
             var path = playniteAPI.Dialogs.SelectFolder();
             if (path != "")
             {
-                InstallerPage.Visibility = Visibility.Collapsed;
-                LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
-                downloadManager.CancelDownloadBtn.Visibility = Visibility.Collapsed;
-                downloadManager.PauseBtn.Visibility = Visibility.Collapsed;
-                InstallerWindow.Close();
                 var importCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                          .WithArguments(new[] { "-y", "import", GameID, path })
                                          .WithValidation(CommandResultValidation.None)
                                          .ExecuteBufferedAsync();
                 if (importCmd.StandardError.Contains("has been imported"))
                 {
-                    await downloadManager.EnqueueJob(GameID, path, downloadSize, installSize, InstallerWindow.Title, (int)DownloadAction.Repair);
+                    InstallerWindow.DialogResult = true;
                 }
                 else
                 {
                     logger.Debug("[Legendary] " + importCmd.StandardError);
                     logger.Error("[Legendary] exit code: " + importCmd.ExitCode);
                 }
+                InstallerWindow.Close();
             }
         }
 
         private async void LegendaryGameInstallerUC_Loaded(object sender, RoutedEventArgs e)
         {
-            SelectedGamePathTxt.Text = LegendaryLibrary.GetSettings().GamesInstallationPath;
+            var settings = LegendaryLibrary.GetSettings();
+            SelectedGamePathTxt.Text = settings.GamesInstallationPath;
+            ReorderingChk.IsChecked = settings.EnableReordering;
+            MaxWorkersNI.Value = settings.MaxWorkers.ToString();
+            MaxSharedMemoryNI.Value = settings.MaxSharedMemory.ToString();
             UpdateSpaceInfo(SelectedGamePathTxt.Text);
             if (GameID != "eos-overlay")
             {
@@ -157,23 +168,41 @@ namespace LegendaryLibraryNS
                 var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                       .WithArguments(new[] { GameID, "install" })
                                       .WithStandardInputPipe(PipeSource.FromString("n"))
+                                      .WithValidation(CommandResultValidation.None)
                                       .ExecuteBufferedAsync();
-                string[] lines = result.StandardError.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-                foreach (var line in lines)
+                if (result.ExitCode != 0)
                 {
-                    if (line.Contains("Download size:"))
+                    logger.Error("[Legendary]" + result.StandardError);
+                    if (result.StandardError.Contains("Failed to establish a new connection"))
                     {
-                        var downloadSizeValue = double.Parse(line.Substring(line.IndexOf("Download size:") + 15).Replace(" MiB", ""), CultureInfo.InvariantCulture) * 1024 * 1024;
-                        downloadSize = Helpers.FormatSize(downloadSizeValue);
-                        DownloadSizeTB.Text = downloadSize;
+                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), ResourceProvider.GetString("LOCLoginRequired")));
                     }
-                    if (line.Contains("Install size:"))
+                    else
                     {
-                        var installSizeValue = double.Parse(line.Substring(line.IndexOf("Install size:") + 14).Replace(" MiB", ""), CultureInfo.InvariantCulture) * 1024 * 1024;
-                        installSize = Helpers.FormatSize(installSizeValue);
-                        InstallSizeTB.Text = installSize;
+                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), result.StandardError));
+                    }
+                    Window.GetWindow(this).Close();
+                }
+                else
+                {
+                    string[] lines = result.StandardError.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                    foreach (var line in lines)
+                    {
+                        if (line.Contains("Download size:"))
+                        {
+                            var downloadSizeValue = double.Parse(line.Substring(line.IndexOf("Download size:") + 15).Replace(" MiB", ""), CultureInfo.InvariantCulture) * 1024 * 1024;
+                            downloadSize = Helpers.FormatSize(downloadSizeValue);
+                            DownloadSizeTB.Text = downloadSize;
+                        }
+                        if (line.Contains("Install size:"))
+                        {
+                            var installSizeValue = double.Parse(line.Substring(line.IndexOf("Install size:") + 14).Replace(" MiB", ""), CultureInfo.InvariantCulture) * 1024 * 1024;
+                            installSize = Helpers.FormatSize(installSizeValue);
+                            InstallSizeTB.Text = installSize;
+                        }
                     }
                 }
+
             }
             InstallBtn.IsEnabled = true;
         }

@@ -31,6 +31,9 @@ namespace LegendaryLibraryNS.Models
                 set => SetValue(ref _completedTime, value);
             }
 
+            public bool enableReordering;
+            public int maxWorkers;
+            public int maxSharedMemory;
             private int _status;
             public int status
             {

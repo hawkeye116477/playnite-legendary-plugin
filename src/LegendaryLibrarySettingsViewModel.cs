@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Management;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -36,6 +35,7 @@ namespace LegendaryLibraryNS
         public bool SyncGameSaves { get; set; } = false;
         public int MaxWorkers { get; set; } = LegendaryLauncher.DefaultMaxWorkers;
         public int MaxSharedMemory { get; set; } = LegendaryLauncher.DefaultMaxSharedMemory;
+        public bool EnableReordering { get; set; } = false;
     }
 
     public class LegendaryLibrarySettingsViewModel : PluginSettingsViewModel<LegendaryLibrarySettings, LegendaryLibrary>
@@ -73,23 +73,6 @@ namespace LegendaryLibraryNS
             {
                 PlayniteApi.Dialogs.ShowErrorMessage(PlayniteApi.Resources.GetString(LOC.EpicNotLoggedInError), "");
                 Logger.Error(e, "Failed to authenticate user.");
-            }
-        }
-
-        public int TotalRAM
-        {
-            get
-            {
-                ObjectQuery wql = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher(wql);
-                ManagementObjectCollection results = searcher.Get();
-                double ram = 0.0;
-                foreach (ManagementObject result in results)
-                {
-                    ram = Convert.ToDouble(result["TotalVisibleMemorySize"].ToString().Replace("KB", ""));
-                }
-                ram = Math.Round(ram / 1024);
-                return Convert.ToInt32(ram);
             }
         }
     }

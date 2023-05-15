@@ -26,12 +26,6 @@ namespace LegendaryLibraryNS
         public LegendaryInstallController(Game game) : base(game)
         {
             Name = "Install using Legendary client";
-            Instance = this;
-        }
-
-        public static void CompleteInstall(GameInstalledEventArgs installArgs)
-        {
-            Instance.InvokeOnInstalled(installArgs);
         }
 
         public override void Install(InstallActionArgs args)
@@ -52,8 +46,35 @@ namespace LegendaryLibraryNS
             window.SizeToContent = SizeToContent.Height;
             window.Width = 600;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            window.ShowDialog();
-            Game.IsInstalling = false;
+            var result = window.ShowDialog();
+            if (result == false)
+            {
+                Game.IsInstalling = false;
+            }
+            else
+            {
+                _ = (Application.Current.Dispatcher?.BeginInvoke((Action)delegate
+                {
+                    var installed = LegendaryLauncher.GetInstalledAppList();
+                    if (installed != null)
+                    {
+                        foreach (KeyValuePair<string, Installed> app in installed)
+                        {
+                            if (app.Value.App_name == Game.GameId)
+                            {
+                                var installInfo = new GameInstallationData
+                                {
+                                    InstallDirectory = app.Value.Install_path
+                                };
+
+                                InvokeOnInstalled(new GameInstalledEventArgs(installInfo));
+                                return;
+                            }
+                        }
+                    }
+                }));
+            }
+
         }
     }
 
