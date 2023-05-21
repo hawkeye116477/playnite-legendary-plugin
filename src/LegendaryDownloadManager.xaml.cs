@@ -102,7 +102,7 @@ namespace LegendaryLibraryNS
             if (!running && queuedList.Count > 0)
             {
                 await Install(queuedList[0].gameID, queuedList[0].installPath, queuedList[0].downloadSize, queuedList[0].name,
-                    queuedList[0].downloadAction, queuedList[0].maxWorkers, queuedList[0].maxSharedMemory, queuedList[0].enableReordering);
+                    queuedList[0].downloadAction, queuedList[0].maxWorkers, queuedList[0].maxSharedMemory, queuedList[0].enableReordering, queuedList[0].extraContent);
             }
             else if (!running)
             {
@@ -129,14 +129,14 @@ namespace LegendaryLibraryNS
         }
 
         public async Task EnqueueJob(string gameID, string installPath, string downloadSize, string installSize, string gameTitle, int downloadAction,
-            int maxWorkers, int maxSharedMemory, bool enableReordering)
+            int maxWorkers, int maxSharedMemory, bool enableReordering, List<string> selectedExtraContent = default)
         {
             var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameID);
             if (wantedItem == null)
             {
                 DateTimeOffset now = DateTime.UtcNow;
                 downloadManagerData.downloads.Add(new DownloadManagerData.Download
-                { gameID = gameID, installPath = installPath, downloadSize = downloadSize, installSize = installSize, name = gameTitle, status = (int)DownloadStatus.Queued, addedTime = now.ToUnixTimeSeconds(), downloadAction = downloadAction, maxWorkers = maxWorkers, maxSharedMemory = maxSharedMemory, enableReordering = enableReordering });
+                { gameID = gameID, installPath = installPath, downloadSize = downloadSize, installSize = installSize, name = gameTitle, status = (int)DownloadStatus.Queued, addedTime = now.ToUnixTimeSeconds(), downloadAction = downloadAction, maxWorkers = maxWorkers, maxSharedMemory = maxSharedMemory, enableReordering = enableReordering, extraContent = selectedExtraContent });
                 SaveData();
             }
             else
@@ -147,7 +147,7 @@ namespace LegendaryLibraryNS
             var running = downloadManagerData.downloads.Any(item => item.status == (int)DownloadStatus.Running);
             if (!running)
             {
-                await Install(gameID, installPath, downloadSize, gameTitle, downloadAction, maxWorkers, maxSharedMemory, enableReordering);
+                await Install(gameID, installPath, downloadSize, gameTitle, downloadAction, maxWorkers, maxSharedMemory, enableReordering, selectedExtraContent);
             }
             foreach (DownloadManagerData.Download download in downloadManagerData.downloads)
             {
@@ -156,7 +156,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        public async Task Install(string gameID, string installPath, string downloadSize, string gameTitle, int downloadAction, int maxWorkers, int maxSharedMemory, bool enableReordering)
+        public async Task Install(string gameID, string installPath, string downloadSize, string gameTitle, int downloadAction, int maxWorkers, int maxSharedMemory, bool enableReordering, List<string> selectedExtraContent = default)
         {
             var installCommand = new List<string>() { "-y", "install", gameID };
             if (installPath != "")
@@ -187,6 +187,16 @@ namespace LegendaryLibraryNS
             if (downloadAction == (int)DownloadAction.Repair)
             {
                 installCommand.Add("--repair");
+            }
+            if (selectedExtraContent != null)
+            {
+                if (selectedExtraContent.Count > 0)
+                {
+                    foreach (var singleSelectedContent in selectedExtraContent)
+                    {
+                        installCommand.Add("--install-tag=" + singleSelectedContent);
+                    }
+                }
             }
             if (gameID == "eos-overlay")
             {
@@ -336,7 +346,7 @@ namespace LegendaryLibraryNS
                         selectedRow.status == (int)DownloadStatus.Paused)
                     {
                         await EnqueueJob(selectedRow.gameID, selectedRow.installPath, selectedRow.downloadSize, selectedRow.installSize, selectedRow.name, selectedRow.downloadAction,
-                            selectedRow.maxWorkers, selectedRow.maxSharedMemory, selectedRow.enableReordering);
+                            selectedRow.maxWorkers, selectedRow.maxSharedMemory, selectedRow.enableReordering, selectedRow.extraContent);
                     }
                 }
             }

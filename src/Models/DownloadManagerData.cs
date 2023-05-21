@@ -41,6 +41,7 @@ namespace LegendaryLibraryNS.Models
                 set => SetValue(ref _status, value);
             }
             public int downloadAction { get; set; }
+            public List<string> extraContent { get; set; }
         }
     }
 }

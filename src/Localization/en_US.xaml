@@ -50,4 +50,5 @@
   <sys:String x:Key="LOCLegendaryRepair">Repair</sys:String>
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Advanced Options</sys:String>
   <sys:String x:Key="LOCLegendaryEnableReordering">Enable reordering optimization</sys:String>
+  <sys:String x:Key="LOCLegendaryExtraContent">Extra Content</sys:String>
 </ResourceDictionary>

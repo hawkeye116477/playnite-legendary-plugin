@@ -8,7 +8,7 @@
     xmlns:pcon="clr-namespace:Playnite.Converters"
     xmlns:pcmd="clr-namespace:Playnite.Commands"
     mc:Ignorable="d" Name="LegendaryGameInstallerUC" Loaded="LegendaryGameInstallerUC_Loaded"
-    d:DesignHeight="300" d:DesignWidth="600">
+    d:DesignHeight="330" d:DesignWidth="600">
 
     <UserControl.Resources>
         <pcon:NegateConverter x:Key="NegateConverter" />
@@ -24,6 +24,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -55,8 +56,27 @@
                 <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLoadingLabel}"
                     Margin="5,0,0,0" Name="SpaceTB" />
             </StackPanel>
-            <Border Grid.Row="4" Grid.Column="0" BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,15,0,0" Grid.ColumnSpan="2">
-                <Expander Header="{DynamicResource LOCLegendaryAdvancedOptions}" Margin="2" HorizontalAlignment="Left">
+            <Border Grid.Row="4" Grid.Column="0" BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,15,0,0" Grid.ColumnSpan="2" Name="ExtraContentBrd" Visibility="Collapsed">
+                <Expander Header="{DynamicResource LOCLegendaryExtraContent}" Margin="2" HorizontalAlignment="Left">
+                    <StackPanel>
+                        <ListBox BorderThickness="0" Name="ExtraContentLB" SelectionMode="Multiple" SelectionChanged="ExtraContentLB_SelectionChanged" Margin="0,0,0,5">
+                            <ListBox.Resources>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListBoxItem">
+                                                <CheckBox Content="{Binding Value.Name}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" ToolTip="{Binding Value.Description}" Margin="0,5,0,0"/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListBox.Resources>
+                        </ListBox>
+                    </StackPanel>
+                </Expander>
+            </Border>
+            <Border Grid.Row="5" Grid.Column="0" BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,5,0,0" Grid.ColumnSpan="2">
+                <Expander Header="{DynamicResource LOCLegendaryAdvancedOptions}" Margin="2" HorizontalAlignment="Left" >
                     <Grid Margin="5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -80,7 +100,7 @@
                 </Expander>
             </Border>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0"
-                VerticalAlignment="Bottom" Grid.Row="5" Grid.Column="2">
+                VerticalAlignment="Bottom" Grid.Row="6" Grid.Column="2">
                 <Button x:Name="CancelBtn" Content="{DynamicResource LOCCancelLabel}"
                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
                     Click="CancelBtn_Click" IsCancel="True" />

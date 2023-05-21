@@ -281,5 +281,9 @@ namespace System
         /// Enable reordering optimization
         /// </summary>
         public const string LegendaryEnableReordering = "LOCLegendaryEnableReordering";
+        /// <summary>
+        /// Extra Content
+        /// </summary>
+        public const string LegendaryExtraContent = "LOCLegendaryExtraContent";
     }
 }

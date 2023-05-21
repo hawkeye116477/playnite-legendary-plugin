@@ -14,6 +14,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -40,6 +41,10 @@ namespace LegendaryLibraryNS
         public string installCommand;
         public string downloadSize;
         public string installSize;
+        public List<string> requiredThings;
+        public double downloadSizeNumber;
+        public double installSizeNumber;
+        private LegendaryGameInfo.Rootobject manifest;
 
         public LegendaryGameInstaller()
         {
@@ -88,8 +93,27 @@ namespace LegendaryLibraryNS
                 maxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
             }
             bool enableReordering = Convert.ToBoolean(ReorderingChk.IsChecked);
-            LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
+            var selectedExtraContent = new List<string>();
+            if (requiredThings.Count > 0)
+            {
+                selectedExtraContent.Add("");
+                foreach (var requiredThing in requiredThings)
+                {
+                    selectedExtraContent.Add(requiredThing);
+                }
+            }
+            if (ExtraContentLB.Items.Count > 0)
+            {
+                foreach (var selectedOption in ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().ToList())
+                {
+                    foreach (var tag in selectedOption.Value.Tags)
+                    {
+                        selectedExtraContent.Add(tag);
+                    }
+                }
+            }
             InstallerWindow.Close();
+            LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
             var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == GameID);
             if (wantedItem != null)
             {
@@ -98,7 +122,7 @@ namespace LegendaryLibraryNS
             else
             {
                 playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp));
-                await downloadManager.EnqueueJob(GameID, installPath, downloadSize, installSize, InstallerWindow.Title, (int)DownloadAction.Install, maxWorkers, maxSharedMemory, enableReordering);
+                await downloadManager.EnqueueJob(GameID, installPath, downloadSize, installSize, InstallerWindow.Title, (int)DownloadAction.Install, maxWorkers, maxSharedMemory, enableReordering, selectedExtraContent);
             }
         }
 
@@ -132,6 +156,7 @@ namespace LegendaryLibraryNS
             MaxWorkersNI.Value = settings.MaxWorkers.ToString();
             MaxSharedMemoryNI.Value = settings.MaxSharedMemory.ToString();
             UpdateSpaceInfo(SelectedGamePathTxt.Text);
+            requiredThings = new List<string>();
             if (GameID != "eos-overlay")
             {
                 var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
@@ -153,11 +178,69 @@ namespace LegendaryLibraryNS
                 }
                 else
                 {
-                    var manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>(result.StandardOutput);
-                    downloadSize = Helpers.FormatSize(manifest.Manifest.Download_size);
-                    DownloadSizeTB.Text = downloadSize;
-                    installSize = Helpers.FormatSize(manifest.Manifest.Disk_size);
-                    InstallSizeTB.Text = installSize;
+                    manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>(result.StandardOutput);
+                    if (manifest.Manifest.Install_tags.Length > 1)
+                    {
+                        downloadSizeNumber = 0;
+                        installSizeNumber = 0;
+                        var httpClient = new HttpClient();
+                        var content = await httpClient.GetStringAsync("https://api.legendary.gl/v1/sdl/" + GameID + ".json");
+                        httpClient.Dispose();
+                        var sdlInfo = Serialization.FromJson<Dictionary<string, LegendarySDLInfo>>(content);
+                        if (sdlInfo.ContainsKey("__required"))
+                        {
+                            foreach (var tag in sdlInfo["__required"].Tags)
+                            {
+                                foreach (var tagDo in manifest.Manifest.Tag_download_size)
+                                {
+                                    if (tagDo.Tag == tag)
+                                    {
+                                        downloadSizeNumber += tagDo.Size;
+                                        break;
+                                    }
+                                }
+                                foreach (var tagDi in manifest.Manifest.Tag_disk_size)
+                                {
+                                    if (tagDi.Tag == tag)
+                                    {
+                                        installSizeNumber += tagDi.Size;
+                                        break;
+                                    }
+                                }
+                                requiredThings.Add(tag);
+                            }
+                            sdlInfo.Remove("__required");
+                        }
+                        foreach (var tagDo in manifest.Manifest.Tag_download_size)
+                        {
+                            if (tagDo.Tag == "")
+                            {
+                                downloadSizeNumber += tagDo.Size;
+                                break;
+                            }
+                        }
+                        foreach (var tagDi in manifest.Manifest.Tag_disk_size)
+                        {
+                            if (tagDi.Tag == "")
+                            {
+                                installSizeNumber += tagDi.Size;
+                                break;
+                            }
+                        }
+                        ExtraContentLB.ItemsSource = sdlInfo;
+                        downloadSize = Helpers.FormatSize(downloadSizeNumber);
+                        DownloadSizeTB.Text = downloadSize;
+                        installSize = Helpers.FormatSize(installSizeNumber);
+                        InstallSizeTB.Text = installSize;
+                        ExtraContentBrd.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        downloadSize = Helpers.FormatSize(manifest.Manifest.Download_size);
+                        DownloadSizeTB.Text = downloadSize;
+                        installSize = Helpers.FormatSize(manifest.Manifest.Disk_size);
+                        InstallSizeTB.Text = installSize;
+                    }
                 }
             }
             else
@@ -214,6 +297,38 @@ namespace LegendaryLibraryNS
             {
                 SpaceTB.Text = Helpers.FormatSize(dDrive.AvailableFreeSpace);
             }
+        }
+
+        private void ExtraContentLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var initialDownloadSizeNumber = downloadSizeNumber;
+            var initialInstallSizeNumber = installSizeNumber;
+            foreach (var selectedOption in ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().ToList())
+            {
+                foreach (var tag in selectedOption.Value.Tags)
+                {
+                    foreach (var tagDo in manifest.Manifest.Tag_download_size)
+                    {
+                        if (tagDo.Tag == tag)
+                        {
+                            initialDownloadSizeNumber += tagDo.Size;
+                            break;
+                        }
+                    }
+                    foreach (var tagDi in manifest.Manifest.Tag_disk_size)
+                    {
+                        if (tagDi.Tag == tag)
+                        {
+                            initialInstallSizeNumber += tagDi.Size;
+                            break;
+                        }
+                    }
+                }
+            }
+            downloadSize = Helpers.FormatSize(initialDownloadSizeNumber);
+            DownloadSizeTB.Text = downloadSize;
+            installSize = Helpers.FormatSize(initialInstallSizeNumber);
+            InstallSizeTB.Text = installSize;
         }
     }
 }

@@ -28,7 +28,23 @@ namespace LegendaryLibraryNS.Models
             public double Disk_size { get; set; }
             public double Download_size { get; set; }
             public string Launch_exe { get; set; }
+            public string[] Install_tags { get; set; }
+            public Tag_Disk_Size[] Tag_disk_size { get; set; }
+            public Tag_Download_Size[] Tag_download_size { get; set; }
         }
 
+        public class Tag_Disk_Size
+        {
+            public string Tag { get; set; }
+            public double Size { get; set; }
+            public int Count { get; set; }
+        }
+
+        public class Tag_Download_Size
+        {
+            public string Tag { get; set; }
+            public double Size { get; set; }
+            public int Count { get; set; }
+        }
     }
 }
