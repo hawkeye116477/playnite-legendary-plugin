@@ -221,6 +221,19 @@ namespace LegendaryLibraryNS
                             DownloadSpeedTB.Text = "";
                             break;
                         case StandardErrorCommandEvent stdErr:
+                            var downloadSizeMatch = Regex.Match(stdErr.Text, @"Download size: (\S+.) MiB");
+                            if (downloadSizeMatch.Length >= 2)
+                            {
+                                downloadSize = Helpers.FormatSize(double.Parse(downloadSizeMatch.Groups[1].Value, CultureInfo.InvariantCulture) * 1024 * 1024);
+                                wantedItem.downloadSize = downloadSize;
+                            }
+                            var installSizeMatch = Regex.Match(stdErr.Text, @"Install size: (\S+.) MiB");
+                            if (installSizeMatch.Length >= 2)
+                            {
+                                string installSize = Helpers.FormatSize(double.Parse(installSizeMatch.Groups[1].Value, CultureInfo.InvariantCulture) * 1024 * 1024);
+                                wantedItem.installSize = installSize;
+                            }
+                            SaveData();
                             var verificationProgressMatch = Regex.Match(stdErr.Text, @"Verification progress:.*\((\d.*%)");
                             var progressMatch = Regex.Match(stdErr.Text, @"Progress: (\d.*%)");
                             if (verificationProgressMatch.Length >= 2)

@@ -157,90 +157,127 @@ namespace LegendaryLibraryNS
             MaxSharedMemoryNI.Value = settings.MaxSharedMemory.ToString();
             UpdateSpaceInfo(SelectedGamePathTxt.Text);
             requiredThings = new List<string>();
+            var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("infocache");
+            var cacheInfoFile = Path.Combine(cacheInfoPath, GameID + ".json");
+            if (!Directory.Exists(cacheInfoPath))
+            {
+                Directory.CreateDirectory(cacheInfoPath);
+            }
             if (GameID != "eos-overlay")
             {
-                var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                if (!File.Exists(cacheInfoFile))
+                {
+                    var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                       .WithArguments(new[] { "info", GameID, "--json" })
                                       .WithValidation(CommandResultValidation.None)
                                       .ExecuteBufferedAsync();
-                if (result.ExitCode != 0)
-                {
-                    logger.Error("[Legendary]" + result.StandardError);
-                    if (result.StandardError.Contains("Log in failed"))
+                    if (result.ExitCode != 0)
                     {
-                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), ResourceProvider.GetString("LOCLoginRequired")));
+                        logger.Error("[Legendary]" + result.StandardError);
+                        if (result.StandardError.Contains("Log in failed"))
+                        {
+                            playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), ResourceProvider.GetString("LOCLoginRequired")));
+                        }
+                        else
+                        {
+                            playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), result.StandardError));
+                        }
+                        Window.GetWindow(this).Close();
                     }
                     else
                     {
-                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), result.StandardError));
+                        File.WriteAllText(cacheInfoFile, result.StandardOutput);
+                        manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>(result.StandardOutput);
                     }
-                    Window.GetWindow(this).Close();
                 }
                 else
                 {
-                    manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>(result.StandardOutput);
-                    if (manifest.Manifest.Install_tags.Length > 1)
+                    manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>(FileSystem.ReadFileAsStringSafe(cacheInfoFile));
+                }
+                if (manifest.Manifest.Install_tags.Length > 1)
+                {
+                    downloadSizeNumber = 0;
+                    installSizeNumber = 0;
+                    var cacheSDLPath = LegendaryLibrary.Instance.GetCachePath("sdlcache");
+                    var cacheSDLFile = Path.Combine(cacheSDLPath, GameID + ".json");
+                    string content = null;
+                    if (!File.Exists(cacheSDLFile))
                     {
-                        downloadSizeNumber = 0;
-                        installSizeNumber = 0;
                         var httpClient = new HttpClient();
-                        var content = await httpClient.GetStringAsync("https://api.legendary.gl/v1/sdl/" + GameID + ".json");
+                        var response = await httpClient.GetAsync("https://api.legendary.gl/v1/sdl/" + GameID + ".json");
+                        if (response.IsSuccessStatusCode)
+                        {
+                            content = await response.Content.ReadAsStringAsync();
+                            if (!Directory.Exists(cacheSDLPath))
+                            {
+                                Directory.CreateDirectory(cacheSDLPath);
+                            }
+                            File.WriteAllText(cacheSDLFile, content);
+                        }
                         httpClient.Dispose();
-                        var sdlInfo = Serialization.FromJson<Dictionary<string, LegendarySDLInfo>>(content);
-                        if (sdlInfo.ContainsKey("__required"))
-                        {
-                            foreach (var tag in sdlInfo["__required"].Tags)
-                            {
-                                foreach (var tagDo in manifest.Manifest.Tag_download_size)
-                                {
-                                    if (tagDo.Tag == tag)
-                                    {
-                                        downloadSizeNumber += tagDo.Size;
-                                        break;
-                                    }
-                                }
-                                foreach (var tagDi in manifest.Manifest.Tag_disk_size)
-                                {
-                                    if (tagDi.Tag == tag)
-                                    {
-                                        installSizeNumber += tagDi.Size;
-                                        break;
-                                    }
-                                }
-                                requiredThings.Add(tag);
-                            }
-                            sdlInfo.Remove("__required");
-                        }
-                        foreach (var tagDo in manifest.Manifest.Tag_download_size)
-                        {
-                            if (tagDo.Tag == "")
-                            {
-                                downloadSizeNumber += tagDo.Size;
-                                break;
-                            }
-                        }
-                        foreach (var tagDi in manifest.Manifest.Tag_disk_size)
-                        {
-                            if (tagDi.Tag == "")
-                            {
-                                installSizeNumber += tagDi.Size;
-                                break;
-                            }
-                        }
-                        ExtraContentLB.ItemsSource = sdlInfo;
-                        downloadSize = Helpers.FormatSize(downloadSizeNumber);
-                        DownloadSizeTB.Text = downloadSize;
-                        installSize = Helpers.FormatSize(installSizeNumber);
-                        InstallSizeTB.Text = installSize;
-                        ExtraContentBrd.Visibility = Visibility.Visible;
                     }
                     else
                     {
-                        downloadSize = Helpers.FormatSize(manifest.Manifest.Download_size);
-                        DownloadSizeTB.Text = downloadSize;
-                        installSize = Helpers.FormatSize(manifest.Manifest.Disk_size);
-                        InstallSizeTB.Text = installSize;
+                        content = FileSystem.ReadFileAsStringSafe(cacheSDLFile);
                     }
+                    if (content.IsNullOrEmpty())
+                    {
+                        logger.Error("An error occurred while downloading SDL data.");
+                    }
+                    var sdlInfo = Serialization.FromJson<Dictionary<string, LegendarySDLInfo>>(content);
+                    if (sdlInfo.ContainsKey("__required"))
+                    {
+                        foreach (var tag in sdlInfo["__required"].Tags)
+                        {
+                            foreach (var tagDo in manifest.Manifest.Tag_download_size)
+                            {
+                                if (tagDo.Tag == tag)
+                                {
+                                    downloadSizeNumber += tagDo.Size;
+                                    break;
+                                }
+                            }
+                            foreach (var tagDi in manifest.Manifest.Tag_disk_size)
+                            {
+                                if (tagDi.Tag == tag)
+                                {
+                                    installSizeNumber += tagDi.Size;
+                                    break;
+                                }
+                            }
+                            requiredThings.Add(tag);
+                        }
+                        sdlInfo.Remove("__required");
+                    }
+                    foreach (var tagDo in manifest.Manifest.Tag_download_size)
+                    {
+                        if (tagDo.Tag == "")
+                        {
+                            downloadSizeNumber += tagDo.Size;
+                            break;
+                        }
+                    }
+                    foreach (var tagDi in manifest.Manifest.Tag_disk_size)
+                    {
+                        if (tagDi.Tag == "")
+                        {
+                            installSizeNumber += tagDi.Size;
+                            break;
+                        }
+                    }
+                    ExtraContentLB.ItemsSource = sdlInfo;
+                    downloadSize = Helpers.FormatSize(downloadSizeNumber);
+                    DownloadSizeTB.Text = downloadSize;
+                    installSize = Helpers.FormatSize(installSizeNumber);
+                    InstallSizeTB.Text = installSize;
+                    ExtraContentBrd.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    downloadSize = Helpers.FormatSize(manifest.Manifest.Download_size);
+                    DownloadSizeTB.Text = downloadSize;
+                    installSize = Helpers.FormatSize(manifest.Manifest.Disk_size);
+                    InstallSizeTB.Text = installSize;
                 }
             }
             else

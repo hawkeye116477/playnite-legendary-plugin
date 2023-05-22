@@ -20,8 +20,20 @@ namespace LegendaryLibraryNS.Models
             public string gameID { get; set; }
             public string name { get; set; }
             public string installPath { get; set; }
-            public string downloadSize { get; set; }
-            public string installSize { get; set; }
+
+            private string _downloadSize;
+            public string downloadSize
+            {
+                get => _downloadSize;
+                set => SetValue(ref _downloadSize, value);
+            }
+            private string _installSize;
+            public string installSize
+            {
+                get => _installSize;
+                set => SetValue(ref _installSize, value);
+            }
+
             public long addedTime { get; set; }
 
             private long _completedTime;
