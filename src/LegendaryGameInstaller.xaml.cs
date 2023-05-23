@@ -165,6 +165,13 @@ namespace LegendaryLibraryNS
             }
             if (GameID != "eos-overlay")
             {
+                if (File.Exists(cacheInfoFile))
+                {
+                    if (File.GetCreationTime(cacheInfoFile) < DateTime.Now.AddDays(-1))
+                    {
+                        File.Delete(cacheInfoFile);
+                    }
+                }
                 if (!File.Exists(cacheInfoFile))
                 {
                     var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
@@ -201,6 +208,13 @@ namespace LegendaryLibraryNS
                     var cacheSDLPath = LegendaryLibrary.Instance.GetCachePath("sdlcache");
                     var cacheSDLFile = Path.Combine(cacheSDLPath, GameID + ".json");
                     string content = null;
+                    if (File.Exists(cacheSDLFile))
+                    {
+                        if (File.GetCreationTime(cacheSDLFile) < DateTime.Now.AddDays(-1))
+                        {
+                            File.Delete(cacheSDLFile);
+                        }
+                    }
                     if (!File.Exists(cacheSDLFile))
                     {
                         var httpClient = new HttpClient();
