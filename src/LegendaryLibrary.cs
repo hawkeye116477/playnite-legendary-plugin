@@ -473,6 +473,48 @@ namespace LegendaryLibraryNS
                 }
                 downloadManager.SaveData();
             }
+
+            if (GetSettings().AutoClearCache != (int)ClearCacheTime.Never)
+            {
+                var clearingTime = DateTime.Now;
+                switch (GetSettings().AutoClearCache)
+                {
+                    case (int)ClearCacheTime.Day:
+                        clearingTime = DateTime.Now.AddDays(-1);
+                        break;
+                    case (int)ClearCacheTime.Week:
+                        clearingTime = DateTime.Now.AddDays(-7);
+                        break;
+                    case (int)ClearCacheTime.Month:
+                        clearingTime = DateTime.Now.AddMonths(-1);
+                        break;
+                    case (int)ClearCacheTime.ThreeMonths:
+                        clearingTime = DateTime.Now.AddMonths(-3);
+                        break;
+                    case (int)ClearCacheTime.SixMonths:
+                        clearingTime = DateTime.Now.AddMonths(-6);
+                        break;
+                    default:
+                        break;
+                }
+                var cacheDirs = new List<string>()
+                {
+                    GetCachePath("catalogcache"),
+                    GetCachePath("infocache"),
+                    GetCachePath("sdlcache")
+                };
+
+                foreach (var cacheDir in cacheDirs)
+                {
+                    if (Directory.Exists(cacheDir))
+                    {
+                        if (Directory.GetCreationTime(cacheDir) < clearingTime)
+                        {
+                            Directory.Delete(cacheDir, true);
+                        }
+                    }
+                }
+            }
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)

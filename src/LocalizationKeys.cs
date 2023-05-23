@@ -285,5 +285,33 @@ namespace System
         /// Extra Content
         /// </summary>
         public const string LegendaryExtraContent = "LOCLegendaryExtraContent";
+        /// <summary>
+        /// Cache
+        /// </summary>
+        public const string LegendaryCache = "LOCLegendaryCache";
+        /// <summary>
+        /// Clear cache
+        /// </summary>
+        public const string LegendaryClearCache = "LOCLegendaryClearCache";
+        /// <summary>
+        /// Automatically clear cache
+        /// </summary>
+        public const string LegendaryAutoClearCache = "LOCLegendaryAutoClearCache";
+        /// <summary>
+        /// Once a month
+        /// </summary>
+        public const string LegendaryOnceAMonth = "LOCLegendaryOnceAMonth";
+        /// <summary>
+        /// Once every 3 months
+        /// </summary>
+        public const string LegendaryOnceEvery3Months = "LOCLegendaryOnceEvery3Months";
+        /// <summary>
+        /// Once every 6 months
+        /// </summary>
+        public const string LegendaryOnceEvery6Months = "LOCLegendaryOnceEvery6Months";
+        /// <summary>
+        /// Are you sure you want to clear cache?
+        /// </summary>
+        public const string LegendaryClearCacheConfirm = "LOCLegendaryClearCacheConfirm";
     }
 }

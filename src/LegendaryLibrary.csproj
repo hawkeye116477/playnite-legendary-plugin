@@ -196,6 +196,7 @@
       <Link>Shared\Playnite\PluginSettingsViewModel.cs</Link>
     </Compile>
     <Compile Include="Converters\DownloadStatusEnumToStringConverter.cs" />
+    <Compile Include="Enums\ClearCacheTime.cs" />
     <Compile Include="Enums\DownloadAction.cs" />
     <Compile Include="Enums\DownloadCompleteAction.cs" />
     <Compile Include="Enums\DownloadStatus.cs" />

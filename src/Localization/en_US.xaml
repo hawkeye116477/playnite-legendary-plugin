@@ -51,4 +51,11 @@
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Advanced Options</sys:String>
   <sys:String x:Key="LOCLegendaryEnableReordering">Enable reordering optimization</sys:String>
   <sys:String x:Key="LOCLegendaryExtraContent">Extra Content</sys:String>
+  <sys:String x:Key="LOCLegendaryCache">Cache</sys:String>
+  <sys:String x:Key="LOCLegendaryClearCache">Clear cache</sys:String>
+  <sys:String x:Key="LOCLegendaryAutoClearCache">Automatically clear cache</sys:String>
+  <sys:String x:Key="LOCLegendaryOnceAMonth">Once a month</sys:String>
+  <sys:String x:Key="LOCLegendaryOnceEvery3Months">Once every 3 months</sys:String>
+  <sys:String x:Key="LOCLegendaryOnceEvery6Months">Once every 6 months</sys:String>
+  <sys:String x:Key="LOCLegendaryClearCacheConfirm">Are you sure you want to clear cache?</sys:String>
 </ResourceDictionary>

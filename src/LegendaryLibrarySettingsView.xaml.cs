@@ -155,6 +155,39 @@ namespace LegendaryLibraryNS
                 { (int)DownloadCompleteAction.Sleep, ResourceProvider.GetString("LOCMenuSuspendSystem") },
             };
             AfterDownloadCompleteCBo.ItemsSource = downloadCompleteActions;
+
+            var autoClearOptions = new Dictionary<int, string>
+            {
+                { (int)ClearCacheTime.Day, ResourceProvider.GetString("LOCOptionOnceADay") },
+                { (int)ClearCacheTime.Week, ResourceProvider.GetString("LOCOptionOnceAWeek") },
+                { (int)ClearCacheTime.Month, ResourceProvider.GetString(LOC.LegendaryOnceAMonth) },
+                { (int)ClearCacheTime.ThreeMonths, ResourceProvider.GetString(LOC.LegendaryOnceEvery3Months) },
+                { (int)ClearCacheTime.SixMonths, ResourceProvider.GetString(LOC.LegendaryOnceEvery6Months) },
+                { (int)ClearCacheTime.Never, ResourceProvider.GetString("LOCNever") }
+            };
+            AutoClearCacheCBo.ItemsSource = autoClearOptions;
         }
+
+        private void ClearCacheBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryClearCacheConfirm), ResourceProvider.GetString("LOCSettingsClearCacheTitle"), MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                var cacheDirs = new List<string>()
+                {
+                    LegendaryLibrary.Instance.GetCachePath("catalogcache"),
+                    LegendaryLibrary.Instance.GetCachePath("infocache"),
+                    LegendaryLibrary.Instance.GetCachePath("sdlcache")
+                };
+                foreach (var cacheDir in cacheDirs)
+                {
+                    if (Directory.Exists(cacheDir))
+                    {
+                        Directory.Delete(cacheDir, true);
+                    }
+                }
+            }
+        }
+
     }
 }

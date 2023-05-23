@@ -7,7 +7,7 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:pcon="clr-namespace:Playnite.Converters"
     xmlns:pcmd="clr-namespace:Playnite.Commands"
-    mc:Ignorable="d" d:DesignHeight="440" d:DesignWidth="600" Name="LegendarySettingsUC"
+    mc:Ignorable="d" d:DesignHeight="550" d:DesignWidth="600" Name="LegendarySettingsUC"
     Loaded="LegendarySettingsUC_Loaded">
 
     <UserControl.Resources>
@@ -155,6 +155,24 @@
                         <TextBlock Grid.Column="0" Grid.Row="5"
                             Text="{DynamicResource LOCLegendaryAfterDownloadComplete}" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"  />
                         <ComboBox Grid.Column="1" Grid.Row="5" x:Name="AfterDownloadCompleteCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.DoActionAfterDownloadComplete}" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  Margin="0,0,0,5"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Margin="0,20,0,0">
+                    <TextBlock Text="{DynamicResource LOCLegendaryCache}" FontSize="18"
+                        Margin="0,0,0,2" />
+                    <Separator Margin="0,0,0,10" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource LOCLegendaryAutoClearCache}" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="AutoClearCacheCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.AutoClearCache}" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  Margin="10,0,0,5"/>
+                        <Button Grid.Row="1" Content="{DynamicResource LOCLegendaryClearCache}" Name="ClearCacheBtn" Click="ClearCacheBtn_Click"/>
                     </Grid>
                 </StackPanel>
                 <StackPanel Margin="0,20,0,0">
