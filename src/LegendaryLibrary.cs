@@ -260,42 +260,11 @@ namespace LegendaryLibraryNS
 
         public override IEnumerable<PlayController> GetPlayActions(GetPlayActionsArgs args)
         {
-            var LegendaryLauncher = new LegendaryLauncher();
             if (args.Game.PluginId != Id)
             {
                 yield break;
             }
-
-            string gameLaunchCommand = "launch {0}";
-
-            bool canRunOffline = false;
-            var appList = LegendaryLauncher.GetInstalledAppList();
-            foreach (KeyValuePair<string, Installed> d in appList)
-            {
-                var app = d.Value;
-                if (app.App_name == args.Game.GameId)
-                {
-                    if (app.Can_run_offline && !SettingsViewModel.Settings.OnlineList.Contains(app.App_name))
-                    {
-                        canRunOffline = true;
-                    }
-                    break;
-                }
-            }
-            if (GetSettings().LaunchOffline && canRunOffline)
-            {
-                gameLaunchCommand += " --offline";
-            }
-
-            yield return new AutomaticPlayController(args.Game)
-            {
-                Type = AutomaticPlayActionType.File,
-                TrackingMode = TrackingMode.Directory,
-                TrackingPath = args.Game.InstallDirectory,
-                Path = LegendaryLauncher.ClientExecPath,
-                Arguments = string.Format(gameLaunchCommand, args.Game.GameId),
-                Name = ResourceProvider.GetString(LOC.EpicStartUsingClient).Format("Legendary")
-            };
+            yield return new LegendaryPlayController(args.Game);
         }
 
         public override LibraryMetadataProvider GetMetadataDownloader()

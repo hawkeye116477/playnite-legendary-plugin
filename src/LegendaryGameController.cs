@@ -128,4 +128,89 @@ namespace LegendaryLibraryNS
             return Game;
         }
     }
+
+    public class LegendaryPlayController : PlayController
+    {
+        private IPlayniteAPI playniteAPI = API.Instance;
+        private static ILogger logger = LogManager.GetLogger();
+        private ProcessMonitor procMon;
+        private Stopwatch stopWatch;
+
+        public LegendaryPlayController(Game game) : base(game)
+        {
+            Name = string.Format(ResourceProvider.GetString(LOC.EpicStartUsingClient), "Legendary");
+        }
+
+        public override void Dispose()
+        {
+            procMon?.Dispose();
+        }
+
+        public override async void Play(PlayActionArgs args)
+        {
+            Dispose();
+            if (Directory.Exists(Game.InstallDirectory))
+            {
+                var playArgs = new List<string>();
+                playArgs.AddRange(new[] { "launch", Game.GameId });
+                if (LegendaryLibrary.GetSettings().LaunchOffline)
+                {
+                    bool canRunOffline = false;
+                    var appList = LegendaryLauncher.GetInstalledAppList();
+                    foreach (KeyValuePair<string, Installed> d in appList)
+                    {
+                        var app = d.Value;
+                        if (app.App_name == Game.GameId)
+                        {
+                            if (app.Can_run_offline && !LegendaryLibrary.GetSettings().OnlineList.Contains(app.App_name))
+                            {
+                                canRunOffline = true;
+                            }
+                            break;
+                        }
+                    }
+                    if (LegendaryLibrary.GetSettings().LaunchOffline && canRunOffline)
+                    {
+                        playArgs.Add("--offline");
+                    }
+                }
+                var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                   .WithArguments(playArgs)
+                                   .WithValidation(CommandResultValidation.None)
+                                   .ExecuteBufferedAsync();
+                if (cmd.ExitCode != 0)
+                {
+                    InvokeOnStopped(new GameStoppedEventArgs());
+                    logger.Error("[Legendary] " + cmd.StandardError);
+                    if (cmd.StandardError.Contains("login failed"))
+                    {
+                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameStartError"), ResourceProvider.GetString("LOCLoginRequired")));
+                    }
+                    else
+                    {
+                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameStartError"), ResourceProvider.GetString(cmd.StandardError)));
+                    }
+                    return;
+                }
+                void gameStarted(int processId)
+                {
+                    stopWatch = Stopwatch.StartNew();
+                    InvokeOnStarted(new GameStartedEventArgs { StartedProcessId = processId });
+                }
+                procMon = new ProcessMonitor();
+                procMon.TreeStarted += (_, treeArgs) => gameStarted(treeArgs.StartedId);
+                procMon.TreeDestroyed += (_, __) =>
+                {
+                    stopWatch.Stop();
+                    InvokeOnStopped(new GameStoppedEventArgs { SessionLength = Convert.ToUInt64(stopWatch.Elapsed.TotalSeconds) });
+                };
+                stopWatch = Stopwatch.StartNew();
+                procMon.WatchDirectoryProcesses(Game.InstallDirectory, false);
+            }
+            else
+            {
+                InvokeOnStopped(new GameStoppedEventArgs());
+            }
+        }
+    }
 }
