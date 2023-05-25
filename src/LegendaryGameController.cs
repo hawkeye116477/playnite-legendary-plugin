@@ -35,16 +35,25 @@ namespace LegendaryLibraryNS
                 throw new Exception("Legendary Launcher is not installed.");
             }
 
-            var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
+            Window window = null;
+            if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Desktop)
             {
-                ShowMaximizeButton = false,
-            });
+                window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
+                {
+                    ShowMaximizeButton = false,
+                });
+            }
+            else
+            {
+                window = new Window();
+                window.Background = System.Windows.Media.Brushes.DodgerBlue;
+            }
             window.Title = Game.Name;
             window.DataContext = Game.GameId.ToString();
             window.Content = new LegendaryGameInstaller();
             window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
-            window.SizeToContent = SizeToContent.Height;
-            window.Width = 600;
+            window.SizeToContent = SizeToContent.WidthAndHeight;
+            window.MinWidth = 600;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             var result = window.ShowDialog();
             if (result == false)

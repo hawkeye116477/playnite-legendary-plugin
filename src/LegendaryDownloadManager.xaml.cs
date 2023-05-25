@@ -43,6 +43,7 @@ namespace LegendaryLibraryNS
         public LegendaryDownloadManager()
         {
             InitializeComponent();
+            SetControlTextBlockStyle();
             LoadSavedData();
             var runningAndQueuedDownloads = downloadManagerData.downloads.Where(i => i.status == (int)DownloadStatus.Running
                                                                                      || i.status == (int)DownloadStatus.Queued).ToList();
@@ -482,6 +483,21 @@ namespace LegendaryLibraryNS
             else
             {
                 downloadsView.Filter = null;
+            }
+        }
+
+        private void SetControlTextBlockStyle()
+        {
+            var baseStyleName = "BaseTextBlockStyle";
+            if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+            {
+                baseStyleName = "TextBlockBaseStyle";
+            }
+
+            if (ResourceProvider.GetResource(baseStyleName) is Style baseStyle && baseStyle.TargetType == typeof(TextBlock))
+            {
+                var implicitStyle = new Style(typeof(TextBlock), baseStyle);
+                Resources.Add(typeof(TextBlock), implicitStyle);
             }
         }
 

@@ -15,7 +15,6 @@
         <pcon:NegateConverter x:Key="NegateConverter" />
         <sys:Boolean x:Key="True">True</sys:Boolean>
         <sys:Boolean x:Key="False">False</sys:Boolean>
-        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}"/>
         <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
         <localcon:LongToDateConverter x:Key="LongToDateConverter"/>
         <localcon:DownloadStatusEnumToStringConverter x:Key="DownloadStatusEnumToStringConverter"/>
