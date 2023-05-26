@@ -49,7 +49,7 @@ namespace LegendaryLibraryNS
         public LegendaryGameInstaller()
         {
             InitializeComponent();
-            SetControlTextBlockStyle();
+            SetControlStyles();
         }
 
         public Window InstallerWindow => Window.GetWindow(this);
@@ -188,7 +188,7 @@ namespace LegendaryLibraryNS
                         }
                         else
                         {
-                            playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), result.StandardError));
+                            playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), ResourceProvider.GetString(LOC.LegendaryCheckLog)));
                         }
                         Window.GetWindow(this).Close();
                     }
@@ -239,61 +239,70 @@ namespace LegendaryLibraryNS
                     {
                         logger.Error("An error occurred while downloading SDL data.");
                     }
-                    var sdlInfo = Serialization.FromJson<Dictionary<string, LegendarySDLInfo>>(content);
-                    if (sdlInfo.ContainsKey("__required"))
+                    if (Serialization.TryFromJson<Dictionary<string, LegendarySDLInfo>>(content, out var sdlInfo))
                     {
-                        foreach (var tag in sdlInfo["__required"].Tags)
+                        if (sdlInfo.ContainsKey("__required"))
                         {
-                            foreach (var tagDo in manifest.Manifest.Tag_download_size)
+                            foreach (var tag in sdlInfo["__required"].Tags)
                             {
-                                if (tagDo.Tag == tag)
+                                foreach (var tagDo in manifest.Manifest.Tag_download_size)
                                 {
-                                    downloadSizeNumber += tagDo.Size;
-                                    break;
+                                    if (tagDo.Tag == tag)
+                                    {
+                                        downloadSizeNumber += tagDo.Size;
+                                        break;
+                                    }
                                 }
+                                foreach (var tagDi in manifest.Manifest.Tag_disk_size)
+                                {
+                                    if (tagDi.Tag == tag)
+                                    {
+                                        installSizeNumber += tagDi.Size;
+                                        break;
+                                    }
+                                }
+                                requiredThings.Add(tag);
                             }
-                            foreach (var tagDi in manifest.Manifest.Tag_disk_size)
+                            sdlInfo.Remove("__required");
+                        }
+                        foreach (var tagDo in manifest.Manifest.Tag_download_size)
+                        {
+                            if (tagDo.Tag == "")
                             {
-                                if (tagDi.Tag == tag)
-                                {
-                                    installSizeNumber += tagDi.Size;
-                                    break;
-                                }
+                                downloadSizeNumber += tagDo.Size;
+                                break;
                             }
-                            requiredThings.Add(tag);
                         }
-                        sdlInfo.Remove("__required");
-                    }
-                    foreach (var tagDo in manifest.Manifest.Tag_download_size)
-                    {
-                        if (tagDo.Tag == "")
+                        foreach (var tagDi in manifest.Manifest.Tag_disk_size)
                         {
-                            downloadSizeNumber += tagDo.Size;
-                            break;
+                            if (tagDi.Tag == "")
+                            {
+                                installSizeNumber += tagDi.Size;
+                                break;
+                            }
                         }
+                        ExtraContentLB.ItemsSource = sdlInfo;
+                        ExtraContentBrd.Visibility = Visibility.Visible;
+                        downloadSize = Helpers.FormatSize(downloadSizeNumber);
+                        installSize = Helpers.FormatSize(installSizeNumber);
                     }
-                    foreach (var tagDi in manifest.Manifest.Tag_disk_size)
+                    else
                     {
-                        if (tagDi.Tag == "")
+                        if (File.Exists(cacheSDLFile))
                         {
-                            installSizeNumber += tagDi.Size;
-                            break;
+                            File.Delete(cacheSDLFile);
                         }
+                        downloadSize = Helpers.FormatSize(manifest.Manifest.Download_size);
+                        installSize = Helpers.FormatSize(manifest.Manifest.Disk_size);
                     }
-                    ExtraContentLB.ItemsSource = sdlInfo;
-                    downloadSize = Helpers.FormatSize(downloadSizeNumber);
-                    DownloadSizeTB.Text = downloadSize;
-                    installSize = Helpers.FormatSize(installSizeNumber);
-                    InstallSizeTB.Text = installSize;
-                    ExtraContentBrd.Visibility = Visibility.Visible;
                 }
                 else
                 {
                     downloadSize = Helpers.FormatSize(manifest.Manifest.Download_size);
-                    DownloadSizeTB.Text = downloadSize;
                     installSize = Helpers.FormatSize(manifest.Manifest.Disk_size);
-                    InstallSizeTB.Text = installSize;
                 }
+                DownloadSizeTB.Text = downloadSize;
+                InstallSizeTB.Text = installSize;
             }
             else
             {
@@ -314,7 +323,7 @@ namespace LegendaryLibraryNS
                     }
                     else
                     {
-                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), result.StandardError));
+                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), ResourceProvider.GetString(LOC.LegendaryCheckLog)));
                     }
                     Window.GetWindow(this).Close();
                 }
@@ -383,12 +392,13 @@ namespace LegendaryLibraryNS
             InstallSizeTB.Text = installSize;
         }
 
-        private void SetControlTextBlockStyle()
+        private void SetControlStyles()
         {
             var baseStyleName = "BaseTextBlockStyle";
             if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
             {
                 baseStyleName = "TextBlockBaseStyle";
+                Resources.Add(typeof(Button), new Style(typeof(Button), null));
             }
 
             if (ResourceProvider.GetResource(baseStyleName) is Style baseStyle && baseStyle.TargetType == typeof(TextBlock))

@@ -37,6 +37,7 @@ namespace LegendaryLibraryNS
         public int MaxSharedMemory { get; set; } = LegendaryLauncher.DefaultMaxSharedMemory;
         public bool EnableReordering { get; set; } = false;
         public int AutoClearCache { get; set; } = (int)ClearCacheTime.Never;
+        public bool CloudSavesNoticeShown { get; set; } = false;
     }
 
     public class LegendaryLibrarySettingsViewModel : PluginSettingsViewModel<LegendaryLibrarySettings, LegendaryLibrary>

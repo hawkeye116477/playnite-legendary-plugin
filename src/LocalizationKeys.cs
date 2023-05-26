@@ -313,5 +313,13 @@ namespace System
         /// Are you sure you want to clear cache?
         /// </summary>
         public const string LegendaryClearCacheConfirm = "LOCLegendaryClearCacheConfirm";
+        /// <summary>
+        /// Check the log files for more information.
+        /// </summary>
+        public const string LegendaryCheckLog = "LOCLegendaryCheckLog";
+        /// <summary>
+        /// Cloud saves feature is experimental. It's recommended to backup game saves in case something goes wrong.
+        /// </summary>
+        public const string LegendarySyncGameSavesWarn = "LOCLegendarySyncGameSavesWarn";
     }
 }

@@ -58,4 +58,6 @@
   <sys:String x:Key="LOCLegendaryOnceEvery3Months">Once every 3 months</sys:String>
   <sys:String x:Key="LOCLegendaryOnceEvery6Months">Once every 6 months</sys:String>
   <sys:String x:Key="LOCLegendaryClearCacheConfirm">Are you sure you want to clear cache?</sys:String>
+  <sys:String x:Key="LOCLegendaryCheckLog">Check the log files for more information.</sys:String>
+  <sys:String x:Key="LOCLegendarySyncGameSavesWarn">Cloud saves feature is experimental. It's recommended to backup game saves in case something goes wrong.</sys:String>
 </ResourceDictionary>

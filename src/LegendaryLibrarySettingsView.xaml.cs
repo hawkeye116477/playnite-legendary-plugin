@@ -189,5 +189,14 @@ namespace LegendaryLibraryNS
             }
         }
 
+        private void SyncGameSavesChk_Checked(object sender, RoutedEventArgs e)
+        {
+            var settings = LegendaryLibrary.GetSettings();
+            if (!settings.CloudSavesNoticeShown)
+            {
+                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendarySyncGameSavesWarn));
+                settings.CloudSavesNoticeShown = true;
+            }
+        }
     }
 }

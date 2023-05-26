@@ -207,7 +207,7 @@ namespace LegendaryLibraryNS
             try
             {
                 var stdOutBuffer = new StringBuilder();
-                var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath).WithArguments(installCommand);
+                var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath).WithArguments(installCommand).WithValidation(CommandResultValidation.None);
                 var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameID);
                 await foreach (CommandEvent cmdEvent in cmd.ListenAsync(installerCTS.Token))
                 {
@@ -274,7 +274,7 @@ namespace LegendaryLibraryNS
                             {
                                 fullInstallPath = fullInstallPathMatch.Groups[1].Value;
                             }
-                            stdOutBuffer.AppendLine("[Legendary]: " + stdErr);
+                            stdOutBuffer.AppendLine(stdErr.Text);
                             break;
                         case ExitedCommandEvent exited:
                             if (exited.ExitCode == 0)
@@ -312,7 +312,9 @@ namespace LegendaryLibraryNS
                             }
                             else if (exited.ExitCode != 0)
                             {
-                                logger.Debug(stdOutBuffer.ToString());
+                                wantedItem.status = (int)DownloadStatus.Paused;
+                                playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), ResourceProvider.GetString(LOC.LegendaryCheckLog)));
+                                logger.Error("[Legendary]: " + stdOutBuffer.ToString());
                                 logger.Error("[Legendary] exit code: " + exited.ExitCode);
                             }
                             installerCTS?.Dispose();
