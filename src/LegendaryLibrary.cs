@@ -490,7 +490,7 @@ namespace LegendaryLibraryNS
         {
             foreach (var game in args.Games)
             {
-                if (game.PluginId == Id)
+                if (game.PluginId == Id && game.IsInstalled)
                 {
                     yield return new GameMenuItem
                     {
