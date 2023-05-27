@@ -321,5 +321,9 @@ namespace System
         /// Cloud saves feature is experimental. It's recommended to backup game saves in case something goes wrong.
         /// </summary>
         public const string LegendarySyncGameSavesWarn = "LOCLegendarySyncGameSavesWarn";
+        /// <summary>
+        /// Current shared memory cache is smaller than required: {0} < {1}. Try to enable reordering optimization to reduce memory usage or increase maximum amount of shared memory.
+        /// </summary>
+        public const string LegendaryMemoryError = "LOCLegendaryMemoryError";
     }
 }

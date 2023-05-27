@@ -313,7 +313,15 @@ namespace LegendaryLibraryNS
                             else if (exited.ExitCode != 0)
                             {
                                 wantedItem.status = (int)DownloadStatus.Paused;
-                                playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), ResourceProvider.GetString(LOC.LegendaryCheckLog)));
+                                var memoryErrorMatch = Regex.Match(stdOutBuffer.ToString(), @"MemoryError: Current shared memory cache is smaller than required: (\S+.) MiB < (\S+.) MiB");
+                                if (memoryErrorMatch.Length >= 2)
+                                {
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), string.Format(ResourceProvider.GetString(LOC.LegendaryMemoryError), memoryErrorMatch.Groups[1] + " MB", memoryErrorMatch.Groups[2] + " MB")));
+                                }
+                                else
+                                {
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), ResourceProvider.GetString(LOC.LegendaryCheckLog)));
+                                }
                                 logger.Error("[Legendary]: " + stdOutBuffer.ToString());
                                 logger.Error("[Legendary] exit code: " + exited.ExitCode);
                             }
