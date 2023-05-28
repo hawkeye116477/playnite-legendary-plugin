@@ -511,5 +511,51 @@ namespace LegendaryLibraryNS
             }
         }
 
+        private void DownloadPropertiesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (DownloadsDG.SelectedIndex != -1)
+            {
+                var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
+                {
+                    ShowMaximizeButton = false,
+                });
+                var selectedItem = DownloadsDG.SelectedItems[0] as DownloadManagerData.Download;
+                window.Title = selectedItem.name + " — " + ResourceProvider.GetString(LOC.LegendaryDownloadProperties);
+                window.DataContext = selectedItem;
+                window.Content = new LegendaryDownloadProperties();
+                window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
+                window.SizeToContent = SizeToContent.WidthAndHeight;
+                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                window.ShowDialog();
+            }
+        }
+
+        private void DownloadsDG_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DownloadsDG.SelectedIndex != -1)
+            {
+                ResumeDownloadBtn.IsEnabled = true;
+                PauseBtn.IsEnabled = true;
+                CancelDownloadBtn.IsEnabled = true;
+                RemoveDownloadBtn.IsEnabled = true;
+                if (DownloadsDG.SelectedItems.Count == 1)
+                {
+                    DownloadPropertiesBtn.IsEnabled = true;
+                }
+                else
+                {
+                    DownloadPropertiesBtn.IsEnabled = false;
+                }
+            }
+            else
+            {
+                ResumeDownloadBtn.IsEnabled = false;
+                PauseBtn.IsEnabled = false;
+                CancelDownloadBtn.IsEnabled = false;
+                RemoveDownloadBtn.IsEnabled = false;
+                DownloadPropertiesBtn.IsEnabled = false;
+            }
+        }
+
     }
 }

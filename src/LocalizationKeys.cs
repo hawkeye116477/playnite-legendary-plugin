@@ -325,5 +325,17 @@ namespace System
         /// Current shared memory cache is smaller than required: {0} < {1}. Try to enable reordering optimization to reduce memory usage or increase maximum amount of shared memory.
         /// </summary>
         public const string LegendaryMemoryError = "LOCLegendaryMemoryError";
+        /// <summary>
+        /// Edit properties of selected entry
+        /// </summary>
+        public const string LegendaryEditSelectedDownloadProperties = "LOCLegendaryEditSelectedDownloadProperties";
+        /// <summary>
+        /// Task
+        /// </summary>
+        public const string LegendaryTask = "LOCLegendaryTask";
+        /// <summary>
+        /// Download Properties
+        /// </summary>
+        public const string LegendaryDownloadProperties = "LOCLegendaryDownloadProperties";
     }
 }

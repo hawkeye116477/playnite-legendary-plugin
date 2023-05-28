@@ -61,4 +61,7 @@
   <sys:String x:Key="LOCLegendaryCheckLog">Check the log files for more information.</sys:String>
   <sys:String x:Key="LOCLegendarySyncGameSavesWarn">Cloud saves feature is experimental. It's recommended to backup game saves in case something goes wrong.</sys:String>
   <sys:String x:Key="LOCLegendaryMemoryError">Current shared memory cache is smaller than required: {0} &lt; {1}. Try to enable reordering optimization to reduce memory usage or increase maximum amount of shared memory.</sys:String>
+  <sys:String x:Key="LOCLegendaryEditSelectedDownloadProperties">Edit entry properties</sys:String>
+  <sys:String x:Key="LOCLegendaryTask">Task</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadProperties">Download Properties</sys:String>
 </ResourceDictionary>

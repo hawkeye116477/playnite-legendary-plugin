@@ -205,6 +205,9 @@
     <Compile Include="LegendaryDownloadManager.xaml.cs">
       <DependentUpon>LegendaryDownloadManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LegendaryDownloadProperties.xaml.cs">
+      <DependentUpon>LegendaryDownloadProperties.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LegendaryExcludeOnlineGames.xaml.cs">
       <DependentUpon>LegendaryExcludeOnlineGames.xaml</DependentUpon>
     </Compile>
@@ -281,6 +284,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="LegendaryDownloadManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LegendaryDownloadProperties.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
