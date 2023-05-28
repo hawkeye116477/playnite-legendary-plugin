@@ -82,12 +82,12 @@ namespace LegendaryLibraryNS
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            lastGoodValue = NumericTxt.Text;
+            lastGoodValue = !NumericTxt.Text.IsNullOrEmpty() ? NumericTxt.Text : MinValue.ToString();
         }
 
         public void Increment()
         {
-            int number = NumericTxt.Text != "" ? Convert.ToInt32(NumericTxt.Text) : Convert.ToInt32(lastGoodValue);
+            int number = !NumericTxt.Text.IsNullOrEmpty() ? Convert.ToInt32(NumericTxt.Text) : Convert.ToInt32(lastGoodValue);
             if (number < MaxValue)
             {
                 NumericTxt.Text = Convert.ToString(number + StepSize);
@@ -102,7 +102,7 @@ namespace LegendaryLibraryNS
 
         public void Decrement()
         {
-            int number = NumericTxt.Text != "" ? Convert.ToInt32(NumericTxt.Text) : Convert.ToInt32(lastGoodValue);
+            int number = !NumericTxt.Text.IsNullOrEmpty() ? Convert.ToInt32(NumericTxt.Text) : Convert.ToInt32(lastGoodValue);
             if (number > MinValue)
             {
                 NumericTxt.Text = Convert.ToString(number - StepSize);

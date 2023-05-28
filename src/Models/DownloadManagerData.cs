@@ -19,7 +19,7 @@ namespace LegendaryLibraryNS.Models
         {
             public string gameID { get; set; }
             public string name { get; set; }
-            public string installPath { get; set; }
+            public string fullInstallPath { get; set; }
 
             private string _downloadSize;
             public string downloadSize
@@ -43,17 +43,24 @@ namespace LegendaryLibraryNS.Models
                 set => SetValue(ref _completedTime, value);
             }
 
-            public bool enableReordering;
-            public int maxWorkers;
-            public int maxSharedMemory;
             private int _status;
             public int status
             {
                 get => _status;
                 set => SetValue(ref _status, value);
             }
-            public int downloadAction { get; set; }
-            public List<string> extraContent { get; set; }
+
+            public DownloadProperties downloadProperties { get; set; }
         }
+    }
+
+    public class DownloadProperties : ObservableObject
+    {
+        public string installPath { get; set; } = "";
+        public int downloadAction { get; set; }
+        public bool enableReordering { get; set; }
+        public int maxWorkers { get; set; }
+        public int maxSharedMemory { get; set; }
+        public List<string> extraContent { get; set; } = default;
     }
 }

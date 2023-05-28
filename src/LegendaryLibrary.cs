@@ -497,7 +497,14 @@ namespace LegendaryLibraryNS
                         Description = ResourceProvider.GetString(LOC.LegendaryRepair),
                         Action = async (args) =>
                         {
-                            await GetLegendaryDownloadManager().EnqueueJob(game.GameId, "", "", "", game.Name, (int)DownloadAction.Repair, GetSettings().MaxWorkers, GetSettings().MaxSharedMemory, GetSettings().EnableReordering);
+                            DownloadProperties downloadProperties = new DownloadProperties()
+                            {
+                                downloadAction = (int)DownloadAction.Repair,
+                                enableReordering = GetSettings().EnableReordering,
+                                maxWorkers = GetSettings().MaxWorkers,
+                                maxSharedMemory = GetSettings().MaxSharedMemory
+                            };
+                            await GetLegendaryDownloadManager().EnqueueJob(game.GameId, game.Name, "", "", downloadProperties);
                         }
                     };
                 }

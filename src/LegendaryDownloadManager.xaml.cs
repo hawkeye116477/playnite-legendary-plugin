@@ -37,7 +37,6 @@ namespace LegendaryLibraryNS
         public CancellationTokenSource installerCTS;
         private ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI playniteAPI = API.Instance;
-        private string fullInstallPath;
         public DownloadManagerData.Rootobject downloadManagerData;
 
         public LegendaryDownloadManager()
@@ -53,8 +52,8 @@ namespace LegendaryLibraryNS
                 {
                     download.status = (int)DownloadStatus.Paused;
                 }
+                SaveData();
             }
-            SaveData();
         }
 
         public RelayCommand<object> NavigateBackCommand
@@ -102,8 +101,7 @@ namespace LegendaryLibraryNS
             var queuedList = downloadManagerData.downloads.Where(i => i.status == (int)DownloadStatus.Queued).ToList();
             if (!running && queuedList.Count > 0)
             {
-                await Install(queuedList[0].gameID, queuedList[0].installPath, queuedList[0].downloadSize, queuedList[0].name,
-                    queuedList[0].downloadAction, queuedList[0].maxWorkers, queuedList[0].maxSharedMemory, queuedList[0].enableReordering, queuedList[0].extraContent);
+                await Install(queuedList[0].gameID, queuedList[0].name, queuedList[0].downloadSize, queuedList[0].downloadProperties);
             }
             else if (!running)
             {
@@ -129,15 +127,14 @@ namespace LegendaryLibraryNS
             }
         }
 
-        public async Task EnqueueJob(string gameID, string installPath, string downloadSize, string installSize, string gameTitle, int downloadAction,
-            int maxWorkers, int maxSharedMemory, bool enableReordering, List<string> selectedExtraContent = default)
+        public async Task EnqueueJob(string gameID, string gameTitle, string downloadSize, string installSize, DownloadProperties downloadProperties)
         {
             var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameID);
             if (wantedItem == null)
             {
                 DateTimeOffset now = DateTime.UtcNow;
                 downloadManagerData.downloads.Add(new DownloadManagerData.Download
-                { gameID = gameID, installPath = installPath, downloadSize = downloadSize, installSize = installSize, name = gameTitle, status = (int)DownloadStatus.Queued, addedTime = now.ToUnixTimeSeconds(), downloadAction = downloadAction, maxWorkers = maxWorkers, maxSharedMemory = maxSharedMemory, enableReordering = enableReordering, extraContent = selectedExtraContent });
+                { gameID = gameID, downloadSize = downloadSize, installSize = installSize, name = gameTitle, status = (int)DownloadStatus.Queued, addedTime = now.ToUnixTimeSeconds(), downloadProperties = downloadProperties });
                 SaveData();
             }
             else
@@ -148,7 +145,7 @@ namespace LegendaryLibraryNS
             var running = downloadManagerData.downloads.Any(item => item.status == (int)DownloadStatus.Running);
             if (!running)
             {
-                await Install(gameID, installPath, downloadSize, gameTitle, downloadAction, maxWorkers, maxSharedMemory, enableReordering, selectedExtraContent);
+                await Install(gameID, gameTitle, downloadSize, downloadProperties);
             }
             foreach (DownloadManagerData.Download download in downloadManagerData.downloads)
             {
@@ -157,12 +154,12 @@ namespace LegendaryLibraryNS
             }
         }
 
-        public async Task Install(string gameID, string installPath, string downloadSize, string gameTitle, int downloadAction, int maxWorkers, int maxSharedMemory, bool enableReordering, List<string> selectedExtraContent = default)
+        public async Task Install(string gameID, string gameTitle, string downloadSize, DownloadProperties downloadProperties)
         {
             var installCommand = new List<string>() { "-y", "install", gameID };
-            if (installPath != "")
+            if (downloadProperties.installPath != "")
             {
-                installCommand.AddRange(new[] { "--base-path", installPath });
+                installCommand.AddRange(new[] { "--base-path", downloadProperties.installPath });
             }
             var settings = LegendaryLibrary.GetSettings();
             if (settings.PreferredCDN != "")
@@ -173,27 +170,27 @@ namespace LegendaryLibraryNS
             {
                 installCommand.Add("--no-https");
             }
-            if (maxWorkers != 0)
+            if (downloadProperties.maxWorkers != 0)
             {
-                installCommand.AddRange(new[] { "--max-workers", maxWorkers.ToString() });
+                installCommand.AddRange(new[] { "--max-workers", downloadProperties.maxWorkers.ToString() });
             }
-            if (maxSharedMemory != 0)
+            if (downloadProperties.maxSharedMemory != 0)
             {
-                installCommand.AddRange(new[] { "--max-shared-memory", maxSharedMemory.ToString() });
+                installCommand.AddRange(new[] { "--max-shared-memory", downloadProperties.maxSharedMemory.ToString() });
             }
-            if (enableReordering)
+            if (downloadProperties.enableReordering)
             {
                 installCommand.Add("--enable-reordering");
             }
-            if (downloadAction == (int)DownloadAction.Repair)
+            if (downloadProperties.downloadAction == (int)DownloadAction.Repair)
             {
                 installCommand.Add("--repair");
             }
-            if (selectedExtraContent != null)
+            if (downloadProperties.extraContent != null)
             {
-                if (selectedExtraContent.Count > 0)
+                if (downloadProperties.extraContent.Count > 0)
                 {
-                    foreach (var singleSelectedContent in selectedExtraContent)
+                    foreach (var singleSelectedContent in downloadProperties.extraContent)
                     {
                         installCommand.Add("--install-tag=" + singleSelectedContent);
                     }
@@ -201,7 +198,7 @@ namespace LegendaryLibraryNS
             }
             if (gameID == "eos-overlay")
             {
-                installCommand = new List<string>() { "-y", "eos-overlay", "install", "--path", installPath };
+                installCommand = new List<string>() { "-y", "eos-overlay", "install", "--path", downloadProperties.installPath };
             }
             installerCTS = new CancellationTokenSource();
             try
@@ -233,6 +230,11 @@ namespace LegendaryLibraryNS
                             {
                                 string installSize = Helpers.FormatSize(double.Parse(installSizeMatch.Groups[1].Value, CultureInfo.InvariantCulture) * 1024 * 1024);
                                 wantedItem.installSize = installSize;
+                            }
+                            var fullInstallPathMatch = Regex.Match(stdErr.Text, @"Install path: (\S+)");
+                            if (fullInstallPathMatch.Length >= 2)
+                            {
+                                wantedItem.fullInstallPath = fullInstallPathMatch.Groups[1].Value;
                             }
                             SaveData();
                             var verificationProgressMatch = Regex.Match(stdErr.Text, @"Verification progress:.*\((\d.*%)");
@@ -268,11 +270,6 @@ namespace LegendaryLibraryNS
                             {
                                 string downloadSpeed = Helpers.FormatSize(double.Parse(downloadSpeedMatch.Groups[1].Value, CultureInfo.InvariantCulture) * 1024 * 1024);
                                 DownloadSpeedTB.Text = downloadSpeed + "/s";
-                            }
-                            var fullInstallPathMatch = Regex.Match(stdErr.Text, @"Install path: (\S+)");
-                            if (fullInstallPathMatch.Length >= 2)
-                            {
-                                fullInstallPath = fullInstallPathMatch.Groups[1].Value;
                             }
                             stdOutBuffer.AppendLine(stdErr.Text);
                             break;
@@ -313,6 +310,7 @@ namespace LegendaryLibraryNS
                             else if (exited.ExitCode != 0)
                             {
                                 wantedItem.status = (int)DownloadStatus.Paused;
+                                SaveData();
                                 var memoryErrorMatch = Regex.Match(stdOutBuffer.ToString(), @"MemoryError: Current shared memory cache is smaller than required: (\S+.) MiB < (\S+.) MiB");
                                 if (memoryErrorMatch.Length >= 2)
                                 {
@@ -369,8 +367,7 @@ namespace LegendaryLibraryNS
                     if (selectedRow.status == (int)DownloadStatus.Canceled ||
                         selectedRow.status == (int)DownloadStatus.Paused)
                     {
-                        await EnqueueJob(selectedRow.gameID, selectedRow.installPath, selectedRow.downloadSize, selectedRow.installSize, selectedRow.name, selectedRow.downloadAction,
-                            selectedRow.maxWorkers, selectedRow.maxSharedMemory, selectedRow.enableReordering, selectedRow.extraContent);
+                        await EnqueueJob(selectedRow.gameID, selectedRow.name, selectedRow.downloadSize, selectedRow.installSize, selectedRow.downloadProperties);
                     }
                 }
             }
@@ -401,11 +398,11 @@ namespace LegendaryLibraryNS
                         {
                             File.Delete(repairFile);
                         }
-                        if (fullInstallPath != null)
+                        if (selectedRow.fullInstallPath != null)
                         {
-                            if (Directory.Exists(fullInstallPath))
+                            if (Directory.Exists(selectedRow.fullInstallPath))
                             {
-                                Directory.Delete(fullInstallPath, true);
+                                Directory.Delete(selectedRow.fullInstallPath, true);
                             }
                         }
                         selectedRow.status = (int)DownloadStatus.Canceled;
@@ -446,11 +443,11 @@ namespace LegendaryLibraryNS
                         {
                             File.Delete(repairFile);
                         }
-                        if (fullInstallPath != null)
+                        if (selectedRow.fullInstallPath != null && wantedItem.status != (int)DownloadStatus.Completed)
                         {
-                            if (Directory.Exists(fullInstallPath))
+                            if (Directory.Exists(selectedRow.fullInstallPath))
                             {
-                                Directory.Delete(fullInstallPath, true);
+                                Directory.Delete(selectedRow.fullInstallPath, true);
                             }
                         }
                         downloadManagerData.downloads.Remove(selectedRow);

@@ -17,6 +17,18 @@
         <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
     </UserControl.Resources>
     <DockPanel Margin="10">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0"
+                VerticalAlignment="Bottom" Grid.Row="6" Grid.Column="2" DockPanel.Dock="Bottom">
+            <Button x:Name="ImportBtn" Content="{DynamicResource LOCLegendaryImportEGL}"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
+                    Click="ImportBtn_Click" />
+            <Button x:Name="InstallBtn" Content="{DynamicResource LOCInstallGame}"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
+                    Click="InstallBtn_Click" IsEnabled="False" />
+            <Button x:Name="CancelBtn" Content="{DynamicResource LOCCancelLabel}"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                    Click="CancelBtn_Click" IsCancel="True" />
+        </StackPanel>
         <Grid VerticalAlignment="Top" DockPanel.Dock="Top" Name="InstallerPage">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -98,18 +110,6 @@
                     </Grid>
                 </Expander>
             </Border>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0"
-                VerticalAlignment="Bottom" Grid.Row="6" Grid.Column="2">
-                <Button x:Name="CancelBtn" Content="{DynamicResource LOCCancelLabel}"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
-                    Click="CancelBtn_Click" IsCancel="True" />
-                <Button x:Name="ImportBtn" Content="{DynamicResource LOCLegendaryImportEGL}"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
-                    Click="ImportBtn_Click" />
-                <Button x:Name="InstallBtn" Content="{DynamicResource LOCInstallGame}"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                    Click="InstallBtn_Click" IsEnabled="False" />
-            </StackPanel>
         </Grid>
     </DockPanel>
 </UserControl>

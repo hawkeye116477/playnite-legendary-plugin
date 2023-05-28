@@ -105,11 +105,15 @@ namespace LegendaryLibraryNS
             }
             if (ExtraContentLB.Items.Count > 0)
             {
+                selectedExtraContent.AddMissing("");
                 foreach (var selectedOption in ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().ToList())
                 {
                     foreach (var tag in selectedOption.Value.Tags)
                     {
-                        selectedExtraContent.Add(tag);
+                        if (!selectedExtraContent.Contains(tag))
+                        {
+                            selectedExtraContent.Add(tag);
+                        }
                     }
                 }
             }
@@ -123,7 +127,16 @@ namespace LegendaryLibraryNS
             else
             {
                 playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp));
-                await downloadManager.EnqueueJob(GameID, installPath, downloadSize, installSize, InstallerWindow.Title, (int)DownloadAction.Install, maxWorkers, maxSharedMemory, enableReordering, selectedExtraContent);
+                DownloadProperties downloadProperties = new DownloadProperties()
+                {
+                    installPath = installPath,
+                    downloadAction = (int)DownloadAction.Install,
+                    enableReordering = enableReordering,
+                    maxWorkers = maxWorkers,
+                    maxSharedMemory = maxSharedMemory,
+                    extraContent = selectedExtraContent
+                };
+                await downloadManager.EnqueueJob(GameID, InstallerWindow.Title, downloadSize, installSize, downloadProperties);
             }
         }
 
@@ -168,7 +181,7 @@ namespace LegendaryLibraryNS
             {
                 if (File.Exists(cacheInfoFile))
                 {
-                    if (File.GetCreationTime(cacheInfoFile) < DateTime.Now.AddDays(-1))
+                    if (File.GetLastWriteTime(cacheInfoFile) < DateTime.Now.AddDays(-1))
                     {
                         File.Delete(cacheInfoFile);
                     }
@@ -211,7 +224,7 @@ namespace LegendaryLibraryNS
                     string content = null;
                     if (File.Exists(cacheSDLFile))
                     {
-                        if (File.GetCreationTime(cacheSDLFile) < DateTime.Now.AddDays(-1))
+                        if (File.GetLastWriteTime(cacheSDLFile) < DateTime.Now.AddDays(-1))
                         {
                             File.Delete(cacheSDLFile);
                         }

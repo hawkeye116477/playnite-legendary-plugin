@@ -38,26 +38,29 @@ namespace LegendaryLibraryNS
 
         private DownloadManagerData.Rootobject LoadSavedData()
         {
-            var dataDir = LegendaryLibrary.Instance.GetPluginUserDataPath();
-            var dataFile = Path.Combine(dataDir, "downloadManager.json");
-            downloadManagerData = Serialization.FromJson<DownloadManagerData.Rootobject>(FileSystem.ReadFileAsStringSafe(dataFile));
+            var downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
+            downloadManagerData = downloadManager.downloadManagerData;
             return downloadManagerData;
         }
 
         private void LegendaryDownloadPropertiesUC_Loaded(object sender, RoutedEventArgs e)
         {
-            var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == SelectedDownload.gameID);
-            SelectedGamePathTxt.Text = wantedItem.installPath;
-            ReorderingChk.IsChecked = wantedItem.enableReordering;
-            MaxWorkersNI.Value = wantedItem.maxWorkers.ToString();
-            MaxSharedMemoryNI.Value = wantedItem.maxSharedMemory.ToString();
+            var wantedItem = SelectedDownload;
+            if (wantedItem.downloadProperties != null)
+            {
+                SelectedGamePathTxt.Text = wantedItem.downloadProperties.installPath;
+                ReorderingChk.IsChecked = wantedItem.downloadProperties.enableReordering;
+                MaxWorkersNI.Value = wantedItem.downloadProperties.maxWorkers.ToString();
+                MaxSharedMemoryNI.Value = wantedItem.downloadProperties.maxSharedMemory.ToString();
+                TaskCBo.SelectedValue = wantedItem.downloadProperties.downloadAction;
+            }
             var downloadActionOptions = new Dictionary<int, string>
             {
                 { (int)DownloadAction.Install, ResourceProvider.GetString("LOCInstallGame") },
                 { (int)DownloadAction.Repair, ResourceProvider.GetString(LOC.LegendaryRepair) }
             };
             TaskCBo.ItemsSource = downloadActionOptions;
-            TaskCBo.SelectedValue = wantedItem.downloadAction;
+
             var cacheSDLPath = LegendaryLibrary.Instance.GetCachePath("sdlcache");
             var cacheSDLFile = Path.Combine(cacheSDLPath, SelectedDownload.gameID + ".json");
             requiredThings = new List<string>();
@@ -74,12 +77,15 @@ namespace LegendaryLibraryNS
                         }
                         sdlInfo.Remove("__required");
                     }
-                    foreach (var selectedExtraContent in wantedItem.extraContent)
+                    if (wantedItem.downloadProperties != null)
                     {
-                        var wantedExtraItem = sdlInfo.SingleOrDefault(i => i.Value.Tags.Contains(selectedExtraContent));
-                        if (wantedExtraItem.Key != null)
+                        foreach (var selectedExtraContent in wantedItem.downloadProperties.extraContent)
                         {
-                            ExtraContentLB.SelectedItems.Add(wantedExtraItem);
+                            var wantedExtraItem = sdlInfo.SingleOrDefault(i => i.Value.Tags.Contains(selectedExtraContent));
+                            if (wantedExtraItem.Key != null)
+                            {
+                                ExtraContentLB.SelectedItems.Add(wantedExtraItem);
+                            }
                         }
                     }
                     ExtraContentLB.ItemsSource = sdlInfo;
@@ -101,13 +107,12 @@ namespace LegendaryLibraryNS
         {
             var dataDir = LegendaryLibrary.Instance.GetPluginUserDataPath();
             var dataFile = Path.Combine(dataDir, "downloadManager.json");
-            var downloadManagerData = Serialization.FromJson<DownloadManagerData.Rootobject>(FileSystem.ReadFileAsStringSafe(dataFile));
             var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == SelectedDownload.gameID);
-            wantedItem.installPath = SelectedGamePathTxt.Text;
-            wantedItem.downloadAction = (int)TaskCBo.SelectedValue;
-            wantedItem.enableReordering = (bool)ReorderingChk.IsChecked;
-            wantedItem.maxWorkers = int.Parse(MaxWorkersNI.Value);
-            wantedItem.maxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
+            wantedItem.downloadProperties.installPath = SelectedGamePathTxt.Text;
+            wantedItem.downloadProperties.downloadAction = (int)TaskCBo.SelectedValue;
+            wantedItem.downloadProperties.enableReordering = (bool)ReorderingChk.IsChecked;
+            wantedItem.downloadProperties.maxWorkers = int.Parse(MaxWorkersNI.Value);
+            wantedItem.downloadProperties.maxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
             var selectedExtraContent = new List<string>();
             if (requiredThings.Count > 0)
             {
@@ -119,6 +124,7 @@ namespace LegendaryLibraryNS
             }
             if (ExtraContentLB.Items.Count > 0)
             {
+                selectedExtraContent.AddMissing("");
                 foreach (var selectedOption in ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().ToList())
                 {
                     foreach (var tag in selectedOption.Value.Tags)
@@ -130,9 +136,20 @@ namespace LegendaryLibraryNS
                     }
                 }
             }
-            wantedItem.extraContent = selectedExtraContent;
+            wantedItem.downloadProperties.extraContent = selectedExtraContent;
             var strConf = Serialization.ToJson(downloadManagerData, true);
             File.WriteAllText(dataFile, strConf);
+            var downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
+            var previouslySelected = downloadManager.DownloadsDG.SelectedIndex;
+            for (int i = 0; i < downloadManager.downloadManagerData.downloads.Count; i++)
+            {
+                if (downloadManager.downloadManagerData.downloads[i].gameID == SelectedDownload.gameID)
+                {
+                    downloadManager.downloadManagerData.downloads[i] = wantedItem;
+                    break;
+                }
+            }
+            downloadManager.DownloadsDG.SelectedIndex = previouslySelected;
             Window.GetWindow(this).Close();
         }
     }
