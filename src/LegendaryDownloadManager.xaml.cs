@@ -34,7 +34,8 @@ namespace LegendaryLibraryNS
     /// </summary>
     public partial class LegendaryDownloadManager : UserControl
     {
-        public CancellationTokenSource installerCTS;
+        public CancellationTokenSource forcefulInstallerCTS;
+        public CancellationTokenSource gracefulInstallerCTS;
         private ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI playniteAPI = API.Instance;
         public DownloadManagerData.Rootobject downloadManagerData;
@@ -200,13 +201,14 @@ namespace LegendaryLibraryNS
             {
                 installCommand = new List<string>() { "-y", "eos-overlay", "install", "--path", downloadProperties.installPath };
             }
-            installerCTS = new CancellationTokenSource();
+            forcefulInstallerCTS = new CancellationTokenSource();
+            gracefulInstallerCTS = new CancellationTokenSource();
             try
             {
                 var stdOutBuffer = new StringBuilder();
                 var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath).WithArguments(installCommand).WithValidation(CommandResultValidation.None);
                 var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameID);
-                await foreach (CommandEvent cmdEvent in cmd.ListenAsync(installerCTS.Token))
+                await foreach (CommandEvent cmdEvent in cmd.ListenAsync(Console.OutputEncoding, Console.OutputEncoding, forcefulInstallerCTS.Token, gracefulInstallerCTS.Token))
                 {
                     switch (cmdEvent)
                     {
@@ -323,7 +325,8 @@ namespace LegendaryLibraryNS
                                 logger.Error("[Legendary]: " + stdOutBuffer.ToString());
                                 logger.Error("[Legendary] exit code: " + exited.ExitCode);
                             }
-                            installerCTS?.Dispose();
+                            gracefulInstallerCTS?.Dispose();
+                            forcefulInstallerCTS?.Dispose();
                             break;
                         default:
                             break;
@@ -347,9 +350,10 @@ namespace LegendaryLibraryNS
                     {
                         if (selectedRow.status == (int)DownloadStatus.Running)
                         {
-                            installerCTS?.Cancel();
-                            installerCTS?.Dispose();
-                            EtaTB.Text = ResourceProvider.GetString(LOC.LegendaryDownloadPaused);
+                            gracefulInstallerCTS?.Cancel();
+                            gracefulInstallerCTS?.Dispose();
+                            forcefulInstallerCTS?.Dispose();
+                            EtaTB.Text = "";
                         }
                         selectedRow.status = (int)DownloadStatus.Paused;
                         SaveData();
@@ -385,8 +389,9 @@ namespace LegendaryLibraryNS
                     {
                         if (selectedRow.status == (int)DownloadStatus.Running)
                         {
-                            installerCTS?.Cancel();
-                            installerCTS?.Dispose();
+                            gracefulInstallerCTS?.Cancel();
+                            gracefulInstallerCTS?.Dispose();
+                            forcefulInstallerCTS?.Dispose();
                         }
                         var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", selectedRow.gameID + ".resume");
                         if (File.Exists(resumeFile))
@@ -406,6 +411,7 @@ namespace LegendaryLibraryNS
                             }
                         }
                         selectedRow.status = (int)DownloadStatus.Canceled;
+                        EtaTB.Text = "";
                         SaveData();
                     }
                 }
@@ -428,8 +434,9 @@ namespace LegendaryLibraryNS
                         {
                             if (wantedItem.status == (int)DownloadStatus.Running)
                             {
-                                installerCTS?.Cancel();
-                                installerCTS?.Dispose();
+                                gracefulInstallerCTS?.Cancel();
+                                gracefulInstallerCTS?.Dispose();
+                                forcefulInstallerCTS?.Dispose();
                             }
                             selectedRow.status = (int)DownloadStatus.Canceled;
                         }

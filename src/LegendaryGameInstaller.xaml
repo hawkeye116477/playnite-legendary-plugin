@@ -68,26 +68,24 @@
                     Margin="5,0,0,0" Name="SpaceTB" />
             </StackPanel>
             <Border Grid.Row="4" Grid.Column="0" BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,15,0,0" Grid.ColumnSpan="2" Name="ExtraContentBrd" Visibility="Collapsed">
-                <Expander Header="{DynamicResource LOCLegendaryExtraContent}" Margin="2" HorizontalAlignment="Left">
-                    <StackPanel>
-                        <ListBox BorderThickness="0" Name="ExtraContentLB" SelectionMode="Multiple" SelectionChanged="ExtraContentLB_SelectionChanged" Margin="0,0,0,5">
-                            <ListBox.Resources>
-                                <Style TargetType="ListBoxItem">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="ListBoxItem">
-                                                <CheckBox Content="{Binding Value.Name}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" ToolTip="{Binding Value.Description}" Margin="0,5,0,0"/>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </ListBox.Resources>
-                        </ListBox>
-                    </StackPanel>
+                <Expander Header="{DynamicResource LOCLegendaryExtraContent}" Margin="2,2,5,2" HorizontalAlignment="Left">
+                    <ListBox BorderThickness="0" Name="ExtraContentLB" SelectionMode="Multiple" SelectionChanged="ExtraContentLB_SelectionChanged" Margin="5,0,5,5">
+                        <ListBox.Resources>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <CheckBox Content="{Binding Value.Name}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" ToolTip="{Binding Value.Description}" Margin="0,5,0,0"/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.Resources>
+                    </ListBox>
                 </Expander>
             </Border>
             <Border Grid.Row="5" Grid.Column="0" BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,5,0,0" Grid.ColumnSpan="2">
-                <Expander Header="{DynamicResource LOCLegendaryAdvancedOptions}" Margin="2" HorizontalAlignment="Left" >
+                <Expander Header="{DynamicResource LOCLegendaryAdvancedOptions}" Margin="2,2,5,2" HorizontalAlignment="Left" >
                     <Grid Margin="5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />

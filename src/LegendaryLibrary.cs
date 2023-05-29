@@ -435,8 +435,8 @@ namespace LegendaryLibraryNS
                 {
                     if (download.status == (int)DownloadStatus.Running)
                     {
-                        downloadManager.installerCTS?.Cancel();
-                        downloadManager.installerCTS?.Dispose();
+                        downloadManager.gracefulInstallerCTS?.Cancel();
+                        downloadManager.gracefulInstallerCTS?.Dispose();
                     }
                     download.status = (int)DownloadStatus.Paused;
                 }

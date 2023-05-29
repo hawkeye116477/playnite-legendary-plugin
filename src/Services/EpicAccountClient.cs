@@ -223,10 +223,11 @@ namespace LegendaryLibraryNS.Services
         {
             var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
                          .WithArguments("auth");
-            var cts = new CancellationTokenSource();
+            using var forcefulCTS = new CancellationTokenSource();
+            using var gracefulCTS = new CancellationTokenSource();
             try
             {
-                await foreach (CommandEvent cmdEvent in cmd.ListenAsync(cts.Token))
+                await foreach (CommandEvent cmdEvent in cmd.ListenAsync(Console.OutputEncoding, Console.OutputEncoding, forcefulCTS.Token, gracefulCTS.Token))
                 {
                     switch (cmdEvent)
                     {
@@ -236,11 +237,12 @@ namespace LegendaryLibraryNS.Services
                             // so we need to prevent that.
                             if (stdErr.Text.Contains("no longer valid"))
                             {
-                                cts.Cancel();
+                                gracefulCTS.Cancel();
                             }
                             break;
                         case ExitedCommandEvent exited:
-                            cts?.Dispose();
+                            gracefulCTS?.Dispose();
+                            forcefulCTS?.Dispose();
                             break;
                         default:
                             break;

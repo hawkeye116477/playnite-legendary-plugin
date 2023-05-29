@@ -110,10 +110,7 @@ namespace LegendaryLibraryNS
                 {
                     foreach (var tag in selectedOption.Value.Tags)
                     {
-                        if (!selectedExtraContent.Contains(tag))
-                        {
-                            selectedExtraContent.Add(tag);
-                        }
+                        selectedExtraContent.AddMissing(tag);
                     }
                 }
             }
