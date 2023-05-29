@@ -238,6 +238,8 @@ namespace LegendaryLibraryNS.Services
                             if (stdErr.Text.Contains("no longer valid"))
                             {
                                 gracefulCTS.Cancel();
+                                gracefulCTS?.Dispose();
+                                forcefulCTS?.Dispose();
                             }
                             break;
                         case ExitedCommandEvent exited:
