@@ -54,7 +54,8 @@ namespace LegendaryLibraryNS
 
         public Window InstallerWindow => Window.GetWindow(this);
 
-        public string GameID => DataContext.ToString();
+        public DownloadManagerData.Download InstallData => (DownloadManagerData.Download)DataContext;
+        public string GameID => InstallData.gameID;
 
         private void ChooseGamePathBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -161,12 +162,26 @@ namespace LegendaryLibraryNS
 
         private async void LegendaryGameInstallerUC_Loaded(object sender, RoutedEventArgs e)
         {
+            if (InstallData.downloadProperties.downloadAction == (int)DownloadAction.Repair)
+            {
+                FolderDP.Visibility = Visibility.Collapsed;
+                ImportBtn.Visibility = Visibility.Collapsed;
+                InstallBtn.Visibility = Visibility.Collapsed;
+                RepairBtn.Visibility = Visibility.Visible;
+            }
             var settings = LegendaryLibrary.GetSettings();
             SelectedGamePathTxt.Text = settings.GamesInstallationPath;
             ReorderingChk.IsChecked = settings.EnableReordering;
             MaxWorkersNI.Value = settings.MaxWorkers.ToString();
             MaxSharedMemoryNI.Value = settings.MaxSharedMemory.ToString();
-            UpdateSpaceInfo(SelectedGamePathTxt.Text);
+            if (!SelectedGamePathTxt.Text.IsNullOrEmpty())
+            {
+                UpdateSpaceInfo(SelectedGamePathTxt.Text);
+            }
+            else
+            {
+                UpdateSpaceInfo(settings.GamesInstallationPath);
+            }
             requiredThings = new List<string>();
             var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("infocache");
             var cacheInfoFile = Path.Combine(cacheInfoPath, GameID + ".json");
@@ -359,6 +374,7 @@ namespace LegendaryLibraryNS
 
             }
             InstallBtn.IsEnabled = true;
+            RepairBtn.IsEnabled = true;
         }
 
         private void UpdateSpaceInfo(string path)
@@ -415,6 +431,63 @@ namespace LegendaryLibraryNS
             {
                 var implicitStyle = new Style(typeof(TextBlock), baseStyle);
                 Resources.Add(typeof(TextBlock), implicitStyle);
+            }
+        }
+
+        private async void RepairBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var settings = LegendaryLibrary.GetSettings();
+            int maxWorkers = settings.MaxWorkers;
+            if (MaxWorkersNI.Value != "")
+            {
+                maxWorkers = int.Parse(MaxWorkersNI.Value);
+            }
+            int maxSharedMemory = settings.MaxSharedMemory;
+            if (MaxSharedMemoryNI.Value != "")
+            {
+                maxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
+            }
+            bool enableReordering = Convert.ToBoolean(ReorderingChk.IsChecked);
+            var selectedExtraContent = new List<string>();
+            if (requiredThings.Count > 0)
+            {
+                selectedExtraContent.Add("");
+                foreach (var requiredThing in requiredThings)
+                {
+                    selectedExtraContent.Add(requiredThing);
+                }
+            }
+            if (ExtraContentLB.Items.Count > 0)
+            {
+                selectedExtraContent.AddMissing("");
+                foreach (var selectedOption in ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().ToList())
+                {
+                    foreach (var tag in selectedOption.Value.Tags)
+                    {
+                        selectedExtraContent.AddMissing(tag);
+                    }
+                }
+            }
+            InstallerWindow.Close();
+            LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
+            var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == GameID);
+            if (wantedItem != null)
+            {
+                playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), wantedItem.name));
+            }
+            else
+            {
+                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp));
+                DownloadProperties downloadProperties = new DownloadProperties()
+                {
+                    installPath = "",
+                    downloadAction = (int)DownloadAction.Repair,
+                    enableReordering = enableReordering,
+                    maxWorkers = maxWorkers,
+                    maxSharedMemory = maxSharedMemory,
+                    extraContent = selectedExtraContent
+                };
+                await downloadManager.EnqueueJob(GameID, InstallerWindow.Title, downloadSize, installSize, downloadProperties);
             }
         }
     }

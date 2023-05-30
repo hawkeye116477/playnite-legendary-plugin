@@ -24,7 +24,7 @@
                     Margin="0,0,0,2"></TextBlock>
                 <DockPanel Margin="0,0,0,10">
                     <Button DockPanel.Dock="Right" Padding="5" Margin="5 0 0 0"
-                        Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" Content="&#xec5b;" FontFamily="{DynamicResource FontIcoFont}"/>
+                        Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" Content="&#xec5b;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCSelectDirectoryTooltip}" />
                     <TextBox Name="SelectedGamePathTxt"
                         Text="{Binding Settings.GamesInstallationPath, UpdateSourceTrigger=PropertyChanged}"
                         VerticalAlignment="Center" />

@@ -45,11 +45,15 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                window = new Window();
-                window.Background = System.Windows.Media.Brushes.DodgerBlue;
+                window = new Window
+                {
+                    Background = System.Windows.Media.Brushes.DodgerBlue
+                };
             }
             window.Title = Game.Name;
-            window.DataContext = Game.GameId.ToString();
+            var installProperties = new DownloadProperties { downloadAction = (int)Enums.DownloadAction.Install };
+            var installData = new DownloadManagerData.Download { gameID = Game.GameId, downloadProperties = installProperties };
+            window.DataContext = installData;
             window.Content = new LegendaryGameInstaller();
             window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
             window.SizeToContent = SizeToContent.WidthAndHeight;

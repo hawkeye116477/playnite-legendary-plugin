@@ -19,6 +19,8 @@
     <DockPanel Margin="10">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0"
                 VerticalAlignment="Bottom" Grid.Row="6" Grid.Column="2" DockPanel.Dock="Bottom">
+            <Button x:Name="RepairBtn" Content="{DynamicResource LOCLegendaryRepair}"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0" Visibility="Collapsed" IsEnabled="False" Click="RepairBtn_Click" />
             <Button x:Name="ImportBtn" Content="{DynamicResource LOCLegendaryImportEGL}"
                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
                     Click="ImportBtn_Click" />
@@ -43,10 +45,10 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Text="{DynamicResource LOCGameInstallDirTitle}" Grid.Row="0"></TextBlock>
-            <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,0,15">
+            <DockPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,15" Name="FolderDP">
+                <TextBlock Text="{DynamicResource LOCGameInstallDirTitle}" VerticalAlignment="Center" Margin="0,0,10,0"></TextBlock>
                 <Button DockPanel.Dock="Right" Padding="5" Margin="5 0 0 0" Content="&#xec5b;"
-                    Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" FontFamily="{DynamicResource FontIcoFont}"/>
+                    Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCSelectDirectoryTooltip}" />
                 <TextBox Name="SelectedGamePathTxt" Text="" VerticalAlignment="Top" Margin="0,5" />
             </DockPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="0">
@@ -55,7 +57,7 @@
                 <TextBlock x:Name="DownloadSizeTB" Text="{DynamicResource LOCLoadingLabel}"
                     VerticalAlignment="Top" Margin="5,0,0,0" />
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0">
+            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Margin="0,0,0,15">
                 <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendaryInstallSize}" />
                 <TextBlock x:Name="InstallSizeTB" Text="{DynamicResource LOCLoadingLabel}"
                     VerticalAlignment="Top" Margin="5,0,0,0" />
@@ -67,7 +69,7 @@
                 <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLoadingLabel}"
                     Margin="5,0,0,0" Name="SpaceTB" />
             </StackPanel>
-            <Border Grid.Row="4" Grid.Column="0" BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,15,0,0" Grid.ColumnSpan="2" Name="ExtraContentBrd" Visibility="Collapsed">
+            <Border Grid.Row="4" Grid.Column="0" BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Name="ExtraContentBrd" Visibility="Collapsed" Margin="0,0,0,5">
                 <Expander Header="{DynamicResource LOCLegendaryExtraContent}" Margin="2,2,5,2" HorizontalAlignment="Left">
                     <ListBox BorderThickness="0" Name="ExtraContentLB" SelectionMode="Multiple" SelectionChanged="ExtraContentLB_SelectionChanged" Margin="5,0,5,5">
                         <ListBox.Resources>
@@ -84,7 +86,7 @@
                     </ListBox>
                 </Expander>
             </Border>
-            <Border Grid.Row="5" Grid.Column="0" BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,5,0,0" Grid.ColumnSpan="2">
+            <Border Grid.Row="5" Grid.Column="0" BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2">
                 <Expander Header="{DynamicResource LOCLegendaryAdvancedOptions}" Margin="2,2,5,2" HorizontalAlignment="Left" >
                     <Grid Margin="5">
                         <Grid.ColumnDefinitions>

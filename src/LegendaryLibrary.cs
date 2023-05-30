@@ -496,16 +496,33 @@ namespace LegendaryLibraryNS
                     yield return new GameMenuItem
                     {
                         Description = ResourceProvider.GetString(LOC.LegendaryRepair),
-                        Action = async (args) =>
+                        Action = (args) =>
                         {
-                            DownloadProperties downloadProperties = new DownloadProperties()
+                            Window window = null;
+                            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
                             {
-                                downloadAction = (int)DownloadAction.Repair,
-                                enableReordering = GetSettings().EnableReordering,
-                                maxWorkers = GetSettings().MaxWorkers,
-                                maxSharedMemory = GetSettings().MaxSharedMemory
-                            };
-                            await GetLegendaryDownloadManager().EnqueueJob(game.GameId, game.Name, "", "", downloadProperties);
+                                window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                                {
+                                    ShowMaximizeButton = false,
+                                });
+                            }
+                            else
+                            {
+                                window = new Window
+                                {
+                                    Background = System.Windows.Media.Brushes.DodgerBlue
+                                };
+                            }
+                            window.Title = game.Name;
+                            var installProperties = new DownloadProperties { downloadAction = (int)DownloadAction.Repair };
+                            var installData = new DownloadManagerData.Download { gameID = game.GameId, downloadProperties = installProperties };
+                            window.DataContext = installData;
+                            window.Content = new LegendaryGameInstaller();
+                            window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+                            window.SizeToContent = SizeToContent.WidthAndHeight;
+                            window.MinWidth = 600;
+                            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                            window.ShowDialog();
                         }
                     };
                 }
