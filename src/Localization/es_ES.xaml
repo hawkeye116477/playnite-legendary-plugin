@@ -60,12 +60,13 @@
   <sys:String x:Key="LOCLegendaryClearCacheConfirm"></sys:String>
   <sys:String x:Key="LOCLegendaryCheckLog"></sys:String>
   <sys:String x:Key="LOCLegendarySyncGameSavesWarn"></sys:String>
-  <sys:String x:Key="LOCLegendaryMemoryError"></sys:String>
-  <sys:String x:Key="LOCLegendaryEditSelectedDownloadProperties"></sys:String>
-  <sys:String x:Key="LOCLegendaryTask"></sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadProperties"></sys:String>
+  <sys:String x:Key="LOCLegendaryMemoryError">La caché de memoria compartida actual es menor de lo requerido: {0} &lt; {1}. Trata de habilitar la optimización de reordenación para reducir el uso de memoria o aumentar la cantidad máxima de memoria compartida.</sys:String>
+  <sys:String x:Key="LOCLegendaryEditSelectedDownloadProperties">Editar propiedades de la entrada</sys:String>
+  <sys:String x:Key="LOCLegendaryTask">Tarea</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadProperties">Propiedades de la descarga</sys:String>
   <sys:String x:Key="LOCLegendaryMigrateGamesEpic"></sys:String>
   <sys:String x:Key="LOCLegendaryMigratingGamesEpic"></sys:String>
   <sys:String x:Key="LOCLegendaryMigrationCompleted"></sys:String>
   <sys:String x:Key="LOCLegendaryMigrationNoGames"></sys:String>
+  <sys:String x:Key="LOCLegendaryMigrationConfirm"></sys:String>
 </ResourceDictionary>
