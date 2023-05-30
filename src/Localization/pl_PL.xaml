@@ -68,4 +68,5 @@
   <sys:String x:Key="LOCLegendaryMigratingGamesEpic">Migrowanie wszystkich gier z wtyczki Epic...</sys:String>
   <sys:String x:Key="LOCLegendaryMigrationCompleted">Migracja ukończona pomyślnie.</sys:String>
   <sys:String x:Key="LOCLegendaryMigrationNoGames">Nie znaleziono gier do migracji.</sys:String>
+  <sys:String x:Key="LOCLegendaryMigrationConfirm">Wszystkie gry zostaną usunięte z wtyczki Epic i przeniesione do Legendary. Czy na pewno chcesz to zrobić?</sys:String>
 </ResourceDictionary>

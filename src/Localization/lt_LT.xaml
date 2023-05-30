@@ -68,4 +68,5 @@
   <sys:String x:Key="LOCLegendaryMigratingGamesEpic"></sys:String>
   <sys:String x:Key="LOCLegendaryMigrationCompleted"></sys:String>
   <sys:String x:Key="LOCLegendaryMigrationNoGames"></sys:String>
+  <sys:String x:Key="LOCLegendaryMigrationConfirm"></sys:String>
 </ResourceDictionary>
