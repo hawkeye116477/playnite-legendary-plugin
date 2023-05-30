@@ -193,7 +193,7 @@ namespace LegendaryLibraryNS
             {
                 if (File.Exists(cacheInfoFile))
                 {
-                    if (File.GetLastWriteTime(cacheInfoFile) < DateTime.Now.AddDays(-1))
+                    if (File.GetLastWriteTime(cacheInfoFile) < DateTime.Now.AddDays(-7))
                     {
                         File.Delete(cacheInfoFile);
                     }
@@ -216,6 +216,7 @@ namespace LegendaryLibraryNS
                             playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), ResourceProvider.GetString(LOC.LegendaryCheckLog)));
                         }
                         Window.GetWindow(this).Close();
+                        return;
                     }
                     else
                     {
@@ -236,7 +237,7 @@ namespace LegendaryLibraryNS
                     string content = null;
                     if (File.Exists(cacheSDLFile))
                     {
-                        if (File.GetLastWriteTime(cacheSDLFile) < DateTime.Now.AddDays(-1))
+                        if (File.GetLastWriteTime(cacheSDLFile) < DateTime.Now.AddDays(-7))
                         {
                             File.Delete(cacheSDLFile);
                         }
