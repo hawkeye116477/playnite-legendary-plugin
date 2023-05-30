@@ -31,4 +31,41 @@
   <sys:String x:Key="LOCLegendarySyncError">Wystąpił błąd podczas synchronizacji zapisów gry {0} z chmurą.</sys:String>
   <sys:String x:Key="LOCLegendaryImportingGame">Importowanie gry {0}...</sys:String>
   <sys:String x:Key="LOCLegendaryImportFinished">Importowanie zakończone. Dobrej zabawy.</sys:String>
+  <sys:String x:Key="LOCLegendaryMaxWorkers">Maksymalna liczba procesów roboczych</sys:String>
+  <sys:String x:Key="LOCLegendaryMaxSharedMemory">Maksymalna ilość pamięci współdzielonej (MB)</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadManager">Menedżer pobierania</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadStatus">Stan</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadCompletedColumn">Ukończono</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadQueued">W kolejce</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadRunning">Uruchomione</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadCanceled">Anulowane</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadCompleted">Ukończone</sys:String>
+  <sys:String x:Key="LOCLegendaryCurrentDownloadSummary">Podsumowanie bieżącego pobierania</sys:String>
+  <sys:String x:Key="LOCLegendaryRemoveEntry">Usuń wpis</sys:String>
+  <sys:String x:Key="LOCLegendaryRemoveEntryConfirm">Czy na pewno chcesz usunąć {0} z listy?</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadSizeColumn">Rozmiar pobierania</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">Pobieranie rozpocznie się już wkrótce. Możesz zobaczyć jego stan, uzyskując dostęp do panelu Legendary za pośrednictwem Menu =&gt; Widok lub paska bocznego.</sys:String>
+  <sys:String x:Key="LOCLegendaryPanel">Panel Legendary</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} jest już na liście pobierania. Możesz zobaczyć stan pobierania, uzyskując dostęp do panelu Legendary za pośrednictwem Menu =&gt; Widok lub paska bocznego.</sys:String>
+  <sys:String x:Key="LOCLegendaryRepair">Napraw</sys:String>
+  <sys:String x:Key="LOCLegendaryAdvancedOptions">Opcje zaawansowane</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReordering">Włącz optymalizację zmiany kolejności</sys:String>
+  <sys:String x:Key="LOCLegendaryExtraContent">Dodatkowa zawartość</sys:String>
+  <sys:String x:Key="LOCLegendaryCache">Pamięć podręczna</sys:String>
+  <sys:String x:Key="LOCLegendaryClearCache">Wyczyść pamięć podręczną</sys:String>
+  <sys:String x:Key="LOCLegendaryAutoClearCache">Automatycznie czyść pamięć podręczną</sys:String>
+  <sys:String x:Key="LOCLegendaryOnceAMonth">Raz w miesiącu</sys:String>
+  <sys:String x:Key="LOCLegendaryOnceEvery3Months">Raz na 3 miesiące</sys:String>
+  <sys:String x:Key="LOCLegendaryOnceEvery6Months">Raz na 6 miesięcy</sys:String>
+  <sys:String x:Key="LOCLegendaryClearCacheConfirm">Czy na pewno chcesz wyczyścić pamięć podręczną?</sys:String>
+  <sys:String x:Key="LOCLegendaryCheckLog">Sprawdź pliki log, aby uzyskać więcej informacji.</sys:String>
+  <sys:String x:Key="LOCLegendarySyncGameSavesWarn">Funkcja zapisywania w chmurze jest eksperymentalna. Zalecane jest utworzenie kopii zapasowej zapisów gier na wypadek, gdyby coś poszło nie tak.</sys:String>
+  <sys:String x:Key="LOCLegendaryMemoryError">Współdzielona pamięć podręczna jest mniejsza niż wymagana: {0} &lt; {1}. Spróbuj włączyć optymalizację zmiany kolejności, aby zmniejszyć zużycie pamięci lub zwiększ maksymalną ilość pamięci współdzielonej.</sys:String>
+  <sys:String x:Key="LOCLegendaryEditSelectedDownloadProperties">Edytuj właściwości wpisu</sys:String>
+  <sys:String x:Key="LOCLegendaryTask">Zadanie</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadProperties">Właściwości pobierania</sys:String>
+  <sys:String x:Key="LOCLegendaryMigrateGamesEpic">Migruj wszystkie gry z wtyczki Epic</sys:String>
+  <sys:String x:Key="LOCLegendaryMigratingGamesEpic">Migrowanie wszystkich gier z wtyczki Epic...</sys:String>
+  <sys:String x:Key="LOCLegendaryMigrationCompleted">Migracja ukończona pomyślnie.</sys:String>
+  <sys:String x:Key="LOCLegendaryMigrationNoGames">Nie znaleziono gier do migracji.</sys:String>
 </ResourceDictionary>
