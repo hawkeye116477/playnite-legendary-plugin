@@ -27,6 +27,7 @@ namespace LegendaryLibraryNS
     /// </summary>
     public partial class LegendaryLibrarySettingsView : UserControl
     {
+        private ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI playniteAPI = API.Instance;
         public LegendaryLibrarySettingsView()
         {
@@ -132,6 +133,12 @@ namespace LegendaryLibraryNS
 
         private void LegendarySettingsUC_Loaded(object sender, RoutedEventArgs e)
         {
+            var installedAddons = playniteAPI.Addons.Addons;
+            if (installedAddons.Contains("EpicGamesLibrary_Builtin"))
+            {
+                MigrateEpicBtn.IsEnabled = true;
+            }
+
             if (!LegendaryLauncher.IsEOSOverlayInstalled)
             {
                 EOSOInstallBtn.Visibility = Visibility.Visible;
@@ -197,6 +204,68 @@ namespace LegendaryLibraryNS
                 playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendarySyncGameSavesWarn));
                 settings.CloudSavesNoticeShown = true;
             }
+        }
+
+        private void MigrateEpicBtn_Click(object sender, RoutedEventArgs e)
+        {
+            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryMigratingGamesEpic), false) { IsIndeterminate = false };
+            playniteAPI.Dialogs.ActivateGlobalProgress(async (a) => 
+            {
+                using (playniteAPI.Database.BufferedUpdate())
+                {
+                    var gamesToMigrate = playniteAPI.Database.Games.Where(i => i.PluginId == Guid.Parse("00000002-DBD1-46C6-B5D0-B1BA559D10E4")).ToList();
+                    var migratedGames = new List<string>();
+                    var notImportedGames = new List<string>();
+                    if (gamesToMigrate.Count > 0)
+                    {
+                        var iterator = 0;
+                        a.ProgressMaxValue = gamesToMigrate.Count() + 1;
+                        a.CurrentProgressValue = 0;
+                        foreach (var game in gamesToMigrate.ToList())
+                        {
+                            iterator++;
+                            var alreadyExists = playniteAPI.Database.Games.FirstOrDefault(i => i.GameId == game.GameId && i.PluginId == LegendaryLibrary.Instance.Id);
+                            if (alreadyExists == null)
+                            {
+                                game.PluginId = LegendaryLibrary.Instance.Id;
+                                if (game.IsInstalled)
+                                {
+                                    var importCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                                             .WithArguments(new[] { "-y", "import", game.GameId, game.InstallDirectory })
+                                                             .WithValidation(CommandResultValidation.None)
+                                                             .ExecuteBufferedAsync();
+                                    if (!importCmd.StandardError.Contains("has been imported"))
+                                    {
+                                        notImportedGames.Add(game.GameId);
+                                        game.IsInstalled = false;
+                                        logger.Debug("[Legendary] " + importCmd.StandardError);
+                                        logger.Error("[Legendary] exit code: " + importCmd.ExitCode);
+                                    }
+                                }
+                                playniteAPI.Database.Games.Update(game);
+                                migratedGames.Add(game.GameId);
+                                a.CurrentProgressValue = iterator;
+                            }
+                        }
+                        a.CurrentProgressValue = gamesToMigrate.Count() + 1;
+                        if (migratedGames.Count > 0)
+                        {
+                            playniteAPI.Dialogs.ShowMessage(LOC.LegendaryMigrationCompleted);
+                            logger.Info("Successfully migrated " + migratedGames.Count + " game(s) from Epic to Legendary.");
+                        }
+                        if (notImportedGames.Count > 0)
+                        {
+                            logger.Info(notImportedGames.Count + " game(s) probably needs to be imported or installed again.");
+                        }
+                    }
+                    else
+                    {
+                        a.ProgressMaxValue = 1;
+                        a.CurrentProgressValue = 1;
+                        playniteAPI.Dialogs.ShowErrorMessage(LOC.LegendaryMigrationNoGames);
+                    }
+                }
+            }, globalProgressOptions);
         }
     }
 }

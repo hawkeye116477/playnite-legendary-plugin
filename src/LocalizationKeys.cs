@@ -326,7 +326,7 @@ namespace System
         /// </summary>
         public const string LegendaryMemoryError = "LOCLegendaryMemoryError";
         /// <summary>
-        /// Edit properties of selected entry
+        /// Edit entry properties
         /// </summary>
         public const string LegendaryEditSelectedDownloadProperties = "LOCLegendaryEditSelectedDownloadProperties";
         /// <summary>
@@ -337,5 +337,21 @@ namespace System
         /// Download Properties
         /// </summary>
         public const string LegendaryDownloadProperties = "LOCLegendaryDownloadProperties";
+        /// <summary>
+        /// Migrate all games from Epic plugin
+        /// </summary>
+        public const string LegendaryMigrateGamesEpic = "LOCLegendaryMigrateGamesEpic";
+        /// <summary>
+        /// Migrating all games from Epic plugin...
+        /// </summary>
+        public const string LegendaryMigratingGamesEpic = "LOCLegendaryMigratingGamesEpic";
+        /// <summary>
+        /// Migration completed successfully.
+        /// </summary>
+        public const string LegendaryMigrationCompleted = "LOCLegendaryMigrationCompleted";
+        /// <summary>
+        /// No games found for migration.
+        /// </summary>
+        public const string LegendaryMigrationNoGames = "LOCLegendaryMigrationNoGames";
     }
 }

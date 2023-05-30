@@ -64,4 +64,8 @@
   <sys:String x:Key="LOCLegendaryEditSelectedDownloadProperties">Edit entry properties</sys:String>
   <sys:String x:Key="LOCLegendaryTask">Task</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadProperties">Download Properties</sys:String>
+  <sys:String x:Key="LOCLegendaryMigrateGamesEpic">Migrate all games from Epic plugin</sys:String>
+  <sys:String x:Key="LOCLegendaryMigratingGamesEpic">Migrating all games from Epic plugin...</sys:String>
+  <sys:String x:Key="LOCLegendaryMigrationCompleted">Migration completed successfully.</sys:String>
+  <sys:String x:Key="LOCLegendaryMigrationNoGames">No games found for migration.</sys:String>
 </ResourceDictionary>

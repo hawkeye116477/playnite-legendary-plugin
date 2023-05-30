@@ -80,6 +80,7 @@
                         </TextBlock>
                     </StackPanel>
                 </StackPanel>
+                <Button Content="{DynamicResource LOCLegendaryMigrateGamesEpic}" HorizontalAlignment="Left" Margin="0,0,0,10" Name="MigrateEpicBtn" IsEnabled="False" Click="MigrateEpicBtn_Click"></Button>
                 <StackPanel>
                     <CheckBox DockPanel.Dock="Top" Margin="0,0,0,10"
                         IsChecked="{Binding Settings.LaunchOffline}"
