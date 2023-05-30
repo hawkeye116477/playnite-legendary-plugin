@@ -1,5 +1,30 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.1.0
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2023-05-30
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.1.0/LegendaryLibrary_1_1_0.pext
+    Changelog:
+      - Added possibility to migrate game entries from Epic plugin
+      - Added more amount of advanced download settings
+      - Added caching for information needed for Game Installer (cache will be cleared
+        after 7 days for some files if you click to install game)
+      - Added possibility to clear cache
+      - Added possibility to automatically clear cache within intervals
+      - Moved Download Manager to sidebar and redesigned (added more buttons and icons,
+        queuing downloads, saving list of downloaded files and other features)
+      - Added support for games with selective content (like Fallout New Vegas, Fortnite
+        and co)
+      - Added advanced options for Game Installer
+      - Separated import and repair functions (new game menu entry for repair function)
+      - Added initial support for installing in full screen mode (inheriting theme
+        for plugins isn't possible currently, so colors aren't that well matched and
+        no Download Manager currently)
+      - Improved error handling
+      - Downgraded SDK for compatibility with older Playnite's versions
+      - Fixed problems with authentication
+      - Fixed parsing installation path
+      - Updated translations (for now only Polish and Turkish are 100% translated)
   - Version: 1.0.0
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2023-04-18

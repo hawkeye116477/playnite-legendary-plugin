@@ -68,7 +68,7 @@ if os.path.exists(extFile):
     if newVersion == "true":
         installerManifest["Packages"].insert(0, {
             "Version": version,
-            "RequiredApiVersion": '6.0.0',
+            "RequiredApiVersion": '6.4.0',
             "ReleaseDate": datetime.date.today(),
             "PackageUrl": f"https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/{version}/LegendaryLibrary_{versionUnderline}.pext",
             "Changelog": [line.rstrip().replace("* ", "") for line in changelog]
