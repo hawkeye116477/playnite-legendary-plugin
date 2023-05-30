@@ -208,8 +208,13 @@ namespace LegendaryLibraryNS
 
         private void MigrateEpicBtn_Click(object sender, RoutedEventArgs e)
         {
+            var result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryMigrationConfirm), ResourceProvider.GetString(LOC.LegendaryMigrateGamesEpic), MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.No)
+            {
+                return;
+            }
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryMigratingGamesEpic), false) { IsIndeterminate = false };
-            playniteAPI.Dialogs.ActivateGlobalProgress(async (a) => 
+            playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
             {
                 using (playniteAPI.Database.BufferedUpdate())
                 {

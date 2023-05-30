@@ -353,5 +353,9 @@ namespace System
         /// No games found for migration.
         /// </summary>
         public const string LegendaryMigrationNoGames = "LOCLegendaryMigrationNoGames";
+        /// <summary>
+        /// All games will be removed from Epic plugin and moved to Legendary. Are you sure you want to do this?
+        /// </summary>
+        public const string LegendaryMigrationConfirm = "LOCLegendaryMigrationConfirm";
     }
 }
