@@ -134,6 +134,11 @@ namespace LegendaryLibraryNS
         public static Dictionary<string, Installed> GetInstalledAppList()
         {
             var installListPath = Path.Combine(ConfigPath, "installed.json");
+            if (!File.Exists(installListPath))
+            {
+                return new Dictionary<string, Installed>();
+            }
+
             var list = Serialization.FromJson<Dictionary<string, Installed>>(FileSystem.ReadFileAsStringSafe(installListPath));
             return list;
         }
