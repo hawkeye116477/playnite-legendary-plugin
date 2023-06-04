@@ -312,13 +312,8 @@ namespace LegendaryLibraryNS
                         downloadSize = Helpers.FormatSize(downloadSizeNumber);
                         installSize = Helpers.FormatSize(installSizeNumber);
                     }
-                    else
-                    {
-                        downloadSize = Helpers.FormatSize(manifest.Manifest.Download_size);
-                        installSize = Helpers.FormatSize(manifest.Manifest.Disk_size);
-                    }
                 }
-                else
+                if (downloadSize.IsNullOrEmpty() || installSize.IsNullOrEmpty())
                 {
                     downloadSize = Helpers.FormatSize(manifest.Manifest.Download_size);
                     installSize = Helpers.FormatSize(manifest.Manifest.Disk_size);
