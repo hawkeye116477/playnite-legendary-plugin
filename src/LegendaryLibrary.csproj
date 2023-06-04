@@ -90,9 +90,6 @@
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\native\Fileapi.cs">
       <Link>Shared\Playnite\Native\Fileapi.cs</Link>
     </Compile>
-    <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\native\Gdi32.cs">
-      <Link>Shared\Playnite\Native\Gdi32.cs</Link>
-    </Compile>
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\native\Kernel32.cs">
       <Link>Shared\Playnite\Native\Kernel32.cs</Link>
     </Compile>
@@ -105,17 +102,8 @@
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\native\Processthreadsapi.cs">
       <Link>Shared\Playnite\Native\Processthreadsapi.cs</Link>
     </Compile>
-    <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\native\Psapi.cs">
-      <Link>Shared\Playnite\Native\Psapi.cs</Link>
-    </Compile>
-    <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\native\Shell32.cs">
-      <Link>Shared\Playnite\Native\Shell32.cs</Link>
-    </Compile>
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\native\Shlwapi.cs">
       <Link>Shared\Playnite\Native\Shlwapi.cs</Link>
-    </Compile>
-    <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\native\User32.cs">
-      <Link>Shared\Playnite\Native\User32.cs</Link>
     </Compile>
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\native\Winbase.cs">
       <Link>Shared\Playnite\Native\Winbase.cs</Link>
@@ -123,23 +111,11 @@
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\native\Windef.cs">
       <Link>Shared\Playnite\Native\Windef.cs</Link>
     </Compile>
-    <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\native\WinError.cs">
-      <Link>Shared\Playnite\Native\WinError.cs</Link>
-    </Compile>
-    <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\native\Wingdi.cs">
-      <Link>Shared\Playnite\Native\Wingdi.cs</Link>
-    </Compile>
-    <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\native\Winnt.cs">
-      <Link>Shared\Playnite\Native\Winnt.cs</Link>
-    </Compile>
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\native\winuser.cs">
       <Link>Shared\Playnite\Native\winuser.cs</Link>
     </Compile>
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\extensions\Enums.cs">
       <Link>Shared\Playnite\Enums.cs</Link>
-    </Compile>
-    <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\extensions\ObjectExtensions.cs">
-      <Link>Shared\Playnite\ObjectExtensions.cs</Link>
     </Compile>
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\extensions\ProcessExtensions.cs">
       <Link>Shared\Playnite\ProcessExtensions.cs</Link>
@@ -150,9 +126,6 @@
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\FileSystem.cs">
       <Link>Shared\Playnite\FileSystem.cs</Link>
     </Compile>
-    <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\GlobalRandom.cs">
-      <Link>Shared\Playnite\GlobalRandom.cs</Link>
-    </Compile>
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\Paths.cs">
       <Link>Shared\Playnite\Paths.cs</Link>
     </Compile>
@@ -162,29 +135,8 @@
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\ProcessStarter.cs">
       <Link>Shared\Playnite\ProcessStarter.cs</Link>
     </Compile>
-    <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\Programs.cs">
-      <Link>Shared\Playnite\Programs.cs</Link>
-    </Compile>
-    <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\web\Downloader.cs">
-      <Link>Shared\Playnite\Downloader.cs</Link>
-    </Compile>
-    <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\web\HttpDownloader.cs">
-      <Link>Shared\Playnite\HttpDownloader.cs</Link>
-    </Compile>
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\Playnite\Common\Xaml.cs">
       <Link>Shared\Playnite\Xaml.cs</Link>
-    </Compile>
-    <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\Playnite\Converters\InvertableBooleanToVisibilityConverter.cs">
-      <Link>Shared\Playnite\InvertableBooleanToVisibilityConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\converters\NegateConverter.cs">
-      <Link>Shared\Playnite\NegateConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\converters\ObjectToStringConverter.cs">
-      <Link>Shared\Playnite\ObjectToStringConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\third_party\PlayniteExtensions\source\Generic\PlayniteExtensions.Common\Encryption.cs">
-      <Link>Shared\Playnite\Encryption.cs</Link>
     </Compile>
     <Compile Include="..\third_party\PlayniteExtensions\source\Generic\PlayniteExtensions.Common\GlobalCommands.cs">
       <Link>Shared\Playnite\GlobalCommands.cs</Link>

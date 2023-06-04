@@ -5,12 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LegendaryLibraryNS"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:pcon="clr-namespace:Playnite.Converters"
              xmlns:pcmd="clr-namespace:Playnite.Commands"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400" Name="LegendaryDownloadPropertiesUC" Loaded="LegendaryDownloadPropertiesUC_Loaded">
     <UserControl.Resources>
-        <pcon:NegateConverter x:Key="NegateConverter" />
         <sys:Boolean x:Key="True">True</sys:Boolean>
         <sys:Boolean x:Key="False">False</sys:Boolean>
         <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>

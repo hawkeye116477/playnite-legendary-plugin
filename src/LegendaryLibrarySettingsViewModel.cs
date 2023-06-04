@@ -20,7 +20,6 @@ namespace LegendaryLibraryNS
 {
     public class LegendaryLibrarySettings
     {
-        public int Version { get; set; }
         public bool ImportInstalledGames { get; set; } = LegendaryLauncher.IsInstalled;
         public bool ConnectAccount { get; set; } = false;
         public bool ImportUninstalledGames { get; set; } = false;

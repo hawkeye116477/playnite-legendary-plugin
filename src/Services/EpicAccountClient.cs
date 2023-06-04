@@ -5,7 +5,6 @@ using LegendaryLibraryNS.Models;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
-using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
