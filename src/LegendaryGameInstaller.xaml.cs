@@ -314,10 +314,6 @@ namespace LegendaryLibraryNS
                     }
                     else
                     {
-                        if (File.Exists(cacheSDLFile))
-                        {
-                            File.Delete(cacheSDLFile);
-                        }
                         downloadSize = Helpers.FormatSize(manifest.Manifest.Download_size);
                         installSize = Helpers.FormatSize(manifest.Manifest.Disk_size);
                     }
