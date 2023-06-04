@@ -205,19 +205,17 @@ namespace LegendaryLibraryNS
                     }
                     return;
                 }
-                void gameStarted(int processId)
+                procMon = new ProcessMonitor();
+                procMon.TreeStarted += (_, treeArgs) =>
                 {
                     stopWatch = Stopwatch.StartNew();
-                    InvokeOnStarted(new GameStartedEventArgs { StartedProcessId = processId });
-                }
-                procMon = new ProcessMonitor();
-                procMon.TreeStarted += (_, treeArgs) => gameStarted(treeArgs.StartedId);
+                    InvokeOnStarted(new GameStartedEventArgs { StartedProcessId = treeArgs.StartedId });
+                };
                 procMon.TreeDestroyed += (_, __) =>
                 {
                     stopWatch.Stop();
                     InvokeOnStopped(new GameStoppedEventArgs { SessionLength = Convert.ToUInt64(stopWatch.Elapsed.TotalSeconds) });
                 };
-                stopWatch = Stopwatch.StartNew();
                 procMon.WatchDirectoryProcesses(Game.InstallDirectory, false);
             }
             else
