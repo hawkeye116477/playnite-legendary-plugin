@@ -493,10 +493,12 @@ namespace LegendaryLibraryNS
             if (checkedStatus.Count > 0)
             {
                 downloadsView.Filter = item => checkedStatus.Contains((item as DownloadManagerData.Download).status);
+                FilterDownloadBtn.Content = "\uef29 " + ResourceProvider.GetString("LOCFilterActiveLabel");
             }
             else
             {
                 downloadsView.Filter = null;
+                FilterDownloadBtn.Content = "\uef29";
             }
         }
 
