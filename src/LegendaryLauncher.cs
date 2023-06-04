@@ -85,7 +85,20 @@ namespace LegendaryLibraryNS
                 var installPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Games");
                 if (IniConfig != null && !IniConfig["Legendary"]["install_dir"].IsNullOrEmpty())
                 {
-                    installPath = Path.GetFullPath(IniConfig["Legendary"]["install_dir"]);
+                    var newInstallPath = "";
+                    bool installPathIsValid = true;
+                    try
+                    {
+                        newInstallPath = Path.GetFullPath(IniConfig["Legendary"]["install_dir"]);
+                    }
+                    catch
+                    {
+                        installPathIsValid = false;
+                    }
+                    if (installPathIsValid)
+                    {
+                        installPath = newInstallPath;
+                    }
                 }
                 return installPath;
             }
