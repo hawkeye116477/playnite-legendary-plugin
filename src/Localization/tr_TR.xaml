@@ -4,7 +4,7 @@
   <sys:String x:Key="LOCLegendaryGamesInstallationPath">Oyunların Kurulum Yolu</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSize">İndirme Boyutu:</sys:String>
   <sys:String x:Key="LOCLegendaryInstallSize">Kurulum Boyutu:</sys:String>
-  <sys:String x:Key="LOCLegendaryUninstallGameConfirm">{0} uygulaması kaldırılsın mı?</sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallGameConfirm">{0} kaldırılacak, bundan emin misiniz?</sys:String>
   <sys:String x:Key="LOCLegendaryLaunchOffline">Mümkünse oyunları çevrimdışı kipte başlat</sys:String>
   <sys:String x:Key="LOCLegendaryExcludeGames">Hariç tutulan oyunlar</sys:String>
   <sys:String x:Key="LOCLegendaryOfflineGames">Çevrimdışı oyunlar</sys:String>
@@ -27,8 +27,8 @@
   <sys:String x:Key="LOCLegendaryInstallationFinished">Kurulum tamamlandı. İyi eğlenceler.</sys:String>
   <sys:String x:Key="LOCLegendaryAfterDownloadComplete">İndirme tamamlandıktan sonra:</sys:String>
   <sys:String x:Key="LOCLegendarySyncGameSaves">Oyun kayıtlarını buluta eşitle</sys:String>
-  <sys:String x:Key="LOCLegendarySyncing">{0} oyunun kaydı buluta eşitleniyor...</sys:String>
-  <sys:String x:Key="LOCLegendarySyncError">{0} oyunun kaydı buluta eşitlenirken bir hata oluştu.</sys:String>
+  <sys:String x:Key="LOCLegendarySyncing">{0} oyun kaydı buluta eşitleniyor...</sys:String>
+  <sys:String x:Key="LOCLegendarySyncError">{0} oyun kaydı buluta eşitlenirken bir hata oluştu.</sys:String>
   <sys:String x:Key="LOCLegendaryImportingGame">İçe aktarılıyor {0}...</sys:String>
   <sys:String x:Key="LOCLegendaryImportFinished">İçe aktarma tamamlandı. İyi eğlenceler.</sys:String>
   <sys:String x:Key="LOCLegendaryMaxWorkers">En fazla çalışan işlem sayısı</sys:String>
