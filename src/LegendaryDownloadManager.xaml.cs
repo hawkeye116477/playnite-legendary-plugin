@@ -69,16 +69,23 @@ namespace LegendaryLibraryNS
         {
             var dataDir = LegendaryLibrary.Instance.GetPluginUserDataPath();
             var dataFile = Path.Combine(dataDir, "downloadManager.json");
-            if (!File.Exists(dataFile))
+            bool correctJson = false;
+            if (File.Exists(dataFile))
+            {
+                if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(dataFile), out downloadManagerData))
+                {
+                    if (downloadManagerData != null && downloadManagerData.downloads != null)
+                    {
+                        correctJson = true;
+                    }
+                }
+            }
+            if (!correctJson)
             {
                 downloadManagerData = new DownloadManagerData.Rootobject
                 {
                     downloads = new ObservableCollection<DownloadManagerData.Download>()
                 };
-            }
-            else
-            {
-                downloadManagerData = Serialization.FromJson<DownloadManagerData.Rootobject>(FileSystem.ReadFileAsStringSafe(dataFile));
             }
             DownloadsDG.ItemsSource = downloadManagerData.downloads;
             return downloadManagerData;
