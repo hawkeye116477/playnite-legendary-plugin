@@ -100,7 +100,10 @@ namespace LegendaryLibraryNS
                 Directory.CreateDirectory(dataDir);
             }
             var strConf = Serialization.ToJson(downloadManagerData, true);
-            File.WriteAllText(dataFile, strConf);
+            if (!strConf.IsNullOrEmpty())
+            {
+                File.WriteAllText(dataFile, strConf);
+            }
         }
 
         public async void DoNextJobInQueue(object _, PropertyChangedEventArgs arg)

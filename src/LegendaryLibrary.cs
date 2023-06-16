@@ -337,9 +337,53 @@ namespace LegendaryLibraryNS
                 var metadataFile = Path.Combine(LegendaryLauncher.ConfigPath, "metadata", gameID + ".json");
                 if (File.Exists(metadataFile))
                 {
-                    var metadata = Serialization.FromJson<LegendaryMetadata.Rootobject>(FileSystem.ReadFileAsStringSafe(Path.Combine(LegendaryLauncher.ConfigPath, "metadata", gameID + ".json")));
+                    bool correctJson = false;
+                    LegendaryMetadata.Rootobject metadata = null;
+                    if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(Path.Combine(LegendaryLauncher.ConfigPath, "metadata", gameID + ".json")), out metadata))
+                    {
+                        if (metadata != null && metadata.metadata != null)
+                        {
+                            correctJson = true;
+                        }
+                    }
+                    if (!correctJson)
+                    {
+                        GlobalProgressOptions metadataProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCProgressMetadata"), false);
+                        PlayniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
+                        {
+                            a.ProgressMaxValue = 100;
+                            a.CurrentProgressValue = 0;
+                            var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath).WithArguments(new[] { "info", gameID });
+                            await foreach (var cmdEvent in cmd.ListenAsync())
+                            {
+                                switch (cmdEvent)
+                                {
+                                    case StartedCommandEvent started:
+                                        a.CurrentProgressValue = 1;
+                                        break;
+                                    case StandardErrorCommandEvent stdErr:
+                                        logger.Debug("[Legendary] " + stdErr.ToString());
+                                        break;
+                                    case ExitedCommandEvent exited:
+                                        if (exited.ExitCode != 0)
+                                        {
+                                            logger.Error("[Legendary] exit code: " + exited.ExitCode);
+                                            PlayniteApi.Dialogs.ShowErrorMessage(PlayniteApi.Resources.GetString("LOCMetadataDownloadError").Format(gameName));
+                                            return;
+                                        }
+                                        else
+                                        {
+                                            metadata = Serialization.FromJson<LegendaryMetadata.Rootobject>(FileSystem.ReadFileAsStringSafe(Path.Combine(LegendaryLauncher.ConfigPath, "metadata", gameID + ".json")));
+                                        }
+                                        a.CurrentProgressValue = 100;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }, metadataProgressOptions);
+                    }
                     var cloudSaveFolder = metadata.metadata.customAttributes.CloudSaveFolder.value;
-
                     if (cloudSaveFolder != null)
                     {
                         var userData = Serialization.FromJson<OauthResponse>(FileSystem.ReadFileAsStringSafe(LegendaryLauncher.TokensPath));

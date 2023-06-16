@@ -191,14 +191,22 @@ namespace LegendaryLibraryNS
             }
             if (GameID != "eos-overlay")
             {
+                bool correctJson = false;
                 if (File.Exists(cacheInfoFile))
                 {
                     if (File.GetLastWriteTime(cacheInfoFile) < DateTime.Now.AddDays(-7))
                     {
                         File.Delete(cacheInfoFile);
                     }
+                    if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(cacheInfoFile), out manifest))
+                    {
+                        if (manifest != null && manifest.Manifest != null)
+                        {
+                            correctJson = true;
+                        }
+                    }
                 }
-                if (!File.Exists(cacheInfoFile))
+                if (!correctJson)
                 {
                     var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                       .WithArguments(new[] { "info", GameID, "--json" })
@@ -223,10 +231,6 @@ namespace LegendaryLibraryNS
                         File.WriteAllText(cacheInfoFile, result.StandardOutput);
                         manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>(result.StandardOutput);
                     }
-                }
-                else
-                {
-                    manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>(FileSystem.ReadFileAsStringSafe(cacheInfoFile));
                 }
                 if (manifest.Manifest.Install_tags.Length > 1)
                 {
