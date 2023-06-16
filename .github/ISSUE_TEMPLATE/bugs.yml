@@ -7,13 +7,13 @@ body:
       value: |
         Thanks for taking the time to fill out this bug report!
   - type: input
-    id: Lversion
+    id: legendaryV
     attributes:
       label: Plugin's version
     validations:
       required: true
   - type: input
-    id: Pversion
+    id: playniteV
     attributes:
       label: Playnite's version
     validations:
@@ -21,15 +21,20 @@ body:
   - type: textarea
     id: what-happened
     attributes:
-      label: What happened?
-      description: Also tell us, what did you expect to happen?
+      label: Bug description
+      description: Describe what happened and tell us also, what did you expect to happen?
       placeholder: Tell us what you see!
-      value: "A bug happened!"
     validations:
       required: true
   - type: textarea
     id: logs
     attributes:
       label: Relevant log
-      description: Please include any relevant log. This will be automatically formatted into code, so no need for backticks.
-      render: shell
+      description: Please include any relevant log file or message.
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain your problem.
