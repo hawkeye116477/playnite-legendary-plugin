@@ -21,7 +21,6 @@ namespace LegendaryLibraryNS
     public class LegendaryInstallController : InstallController
     {
         private IPlayniteAPI playniteAPI = API.Instance;
-        private static LegendaryInstallController Instance { get; set; }
 
         public LegendaryInstallController(Game game) : base(game)
         {

@@ -1,6 +1,7 @@
 ﻿using CliWrap;
 using CliWrap.Buffered;
 using LegendaryLibraryNS.Enums;
+using LegendaryLibraryNS.Models;
 using Playnite;
 using Playnite.Common;
 using Playnite.SDK;
@@ -93,7 +94,9 @@ namespace LegendaryLibraryNS
                 ShowMaximizeButton = false
             });
             window.Title = ResourceProvider.GetString(LOC.LegendaryEOSOverlay);
-            window.DataContext = "eos-overlay";
+            var installProperties = new DownloadProperties { downloadAction = (int)DownloadAction.Install };
+            var installData = new DownloadManagerData.Download { gameID = "eos-overlay", downloadProperties = installProperties };
+            window.DataContext = installData;
             window.Content = new LegendaryGameInstaller();
             window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
             window.SizeToContent = SizeToContent.Height;
