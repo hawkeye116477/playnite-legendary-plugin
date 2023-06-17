@@ -437,7 +437,7 @@ namespace LegendaryLibraryNS
             {
                 foreach (var selectedRow in DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
                 {
-                    var result = playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryRemoveEntryConfirm), selectedRow.name), ResourceProvider.GetString(LOC.LegendaryRemoveEntry), MessageBoxButton.YesNo);
+                    var result = playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryRemoveEntryConfirm), selectedRow.name), ResourceProvider.GetString(LOC.LegendaryRemoveEntry), MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (result == MessageBoxResult.Yes)
                     {
                         var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == selectedRow.gameID);

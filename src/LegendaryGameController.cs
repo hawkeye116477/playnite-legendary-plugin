@@ -111,7 +111,7 @@ namespace LegendaryLibraryNS
             var result = playniteAPI.Dialogs.ShowMessage(
                 string.Format(ResourceProvider.GetString(LOC.LegendaryUninstallGameConfirm), Game.Name),
                 ResourceProvider.GetString("LOCUninstallGame"),
-                MessageBoxButton.YesNo);
+                MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.No)
             {
                 Game.IsUninstalling = false;
