@@ -421,6 +421,9 @@ namespace LegendaryLibraryNS
                             }
                         }
                         selectedRow.status = (int)DownloadStatus.Canceled;
+                        DownloadSpeedTB.Text = "";
+                        DownloadedTB.Text = "";
+                        ElapsedTB.Text = "";
                         EtaTB.Text = "";
                         SaveData();
                     }
