@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # pylint: disable=C0103
 """Update Localization Keys (LOC class)"""
 import os
