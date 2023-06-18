@@ -425,6 +425,7 @@ namespace LegendaryLibraryNS
                         DownloadedTB.Text = "";
                         ElapsedTB.Text = "";
                         EtaTB.Text = "";
+                        DownloadPB.Value = 0;
                         SaveData();
                     }
                 }
