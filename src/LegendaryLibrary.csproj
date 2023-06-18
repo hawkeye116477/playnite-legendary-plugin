@@ -173,6 +173,7 @@
     <Compile Include="LegendaryLibrarySettingsView.xaml.cs">
       <DependentUpon>LegendaryLibrarySettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LegendaryMessagesSettings.cs" />
     <Compile Include="LocalizationKeys.cs" />
     <Compile Include="Converters\LongToDateConverter.cs" />
     <Compile Include="Models\AccountResponse.cs" />

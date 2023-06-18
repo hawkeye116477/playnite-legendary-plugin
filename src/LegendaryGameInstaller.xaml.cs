@@ -124,7 +124,19 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp));
+                var messagesSettings = LegendaryMessagesSettings.LoadSettings();
+                if (!messagesSettings.DontShowDownloadManagerWhatsUpMsg)
+                {
+                    var okResponse = new MessageBoxOption("LOCOKLabel", true, true);
+                    var dontShowResponse = new MessageBoxOption("LOCDontShowAgainTitle");
+                    var response = playniteAPI.Dialogs.ShowMessage(LOC.LegendaryDownloadManagerWhatsUp, "", MessageBoxImage.Information, new List<MessageBoxOption> { okResponse, dontShowResponse });
+                    if (response == dontShowResponse)
+                    {
+                        messagesSettings.DontShowDownloadManagerWhatsUpMsg = true;
+                        LegendaryMessagesSettings.SaveSettings(messagesSettings);
+                    }
+                }
+
                 DownloadProperties downloadProperties = new DownloadProperties()
                 {
                     installPath = installPath,
@@ -473,7 +485,19 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp));
+                var messagesSettings = LegendaryMessagesSettings.LoadSettings();
+                if (!messagesSettings.DontShowDownloadManagerWhatsUpMsg)
+                {
+                    var okResponse = new MessageBoxOption("LOCOKLabel", true, true);
+                    var dontShowResponse = new MessageBoxOption("LOCDontShowAgainTitle");
+                    var response = playniteAPI.Dialogs.ShowMessage(LOC.LegendaryDownloadManagerWhatsUp, "", MessageBoxImage.Information, new List<MessageBoxOption> { okResponse, dontShowResponse });
+                    if (response == dontShowResponse)
+                    {
+                        messagesSettings.DontShowDownloadManagerWhatsUpMsg = true;
+                        LegendaryMessagesSettings.SaveSettings(messagesSettings);
+                    }
+                }
+
                 DownloadProperties downloadProperties = new DownloadProperties()
                 {
                     installPath = "",
