@@ -413,7 +413,7 @@ namespace LegendaryLibraryNS
                         {
                             File.Delete(repairFile);
                         }
-                        if (selectedRow.fullInstallPath != null)
+                        if (selectedRow.fullInstallPath != null && selectedRow.downloadProperties.downloadAction == (int)DownloadAction.Install)
                         {
                             if (Directory.Exists(selectedRow.fullInstallPath))
                             {
@@ -464,7 +464,8 @@ namespace LegendaryLibraryNS
                         {
                             File.Delete(repairFile);
                         }
-                        if (selectedRow.fullInstallPath != null && wantedItem.status != (int)DownloadStatus.Completed)
+                        if (selectedRow.fullInstallPath != null && wantedItem.status != (int)DownloadStatus.Completed
+                            && selectedRow.downloadProperties.downloadAction == (int)DownloadAction.Install)
                         {
                             if (Directory.Exists(selectedRow.fullInstallPath))
                             {
