@@ -199,13 +199,11 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private void SyncGameSavesChk_Checked(object sender, RoutedEventArgs e)
+        private void SyncGameSavesChk_Click(object sender, RoutedEventArgs e)
         {
-            var settings = LegendaryLibrary.GetSettings();
-            if (!settings.CloudSavesNoticeShown)
+            if (SyncGameSavesChk.IsChecked == true)
             {
                 playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendarySyncGameSavesWarn), "", MessageBoxButton.OK, MessageBoxImage.Warning);
-                settings.CloudSavesNoticeShown = true;
             }
         }
 

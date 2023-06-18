@@ -92,7 +92,7 @@
                 <CheckBox DockPanel.Dock="Top"
                     Margin="0,10,0,0"
                     IsChecked="{Binding Settings.SyncGameSaves}"
-                    Content="{DynamicResource LOCLegendarySyncGameSaves}" Name="SyncGameSavesChk" Checked="SyncGameSavesChk_Checked" />
+                    Content="{DynamicResource LOCLegendarySyncGameSaves}" Name="SyncGameSavesChk" Click="SyncGameSavesChk_Click" />
 
                 <TextBlock VerticalAlignment="Center" Margin="0,20,0,0" Height="24"
                     RenderTransformOrigin="0.5,0.5">
