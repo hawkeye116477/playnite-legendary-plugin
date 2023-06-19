@@ -1,13 +1,18 @@
 #!/usr/bin/env python
 # pylint: disable=C0103
 # pylint: disable=C0301
+# pylint: disable=E1129
+# pylint: disable=E1136
 """Pack extension"""
 import os
 import subprocess
 import shutil
 import datetime
 import hashlib
+import winreg
+import xml.etree.ElementTree as ET
 import yaml
+import git
 import get_extension_version
 
 
@@ -21,7 +26,15 @@ class MyDumper(yaml.Dumper):
 pj = os.path.join
 pn = os.path.normpath
 
-playnitePath = pn(r"C:\Program Files\Playnite")
+playnitePath = pn(pj(os.path.expanduser('~'), r"scoop\apps\playnite\current"))
+if not os.path.isdir(playnitePath):
+    with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall') as key:
+        for i in range(0, winreg.QueryInfoKey(key)[0]):
+            with winreg.OpenKey(key, winreg.EnumKey(key, i)) as subkey:
+                if winreg.QueryValueEx(subkey, "DisplayName")[0] == "Playnite":
+                    playnitePath = pn(winreg.QueryValueEx(subkey, "InstallLocation")[0])
+                    break
+
 toolbox = pj(playnitePath, "Toolbox.exe")
 scriptPath = os.path.dirname(os.path.realpath(__file__))
 mainPath = pn(scriptPath + "/..")
@@ -50,6 +63,7 @@ if os.path.exists(extFile):
 
     with open(checksumFilePath, "a", encoding="utf-8") as checksumFile:
         checksumFile.write(checksumExt+"  "+os.path.basename(extFile))
+    print(f"Checksum: {checksumExt}")
 
     with open(pj(mainPath, "changelog.txt"), "r", encoding="utf-8") as cf:
         changelog = cf.readlines()
@@ -65,10 +79,16 @@ if os.path.exists(extFile):
     else:
         installerManifest["Packages"] = []
 
+    packagesConfig = ET.parse(pj(mainPath, "src", "packages.config"))
+    for child in packagesConfig.getroot():
+        if child.get('id') == "PlayniteSDK":
+            sdkVersion = child.get('version')
+            break
+
     if newVersion == "true":
         installerManifest["Packages"].insert(0, {
             "Version": version,
-            "RequiredApiVersion": '6.4.0',
+            "RequiredApiVersion": sdkVersion,
             "ReleaseDate": datetime.date.today(),
             "PackageUrl": f"https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/{version}/LegendaryLibrary_{versionUnderline}.pext",
             "Changelog": [line.rstrip().replace("* ", "") for line in changelog]
@@ -77,3 +97,6 @@ if os.path.exists(extFile):
         with open(pj(mainPath, "installer.yaml"), "w", encoding="utf-8") as file:
             yaml.dump(installerManifest, file,
                       sort_keys=False, Dumper=MyDumper)
+
+        git_repo = git.Repo(mainPath)
+        git_repo.create_tag(version)
