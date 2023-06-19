@@ -197,7 +197,7 @@
     <Compile Include="Services\WebStoreClient.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\..\..\Program Files\Playnite\Templates\Themes\Fonts\icofont.ttf">
+    <None Include="$(LocalAppData)\Playnite\Templates\Themes\Fonts\icofont.ttf">
       <Link>Fonts/icofont.ttf</Link>
     </None>
     <None Include="..\LICENSE">
@@ -270,6 +270,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
+    <LocalAppData>$([System.Environment]::GetFolderPath(SpecialFolder.LocalApplicationData))</LocalAppData>
     <PostBuildEvent>"$(ProjectDir)..\make_scripts\after_build.py" $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
 </Project>
