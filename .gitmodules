@@ -1,3 +1,4 @@
 [submodule "third_party/PlayniteExtensions"]
 	path = third_party/PlayniteExtensions
 	url = https://github.com/JosefNemec/PlayniteExtensions.git
+	branch = master
