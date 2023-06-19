@@ -1,5 +1,14 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.1.2
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2023-06-19
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.1.2/LegendaryLibrary_1_1_2.pext
+    Changelog:
+      - Fixed crashes occurring when some files are corrupted
+      - Fixed installing EOS Overlay
+      - Added possibility to skip displaying notice about Download Manager
+      - Added other minor improvements
   - Version: 1.1.1
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2023-06-04
@@ -29,6 +38,7 @@ Packages:
       - Added initial support for installing in full screen mode (inheriting theme
         for plugins isn't possible currently, so colors aren't that well matched and
         no Download Manager currently)
+      - Improved launching games
       - Improved error handling
       - Downgraded SDK for compatibility with older Playnite's versions
       - Fixed problems with authentication
