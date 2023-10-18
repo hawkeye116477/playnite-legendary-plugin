@@ -83,7 +83,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Label="compileInclude3p">
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\WindowsNotifyIconManager.cs">
       <Link>Shared\Playnite\WindowsNotifyIconManager.cs</Link>
     </Compile>
@@ -147,6 +147,8 @@
     <Compile Include="..\third_party\PlayniteExtensions\source\Generic\PlayniteExtensions.Common\PluginSettingsViewModel.cs">
       <Link>Shared\Playnite\PluginSettingsViewModel.cs</Link>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Converters\DownloadStatusEnumToStringConverter.cs" />
     <Compile Include="Enums\ClearCacheTime.cs" />
     <Compile Include="Enums\DownloadAction.cs" />
@@ -221,16 +223,11 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\third_party\PlayniteExtensions\source\Libraries\EpicLibrary\Localization\*.xaml">
-      <Link>Localization\Epic\%(Filename)%(Extension)</Link>
+    <None Include="..\third_party\Localization\*.xaml">
+      <Link>Localization\third_party\%(Filename)%(Extension)</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\Playnite\Localization\LocSource.xaml">
-      <Link>Shared\Playnite\LocSource.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </None>
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>

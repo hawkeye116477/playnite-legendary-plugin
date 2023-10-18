@@ -71,7 +71,7 @@ namespace LegendaryLibraryNS
             }
             catch (Exception e) when (!Debugger.IsAttached)
             {
-                PlayniteApi.Dialogs.ShowErrorMessage(PlayniteApi.Resources.GetString(LOC.EpicNotLoggedInError), "");
+                PlayniteApi.Dialogs.ShowErrorMessage(PlayniteApi.Resources.GetString(LOC.Legendary3P_EpicNotLoggedInError), "");
                 Logger.Error(e, "Failed to authenticate user.");
             }
         }

@@ -71,7 +71,7 @@ namespace LegendaryLibraryNS
         private async void EOSOUninstallBtn_Click(object sender, RoutedEventArgs e)
         {
             var result = playniteAPI.Dialogs.ShowMessage(
-                string.Format(ResourceProvider.GetString(LOC.LegendaryUninstallGameConfirm), ResourceProvider.GetString(LOC.LegendaryEOSOverlay)), ResourceProvider.GetString("LOCUninstallGame"), MessageBoxButton.YesNo, MessageBoxImage.Question);
+                string.Format(ResourceProvider.GetString(LOC.LegendaryUninstallGameConfirm), ResourceProvider.GetString(LOC.LegendaryEOSOverlay)), ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstallGame), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
@@ -158,29 +158,29 @@ namespace LegendaryLibraryNS
 
             var downloadCompleteActions = new Dictionary<int, string>
             {
-                { (int)DownloadCompleteAction.Nothing, ResourceProvider.GetString("LOCDoNothing") },
-                { (int)DownloadCompleteAction.ShutDown, ResourceProvider.GetString("LOCMenuShutdownSystem") },
-                { (int)DownloadCompleteAction.Reboot, ResourceProvider.GetString("LOCMenuRestartSystem") },
-                { (int)DownloadCompleteAction.Hibernate, ResourceProvider.GetString("LOCMenuHibernateSystem") },
-                { (int)DownloadCompleteAction.Sleep, ResourceProvider.GetString("LOCMenuSuspendSystem") },
+                { (int)DownloadCompleteAction.Nothing, ResourceProvider.GetString(LOC.Legendary3P_PlayniteDoNothing) },
+                { (int)DownloadCompleteAction.ShutDown, ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuShutdownSystem) },
+                { (int)DownloadCompleteAction.Reboot, ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuRestartSystem) },
+                { (int)DownloadCompleteAction.Hibernate, ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuHibernateSystem) },
+                { (int)DownloadCompleteAction.Sleep, ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuSuspendSystem) },
             };
             AfterDownloadCompleteCBo.ItemsSource = downloadCompleteActions;
 
             var autoClearOptions = new Dictionary<int, string>
             {
-                { (int)ClearCacheTime.Day, ResourceProvider.GetString("LOCOptionOnceADay") },
-                { (int)ClearCacheTime.Week, ResourceProvider.GetString("LOCOptionOnceAWeek") },
+                { (int)ClearCacheTime.Day, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnceADay) },
+                { (int)ClearCacheTime.Week, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnceAWeek) },
                 { (int)ClearCacheTime.Month, ResourceProvider.GetString(LOC.LegendaryOnceAMonth) },
                 { (int)ClearCacheTime.ThreeMonths, ResourceProvider.GetString(LOC.LegendaryOnceEvery3Months) },
                 { (int)ClearCacheTime.SixMonths, ResourceProvider.GetString(LOC.LegendaryOnceEvery6Months) },
-                { (int)ClearCacheTime.Never, ResourceProvider.GetString("LOCNever") }
+                { (int)ClearCacheTime.Never, ResourceProvider.GetString(LOC.Legendary3P_PlayniteSettingsPlaytimeImportModeNever) }
             };
             AutoClearCacheCBo.ItemsSource = autoClearOptions;
         }
 
         private void ClearCacheBtn_Click(object sender, RoutedEventArgs e)
         {
-            var result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryClearCacheConfirm), ResourceProvider.GetString("LOCSettingsClearCacheTitle"), MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryClearCacheConfirm), ResourceProvider.GetString(LOC.Legendary3P_PlayniteSettingsClearCacheTitle), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 var cacheDirs = new List<string>()

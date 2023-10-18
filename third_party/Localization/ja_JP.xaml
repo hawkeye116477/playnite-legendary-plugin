@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/5ccea78fb040874f8e30976d3acf43079c80cb7c.
+  DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <sys:String x:Key="LOCLegendary3P_PlayniteFilterActiveLabel">フィルターを有効にする</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteFilters">フィルター</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">ゲームを開始できませんでした: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">ゲームをインストールできません: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">インストール容量</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">追加日</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">OK</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSaveLabel">保存</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel">キャンセル</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">読み込み中…</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata">メタデーターを取得中...</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">システムの再起動</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuShutdownSystem">システムのシャットダウン</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuSuspendSystem">システムのスリープ</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuHibernateSystem">システムの休止</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsGeneralLabel">一般設定</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsAdvancedLabel">詳細設定</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">キャッシュをクリアしますか？</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">常に無効</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">認証が必要</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">タイトル</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">インストール先</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">{0}からゲームをインポートできませんでした。</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">メタデータをダウンロードできませんでした: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">何もしない</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">インストール</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">アンインストール</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">再び表示しない</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage">ストアページ</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">フォルダを選択…</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">1日に1回</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">週に1回</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">インストール済みのゲームをインポートする</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">インストールされていないゲームをインポートする</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">アカウントに接続</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">認証ステータスを確認しています...</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">ユーザー認証済み</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">認証が必要</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">ユーザー認証に失敗しました。</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">認証する</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicTroubleShootingIssues">問題解決</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicStartUsingClient">{0} クライアントの使用を開始</sys:String>
+</ResourceDictionary>

@@ -22,10 +22,10 @@
             <Button x:Name="ImportBtn" Content="{DynamicResource LOCLegendaryImportEGL}"
                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
                     Click="ImportBtn_Click" />
-            <Button x:Name="InstallBtn" Content="{DynamicResource LOCInstallGame}"
+            <Button x:Name="InstallBtn" Content="{DynamicResource LOCLegendary3P_PlayniteInstallGame}"
                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
                     Click="InstallBtn_Click" IsEnabled="False" />
-            <Button x:Name="CancelBtn" Content="{DynamicResource LOCCancelLabel}"
+            <Button x:Name="CancelBtn" Content="{DynamicResource LOCLegendary3P_PlayniteCancelLabel}"
                     HorizontalAlignment="Right" VerticalAlignment="Bottom"
                     Click="CancelBtn_Click" IsCancel="True" />
         </StackPanel>
@@ -44,27 +44,27 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <DockPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,15" Name="FolderDP">
-                <TextBlock Text="{DynamicResource LOCGameInstallDirTitle}" VerticalAlignment="Center" Margin="0,0,10,0"></TextBlock>
+                <TextBlock Text="{DynamicResource LOCLegendary3P_PlayniteGameInstallDirTitle}" VerticalAlignment="Center" Margin="0,0,10,0"></TextBlock>
                 <Button DockPanel.Dock="Right" Padding="5" Margin="5 0 0 0" Content="&#xec5b;"
-                    Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCSelectDirectoryTooltip}" />
+                    Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteSelectDirectoryTooltip}" />
                 <TextBox Name="SelectedGamePathTxt" Text="" VerticalAlignment="Top" Margin="0,5" />
             </DockPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="0">
                 <TextBlock Text="{DynamicResource LOCLegendaryDownloadSize}" VerticalAlignment="Top"
                     HorizontalAlignment="Left" Margin="0,0,0,5" />
-                <TextBlock x:Name="DownloadSizeTB" Text="{DynamicResource LOCLoadingLabel}"
+                <TextBlock x:Name="DownloadSizeTB" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
                     VerticalAlignment="Top" Margin="5,0,0,0" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Margin="0,0,0,15">
                 <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendaryInstallSize}" />
-                <TextBlock x:Name="InstallSizeTB" Text="{DynamicResource LOCLoadingLabel}"
+                <TextBlock x:Name="InstallSizeTB" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
                     VerticalAlignment="Top" Margin="5,0,0,0" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2"
                 Grid.Column="1">
                 <TextBlock VerticalAlignment="Top"
                     Text="{DynamicResource LOCLegendarySpaceAvailable}" />
-                <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLoadingLabel}"
+                <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
                     Margin="5,0,0,0" Name="SpaceTB" />
             </StackPanel>
             <Border Grid.Row="4" Grid.Column="0" BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Name="ExtraContentBrd" Visibility="Collapsed" Margin="0,0,0,5">

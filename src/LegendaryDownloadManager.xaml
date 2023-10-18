@@ -47,23 +47,23 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Button x:Name="ResumeDownloadBtn" Content="&#xec74;" ToolTip="{DynamicResource LOCLegendaryResumeDownload}" FontFamily="{DynamicResource FontIcoFont}" Click="ResumeDownloadBtn_Click" IsEnabled="False" />
             <Button x:Name="PauseBtn" ToolTip="{DynamicResource LOCLegendaryPauseDownload}" Content="&#xec72;" FontFamily="{DynamicResource FontIcoFont}" Click="PauseBtn_Click" Margin="5,0,0,0" IsEnabled="False" />
-            <Button x:Name="CancelDownloadBtn" Content="&#xec73;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCCancelLabel}"
+            <Button x:Name="CancelDownloadBtn" Content="&#xec73;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteCancelLabel}"
                    Margin="5,0,0,0" IsCancel="True" Click="CancelDownloadBtn_Click" IsEnabled="False" />
             <Button x:Name="RemoveDownloadBtn" Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendaryRemoveEntry}"
                     Margin="5,0,0,0" Click="RemoveDownloadBtn_Click" IsEnabled="False" />
             <Button x:Name="DownloadPropertiesBtn" Content="&#xefe2;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendaryEditSelectedDownloadProperties}"
                     Margin="5,0,0,0" Click="DownloadPropertiesBtn_Click" IsEnabled="False" />
-            <ToggleButton x:Name="FilterDownloadBtn" Content="&#xef29;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCFilters}"
+            <ToggleButton x:Name="FilterDownloadBtn" Content="&#xef29;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteFilters}"
                     Margin="5,0,0,0" Checked="FilterDownloadBtn_Checked" Unchecked="FilterDownloadBtn_Unchecked" />
         </StackPanel>
         <Separator Grid.Row="2" Grid.ColumnSpan="2" Margin="0,5,0,5"></Separator>
         <DataGrid x:Name="DownloadsDG" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Margin="0,0,0,10" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="2" ColumnWidth="*" CanUserSortColumns="True" CanUserResizeColumns="True" SelectionChanged="DownloadsDG_SelectionChanged" >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource LOCGameNameTitle}" Binding="{Binding name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource LOCLegendary3P_PlayniteGameNameTitle}" Binding="{Binding name}"></DataGridTextColumn>
                 <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloadStatus}" Binding="{Binding status, Converter={StaticResource DownloadStatusEnumToStringConverter}}"/>
                 <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloadSizeColumn}" Binding="{Binding downloadSize}"/>
-                <DataGridTextColumn Header="{DynamicResource LOCInstallSizeLabel}" Binding="{Binding installSize}"/>
-                <DataGridTextColumn Header="{DynamicResource LOCAddedLabel}" Binding="{Binding addedTime, Converter={StaticResource LongToDateConverter}, StringFormat='dd.MM.yyyy HH:mm:ss'}"/>
+                <DataGridTextColumn Header="{DynamicResource LOCLegendary3P_PlayniteInstallSizeLabel}" Binding="{Binding installSize}"/>
+                <DataGridTextColumn Header="{DynamicResource LOCLegendary3P_PlayniteAddedLabel}" Binding="{Binding addedTime, Converter={StaticResource LongToDateConverter}, StringFormat='dd.MM.yyyy HH:mm:ss'}"/>
                 <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloadCompletedColumn}" Binding="{Binding completedTime, Converter={StaticResource LongToDateConverter}, StringFormat='dd.MM.yyyy HH:mm:ss'}"/>
             </DataGrid.Columns>
         </DataGrid>

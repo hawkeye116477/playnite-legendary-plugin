@@ -48,9 +48,9 @@
         </StackPanel>
         <StackPanel Grid.Column="2" Grid.Row="2" Orientation="Horizontal"
             HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,5,0">
-            <Button x:Name="SaveBtn" Content="{DynamicResource LOCOKLabel}" Margin="0,0,10,0"
+            <Button x:Name="SaveBtn" Content="{DynamicResource LOCLegendary3P_PlayniteOKLabel}" Margin="0,0,10,0"
                 Click="SaveBtn_Click" />
-            <Button x:Name="CancelBtn" Content="{DynamicResource LOCCancelLabel}" IsCancel="True"
+            <Button x:Name="CancelBtn" Content="{DynamicResource LOCLegendary3P_PlayniteCancelLabel}" IsCancel="True"
                 Click="CancelBtn_Click" />
         </StackPanel>
     </Grid>

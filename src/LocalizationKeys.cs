@@ -6,81 +6,173 @@ namespace System
     public static class LOC
     {
         /// <summary>
+        /// Filter Active
+        /// </summary>
+        public const string Legendary3P_PlayniteFilterActiveLabel = "LOCLegendary3P_PlayniteFilterActiveLabel";
+        /// <summary>
+        /// Filters
+        /// </summary>
+        public const string Legendary3P_PlayniteFilters = "LOCLegendary3P_PlayniteFilters";
+        /// <summary>
+        /// Cannot start game: {0}
+        /// </summary>
+        public const string Legendary3P_PlayniteGameStartError = "LOCLegendary3P_PlayniteGameStartError";
+        /// <summary>
+        /// Cannot install game: {0}
+        /// </summary>
+        public const string Legendary3P_PlayniteGameInstallError = "LOCLegendary3P_PlayniteGameInstallError";
+        /// <summary>
+        /// Install Size
+        /// </summary>
+        public const string Legendary3P_PlayniteInstallSizeLabel = "LOCLegendary3P_PlayniteInstallSizeLabel";
+        /// <summary>
+        /// Added
+        /// </summary>
+        public const string Legendary3P_PlayniteAddedLabel = "LOCLegendary3P_PlayniteAddedLabel";
+        /// <summary>
+        /// OK
+        /// </summary>
+        public const string Legendary3P_PlayniteOKLabel = "LOCLegendary3P_PlayniteOKLabel";
+        /// <summary>
+        /// Save
+        /// </summary>
+        public const string Legendary3P_PlayniteSaveLabel = "LOCLegendary3P_PlayniteSaveLabel";
+        /// <summary>
+        /// Cancel
+        /// </summary>
+        public const string Legendary3P_PlayniteCancelLabel = "LOCLegendary3P_PlayniteCancelLabel";
+        /// <summary>
+        /// Loading…
+        /// </summary>
+        public const string Legendary3P_PlayniteLoadingLabel = "LOCLegendary3P_PlayniteLoadingLabel";
+        /// <summary>
+        /// Downloading metadata…
+        /// </summary>
+        public const string Legendary3P_PlayniteProgressMetadata = "LOCLegendary3P_PlayniteProgressMetadata";
+        /// <summary>
+        /// Restart System
+        /// </summary>
+        public const string Legendary3P_PlayniteMenuRestartSystem = "LOCLegendary3P_PlayniteMenuRestartSystem";
+        /// <summary>
+        /// Turn Off System
+        /// </summary>
+        public const string Legendary3P_PlayniteMenuShutdownSystem = "LOCLegendary3P_PlayniteMenuShutdownSystem";
+        /// <summary>
+        /// Suspend System
+        /// </summary>
+        public const string Legendary3P_PlayniteMenuSuspendSystem = "LOCLegendary3P_PlayniteMenuSuspendSystem";
+        /// <summary>
+        /// Hibernate System
+        /// </summary>
+        public const string Legendary3P_PlayniteMenuHibernateSystem = "LOCLegendary3P_PlayniteMenuHibernateSystem";
+        /// <summary>
+        /// General
+        /// </summary>
+        public const string Legendary3P_PlayniteSettingsGeneralLabel = "LOCLegendary3P_PlayniteSettingsGeneralLabel";
+        /// <summary>
+        /// Advanced
+        /// </summary>
+        public const string Legendary3P_PlayniteSettingsAdvancedLabel = "LOCLegendary3P_PlayniteSettingsAdvancedLabel";
+        /// <summary>
+        /// Clear Cache?
+        /// </summary>
+        public const string Legendary3P_PlayniteSettingsClearCacheTitle = "LOCLegendary3P_PlayniteSettingsClearCacheTitle";
+        /// <summary>
+        /// Never
+        /// </summary>
+        public const string Legendary3P_PlayniteSettingsPlaytimeImportModeNever = "LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever";
+        /// <summary>
+        /// Authentification required
+        /// </summary>
+        public const string Legendary3P_PlayniteLoginRequired = "LOCLegendary3P_PlayniteLoginRequired";
+        /// <summary>
+        /// Name
+        /// </summary>
+        public const string Legendary3P_PlayniteGameNameTitle = "LOCLegendary3P_PlayniteGameNameTitle";
+        /// <summary>
+        /// Installation Folder
+        /// </summary>
+        public const string Legendary3P_PlayniteGameInstallDirTitle = "LOCLegendary3P_PlayniteGameInstallDirTitle";
+        /// <summary>
+        /// Failed to import games from {0}.
+        /// </summary>
+        public const string Legendary3P_PlayniteLibraryImportError = "LOCLegendary3P_PlayniteLibraryImportError";
+        /// <summary>
+        /// Failed to download metadata: {0}
+        /// </summary>
+        public const string Legendary3P_PlayniteMetadataDownloadError = "LOCLegendary3P_PlayniteMetadataDownloadError";
+        /// <summary>
+        /// Do nothing
+        /// </summary>
+        public const string Legendary3P_PlayniteDoNothing = "LOCLegendary3P_PlayniteDoNothing";
+        /// <summary>
+        /// Install
+        /// </summary>
+        public const string Legendary3P_PlayniteInstallGame = "LOCLegendary3P_PlayniteInstallGame";
+        /// <summary>
+        /// Uninstall
+        /// </summary>
+        public const string Legendary3P_PlayniteUninstallGame = "LOCLegendary3P_PlayniteUninstallGame";
+        /// <summary>
+        /// Don't Show Again
+        /// </summary>
+        public const string Legendary3P_PlayniteDontShowAgainTitle = "LOCLegendary3P_PlayniteDontShowAgainTitle";
+        /// <summary>
+        /// Store Page
+        /// </summary>
+        public const string Legendary3P_PlayniteCommonLinksStorePage = "LOCLegendary3P_PlayniteCommonLinksStorePage";
+        /// <summary>
+        /// Select folder…
+        /// </summary>
+        public const string Legendary3P_PlayniteSelectDirectoryTooltip = "LOCLegendary3P_PlayniteSelectDirectoryTooltip";
+        /// <summary>
+        /// Once a day
+        /// </summary>
+        public const string Legendary3P_PlayniteOptionOnceADay = "LOCLegendary3P_PlayniteOptionOnceADay";
+        /// <summary>
+        /// Once a week
+        /// </summary>
+        public const string Legendary3P_PlayniteOptionOnceAWeek = "LOCLegendary3P_PlayniteOptionOnceAWeek";
+        /// <summary>
         /// Import installed games
         /// </summary>
-        public const string EpicSettingsImportInstalledLabel = "LOCEpicSettingsImportInstalledLabel";
+        public const string Legendary3P_EpicSettingsImportInstalledLabel = "LOCLegendary3P_EpicSettingsImportInstalledLabel";
         /// <summary>
         /// Import not installed games
         /// </summary>
-        public const string EpicSettingsImportUninstalledLabel = "LOCEpicSettingsImportUninstalledLabel";
+        public const string Legendary3P_EpicSettingsImportUninstalledLabel = "LOCLegendary3P_EpicSettingsImportUninstalledLabel";
         /// <summary>
         /// Connect account
         /// </summary>
-        public const string EpicSettingsConnectAccount = "LOCEpicSettingsConnectAccount";
+        public const string Legendary3P_EpicSettingsConnectAccount = "LOCLegendary3P_EpicSettingsConnectAccount";
         /// <summary>
         /// Checking authentication status…
         /// </summary>
-        public const string EpicLoginChecking = "LOCEpicLoginChecking";
+        public const string Legendary3P_EpicLoginChecking = "LOCLegendary3P_EpicLoginChecking";
         /// <summary>
         /// User is authenticated
         /// </summary>
-        public const string EpicLoggedIn = "LOCEpicLoggedIn";
+        public const string Legendary3P_EpicLoggedIn = "LOCLegendary3P_EpicLoggedIn";
         /// <summary>
         /// Requires authentication
         /// </summary>
-        public const string EpicNotLoggedIn = "LOCEpicNotLoggedIn";
+        public const string Legendary3P_EpicNotLoggedIn = "LOCLegendary3P_EpicNotLoggedIn";
         /// <summary>
         /// Failed to authenticate user.
         /// </summary>
-        public const string EpicNotLoggedInError = "LOCEpicNotLoggedInError";
+        public const string Legendary3P_EpicNotLoggedInError = "LOCLegendary3P_EpicNotLoggedInError";
         /// <summary>
         /// Authenticate
         /// </summary>
-        public const string EpicAuthenticateLabel = "LOCEpicAuthenticateLabel";
-        /// <summary>
-        /// Start games directly without running official client
-        /// </summary>
-        public const string EpicSettingsStartGameDirectly = "LOCEpicSettingsStartGameDirectly";
-        /// <summary>
-        /// Troubleshooting account sync issues
-        /// </summary>
-        public const string EpicTroubleShootingAccountLink = "LOCEpicTroubleShootingAccountLink";
+        public const string Legendary3P_EpicAuthenticateLabel = "LOCLegendary3P_EpicAuthenticateLabel";
         /// <summary>
         /// Troubleshooting issues
         /// </summary>
-        public const string EpicTroubleShootingIssues = "LOCEpicTroubleShootingIssues";
-        /// <summary>
-        /// Import all games
-        /// </summary>
-        public const string EpicSettingsImportLibraryLabel = "LOCEpicSettingsImportLibraryLabel";
-        /// <summary>
-        /// Private Account
-        /// </summary>
-        public const string EpicPrivateAccount = "LOCEpicPrivateAccount";
-        /// <summary>
-        /// Public Account
-        /// </summary>
-        public const string EpicPublicAccount = "LOCEpicPublicAccount";
-        /// <summary>
-        /// API Key
-        /// </summary>
-        public const string EpicAPIKey = "LOCEpicAPIKey";
+        public const string Legendary3P_EpicTroubleShootingIssues = "LOCLegendary3P_EpicTroubleShootingIssues";
         /// <summary>
         /// Start using {0} client
         /// </summary>
-        public const string EpicStartUsingClient = "LOCEpicStartUsingClient";
-        /// <summary>
-        /// Import play time
-        /// </summary>
-        public const string EpicImportPlaytime = "LOCEpicImportPlaytime";
-        /// <summary>
-        /// Account ID
-        /// </summary>
-        public const string EpicAccountID = "LOCEpicAccountID";
-        /// <summary>
-        /// Metadata language:
-        /// </summary>
-        public const string EpicMetadataLanguageLabel = "LOCEpicMetadataLanguageLabel";
+        public const string Legendary3P_EpicStartUsingClient = "LOCLegendary3P_EpicStartUsingClient";
         /// <summary>
         /// Use custom launcher path
         /// </summary>

@@ -41,7 +41,7 @@ namespace LegendaryLibraryNS
         {
             Instance = this;
             SettingsViewModel = new LegendaryLibrarySettingsViewModel(this, api);
-            LoadEpicLocalization();
+            Load3pLocalization();
         }
 
         public static LegendaryLibrarySettings GetSettings()
@@ -220,7 +220,7 @@ namespace LegendaryLibraryNS
             {
                 PlayniteApi.Notifications.Add(new NotificationMessage(
                     ImportErrorMessageId,
-                    string.Format(PlayniteApi.Resources.GetString("LOCLibraryImportError"), Name) +
+                    string.Format(PlayniteApi.Resources.GetString(LOC.Legendary3P_PlayniteLibraryImportError), Name) +
                     Environment.NewLine + importError.Message,
                     NotificationType.Error,
                     () => OpenSettingsView()));
@@ -272,7 +272,7 @@ namespace LegendaryLibraryNS
             return new EpicMetadataProvider(PlayniteApi);
         }
 
-        public void LoadEpicLocalization()
+        public void Load3pLocalization()
         {
             var currentLanguage = PlayniteApi.ApplicationSettings.Language;
             var dictionaries = Application.Current.Resources.MergedDictionaries;
@@ -307,7 +307,7 @@ namespace LegendaryLibraryNS
                 dictionaries.Add(res);
             }
 
-            var extraLocDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Localization\Epic");
+            var extraLocDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Localization\third_party");
             if (!Directory.Exists(extraLocDir))
             {
                 return;
@@ -348,7 +348,7 @@ namespace LegendaryLibraryNS
                     }
                     if (!correctJson)
                     {
-                        GlobalProgressOptions metadataProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCProgressMetadata"), false);
+                        GlobalProgressOptions metadataProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.Legendary3P_PlayniteProgressMetadata), false);
                         PlayniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
                         {
                             a.ProgressMaxValue = 100;
@@ -368,7 +368,7 @@ namespace LegendaryLibraryNS
                                         if (exited.ExitCode != 0)
                                         {
                                             logger.Error("[Legendary] exit code: " + exited.ExitCode);
-                                            PlayniteApi.Dialogs.ShowErrorMessage(PlayniteApi.Resources.GetString("LOCMetadataDownloadError").Format(gameName));
+                                            PlayniteApi.Dialogs.ShowErrorMessage(PlayniteApi.Resources.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(gameName));
                                             return;
                                         }
                                         else

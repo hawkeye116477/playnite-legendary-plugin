@@ -110,7 +110,7 @@ namespace LegendaryLibraryNS
             Dispose();
             var result = playniteAPI.Dialogs.ShowMessage(
                 string.Format(ResourceProvider.GetString(LOC.LegendaryUninstallGameConfirm), Game.Name),
-                ResourceProvider.GetString("LOCUninstallGame"),
+                ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstallGame),
                 MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.No)
             {
@@ -150,7 +150,7 @@ namespace LegendaryLibraryNS
 
         public LegendaryPlayController(Game game) : base(game)
         {
-            Name = string.Format(ResourceProvider.GetString(LOC.EpicStartUsingClient), "Legendary");
+            Name = string.Format(ResourceProvider.GetString(LOC.Legendary3P_EpicStartUsingClient), "Legendary");
         }
 
         public override void Dispose()
@@ -196,11 +196,11 @@ namespace LegendaryLibraryNS
                     logger.Error("[Legendary] " + cmd.StandardError);
                     if (cmd.StandardError.Contains("login failed"))
                     {
-                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameStartError"), ResourceProvider.GetString("LOCLoginRequired")));
+                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
                     }
                     else
                     {
-                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameStartError"), ResourceProvider.GetString(cmd.StandardError)));
+                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), ResourceProvider.GetString(cmd.StandardError)));
                     }
                     return;
                 }

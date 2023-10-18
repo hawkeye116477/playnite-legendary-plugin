@@ -326,11 +326,11 @@ namespace LegendaryLibraryNS
                                 var memoryErrorMatch = Regex.Match(stdOutBuffer.ToString(), @"MemoryError: Current shared memory cache is smaller than required: (\S+.) MiB < (\S+.) MiB");
                                 if (memoryErrorMatch.Length >= 2)
                                 {
-                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), string.Format(ResourceProvider.GetString(LOC.LegendaryMemoryError), memoryErrorMatch.Groups[1] + " MB", memoryErrorMatch.Groups[2] + " MB")));
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), string.Format(ResourceProvider.GetString(LOC.LegendaryMemoryError), memoryErrorMatch.Groups[1] + " MB", memoryErrorMatch.Groups[2] + " MB")));
                                 }
                                 else
                                 {
-                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), ResourceProvider.GetString(LOC.LegendaryCheckLog)));
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryCheckLog)));
                                 }
                                 logger.Error("[Legendary]: " + stdOutBuffer.ToString());
                                 logger.Error("[Legendary] exit code: " + exited.ExitCode);
@@ -508,7 +508,7 @@ namespace LegendaryLibraryNS
             if (checkedStatus.Count > 0)
             {
                 downloadsView.Filter = item => checkedStatus.Contains((item as DownloadManagerData.Download).status);
-                FilterDownloadBtn.Content = "\uef29 " + ResourceProvider.GetString("LOCFilterActiveLabel");
+                FilterDownloadBtn.Content = "\uef29 " + ResourceProvider.GetString(LOC.Legendary3P_PlayniteFilterActiveLabel);
             }
             else
             {

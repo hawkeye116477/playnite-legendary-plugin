@@ -229,11 +229,11 @@ namespace LegendaryLibraryNS
                         logger.Error("[Legendary]" + result.StandardError);
                         if (result.StandardError.Contains("Log in failed"))
                         {
-                            playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), ResourceProvider.GetString("LOCLoginRequired")));
+                            playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
                         }
                         else
                         {
-                            playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), ResourceProvider.GetString(LOC.LegendaryCheckLog)));
+                            playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryCheckLog)));
                         }
                         Window.GetWindow(this).Close();
                         return;
@@ -352,11 +352,11 @@ namespace LegendaryLibraryNS
                     logger.Error("[Legendary]" + result.StandardError);
                     if (result.StandardError.Contains("Failed to establish a new connection"))
                     {
-                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), ResourceProvider.GetString("LOCLoginRequired")));
+                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
                     }
                     else
                     {
-                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCGameInstallError"), ResourceProvider.GetString(LOC.LegendaryCheckLog)));
+                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryCheckLog)));
                     }
                     Window.GetWindow(this).Close();
                 }

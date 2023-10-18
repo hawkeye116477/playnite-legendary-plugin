@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/5ccea78fb040874f8e30976d3acf43079c80cb7c.
+  DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <sys:String x:Key="LOCLegendary3P_PlayniteFilterActiveLabel">Фільтр Активний</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteFilters">Фільтри</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">Неможливо запустити гру: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">Не вдається встановити гру: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">Розмір встановлення</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">Додано</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">ОК</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSaveLabel">Зберегти</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel">Скасувати</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">Завантаження...</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata">Завантаження метаданих...</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">Перезавантажити систему</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuShutdownSystem">Вимкнути систему</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuSuspendSystem">Призупинити систему</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuHibernateSystem">Режим глибокого сну</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsGeneralLabel">Загальні</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsAdvancedLabel">Додатково</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Очистити кеш?</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">Ніколи</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Необхідна автентифікація</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Назва</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Тека встановлення</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Не вдалося імпортувати ігри з {0}.</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Не вдалося завантажити метадані: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Нічого не робити</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Встановити</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Видалити</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">Не показувати знову</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage">Сторінка в крамниці</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Обрати теку...</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Раз на день</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">Раз на тиждень</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">Імпортувати встановлені ігри</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Імпортувати не встановлені ігри</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Під'єднати обліковий запис</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Перевірка стану автентифікації...</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">Користувача автентифіковано</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Необхідна автентифікація</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Не вдалося автентифікувати користувача.</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Автентифікація</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicTroubleShootingIssues">Вирішення проблем</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicStartUsingClient">Запустити клієнтом {0}</sys:String>
+</ResourceDictionary>

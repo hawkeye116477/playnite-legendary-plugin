@@ -16,13 +16,13 @@
     </UserControl.Resources>
     <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled"
         HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-        <TabItem Header="{DynamicResource LOCSettingsGeneralLabel}">
+        <TabItem Header="{DynamicResource LOCLegendary3P_PlayniteSettingsGeneralLabel}">
             <StackPanel Margin="20">
                 <TextBlock Text="{DynamicResource LOCLegendaryGamesInstallationPath}"
                     Margin="0,0,0,2"></TextBlock>
                 <DockPanel Margin="0,0,0,10">
                     <Button DockPanel.Dock="Right" Padding="5" Margin="5 0 0 0"
-                        Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" Content="&#xec5b;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCSelectDirectoryTooltip}" />
+                        Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" Content="&#xec5b;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteSelectDirectoryTooltip}" />
                     <TextBox Name="SelectedGamePathTxt"
                         Text="{Binding Settings.GamesInstallationPath, UpdateSourceTrigger=PropertyChanged}"
                         VerticalAlignment="Center" />
@@ -31,11 +31,11 @@
                 <CheckBox DockPanel.Dock="Top" Name="CheckEpicImportInstalled"
                     Margin="0,0,0,15"
                     IsChecked="{Binding Settings.ImportInstalledGames}"
-                    Content="{DynamicResource LOCEpicSettingsImportInstalledLabel}" />
+                    Content="{DynamicResource LOCLegendary3P_EpicSettingsImportInstalledLabel}" />
 
                 <CheckBox DockPanel.Dock="Top" Name="CheckEpicConnectAccount"
                     IsChecked="{Binding Settings.ConnectAccount}"
-                    Content="{DynamicResource LOCEpicSettingsConnectAccount}" />
+                    Content="{DynamicResource LOCLegendary3P_EpicSettingsConnectAccount}" />
 
                 <StackPanel DockPanel.Dock="Top" Margin="40,5,5,5"
                     IsEnabled="{Binding IsChecked, ElementName=CheckEpicConnectAccount}">
@@ -43,11 +43,11 @@
                     <CheckBox DockPanel.Dock="Top" Name="CheckEpicImportUninstalled"
                         IsChecked="{Binding Settings.ImportUninstalledGames}"
                         Margin="0,10,0,0"
-                        Content="{DynamicResource LOCEpicSettingsImportUninstalledLabel}" />
+                        Content="{DynamicResource LOCLegendary3P_EpicSettingsImportUninstalledLabel}" />
 
                     <StackPanel Orientation="Horizontal"
                         DockPanel.Dock="Top" Margin="0,15,5,5" HorizontalAlignment="Left">
-                        <Button Content="{DynamicResource LOCEpicAuthenticateLabel}"
+                        <Button Content="{DynamicResource LOCLegendary3P_EpicAuthenticateLabel}"
                             HorizontalAlignment="Left"
                             Command="{Binding LoginCommand}" />
                         <TextBlock VerticalAlignment="Center" Margin="10,5,5,5">
@@ -62,15 +62,15 @@
                                     <Style.Triggers>
                                         <Trigger Property="Tag" Value="{StaticResource True}">
                                             <Setter Property="Text"
-                                                Value="{DynamicResource LOCEpicLoggedIn}" />
+                                                Value="{DynamicResource LOCLegendary3P_EpicLoggedIn}" />
                                         </Trigger>
                                         <Trigger Property="Tag" Value="{StaticResource False}">
                                             <Setter Property="Text"
-                                                Value="{DynamicResource LOCEpicNotLoggedIn}" />
+                                                Value="{DynamicResource LOCLegendary3P_EpicNotLoggedIn}" />
                                         </Trigger>
                                         <Trigger Property="Tag" Value="{x:Null}">
                                             <Setter Property="Text"
-                                                Value="{DynamicResource LOCEpicLoginChecking}" />
+                                                Value="{DynamicResource LOCLegendary3P_EpicLoginChecking}" />
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -100,12 +100,12 @@
                         NavigateUri="https://github.com/hawkeye116477/playnite-legendary-plugin/wiki/troubleshooting"
                         Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
                         CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
-                        <Run Text="{DynamicResource LOCEpicTroubleShootingIssues}" />
+                        <Run Text="{DynamicResource LOCLegendary3P_EpicTroubleShootingIssues}" />
                     </Hyperlink>
                 </TextBlock>
             </StackPanel>
         </TabItem>
-        <TabItem Header="{DynamicResource LOCSettingsAdvancedLabel}">
+        <TabItem Header="{DynamicResource LOCLegendary3P_PlayniteSettingsAdvancedLabel}">
             <StackPanel Margin="20">
                 <CheckBox Name="CheckUseCustomLauncherPath"
                     IsChecked="{Binding Settings.UseCustomLauncherPath}"
@@ -189,13 +189,13 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Button Content="{DynamicResource LOCInstallGame}" Grid.Row="0"
+                        <Button Content="{DynamicResource LOCLegendary3P_PlayniteInstallGame}" Grid.Row="0"
                             Grid.Column="0" Name="EOSOInstallBtn" Visibility="Collapsed"
                             Click="EOSOInstallBtn_Click"></Button>
                         <Button Content="{DynamicResource LOCLegendaryDisable}" Grid.Row="0"
                             Grid.Column="0" Margin="10,0,0,0" Name="EOSOToggleBtn"
                             Click="EOSOToggleBtn_Click"></Button>
-                        <Button Content="{DynamicResource LOCUninstallGame}" Name="EOSOUninstallBtn"
+                        <Button Content="{DynamicResource LOCLegendary3P_PlayniteUninstallGame}" Name="EOSOUninstallBtn"
                             Grid.Row="0" Grid.Column="1" Margin="10,0,0,0"
                             Click="EOSOUninstallBtn_Click"></Button>
                     </Grid>

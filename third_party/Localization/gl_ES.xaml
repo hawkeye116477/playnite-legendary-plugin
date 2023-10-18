@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/5ccea78fb040874f8e30976d3acf43079c80cb7c.
+  DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <sys:String x:Key="LOCLegendary3P_PlayniteFilterActiveLabel">Filtro Activo</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteFilters">Filtros</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">Non foi posíbel comezar o xogo: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">Non foi posíbel instalar o xogo: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">Engadido</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">OK</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSaveLabel">Gardar</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel">Cancelar</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">Cargando...</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata">Descargando metadatos…</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">Reiniciar o sistema</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuShutdownSystem">Apagar o sistema</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuSuspendSystem">Suspender o sistema</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuHibernateSystem">Hibernar o sistema</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsGeneralLabel">Xeral</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsAdvancedLabel">Avanzado</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Borrar a caché?</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">Nunca</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Requírese autenticación</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Nome</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Cartafol de Instalación</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Erro ó importar os xogos de {0}.</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Fallou ó descargar os metadatos: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Non facer nada</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Instalar</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Desinstalar</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">Non mostrar de novo</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage">Páxina da tenda</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek" />
+  <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">Importar xogos instalados</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Importar xogos non instalados</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Vincular conta</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Comprobando estado da verificación</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">O usuario xa está verificado</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Requírese verificación</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Erro na verificación do usuario</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Verificar</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicTroubleShootingIssues">Solución de problemas</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicStartUsingClient">Comezar usando o cliente {0}</sys:String>
+</ResourceDictionary>
