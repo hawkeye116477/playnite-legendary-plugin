@@ -1,5 +1,6 @@
 ﻿using CliWrap;
 using CliWrap.Buffered;
+using CliWrap.EventStream;
 using LegendaryLibraryNS.Models;
 using Playnite;
 using Playnite.Common;
@@ -186,24 +187,6 @@ namespace LegendaryLibraryNS
                         playArgs.Add("--offline");
                     }
                 }
-                var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                   .WithArguments(playArgs)
-                                   .WithValidation(CommandResultValidation.None)
-                                   .ExecuteBufferedAsync();
-                if (cmd.ExitCode != 0)
-                {
-                    InvokeOnStopped(new GameStoppedEventArgs());
-                    logger.Error("[Legendary] " + cmd.StandardError);
-                    if (cmd.StandardError.Contains("login failed"))
-                    {
-                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
-                    }
-                    else
-                    {
-                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), ResourceProvider.GetString(cmd.StandardError)));
-                    }
-                    return;
-                }
                 procMon = new ProcessMonitor();
                 procMon.TreeStarted += (_, treeArgs) =>
                 {
@@ -215,7 +198,42 @@ namespace LegendaryLibraryNS
                     stopWatch.Stop();
                     InvokeOnStopped(new GameStoppedEventArgs { SessionLength = Convert.ToUInt64(stopWatch.Elapsed.TotalSeconds) });
                 };
-                procMon.WatchDirectoryProcesses(Game.InstallDirectory, false);
+                var stdOutBuffer = new StringBuilder();
+                var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                   .WithArguments(playArgs)
+                                   .WithValidation(CommandResultValidation.None);
+                await foreach (var cmdEvent in cmd.ListenAsync())
+                {
+                    switch (cmdEvent)
+                    {
+                        case StartedCommandEvent started:
+                            procMon.WatchDirectoryProcesses(Game.InstallDirectory, false);
+                            break;
+                        case StandardErrorCommandEvent stdErr:
+                            stdOutBuffer.AppendLine(stdErr.Text);
+                            break;
+                        case ExitedCommandEvent exited:
+                            if (exited.ExitCode != 0)
+                            {
+                                InvokeOnStopped(new GameStoppedEventArgs());
+                                var errorMessage = stdOutBuffer.ToString();
+                                logger.Debug("[Legendary] " + errorMessage);
+                                logger.Error("[Legendary] exit code: " + exited.ExitCode);
+                                if (errorMessage.Contains("login failed"))
+                                {
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
+                                }
+                                else
+                                {
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), errorMessage));
+                                }
+                                return;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
             else
             {
