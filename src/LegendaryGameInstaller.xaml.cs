@@ -80,6 +80,10 @@ namespace LegendaryLibraryNS
             {
                 installPath = SelectedGamePathTxt.Text;
             }
+            if (installPath == "")
+            {
+                installPath = LegendaryLauncher.DefaultGamesInstallationPath;
+            }
             var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory.ToString();
             if (installPath.Contains(playniteDirectoryVariable))
             {
@@ -184,6 +188,10 @@ namespace LegendaryLibraryNS
             }
             var settings = LegendaryLibrary.GetSettings();
             var installPath = settings.GamesInstallationPath;
+            if (installPath == "")
+            {
+                installPath = LegendaryLauncher.DefaultGamesInstallationPath;
+            }
             var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory.ToString();
             if (installPath.Contains(playniteDirectoryVariable))
             {
