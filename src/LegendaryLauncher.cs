@@ -55,6 +55,14 @@ namespace LegendaryLibraryNS
                         pf64 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
                     }
                     launcherPath = Path.Combine(pf64, "Legendary");
+                    if (!File.Exists(Path.Combine(launcherPath, "legendary.exe")))
+                    {
+                        var playniteAPI = API.Instance;
+                        if (playniteAPI.ApplicationInfo.IsPortable)
+                        {
+                            launcherPath = Path.Combine(playniteAPI.Paths.ApplicationPath, "Legendary");
+                        }
+                    }
                 }
                 var savedSettings = LegendaryLibrary.GetSettings();
                 if (savedSettings != null)
@@ -105,6 +113,12 @@ namespace LegendaryLibraryNS
                     {
                         installPath = newInstallPath;
                     }
+                }
+                var playniteAPI = API.Instance;
+                if (playniteAPI.ApplicationInfo.IsPortable)
+                {
+                    var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory.ToString();
+                    installPath = Path.Combine(playniteDirectoryVariable, "Games");
                 }
                 return installPath;
             }
