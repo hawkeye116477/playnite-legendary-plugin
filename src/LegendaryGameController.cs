@@ -200,8 +200,8 @@ namespace LegendaryLibraryNS
                 };
                 var stdOutBuffer = new StringBuilder();
                 var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                   .WithArguments(playArgs)
-                                   .WithValidation(CommandResultValidation.None);
+                             .WithArguments(playArgs)
+                             .WithValidation(CommandResultValidation.None);
                 await foreach (var cmdEvent in cmd.ListenAsync())
                 {
                     switch (cmdEvent)

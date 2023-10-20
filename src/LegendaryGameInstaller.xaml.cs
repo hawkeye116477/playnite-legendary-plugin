@@ -80,6 +80,11 @@ namespace LegendaryLibraryNS
             {
                 installPath = SelectedGamePathTxt.Text;
             }
+            var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory.ToString();
+            if (installPath.Contains(playniteDirectoryVariable))
+            {
+                installPath = installPath.Replace(playniteDirectoryVariable, playniteAPI.Paths.ApplicationPath);
+            }
             if (GameID == "eos-overlay")
             {
                 installPath = Path.Combine(SelectedGamePathTxt.Text, ".overlay");
@@ -182,18 +187,17 @@ namespace LegendaryLibraryNS
                 RepairBtn.Visibility = Visibility.Visible;
             }
             var settings = LegendaryLibrary.GetSettings();
-            SelectedGamePathTxt.Text = settings.GamesInstallationPath;
+            var installPath = settings.GamesInstallationPath;
+            var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory.ToString();
+            if (installPath.Contains(playniteDirectoryVariable))
+            {
+                installPath = installPath.Replace(playniteDirectoryVariable, playniteAPI.Paths.ApplicationPath);
+            }
+            SelectedGamePathTxt.Text = installPath;
             ReorderingChk.IsChecked = settings.EnableReordering;
             MaxWorkersNI.Value = settings.MaxWorkers.ToString();
             MaxSharedMemoryNI.Value = settings.MaxSharedMemory.ToString();
-            if (!SelectedGamePathTxt.Text.IsNullOrEmpty())
-            {
-                UpdateSpaceInfo(SelectedGamePathTxt.Text);
-            }
-            else
-            {
-                UpdateSpaceInfo(settings.GamesInstallationPath);
-            }
+            UpdateSpaceInfo(installPath);
             requiredThings = new List<string>();
             var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("infocache");
             var cacheInfoFile = Path.Combine(cacheInfoPath, GameID + ".json");
