@@ -85,10 +85,6 @@ namespace LegendaryLibraryNS
             {
                 installPath = installPath.Replace(playniteDirectoryVariable, playniteAPI.Paths.ApplicationPath);
             }
-            if (GameID == "eos-overlay")
-            {
-                installPath = Path.Combine(SelectedGamePathTxt.Text, ".overlay");
-            }
             int maxWorkers = settings.MaxWorkers;
             if (MaxWorkersNI.Value != "")
             {

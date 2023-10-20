@@ -209,7 +209,7 @@ namespace LegendaryLibraryNS
             }
             if (gameID == "eos-overlay")
             {
-                installCommand = new List<string>() { "-y", "eos-overlay", "install", "--path", downloadProperties.installPath };
+                installCommand = new List<string>() { "-y", "eos-overlay", "install", "--path", Path.Combine(downloadProperties.installPath, ".overlay") };
             }
             forcefulInstallerCTS = new CancellationTokenSource();
             gracefulInstallerCTS = new CancellationTokenSource();
@@ -319,7 +319,7 @@ namespace LegendaryLibraryNS
                                 }));
                                 Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), gameTitle, ResourceProvider.GetString(LOC.LegendaryInstallationFinished), null);
                             }
-                            else if (exited.ExitCode != 0)
+                            else
                             {
                                 wantedItem.status = (int)DownloadStatus.Paused;
                                 SaveData();
