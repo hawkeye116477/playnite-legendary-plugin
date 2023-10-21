@@ -43,6 +43,10 @@
   <sys:String x:Key="LOCLegendaryCurrentDownloadSummary">Summary of the current download</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveEntry">Remove entry</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveEntryConfirm">Are you sure you want to remove {0} from list?</sys:String>
+  <sys:String x:Key="LOCLegendaryRemoveCompletedDownloads">Remove completed downloads</sys:String>
+  <sys:String x:Key="LOCLegendaryRemoveCompletedDownloadsConfirm">Are you sure you want to remove all completed downloads from list?</sys:String>
+  <sys:String x:Key="LOCLegendaryRemoveSelectedEntriesConfirm">Are you sure you want to remove selected entries from list?</sys:String>
+  <sys:String x:Key="LOCLegendarySelectAllEntries">Select all entires (Ctrl+A)</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSizeColumn">Download Size</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">The download will start soon. You can see its status by accessing Legendary Panel via Menu => View or sidebar.</sys:String>
   <sys:String x:Key="LOCLegendaryPanel">Legendary Panel</sys:String>
@@ -62,6 +66,7 @@
   <sys:String x:Key="LOCLegendarySyncGameSavesWarn">Cloud saves feature is experimental. It's recommended to backup game saves in case something goes wrong.</sys:String>
   <sys:String x:Key="LOCLegendaryMemoryError">Current shared memory cache is smaller than required: {0} &lt; {1}. Try to enable reordering optimization to reduce memory usage or increase maximum amount of shared memory.</sys:String>
   <sys:String x:Key="LOCLegendaryEditSelectedDownloadProperties">Edit entry properties</sys:String>
+  <sys:String x:Key="LOCLegendaryOpenDownloadDirectory">Open download directory</sys:String>
   <sys:String x:Key="LOCLegendaryTask">Task</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadProperties">Download Properties</sys:String>
   <sys:String x:Key="LOCLegendaryMigrateGamesEpic">Migrate all games from Epic plugin</sys:String>

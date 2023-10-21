@@ -432,48 +432,80 @@ namespace LegendaryLibraryNS
             }
         }
 
+        private void RemoveDownloadEntry(DownloadManagerData.Download selectedEntry)
+        {
+            var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == selectedEntry.gameID);
+            wantedItem.PropertyChanged -= DoNextJobInQueue;
+            if (wantedItem.status != (int)DownloadStatus.Completed && wantedItem.status != (int)DownloadStatus.Canceled)
+            {
+                if (wantedItem.status == (int)DownloadStatus.Running)
+                {
+                    gracefulInstallerCTS?.Cancel();
+                    gracefulInstallerCTS?.Dispose();
+                    forcefulInstallerCTS?.Dispose();
+                }
+                selectedEntry.status = (int)DownloadStatus.Canceled;
+            }
+            var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", selectedEntry.gameID + ".resume");
+            if (File.Exists(resumeFile))
+            {
+                File.Delete(resumeFile);
+            }
+            var repairFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", selectedEntry.gameID + ".repair");
+            if (File.Exists(repairFile))
+            {
+                File.Delete(repairFile);
+            }
+            if (selectedEntry.fullInstallPath != null && wantedItem.status != (int)DownloadStatus.Completed
+                && selectedEntry.downloadProperties.downloadAction == (int)DownloadAction.Install)
+            {
+                if (Directory.Exists(selectedEntry.fullInstallPath))
+                {
+                    Directory.Delete(selectedEntry.fullInstallPath, true);
+                }
+            }
+            downloadManagerData.downloads.Remove(selectedEntry);
+            SaveData();
+        }
+
         private void RemoveDownloadBtn_Click(object sender, RoutedEventArgs e)
         {
             if (DownloadsDG.SelectedIndex != -1)
             {
-                foreach (var selectedRow in DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
+                string messageText;
+                if (DownloadsDG.SelectedItems.Count == 1)
                 {
-                    var result = playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryRemoveEntryConfirm), selectedRow.name), ResourceProvider.GetString(LOC.LegendaryRemoveEntry), MessageBoxButton.YesNo, MessageBoxImage.Question);
-                    if (result == MessageBoxResult.Yes)
+                    var selectedRow = (DownloadManagerData.Download)DownloadsDG.SelectedItem;
+                    messageText = string.Format(ResourceProvider.GetString(LOC.LegendaryRemoveEntryConfirm), selectedRow.name);
+                }
+                else
+                {
+                    messageText = ResourceProvider.GetString(LOC.LegendaryRemoveSelectedEntriesConfirm);
+                }
+                var result = playniteAPI.Dialogs.ShowMessage(messageText, ResourceProvider.GetString(LOC.LegendaryRemoveEntry), MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    foreach (var selectedRow in DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
                     {
-                        var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == selectedRow.gameID);
-                        wantedItem.PropertyChanged -= DoNextJobInQueue;
-                        if (wantedItem.status != (int)DownloadStatus.Completed &&
-                            wantedItem.status != (int)DownloadStatus.Canceled)
+                        RemoveDownloadEntry(selectedRow);
+                    }
+                }
+            }
+        }
+
+        private void RemoveCompletedDownloadsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (DownloadsDG.Items.Count > 0)
+            {
+                var result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryRemoveCompletedDownloadsConfirm), ResourceProvider.GetString(LOC.LegendaryRemoveCompletedDownloads), MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    foreach (var row in DownloadsDG.Items.Cast<DownloadManagerData.Download>().ToList())
+                    {
+                        if (row.status == (int)DownloadStatus.Completed)
                         {
-                            if (wantedItem.status == (int)DownloadStatus.Running)
-                            {
-                                gracefulInstallerCTS?.Cancel();
-                                gracefulInstallerCTS?.Dispose();
-                                forcefulInstallerCTS?.Dispose();
-                            }
-                            selectedRow.status = (int)DownloadStatus.Canceled;
+                            RemoveDownloadEntry(row);
                         }
-                        var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", selectedRow.gameID + ".resume");
-                        if (File.Exists(resumeFile))
-                        {
-                            File.Delete(resumeFile);
-                        }
-                        var repairFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", selectedRow.gameID + ".repair");
-                        if (File.Exists(repairFile))
-                        {
-                            File.Delete(repairFile);
-                        }
-                        if (selectedRow.fullInstallPath != null && wantedItem.status != (int)DownloadStatus.Completed
-                            && selectedRow.downloadProperties.downloadAction == (int)DownloadAction.Install)
-                        {
-                            if (Directory.Exists(selectedRow.fullInstallPath))
-                            {
-                                Directory.Delete(selectedRow.fullInstallPath, true);
-                            }
-                        }
-                        downloadManagerData.downloads.Remove(selectedRow);
-                        SaveData();
                     }
                 }
             }
@@ -562,10 +594,12 @@ namespace LegendaryLibraryNS
                 if (DownloadsDG.SelectedItems.Count == 1)
                 {
                     DownloadPropertiesBtn.IsEnabled = true;
+                    OpenDownloadDirectoryBtn.IsEnabled = true;
                 }
                 else
                 {
                     DownloadPropertiesBtn.IsEnabled = false;
+                    OpenDownloadDirectoryBtn.IsEnabled = false;
                 }
             }
             else
@@ -575,8 +609,26 @@ namespace LegendaryLibraryNS
                 CancelDownloadBtn.IsEnabled = false;
                 RemoveDownloadBtn.IsEnabled = false;
                 DownloadPropertiesBtn.IsEnabled = false;
+                OpenDownloadDirectoryBtn.IsEnabled = false;
             }
         }
 
+        private void SelectAllBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (DownloadsDG.Items.Count > 0)
+            {
+                DownloadsDG.SelectAll();
+            }
+        }
+
+        private void OpenDownloadDirectoryBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = DownloadsDG.SelectedItems[0] as DownloadManagerData.Download;
+            var fullInstallPath = selectedItem.fullInstallPath;
+            if (fullInstallPath != "")
+            {
+                Process.Start("explorer.exe", selectedItem.fullInstallPath);
+            }
+        }
     }
 }

@@ -346,6 +346,22 @@ namespace System
         /// </summary>
         public const string LegendaryRemoveEntryConfirm = "LOCLegendaryRemoveEntryConfirm";
         /// <summary>
+        /// Remove completed downloads
+        /// </summary>
+        public const string LegendaryRemoveCompletedDownloads = "LOCLegendaryRemoveCompletedDownloads";
+        /// <summary>
+        /// Are you sure you want to remove all completed downloads from list?
+        /// </summary>
+        public const string LegendaryRemoveCompletedDownloadsConfirm = "LOCLegendaryRemoveCompletedDownloadsConfirm";
+        /// <summary>
+        /// Are you sure you want to remove selected entries from list?
+        /// </summary>
+        public const string LegendaryRemoveSelectedEntriesConfirm = "LOCLegendaryRemoveSelectedEntriesConfirm";
+        /// <summary>
+        /// Select all entires (Ctrl+A)
+        /// </summary>
+        public const string LegendarySelectAllEntries = "LOCLegendarySelectAllEntries";
+        /// <summary>
         /// Download Size
         /// </summary>
         public const string LegendaryDownloadSizeColumn = "LOCLegendaryDownloadSizeColumn";
@@ -421,6 +437,10 @@ namespace System
         /// Edit entry properties
         /// </summary>
         public const string LegendaryEditSelectedDownloadProperties = "LOCLegendaryEditSelectedDownloadProperties";
+        /// <summary>
+        /// Open download directory
+        /// </summary>
+        public const string LegendaryOpenDownloadDirectory = "LOCLegendaryOpenDownloadDirectory";
         /// <summary>
         /// Task
         /// </summary>

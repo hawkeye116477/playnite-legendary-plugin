@@ -49,10 +49,18 @@
             <Button x:Name="PauseBtn" ToolTip="{DynamicResource LOCLegendaryPauseDownload}" Content="&#xec72;" FontFamily="{DynamicResource FontIcoFont}" Click="PauseBtn_Click" Margin="5,0,0,0" IsEnabled="False" />
             <Button x:Name="CancelDownloadBtn" Content="&#xec73;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteCancelLabel}"
                    Margin="5,0,0,0" IsCancel="True" Click="CancelDownloadBtn_Click" IsEnabled="False" />
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="5,0,0,0" />
+            <Button x:Name="SelectAllBtn" Content="&#xeed9;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendarySelectAllEntries}"
+                    Margin="5,0,0,0" Click="SelectAllBtn_Click" />
             <Button x:Name="RemoveDownloadBtn" Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendaryRemoveEntry}"
                     Margin="5,0,0,0" Click="RemoveDownloadBtn_Click" IsEnabled="False" />
+            <Button x:Name="RemoveCompletedDownloadsBtn" Content="&#xef9f;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendaryRemoveCompletedDownloads}"
+                    Margin="5,0,0,0" Click="RemoveCompletedDownloadsBtn_Click" />
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="5,0,0,0" />
             <Button x:Name="DownloadPropertiesBtn" Content="&#xefe2;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendaryEditSelectedDownloadProperties}"
                     Margin="5,0,0,0" Click="DownloadPropertiesBtn_Click" IsEnabled="False" />
+            <Button x:Name="OpenDownloadDirectoryBtn" Content="&#xef35;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendaryOpenDownloadDirectory}"
+                    Margin="5,0,0,0" Click="OpenDownloadDirectoryBtn_Click" IsEnabled="False" />
             <ToggleButton x:Name="FilterDownloadBtn" Content="&#xef29;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteFilters}"
                     Margin="5,0,0,0" Checked="FilterDownloadBtn_Checked" Unchecked="FilterDownloadBtn_Unchecked" />
         </StackPanel>
