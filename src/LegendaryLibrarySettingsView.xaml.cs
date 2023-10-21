@@ -37,9 +37,10 @@ namespace LegendaryLibraryNS
 
         private void ChooseLauncherBtn_Click(object sender, RoutedEventArgs e)
         {
-            var path = playniteAPI.Dialogs.SelectFolder();
-            if (path != "")
+            var file = playniteAPI.Dialogs.SelectFile("Legendary|legendary.exe");
+            if (file != "")
             {
+                var path = System.IO.Path.GetDirectoryName(file);
                 SelectedLauncherPathTxt.Text = path;
             }
         }
