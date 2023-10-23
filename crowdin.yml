@@ -8,6 +8,5 @@ files: [
     "translation": "/src/Localization/%locale_with_underscore%.xaml",
     "escape_quotes": 3,
     "escape_special_characters": 0,
-    "update_option": "update_as_unapproved"
   }
 ]
