@@ -74,4 +74,5 @@
   <sys:String x:Key="LOCLegendaryMigrationCompleted">Migration completed successfully.</sys:String>
   <sys:String x:Key="LOCLegendaryMigrationNoGames">No games found for migration.</sys:String>
   <sys:String x:Key="LOCLegendaryMigrationConfirm">All games will be removed from Epic plugin and moved to Legendary. Are you sure you want to do this?</sys:String>
+  <sys:String x:Key="LOCLegendarySignOut">Sign out</sys:String>
 </ResourceDictionary>

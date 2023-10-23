@@ -1,4 +1,6 @@
-﻿using LegendaryLibraryNS.Enums;
+﻿using CliWrap;
+using CliWrap.Buffered;
+using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Services;
 using Playnite;
 using Playnite.Commands;
@@ -52,6 +54,23 @@ namespace LegendaryLibraryNS
             get => new RelayCommand<object>(async (a) =>
             {
                 await Login();
+            });
+        }
+
+        public RelayCommand<object> SignOutCommand
+        {
+            get => new RelayCommand<object>(async (a) =>
+            {
+                var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                      .WithArguments(new[] { "auth", "--delete" })
+                                      .WithValidation(CommandResultValidation.None)
+                                      .ExecuteBufferedAsync();
+               if (result.ExitCode != 0 && !result.StandardError.Contains("User data deleted"))
+                {
+                    Logger.Error($"[Legendary] Failed to sign out. Error: {result.StandardError}");
+                    return;
+                }
+                OnPropertyChanged(nameof(IsUserLoggedIn));
             });
         }
 

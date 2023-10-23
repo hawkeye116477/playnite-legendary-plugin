@@ -122,6 +122,10 @@ namespace System
         /// </summary>
         public const string Legendary3P_PlayniteCommonLinksStorePage = "LOCLegendary3P_PlayniteCommonLinksStorePage";
         /// <summary>
+        /// Select file…
+        /// </summary>
+        public const string Legendary3P_PlayniteSelectFileTooltip = "LOCLegendary3P_PlayniteSelectFileTooltip";
+        /// <summary>
         /// Select folder…
         /// </summary>
         public const string Legendary3P_PlayniteSelectDirectoryTooltip = "LOCLegendary3P_PlayniteSelectDirectoryTooltip";
@@ -469,5 +473,9 @@ namespace System
         /// All games will be removed from Epic plugin and moved to Legendary. Are you sure you want to do this?
         /// </summary>
         public const string LegendaryMigrationConfirm = "LOCLegendaryMigrationConfirm";
+        /// <summary>
+        /// Sign out
+        /// </summary>
+        public const string LegendarySignOut = "LOCLegendarySignOut";
     }
 }

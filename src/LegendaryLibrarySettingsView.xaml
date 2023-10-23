@@ -37,9 +37,34 @@
 
                     <StackPanel Orientation="Horizontal"
                         DockPanel.Dock="Top" Margin="0,15,5,5" HorizontalAlignment="Left">
-                        <Button Content="{DynamicResource LOCLegendary3P_EpicAuthenticateLabel}"
+                        <Button
                             HorizontalAlignment="Left"
-                            Command="{Binding LoginCommand}" />
+                            Name="LoginBtn">
+                            <Button.Tag>
+                                <PriorityBinding>
+                                    <Binding Path="IsUserLoggedIn" IsAsync="True" />
+                                    <Binding Source="{x:Null}" />
+                                </PriorityBinding>
+                            </Button.Tag>
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Style.Triggers>
+                                        <Trigger Property="Tag" Value="{StaticResource True}">
+                                            <Setter Property="Content" Value="{DynamicResource LOCLegendarySignOut}" />
+                                            <Setter Property="Command" Value="{Binding SignOutCommand}" />
+                                        </Trigger>
+                                        <Trigger Property="Tag" Value="{StaticResource False}">
+                                            <Setter Property="Content" Value="{DynamicResource LOCLegendary3P_EpicAuthenticateLabel}" />
+                                            <Setter Property="Command" Value="{Binding LoginCommand}" />
+                                        </Trigger>
+                                        <Trigger Property="Tag" Value="{x:Null}">
+                                            <Setter Property="Content" Value="{DynamicResource LOCLegendary3P_EpicAuthenticateLabel}" />
+                                            <Setter Property="Command" Value="{Binding LoginCommand}" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                         <TextBlock VerticalAlignment="Center" Margin="10,5,5,5">
                             <TextBlock.Tag>
                                 <PriorityBinding>
