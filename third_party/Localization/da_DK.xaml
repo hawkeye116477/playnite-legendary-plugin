@@ -33,6 +33,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Afinstaller</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle" />
   <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip" />
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip" />
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay" />
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek" />

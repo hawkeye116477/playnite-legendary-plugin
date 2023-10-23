@@ -50,7 +50,7 @@
             <Button x:Name="CancelDownloadBtn" Content="&#xec73;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteCancelLabel}"
                    Margin="5,0,0,0" IsCancel="True" Click="CancelDownloadBtn_Click" IsEnabled="False" />
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="5,0,0,0" />
-            <Button x:Name="SelectAllBtn" Content="&#xeed9;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendarySelectAllEntries}"
+            <Button x:Name="SelectAllBtn" Content="&#xeed9;" FontFamily="{DynamicResource FontIcoFont}"
                     Margin="5,0,0,0" Click="SelectAllBtn_Click" />
             <Button x:Name="RemoveDownloadBtn" Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendaryRemoveEntry}"
                     Margin="5,0,0,0" Click="RemoveDownloadBtn_Click" IsEnabled="False" />

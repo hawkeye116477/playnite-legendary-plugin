@@ -33,6 +33,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">विस्थापित करा</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">पुन्हा दाखवू नका</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage">दुकानाचे पृष्ठ</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">फाईल निवडा…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">फोल्डर निवडा…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay" />
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek" />

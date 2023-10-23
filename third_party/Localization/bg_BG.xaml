@@ -33,6 +33,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Деинсталиране</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">Не показвай отново</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage">Страница на магазин</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">Изберете файл...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Изберете папка...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Веднъж на ден</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">Веднъж седмично</sys:String>

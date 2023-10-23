@@ -31,6 +31,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame" />
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle" />
   <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip" />
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip" />
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel" />
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel" />

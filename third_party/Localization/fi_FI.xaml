@@ -33,6 +33,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Poista asennus</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">Älä näytä uudelleen</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage">Kaupan sivu</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">Valitse tiedosto…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Valitse kansio...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay" />
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek" />

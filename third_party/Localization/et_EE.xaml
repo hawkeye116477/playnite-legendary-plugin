@@ -33,6 +33,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Desinstalli</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle" />
   <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage">Poeleht</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip" />
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Vali kaust…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Kord päevas</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">Kord nädalas</sys:String>

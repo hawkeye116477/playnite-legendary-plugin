@@ -174,7 +174,7 @@ namespace System
         /// </summary>
         public const string Legendary3P_EpicStartUsingClient = "LOCLegendary3P_EpicStartUsingClient";
         /// <summary>
-        /// Use custom launcher path
+        /// Launcher Path
         /// </summary>
         public const string LegendaryLauncherCustomPath = "LOCLegendaryLauncherCustomPath";
         /// <summary>
@@ -358,7 +358,7 @@ namespace System
         /// </summary>
         public const string LegendaryRemoveSelectedEntriesConfirm = "LOCLegendaryRemoveSelectedEntriesConfirm";
         /// <summary>
-        /// Select all entires (Ctrl+A)
+        /// Select all entires
         /// </summary>
         public const string LegendarySelectAllEntries = "LOCLegendarySelectAllEntries";
         /// <summary>

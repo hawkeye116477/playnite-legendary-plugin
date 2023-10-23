@@ -44,6 +44,7 @@ namespace LegendaryLibraryNS
         {
             InitializeComponent();
             SetControlTextBlockStyle();
+            SelectAllBtn.ToolTip = $"{ResourceProvider.GetResource(LOC.LegendarySelectAllEntries)} (Ctrl+A)";
             LoadSavedData();
             var runningAndQueuedDownloads = downloadManagerData.downloads.Where(i => i.status == (int)DownloadStatus.Running
                                                                                      || i.status == (int)DownloadStatus.Queued).ToList();

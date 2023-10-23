@@ -18,16 +18,6 @@
         HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
         <TabItem Header="{DynamicResource LOCLegendary3P_PlayniteSettingsGeneralLabel}">
             <StackPanel Margin="20">
-                <TextBlock Text="{DynamicResource LOCLegendaryGamesInstallationPath}"
-                    Margin="0,0,0,2"></TextBlock>
-                <DockPanel Margin="0,0,0,10">
-                    <Button DockPanel.Dock="Right" Padding="5" Margin="5 0 0 0"
-                        Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" Content="&#xec5b;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteSelectDirectoryTooltip}" />
-                    <TextBox Name="SelectedGamePathTxt"
-                        Text="{Binding Settings.GamesInstallationPath, UpdateSourceTrigger=PropertyChanged}"
-                        VerticalAlignment="Center" />
-                </DockPanel>
-
                 <CheckBox DockPanel.Dock="Top" Name="CheckEpicImportInstalled"
                     Margin="0,0,0,15"
                     IsChecked="{Binding Settings.ImportInstalledGames}"
@@ -107,16 +97,35 @@
         </TabItem>
         <TabItem Header="{DynamicResource LOCLegendary3P_PlayniteSettingsAdvancedLabel}">
             <StackPanel Margin="20">
-                <CheckBox Name="CheckUseCustomLauncherPath"
-                    IsChecked="{Binding Settings.UseCustomLauncherPath}"
-                    Content="{DynamicResource LOCLegendaryLauncherCustomPath}" Margin="0,5" />
-                <DockPanel IsEnabled="{Binding Settings.UseCustomLauncherPath}">
-                    <Button Name="ChooseLauncherBtn" DockPanel.Dock="Right" Padding="5"
-                        Margin="5 0 0 0" Content="&#xec5b;" FontFamily="{DynamicResource FontIcoFont}" Click="ChooseLauncherBtn_Click" />
-                    <TextBox
-                        Text="{Binding Settings.SelectedLauncherPath, UpdateSourceTrigger=PropertyChanged}"
-                        VerticalAlignment="Center" x:Name="SelectedLauncherPathTxt" />
-                </DockPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{DynamicResource LOCLegendaryLauncherCustomPath}" Grid.Column="0" Grid.Row="0"
+                               Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    </TextBlock>
+                    <TextBox Text="{Binding Settings.SelectedLauncherPath, UpdateSourceTrigger=PropertyChanged}" x:Name="SelectedLauncherPathTxt" 
+                             Grid.Row="0" Grid.Column="1" Margin="10,0,0,5" VerticalAlignment="Center"/>
+                    <Button Name="ChooseLauncherBtn"
+                            Margin="5,0,0,5" Content="&#xec5b;" FontFamily="{DynamicResource FontIcoFont}" Click="ChooseLauncherBtn_Click" Grid.Row="0" Grid.Column="2"
+                            ToolTip="{DynamicResource LOCLegendary3P_PlayniteSelectFileTooltip}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{DynamicResource LOCLegendaryGamesInstallationPath}" Grid.Row="1" Grid.Column="0"
+                               Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    </TextBlock>
+                    <TextBox Name="SelectedGamePathTxt"
+                        Text="{Binding Settings.GamesInstallationPath, UpdateSourceTrigger=PropertyChanged}"
+                        VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Margin="10,0,0,5"/>
+                    <Button Margin="5 0 0 5"
+                            Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" Content="&#xec5b;" 
+                            FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteSelectDirectoryTooltip}"
+                            Grid.Row="1" Grid.Column="2" VerticalAlignment="Center"/>
+                </Grid>
                 <StackPanel Margin="0,20,0,0">
                     <TextBlock Text="{DynamicResource LOCLegendaryDownloadSettings}" FontSize="18"
                         Margin="0,0,0,2" />
