@@ -82,7 +82,7 @@ namespace LegendaryLibraryNS
             }
             if (installPath == "")
             {
-                installPath = LegendaryLauncher.DefaultGamesInstallationPath;
+                installPath = LegendaryLauncher.GamesInstallationPath;
             }
             var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory.ToString();
             if (installPath.Contains(playniteDirectoryVariable))
@@ -187,11 +187,7 @@ namespace LegendaryLibraryNS
                 RepairBtn.Visibility = Visibility.Visible;
             }
             var settings = LegendaryLibrary.GetSettings();
-            var installPath = settings.GamesInstallationPath;
-            if (installPath == "")
-            {
-                installPath = LegendaryLauncher.DefaultGamesInstallationPath;
-            }
+            var installPath = LegendaryLauncher.GamesInstallationPath;
             var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory.ToString();
             if (installPath.Contains(playniteDirectoryVariable))
             {

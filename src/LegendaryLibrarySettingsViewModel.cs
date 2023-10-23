@@ -24,7 +24,7 @@ namespace LegendaryLibraryNS
         public bool ConnectAccount { get; set; } = false;
         public bool ImportUninstalledGames { get; set; } = false;
         public string SelectedLauncherPath { get; set; } = "";
-        public string GamesInstallationPath { get; set; } = LegendaryLauncher.DefaultGamesInstallationPath;
+        public string GamesInstallationPath { get; set; } = "";
         public bool LaunchOffline { get; set; } = false;
         public List<string> OnlineList { get; set; } = new List<string>();
         public string PreferredCDN { get; set; } = LegendaryLauncher.DefaultPreferredCDN;

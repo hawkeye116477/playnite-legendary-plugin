@@ -67,15 +67,15 @@ namespace LegendaryLibraryNS
                 var savedSettings = LegendaryLibrary.GetSettings();
                 if (savedSettings != null)
                 {
-                    var savedLauncherPath = LegendaryLibrary.GetSettings().SelectedLauncherPath;
+                    var savedLauncherPath = savedSettings.SelectedLauncherPath;
                     var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory.ToString();
-                    if (savedLauncherPath.Contains(playniteDirectoryVariable))
-                    {
-                        var playniteAPI = API.Instance;
-                        savedLauncherPath = savedLauncherPath.Replace(playniteDirectoryVariable, playniteAPI.Paths.ApplicationPath);
-                    }
                     if (savedLauncherPath != "" && Directory.Exists(savedLauncherPath))
                     {
+                        if (savedLauncherPath.Contains(playniteDirectoryVariable))
+                        {
+                            var playniteAPI = API.Instance;
+                            savedLauncherPath = savedLauncherPath.Replace(playniteDirectoryVariable, playniteAPI.Paths.ApplicationPath);
+                        }
                         launcherPath = savedLauncherPath;
                     }
                 }
@@ -92,7 +92,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        public static string DefaultGamesInstallationPath
+        public static string GamesInstallationPath
         {
             get
             {
@@ -119,6 +119,15 @@ namespace LegendaryLibraryNS
                 {
                     var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory.ToString();
                     installPath = Path.Combine(playniteDirectoryVariable, "Games");
+                }
+                var savedSettings = LegendaryLibrary.GetSettings();
+                if (savedSettings != null)
+                {
+                    var savedGamesInstallationPath = savedSettings.GamesInstallationPath;
+                    if (savedGamesInstallationPath != "")
+                    {
+                        installPath = savedGamesInstallationPath;
+                    }
                 }
                 return installPath;
             }
