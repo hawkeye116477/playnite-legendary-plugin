@@ -69,14 +69,17 @@ namespace LegendaryLibraryNS
                 {
                     var savedLauncherPath = savedSettings.SelectedLauncherPath;
                     var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory.ToString();
-                    if (savedLauncherPath != "" && Directory.Exists(savedLauncherPath))
+                    if (savedLauncherPath != "")
                     {
                         if (savedLauncherPath.Contains(playniteDirectoryVariable))
                         {
                             var playniteAPI = API.Instance;
                             savedLauncherPath = savedLauncherPath.Replace(playniteDirectoryVariable, playniteAPI.Paths.ApplicationPath);
                         }
-                        launcherPath = savedLauncherPath;
+                        if (Directory.Exists(savedLauncherPath))
+                        {
+                            launcherPath = savedLauncherPath;
+                        }
                     }
                 }
                 return launcherPath;

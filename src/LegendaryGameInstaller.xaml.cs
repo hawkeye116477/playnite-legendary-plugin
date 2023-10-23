@@ -75,11 +75,7 @@ namespace LegendaryLibraryNS
         private async void InstallBtn_Click(object sender, RoutedEventArgs e)
         {
             var settings = LegendaryLibrary.GetSettings();
-            var installPath = settings.GamesInstallationPath;
-            if (SelectedGamePathTxt.Text != "")
-            {
-                installPath = SelectedGamePathTxt.Text;
-            }
+            var installPath = SelectedGamePathTxt.Text;
             if (installPath == "")
             {
                 installPath = LegendaryLauncher.GamesInstallationPath;
