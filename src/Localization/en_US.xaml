@@ -46,7 +46,7 @@
   <sys:String x:Key="LOCLegendaryRemoveCompletedDownloads">Remove completed downloads</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveCompletedDownloadsConfirm">Are you sure you want to remove all completed downloads from list?</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveSelectedEntriesConfirm">Are you sure you want to remove selected entries from list?</sys:String>
-  <sys:String x:Key="LOCLegendarySelectAllEntries">Select all entires</sys:String>
+  <sys:String x:Key="LOCLegendarySelectAllEntries">Select all entries</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSizeColumn">Download Size</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">The download will start soon. You can see its status by accessing Legendary Panel via Menu => View or sidebar.</sys:String>
   <sys:String x:Key="LOCLegendaryPanel">Legendary Panel</sys:String>
