@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!--
-  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/5ccea78fb040874f8e30976d3acf43079c80cb7c.
+  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/0b392acd355d2b544df828ebe60edfe19bf6ff4f.
   DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
@@ -40,11 +40,11 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">Impordi paigaldatud mängud</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Impordi paigaldamata mängud</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Ühenda konto</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoginChecking" />
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn" />
-  <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn" />
-  <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError" />
-  <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel" />
+  <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Autentimise oleku kontrollimine…</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">Kasutaja on autenditud</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Vajalik on autentimine</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Kasutaja autentimine ebaõnnestus.</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Autendi</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicTroubleShootingIssues">Probleemide tõrkeotsing</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicStartUsingClient" />
+  <sys:String x:Key="LOCLegendary3P_EpicStartUsingClient">Käivita klienti {0} kasutades</sys:String>
 </ResourceDictionary>

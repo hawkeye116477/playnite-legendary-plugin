@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!--
-  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/5ccea78fb040874f8e30976d3acf43079c80cb7c.
+  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/0b392acd355d2b544df828ebe60edfe19bf6ff4f.
   DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
@@ -37,14 +37,14 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">フォルダを選択…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">1日に1回</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">週に1回</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">インストール済みのゲームをインポートする</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">インストールされていないゲームをインポートする</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">インストール済みのゲームをインポート</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">インストールされていないゲームをインポート</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">アカウントに接続</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">認証ステータスを確認しています...</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">ユーザー認証済み</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">認証が必要</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">ユーザーは認証されています</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">認証が必要です</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">ユーザー認証に失敗しました。</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">認証する</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicTroubleShootingIssues">問題解決</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">認証</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicTroubleShootingIssues">問題のトラブルシューティング</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicStartUsingClient">{0} クライアントの使用を開始</sys:String>
 </ResourceDictionary>
