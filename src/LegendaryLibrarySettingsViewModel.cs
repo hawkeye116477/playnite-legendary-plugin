@@ -53,7 +53,14 @@ namespace LegendaryLibraryNS
         {
             get => new RelayCommand<object>(async (a) =>
             {
-                await Login();
+                if (LegendaryLauncher.IsInstalled)
+                {
+                    await Login();
+                }
+                else
+                {
+                    PlayniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                }
             });
         }
 

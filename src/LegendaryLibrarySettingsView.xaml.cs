@@ -93,6 +93,11 @@ namespace LegendaryLibraryNS
 
         private void EOSOInstallBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (!LegendaryLauncher.IsInstalled)
+            {
+                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                return;
+            }
             var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
             {
                 ShowMaximizeButton = false
@@ -182,19 +187,31 @@ namespace LegendaryLibraryNS
             AutoClearCacheCBo.ItemsSource = autoClearOptions;
 
             troubleshootingInformation = new LegendaryTroubleshootingInformation();
-            var verionCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                         .WithArguments(new[] { "-V" })
-                         .WithValidation(CommandResultValidation.None)
-                         .ExecuteBufferedAsync();
-            if (verionCmd.StandardOutput.Contains("version"))
+            if (LegendaryLauncher.IsInstalled)
             {
-                troubleshootingInformation.LauncherVersion = Regex.Match(verionCmd.StandardOutput, @"\d+(\.\d+)+").Value;
-                LauncherVersionTxt.Text = troubleshootingInformation.LauncherVersion;
+                var verionCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                         .WithArguments(new[] { "-V" })
+                                         .WithValidation(CommandResultValidation.None)
+                                         .ExecuteBufferedAsync();
+                if (verionCmd.StandardOutput.Contains("version"))
+                {
+                    troubleshootingInformation.LauncherVersion = Regex.Match(verionCmd.StandardOutput, @"\d+(\.\d+)+").Value;
+                    LauncherVersionTxt.Text = troubleshootingInformation.LauncherVersion;
+                }
+            }
+            else
+            {
+                LauncherVersionTxt.Text = ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled);
             }
 
             PlayniteVersionTxt.Text = troubleshootingInformation.PlayniteVersion;
             PluginVersionTxt.Text = troubleshootingInformation.PluginVersion;
             LauncherBinaryTxt.Text = troubleshootingInformation.LauncherBinary;
+            if (LauncherBinaryTxt.Text.IsNullOrEmpty())
+            {
+                LauncherBinaryTxt.Text = ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled);
+                OpenLauncherBinaryBtn.IsEnabled = false;
+            }
             GamesInstallationPathTxt.Text = troubleshootingInformation.GamesInstallationPath;
             ReportBugHyp.NavigateUri = new Uri($"https://github.com/hawkeye116477/playnite-legendary-plugin/issues/new?assignees=&labels=bug&projects=&template=bugs.yml&legendaryV={troubleshootingInformation.PluginVersion}&playniteV={troubleshootingInformation.PlayniteVersion}&launcherV={troubleshootingInformation.LauncherVersion}");
         }
@@ -230,6 +247,11 @@ namespace LegendaryLibraryNS
 
         private void MigrateEpicBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (!LegendaryLauncher.IsInstalled)
+            {
+                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                return;
+            }
             var result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryMigrationConfirm), ResourceProvider.GetString(LOC.LegendaryMigrateGamesEpic), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.No)
             {

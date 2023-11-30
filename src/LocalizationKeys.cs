@@ -517,5 +517,9 @@ namespace System
         /// Report a bug
         /// </summary>
         public const string LegendaryReportBug = "LOCLegendaryReportBug";
+        /// <summary>
+        /// Legendary Launcher is not installed.
+        /// </summary>
+        public const string LegendaryLauncherNotInstalled = "LOCLegendaryLauncherNotInstalled";
     }
 }

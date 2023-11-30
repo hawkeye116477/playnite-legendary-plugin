@@ -32,7 +32,7 @@ namespace LegendaryLibraryNS
         {
             if (!LegendaryLauncher.IsInstalled)
             {
-                throw new Exception("Legendary Launcher is not installed.");
+                throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
             }
 
             Window window = null;
@@ -105,7 +105,7 @@ namespace LegendaryLibraryNS
         {
             if (!LegendaryLauncher.IsInstalled)
             {
-                throw new Exception("Legendary Launcher is not installed.");
+                throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
             }
 
             Dispose();

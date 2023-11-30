@@ -26,8 +26,8 @@ namespace LegendaryLibraryNS
                 return fvi.FileVersion;
             }
         }
-        public string LauncherVersion { get; set; }
-        public string LauncherBinary => LegendaryLauncher.GetExecutablePath(LegendaryLauncher.LauncherPath);
+        public string LauncherVersion { get; set; } = "";
+        public string LauncherBinary => LegendaryLauncher.ClientExecPath;
         public string GamesInstallationPath => LegendaryLauncher.GamesInstallationPath;
     }
 }

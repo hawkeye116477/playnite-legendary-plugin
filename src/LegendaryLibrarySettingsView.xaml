@@ -218,7 +218,7 @@
                             Click="EOSOInstallBtn_Click" HorizontalAlignment="Left"></Button>
                         <Button Content="{DynamicResource LOCLegendaryDisable}" Grid.Row="0"
                             Grid.Column="0" Margin="10,0,0,0" Name="EOSOToggleBtn"
-                            Click="EOSOToggleBtn_Click" HorizontalAlignment="Left"></Button>
+                            Click="EOSOToggleBtn_Click" HorizontalAlignment="Left"/>
                         <Button Content="{DynamicResource LOCLegendary3P_PlayniteUninstallGame}" Name="EOSOUninstallBtn"
                             Grid.Row="0" Grid.Column="1" Margin="10,0,0,0"
                             Click="EOSOUninstallBtn_Click" HorizontalAlignment="Left"></Button>

@@ -82,6 +82,10 @@ namespace LegendaryLibraryNS
                         }
                     }
                 }
+                if (!File.Exists(Path.Combine(launcherPath, "legendary.exe")))
+                {
+                    launcherPath = "";
+                }
                 return launcherPath;
             }
         }
