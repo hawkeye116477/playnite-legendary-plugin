@@ -37,6 +37,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">फोल्डर निवडा…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay" />
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteOpen" />
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">खाते कनेक्ट करा</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicStartUsingClient">{0} क्लाएंट वापरून सुरू करा</sys:String>
 </ResourceDictionary>

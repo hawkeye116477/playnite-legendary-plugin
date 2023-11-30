@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,6 +31,8 @@ namespace LegendaryLibraryNS
     {
         private ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI playniteAPI = API.Instance;
+        public LegendaryTroubleshootingInformation troubleshootingInformation;
+
         public LegendaryLibrarySettingsView()
         {
             InitializeComponent();
@@ -135,7 +138,7 @@ namespace LegendaryLibraryNS
             EOSOToggleBtn.Content = ResourceProvider.GetString(toggleTxt);
         }
 
-        private void LegendarySettingsUC_Loaded(object sender, RoutedEventArgs e)
+        private async void LegendarySettingsUC_Loaded(object sender, RoutedEventArgs e)
         {
             var installedAddons = playniteAPI.Addons.Addons;
             if (installedAddons.Contains("EpicGamesLibrary_Builtin"))
@@ -177,6 +180,23 @@ namespace LegendaryLibraryNS
                 { (int)ClearCacheTime.Never, ResourceProvider.GetString(LOC.Legendary3P_PlayniteSettingsPlaytimeImportModeNever) }
             };
             AutoClearCacheCBo.ItemsSource = autoClearOptions;
+
+            troubleshootingInformation = new LegendaryTroubleshootingInformation();
+            var verionCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                         .WithArguments(new[] { "-V" })
+                         .WithValidation(CommandResultValidation.None)
+                         .ExecuteBufferedAsync();
+            if (verionCmd.StandardOutput.Contains("version"))
+            {
+                troubleshootingInformation.LauncherVersion = Regex.Match(verionCmd.StandardOutput, @"\d+(\.\d+)+").Value;
+                LauncherVersionTxt.Text = troubleshootingInformation.LauncherVersion;
+            }
+
+            PlayniteVersionTxt.Text = troubleshootingInformation.PlayniteVersion;
+            PluginVersionTxt.Text = troubleshootingInformation.PluginVersion;
+            LauncherBinaryTxt.Text = troubleshootingInformation.LauncherBinary;
+            GamesInstallationPathTxt.Text = troubleshootingInformation.GamesInstallationPath;
+            ReportBugHyp.NavigateUri = new Uri($"https://github.com/hawkeye116477/playnite-legendary-plugin/issues/new?assignees=&labels=bug&projects=&template=bugs.yml&legendaryV={troubleshootingInformation.PluginVersion}&playniteV={troubleshootingInformation.PlayniteVersion}&launcherV={troubleshootingInformation.LauncherVersion}");
         }
 
         private void ClearCacheBtn_Click(object sender, RoutedEventArgs e)
@@ -273,6 +293,34 @@ namespace LegendaryLibraryNS
                     }
                 }
             }, globalProgressOptions);
+        }
+
+        private void CopyRawDataBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var troubleshootingJSON = Playnite.SDK.Data.Serialization.ToJson(troubleshootingInformation, true);
+            Clipboard.SetText(troubleshootingJSON);
+        }
+
+        private void LogFilesFolderHyp_Click(object sender, RoutedEventArgs e)
+        {
+            ProcessStarter.StartProcess("explorer.exe", playniteAPI.Paths.ConfigurationPath);
+        }
+
+        private void OpenGamesInstallationPathBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (Directory.Exists(troubleshootingInformation.GamesInstallationPath))
+            {
+                ProcessStarter.StartProcess("explorer.exe", troubleshootingInformation.GamesInstallationPath);
+            }
+            else
+            {
+                playniteAPI.Dialogs.ShowErrorMessage(LOC.LegendaryPathNotExist);
+            }
+        }
+
+        private void OpenLauncherBinaryBtn_Click(object sender, RoutedEventArgs e)
+        {
+            LegendaryLauncher.StartClient();
         }
     }
 }

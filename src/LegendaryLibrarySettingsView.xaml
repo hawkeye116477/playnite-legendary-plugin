@@ -108,16 +108,6 @@
                     Margin="0,10,0,0"
                     IsChecked="{Binding Settings.SyncGameSaves}"
                     Content="{DynamicResource LOCLegendarySyncGameSaves}" Name="SyncGameSavesChk" Click="SyncGameSavesChk_Click" />
-
-                <TextBlock VerticalAlignment="Center" Margin="0,20,0,0" Height="24"
-                    RenderTransformOrigin="0.5,0.5">
-                    <Hyperlink
-                        NavigateUri="https://github.com/hawkeye116477/playnite-legendary-plugin/wiki/troubleshooting"
-                        Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
-                        CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
-                        <Run Text="{DynamicResource LOCLegendary3P_EpicTroubleShootingIssues}" />
-                    </Hyperlink>
-                </TextBlock>
             </StackPanel>
         </TabItem>
         <TabItem Header="{DynamicResource LOCLegendary3P_PlayniteSettingsAdvancedLabel}">
@@ -234,6 +224,78 @@
                             Click="EOSOUninstallBtn_Click"></Button>
                     </Grid>
                 </StackPanel>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="{DynamicResource LOCLegendaryTroubleshootingInformation}">
+            <StackPanel Margin="20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{DynamicResource LOCLegendaryPlayniteVersion}" Grid.Column="0" Grid.Row="0"
+                               Margin="0,0,10,5" VerticalAlignment="Center">
+                    </TextBlock>
+                    <TextBox x:Name="PlayniteVersionTxt" Grid.Column="1" Grid.Row="0" Margin="0,0,0,5" 
+                             VerticalAlignment="Center" IsReadOnly="True" HorizontalAlignment="Left"/>
+                    <TextBlock Text="{DynamicResource LOCLegendaryPluginVersion}" Grid.Column="0" Grid.Row="1"
+                               Margin="0,0,10,5" VerticalAlignment="Center" />
+                    <TextBox x:Name="PluginVersionTxt" Grid.Column="1" Grid.Row="1" Margin="0,0,0,5" 
+                             VerticalAlignment="Center" IsReadOnly="True" HorizontalAlignment="Left"/>
+                    <TextBlock Text="{DynamicResource LOCLegendaryLauncherVersion}" Grid.Column="0" Grid.Row="2"
+                               Margin="0,0,10,5" VerticalAlignment="Center" />
+                    <TextBox x:Name="LauncherVersionTxt" Text="" Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" VerticalAlignment="Center" 
+                             IsReadOnly="True" HorizontalAlignment="Left"/>
+                    <TextBlock Text="{DynamicResource LOCLegendaryLauncherBinary}" Grid.Column="0" Grid.Row="3"
+                               Margin="0,0,10,5" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBox x:Name="LauncherBinaryTxt" VerticalAlignment="Center" IsReadOnly="True"/>
+                        <Button x:Name="OpenLauncherBinaryBtn" Margin="10,0,0,0" Content="{DynamicResource LOCLegendary3P_PlayniteOpen}" 
+                                VerticalAlignment="Center" Click="OpenLauncherBinaryBtn_Click"/>
+                    </StackPanel>
+                    <TextBlock Text="{DynamicResource LOCLegendaryGamesInstallationPath}" Grid.Row="4" Grid.Column="0"
+                               Margin="0,0,10,5" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,5">
+                        <TextBox x:Name="GamesInstallationPathTxt" Margin="0,0,0,0" VerticalAlignment="Center" IsReadOnly="True" Grid.Column="0"/>
+                        <Button x:Name="OpenGamesInstallationPathBtn" Margin="10,0,0,0" Content="{DynamicResource LOCLegendary3P_PlayniteOpen}" 
+                                VerticalAlignment="Center" Click="OpenGamesInstallationPathBtn_Click" Grid.Column="1"/>
+                    </StackPanel>
+                    <Button Margin="0,10,5,5" Grid.Column="0" Grid.Row="5" Name="CopyRawDataBtn" Click="CopyRawDataBtn_Click" 
+                            Grid.ColumnSpan="2" HorizontalAlignment="Left" Content="{DynamicResource LOCLegendaryCopyRawDataToClipboard}">
+                    </Button>
+                    <TextBlock VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Grid.Column="0" Grid.Row="6" Margin="0,5,0,0">
+                    <Hyperlink Name="LogFilesFolderHyp" Click="LogFilesFolderHyp_Click">
+                        <Run Text="{DynamicResource LOCLegendaryLogFilesFolder}" />
+                    </Hyperlink>
+                    </TextBlock>
+                    <TextBlock VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Grid.Column="0" Grid.Row="7" Margin="0,10,0,0">
+                    <Hyperlink
+                        NavigateUri="https://github.com/hawkeye116477/playnite-legendary-plugin/wiki/troubleshooting"
+                        Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                        CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                        <Run Text="{DynamicResource LOCLegendary3P_EpicTroubleShootingIssues}" />
+                    </Hyperlink>
+                    </TextBlock>
+                    <TextBlock VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Grid.Column="0" Grid.Row="8" Margin="0,10,0,0">
+                    <Hyperlink 
+                        Name="ReportBugHyp"
+                        Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                        CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                        <Run Text="{DynamicResource LOCLegendaryReportBug}" />
+                    </Hyperlink>
+                    </TextBlock>
+                </Grid>
             </StackPanel>
         </TabItem>
     </TabControl>

@@ -138,6 +138,10 @@ namespace System
         /// </summary>
         public const string Legendary3P_PlayniteOptionOnceAWeek = "LOCLegendary3P_PlayniteOptionOnceAWeek";
         /// <summary>
+        /// Open
+        /// </summary>
+        public const string Legendary3P_PlayniteOpen = "LOCLegendary3P_PlayniteOpen";
+        /// <summary>
         /// Import installed games
         /// </summary>
         public const string Legendary3P_EpicSettingsImportInstalledLabel = "LOCLegendary3P_EpicSettingsImportInstalledLabel";
@@ -362,7 +366,7 @@ namespace System
         /// </summary>
         public const string LegendaryRemoveSelectedEntriesConfirm = "LOCLegendaryRemoveSelectedEntriesConfirm";
         /// <summary>
-        /// Select all entires
+        /// Select all entries
         /// </summary>
         public const string LegendarySelectAllEntries = "LOCLegendarySelectAllEntries";
         /// <summary>
@@ -477,5 +481,41 @@ namespace System
         /// Sign out
         /// </summary>
         public const string LegendarySignOut = "LOCLegendarySignOut";
+        /// <summary>
+        /// Troubleshooting information
+        /// </summary>
+        public const string LegendaryTroubleshootingInformation = "LOCLegendaryTroubleshootingInformation";
+        /// <summary>
+        /// Playnite version
+        /// </summary>
+        public const string LegendaryPlayniteVersion = "LOCLegendaryPlayniteVersion";
+        /// <summary>
+        /// Plugin version
+        /// </summary>
+        public const string LegendaryPluginVersion = "LOCLegendaryPluginVersion";
+        /// <summary>
+        /// Launcher version
+        /// </summary>
+        public const string LegendaryLauncherVersion = "LOCLegendaryLauncherVersion";
+        /// <summary>
+        /// Launcher binary
+        /// </summary>
+        public const string LegendaryLauncherBinary = "LOCLegendaryLauncherBinary";
+        /// <summary>
+        /// Copy raw data to clipboard
+        /// </summary>
+        public const string LegendaryCopyRawDataToClipboard = "LOCLegendaryCopyRawDataToClipboard";
+        /// <summary>
+        /// Log files folder
+        /// </summary>
+        public const string LegendaryLogFilesFolder = "LOCLegendaryLogFilesFolder";
+        /// <summary>
+        /// The specified path does not exist.
+        /// </summary>
+        public const string LegendaryPathNotExist = "LOCLegendaryPathNotExist";
+        /// <summary>
+        /// Report a bug
+        /// </summary>
+        public const string LegendaryReportBug = "LOCLegendaryReportBug";
     }
 }

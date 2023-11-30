@@ -37,6 +37,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">בחר תיקיה...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay" />
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteOpen" />
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">ייבא משחקים שהותקנו</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">ייבא משחקים שלא הותקנו</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">חבר חשבון</sys:String>

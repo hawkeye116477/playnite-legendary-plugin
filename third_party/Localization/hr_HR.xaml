@@ -37,4 +37,5 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Odaberi mapu…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay" />
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteOpen" />
 </ResourceDictionary>

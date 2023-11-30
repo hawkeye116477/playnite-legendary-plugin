@@ -37,6 +37,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Mappa kiválasztása…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Naponta egyszer</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">Hetente egyszer</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOpen">Megnyitás</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">Telepített játékok importálása</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Nem telepített játékok importálása</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Összekapcsolás a fiókkal</sys:String>

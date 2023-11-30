@@ -37,6 +37,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Изаберите фасциклу...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay" />
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteOpen" />
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">Увези инсталиране игре</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Увези неинсталиране игре</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Повежи налог</sys:String>

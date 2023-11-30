@@ -37,6 +37,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">選擇資料夾...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">每天一次</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">每週一次</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOpen">開啟</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">匯入已安裝的遊戲</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">匯入未安裝遊戲</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">連結帳號</sys:String>

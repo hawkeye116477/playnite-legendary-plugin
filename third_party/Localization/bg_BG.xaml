@@ -37,6 +37,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Изберете папка...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Веднъж на ден</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">Веднъж седмично</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOpen">Отвори</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">Импортиране на инсталирани игри</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Импортиране на неинсталирани игри</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Свързване на акаун</sys:String>

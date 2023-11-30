@@ -37,6 +37,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">フォルダを選択…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">1日に1回</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">週に1回</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOpen">開く</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">インストール済みのゲームをインポート</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">インストールされていないゲームをインポート</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">アカウントに接続</sys:String>

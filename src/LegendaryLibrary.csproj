@@ -190,6 +190,7 @@
     <Compile Include="Models\OauthResponse.cs" />
     <Compile Include="EpicMetadataProvider.cs" />
     <Compile Include="Models\PlaytimesResponse.cs" />
+    <Compile Include="LegendaryTroubleshootingInformation.cs" />
     <Compile Include="Models\WebStoreModels.cs" />
     <Compile Include="NumericInput.xaml.cs">
       <DependentUpon>NumericInput.xaml</DependentUpon>

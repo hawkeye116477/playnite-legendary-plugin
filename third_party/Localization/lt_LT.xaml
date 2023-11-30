@@ -37,6 +37,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Pasirinkite aplanką...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay" />
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteOpen" />
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">Importuoti įdiegtus žaidimus</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Importuoti neįdiegtus žaidimus</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Susieti paskyrą</sys:String>

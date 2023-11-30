@@ -37,6 +37,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Chọn thư mục…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Mỗi ngày một lần</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">Mỗi tuần một lần</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOpen">Mở</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">Nhập vào các trò chơi đã được cài đặt</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Nhập vào các trò chơi chưa được cài đặt</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Kết nối tài khoản</sys:String>

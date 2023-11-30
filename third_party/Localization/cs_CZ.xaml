@@ -37,6 +37,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Vybrat adresář...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Jednou denně</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">Jednou týdně</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOpen">Otevřít</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">Importovat nainstalované hry</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Importovat neinstalované hry</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Připojit účet</sys:String>

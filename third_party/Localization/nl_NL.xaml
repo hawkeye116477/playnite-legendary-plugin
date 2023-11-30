@@ -37,6 +37,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Selecteer map...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Eens per dag</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">Eens per week</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOpen">Open</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">Importeer geïnstalleerde spellen</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Importeer niet-geïnstalleerde spellen</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Accounts koppelen</sys:String>

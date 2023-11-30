@@ -75,4 +75,13 @@
   <sys:String x:Key="LOCLegendaryMigrationNoGames">No games found for migration.</sys:String>
   <sys:String x:Key="LOCLegendaryMigrationConfirm">All games will be removed from Epic plugin and moved to Legendary. Are you sure you want to do this?</sys:String>
   <sys:String x:Key="LOCLegendarySignOut">Sign out</sys:String>
+  <sys:String x:Key="LOCLegendaryTroubleshootingInformation">Troubleshooting information</sys:String>
+  <sys:String x:Key="LOCLegendaryPlayniteVersion">Playnite version</sys:String>
+  <sys:String x:Key="LOCLegendaryPluginVersion">Plugin version</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherVersion">Launcher version</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherBinary">Launcher binary</sys:String>
+  <sys:String x:Key="LOCLegendaryCopyRawDataToClipboard">Copy raw data to clipboard</sys:String>
+  <sys:String x:Key="LOCLegendaryLogFilesFolder">Log files folder</sys:String>
+  <sys:String x:Key="LOCLegendaryPathNotExist">The specified path does not exist.</sys:String>
+  <sys:String x:Key="LOCLegendaryReportBug">Report a bug</sys:String>
 </ResourceDictionary>

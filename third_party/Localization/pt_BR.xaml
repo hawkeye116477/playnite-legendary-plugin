@@ -37,6 +37,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Selecionar pasta...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Uma vez por dia</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">Uma vez por semana</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOpen">Abrir</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">Importar jogos instalados</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Importar jogos não instalados</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Conectar conta</sys:String>

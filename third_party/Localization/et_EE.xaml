@@ -37,6 +37,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Vali kaust…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Kord päevas</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">Kord nädalas</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOpen" />
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">Impordi paigaldatud mängud</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Impordi paigaldamata mängud</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Ühenda konto</sys:String>
