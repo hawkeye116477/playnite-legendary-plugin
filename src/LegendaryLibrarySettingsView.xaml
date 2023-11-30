@@ -166,10 +166,10 @@
                             IsChecked="{Binding Settings.EnableReordering}" Margin="0,0,0,5"/>
                         <TextBlock Text="{DynamicResource LOCLegendaryMaxWorkers}" Grid.Column="0"
                             Grid.Row="2" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        <local:NumericInput Grid.Row="2" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="16" Value="{Binding Settings.MaxWorkers}"/>
+                        <local:NumericInput Grid.Row="2" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="16" Value="{Binding Settings.MaxWorkers}" HorizontalAlignment="Left"/>
                         <TextBlock Text="{DynamicResource LOCLegendaryMaxSharedMemory}" Grid.Column="0"
                             Grid.Row="3" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        <local:NumericInput Grid.Row="3" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" Value="{Binding Settings.MaxSharedMemory}"/>
+                        <local:NumericInput Grid.Row="3" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" Value="{Binding Settings.MaxSharedMemory}" HorizontalAlignment="Left"/>
                         <TextBlock Text="{DynamicResource LOCLegendaryPreferredCDN}" Grid.Column="0"
                             Grid.Row="4" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         <TextBox
@@ -177,7 +177,7 @@
                             Grid.Column="1" Grid.Row="4" Margin="0,0,0,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" />
                         <TextBlock Grid.Column="0" Grid.Row="5"
                             Text="{DynamicResource LOCLegendaryAfterDownloadComplete}" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"  />
-                        <ComboBox Grid.Column="1" Grid.Row="5" x:Name="AfterDownloadCompleteCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.DoActionAfterDownloadComplete}" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  Margin="0,0,0,5"/>
+                        <ComboBox Grid.Column="1" Grid.Row="5" x:Name="AfterDownloadCompleteCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.DoActionAfterDownloadComplete}" SelectedValuePath="Key"  VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Margin="0,0,0,5" HorizontalAlignment="Left"/>
                     </Grid>
                 </StackPanel>
                 <StackPanel Margin="0,20,0,0">
@@ -194,8 +194,8 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource LOCLegendaryAutoClearCache}" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
-                        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="AutoClearCacheCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.AutoClearCache}" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  Margin="10,0,0,5"/>
-                        <Button Grid.Row="1" Content="{DynamicResource LOCLegendaryClearCache}" Name="ClearCacheBtn" Click="ClearCacheBtn_Click"/>
+                        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="AutoClearCacheCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.AutoClearCache}" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  Margin="10,0,0,5" HorizontalAlignment="Left" />
+                        <Button Grid.Row="1" Content="{DynamicResource LOCLegendaryClearCache}" Name="ClearCacheBtn" Click="ClearCacheBtn_Click" HorizontalAlignment="Left" />
                     </Grid>
                 </StackPanel>
                 <StackPanel Margin="0,20,0,0">
@@ -204,9 +204,9 @@
                     <Separator Margin="0,0,0,10" />
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
@@ -215,13 +215,13 @@
                         </Grid.RowDefinitions>
                         <Button Content="{DynamicResource LOCLegendary3P_PlayniteInstallGame}" Grid.Row="0"
                             Grid.Column="0" Name="EOSOInstallBtn" Visibility="Collapsed"
-                            Click="EOSOInstallBtn_Click"></Button>
+                            Click="EOSOInstallBtn_Click" HorizontalAlignment="Left"></Button>
                         <Button Content="{DynamicResource LOCLegendaryDisable}" Grid.Row="0"
                             Grid.Column="0" Margin="10,0,0,0" Name="EOSOToggleBtn"
-                            Click="EOSOToggleBtn_Click"></Button>
+                            Click="EOSOToggleBtn_Click" HorizontalAlignment="Left"></Button>
                         <Button Content="{DynamicResource LOCLegendary3P_PlayniteUninstallGame}" Name="EOSOUninstallBtn"
                             Grid.Row="0" Grid.Column="1" Margin="10,0,0,0"
-                            Click="EOSOUninstallBtn_Click"></Button>
+                            Click="EOSOUninstallBtn_Click" HorizontalAlignment="Left"></Button>
                     </Grid>
                 </StackPanel>
             </StackPanel>
