@@ -7,15 +7,21 @@ body:
       value: |
         Thanks for taking the time to fill out this bug report!
   - type: input
+    id: playniteV
+    attributes:
+      label: Playnite's version
+    validations:
+      required: true
+  - type: input
     id: legendaryV
     attributes:
       label: Plugin's version
     validations:
       required: true
   - type: input
-    id: playniteV
+    id: launcherV
     attributes:
-      label: Playnite's version
+      label: Launcher's version
     validations:
       required: true
   - type: textarea
