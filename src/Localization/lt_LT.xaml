@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-  <sys:String x:Key="LOCLegendaryLauncherCustomPath">Naudoti tinkintą paleidyklės kelią</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherCustomPath"></sys:String>
   <sys:String x:Key="LOCLegendaryGamesInstallationPath">Žaidimų įdiegimo kelias</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSize">Atsisiuntimo dydis:</sys:String>
   <sys:String x:Key="LOCLegendaryInstallSize">Įdiegties dydis:</sys:String>
@@ -43,6 +43,10 @@
   <sys:String x:Key="LOCLegendaryCurrentDownloadSummary">Dabartinio siuntimosi santrauka</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveEntry">Pašalinti įrašą</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveEntryConfirm">Ar tikrai norite pašalinti {0} iš sąrašo?</sys:String>
+  <sys:String x:Key="LOCLegendaryRemoveCompletedDownloads"></sys:String>
+  <sys:String x:Key="LOCLegendaryRemoveCompletedDownloadsConfirm"></sys:String>
+  <sys:String x:Key="LOCLegendaryRemoveSelectedEntriesConfirm"></sys:String>
+  <sys:String x:Key="LOCLegendarySelectAllEntries"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSizeColumn">Atsisiuntimo dydis</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp"></sys:String>
   <sys:String x:Key="LOCLegendaryPanel"></sys:String>
@@ -62,6 +66,7 @@
   <sys:String x:Key="LOCLegendarySyncGameSavesWarn"></sys:String>
   <sys:String x:Key="LOCLegendaryMemoryError"></sys:String>
   <sys:String x:Key="LOCLegendaryEditSelectedDownloadProperties"></sys:String>
+  <sys:String x:Key="LOCLegendaryOpenDownloadDirectory"></sys:String>
   <sys:String x:Key="LOCLegendaryTask"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadProperties"></sys:String>
   <sys:String x:Key="LOCLegendaryMigrateGamesEpic"></sys:String>
@@ -69,4 +74,15 @@
   <sys:String x:Key="LOCLegendaryMigrationCompleted"></sys:String>
   <sys:String x:Key="LOCLegendaryMigrationNoGames"></sys:String>
   <sys:String x:Key="LOCLegendaryMigrationConfirm"></sys:String>
+  <sys:String x:Key="LOCLegendarySignOut"></sys:String>
+  <sys:String x:Key="LOCLegendaryTroubleshootingInformation"></sys:String>
+  <sys:String x:Key="LOCLegendaryPlayniteVersion"></sys:String>
+  <sys:String x:Key="LOCLegendaryPluginVersion"></sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherVersion"></sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherBinary"></sys:String>
+  <sys:String x:Key="LOCLegendaryCopyRawDataToClipboard"></sys:String>
+  <sys:String x:Key="LOCLegendaryLogFilesFolder"></sys:String>
+  <sys:String x:Key="LOCLegendaryPathNotExist"></sys:String>
+  <sys:String x:Key="LOCLegendaryReportBug"></sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherNotInstalled"></sys:String>
 </ResourceDictionary>
