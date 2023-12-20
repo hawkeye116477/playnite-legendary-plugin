@@ -9,19 +9,19 @@ body:
   - type: input
     id: playniteV
     attributes:
-      label: Playnite's version
+      label: Playnite version
     validations:
       required: true
   - type: input
     id: legendaryV
     attributes:
-      label: Plugin's version
+      label: Plugin version
     validations:
       required: true
   - type: input
     id: launcherV
     attributes:
-      label: Launcher's version
+      label: Legendary Launcher version
     validations:
       required: true
   - type: textarea
