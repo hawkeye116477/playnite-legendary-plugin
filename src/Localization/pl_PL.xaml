@@ -85,4 +85,8 @@
   <sys:String x:Key="LOCLegendaryPathNotExist">Podana ścieżka nie istnieje.</sys:String>
   <sys:String x:Key="LOCLegendaryReportBug">Zgłoś błąd</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherNotInstalled">Program uruchamiający Legendary nie jest zainstalowany.</sys:String>
+  <sys:String x:Key="LOCLegendaryNewVersionAvailable">Dostępna jest nowa wersja: {0} {1}.</sys:String>
+  <sys:String x:Key="LOCLegendaryNoUpdatesAvailable">Brak dostępnych aktualizacji.</sys:String>
+  <sys:String x:Key="LOCLegendaryViewChangelog">Zobacz listę zmian</sys:String>
+  <sys:String x:Key="LOCLegendaryDisableGameVersionCheck">Nie sprawdzaj wersji podczas uruchamiania gier</sys:String>
 </ResourceDictionary>
