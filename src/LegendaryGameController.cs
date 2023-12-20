@@ -207,7 +207,7 @@ namespace LegendaryLibraryNS
                     switch (cmdEvent)
                     {
                         case StartedCommandEvent started:
-                            procMon.WatchDirectoryProcesses(Game.InstallDirectory, false);
+                            Task watchGameProcess = procMon.WatchDirectoryProcesses(Game.InstallDirectory, false);
                             break;
                         case StandardErrorCommandEvent stdErr:
                             stdOutBuffer.AppendLine(stdErr.Text);

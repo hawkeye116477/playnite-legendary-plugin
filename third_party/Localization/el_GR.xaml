@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!--
-  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/0b392acd355d2b544df828ebe60edfe19bf6ff4f.
+  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/c33df30eed393305f9615423fd4385f3737d8d42 and https://github.com/JosefNemec/Playnite/tree/ef9effdd273f1448f05d53c3f5eacc5448d6f1ee.
   DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
@@ -8,7 +8,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteFilters">Φίλτρα</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">Δεν είναι δυνατή η έναρξη του παιχνιδιού: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">Δεν είναι δυνατή η εγκατάσταση του παιχνιδιού: {0}</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">Μέγεθος Εγκατάστασης</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">Προστέθηκε</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">ΟΚ</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSaveLabel">Αποθήκευση</sys:String>
@@ -16,28 +16,28 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">Φόρτωση…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata">Λήψη metadata...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">Επανεκκίνηση του Συστήματος</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteMenuShutdownSystem" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteMenuSuspendSystem" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteMenuHibernateSystem" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuShutdownSystem">Απενεργοποίηση Συστήματος</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuSuspendSystem">Αναστολή Λειτουργίας</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuHibernateSystem">Αδρανοποίηση</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsGeneralLabel">Γενικά</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsAdvancedLabel">Για Προχωρημένους</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Καθαρισμός Cache?</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">Ποτέ</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Απαιτείται πιστοποίηση</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Ονομα</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Κατάλογος εγκατάστασης</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Αποτυχία εισαγωγής παιχνιδιών από {0}.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Αποτυχία λήψης metadata: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">καμία ενέργεια</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Εγκατάσταση</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Απεγκατάσταση</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">Να μην εμφανιστεί ξανά</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteOpen" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage">Σελίδα Καταστήματος</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">Επιλογή αρχείου</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Επιλογή φακέλου</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Μία φορά την ημέρα</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">Μία φορά την εβδομάδα</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOpen">Άνοιγμα</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">Εισαγωγή εγκατεστημένων παιχνιδιών</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Εισαγωγή μη εγκατεστημένων παιχνιδιών</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Σύνδεση λογαριασμού</sys:String>

@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!--
-  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/0b392acd355d2b544df828ebe60edfe19bf6ff4f.
+  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/c33df30eed393305f9615423fd4385f3737d8d42 and https://github.com/JosefNemec/Playnite/tree/ef9effdd273f1448f05d53c3f5eacc5448d6f1ee.
   DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <sys:String x:Key="LOCLegendary3P_PlayniteFilterActiveLabel">Filtre Etkin</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteFilters">Filtreler</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">Oyun başlatılamıyor: {0}</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">Oyun yüklenemiyor: {0}</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">Yükleme boyutu</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">Oyun kurulamıyor: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">Kurulu Boyut</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">Eklenme</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">TAMAM</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSaveLabel">Kaydet</sys:String>
@@ -25,18 +25,18 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">Asla</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Doğrulama gerekli</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">İsim</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Kurulum Dizini</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Kurulum Klasörü</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">{0} konumundan oyun içe aktarılamadı.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Üst veriler indirilemedi: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Hiçbir şey yapma</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Yükle</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Kaldır</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Kur</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Kurulumu Kaldır</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">Bir Daha Gösterme</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage">Mağaza Sayfası</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">Dosyaları seç</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Dosya Seç...</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">Dosya seç…</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Klasör seç…</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Günde bir</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">Haftada bir</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOpen">Aç</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">Kurulu oyunları içeri aktar</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Kurulu olmayan oyunları içe aktar</sys:String>

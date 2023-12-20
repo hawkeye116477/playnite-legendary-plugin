@@ -41,8 +41,12 @@ os.makedirs(localization_path)
 for filename in os.listdir(pj(main_path, "..", "PlayniteExtensions", "PlayniteRepo", "source", "Playnite", "Localization")):
     git_repo = git.Repo(
         pj(main_path, "..", "PlayniteExtensions"), search_parent_directories=True)
-    source = git_repo.remotes.origin.url
     commit = git_repo.head.object.hexsha
+    source = git_repo.remotes.origin.url.replace(".git", f"/tree/{commit}")
+    Playnite_git_repo = git.Repo(pj(main_path, "..", "PlayniteExtensions", "PlayniteRepo"), search_parent_directories=True)
+    commit2 = Playnite_git_repo.head.object.hexsha
+    source2 = Playnite_git_repo.remotes.origin.url.replace(".git", f"/tree/{commit2}")
+
     i18n_content = ['<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">']
     new_filename = filename
     if filename not in ["LocSource.xaml", "LocalizationKeys.cs", "locstatus.json"]:
@@ -84,5 +88,5 @@ for filename in os.listdir(pj(main_path, "..", "PlayniteExtensions", "PlayniteRe
         with open(pj(localization_path, filename), "w", encoding="utf-8") as i18n_file:
             i18n_file.write("<?xml version='1.0' encoding='utf-8'?>\n")
             i18n_file.write(
-                f'<!--\n  Automatically generated via update_3p_localization.py script using files from {source.replace(".git", f"/tree/{commit}")}.\n  DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!\n-->\n')
+                f'<!--\n  Automatically generated via update_3p_localization.py script using files from {source} and {source2}.\n  DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!\n-->\n')
             i18n_file.write(ET.tostring(tree, encoding="utf-8").decode())
