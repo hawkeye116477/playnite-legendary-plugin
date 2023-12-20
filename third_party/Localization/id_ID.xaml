@@ -30,6 +30,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Gagal mendownload metadata: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Diamkan aplikasi</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Update Tersedia</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Install Update</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Periksa Pembaruan</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">Gagal memeriksa pembaruan.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Instal</sys:String>

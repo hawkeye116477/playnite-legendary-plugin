@@ -88,4 +88,5 @@
   <sys:String x:Key="LOCLegendaryNewVersionAvailable">A new version is available: {0} {1}.</sys:String>
   <sys:String x:Key="LOCLegendaryNoUpdatesAvailable">No updates available.</sys:String>
   <sys:String x:Key="LOCLegendaryViewChangelog">View changelog</sys:String>
+  <sys:String x:Key="LOCLegendaryDisableGameVersionCheck">Don't check version when launching games</sys:String>
 </ResourceDictionary>

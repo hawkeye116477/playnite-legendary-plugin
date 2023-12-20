@@ -30,6 +30,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">メタデータをダウンロードできませんでした: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">何もしない</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">更新が利用可能です</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">更新をダウンロードしてインストール</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">更新を確認</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">新しいバージョンを確認できませんでした。</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">インストール</sys:String>

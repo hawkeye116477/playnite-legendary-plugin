@@ -347,6 +347,11 @@ namespace LegendaryLibraryNS
 
         private async void CheckForUpdatesBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (!LegendaryLauncher.IsInstalled)
+            {
+                throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+            }
+
             var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath).WithArguments(new[] { "list-installed", "--check-updates" }).WithValidation(CommandResultValidation.None).ExecuteBufferedAsync();
             if (cmd.StandardOutput.Contains("Legendary update available"))
             {
@@ -363,9 +368,14 @@ namespace LegendaryLibraryNS
                     Playnite.Commands.GlobalCommands.NavigateUrl(changelogURL);
                 }
             }
-            else if (cmd.StandardError.Contains("login failed"))
+            else if (cmd.StandardError.Contains("login failed") || cmd.StandardError.Contains("No saved credentials"))
             {
-                playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
+                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired));
+            }
+            else if (cmd.StandardError.Contains("Error"))
+            {
+                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage), "Legendary Launcher");
+                logger.Error($"[Legendary] {cmd.StandardError}");
             }
             else
             {

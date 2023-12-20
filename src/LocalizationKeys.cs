@@ -110,6 +110,10 @@ namespace System
         /// </summary>
         public const string Legendary3P_PlayniteUpdaterWindowTitle = "LOCLegendary3P_PlayniteUpdaterWindowTitle";
         /// <summary>
+        /// Download and Install Update
+        /// </summary>
+        public const string Legendary3P_PlayniteUpdaterInstallUpdate = "LOCLegendary3P_PlayniteUpdaterInstallUpdate";
+        /// <summary>
         /// Check for Updates
         /// </summary>
         public const string Legendary3P_PlayniteCheckForUpdates = "LOCLegendary3P_PlayniteCheckForUpdates";
@@ -545,5 +549,9 @@ namespace System
         /// View changelog
         /// </summary>
         public const string LegendaryViewChangelog = "LOCLegendaryViewChangelog";
+        /// <summary>
+        /// Don't check version when launching games
+        /// </summary>
+        public const string LegendaryDisableGameVersionCheck = "LOCLegendaryDisableGameVersionCheck";
     }
 }

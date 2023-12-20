@@ -30,6 +30,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">بارگیری ابرداده انجام نشد: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">کاری نکن</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">به روزرسانی موجود است</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">دانلود و نصب بروزرسانی</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">بررسی برای بروزرسانی</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">بررسی نسخه جدید انجام نشد.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">نصب</sys:String>

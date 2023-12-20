@@ -198,6 +198,10 @@ namespace LegendaryLibraryNS
             {
                 installCommand.Add("--repair");
             }
+            if (downloadProperties.downloadAction == (int)DownloadAction.Update)
+            {
+                installCommand.Add("--update-only");
+            }
             if (downloadProperties.extraContent != null)
             {
                 if (downloadProperties.extraContent.Count > 0)

@@ -30,6 +30,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Üst veriler indirilemedi: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Hiçbir şey yapma</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Güncelleme Mevcut</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Güncellemeyi İndir ve Kur</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Güncelleştirmeleri Denetle</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">Yeni sürüm kontrol edilemedi.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Kur</sys:String>

@@ -30,6 +30,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Неуспешно изтегляне на метаданни: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Не правете нищо</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Налична актуализация</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Изтеглете и инсталирайте актуализация</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Проверка за актуализации</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">Неуспешна проверка за нова версия.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Инсталиране</sys:String>

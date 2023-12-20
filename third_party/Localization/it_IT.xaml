@@ -30,6 +30,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Scaricamento del metadata fallito: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Non fare niente</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Aggiornamento disponibile</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Installa l'aggiornamento</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Controlla aggiornamenti</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">Controllo della nuova versione fallito.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Installa</sys:String>

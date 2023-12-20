@@ -9,6 +9,7 @@ namespace LegendaryLibraryNS.Enums
     public enum DownloadAction
     {
         Install,
-        Repair
+        Repair,
+        Update
     }
 }

@@ -30,6 +30,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Selhalo stahování metadat: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Nedělat nic</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Dostupná Aktualizace</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Stáhnout a Nainstalovat Aktualizaci</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Zkontrolovat Aktualizace</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">Nepodařilo se zkontrolovat aktualizace.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Instalovat</sys:String>

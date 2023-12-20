@@ -87,6 +87,9 @@
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\WindowsNotifyIconManager.cs">
       <Link>Shared\Playnite\WindowsNotifyIconManager.cs</Link>
     </Compile>
+    <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\Converters\InvertedBoolenConverter.cs">
+      <Link>Shared\Playnite\Converters\InvertedBoolenConverter.cs</Link>
+    </Compile>
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\native\Fileapi.cs">
       <Link>Shared\Playnite\Native\Fileapi.cs</Link>
     </Compile>

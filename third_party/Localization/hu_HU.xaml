@@ -30,6 +30,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Hiba a metaadatok letöltésekor: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Ne tegyen semmit</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Frissítés elérhető</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Frissítés letöltése és telepítése</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Frissítések keresése</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">Nem sikerült ellenőrizni a frissítéseket.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Telepítés</sys:String>
