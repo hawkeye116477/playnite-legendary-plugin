@@ -85,4 +85,8 @@
   <sys:String x:Key="LOCLegendaryPathNotExist"></sys:String>
   <sys:String x:Key="LOCLegendaryReportBug"></sys:String>
   <sys:String x:Key="LOCLegendaryLauncherNotInstalled"></sys:String>
+  <sys:String x:Key="LOCLegendaryNewVersionAvailable"></sys:String>
+  <sys:String x:Key="LOCLegendaryNoUpdatesAvailable"></sys:String>
+  <sys:String x:Key="LOCLegendaryViewChangelog"></sys:String>
+  <sys:String x:Key="LOCLegendaryDisableGameVersionCheck"></sys:String>
 </ResourceDictionary>
