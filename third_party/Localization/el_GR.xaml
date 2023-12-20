@@ -29,6 +29,9 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Αποτυχία εισαγωγής παιχνιδιών από {0}.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Αποτυχία λήψης metadata: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">καμία ενέργεια</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Διαθέσιμη Ενημέρωση</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Έλεγχος για Ενημερώσεις</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">Απέτυχε ο έλεγχος για νέα έκδοση.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Εγκατάσταση</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Απεγκατάσταση</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">Να μην εμφανιστεί ξανά</sys:String>

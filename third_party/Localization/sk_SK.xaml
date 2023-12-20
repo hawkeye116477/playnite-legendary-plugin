@@ -29,6 +29,9 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Nepodarilo sa importovať hry z {0}.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Nepodarilo sa prevziať metadáta: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Nerobiť nič</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Dostupná aktualizácia</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Skontrolovať aktualizácie</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">Nepodarilo sa skontrolovať aktualizácie.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Inštalovať</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Odinštalovať</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">Nabudúce nezobrazovať</sys:String>

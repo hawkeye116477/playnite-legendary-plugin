@@ -29,6 +29,9 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Falha ao importar os jogos de {0}.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Falha ao baixar metadados: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Não fazer nada</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Atualização disponível</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Verificar se há atualizações</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">Falha ao verificar se há uma nova versão.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Instalar</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Desinstalar</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">Não mostrar novamente</sys:String>

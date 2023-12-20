@@ -29,6 +29,9 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Không thể nhập trò chơi từ {0}.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Không tải xuống được siêu dữ liệu: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Không làm gì cả</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Bản cập nhật có sẵn</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Kiểm Tra Cập Nhật</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">Không thể kiểm tra phiên bản mới.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Cài đặt</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Gỡ cài đặt</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">Không hiện thị lại</sys:String>

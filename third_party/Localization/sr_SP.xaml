@@ -29,6 +29,9 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Неуспешно увођење игара из {0}.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Неуспело преузимање метаподатака: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Не ради ништа</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Доступно је ажурирање</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Провери да ли постоје ажурирања</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">Неуспешна провера нових ажурирања.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Инсталирај</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Деинсталирај</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">Не приказуј поново</sys:String>

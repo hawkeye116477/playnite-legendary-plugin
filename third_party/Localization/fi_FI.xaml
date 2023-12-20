@@ -29,6 +29,9 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Pelejä ei voitu tuoda sijainnista {0}.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Tietojen lataaminen epäonnistui: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Älä tee mitään</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Päivitys saatavilla</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Tarkista päivitykset</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">Uuden version tarkistaminen epäonnistui.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Asenna</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Poista asennus</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">Älä näytä uudelleen</sys:String>

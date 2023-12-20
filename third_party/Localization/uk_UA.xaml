@@ -29,6 +29,9 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Не вдалося імпортувати ігри з {0}.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Не вдалося завантажити метадані: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Нічого не робити</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Доступне оновлення</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Перевірити наявність оновлень</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">Не вдалося перевірити наявність нової версії.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Встановити</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Видалити</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">Не показувати знову</sys:String>

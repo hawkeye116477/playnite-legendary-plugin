@@ -32,7 +32,7 @@ PLAYNITE_LOC_KEYS = ["LOCUninstallGame", "LOCGameStartError", "LOCLoginRequired"
                      "LOCSettingsGeneralLabel", "LOCSelectDirectoryTooltip", "LOCSelectFileTooltip", "LOCCancelLabel",
                      "LOCSettingsAdvancedLabel", "LOCGameInstallDirTitle", "LOCLoadingLabel",
                      "LOCSaveLabel", "LOCFilters", "LOCGameNameTitle", "LOCInstallSizeLabel",
-                     "LOCAddedLabel", "LOCOpen"]
+                     "LOCAddedLabel", "LOCOpen", "LOCCheckForUpdates", "LOCUpdaterWindowTitle", "LOCUpdateCheckFailMessage"]
 
 if os.path.exists(localization_path):
     shutil.rmtree(localization_path)

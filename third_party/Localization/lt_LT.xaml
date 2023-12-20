@@ -29,6 +29,9 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Importuoti žaidimus iš {0}.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Nepavyko atsisiųsti metadata: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Nieko nedaryti</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Galimas atnaujinimas</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Tikrinti, ar yra atnaujinimų</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">Nepavyko patikrinti ar yra naujinimų.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Įrašyti</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Ištrinti</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">Daugiau neberodyti</sys:String>

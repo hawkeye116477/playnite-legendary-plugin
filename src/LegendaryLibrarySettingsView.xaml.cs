@@ -344,5 +344,33 @@ namespace LegendaryLibraryNS
         {
             LegendaryLauncher.StartClient();
         }
+
+        private async void CheckForUpdatesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath).WithArguments(new[] { "list-installed", "--check-updates" }).WithValidation(CommandResultValidation.None).ExecuteBufferedAsync();
+            if (cmd.StandardOutput.Contains("Legendary update available"))
+            {
+                var newVersion = Regex.Match(cmd.StandardOutput, @"Legendary update available!\s+\- New version: (\S+.) \-", RegexOptions.Multiline).Groups[1].Value;
+                var options = new List<MessageBoxOption>
+                {
+                    new MessageBoxOption(ResourceProvider.GetString(LOC.LegendaryViewChangelog)),
+                    new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteOKLabel)),
+                };
+                var result = playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryNewVersionAvailable), "Legendary Launcher", newVersion), ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
+                if (result == options[0])
+                {
+                    var changelogURL = $"https://github.com/derrod/legendary/releases/latest";
+                    Playnite.Commands.GlobalCommands.NavigateUrl(changelogURL);
+                }
+            }
+            else if (cmd.StandardError.Contains("login failed"))
+            {
+                playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
+            }
+            else
+            {
+                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryNoUpdatesAvailable));
+            }
+        }
     }
 }

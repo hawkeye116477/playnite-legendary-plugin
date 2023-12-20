@@ -106,6 +106,18 @@ namespace System
         /// </summary>
         public const string Legendary3P_PlayniteDoNothing = "LOCLegendary3P_PlayniteDoNothing";
         /// <summary>
+        /// Update Available
+        /// </summary>
+        public const string Legendary3P_PlayniteUpdaterWindowTitle = "LOCLegendary3P_PlayniteUpdaterWindowTitle";
+        /// <summary>
+        /// Check for Updates
+        /// </summary>
+        public const string Legendary3P_PlayniteCheckForUpdates = "LOCLegendary3P_PlayniteCheckForUpdates";
+        /// <summary>
+        /// Failed to check for new version.
+        /// </summary>
+        public const string Legendary3P_PlayniteUpdateCheckFailMessage = "LOCLegendary3P_PlayniteUpdateCheckFailMessage";
+        /// <summary>
         /// Install
         /// </summary>
         public const string Legendary3P_PlayniteInstallGame = "LOCLegendary3P_PlayniteInstallGame";
@@ -521,5 +533,17 @@ namespace System
         /// Legendary Launcher is not installed.
         /// </summary>
         public const string LegendaryLauncherNotInstalled = "LOCLegendaryLauncherNotInstalled";
+        /// <summary>
+        /// A new version is available: {0} {1}.
+        /// </summary>
+        public const string LegendaryNewVersionAvailable = "LOCLegendaryNewVersionAvailable";
+        /// <summary>
+        /// No updates available.
+        /// </summary>
+        public const string LegendaryNoUpdatesAvailable = "LOCLegendaryNoUpdatesAvailable";
+        /// <summary>
+        /// View changelog
+        /// </summary>
+        public const string LegendaryViewChangelog = "LOCLegendaryViewChangelog";
     }
 }

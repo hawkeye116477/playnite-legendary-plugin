@@ -29,6 +29,9 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">{0} konumundan oyun içe aktarılamadı.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Üst veriler indirilemedi: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Hiçbir şey yapma</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Güncelleme Mevcut</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Güncelleştirmeleri Denetle</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">Yeni sürüm kontrol edilemedi.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Kur</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Kurulumu Kaldır</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">Bir Daha Gösterme</sys:String>

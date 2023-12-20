@@ -29,6 +29,9 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">{0}(으)로부터 게임 불러오기 실패.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">메타 데이터 다운로드 실패 : {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">아무것도 하지않음</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">업데이트 사용 가능</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">업데이트 확인</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">새로운 버전 확인에 실패했습니다.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">설치</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">설치 제거</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">다시 표시 안함</sys:String>
