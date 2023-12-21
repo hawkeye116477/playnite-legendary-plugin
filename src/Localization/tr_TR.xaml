@@ -85,8 +85,8 @@
   <sys:String x:Key="LOCLegendaryPathNotExist">Belirtilen yol mevcut değil.</sys:String>
   <sys:String x:Key="LOCLegendaryReportBug">Bir hata bildir</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherNotInstalled">Legendary Launcher kurulu değil.</sys:String>
-  <sys:String x:Key="LOCLegendaryNewVersionAvailable"></sys:String>
-  <sys:String x:Key="LOCLegendaryNoUpdatesAvailable"></sys:String>
-  <sys:String x:Key="LOCLegendaryViewChangelog"></sys:String>
-  <sys:String x:Key="LOCLegendaryDisableGameVersionCheck"></sys:String>
+  <sys:String x:Key="LOCLegendaryNewVersionAvailable">Yeni bir sürüm mevcut: {0} {1}.</sys:String>
+  <sys:String x:Key="LOCLegendaryNoUpdatesAvailable">Güncelleme yok.</sys:String>
+  <sys:String x:Key="LOCLegendaryViewChangelog">Değişiklikleri görüntüle</sys:String>
+  <sys:String x:Key="LOCLegendaryDisableGameVersionCheck">Oyunlar başladığında sürüm kontrol edilmesin</sys:String>
 </ResourceDictionary>
