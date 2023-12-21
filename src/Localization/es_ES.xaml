@@ -85,8 +85,8 @@
   <sys:String x:Key="LOCLegendaryPathNotExist">La ruta especificada no existe.</sys:String>
   <sys:String x:Key="LOCLegendaryReportBug">Reportar un error</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherNotInstalled">El lanzador Legendary no está instalado.</sys:String>
-  <sys:String x:Key="LOCLegendaryNewVersionAvailable"></sys:String>
-  <sys:String x:Key="LOCLegendaryNoUpdatesAvailable"></sys:String>
-  <sys:String x:Key="LOCLegendaryViewChangelog"></sys:String>
-  <sys:String x:Key="LOCLegendaryDisableGameVersionCheck"></sys:String>
+  <sys:String x:Key="LOCLegendaryNewVersionAvailable">Una nueva versión está disponible: {0} {1}.</sys:String>
+  <sys:String x:Key="LOCLegendaryNoUpdatesAvailable">No hay actualizaciones disponibles.</sys:String>
+  <sys:String x:Key="LOCLegendaryViewChangelog">Ver lista de cambios</sys:String>
+  <sys:String x:Key="LOCLegendaryDisableGameVersionCheck">No comprobar la versión al iniciar juegos</sys:String>
 </ResourceDictionary>
