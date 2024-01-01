@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Önbelleği Temizle?</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">Asla</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Doğrulama gerekli</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">Uygulama</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">İsim</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Kurulum Klasörü</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">{0} konumundan oyun içe aktarılamadı.</sys:String>

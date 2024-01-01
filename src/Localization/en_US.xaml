@@ -9,6 +9,7 @@
   <sys:String x:Key="LOCLegendaryExcludeGames">Exclude games</sys:String>
   <sys:String x:Key="LOCLegendaryOfflineGames">Offline games</sys:String>
   <sys:String x:Key="LOCLegendaryOnlineGames">Online games</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableOfflineMode">Enable offline mode</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings">Download Settings</sys:String>
   <sys:String x:Key="LOCLegendaryPreferredCDN">Preferred CDN</sys:String>
   <sys:String x:Key="LOCLegendaryHttpOnlyDownload">Disable HTTPS (useful for CDNs e.g. LanCache)</sys:String>
@@ -89,4 +90,9 @@
   <sys:String x:Key="LOCLegendaryNoUpdatesAvailable">No updates available.</sys:String>
   <sys:String x:Key="LOCLegendaryViewChangelog">View changelog</sys:String>
   <sys:String x:Key="LOCLegendaryDisableGameVersionCheck">Don't check version when launching games</sys:String>
+  <sys:String x:Key="LOCLegendaryDisableGameUpdateChecking">Disable update checking</sys:String>
+  <sys:String x:Key="LOCLegendaryStartupArguments">Startup arguments</sys:String>
+  <sys:String x:Key="LOCLegendaryLanguageCode">Language (code in RFC 1766 format)</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherSettings">Legendary launcher settings</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeExe">Alternative executable file</sys:String>
 </ResourceDictionary>

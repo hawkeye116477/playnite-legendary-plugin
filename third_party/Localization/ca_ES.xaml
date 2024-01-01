@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Esborrar memòria cau?</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">Mai</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Es requereix autenticació</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">Executable</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Nom</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Carpeta d'instal·lació</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">No s’han pogut importar els jocs de {0}.</sys:String>

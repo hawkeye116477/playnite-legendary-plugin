@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">캐시를 삭제하시겠습니까?</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">가져오지 않음</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">인증이 필요함</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">실행파일</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">이름</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">설치 경로</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">{0}(으)로부터 게임 불러오기 실패.</sys:String>

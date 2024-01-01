@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Ripulire la cache?</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">Mai</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Autenticazione richiesta</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">Eseguibili</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Nome</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Cartella d'installazione</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Importazione giochi da {0} fallita.</sys:String>

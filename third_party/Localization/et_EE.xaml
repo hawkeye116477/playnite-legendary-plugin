@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Tühjenda vahemälu?</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">Mitte kunagi</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Autentimine vajalik</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">Täitmisprogramm</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Nimi</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Paigalduse asukoht</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Ei saanud importida mänge kohast {0}.</sys:String>

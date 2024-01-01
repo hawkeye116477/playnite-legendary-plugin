@@ -22,6 +22,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsAdvancedLabel" />
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle" />
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle" />
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle" />
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle" />
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError" />

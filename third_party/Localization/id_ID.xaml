@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Bersihkan Cache?</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">Tidak pernah</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Login dibutuhkan</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">File program (file .exe/.sh/.bat, dll..)</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Nama</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Direktori Instalasi</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Gagal mengimpor game dari {0}</sys:String>

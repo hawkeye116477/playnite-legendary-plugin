@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Vyčistit Mezipaměť?</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">Nikdy</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Vyžaduje se přihlášení</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">Spustitelný soubor</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Jméno</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Instalační Adresář</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Nepodařilo se importovat hry z {0}.</sys:String>

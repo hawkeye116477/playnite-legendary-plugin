@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Xóa bộ nhớ cache?</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">Không bao giờ</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Yêu cầu xác thực</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">Thực hiện</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Tên</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Thư mục cài đặt cửa hàng</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Không thể nhập trò chơi từ {0}.</sys:String>

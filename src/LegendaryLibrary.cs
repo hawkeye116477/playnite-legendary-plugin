@@ -45,6 +45,7 @@ namespace LegendaryLibraryNS
             Instance = this;
             SettingsViewModel = new LegendaryLibrarySettingsViewModel(this, api);
             Load3pLocalization();
+            MigrateOnlineGames();
         }
 
         public static LegendaryLibrarySettings GetSettings()
@@ -450,6 +451,29 @@ namespace LegendaryLibraryNS
             }
         }
 
+        public void MigrateOnlineGames()
+        {
+            var globalSettings = GetSettings();
+            if (globalSettings.OnlineList.Count > 0)
+            {
+                var gamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
+                foreach (var onlineGame in globalSettings.OnlineList)
+                {
+                    if (!gamesSettings.ContainsKey(onlineGame))
+                    {
+                        gamesSettings.Add(onlineGame, new GameSettings());
+                    }
+                    gamesSettings[onlineGame].LaunchOffline = false;
+                }
+                var strConf = Serialization.ToJson(gamesSettings, true);
+                var dataDir = Instance.GetPluginUserDataPath();
+                var dataFile = Path.Combine(dataDir, "gamesSettings.json");
+                File.WriteAllText(dataFile, strConf);
+                globalSettings.OnlineList.Clear();
+                File.WriteAllText(Path.Combine(dataDir, "config.json"), Serialization.ToJson(globalSettings, true));
+            }
+        }
+
         public override void OnGameStarting(OnGameStartingEventArgs args)
         {
             SyncGameSaves(args.Game.Name, args.Game.GameId, args.Game.InstallDirectory, true);
@@ -584,6 +608,25 @@ namespace LegendaryLibraryNS
 
                             LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
                             await legendaryUpdateController.UpdateGame(game.Name, game.GameId);
+                        }
+                    };
+                    yield return new GameMenuItem
+                    {
+                        Description = ResourceProvider.GetString(LOC.LegendaryLauncherSettings),
+                        Action = (args) =>
+                        {
+                            Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                            {
+                                ShowMaximizeButton = false
+                            });
+                            window.DataContext = game;
+                            window.Title = $"{ResourceProvider.GetString(LOC.LegendaryLauncherSettings)} - {game.Name}";
+                            window.Content = new LegendaryGameSettingsView();
+                            window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+                            window.SizeToContent = SizeToContent.WidthAndHeight;
+                            window.MinWidth = 600;
+                            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                            window.ShowDialog();
                         }
                     };
                 }

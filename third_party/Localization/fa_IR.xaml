@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">حافظه پنهان پاک شود؟</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">هرگز</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">نیاز به تایید هویت دارد</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">قابل اجرا</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">نام</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">محل نصب</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">واردات بازی از {0} انجام نشد.</sys:String>

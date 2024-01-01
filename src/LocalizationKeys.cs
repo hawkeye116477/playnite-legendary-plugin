@@ -86,6 +86,10 @@ namespace System
         /// </summary>
         public const string Legendary3P_PlayniteLoginRequired = "LOCLegendary3P_PlayniteLoginRequired";
         /// <summary>
+        /// Executable
+        /// </summary>
+        public const string Legendary3P_PlayniteExecutableTitle = "LOCLegendary3P_PlayniteExecutableTitle";
+        /// <summary>
         /// Name
         /// </summary>
         public const string Legendary3P_PlayniteGameNameTitle = "LOCLegendary3P_PlayniteGameNameTitle";
@@ -233,6 +237,10 @@ namespace System
         /// Online games
         /// </summary>
         public const string LegendaryOnlineGames = "LOCLegendaryOnlineGames";
+        /// <summary>
+        /// Enable offline mode
+        /// </summary>
+        public const string LegendaryEnableOfflineMode = "LOCLegendaryEnableOfflineMode";
         /// <summary>
         /// Download Settings
         /// </summary>
@@ -553,5 +561,25 @@ namespace System
         /// Don't check version when launching games
         /// </summary>
         public const string LegendaryDisableGameVersionCheck = "LOCLegendaryDisableGameVersionCheck";
+        /// <summary>
+        /// Disable update checking
+        /// </summary>
+        public const string LegendaryDisableGameUpdateChecking = "LOCLegendaryDisableGameUpdateChecking";
+        /// <summary>
+        /// Startup arguments
+        /// </summary>
+        public const string LegendaryStartupArguments = "LOCLegendaryStartupArguments";
+        /// <summary>
+        /// Language (code in RFC 1766 format)
+        /// </summary>
+        public const string LegendaryLanguageCode = "LOCLegendaryLanguageCode";
+        /// <summary>
+        /// Legendary launcher settings
+        /// </summary>
+        public const string LegendaryLauncherSettings = "LOCLegendaryLauncherSettings";
+        /// <summary>
+        /// Alternative executable file
+        /// </summary>
+        public const string LegendaryAlternativeExe = "LOCLegendaryAlternativeExe";
     }
 }

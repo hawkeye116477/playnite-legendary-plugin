@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">مسح ذاكرة التخزين المؤقت؟</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">ابداً</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">يتطلب المصادقة</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">قابل للتنفيذ</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">الاسم</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">دليل التثبيت</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">فشل استيراد الألعاب من {0}.</sys:String>

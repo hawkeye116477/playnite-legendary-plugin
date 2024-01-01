@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Tøm hurtigminne?</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">Aldri</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Godkjennelse er påkrevd</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">Kjørbar fil</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Navn</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Installasjonsmappe</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Kunne ikke importere spill fra {0}.</sys:String>

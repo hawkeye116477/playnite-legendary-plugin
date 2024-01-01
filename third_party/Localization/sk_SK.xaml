@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Vymazať vyrovnávaciu pamäť?</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever" />
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Vyžaduje sa overenie</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">Spustiteľný súbor</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Meno</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Inštalačný priečinok</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Nepodarilo sa importovať hry z {0}.</sys:String>

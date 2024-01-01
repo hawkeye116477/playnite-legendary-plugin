@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Curățați Cache-ul?</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever" />
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Autentificare necesară</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">Executabil</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Nume</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Directorul de instalare</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Nu s-a putut importa jocuri de la {0}.</sys:String>

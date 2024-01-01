@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">清除缓存？</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">从不</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">需要身份验证</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">可执行文件</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">名称</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">安装目录</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">从 {0} 导入游戏失败。</sys:String>

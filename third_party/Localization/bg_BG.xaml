@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Изчистване на кеша?</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">Никога</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Изисква се удостоверяване</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">Изпълним</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Име</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Инсталационна папка</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Неуспешно импортиране на игри от {0}.</sys:String>

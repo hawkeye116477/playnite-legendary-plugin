@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="LegendaryLibraryNS.LegendaryGameSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LegendaryLibraryNS" xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="550" d:DesignWidth="600" Loaded="LegendaryGameSettingsViewUC_Loaded" Name="LegendaryGameSettingsViewUC">
+    <UserControl.Resources>
+        <sys:Boolean x:Key="True">True</sys:Boolean>
+        <sys:Boolean x:Key="False">False</sys:Boolean>
+        <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
+    </UserControl.Resources>
+    <DockPanel Margin="0,0,10,10">
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button x:Name="SaveBtn" Content="{DynamicResource LOCLegendary3P_PlayniteSaveLabel}" Margin="0,0,5,0" Click="SaveBtn_Click" />
+            <Button x:Name="CancelBtn" Content="{DynamicResource LOCLegendary3P_PlayniteCancelLabel}" IsCancel="True" />
+        </StackPanel>
+        <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled"
+        HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <TabItem Header="{DynamicResource LOCLegendary3P_PlayniteSettingsGeneralLabel}">
+                <StackPanel Margin="10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <CheckBox Grid.Column="0" Grid.Row="0"
+                            Content="{DynamicResource LOCLegendaryEnableOfflineMode}" Margin="0,0,0,10" x:Name="EnableOfflineModeChk" />
+                        <CheckBox Grid.Column="0" Grid.Row="1"
+                            Content="{DynamicResource LOCLegendaryDisableGameUpdateChecking}" Margin="0,0,0,10" x:Name="DisableGameUpdateCheckingChk" />
+                        <TextBlock Text="{DynamicResource LOCLegendaryStartupArguments}" Grid.Column="0"
+                            Grid.Row="2" Margin="0,0,5,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        <TextBox x:Name="StartupArgumentsTxt"
+                            Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" />
+                        <TextBlock Text="{DynamicResource LOCLegendaryLanguageCode}" Grid.Column="0"
+                            Grid.Row="3" Margin="0,0,5,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        <TextBox x:Name="LanguageCodeTxt"
+                            Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" />
+
+                        <TextBlock Text="{DynamicResource LOCLegendaryAlternativeExe}" Grid.Column="0" Grid.Row="4"
+                               Margin="0,0,5,5" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        </TextBlock>
+                        <TextBox x:Name="SelectedAlternativeExeTxt" 
+                             Grid.Row="4" Grid.Column="1" Margin="10,0,0,5" VerticalAlignment="Center"/>
+                        <Button Name="ChooseAlternativeExeBtn"
+                            Margin="5,0,0,5" Content="&#xec5b;" FontFamily="{DynamicResource FontIcoFont}" Grid.Row="4" Grid.Column="2"
+                            ToolTip="{DynamicResource LOCLegendary3P_PlayniteSelectFileTooltip}" VerticalAlignment="Center" Click="ChooseAlternativeExeBtn_Click"/>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</UserControl>

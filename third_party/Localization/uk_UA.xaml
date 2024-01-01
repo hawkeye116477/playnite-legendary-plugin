@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Очистити кеш?</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">Ніколи</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Необхідна автентифікація</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">Виконуваний файл</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Назва</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Тека встановлення</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Не вдалося імпортувати ігри з {0}.</sys:String>

@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">לנקות מטמון?</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">אף פעם</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">נדרש אימות</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">ניתן להרצה</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">שם</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">תיקיית התקנה</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">נכשל ביבוא משחקים מ {0}.</sys:String>

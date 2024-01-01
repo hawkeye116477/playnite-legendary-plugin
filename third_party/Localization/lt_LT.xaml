@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Išvalyti Talpyklą?</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">Niekada</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Reikalinga autentifikacija</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">Programinis failas</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Pavadinimas</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Žaidimo direktorija</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Importuoti žaidimus iš {0}.</sys:String>

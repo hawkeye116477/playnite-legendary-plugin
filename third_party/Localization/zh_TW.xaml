@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">清除快取？</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">從未</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">需要驗證</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">執行檔</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">名稱</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">安裝目錄</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">從 {0} 匯入遊戲失敗。</sys:String>

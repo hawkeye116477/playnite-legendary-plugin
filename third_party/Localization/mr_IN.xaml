@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">कॅश साफ करायचे का?</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">कधीच नाही</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">प्रमाणीकरणाची गरज आहे</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">एग्झेक्युटेबल</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">नाव</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">स्थापना फोल्डर</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">{0} पासून गेम आयात करण्यात अपयशी.</sys:String>

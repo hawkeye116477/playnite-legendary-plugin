@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Gyorsítótár ürítése?</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">Sosem</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Hitelesítés szükséges</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">Program</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Név</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Telepítési hely</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Nem sikerült a {0} játékok importálása.</sys:String>

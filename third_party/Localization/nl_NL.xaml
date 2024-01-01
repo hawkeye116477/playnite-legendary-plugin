@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Leeg Cache?</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">Nooit</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Authenticatie nodig</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">Uitvoerbaar bestand</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Naam</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Installatie Map</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Kan geen spellen importeren van {0}.</sys:String>

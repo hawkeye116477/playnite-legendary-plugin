@@ -168,31 +168,57 @@ namespace LegendaryLibraryNS
             {
                 var playArgs = new List<string>();
                 playArgs.AddRange(new[] { "launch", Game.GameId });
-                if (LegendaryLibrary.GetSettings().LaunchOffline)
+                var gamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
+                var globalSettings = LegendaryLibrary.GetSettings();
+                var offlineModeEnabled = globalSettings.LaunchOffline;
+                var gameSettings = new GameSettings();
+                if (gamesSettings.ContainsKey(Game.GameId))
+                {
+                    gameSettings = gamesSettings[Game.GameId];
+                }
+                if (gameSettings?.LaunchOffline != null)
+                {
+                    offlineModeEnabled = (bool)gameSettings.LaunchOffline;
+                }
+                if (offlineModeEnabled)
                 {
                     bool canRunOffline = false;
                     var appList = LegendaryLauncher.GetInstalledAppList();
-                    foreach (KeyValuePair<string, Installed> d in appList)
+                    if (appList.ContainsKey(Game.GameId))
                     {
-                        var app = d.Value;
-                        if (app.App_name == Game.GameId)
+                        if (appList[Game.GameId].Can_run_offline)
                         {
-                            if (app.Can_run_offline && !LegendaryLibrary.GetSettings().OnlineList.Contains(app.App_name))
-                            {
-                                canRunOffline = true;
-                            }
-                            break;
+                            canRunOffline = true;
                         }
                     }
-                    var pluginSettings = LegendaryLibrary.GetSettings();
-                    if (pluginSettings.LaunchOffline && canRunOffline)
+                    if (offlineModeEnabled && canRunOffline)
                     {
                         playArgs.Add("--offline");
                     }
-                    else if (pluginSettings.DisableGameVersionCheck)
+                }
+                else
+                {
+                    bool updateCheckDisabled = globalSettings.DisableGameVersionCheck;
+                    if (gameSettings?.DisableGameVersionCheck != null)
+                    {
+                        updateCheckDisabled = (bool)gameSettings.DisableGameVersionCheck;
+                    }
+                    if (updateCheckDisabled)
                     {
                         playArgs.Add("--skip-version-check");
                     }
+                }
+                if (gameSettings?.StartupArguments != null)
+                {
+                    playArgs.AddRange(gameSettings.StartupArguments);
+                }
+                if (gameSettings?.LanguageCode != null)
+                {
+                    playArgs.AddRange(new[] { "--language", gameSettings.LanguageCode } );
+                }
+                if (gameSettings?.OverrideExe != null)
+                {
+                    playArgs.AddRange(new[] { "--override-exe", gameSettings?.OverrideExe });
                 }
                 procMon = new ProcessMonitor();
                 procMon.TreeStarted += (_, treeArgs) =>

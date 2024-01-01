@@ -57,21 +57,6 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private void ExcludeOnlineGamesBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
-            {
-                ShowMinimizeButton = false,
-            });
-            window.Content = new LegendaryExcludeOnlineGames();
-            window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
-            window.Height = 450;
-            window.Width = 800;
-            window.Title = ResourceProvider.GetString(LOC.LegendaryExcludeGames);
-            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            window.ShowDialog();
-        }
-
         private async void EOSOUninstallBtn_Click(object sender, RoutedEventArgs e)
         {
             var result = playniteAPI.Dialogs.ShowMessage(

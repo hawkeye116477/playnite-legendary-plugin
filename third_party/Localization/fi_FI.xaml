@@ -24,6 +24,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Tyhjennä välimuisti?</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">Ei koskaan</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Todennus vaaditaan</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">Suoritettava ohjelma</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Nimi</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Asennushakemisto</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Pelejä ei voitu tuoda sijainnista {0}.</sys:String>
