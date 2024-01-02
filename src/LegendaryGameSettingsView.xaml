@@ -34,7 +34,7 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <CheckBox Grid.Column="0" Grid.Row="0"
-                            Content="{DynamicResource LOCLegendaryEnableOfflineMode}" Margin="0,0,0,10" x:Name="EnableOfflineModeChk" />
+                            Content="{DynamicResource LOCLegendaryEnableOfflineMode}" Margin="0,0,0,10" x:Name="EnableOfflineModeChk" IsEnabled="False" />
                         <CheckBox Grid.Column="0" Grid.Row="1"
                             Content="{DynamicResource LOCLegendaryDisableGameUpdateChecking}" Margin="0,0,0,10" x:Name="DisableGameUpdateCheckingChk" />
                         <TextBlock Text="{DynamicResource LOCLegendaryStartupArguments}" Grid.Column="0"

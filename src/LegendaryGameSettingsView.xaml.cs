@@ -118,6 +118,14 @@ namespace LegendaryLibraryNS
                     SelectedAlternativeExeTxt.Text = gamesSettings[GameID].OverrideExe;
                 }
             }
+            var appList = LegendaryLauncher.GetInstalledAppList();
+            if (appList.ContainsKey(GameID))
+            {
+                if (appList[Game.GameId].Can_run_offline)
+                {
+                    EnableOfflineModeChk.IsEnabled = true;
+                }
+            }
         }
 
         private void ChooseAlternativeExeBtn_Click(object sender, RoutedEventArgs e)
