@@ -3,7 +3,6 @@ using CliWrap.Buffered;
 using CliWrap.EventStream;
 using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
-using Playnite;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -15,7 +14,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -70,22 +68,15 @@ namespace LegendaryLibraryNS
             {
                 _ = (Application.Current.Dispatcher?.BeginInvoke((Action)delegate
                 {
-                    var installed = LegendaryLauncher.GetInstalledAppList();
-                    if (installed != null)
+                    var installedAppList = LegendaryLauncher.GetInstalledAppList();
+                    if (installedAppList.ContainsKey(Game.GameId))
                     {
-                        foreach (KeyValuePair<string, Installed> app in installed)
+                        var installInfo = new GameInstallationData
                         {
-                            if (app.Value.App_name == Game.GameId)
-                            {
-                                var installInfo = new GameInstallationData
-                                {
-                                    InstallDirectory = app.Value.Install_path
-                                };
-
-                                InvokeOnInstalled(new GameInstalledEventArgs(installInfo));
-                                return;
-                            }
-                        }
+                            InstallDirectory = installedAppList[Game.GameId].Install_path
+                        };
+                        InvokeOnInstalled(new GameInstalledEventArgs(installInfo));
+                        return;
                     }
                 }));
             }
@@ -278,67 +269,67 @@ namespace LegendaryLibraryNS
                 InvokeOnStopped(new GameStoppedEventArgs());
             }
         }
+    }
 
-        public class LegendaryUpdateController
+    public class LegendaryUpdateController
+    {
+        private IPlayniteAPI playniteAPI = API.Instance;
+        private static ILogger logger = LogManager.GetLogger();
+        public async Task UpdateGame(string gameTitle, string gameId)
         {
-            private IPlayniteAPI playniteAPI = API.Instance;
-            private static ILogger logger = LogManager.GetLogger();
-            public async Task UpdateGame(string gameTitle, string gameId)
-            {
 
-                var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath).WithArguments(new[] { "list-installed", "--check-updates" }).WithValidation(CommandResultValidation.None).ExecuteBufferedAsync();
-                if (cmd.StandardError.Contains("login failed") || cmd.StandardError.Contains("No saved credentials"))
-                {
-                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired));
-                }
-                else if (cmd.StandardError.Contains("Error"))
-                {
-                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage), gameTitle);
-                    logger.Error($"[Legendary] {cmd.StandardError}");
-                }
-                else
-                {
-                    var options = new List<MessageBoxOption>
+            var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath).WithArguments(new[] { "list-installed", "--check-updates" }).WithValidation(CommandResultValidation.None).ExecuteBufferedAsync();
+            if (cmd.StandardError.Contains("login failed") || cmd.StandardError.Contains("No saved credentials"))
+            {
+                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired));
+            }
+            else if (cmd.StandardError.Contains("Error"))
+            {
+                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage), gameTitle);
+                logger.Error($"[Legendary] {cmd.StandardError}");
+            }
+            else
+            {
+                var options = new List<MessageBoxOption>
                     {
                         new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterInstallUpdate)),
                         new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteCancelLabel)),
                     };
-                    var newVersion = Regex.Match(cmd.StandardOutput, @$"\* {Regex.Escape(gameTitle)}.*\s+\-> Update available! Installed:.*, Latest: (\S+.)", RegexOptions.Multiline).Groups[1].Value.Trim();
-                    if (!newVersion.IsNullOrEmpty())
+                var newVersion = Regex.Match(cmd.StandardOutput, @$"\* {Regex.Escape(gameTitle)}.*\s+\-> Update available! Installed:.*, Latest: (\S+.)", RegexOptions.Multiline).Groups[1].Value.Trim();
+                if (!newVersion.IsNullOrEmpty())
+                {
+                    var result = playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryNewVersionAvailable), gameTitle, newVersion), ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
+                    if (result == options[0])
                     {
-                        var result = playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryNewVersionAvailable), gameTitle, newVersion), ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
-                        if (result == options[0])
+                        var downloadProperties = new DownloadProperties() { downloadAction = (int)DownloadAction.Update };
+                        var downloadData = new DownloadManagerData.Download { gameID = gameId, downloadProperties = downloadProperties };
+                        LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
+                        var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameId);
+                        if (wantedItem != null)
                         {
-                            var downloadProperties = new DownloadProperties() { downloadAction = (int)DownloadAction.Update };
-                            var downloadData = new DownloadManagerData.Download { gameID = gameId, downloadProperties = downloadProperties };
-                            LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
-                            var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameId);
-                            if (wantedItem != null)
+                            playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), wantedItem.name), "", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                        else
+                        {
+                            var messagesSettings = LegendaryMessagesSettings.LoadSettings();
+                            if (!messagesSettings.DontShowDownloadManagerWhatsUpMsg)
                             {
-                                playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), wantedItem.name), "", MessageBoxButton.OK, MessageBoxImage.Error);
-                            }
-                            else
-                            {
-                                var messagesSettings = LegendaryMessagesSettings.LoadSettings();
-                                if (!messagesSettings.DontShowDownloadManagerWhatsUpMsg)
+                                var okResponse = new MessageBoxOption("LOCOKLabel", true, true);
+                                var dontShowResponse = new MessageBoxOption("LOCDontShowAgainTitle");
+                                var response = playniteAPI.Dialogs.ShowMessage(LOC.LegendaryDownloadManagerWhatsUp, "", MessageBoxImage.Information, new List<MessageBoxOption> { okResponse, dontShowResponse });
+                                if (response == dontShowResponse)
                                 {
-                                    var okResponse = new MessageBoxOption("LOCOKLabel", true, true);
-                                    var dontShowResponse = new MessageBoxOption("LOCDontShowAgainTitle");
-                                    var response = playniteAPI.Dialogs.ShowMessage(LOC.LegendaryDownloadManagerWhatsUp, "", MessageBoxImage.Information, new List<MessageBoxOption> { okResponse, dontShowResponse });
-                                    if (response == dontShowResponse)
-                                    {
-                                        messagesSettings.DontShowDownloadManagerWhatsUpMsg = true;
-                                        LegendaryMessagesSettings.SaveSettings(messagesSettings);
-                                    }
+                                    messagesSettings.DontShowDownloadManagerWhatsUpMsg = true;
+                                    LegendaryMessagesSettings.SaveSettings(messagesSettings);
                                 }
-                                await downloadManager.EnqueueJob(gameId, gameTitle, "", "", downloadProperties);
                             }
+                            await downloadManager.EnqueueJob(gameId, gameTitle, "", "", downloadProperties);
                         }
                     }
-                    else
-                    {
-                        playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryNoUpdatesAvailable), gameTitle);
-                    }
+                }
+                else
+                {
+                    playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryNoUpdatesAvailable), gameTitle);
                 }
             }
         }

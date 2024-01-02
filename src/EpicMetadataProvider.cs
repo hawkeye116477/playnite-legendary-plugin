@@ -92,17 +92,15 @@ namespace LegendaryLibraryNS
             // There's not icon available on Epic servers so we will load one from EXE
             if (game.IsInstalled && string.IsNullOrEmpty(game.Icon))
             {
-                var installed = LegendaryLauncher.GetInstalledAppList();
-                foreach (KeyValuePair<string, Installed> d in installed)
+                var installedAppList = LegendaryLauncher.GetInstalledAppList();
+                if (installedAppList.ContainsKey(game.GameId))
                 {
-                    if (d.Value.App_name == game.GameId)
+                    var exePath = Path.Combine(installedAppList[game.GameId].Install_path, installedAppList[game.GameId].Executable);
+                    if (File.Exists(exePath))
                     {
-                        var exePath = Path.Combine(d.Value.Install_path, d.Value.Executable);
-                        if (File.Exists(exePath))
-                        {
-                            gameInfo.Icon = new MetadataFile(exePath);
-                        }
+                        gameInfo.Icon = new MetadataFile(exePath);
                     }
+
                 }
             }
 

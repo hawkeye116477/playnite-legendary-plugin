@@ -13,11 +13,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.IO;
 using LegendaryLibraryNS.Models;
 using Playnite.SDK.Plugins;
@@ -299,26 +294,21 @@ namespace LegendaryLibraryNS
                                 SaveData();
                                 _ = (Application.Current.Dispatcher?.BeginInvoke((Action)delegate
                                 {
-                                    var installed = LegendaryLauncher.GetInstalledAppList();
-                                    if (installed != null)
+                                    var installedAppList = LegendaryLauncher.GetInstalledAppList();
+                                    if (installedAppList != null)
                                     {
-                                        foreach (KeyValuePair<string, Installed> app in installed)
+                                        if (installedAppList.ContainsKey(gameID))
                                         {
-                                            if (app.Value.App_name == gameID)
+                                            var installInfo = new GameInstallationData
                                             {
-                                                var installInfo = new GameInstallationData
-                                                {
-                                                    InstallDirectory = app.Value.Install_path
-                                                };
-
-                                                var game = playniteAPI.Database.Games.FirstOrDefault(
-                                                    item => item.PluginId == LegendaryLibrary.Instance.Id && item.GameId == gameID);
-                                                game.InstallDirectory = app.Value.Install_path;
-                                                game.Version = app.Value.Version;
-                                                game.IsInstalled = true;
-                                                playniteAPI.Database.Games.Update(game);
-                                                break;
-                                            }
+                                                InstallDirectory = installedAppList[gameID].Install_path
+                                            };
+                                            var game = playniteAPI.Database.Games.FirstOrDefault(
+                                                item => item.PluginId == LegendaryLibrary.Instance.Id && item.GameId == gameID);
+                                            game.InstallDirectory = installedAppList[gameID].Install_path;
+                                            game.Version = installedAppList[gameID].Version;
+                                            game.IsInstalled = true;
+                                            playniteAPI.Database.Games.Update(game);
                                         }
                                     }
                                 }));

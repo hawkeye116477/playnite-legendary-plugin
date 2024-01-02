@@ -1,5 +1,4 @@
 ﻿using CliWrap;
-using CliWrap.Buffered;
 using CliWrap.EventStream;
 using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
@@ -15,13 +14,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using static LegendaryLibraryNS.LegendaryPlayController;
 
 namespace LegendaryLibraryNS
 {

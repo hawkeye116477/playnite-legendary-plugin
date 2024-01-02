@@ -2,21 +2,11 @@
 using CliWrap.Buffered;
 using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Services;
-using Playnite;
-using Playnite.Commands;
 using Playnite.SDK;
-using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
 
 namespace LegendaryLibraryNS
 {

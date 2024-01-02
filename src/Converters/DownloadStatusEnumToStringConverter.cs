@@ -1,12 +1,7 @@
 ﻿using LegendaryLibraryNS.Enums;
 using Playnite.SDK;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace LegendaryLibraryNS.Converters
