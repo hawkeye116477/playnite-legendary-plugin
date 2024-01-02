@@ -6,9 +6,6 @@
   <sys:String x:Key="LOCLegendaryInstallSize">Install Size:</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallGameConfirm">Are you sure you want to uninstall {0}?</sys:String>
   <sys:String x:Key="LOCLegendaryLaunchOffline">Launch games in offline mode if possible</sys:String>
-  <sys:String x:Key="LOCLegendaryExcludeGames">Exclude games</sys:String>
-  <sys:String x:Key="LOCLegendaryOfflineGames">Offline games</sys:String>
-  <sys:String x:Key="LOCLegendaryOnlineGames">Online games</sys:String>
   <sys:String x:Key="LOCLegendaryEnableOfflineMode">Enable offline mode</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings">Download Settings</sys:String>
   <sys:String x:Key="LOCLegendaryPreferredCDN">Preferred CDN</sys:String>
