@@ -36,6 +36,33 @@ namespace LegendaryLibraryNS.Models
         public class Metadata1
         {
             public Agegatings ageGatings { get; set; }
+            public string applicationId { get; set; }
+            public Category[] categories { get; set; }
+            public DateTime creationDate { get; set; }
+            public Customattributes customAttributes { get; set; }
+            public string description { get; set; }
+            public string developer { get; set; }
+            public string developerId { get; set; }
+            public bool endOfSupport { get; set; }
+            public string entitlementName { get; set; }
+            public string entitlementType { get; set; }
+            public string[] eulaIds { get; set; }
+            public string id { get; set; }
+            public string itemType { get; set; }
+            public Keyimage[] keyImages { get; set; }
+            public DateTime lastModifiedDate { get; set; }
+            public Maingameitem mainGameItem { get; set; }
+            public string _namespace { get; set; }
+            public Releaseinfo[] releaseInfo { get; set; }
+            public string status { get; set; }
+            public string title { get; set; }
+            public bool unsearchable { get; set; }
+        }
+
+        public class Maingameitem
+        {
+            public Agegatings ageGatings { get; set; }
+            public string applicationId { get; set; }
             public Category[] categories { get; set; }
             public DateTime creationDate { get; set; }
             public Customattributes customAttributes { get; set; }

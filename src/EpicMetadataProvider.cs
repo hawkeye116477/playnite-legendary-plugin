@@ -52,7 +52,7 @@ namespace LegendaryLibraryNS
                         {
                             gameInfo.Features.Add(new MetadataNameProperty(ResourceProvider.GetString(LOC.LegendaryCloudSaves)));
                         }
-                        if (legendaryMetadata.metadata.categories.FirstOrDefault(a => a.path == "addons") != null)
+                        if (legendaryMetadata.metadata.mainGameItem != null)
                         {
                             gameInfo.Features.Add(new MetadataNameProperty(ResourceProvider.GetString(LOC.LegendaryExtraContent)));
                         }
