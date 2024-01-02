@@ -226,18 +226,6 @@ namespace System
         /// </summary>
         public const string LegendaryLaunchOffline = "LOCLegendaryLaunchOffline";
         /// <summary>
-        /// Exclude games
-        /// </summary>
-        public const string LegendaryExcludeGames = "LOCLegendaryExcludeGames";
-        /// <summary>
-        /// Offline games
-        /// </summary>
-        public const string LegendaryOfflineGames = "LOCLegendaryOfflineGames";
-        /// <summary>
-        /// Online games
-        /// </summary>
-        public const string LegendaryOnlineGames = "LOCLegendaryOnlineGames";
-        /// <summary>
         /// Enable offline mode
         /// </summary>
         public const string LegendaryEnableOfflineMode = "LOCLegendaryEnableOfflineMode";
