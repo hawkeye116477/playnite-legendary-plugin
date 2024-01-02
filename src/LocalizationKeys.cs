@@ -569,5 +569,9 @@ namespace System
         /// Alternative executable file
         /// </summary>
         public const string LegendaryAlternativeExe = "LOCLegendaryAlternativeExe";
+        /// <summary>
+        /// Cloud saves
+        /// </summary>
+        public const string LegendaryCloudSaves = "LOCLegendaryCloudSaves";
     }
 }

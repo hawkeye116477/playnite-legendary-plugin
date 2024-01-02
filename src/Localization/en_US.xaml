@@ -92,4 +92,5 @@
   <sys:String x:Key="LOCLegendaryLanguageCode">Language (code in RFC 1766 format)</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherSettings">Legendary launcher settings</sys:String>
   <sys:String x:Key="LOCLegendaryAlternativeExe">Alternative executable file</sys:String>
+  <sys:String x:Key="LOCLegendaryCloudSaves">Cloud saves</sys:String>
 </ResourceDictionary>
