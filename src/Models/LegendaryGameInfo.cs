@@ -15,6 +15,14 @@
             public string Version { get; set; }
             public bool Cloud_saves_supported { get; set; }
             public bool Is_dlc { get; set; }
+            public Owned_Dlc[] Owned_dlc { get; set; }
+        }
+
+        public class Owned_Dlc
+        {
+            public string App_name { get; set; }
+            public string Title { get; set; }
+            public string Id { get; set; }
         }
 
         public class Manifest

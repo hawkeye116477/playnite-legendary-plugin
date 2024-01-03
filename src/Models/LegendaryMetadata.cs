@@ -10,7 +10,7 @@ namespace LegendaryLibraryNS.Models
             public string app_title { get; set; }
             public Asset_Infos asset_infos { get; set; }
             public string[] base_urls { get; set; }
-            public Metadata1 metadata { get; set; }
+            public Metadata metadata { get; set; }
         }
 
         public class Asset_Infos
@@ -30,10 +30,6 @@ namespace LegendaryLibraryNS.Models
         }
 
         public class Metadata
-        {
-        }
-
-        public class Metadata1
         {
             public Agegatings ageGatings { get; set; }
             public string applicationId { get; set; }
