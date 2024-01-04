@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("LegendaryLibrary")]
-[assembly: AssemblyCopyright("Copyright © 2023 hawkeye116477\n Copyright © 2018 Josef Nemec")]
+[assembly: AssemblyCopyright("Copyright © 2023-2024 hawkeye116477\n Copyright © 2018 Josef Nemec")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
