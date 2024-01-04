@@ -1,5 +1,19 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.3.0
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2024-01-04
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.3.0/LegendaryLibrary_1_3_0.pext
+    Changelog:
+      - Added possibility to download a little metadata from official store
+      - Added DLCs to Game Installer
+      - Added per game specific settings
+      - Removed exclude offline games window (functionality moved to new per game
+        specific settings window)
+      - Speeded up checking for Launcher's update
+      - Fixed disabling update check for games
+      - Updated translations
+      - Removed inactive (not enough translated) languages to save up disk space
   - Version: 1.2.0
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2023-12-21
