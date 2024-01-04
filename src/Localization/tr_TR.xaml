@@ -6,9 +6,7 @@
   <sys:String x:Key="LOCLegendaryInstallSize">Kurulum Boyutu:</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallGameConfirm">{0} kaldırılacak, bundan emin misiniz?</sys:String>
   <sys:String x:Key="LOCLegendaryLaunchOffline">Mümkünse oyunları çevrimdışı kipte başlat</sys:String>
-  <sys:String x:Key="LOCLegendaryExcludeGames">Hariç tutulan oyunlar</sys:String>
-  <sys:String x:Key="LOCLegendaryOfflineGames">Çevrimdışı oyunlar</sys:String>
-  <sys:String x:Key="LOCLegendaryOnlineGames">Çevrimiçi oyunlar</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableOfflineMode">Çevrimdışı modu etkinleştir</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings">İndirme Ayarları</sys:String>
   <sys:String x:Key="LOCLegendaryPreferredCDN">Tercih Edilen CDN</sys:String>
   <sys:String x:Key="LOCLegendaryHttpOnlyDownload">HTTPS devre dışı bırak (CDN için kullanışlıdır, örneğin LanCache)</sys:String>
@@ -89,4 +87,10 @@
   <sys:String x:Key="LOCLegendaryNoUpdatesAvailable">Güncelleme yok.</sys:String>
   <sys:String x:Key="LOCLegendaryViewChangelog">Değişiklikleri görüntüle</sys:String>
   <sys:String x:Key="LOCLegendaryDisableGameVersionCheck">Oyunlar başladığında sürüm kontrol edilmesin</sys:String>
+  <sys:String x:Key="LOCLegendaryDisableGameUpdateChecking">Güncelleme kontrolünü kapat</sys:String>
+  <sys:String x:Key="LOCLegendaryStartupArguments">Başlangıç ​​etkenleri</sys:String>
+  <sys:String x:Key="LOCLegendaryLanguageCode">Dil (RFC 1766 biçiminde kod)</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherSettings">Legendary başlatıcı ayarları</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeExe">Alternatif yürütülebilir dosya</sys:String>
+  <sys:String x:Key="LOCLegendaryCloudSaves">Bulut kayıtları</sys:String>
 </ResourceDictionary>

@@ -6,9 +6,7 @@
   <sys:String x:Key="LOCLegendaryInstallSize"></sys:String>
   <sys:String x:Key="LOCLegendaryUninstallGameConfirm"></sys:String>
   <sys:String x:Key="LOCLegendaryLaunchOffline"></sys:String>
-  <sys:String x:Key="LOCLegendaryExcludeGames"></sys:String>
-  <sys:String x:Key="LOCLegendaryOfflineGames"></sys:String>
-  <sys:String x:Key="LOCLegendaryOnlineGames"></sys:String>
+  <sys:String x:Key="LOCLegendaryEnableOfflineMode"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings"></sys:String>
   <sys:String x:Key="LOCLegendaryPreferredCDN"></sys:String>
   <sys:String x:Key="LOCLegendaryHttpOnlyDownload"></sys:String>
@@ -89,4 +87,10 @@
   <sys:String x:Key="LOCLegendaryNoUpdatesAvailable"></sys:String>
   <sys:String x:Key="LOCLegendaryViewChangelog"></sys:String>
   <sys:String x:Key="LOCLegendaryDisableGameVersionCheck"></sys:String>
+  <sys:String x:Key="LOCLegendaryDisableGameUpdateChecking"></sys:String>
+  <sys:String x:Key="LOCLegendaryStartupArguments"></sys:String>
+  <sys:String x:Key="LOCLegendaryLanguageCode"></sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherSettings"></sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeExe"></sys:String>
+  <sys:String x:Key="LOCLegendaryCloudSaves"></sys:String>
 </ResourceDictionary>

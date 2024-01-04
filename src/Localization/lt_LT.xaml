@@ -6,9 +6,7 @@
   <sys:String x:Key="LOCLegendaryInstallSize">Įdiegties dydis:</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallGameConfirm">Ar tikrai norite išdiegti {0}?</sys:String>
   <sys:String x:Key="LOCLegendaryLaunchOffline">Žaidimus paleisti atsijungusiame rėžime, jei įmanoma</sys:String>
-  <sys:String x:Key="LOCLegendaryExcludeGames">Išskirti žaidimus</sys:String>
-  <sys:String x:Key="LOCLegendaryOfflineGames">Atsijungę žaidimai</sys:String>
-  <sys:String x:Key="LOCLegendaryOnlineGames">Prisijungę žaidimai</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableOfflineMode"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings">Siuntimosi Nustatymai</sys:String>
   <sys:String x:Key="LOCLegendaryPreferredCDN">Pageidaujamas CDN</sys:String>
   <sys:String x:Key="LOCLegendaryHttpOnlyDownload">Išjungti HTTPS (naudinga CDN'ams, pvz. LanCache)</sys:String>
@@ -89,4 +87,10 @@
   <sys:String x:Key="LOCLegendaryNoUpdatesAvailable"></sys:String>
   <sys:String x:Key="LOCLegendaryViewChangelog"></sys:String>
   <sys:String x:Key="LOCLegendaryDisableGameVersionCheck"></sys:String>
+  <sys:String x:Key="LOCLegendaryDisableGameUpdateChecking"></sys:String>
+  <sys:String x:Key="LOCLegendaryStartupArguments"></sys:String>
+  <sys:String x:Key="LOCLegendaryLanguageCode"></sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherSettings"></sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeExe"></sys:String>
+  <sys:String x:Key="LOCLegendaryCloudSaves"></sys:String>
 </ResourceDictionary>
