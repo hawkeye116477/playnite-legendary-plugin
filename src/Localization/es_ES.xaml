@@ -6,9 +6,7 @@
   <sys:String x:Key="LOCLegendaryInstallSize">Tamaño de instalación:</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallGameConfirm">¿Estás seguro que deseas desinstalar {0}?</sys:String>
   <sys:String x:Key="LOCLegendaryLaunchOffline">Lanzar juegos en modo sin conexión si es posible</sys:String>
-  <sys:String x:Key="LOCLegendaryExcludeGames">Excluir juegos</sys:String>
-  <sys:String x:Key="LOCLegendaryOfflineGames">Juegos sin conexión</sys:String>
-  <sys:String x:Key="LOCLegendaryOnlineGames">Juegos en línea</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableOfflineMode">Activar modo sin conexión</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings">Ajustes de descarga</sys:String>
   <sys:String x:Key="LOCLegendaryPreferredCDN">CDN preferido</sys:String>
   <sys:String x:Key="LOCLegendaryHttpOnlyDownload">Desactivar HTTPS (útil para CDNs por ejemplo LanCache)</sys:String>
@@ -89,4 +87,10 @@
   <sys:String x:Key="LOCLegendaryNoUpdatesAvailable">No hay actualizaciones disponibles.</sys:String>
   <sys:String x:Key="LOCLegendaryViewChangelog">Ver lista de cambios</sys:String>
   <sys:String x:Key="LOCLegendaryDisableGameVersionCheck">No comprobar la versión al iniciar juegos</sys:String>
+  <sys:String x:Key="LOCLegendaryDisableGameUpdateChecking">Desactivar comprobación de actualización</sys:String>
+  <sys:String x:Key="LOCLegendaryStartupArguments">Argumentos de inicio</sys:String>
+  <sys:String x:Key="LOCLegendaryLanguageCode">Idioma (código en formato RFC 1766)</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherSettings">Configuración del cliente Legendary</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeExe">Archivo ejecutable alternativo</sys:String>
+  <sys:String x:Key="LOCLegendaryCloudSaves">Guardados en la nube</sys:String>
 </ResourceDictionary>
