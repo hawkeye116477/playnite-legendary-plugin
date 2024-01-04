@@ -188,6 +188,7 @@
     <Compile Include="Models\ErrorResponse.cs" />
     <Compile Include="Models\GameSettings.cs" />
     <Compile Include="Models\Installed.cs" />
+    <Compile Include="Models\LauncherVersion.cs" />
     <Compile Include="Models\LegendaryGameInfo.cs" />
     <Compile Include="Models\LegendaryMetadata.cs" />
     <Compile Include="Models\LegendarySDLInfo.cs" />

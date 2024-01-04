@@ -4,10 +4,12 @@ using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
 using Playnite.Common;
 using Playnite.SDK;
+using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -173,20 +175,18 @@ namespace LegendaryLibraryNS
                     troubleshootingInformation.LauncherVersion = Regex.Match(verionCmd.StandardOutput, @"\d+(\.\d+)+").Value;
                     LauncherVersionTxt.Text = troubleshootingInformation.LauncherVersion;
                 }
+                LauncherBinaryTxt.Text = troubleshootingInformation.LauncherBinary;
             }
             else
             {
                 LauncherVersionTxt.Text = ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled);
+                LauncherBinaryTxt.Text = ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled);
+                CheckForUpdatesBtn.IsEnabled = false;
+                OpenLauncherBinaryBtn.IsEnabled = false;
             }
 
             PlayniteVersionTxt.Text = troubleshootingInformation.PlayniteVersion;
             PluginVersionTxt.Text = troubleshootingInformation.PluginVersion;
-            LauncherBinaryTxt.Text = troubleshootingInformation.LauncherBinary;
-            if (LauncherBinaryTxt.Text.IsNullOrEmpty())
-            {
-                LauncherBinaryTxt.Text = ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled);
-                OpenLauncherBinaryBtn.IsEnabled = false;
-            }
             GamesInstallationPathTxt.Text = troubleshootingInformation.GamesInstallationPath;
             ReportBugHyp.NavigateUri = new Uri($"https://github.com/hawkeye116477/playnite-legendary-plugin/issues/new?assignees=&labels=bug&projects=&template=bugs.yml&legendaryV={troubleshootingInformation.PluginVersion}&playniteV={troubleshootingInformation.PlayniteVersion}&launcherV={troubleshootingInformation.LauncherVersion}");
         }
@@ -326,35 +326,65 @@ namespace LegendaryLibraryNS
             {
                 throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
             }
-
-            var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath).WithArguments(new[] { "list-installed", "--check-updates" }).WithValidation(CommandResultValidation.None).ExecuteBufferedAsync();
-            if (cmd.StandardOutput.Contains("Legendary update available"))
+            var cacheVersionPath = LegendaryLibrary.Instance.GetCachePath("infocache");
+            var cacheVersionFile = Path.Combine(cacheVersionPath, "legendaryVersion.json");
+            string content = null;
+            if (File.Exists(cacheVersionFile))
             {
-                var newVersion = Regex.Match(cmd.StandardOutput, @"Legendary update available!\s+\- New version: (\S+.) \-", RegexOptions.Multiline).Groups[1].Value;
-                var options = new List<MessageBoxOption>
+                if (File.GetLastWriteTime(cacheVersionFile) < DateTime.Now.AddDays(-7))
                 {
-                    new MessageBoxOption(ResourceProvider.GetString(LOC.LegendaryViewChangelog)),
-                    new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteOKLabel)),
-                };
-                var result = playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryNewVersionAvailable), "Legendary Launcher", newVersion), ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
-                if (result == options[0])
-                {
-                    var changelogURL = $"https://github.com/derrod/legendary/releases/latest";
-                    Playnite.Commands.GlobalCommands.NavigateUrl(changelogURL);
+                    File.Delete(cacheVersionFile);
                 }
             }
-            else if (cmd.StandardError.Contains("login failed") || cmd.StandardError.Contains("No saved credentials"))
+            if (!File.Exists(cacheVersionFile))
             {
-                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired));
-            }
-            else if (cmd.StandardError.Contains("Error"))
-            {
-                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage), "Legendary Launcher");
-                logger.Error($"[Legendary] {cmd.StandardError}");
+                var httpClient = new HttpClient();
+                var response = await httpClient.GetAsync("https://api.legendary.gl/v1/version.json");
+                if (response.IsSuccessStatusCode)
+                {
+                    content = await response.Content.ReadAsStringAsync();
+                    if (!Directory.Exists(cacheVersionPath))
+                    {
+                        Directory.CreateDirectory(cacheVersionPath);
+                    }
+                    File.WriteAllText(cacheVersionFile, content);
+                }
+                httpClient.Dispose();
             }
             else
             {
-                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryNoUpdatesAvailable));
+                content = FileSystem.ReadFileAsStringSafe(cacheVersionFile);
+            }
+            if (content.IsNullOrEmpty())
+            {
+                logger.Error("An error occurred while downloading Legendary's version info.");
+            }
+            var versionInfoContent = new LauncherVersion.Rootobject();
+            if (Serialization.TryFromJson(content, out versionInfoContent))
+            {
+                var newVersion = versionInfoContent.release_info.version;
+                if (troubleshootingInformation.LauncherVersion != newVersion)
+                {
+                    var options = new List<MessageBoxOption>
+                    {
+                        new MessageBoxOption(ResourceProvider.GetString(LOC.LegendaryViewChangelog)),
+                        new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteOKLabel)),
+                    };
+                    var result = playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryNewVersionAvailable), "Legendary Launcher", newVersion), ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
+                    if (result == options[0])
+                    {
+                        var changelogURL = versionInfoContent.release_info.gh_url;
+                        Playnite.Commands.GlobalCommands.NavigateUrl(changelogURL);
+                    }
+                }
+                else
+                {
+                    playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryNoUpdatesAvailable));
+                }
+            }
+            else
+            {
+                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage), "Legendary Launcher");
             }
         }
     }
