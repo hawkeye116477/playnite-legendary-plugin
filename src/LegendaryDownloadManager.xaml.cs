@@ -231,16 +231,16 @@ namespace LegendaryLibraryNS
                             DownloadSpeedTB.Text = "";
                             break;
                         case StandardErrorCommandEvent stdErr:
-                            var downloadSizeMatch = Regex.Match(stdErr.Text, @"Download size: (\S+.) MiB");
+                            var downloadSizeMatch = Regex.Match(stdErr.Text, @"Download size: (\S+) (\wiB)");
                             if (downloadSizeMatch.Length >= 2)
                             {
-                                downloadSize = Helpers.FormatSize(double.Parse(downloadSizeMatch.Groups[1].Value, CultureInfo.InvariantCulture) * 1024 * 1024);
+                                downloadSize = Helpers.FormatSize(double.Parse(downloadSizeMatch.Groups[1].Value, CultureInfo.InvariantCulture), downloadSizeMatch.Groups[2].Value);
                                 wantedItem.downloadSize = downloadSize;
                             }
-                            var installSizeMatch = Regex.Match(stdErr.Text, @"Install size: (\S+.) MiB");
+                            var installSizeMatch = Regex.Match(stdErr.Text, @"Install size: (\S+) (\wiB)");
                             if (installSizeMatch.Length >= 2)
                             {
-                                string installSize = Helpers.FormatSize(double.Parse(installSizeMatch.Groups[1].Value, CultureInfo.InvariantCulture) * 1024 * 1024);
+                                string installSize = Helpers.FormatSize(double.Parse(installSizeMatch.Groups[1].Value, CultureInfo.InvariantCulture), installSizeMatch.Groups[2].Value);
                                 wantedItem.installSize = installSize;
                             }
                             var fullInstallPathMatch = Regex.Match(stdErr.Text, @"Install path: (\S+)");
@@ -271,16 +271,16 @@ namespace LegendaryLibraryNS
                             {
                                 ElapsedTB.Text = elapsedMatch.Groups[1].Value;
                             }
-                            var downloadedMatch = Regex.Match(stdErr.Text, @"Downloaded: (\S+.) MiB");
+                            var downloadedMatch = Regex.Match(stdErr.Text, @"Downloaded: (\S+) (\wiB)");
                             if (downloadedMatch.Length >= 2)
                             {
-                                string downloaded = Helpers.FormatSize(double.Parse(downloadedMatch.Groups[1].Value, CultureInfo.InvariantCulture) * 1024 * 1024);
+                                string downloaded = Helpers.FormatSize(double.Parse(downloadedMatch.Groups[1].Value, CultureInfo.InvariantCulture), downloadedMatch.Groups[2].Value);
                                 DownloadedTB.Text = downloaded + " / " + downloadSize;
                             }
-                            var downloadSpeedMatch = Regex.Match(stdErr.Text, @"Download\t- (\S+.) MiB");
+                            var downloadSpeedMatch = Regex.Match(stdErr.Text, @"Download\t- (\S+) (\wiB)");
                             if (downloadSpeedMatch.Length >= 2)
                             {
-                                string downloadSpeed = Helpers.FormatSize(double.Parse(downloadSpeedMatch.Groups[1].Value, CultureInfo.InvariantCulture) * 1024 * 1024);
+                                string downloadSpeed = Helpers.FormatSize(double.Parse(downloadSpeedMatch.Groups[1].Value, CultureInfo.InvariantCulture), downloadSpeedMatch.Groups[2].Value);
                                 DownloadSpeedTB.Text = downloadSpeed + "/s";
                             }
                             stdOutBuffer.AppendLine(stdErr.Text);
@@ -318,7 +318,7 @@ namespace LegendaryLibraryNS
                             {
                                 wantedItem.status = (int)DownloadStatus.Paused;
                                 SaveData();
-                                var memoryErrorMatch = Regex.Match(stdOutBuffer.ToString(), @"MemoryError: Current shared memory cache is smaller than required: (\S+.) MiB < (\S+.) MiB");
+                                var memoryErrorMatch = Regex.Match(stdOutBuffer.ToString(), @"MemoryError: Current shared memory cache is smaller than required: (\S+) MiB < (\S+) MiB");
                                 if (memoryErrorMatch.Length >= 2)
                                 {
                                     playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), string.Format(ResourceProvider.GetString(LOC.LegendaryMemoryError), memoryErrorMatch.Groups[1] + " MB", memoryErrorMatch.Groups[2] + " MB")));

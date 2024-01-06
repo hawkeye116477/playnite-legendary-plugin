@@ -449,16 +449,18 @@ namespace LegendaryLibraryNS
                     string[] lines = result.StandardError.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
                     foreach (var line in lines)
                     {
-                        if (line.Contains("Download size:"))
+                        var downloadSizeText = "Download size:";
+                        if (line.Contains(downloadSizeText))
                         {
-                            var downloadSizeValue = double.Parse(line.Substring(line.IndexOf("Download size:") + 15).Replace(" MiB", ""), CultureInfo.InvariantCulture) * 1024 * 1024;
-                            downloadSize = Helpers.FormatSize(downloadSizeValue);
+                            var downloadSizeSplittedString = line.Substring(line.IndexOf(downloadSizeText) + downloadSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            downloadSize = Helpers.FormatSize(double.Parse(downloadSizeSplittedString[0], CultureInfo.InvariantCulture), downloadSizeSplittedString[1]);
                             DownloadSizeTB.Text = downloadSize;
                         }
-                        if (line.Contains("Install size:"))
+                        var installSizeText = "Install size:";
+                        if (line.Contains(installSizeText))
                         {
-                            var installSizeValue = double.Parse(line.Substring(line.IndexOf("Install size:") + 14).Replace(" MiB", ""), CultureInfo.InvariantCulture) * 1024 * 1024;
-                            installSize = Helpers.FormatSize(installSizeValue);
+                            var installSizeSplittedString = line.Substring(line.IndexOf(installSizeText) + installSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            installSize = Helpers.FormatSize(double.Parse(installSizeSplittedString[0], CultureInfo.InvariantCulture), installSizeSplittedString[1]);
                             InstallSizeTB.Text = installSize;
                         }
                     }
