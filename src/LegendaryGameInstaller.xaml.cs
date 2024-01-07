@@ -93,7 +93,7 @@ namespace LegendaryLibraryNS
             }
             if (ExtraContentLB.Items.Count > 0)
             {
-                var anyNonDlc = ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().FirstOrDefault(a => a.Value.Is_dlc == false);
+                var anyNonDlc = ExtraContentLB.Items.Cast<KeyValuePair<string, LegendarySDLInfo>>().FirstOrDefault(a => a.Value.Is_dlc == false);
                 if (anyNonDlc.Key != null)
                 {
                     selectedExtraContent.AddMissing("");
