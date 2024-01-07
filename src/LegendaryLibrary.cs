@@ -96,6 +96,7 @@ namespace LegendaryLibraryNS
                     GameId = app.App_name,
                     Name = gameName,
                     Version = app.Version,
+                    InstallSize = (ulong?)app.Install_size,
                     InstallDirectory = installLocation,
                     IsInstalled = true,
                     Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") }

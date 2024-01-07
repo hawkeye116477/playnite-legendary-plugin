@@ -307,6 +307,7 @@ namespace LegendaryLibraryNS
                                                 item => item.PluginId == LegendaryLibrary.Instance.Id && item.GameId == gameID);
                                             game.InstallDirectory = installedAppList[gameID].Install_path;
                                             game.Version = installedAppList[gameID].Version;
+                                            game.InstallSize = (ulong?)installedAppList[gameID].Install_size;
                                             game.IsInstalled = true;
                                             playniteAPI.Database.Games.Update(game);
                                         }
