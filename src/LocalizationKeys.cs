@@ -573,5 +573,9 @@ namespace System
         /// Cloud saves
         /// </summary>
         public const string LegendaryCloudSaves = "LOCLegendaryCloudSaves";
+        /// <summary>
+        /// Display download speed in bits per second
+        /// </summary>
+        public const string LegendaryDisplayDownloadSpeedInBits = "LOCLegendaryDisplayDownloadSpeedInBits";
     }
 }

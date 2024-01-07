@@ -7,9 +7,17 @@ namespace LegendaryLibraryNS
 {
     public class Helpers
     {
-        public static string FormatSize(double size, string unit = "B")
+        public static string FormatSize(double size, string unit = "B", bool toBits = false)
         {
+            if (toBits)
+            {
+                size *= 8;
+            }
             var finalSize = ByteSize.Parse($"{size} {unit}").ToBinaryString();
+            if (toBits)
+            {
+                finalSize = finalSize.Replace("B", "b");
+            }
             return finalSize.Replace("i", "");
         }
 

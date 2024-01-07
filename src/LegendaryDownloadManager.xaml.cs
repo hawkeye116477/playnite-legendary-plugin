@@ -280,7 +280,12 @@ namespace LegendaryLibraryNS
                             var downloadSpeedMatch = Regex.Match(stdErr.Text, @"Download\t- (\S+) (\wiB)");
                             if (downloadSpeedMatch.Length >= 2)
                             {
-                                string downloadSpeed = Helpers.FormatSize(double.Parse(downloadSpeedMatch.Groups[1].Value, CultureInfo.InvariantCulture), downloadSpeedMatch.Groups[2].Value);
+                                bool inBits = false;
+                                if (settings.DisplayDownloadSpeedInBits)
+                                {
+                                    inBits = true;
+                                }
+                                string downloadSpeed = Helpers.FormatSize(double.Parse(downloadSpeedMatch.Groups[1].Value, CultureInfo.InvariantCulture), downloadSpeedMatch.Groups[2].Value, inBits);
                                 DownloadSpeedTB.Text = downloadSpeed + "/s";
                             }
                             stdOutBuffer.AppendLine(stdErr.Text);

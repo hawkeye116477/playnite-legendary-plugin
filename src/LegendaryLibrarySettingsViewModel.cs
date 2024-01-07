@@ -28,6 +28,7 @@ namespace LegendaryLibraryNS
         public bool EnableReordering { get; set; } = false;
         public int AutoClearCache { get; set; } = (int)ClearCacheTime.Never;
         public bool DisableGameVersionCheck { get; set; } = false;
+        public bool DisplayDownloadSpeedInBits { get; set; } = false;
     }
 
     public class LegendaryLibrarySettingsViewModel : PluginSettingsViewModel<LegendaryLibrarySettings, LegendaryLibrary>
