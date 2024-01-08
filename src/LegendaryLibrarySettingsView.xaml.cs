@@ -58,6 +58,7 @@ namespace LegendaryLibraryNS
                 var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                    .WithValidation(CommandResultValidation.None)
                                    .WithArguments(new[] { "-y", "eos-overlay", "remove" })
+                                   .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                                    .ExecuteBufferedAsync();
                 if (cmd.StandardError.Contains("Done"))
                 {
@@ -110,6 +111,7 @@ namespace LegendaryLibraryNS
             }
             await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                      .WithArguments(new[] { "-y", "eos-overlay", toggleCommand })
+                     .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                      .WithValidation(CommandResultValidation.None)
                      .ExecuteAsync();
             var toggleTxt = LOC.LegendaryEnable;
@@ -168,6 +170,7 @@ namespace LegendaryLibraryNS
             {
                 var verionCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                          .WithArguments(new[] { "-V" })
+                                         .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                                          .WithValidation(CommandResultValidation.None)
                                          .ExecuteBufferedAsync();
                 if (verionCmd.StandardOutput.Contains("version"))
@@ -256,6 +259,7 @@ namespace LegendaryLibraryNS
                                 {
                                     var importCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                                              .WithArguments(new[] { "-y", "import", game.GameId, game.InstallDirectory })
+                                                             .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                                                              .WithValidation(CommandResultValidation.None)
                                                              .ExecuteBufferedAsync();
                                     if (!importCmd.StandardError.Contains("has been imported"))

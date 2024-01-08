@@ -62,6 +62,7 @@ namespace LegendaryLibraryNS
             {
                 var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                       .WithArguments(new[] { "auth", "--delete" })
+                                      .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                                       .WithValidation(CommandResultValidation.None)
                                       .ExecuteBufferedAsync();
                if (result.ExitCode != 0 && !result.StandardError.Contains("User data deleted"))

@@ -186,6 +186,7 @@ namespace LegendaryLibraryNS
             {
                 var importCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                          .WithArguments(new[] { "-y", "import", GameID, path })
+                                         .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                                          .WithValidation(CommandResultValidation.None)
                                          .ExecuteBufferedAsync();
                 if (importCmd.StandardError.Contains("has been imported"))
@@ -250,6 +251,7 @@ namespace LegendaryLibraryNS
                 {
                     var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                       .WithArguments(new[] { "info", GameID, "--json" })
+                                      .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                                       .WithValidation(CommandResultValidation.None)
                                       .ExecuteBufferedAsync();
                     if (result.ExitCode != 0)
@@ -391,6 +393,7 @@ namespace LegendaryLibraryNS
                                 {
                                     var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                                       .WithArguments(new[] { "info", dlc.App_name, "--json" })
+                                                      .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                                                       .WithValidation(CommandResultValidation.None)
                                                       .ExecuteBufferedAsync();
                                     if (result.ExitCode != 0)
@@ -428,6 +431,7 @@ namespace LegendaryLibraryNS
 
                 var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                       .WithArguments(new[] { GameID, "install" })
+                                      .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                                       .WithStandardInputPipe(PipeSource.FromString("n"))
                                       .WithValidation(CommandResultValidation.None)
                                       .ExecuteBufferedAsync();

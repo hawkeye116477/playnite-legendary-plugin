@@ -120,6 +120,7 @@ namespace LegendaryLibraryNS.Services
 
             var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                   .WithArguments(new[] { "auth", "--code", authorizationCode })
+                                  .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                                   .WithValidation(CommandResultValidation.None)
                                   .ExecuteBufferedAsync();
             if (result.ExitCode != 0 && !result.StandardError.Contains("Successfully"))
@@ -221,6 +222,7 @@ namespace LegendaryLibraryNS.Services
         private async Task renewTokens()
         {
             var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                         .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                          .WithArguments("auth");
             using var forcefulCTS = new CancellationTokenSource();
             using var gracefulCTS = new CancellationTokenSource();

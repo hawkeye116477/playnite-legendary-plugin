@@ -352,7 +352,9 @@ namespace LegendaryLibraryNS
                         {
                             a.ProgressMaxValue = 100;
                             a.CurrentProgressValue = 0;
-                            var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath).WithArguments(new[] { "info", gameID });
+                            var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                         .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                         .WithArguments(new[] { "info", gameID });
                             await foreach (var cmdEvent in cmd.ListenAsync())
                             {
                                 switch (cmdEvent)
@@ -416,6 +418,7 @@ namespace LegendaryLibraryNS
                                     skippedActivity = "--skip-download";
                                 }
                                 var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                             .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                                              .WithArguments(new[] { "-y", "sync-saves", gameID, skippedActivity, "--save-path", cloudSaveFolder });
                                 await foreach (var cmdEvent in cmd.ListenAsync())
                                 {

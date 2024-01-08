@@ -15,7 +15,19 @@ namespace LegendaryLibraryNS
 {
     public class LegendaryLauncher
     {
-        public static string ConfigPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".config", "legendary");
+        public static string ConfigPath
+        {
+            get
+            {
+                var legendaryConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".config", "legendary");
+                var heroicLegendaryConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "heroic", "legendaryConfig", "legendary");
+                if (Directory.Exists(heroicLegendaryConfigPath) && LauncherPath.Contains("heroic"))
+                {
+                    legendaryConfigPath = heroicLegendaryConfigPath;
+                }
+                return legendaryConfigPath;
+            }
+        }
 
         public static string ClientExecPath
         {
@@ -262,6 +274,19 @@ namespace LegendaryLibraryNS
                     maxSharedMemory = Convert.ToInt32(IniConfig["Legendary"]["max_memory"]);
                 }
                 return maxSharedMemory;
+            }
+        }
+
+        public static Dictionary<string, string> DefaultEnvironmentVariables
+        {
+            get
+            {
+                var envDict = new Dictionary<string, string>();
+                if (ConfigPath.Contains("heroic"))
+                {
+                    envDict.Add("LEGENDARY_CONFIG_PATH", ConfigPath);
+                }
+                return envDict;
             }
         }
     }

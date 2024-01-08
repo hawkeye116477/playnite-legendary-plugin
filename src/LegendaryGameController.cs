@@ -114,6 +114,7 @@ namespace LegendaryLibraryNS
             {
                 var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                    .WithArguments(new[] { "-y", "uninstall", Game.GameId })
+                                   .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                                    .WithValidation(CommandResultValidation.None)
                                    .ExecuteBufferedAsync();
                 if (cmd.StandardError.Contains("has been uninstalled"))
@@ -225,6 +226,7 @@ namespace LegendaryLibraryNS
                 var stdOutBuffer = new StringBuilder();
                 var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
                              .WithArguments(playArgs)
+                             .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                              .WithValidation(CommandResultValidation.None);
                 await foreach (var cmdEvent in cmd.ListenAsync())
                 {
@@ -278,7 +280,11 @@ namespace LegendaryLibraryNS
         public async Task UpdateGame(string gameTitle, string gameId)
         {
 
-            var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath).WithArguments(new[] { "list-installed", "--check-updates" }).WithValidation(CommandResultValidation.None).ExecuteBufferedAsync();
+            var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                               .WithArguments(new[] { "list-installed", "--check-updates" })
+                               .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                               .WithValidation(CommandResultValidation.None)
+                               .ExecuteBufferedAsync();
             if (cmd.StandardError.Contains("login failed") || cmd.StandardError.Contains("No saved credentials"))
             {
                 playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired));
