@@ -21,6 +21,7 @@ namespace LegendaryLibraryNS
         private Game Game => DataContext as Game;
         public string GameID => Game.GameId;
         private IPlayniteAPI playniteAPI = API.Instance;
+        private string cloudPath;
 
         public LegendaryGameSettingsView()
         {
@@ -75,6 +76,14 @@ namespace LegendaryLibraryNS
             {
                 newGameSettings.OverrideExe = SelectedAlternativeExeTxt.Text;
             }
+            if (AutoSyncChk.IsChecked != globalSettings.SyncGameSaves)
+            {
+                newGameSettings.AutoSyncSaves = AutoSyncChk.IsChecked;
+            }
+            if (SelectedSavePathTxt.Text != "")
+            {
+                newGameSettings.CloudSaveFolder = SelectedSavePathTxt.Text;
+            }
             if (newGameSettings.GetType().GetProperties().Any(p => p.GetValue(newGameSettings) != null) || gamesSettings.ContainsKey(GameID))
             {
                 if (gamesSettings.ContainsKey(GameID))
@@ -117,6 +126,14 @@ namespace LegendaryLibraryNS
                 {
                     SelectedAlternativeExeTxt.Text = gamesSettings[GameID].OverrideExe;
                 }
+                if (gamesSettings[GameID].AutoSyncSaves != null)
+                {
+                    AutoSyncChk.IsChecked = true;
+                }
+                if (!gamesSettings[GameID].CloudSaveFolder.IsNullOrEmpty())
+                {
+                    SelectedSavePathTxt.Text = gamesSettings[GameID].CloudSaveFolder;
+                }
             }
             var appList = LegendaryLauncher.GetInstalledAppList();
             if (appList.ContainsKey(GameID))
@@ -125,6 +142,12 @@ namespace LegendaryLibraryNS
                 {
                     EnableOfflineModeChk.IsEnabled = true;
                 }
+            }
+            cloudPath = LegendaryCloud.CalculateGameSavesPath(Game.Name, Game.GameId, Game.InstallDirectory);
+            if (cloudPath.IsNullOrEmpty())
+            {
+                CloudSavesGrid.Visibility = Visibility.Collapsed;
+                CloudSavesNotSupportedTB.Visibility = Visibility.Visible;
             }
         }
 
@@ -137,6 +160,31 @@ namespace LegendaryLibraryNS
                 {
                     SelectedAlternativeExeTxt.Text = Helpers.GetRelativePath(Game.InstallDirectory, file);
                 }
+            }
+        }
+
+        private void CalculatePathBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (!cloudPath.IsNullOrEmpty())
+            {
+                SelectedSavePathTxt.Text = cloudPath;
+            }
+        }
+
+        private void ChooseSavePathBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedCloudPath = playniteAPI.Dialogs.SelectFolder();
+            if (selectedCloudPath != "")
+            {
+                SelectedSavePathTxt.Text = selectedCloudPath;
+            }
+        }
+
+        private void AutoSyncChk_Click(object sender, RoutedEventArgs e)
+        {
+            if (AutoSyncChk.IsChecked == true)
+            {
+                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendarySyncGameSavesWarn), "", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
     }

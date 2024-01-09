@@ -9,5 +9,7 @@ namespace LegendaryLibraryNS.Models
         public List<string> StartupArguments { get; set; }
         public string LanguageCode { get; set; }
         public string OverrideExe { get; set; }
+        public bool? AutoSyncSaves { get; set; }
+        public string CloudSaveFolder { get; set; }
     }
 }

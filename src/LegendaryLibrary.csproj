@@ -162,6 +162,7 @@
     <Compile Include="Enums\DownloadStatus.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="LegendaryClient.cs" />
+    <Compile Include="LegendaryCloud.cs" />
     <Compile Include="LegendaryDownloadManager.xaml.cs">
       <DependentUpon>LegendaryDownloadManager.xaml</DependentUpon>
     </Compile>

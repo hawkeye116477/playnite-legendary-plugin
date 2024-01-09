@@ -585,5 +585,21 @@ namespace System
         /// Check all
         /// </summary>
         public const string LegendaryCheckAllContent = "LOCLegendaryCheckAllContent";
+        /// <summary>
+        /// Save path
+        /// </summary>
+        public const string LegendarySavePath = "LOCLegendarySavePath";
+        /// <summary>
+        /// Sync saves to the cloud
+        /// </summary>
+        public const string LegendaryAutoSyncSaves = "LOCLegendaryAutoSyncSaves";
+        /// <summary>
+        /// Calculate path
+        /// </summary>
+        public const string LegendaryCalculatePath = "LOCLegendaryCalculatePath";
+        /// <summary>
+        /// This game doesn't support cloud saves.
+        /// </summary>
+        public const string LegendaryCloudSavesNotSupported = "LOCLegendaryCloudSavesNotSupported";
     }
 }

@@ -14,6 +14,7 @@
             public string Title { get; set; }
             public string Version { get; set; }
             public bool Cloud_saves_supported { get; set; }
+            public string Cloud_save_folder { get; set; }
             public bool Is_dlc { get; set; }
             public Owned_Dlc[] Owned_dlc { get; set; }
         }

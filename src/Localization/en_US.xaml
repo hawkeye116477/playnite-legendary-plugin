@@ -96,4 +96,8 @@
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Display download speed in bits per second</sys:String>
   <sys:String x:Key="LOCLegendaryCheckAllDlcs">Check all DLCs</sys:String>
   <sys:String x:Key="LOCLegendaryCheckAllContent">Check all</sys:String>
+  <sys:String x:Key="LOCLegendarySavePath">Save path</sys:String>
+  <sys:String x:Key="LOCLegendaryAutoSyncSaves">Sync saves to the cloud</sys:String>
+  <sys:String x:Key="LOCLegendaryCalculatePath">Calculate path</sys:String>
+  <sys:String x:Key="LOCLegendaryCloudSavesNotSupported">This game doesn't support cloud saves.</sys:String>
 </ResourceDictionary>
