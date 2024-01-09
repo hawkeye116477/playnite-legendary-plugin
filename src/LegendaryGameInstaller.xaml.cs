@@ -31,6 +31,7 @@ namespace LegendaryLibraryNS
         public double downloadSizeNumber;
         public double installSizeNumber;
         private LegendaryGameInfo.Rootobject manifest;
+        public bool uncheckedByUser = true;
 
         public LegendaryGameInstaller()
         {
@@ -99,7 +100,7 @@ namespace LegendaryLibraryNS
                     selectedExtraContent.AddMissing("");
                     foreach (var selectedOption in ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().ToList())
                     {
-                        if (selectedOption.Value.Is_dlc == false)
+                        if (!selectedOption.Value.Is_dlc)
                         {
                             foreach (var tag in selectedOption.Value.Tags)
                             {
@@ -407,6 +408,7 @@ namespace LegendaryLibraryNS
                                 }
                             }
                         }
+                        AllDlcsChk.Visibility = Visibility.Visible;
                     }
                     if (extraContentInfo.Keys.Count > 0)
                     {
@@ -623,6 +625,55 @@ namespace LegendaryLibraryNS
                     extraContent = selectedExtraContent
                 };
                 await downloadManager.EnqueueJob(GameID, InstallerWindow.Title, downloadSize, installSize, downloadProperties);
+            }
+        }
+
+        private void AllDlcsChk_Checked(object sender, RoutedEventArgs e)
+        {
+            var dlcs = ExtraContentLB.Items.Cast<KeyValuePair<string, LegendarySDLInfo>>().Where(x => x.Value.Is_dlc).ToList();
+            foreach (var dlc in dlcs)
+            {
+                ExtraContentLB.SelectedItems.Add(dlc);
+            }
+        }
+
+        private void AllDlcsChk_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (uncheckedByUser)
+            {
+                var dlcs = ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().Where(x => x.Value.Is_dlc).ToList();
+                foreach (var dlc in dlcs)
+                {
+                    ExtraContentLB.SelectedItems.Remove(dlc);
+                }
+            }
+        }
+
+        private void ExtraContentLBChk_Unchecked(object sender, RoutedEventArgs e)
+        {
+            uncheckedByUser = false;
+            if (AllOrNothingChk.IsChecked == true)
+            {
+                AllOrNothingChk.IsChecked = false;
+            }
+            var extraCheckbox = sender as CheckBox;
+            if (AllDlcsChk.IsChecked == true && (bool)extraCheckbox.Tag)
+            {
+                AllDlcsChk.IsChecked = false;
+            }
+            uncheckedByUser = true;
+        }
+
+        private void AllOrNothingChk_Checked(object sender, RoutedEventArgs e)
+        {
+            ExtraContentLB.SelectAll();
+        }
+
+        private void AllOrNothingChk_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (uncheckedByUser)
+            {
+                ExtraContentLB.SelectedItems.Clear();
             }
         }
     }

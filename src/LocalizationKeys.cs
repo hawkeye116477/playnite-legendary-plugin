@@ -577,5 +577,13 @@ namespace System
         /// Display download speed in bits per second
         /// </summary>
         public const string LegendaryDisplayDownloadSpeedInBits = "LOCLegendaryDisplayDownloadSpeedInBits";
+        /// <summary>
+        /// Check all DLCs
+        /// </summary>
+        public const string LegendaryCheckAllDlcs = "LOCLegendaryCheckAllDlcs";
+        /// <summary>
+        /// Check all
+        /// </summary>
+        public const string LegendaryCheckAllContent = "LOCLegendaryCheckAllContent";
     }
 }

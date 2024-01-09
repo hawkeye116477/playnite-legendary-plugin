@@ -69,19 +69,24 @@
             </StackPanel>
             <Border Grid.Row="4" Grid.Column="0" BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Name="ExtraContentBrd" Visibility="Collapsed" Margin="0,0,0,5">
                 <Expander Header="{DynamicResource LOCLegendaryExtraContent}" Margin="2,2,5,2" HorizontalAlignment="Left">
-                    <ListBox BorderThickness="0" Name="ExtraContentLB" SelectionMode="Multiple" SelectionChanged="ExtraContentLB_SelectionChanged" Margin="5,0,5,5">
-                        <ListBox.Resources>
-                            <Style TargetType="ListBoxItem">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="ListBoxItem">
-                                            <CheckBox Content="{Binding Value.Name}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" ToolTip="{Binding Value.Description}" Margin="0,5,0,0"/>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ListBox.Resources>
-                    </ListBox>
+                    <StackPanel Orientation="Vertical">
+                        <ListBox BorderThickness="0" Name="ExtraContentLB" SelectionMode="Multiple" SelectionChanged="ExtraContentLB_SelectionChanged" Margin="5,0,5,5">
+                            <ListBox.Resources>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListBoxItem">
+                                                <CheckBox Content="{Binding Value.Name}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" ToolTip="{Binding Value.Description}" Tag="{Binding Value.Is_dlc}" Margin="0,5,0,0" Name="ExtraContentLBChk" Unchecked="ExtraContentLBChk_Unchecked"/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListBox.Resources>
+                        </ListBox>
+                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="7,0,0,5" />
+                        <CheckBox Margin="7,0,0,5" Content="{DynamicResource LOCLegendaryCheckAllDlcs}" x:Name="AllDlcsChk" Checked="AllDlcsChk_Checked" Unchecked="AllDlcsChk_Unchecked" Visibility="Collapsed"/>
+                        <CheckBox Margin="7,0,0,5" Content="{DynamicResource LOCLegendaryCheckAllContent}" x:Name="AllOrNothingChk" Checked="AllOrNothingChk_Checked" Unchecked="AllOrNothingChk_Unchecked" />
+                    </StackPanel>
                 </Expander>
             </Border>
             <Border Grid.Row="5" Grid.Column="0" BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2">

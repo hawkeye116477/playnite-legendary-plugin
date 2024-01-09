@@ -94,4 +94,6 @@
   <sys:String x:Key="LOCLegendaryAlternativeExe">Alternative executable file</sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaves">Cloud saves</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Display download speed in bits per second</sys:String>
+  <sys:String x:Key="LOCLegendaryCheckAllDlcs">Check all DLCs</sys:String>
+  <sys:String x:Key="LOCLegendaryCheckAllContent">Check all</sys:String>
 </ResourceDictionary>
