@@ -52,13 +52,17 @@ namespace LegendaryLibraryNS
                             }
                         }
                         gameInfo.Features = new HashSet<MetadataProperty>() { };
-                        if (legendaryMetadata.metadata.customAttributes.CloudSaveFolder != null)
+                        if (legendaryMetadata.metadata.customAttributes?.CloudSaveFolder != null)
                         {
                             gameInfo.Features.Add(new MetadataNameProperty(ResourceProvider.GetString(LOC.LegendaryCloudSaves)));
                         }
                         if (legendaryMetadata.metadata.mainGameItem != null)
                         {
                             gameInfo.Features.Add(new MetadataNameProperty(ResourceProvider.GetString(LOC.LegendaryExtraContent)));
+                        }
+                        if (legendaryMetadata.metadata.customAttributes?.CanRunOffline?.value == "true")
+                        {
+                            gameInfo.Features.Add(new MetadataNameProperty(ResourceProvider.GetString(LOC.LegendaryOfflineMode)));
                         }
                     }
                 }

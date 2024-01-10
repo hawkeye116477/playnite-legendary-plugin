@@ -230,6 +230,10 @@ namespace System
         /// </summary>
         public const string LegendaryEnableOfflineMode = "LOCLegendaryEnableOfflineMode";
         /// <summary>
+        /// Offline mode
+        /// </summary>
+        public const string LegendaryOfflineMode = "LOCLegendaryOfflineMode";
+        /// <summary>
         /// Download Settings
         /// </summary>
         public const string LegendaryDownloadSettings = "LOCLegendaryDownloadSettings";

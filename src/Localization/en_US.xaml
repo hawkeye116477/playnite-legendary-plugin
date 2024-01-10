@@ -7,6 +7,7 @@
   <sys:String x:Key="LOCLegendaryUninstallGameConfirm">Are you sure you want to uninstall {0}?</sys:String>
   <sys:String x:Key="LOCLegendaryLaunchOffline">Launch games in offline mode if possible</sys:String>
   <sys:String x:Key="LOCLegendaryEnableOfflineMode">Enable offline mode</sys:String>
+  <sys:String x:Key="LOCLegendaryOfflineMode">Offline mode</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings">Download Settings</sys:String>
   <sys:String x:Key="LOCLegendaryPreferredCDN">Preferred CDN</sys:String>
   <sys:String x:Key="LOCLegendaryHttpOnlyDownload">Disable HTTPS (useful for CDNs e.g. LanCache)</sys:String>
