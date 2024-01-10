@@ -200,15 +200,15 @@ namespace LegendaryLibraryNS
                         playArgs.Add("--skip-version-check");
                     }
                 }
-                if (gameSettings?.StartupArguments != null)
+                if (gameSettings.StartupArguments?.Any() == true)
                 {
                     playArgs.AddRange(gameSettings.StartupArguments);
                 }
-                if (gameSettings?.LanguageCode != null)
+                if (!gameSettings.LanguageCode.IsNullOrEmpty())
                 {
                     playArgs.AddRange(new[] { "--language", gameSettings.LanguageCode } );
                 }
-                if (gameSettings?.OverrideExe != null)
+                if (!gameSettings.OverrideExe.IsNullOrEmpty())
                 {
                     playArgs.AddRange(new[] { "--override-exe", gameSettings?.OverrideExe });
                 }
