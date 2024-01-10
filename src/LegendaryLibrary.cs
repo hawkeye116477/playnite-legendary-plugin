@@ -354,12 +354,12 @@ namespace LegendaryLibraryNS
 
         public override void OnGameStarting(OnGameStartingEventArgs args)
         {
-            LegendaryCloud.SyncGameSaves(args.Game.Name, args.Game.GameId, args.Game.InstallDirectory, true);
+            LegendaryCloud.SyncGameSaves(args.Game.Name, args.Game.GameId, args.Game.InstallDirectory, CloudSyncAction.Download);
         }
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
-            LegendaryCloud.SyncGameSaves(args.Game.Name, args.Game.GameId, args.Game.InstallDirectory, false);
+            LegendaryCloud.SyncGameSaves(args.Game.Name, args.Game.GameId, args.Game.InstallDirectory, CloudSyncAction.Upload);
         }
 
         public override IEnumerable<SidebarItem> GetSidebarItems()

@@ -100,4 +100,11 @@
   <sys:String x:Key="LOCLegendaryAutoSyncSaves">Sync saves to the cloud</sys:String>
   <sys:String x:Key="LOCLegendaryCalculatePath">Calculate path</sys:String>
   <sys:String x:Key="LOCLegendaryCloudSavesNotSupported">This game doesn't support cloud saves.</sys:String>
+  <sys:String x:Key="LOCLegendaryManualSyncSaves">Manual sync saves</sys:String>
+  <sys:String x:Key="LOCLegendarySync">Sync</sys:String>
+  <sys:String x:Key="LOCLegendaryDownload">Download</sys:String>
+  <sys:String x:Key="LOCLegendaryUpload">Upload</sys:String>
+  <sys:String x:Key="LOCLegendaryForceDownload">Force download</sys:String>
+  <sys:String x:Key="LOCLegendaryForceUpload">Force upload</sys:String>
+  <sys:String x:Key="LOCLegendaryCloudSaveConfirm">Cloud saves feature is experimental. It's recommended to backup game saves in case something goes wrong. Are you sure you want to continue?</sys:String>
 </ResourceDictionary>

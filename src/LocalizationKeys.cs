@@ -601,5 +601,33 @@ namespace System
         /// This game doesn't support cloud saves.
         /// </summary>
         public const string LegendaryCloudSavesNotSupported = "LOCLegendaryCloudSavesNotSupported";
+        /// <summary>
+        /// Manual sync saves
+        /// </summary>
+        public const string LegendaryManualSyncSaves = "LOCLegendaryManualSyncSaves";
+        /// <summary>
+        /// Sync
+        /// </summary>
+        public const string LegendarySync = "LOCLegendarySync";
+        /// <summary>
+        /// Download
+        /// </summary>
+        public const string LegendaryDownload = "LOCLegendaryDownload";
+        /// <summary>
+        /// Upload
+        /// </summary>
+        public const string LegendaryUpload = "LOCLegendaryUpload";
+        /// <summary>
+        /// Force download
+        /// </summary>
+        public const string LegendaryForceDownload = "LOCLegendaryForceDownload";
+        /// <summary>
+        /// Force upload
+        /// </summary>
+        public const string LegendaryForceUpload = "LOCLegendaryForceUpload";
+        /// <summary>
+        /// Cloud saves feature is experimental. It's recommended to backup game saves in case something goes wrong. Are you sure you want to continue?
+        /// </summary>
+        public const string LegendaryCloudSaveConfirm = "LOCLegendaryCloudSaveConfirm";
     }
 }

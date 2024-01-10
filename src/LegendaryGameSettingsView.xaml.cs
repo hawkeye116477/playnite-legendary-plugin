@@ -9,6 +9,7 @@ using Playnite.SDK.Data;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using LegendaryLibraryNS.Enums;
 
 namespace LegendaryLibraryNS
 {
@@ -143,10 +144,22 @@ namespace LegendaryLibraryNS
                     EnableOfflineModeChk.IsEnabled = true;
                 }
             }
+            var cloudSyncActions = new Dictionary<CloudSyncAction, string>
+            {
+                { CloudSyncAction.Download, ResourceProvider.GetString(LOC.LegendaryDownload) },
+                { CloudSyncAction.Upload, ResourceProvider.GetString(LOC.LegendaryUpload) },
+                { CloudSyncAction.ForceDownload, ResourceProvider.GetString(LOC.LegendaryForceDownload) },
+                { CloudSyncAction.ForceUpload, ResourceProvider.GetString(LOC.LegendaryForceUpload) }
+            };
+            ManualSyncSavesCBo.ItemsSource = cloudSyncActions;
+            ManualSyncSavesCBo.SelectedIndex = 0;
+
+
+
             cloudPath = LegendaryCloud.CalculateGameSavesPath(Game.Name, Game.GameId, Game.InstallDirectory);
             if (cloudPath.IsNullOrEmpty())
             {
-                CloudSavesGrid.Visibility = Visibility.Collapsed;
+                CloudSavesSP.Visibility = Visibility.Collapsed;
                 CloudSavesNotSupportedTB.Visibility = Visibility.Visible;
             }
         }
@@ -185,6 +198,16 @@ namespace LegendaryLibraryNS
             if (AutoSyncChk.IsChecked == true)
             {
                 playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendarySyncGameSavesWarn), "", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void SyncBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryCloudSaveConfirm), ResourceProvider.GetString(LOC.LegendaryCloudSaves), MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                CloudSyncAction selectedCloudSyncAction = (CloudSyncAction)ManualSyncSavesCBo.SelectedValue;
+                LegendaryCloud.SyncGameSaves(Game.Name, GameID, Game.InstallDirectory, selectedCloudSyncAction, true);
             }
         }
     }

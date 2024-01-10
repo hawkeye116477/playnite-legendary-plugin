@@ -157,6 +157,7 @@
   <ItemGroup>
     <Compile Include="Converters\DownloadStatusEnumToStringConverter.cs" />
     <Compile Include="Enums\ClearCacheTime.cs" />
+    <Compile Include="Enums\CloudSyncAction.cs" />
     <Compile Include="Enums\DownloadAction.cs" />
     <Compile Include="Enums\DownloadCompleteAction.cs" />
     <Compile Include="Enums\DownloadStatus.cs" />

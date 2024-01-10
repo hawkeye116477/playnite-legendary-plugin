@@ -1,5 +1,6 @@
 ﻿using CliWrap;
 using CliWrap.EventStream;
+using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
 using Playnite.Common;
 using Playnite.SDK;
@@ -123,7 +124,7 @@ namespace LegendaryLibraryNS
         }
 
 
-        public static void SyncGameSaves(string gameName, string gameID, string gameInstallDir, bool download)
+        public static void SyncGameSaves(string gameName, string gameID, string gameInstallDir, CloudSyncAction cloudSyncAction, bool manualSync = false)
         {
             var cloudSyncEnabled = LegendaryLibrary.GetSettings().SyncGameSaves;
             var gamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
@@ -136,10 +137,14 @@ namespace LegendaryLibraryNS
             {
                 cloudSyncEnabled = (bool)gameSettings.AutoSyncSaves;
             }
+            if (manualSync)
+            {
+                cloudSyncEnabled = true;
+            }
             if (cloudSyncEnabled)
             {
                 var cloudSaveFolder = CalculateGameSavesPath(gameName, gameID, gameInstallDir);
-                if (gameSettings?.CloudSaveFolder != "")
+                if (!gameSettings.CloudSaveFolder.IsNullOrEmpty())
                 {
                     cloudSaveFolder = gameSettings.CloudSaveFolder;
                 }
@@ -154,14 +159,26 @@ namespace LegendaryLibraryNS
                         {
                             a.ProgressMaxValue = 100;
                             a.CurrentProgressValue = 0;
+                            var cloudArgs = new List<string>();
+                            cloudArgs.AddRange(new[] { "-y", "sync-saves", gameID });
                             var skippedActivity = "--skip-upload";
-                            if (download == false)
+                            if (cloudSyncAction == CloudSyncAction.Upload || cloudSyncAction == CloudSyncAction.ForceUpload)
                             {
                                 skippedActivity = "--skip-download";
                             }
+                            cloudArgs.Add(skippedActivity);
+                            if (cloudSyncAction == CloudSyncAction.ForceDownload)
+                            {
+                                cloudArgs.Add("--force-download");
+                            }
+                            else if (cloudSyncAction == CloudSyncAction.ForceUpload)
+                            {
+                                cloudArgs.Add("--force-upload");
+                            }
+                            cloudArgs.AddRange(new[] { "--save-path", cloudSaveFolder });
                             var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                          .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
-                                         .WithArguments(new[] { "-y", "sync-saves", gameID, skippedActivity, "--save-path", cloudSaveFolder });
+                                         .WithArguments(cloudArgs);
                             await foreach (var cmdEvent in cmd.ListenAsync())
                             {
                                 switch (cmdEvent)
