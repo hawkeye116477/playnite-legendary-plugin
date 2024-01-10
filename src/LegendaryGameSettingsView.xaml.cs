@@ -154,8 +154,6 @@ namespace LegendaryLibraryNS
             ManualSyncSavesCBo.ItemsSource = cloudSyncActions;
             ManualSyncSavesCBo.SelectedIndex = 0;
 
-
-
             cloudPath = LegendaryCloud.CalculateGameSavesPath(Game.Name, Game.GameId, Game.InstallDirectory);
             if (cloudPath.IsNullOrEmpty())
             {
@@ -178,6 +176,10 @@ namespace LegendaryLibraryNS
 
         private void CalculatePathBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (cloudPath.IsNullOrEmpty())
+            {
+                cloudPath = LegendaryCloud.CalculateGameSavesPath(Game.Name, Game.GameId, Game.InstallDirectory);
+            }
             if (!cloudPath.IsNullOrEmpty())
             {
                 SelectedSavePathTxt.Text = cloudPath;
