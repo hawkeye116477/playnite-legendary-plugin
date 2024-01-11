@@ -32,15 +32,15 @@ namespace LegendaryLibraryNS
 
         public static Dictionary<string, GameSettings> LoadSavedGamesSettings()
         {
-            var gamesSettings = new Dictionary<string, GameSettings>();
+            var savedGamesSettings = new Dictionary<string, GameSettings>();
             var dataDir = LegendaryLibrary.Instance.GetPluginUserDataPath();
             var dataFile = Path.Combine(dataDir, "gamesSettings.json");
             bool correctJson = false;
             if (File.Exists(dataFile))
             {
-                if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(dataFile), out gamesSettings))
+                if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(dataFile), out savedGamesSettings))
                 {
-                    if (gamesSettings != null)
+                    if (savedGamesSettings != null)
                     {
                         correctJson = true;
                     }
@@ -48,9 +48,9 @@ namespace LegendaryLibraryNS
             }
             if (!correctJson)
             {
-                gamesSettings = new Dictionary<string, GameSettings>();
+                savedGamesSettings = new Dictionary<string, GameSettings>();
             }
-            return gamesSettings;
+            return savedGamesSettings;
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
