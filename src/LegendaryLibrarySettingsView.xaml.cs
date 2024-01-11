@@ -203,7 +203,9 @@ namespace LegendaryLibraryNS
                 {
                     LegendaryLibrary.Instance.GetCachePath("catalogcache"),
                     LegendaryLibrary.Instance.GetCachePath("infocache"),
-                    LegendaryLibrary.Instance.GetCachePath("sdlcache")
+                    LegendaryLibrary.Instance.GetCachePath("sdlcache"),
+                    Path.Combine(LegendaryLauncher.ConfigPath, "manifests"),
+                    Path.Combine(LegendaryLauncher.ConfigPath, "metadata")
                 };
                 foreach (var cacheDir in cacheDirs)
                 {

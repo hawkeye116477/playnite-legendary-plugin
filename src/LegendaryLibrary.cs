@@ -393,47 +393,70 @@ namespace LegendaryLibraryNS
                 downloadManager.SaveData();
             }
 
-            if (GetSettings().AutoClearCache != (int)ClearCacheTime.Never)
+            var settings = GetSettings();
+            if (settings != null)
             {
-                var clearingTime = DateTime.Now;
-                switch (GetSettings().AutoClearCache)
+                if (settings.AutoClearCache != (int)ClearCacheTime.Never)
                 {
-                    case (int)ClearCacheTime.Day:
-                        clearingTime = DateTime.Now.AddDays(-1);
-                        break;
-                    case (int)ClearCacheTime.Week:
-                        clearingTime = DateTime.Now.AddDays(-7);
-                        break;
-                    case (int)ClearCacheTime.Month:
-                        clearingTime = DateTime.Now.AddMonths(-1);
-                        break;
-                    case (int)ClearCacheTime.ThreeMonths:
-                        clearingTime = DateTime.Now.AddMonths(-3);
-                        break;
-                    case (int)ClearCacheTime.SixMonths:
-                        clearingTime = DateTime.Now.AddMonths(-6);
-                        break;
-                    default:
-                        break;
-                }
-                var cacheDirs = new List<string>()
-                {
-                    GetCachePath("catalogcache"),
-                    GetCachePath("infocache"),
-                    GetCachePath("sdlcache")
-                };
-
-                foreach (var cacheDir in cacheDirs)
-                {
-                    if (Directory.Exists(cacheDir))
+                    var cacheDirs = new List<string>()
                     {
-                        if (Directory.GetCreationTime(cacheDir) < clearingTime)
+                        GetCachePath("catalogcache"),
+                        GetCachePath("infocache"),
+                        GetCachePath("sdlcache"),
+                        Path.Combine(LegendaryLauncher.ConfigPath, "manifests"),
+                        Path.Combine(LegendaryLauncher.ConfigPath, "metadata")
+                    };
+
+                    DateTimeOffset now = DateTime.UtcNow;
+                    var nextClearingTime = settings.NextClearingTime;
+                    if (nextClearingTime != 0)
+                    {
+                        if (now.ToUnixTimeSeconds() >= nextClearingTime)
                         {
-                            Directory.Delete(cacheDir, true);
+                            foreach (var cacheDir in cacheDirs)
+                            {
+                                if (Directory.Exists(cacheDir))
+                                {
+                                    Directory.Delete(cacheDir, true);
+                                }
+                            }
+                            settings.NextClearingTime = GetNextClearingTime(settings.AutoClearCache);
+                            SavePluginSettings(settings);
                         }
+                    }
+                    else
+                    {
+                        settings.NextClearingTime = GetNextClearingTime(settings.AutoClearCache);
+                        SavePluginSettings(settings);
                     }
                 }
             }
+        }
+
+        public static long GetNextClearingTime(int frequency)
+        {
+            DateTimeOffset clearingTime = DateTime.UtcNow;
+            switch (frequency)
+            {
+                case (int)ClearCacheTime.Day:
+                    clearingTime = clearingTime.AddDays(1);
+                    break;
+                case (int)ClearCacheTime.Week:
+                    clearingTime = clearingTime.AddDays(7);
+                    break;
+                case (int)ClearCacheTime.Month:
+                    clearingTime = clearingTime.AddMonths(1);
+                    break;
+                case (int)ClearCacheTime.ThreeMonths:
+                    clearingTime = clearingTime.AddMonths(3);
+                    break;
+                case (int)ClearCacheTime.SixMonths:
+                    clearingTime = clearingTime.AddMonths(6);
+                    break;
+                default:
+                    break;
+            }
+            return clearingTime.ToUnixTimeSeconds();
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)

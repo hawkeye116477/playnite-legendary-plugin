@@ -27,6 +27,7 @@ namespace LegendaryLibraryNS
         public int MaxSharedMemory { get; set; } = LegendaryLauncher.DefaultMaxSharedMemory;
         public bool EnableReordering { get; set; } = false;
         public int AutoClearCache { get; set; } = (int)ClearCacheTime.Never;
+        public long NextClearingTime { get; set; } = 0;
         public bool DisableGameVersionCheck { get; set; } = false;
         public bool DisplayDownloadSpeedInBits { get; set; } = false;
     }
@@ -92,6 +93,22 @@ namespace LegendaryLibraryNS
                 PlayniteApi.Dialogs.ShowErrorMessage(PlayniteApi.Resources.GetString(LOC.Legendary3P_EpicNotLoggedInError), "");
                 Logger.Error(e, "Failed to authenticate user.");
             }
+        }
+
+        public override void EndEdit()
+        {
+            if (EditingClone.AutoClearCache != Settings.AutoClearCache)
+            {
+                if (Settings.AutoClearCache != (int)ClearCacheTime.Never)
+                {
+                    Settings.NextClearingTime = LegendaryLibrary.GetNextClearingTime(Settings.AutoClearCache);
+                }
+            }
+            if (Settings.AutoClearCache == (int)ClearCacheTime.Never)
+            {
+                Settings.NextClearingTime = 0;
+            }
+            base.EndEdit();
         }
     }
 }
