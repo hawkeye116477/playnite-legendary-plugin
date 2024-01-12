@@ -199,6 +199,7 @@
     <Compile Include="Models\LegendarySDLInfo.cs" />
     <Compile Include="Models\OauthResponse.cs" />
     <Compile Include="EpicMetadataProvider.cs" />
+    <Compile Include="Models\PlaytimePayload.cs" />
     <Compile Include="Models\PlaytimesResponse.cs" />
     <Compile Include="LegendaryTroubleshootingInformation.cs" />
     <Compile Include="Models\WebStoreModels.cs" />

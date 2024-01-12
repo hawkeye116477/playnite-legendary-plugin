@@ -11,5 +11,6 @@ namespace LegendaryLibraryNS.Models
         public string OverrideExe { get; set; }
         public bool? AutoSyncSaves { get; set; }
         public string CloudSaveFolder { get; set; }
+        public bool? AutoSyncPlaytime { get; set; }
     }
 }

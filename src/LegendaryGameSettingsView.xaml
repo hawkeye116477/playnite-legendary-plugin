@@ -57,10 +57,11 @@
                     </Grid>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="{DynamicResource LOCLegendaryCloudSaves}">
+            <TabItem Header="{DynamicResource LOCLegendaryCloud}">
                 <StackPanel Margin="10">
+                    <CheckBox Name="AutoSyncPlaytimeChk" Content="{DynamicResource LOCLegendarySyncPlaytime}" Margin="0,0,0,10"></CheckBox>
                     <StackPanel x:Name="CloudSavesSP">
-                        <CheckBox Name="AutoSyncChk" Content="{DynamicResource LOCLegendaryAutoSyncSaves}" Margin="0,0,0,5" Click="AutoSyncChk_Click"></CheckBox>
+                        <CheckBox Name="AutoSyncSavesChk" Content="{DynamicResource LOCLegendaryAutoSyncSaves}" Margin="0,0,0,10" Click="AutoSyncSavesChk_Click"></CheckBox>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -88,10 +89,10 @@
                         <StackPanel Orientation="Horizontal" Margin="0,10,0,5">
                             <TextBlock Text="{DynamicResource LOCLegendaryManualSyncSaves}" Margin="0,0,10,0" VerticalAlignment="Center"/>
                             <ComboBox x:Name="ManualSyncSavesCBo" DisplayMemberPath="Value" SelectedValuePath="Key" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Margin="0,0,10,0" HorizontalAlignment="Left"/>
-                            <Button x:Name="SyncBtn" Content="{DynamicResource LOCLegendarySync}" HorizontalAlignment="Left" Margin="0" Click="SyncBtn_Click"></Button>
+                            <Button x:Name="SyncSavesBtn" Content="{DynamicResource LOCLegendarySync}" HorizontalAlignment="Left" Margin="0" Click="SyncSavesBtn_Click"></Button>
                         </StackPanel>
                     </StackPanel>
-                    <TextBlock Text="{DynamicResource LOCLegendaryCloudSavesNotSupported}" Name="CloudSavesNotSupportedTB" Visibility="Collapsed"></TextBlock>
+                    <TextBlock Text="{DynamicResource LOCLegendaryCloudSavesNotSupported}" Name="CloudSavesNotSupportedTB" Visibility="Collapsed" Margin="0,5,0,0"></TextBlock>
                 </StackPanel>
             </TabItem>
         </TabControl>

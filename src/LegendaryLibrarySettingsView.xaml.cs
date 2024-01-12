@@ -192,6 +192,11 @@ namespace LegendaryLibraryNS
             PluginVersionTxt.Text = troubleshootingInformation.PluginVersion;
             GamesInstallationPathTxt.Text = troubleshootingInformation.GamesInstallationPath;
             ReportBugHyp.NavigateUri = new Uri($"https://github.com/hawkeye116477/playnite-legendary-plugin/issues/new?assignees=&labels=bug&projects=&template=bugs.yml&legendaryV={troubleshootingInformation.PluginVersion}&playniteV={troubleshootingInformation.PlayniteVersion}&launcherV={troubleshootingInformation.LauncherVersion}");
+
+            if (playniteAPI.ApplicationSettings.PlaytimeImportMode == PlaytimeImportMode.Never)
+            {
+                SyncPlaytimeChk.IsEnabled = false;
+            }
         }
 
         private void ClearCacheBtn_Click(object sender, RoutedEventArgs e)

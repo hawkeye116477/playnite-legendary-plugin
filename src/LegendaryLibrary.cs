@@ -13,8 +13,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace LegendaryLibraryNS
@@ -120,7 +122,11 @@ namespace LegendaryLibraryNS
                 Logger.Warn("Found no assets on Epic accounts.");
             }
 
-            var playtimeItems = accountApi.GetPlaytimeItems();
+            var playtimeItems = new List<PlaytimeItem>();
+            if (GetSettings().SyncPlaytime)
+            {
+                playtimeItems = accountApi.GetPlaytimeItems();
+            }
             foreach (var gameAsset in assets.Where(a => a.@namespace != "ue"))
             {
                 if (cancelToken.IsCancellationRequested)
@@ -149,10 +155,13 @@ namespace LegendaryLibraryNS
                     Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") }
                 };
 
-                var playtimeItem = playtimeItems?.FirstOrDefault(x => x.artifactId == gameAsset.appName);
-                if (playtimeItem != null)
+                if (GetSettings().SyncPlaytime)
                 {
-                    newGame.Playtime = playtimeItem.totalTime;
+                    var playtimeItem = playtimeItems?.FirstOrDefault(x => x.artifactId == gameAsset.appName);
+                    if (playtimeItem != null)
+                    {
+                        newGame.Playtime = playtimeItem.totalTime;
+                    }
                 }
 
                 games.Add(newGame);
@@ -198,7 +207,10 @@ namespace LegendaryLibraryNS
                     {
                         if (installedGames.TryGetValue(game.GameId, out var installed))
                         {
-                            installed.Playtime = game.Playtime;
+                            if (GetSettings().SyncPlaytime)
+                            {
+                                installed.Playtime = game.Playtime;
+                            }
                             installed.LastActivity = game.LastActivity;
                             installed.Name = game.Name;
                         }
@@ -360,6 +372,57 @@ namespace LegendaryLibraryNS
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
             LegendaryCloud.SyncGameSaves(args.Game.Name, args.Game.GameId, args.Game.InstallDirectory, CloudSyncAction.Upload);
+            var playtimeSyncEnabled = false;
+            if (PlayniteApi.ApplicationSettings.PlaytimeImportMode != PlaytimeImportMode.Never)
+            {
+                playtimeSyncEnabled = GetSettings().SyncPlaytime;
+                var gamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
+                var gameSettings = new GameSettings();
+                if (gamesSettings.ContainsKey(args.Game.GameId))
+                {
+                    gameSettings = gamesSettings[args.Game.GameId];
+                }
+                if (gameSettings?.AutoSyncPlaytime != null)
+                {
+                    playtimeSyncEnabled = (bool)gameSettings.AutoSyncPlaytime;
+                }
+            }
+            if (playtimeSyncEnabled)
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryUploadingPlaytime).Format(args.Game.Name), false);
+                    PlayniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
+                    {
+                        a.ProgressMaxValue = 100;
+                        a.CurrentProgressValue = 0;
+                        httpClient.DefaultRequestHeaders.Clear();
+                        var userData = Serialization.FromJson<OauthResponse>(FileSystem.ReadFileAsStringSafe(LegendaryLauncher.TokensPath));
+                        httpClient.DefaultRequestHeaders.Add("Authorization", userData.token_type + " " + userData.access_token);
+                        var uri = $"https://library-service.live.use1a.on.epicgames.com/library/api/public/playtime/account/{userData.account_id}";
+                        PlaytimePayload playtimePayload = new PlaytimePayload
+                        {
+                            artifactId = args.Game.GameId,
+                            machineId = Environment.MachineName
+                        };
+                        DateTime now = DateTime.UtcNow;
+                        playtimePayload.endTime = now;
+                        var totalSeconds = args.ElapsedSeconds;
+                        var startTime = now.AddSeconds(-(double)totalSeconds);
+                        playtimePayload.startTime = now.AddSeconds(-(double)totalSeconds);
+                        var playtimeJson = Serialization.ToJson(playtimePayload);
+                        var content = new StringContent(playtimeJson, System.Text.Encoding.UTF8, "application/json");
+                        a.CurrentProgressValue = 1;
+                        var result = await httpClient.PutAsync(uri, content);
+                        if (!result.IsSuccessStatusCode)
+                        {
+                            PlayniteApi.Dialogs.ShowErrorMessage(PlayniteApi.Resources.GetString(LOC.LegendarySyncError).Format(args.Game.Name));
+                            logger.Error($"An error occured during uploading playtime to the cloud. Status code: {result.StatusCode}.");
+                        }
+                        a.CurrentProgressValue = 100;
+                    }, globalProgressOptions);
+                }
+            }
         }
 
         public override IEnumerable<SidebarItem> GetSidebarItems()

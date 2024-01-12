@@ -77,13 +77,17 @@ namespace LegendaryLibraryNS
             {
                 newGameSettings.OverrideExe = SelectedAlternativeExeTxt.Text;
             }
-            if (AutoSyncChk.IsChecked != globalSettings.SyncGameSaves)
+            if (AutoSyncSavesChk.IsChecked != globalSettings.SyncGameSaves)
             {
-                newGameSettings.AutoSyncSaves = AutoSyncChk.IsChecked;
+                newGameSettings.AutoSyncSaves = AutoSyncSavesChk.IsChecked;
             }
             if (SelectedSavePathTxt.Text != "")
             {
                 newGameSettings.CloudSaveFolder = SelectedSavePathTxt.Text;
+            }
+            if (AutoSyncPlaytimeChk.IsChecked != globalSettings.SyncPlaytime)
+            {
+                newGameSettings.AutoSyncPlaytime = AutoSyncPlaytimeChk.IsChecked;
             }
             if (newGameSettings.GetType().GetProperties().Any(p => p.GetValue(newGameSettings) != null) || gamesSettings.ContainsKey(GameID))
             {
@@ -107,34 +111,43 @@ namespace LegendaryLibraryNS
             DisableGameUpdateCheckingChk.IsChecked = globalSettings.DisableGameVersionCheck;
             if (gamesSettings.ContainsKey(GameID))
             {
-                if (gamesSettings[GameID].LaunchOffline != null)
+                var gameSettings = gamesSettings[GameID];
+                if (gameSettings.LaunchOffline != null)
                 {
                     EnableOfflineModeChk.IsChecked = gamesSettings[GameID].LaunchOffline;
                 }
-                if (gamesSettings[GameID].DisableGameVersionCheck != null)
+                if (gameSettings.DisableGameVersionCheck != null)
                 {
                     DisableGameUpdateCheckingChk.IsChecked = gamesSettings[GameID].DisableGameVersionCheck;
                 }
-                if (gamesSettings[GameID].StartupArguments != null)
+                if (gameSettings.StartupArguments != null)
                 {
                     StartupArgumentsTxt.Text = string.Join(" ", gamesSettings[GameID].StartupArguments);
                 }
-                if (gamesSettings[GameID].LanguageCode != null)
+                if (gameSettings.LanguageCode != null)
                 {
                     LanguageCodeTxt.Text = gamesSettings[GameID].LanguageCode;
                 }
-                if (gamesSettings[GameID].OverrideExe != null)
+                if (gameSettings.OverrideExe != null)
                 {
                     SelectedAlternativeExeTxt.Text = gamesSettings[GameID].OverrideExe;
                 }
-                if (gamesSettings[GameID].AutoSyncSaves != null)
+                if (gameSettings.AutoSyncSaves != null)
                 {
-                    AutoSyncChk.IsChecked = true;
+                    AutoSyncSavesChk.IsChecked = gameSettings.AutoSyncSaves;
                 }
-                if (!gamesSettings[GameID].CloudSaveFolder.IsNullOrEmpty())
+                if (!gameSettings.CloudSaveFolder.IsNullOrEmpty())
                 {
                     SelectedSavePathTxt.Text = gamesSettings[GameID].CloudSaveFolder;
                 }
+                if (!gameSettings.AutoSyncPlaytime != null) 
+                {
+                    AutoSyncPlaytimeChk.IsChecked = gameSettings.AutoSyncPlaytime;
+                }
+            }
+            if (playniteAPI.ApplicationSettings.PlaytimeImportMode == PlaytimeImportMode.Never)
+            {
+                AutoSyncPlaytimeChk.IsEnabled = false;
             }
             var appList = LegendaryLauncher.GetInstalledAppList();
             if (appList.ContainsKey(GameID))
@@ -195,15 +208,15 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private void AutoSyncChk_Click(object sender, RoutedEventArgs e)
+        private void AutoSyncSavesChk_Click(object sender, RoutedEventArgs e)
         {
-            if (AutoSyncChk.IsChecked == true)
+            if (AutoSyncSavesChk.IsChecked == true)
             {
                 playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendarySyncGameSavesWarn), "", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
-        private void SyncBtn_Click(object sender, RoutedEventArgs e)
+        private void SyncSavesBtn_Click(object sender, RoutedEventArgs e)
         {
             var result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryCloudSaveConfirm), ResourceProvider.GetString(LOC.LegendaryCloudSaves), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)

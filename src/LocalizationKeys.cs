@@ -594,6 +594,10 @@ namespace System
         /// </summary>
         public const string LegendarySavePath = "LOCLegendarySavePath";
         /// <summary>
+        /// Cloud
+        /// </summary>
+        public const string LegendaryCloud = "LOCLegendaryCloud";
+        /// <summary>
         /// Sync saves to the cloud
         /// </summary>
         public const string LegendaryAutoSyncSaves = "LOCLegendaryAutoSyncSaves";
@@ -633,5 +637,17 @@ namespace System
         /// Cloud saves feature is experimental. It's recommended to backup game saves in case something goes wrong. Are you sure you want to continue?
         /// </summary>
         public const string LegendaryCloudSaveConfirm = "LOCLegendaryCloudSaveConfirm";
+        /// <summary>
+        /// Sync playtime to the cloud
+        /// </summary>
+        public const string LegendarySyncPlaytime = "LOCLegendarySyncPlaytime";
+        /// <summary>
+        /// Uploading {0} game playtime to the cloud...
+        /// </summary>
+        public const string LegendaryUploadingPlaytime = "LOCLegendaryUploadingPlaytime";
+        /// <summary>
+        /// An error occurred while uploading {0} game playtime to the cloud.
+        /// </summary>
+        public const string LegendaryUploadPlaytimeError = "LOCLegendaryUploadPlaytimeError";
     }
 }

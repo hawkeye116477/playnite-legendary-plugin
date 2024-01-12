@@ -15,7 +15,7 @@ namespace LegendaryLibraryNS
 {
     public class LegendaryCloud
     {
-        public static string CalculateGameSavesPath(string gameName, string gameID, string gameInstallDir)
+        internal static string CalculateGameSavesPath(string gameName, string gameID, string gameInstallDir)
         {
             string cloudSaveFolder = "";
             var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("infocache");
@@ -124,7 +124,7 @@ namespace LegendaryLibraryNS
         }
 
 
-        public static void SyncGameSaves(string gameName, string gameID, string gameInstallDir, CloudSyncAction cloudSyncAction, bool manualSync = false)
+        internal static void SyncGameSaves(string gameName, string gameID, string gameInstallDir, CloudSyncAction cloudSyncAction, bool manualSync = false)
         {
             var cloudSyncEnabled = LegendaryLibrary.GetSettings().SyncGameSaves;
             var gamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();

@@ -98,6 +98,7 @@
   <sys:String x:Key="LOCLegendaryCheckAllDlcs">Check all DLCs</sys:String>
   <sys:String x:Key="LOCLegendaryCheckAllContent">Check all</sys:String>
   <sys:String x:Key="LOCLegendarySavePath">Save path</sys:String>
+  <sys:String x:Key="LOCLegendaryCloud">Cloud</sys:String>
   <sys:String x:Key="LOCLegendaryAutoSyncSaves">Sync saves to the cloud</sys:String>
   <sys:String x:Key="LOCLegendaryCalculatePath">Calculate path</sys:String>
   <sys:String x:Key="LOCLegendaryCloudSavesNotSupported">This game doesn't support cloud saves.</sys:String>
@@ -108,4 +109,7 @@
   <sys:String x:Key="LOCLegendaryForceDownload">Force download</sys:String>
   <sys:String x:Key="LOCLegendaryForceUpload">Force upload</sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaveConfirm">Cloud saves feature is experimental. It's recommended to backup game saves in case something goes wrong. Are you sure you want to continue?</sys:String>
+  <sys:String x:Key="LOCLegendarySyncPlaytime">Sync playtime to the cloud</sys:String>
+  <sys:String x:Key="LOCLegendaryUploadingPlaytime">Uploading {0} game playtime to the cloud...</sys:String>
+  <sys:String x:Key="LOCLegendaryUploadPlaytimeError">An error occurred while uploading {0} game playtime to the cloud.</sys:String>
 </ResourceDictionary>
