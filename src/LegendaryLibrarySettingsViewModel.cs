@@ -39,7 +39,7 @@ namespace LegendaryLibraryNS
         {
             get
             {
-                return new EpicAccountClient(PlayniteApi, LegendaryLauncher.TokensPath).GetIsUserLoggedIn();
+                return new EpicAccountClient(PlayniteApi, LegendaryLauncher.TokensPath).GetIsUserLoggedIn().GetAwaiter().GetResult();
             }
         }
 

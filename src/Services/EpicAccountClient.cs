@@ -130,7 +130,7 @@ namespace LegendaryLibraryNS.Services
             }
         }
 
-        public bool GetIsUserLoggedIn()
+        public async Task<bool> GetIsUserLoggedIn()
         {
             var tokens = loadTokens();
             if (tokens == null)
@@ -140,21 +140,21 @@ namespace LegendaryLibraryNS.Services
 
             try
             {
-                var account = InvokeRequest<AccountResponse>(accountUrl + tokens.account_id, tokens).GetAwaiter().GetResult().Item2;
-                return account.id == tokens.account_id;
+                var account = await InvokeRequest<AccountResponse>(accountUrl + tokens.account_id, tokens);
+                return account.Item2.id == tokens.account_id;
             }
             catch (Exception e)
             {
                 if (e is TokenException)
                 {
-                    renewTokens().GetAwaiter().GetResult();
+                    await renewTokens();
                     tokens = loadTokens();
                     if (tokens is null)
                     {
                         return false;
                     }
-                    var account = InvokeRequest<AccountResponse>(accountUrl + tokens.account_id, tokens).GetAwaiter().GetResult().Item2;
-                    return account.id == tokens.account_id;
+                    var account = await InvokeRequest<AccountResponse>(accountUrl + tokens.account_id, tokens);
+                    return account.Item2.id == tokens.account_id;
                 }
                 else
                 {
@@ -164,26 +164,28 @@ namespace LegendaryLibraryNS.Services
             }
         }
 
-        public List<Asset> GetAssets()
+        public async Task<List<Asset>> GetAssets()
         {
-            if (!GetIsUserLoggedIn())
+            if (!await GetIsUserLoggedIn())
             {
                 throw new Exception("User is not authenticated.");
             }
 
-            return InvokeRequest<List<Asset>>(assetsUrl, loadTokens()).GetAwaiter().GetResult().Item2;
+            var response = await InvokeRequest<List<Asset>>(assetsUrl, loadTokens());
+            return response.Item2;
         }
 
-        public List<PlaytimeItem> GetPlaytimeItems()
+        public async Task<List<PlaytimeItem>> GetPlaytimeItems()
         {
-            if (!GetIsUserLoggedIn())
+            if (!await GetIsUserLoggedIn())
             {
                 throw new Exception("User is not authenticated.");
             }
 
             var tokens = loadTokens();
             var formattedPlaytimeUrl = string.Format(playtimeUrl, tokens.account_id);
-            return InvokeRequest<List<PlaytimeItem>>(formattedPlaytimeUrl, tokens).GetAwaiter().GetResult().Item2;
+            var response = await InvokeRequest<List<PlaytimeItem>>(formattedPlaytimeUrl, tokens);
+            return response.Item2;
         }
 
         public CatalogItem GetCatalogItem(string nameSpace, string id, string cachePath)

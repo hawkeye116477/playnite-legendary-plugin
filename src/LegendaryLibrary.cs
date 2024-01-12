@@ -111,18 +111,18 @@ namespace LegendaryLibraryNS
             return games;
         }
 
-        internal List<GameMetadata> GetLibraryGames(CancellationToken cancelToken)
+        internal async Task<List<GameMetadata>> GetLibraryGames(CancellationToken cancelToken)
         {
             var cacheDir = GetCachePath("catalogcache");
             var games = new List<GameMetadata>();
             var accountApi = new EpicAccountClient(PlayniteApi, LegendaryLauncher.TokensPath);
-            var assets = accountApi.GetAssets();
+            var assets = await accountApi.GetAssets();
             if (!assets?.Any() == true)
             {
                 Logger.Warn("Found no assets on Epic accounts.");
             }
 
-            var playtimeItems = accountApi.GetPlaytimeItems();
+            var playtimeItems = await accountApi.GetPlaytimeItems();
             var gamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
             foreach (var gameAsset in assets.Where(a => a.@namespace != "ue"))
             {
@@ -202,7 +202,7 @@ namespace LegendaryLibraryNS
             {
                 try
                 {
-                    var libraryGames = GetLibraryGames(args.CancelToken);
+                    var libraryGames = GetLibraryGames(args.CancelToken).GetAwaiter().GetResult();
                     Logger.Debug($"Found {libraryGames.Count} library Epic games.");
 
                     if (!SettingsViewModel.Settings.ImportUninstalledGames)
