@@ -122,11 +122,8 @@ namespace LegendaryLibraryNS
                 Logger.Warn("Found no assets on Epic accounts.");
             }
 
-            var playtimeItems = new List<PlaytimeItem>();
-            if (GetSettings().SyncPlaytime)
-            {
-                playtimeItems = accountApi.GetPlaytimeItems();
-            }
+            var playtimeItems = accountApi.GetPlaytimeItems();
+            var gamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
             foreach (var gameAsset in assets.Where(a => a.@namespace != "ue"))
             {
                 if (cancelToken.IsCancellationRequested)
@@ -155,7 +152,17 @@ namespace LegendaryLibraryNS
                     Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") }
                 };
 
-                if (GetSettings().SyncPlaytime)
+                var gameSettings = new GameSettings();
+                if (gamesSettings.ContainsKey(newGame.GameId))
+                {
+                    gameSettings = gamesSettings[newGame.GameId];
+                }
+                var playtimeSyncEnabled = GetSettings().SyncPlaytime;
+                if (gameSettings.AutoSyncPlaytime != null)
+                {
+                    playtimeSyncEnabled = (bool)gameSettings.AutoSyncPlaytime;
+                }
+                if (playtimeSyncEnabled)
                 {
                     var playtimeItem = playtimeItems?.FirstOrDefault(x => x.artifactId == gameAsset.appName);
                     if (playtimeItem != null)
@@ -207,10 +214,7 @@ namespace LegendaryLibraryNS
                     {
                         if (installedGames.TryGetValue(game.GameId, out var installed))
                         {
-                            if (GetSettings().SyncPlaytime)
-                            {
-                                installed.Playtime = game.Playtime;
-                            }
+                            installed.Playtime = game.Playtime;
                             installed.LastActivity = game.LastActivity;
                             installed.Name = game.Name;
                         }
@@ -400,10 +404,15 @@ namespace LegendaryLibraryNS
                         var userData = Serialization.FromJson<OauthResponse>(FileSystem.ReadFileAsStringSafe(LegendaryLauncher.TokensPath));
                         httpClient.DefaultRequestHeaders.Add("Authorization", userData.token_type + " " + userData.access_token);
                         var uri = $"https://library-service.live.use1a.on.epicgames.com/library/api/public/playtime/account/{userData.account_id}";
+                        var machineName = Environment.MachineName;
+                        if (machineName.IsNullOrEmpty())
+                        {
+                            machineName = "Computer";
+                        }
                         PlaytimePayload playtimePayload = new PlaytimePayload
                         {
                             artifactId = args.Game.GameId,
-                            machineId = Environment.MachineName
+                            machineId = machineName
                         };
                         DateTime now = DateTime.UtcNow;
                         playtimePayload.endTime = now;

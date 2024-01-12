@@ -109,6 +109,8 @@ namespace LegendaryLibraryNS
             var globalSettings = LegendaryLibrary.GetSettings();
             EnableOfflineModeChk.IsChecked = globalSettings.LaunchOffline;
             DisableGameUpdateCheckingChk.IsChecked = globalSettings.DisableGameVersionCheck;
+            AutoSyncSavesChk.IsChecked = globalSettings.SyncGameSaves;
+            AutoSyncPlaytimeChk.IsChecked = globalSettings.SyncPlaytime;
             if (gamesSettings.ContainsKey(GameID))
             {
                 var gameSettings = gamesSettings[GameID];
