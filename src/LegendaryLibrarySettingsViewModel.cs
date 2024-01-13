@@ -35,65 +35,9 @@ namespace LegendaryLibraryNS
 
     public class LegendaryLibrarySettingsViewModel : PluginSettingsViewModel<LegendaryLibrarySettings, LegendaryLibrary>
     {
-        public bool IsUserLoggedIn
-        {
-            get
-            {
-                return new EpicAccountClient(PlayniteApi, LegendaryLauncher.TokensPath).GetIsUserLoggedIn().GetAwaiter().GetResult();
-            }
-        }
-
-        public RelayCommand<object> LoginCommand
-        {
-            get => new RelayCommand<object>(async (a) =>
-            {
-                if (LegendaryLauncher.IsInstalled)
-                {
-                    await Login();
-                }
-                else
-                {
-                    PlayniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
-                }
-            });
-        }
-
-        public RelayCommand<object> SignOutCommand
-        {
-            get => new RelayCommand<object>(async (a) =>
-            {
-                var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                      .WithArguments(new[] { "auth", "--delete" })
-                                      .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
-                                      .WithValidation(CommandResultValidation.None)
-                                      .ExecuteBufferedAsync();
-               if (result.ExitCode != 0 && !result.StandardError.Contains("User data deleted"))
-                {
-                    Logger.Error($"[Legendary] Failed to sign out. Error: {result.StandardError}");
-                    return;
-                }
-                OnPropertyChanged(nameof(IsUserLoggedIn));
-            });
-        }
-
         public LegendaryLibrarySettingsViewModel(LegendaryLibrary library, IPlayniteAPI api) : base(library, api)
         {
             Settings = LoadSavedSettings() ?? new LegendaryLibrarySettings();
-        }
-
-        private async Task Login()
-        {
-            try
-            {
-                var clientApi = new EpicAccountClient(PlayniteApi, LegendaryLauncher.TokensPath);
-                await clientApi.Login();
-                OnPropertyChanged(nameof(IsUserLoggedIn));
-            }
-            catch (Exception e) when (!Debugger.IsAttached)
-            {
-                PlayniteApi.Dialogs.ShowErrorMessage(PlayniteApi.Resources.GetString(LOC.Legendary3P_EpicNotLoggedInError), "");
-                Logger.Error(e, "Failed to authenticate user.");
-            }
         }
 
         public override void EndEdit()

@@ -39,60 +39,8 @@
 
                     <StackPanel Orientation="Horizontal"
                         DockPanel.Dock="Top" Margin="0,15,5,5" HorizontalAlignment="Left">
-                        <Button
-                            HorizontalAlignment="Left"
-                            Name="LoginBtn">
-                            <Button.Tag>
-                                <PriorityBinding>
-                                    <Binding Path="IsUserLoggedIn" IsAsync="True" />
-                                    <Binding Source="{x:Null}" />
-                                </PriorityBinding>
-                            </Button.Tag>
-                            <Button.Style>
-                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                    <Style.Triggers>
-                                        <Trigger Property="Tag" Value="{StaticResource True}">
-                                            <Setter Property="Content" Value="{DynamicResource LOCLegendarySignOut}" />
-                                            <Setter Property="Command" Value="{Binding SignOutCommand}" />
-                                        </Trigger>
-                                        <Trigger Property="Tag" Value="{StaticResource False}">
-                                            <Setter Property="Content" Value="{DynamicResource LOCLegendary3P_EpicAuthenticateLabel}" />
-                                            <Setter Property="Command" Value="{Binding LoginCommand}" />
-                                        </Trigger>
-                                        <Trigger Property="Tag" Value="{x:Null}">
-                                            <Setter Property="Content" Value="{DynamicResource LOCLegendary3P_EpicAuthenticateLabel}" />
-                                            <Setter Property="Command" Value="{Binding LoginCommand}" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                        <TextBlock VerticalAlignment="Center" Margin="10,5,5,5">
-                            <TextBlock.Tag>
-                                <PriorityBinding>
-                                    <Binding Path="IsUserLoggedIn" IsAsync="True" />
-                                    <Binding Source="{x:Null}" />
-                                </PriorityBinding>
-                            </TextBlock.Tag>
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Style.Triggers>
-                                        <Trigger Property="Tag" Value="{StaticResource True}">
-                                            <Setter Property="Text"
-                                                Value="{DynamicResource LOCLegendary3P_EpicLoggedIn}" />
-                                        </Trigger>
-                                        <Trigger Property="Tag" Value="{StaticResource False}">
-                                            <Setter Property="Text"
-                                                Value="{DynamicResource LOCLegendary3P_EpicNotLoggedIn}" />
-                                        </Trigger>
-                                        <Trigger Property="Tag" Value="{x:Null}">
-                                            <Setter Property="Text"
-                                                Value="{DynamicResource LOCLegendary3P_EpicLoginChecking}" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
+                        <Button HorizontalAlignment="Left" Name="LoginBtn" Content="{DynamicResource LOCLegendary3P_EpicAuthenticateLabel}" IsEnabled="False" Click="LoginBtn_Click"/>
+                        <TextBlock VerticalAlignment="Center" Margin="10,5,5,5" Name="AuthStatusTB" Text="{DynamicResource LOCLegendary3P_EpicLoginChecking}"/>
                     </StackPanel>
                 </StackPanel>
                 <Button Content="{DynamicResource LOCLegendaryMigrateGamesEpic}" HorizontalAlignment="Left" Margin="0,5,0,15" Name="MigrateEpicBtn" IsEnabled="False" Click="MigrateEpicBtn_Click"></Button>

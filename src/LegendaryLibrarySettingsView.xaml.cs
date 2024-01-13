@@ -2,11 +2,13 @@
 using CliWrap.Buffered;
 using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
+using LegendaryLibraryNS.Services;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -28,6 +30,7 @@ namespace LegendaryLibraryNS
         public LegendaryLibrarySettingsView()
         {
             InitializeComponent();
+            UpdateAuthStatus();
         }
 
         private void ChooseLauncherBtn_Click(object sender, RoutedEventArgs e)
@@ -305,7 +308,7 @@ namespace LegendaryLibraryNS
 
         private void CopyRawDataBtn_Click(object sender, RoutedEventArgs e)
         {
-            var troubleshootingJSON = Playnite.SDK.Data.Serialization.ToJson(troubleshootingInformation, true);
+            var troubleshootingJSON = Serialization.ToJson(troubleshootingInformation, true);
             Clipboard.SetText(troubleshootingJSON);
         }
 
@@ -397,6 +400,62 @@ namespace LegendaryLibraryNS
             {
                 playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage), "Legendary Launcher");
             }
+        }
+
+        private async void LoginBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (!LegendaryLauncher.IsInstalled)
+            {
+                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                return;
+            }
+            var clientApi = new EpicAccountClient(playniteAPI, LegendaryLauncher.TokensPath);
+            var userLoggedIn = await clientApi.GetIsUserLoggedIn();
+            if (!userLoggedIn)
+            {
+                try
+                {
+                    await clientApi.Login();
+                }
+                catch (Exception ex) when (!Debugger.IsAttached)
+                {
+                    playniteAPI.Dialogs.ShowErrorMessage(playniteAPI.Resources.GetString(LOC.Legendary3P_EpicNotLoggedInError), "");
+                    logger.Error(ex, "Failed to authenticate user.");
+                }
+            }
+            else
+            {
+                var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                      .WithArguments(new[] { "auth", "--delete" })
+                                      .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                      .WithValidation(CommandResultValidation.None)
+                                      .ExecuteBufferedAsync();
+                if (result.ExitCode != 0 && !result.StandardError.Contains("User data deleted"))
+                {
+                    logger.Error($"[Legendary] Failed to sign out. Error: {result.StandardError}");
+                    return;
+                }
+            }
+            UpdateAuthStatus();
+        }
+
+        private async void UpdateAuthStatus()
+        {
+            LoginBtn.IsEnabled = false;
+            AuthStatusTB.Text = ResourceProvider.GetString(LOC.Legendary3P_EpicLoginChecking);
+            var clientApi = new EpicAccountClient(playniteAPI, LegendaryLauncher.TokensPath);
+            var userLoggedIn = await clientApi.GetIsUserLoggedIn();
+            if (userLoggedIn)
+            {
+                AuthStatusTB.Text = ResourceProvider.GetString(LOC.Legendary3P_EpicLoggedIn);
+                LoginBtn.Content = ResourceProvider.GetString(LOC.LegendarySignOut);
+            }
+            else
+            {
+                AuthStatusTB.Text = ResourceProvider.GetString(LOC.Legendary3P_EpicNotLoggedIn);
+                LoginBtn.Content = ResourceProvider.GetString(LOC.Legendary3P_EpicAuthenticateLabel);
+            }
+            LoginBtn.IsEnabled = true;
         }
     }
 }
