@@ -410,8 +410,8 @@ namespace LegendaryLibraryNS
                 return;
             }
             var clientApi = new EpicAccountClient(playniteAPI, LegendaryLauncher.TokensPath);
-            var userLoggedIn = await clientApi.GetIsUserLoggedIn();
-            if (!userLoggedIn)
+            var userLoggedIn = LoginBtn.IsChecked;
+            if (!userLoggedIn == false)
             {
                 try
                 {
@@ -449,11 +449,13 @@ namespace LegendaryLibraryNS
             {
                 AuthStatusTB.Text = ResourceProvider.GetString(LOC.Legendary3P_EpicLoggedIn);
                 LoginBtn.Content = ResourceProvider.GetString(LOC.LegendarySignOut);
+                LoginBtn.IsChecked = true;
             }
             else
             {
                 AuthStatusTB.Text = ResourceProvider.GetString(LOC.Legendary3P_EpicNotLoggedIn);
                 LoginBtn.Content = ResourceProvider.GetString(LOC.Legendary3P_EpicAuthenticateLabel);
+                LoginBtn.IsChecked = false;
             }
             LoginBtn.IsEnabled = true;
         }

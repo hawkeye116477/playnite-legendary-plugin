@@ -39,7 +39,7 @@
 
                     <StackPanel Orientation="Horizontal"
                         DockPanel.Dock="Top" Margin="0,15,5,5" HorizontalAlignment="Left">
-                        <Button HorizontalAlignment="Left" Name="LoginBtn" Content="{DynamicResource LOCLegendary3P_EpicAuthenticateLabel}" IsEnabled="False" Click="LoginBtn_Click"/>
+                        <ToggleButton HorizontalAlignment="Left" Name="LoginBtn" Content="{DynamicResource LOCLegendary3P_EpicAuthenticateLabel}" IsEnabled="False" Click="LoginBtn_Click" IsChecked="False"/>
                         <TextBlock VerticalAlignment="Center" Margin="10,5,5,5" Name="AuthStatusTB" Text="{DynamicResource LOCLegendary3P_EpicLoginChecking}"/>
                     </StackPanel>
                 </StackPanel>
