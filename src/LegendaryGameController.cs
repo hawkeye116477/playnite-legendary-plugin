@@ -158,117 +158,143 @@ namespace LegendaryLibraryNS
             Dispose();
             if (Directory.Exists(Game.InstallDirectory))
             {
-                var playArgs = new List<string>();
-                playArgs.AddRange(new[] { "launch", Game.GameId });
-                var gamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
-                var globalSettings = LegendaryLibrary.GetSettings();
-                var offlineModeEnabled = globalSettings.LaunchOffline;
-                var gameSettings = new GameSettings();
-                if (gamesSettings.ContainsKey(Game.GameId))
-                {
-                    gameSettings = gamesSettings[Game.GameId];
-                }
-                if (gameSettings?.LaunchOffline != null)
-                {
-                    offlineModeEnabled = (bool)gameSettings.LaunchOffline;
-                }
-                if (offlineModeEnabled)
-                {
-                    bool canRunOffline = false;
-                    var appList = LegendaryLauncher.GetInstalledAppList();
-                    if (appList.ContainsKey(Game.GameId))
-                    {
-                        if (appList[Game.GameId].Can_run_offline)
-                        {
-                            canRunOffline = true;
-                        }
-                    }
-                    if (offlineModeEnabled && canRunOffline)
-                    {
-                        playArgs.Add("--offline");
-                    }
-                }
-                else
-                {
-                    bool updateCheckDisabled = globalSettings.DisableGameVersionCheck;
-                    if (gameSettings?.DisableGameVersionCheck != null)
-                    {
-                        updateCheckDisabled = (bool)gameSettings.DisableGameVersionCheck;
-                    }
-                    if (updateCheckDisabled)
-                    {
-                        playArgs.Add("--skip-version-check");
-                    }
-                }
-                if (gameSettings.StartupArguments?.Any() == true)
-                {
-                    playArgs.AddRange(gameSettings.StartupArguments);
-                }
-                if (!gameSettings.LanguageCode.IsNullOrEmpty())
-                {
-                    playArgs.AddRange(new[] { "--language", gameSettings.LanguageCode } );
-                }
-                if (!gameSettings.OverrideExe.IsNullOrEmpty())
-                {
-                    playArgs.AddRange(new[] { "--override-exe", gameSettings?.OverrideExe });
-                }
-                procMon = new ProcessMonitor();
-                procMon.TreeStarted += (_, treeArgs) =>
-                {
-                    stopWatch = Stopwatch.StartNew();
-                    InvokeOnStarted(new GameStartedEventArgs { StartedProcessId = treeArgs.StartedId });
-                };
-                procMon.TreeDestroyed += (_, __) =>
-                {
-                    stopWatch.Stop();
-                    InvokeOnStopped(new GameStoppedEventArgs { SessionLength = Convert.ToUInt64(stopWatch.Elapsed.TotalSeconds) });
-                };
-                var stdOutBuffer = new StringBuilder();
-                var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                             .WithArguments(playArgs)
-                             .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
-                             .WithValidation(CommandResultValidation.None);
-                await foreach (var cmdEvent in cmd.ListenAsync())
-                {
-                    switch (cmdEvent)
-                    {
-                        case StartedCommandEvent started:
-                            Task watchGameProcess = procMon.WatchDirectoryProcesses(Game.InstallDirectory, false);
-                            break;
-                        case StandardErrorCommandEvent stdErr:
-                            stdOutBuffer.AppendLine(stdErr.Text);
-                            break;
-                        case ExitedCommandEvent exited:
-                            if (exited.ExitCode != 0)
-                            {
-                                InvokeOnStopped(new GameStoppedEventArgs());
-                                var errorMessage = stdOutBuffer.ToString();
-                                logger.Debug("[Legendary] " + errorMessage);
-                                logger.Error("[Legendary] exit code: " + exited.ExitCode);
-                                if (errorMessage.Contains("login failed") || errorMessage.Contains("No saved credentials"))
-                                {
-                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
-                                }
-                                else if (errorMessage.Contains("Game is out of date"))
-                                {
-                                    LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
-                                    await legendaryUpdateController.UpdateGame(Game.Name, Game.GameId);
-                                }
-                                else
-                                {
-                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), errorMessage));
-                                }
-                                return;
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                await LaunchGame();
             }
             else
             {
                 InvokeOnStopped(new GameStoppedEventArgs());
+            }
+        }
+
+        public async Task LaunchGame(bool offline = false)
+        {
+            Dispose();
+            var playArgs = new List<string>();
+            playArgs.AddRange(new[] { "launch", Game.GameId });
+            var gamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
+            var globalSettings = LegendaryLibrary.GetSettings();
+            var offlineModeEnabled = globalSettings.LaunchOffline;
+            var gameSettings = new GameSettings();
+            if (gamesSettings.ContainsKey(Game.GameId))
+            {
+                gameSettings = gamesSettings[Game.GameId];
+            }
+            if (gameSettings?.LaunchOffline != null)
+            {
+                offlineModeEnabled = (bool)gameSettings.LaunchOffline;
+            }
+
+            bool canRunOffline = false;
+            if (offlineModeEnabled)
+            {
+                var appList = LegendaryLauncher.GetInstalledAppList();
+                if (appList.ContainsKey(Game.GameId))
+                {
+                    if (appList[Game.GameId].Can_run_offline)
+                    {
+                        canRunOffline = true;
+                    }
+                }
+            }
+
+            if (canRunOffline || offline)
+            {
+                playArgs.Add("--offline");
+            }
+            else
+            {
+                bool updateCheckDisabled = globalSettings.DisableGameVersionCheck;
+                if (gameSettings?.DisableGameVersionCheck != null)
+                {
+                    updateCheckDisabled = (bool)gameSettings.DisableGameVersionCheck;
+                }
+                if (updateCheckDisabled)
+                {
+                    playArgs.Add("--skip-version-check");
+                }
+            }
+            if (gameSettings.StartupArguments?.Any() == true)
+            {
+                playArgs.AddRange(gameSettings.StartupArguments);
+            }
+            if (!gameSettings.LanguageCode.IsNullOrEmpty())
+            {
+                playArgs.AddRange(new[] { "--language", gameSettings.LanguageCode });
+            }
+            if (!gameSettings.OverrideExe.IsNullOrEmpty())
+            {
+                playArgs.AddRange(new[] { "--override-exe", gameSettings?.OverrideExe });
+            }
+            procMon = new ProcessMonitor();
+            procMon.TreeStarted += (_, treeArgs) =>
+            {
+                stopWatch = Stopwatch.StartNew();
+                InvokeOnStarted(new GameStartedEventArgs { StartedProcessId = treeArgs.StartedId });
+            };
+            procMon.TreeDestroyed += (_, __) =>
+            {
+                stopWatch.Stop();
+                InvokeOnStopped(new GameStoppedEventArgs { SessionLength = Convert.ToUInt64(stopWatch.Elapsed.TotalSeconds) });
+            };
+            var stdOutBuffer = new StringBuilder();
+            var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                         .WithArguments(playArgs)
+                         .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                         .WithValidation(CommandResultValidation.None);
+            await foreach (var cmdEvent in cmd.ListenAsync())
+            {
+                switch (cmdEvent)
+                {
+                    case StartedCommandEvent started:
+                        Task watchGameProcess = procMon.WatchDirectoryProcesses(Game.InstallDirectory, false);
+                        break;
+                    case StandardErrorCommandEvent stdErr:
+                        stdOutBuffer.AppendLine(stdErr.Text);
+                        break;
+                    case ExitedCommandEvent exited:
+                        if (exited.ExitCode != 0)
+                        {
+                            var errorMessage = stdOutBuffer.ToString();
+                            logger.Debug("[Legendary] " + errorMessage);
+                            logger.Error("[Legendary] exit code: " + exited.ExitCode);
+                            if (errorMessage.Contains("login failed") || errorMessage.Contains("No saved credentials"))
+                            {
+                                var appList = LegendaryLauncher.GetInstalledAppList();
+                                if (appList.ContainsKey(Game.GameId))
+                                {
+                                    if (appList[Game.GameId].Can_run_offline)
+                                    {
+                                        var tryOfflineResponse = new MessageBoxOption(LOC.LegendaryEnableOfflineMode);
+                                        var okResponse = new MessageBoxOption(LOC.Legendary3P_PlayniteOKLabel, true, true);
+                                        var offlineConfirm = playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)), "", MessageBoxImage.Error, 
+                                            new List<MessageBoxOption> { tryOfflineResponse, okResponse });
+                                        if (offlineConfirm == tryOfflineResponse)
+                                        {
+                                            await LaunchGame(true);
+                                            return;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
+                                    }
+                                }
+                            }
+                            else if (errorMessage.Contains("Game is out of date"))
+                            {
+                                LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
+                                await legendaryUpdateController.UpdateGame(Game.Name, Game.GameId);
+                            }
+                            else
+                            {
+                                playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), errorMessage));
+                            }
+                            InvokeOnStopped(new GameStoppedEventArgs());
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
@@ -320,8 +346,8 @@ namespace LegendaryLibraryNS
                             var messagesSettings = LegendaryMessagesSettings.LoadSettings();
                             if (!messagesSettings.DontShowDownloadManagerWhatsUpMsg)
                             {
-                                var okResponse = new MessageBoxOption("LOCOKLabel", true, true);
-                                var dontShowResponse = new MessageBoxOption("LOCDontShowAgainTitle");
+                                var okResponse = new MessageBoxOption(LOC.Legendary3P_PlayniteOKLabel, true, true);
+                                var dontShowResponse = new MessageBoxOption(LOC.Legendary3P_PlayniteDontShowAgainTitle);
                                 var response = playniteAPI.Dialogs.ShowMessage(LOC.LegendaryDownloadManagerWhatsUp, "", MessageBoxImage.Information, new List<MessageBoxOption> { okResponse, dontShowResponse });
                                 if (response == dontShowResponse)
                                 {

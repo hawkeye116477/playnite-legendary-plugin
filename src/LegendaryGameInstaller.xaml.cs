@@ -122,8 +122,8 @@ namespace LegendaryLibraryNS
                 var messagesSettings = LegendaryMessagesSettings.LoadSettings();
                 if (!messagesSettings.DontShowDownloadManagerWhatsUpMsg)
                 {
-                    var okResponse = new MessageBoxOption("LOCOKLabel", true, true);
-                    var dontShowResponse = new MessageBoxOption("LOCDontShowAgainTitle");
+                    var okResponse = new MessageBoxOption(LOC.Legendary3P_PlayniteOKLabel, true, true);
+                    var dontShowResponse = new MessageBoxOption(LOC.Legendary3P_PlayniteDontShowAgainTitle);
                     var response = playniteAPI.Dialogs.ShowMessage(LOC.LegendaryDownloadManagerWhatsUp, "", MessageBoxImage.Information, new List<MessageBoxOption> { okResponse, dontShowResponse });
                     if (response == dontShowResponse)
                     {
@@ -605,8 +605,8 @@ namespace LegendaryLibraryNS
                 var messagesSettings = LegendaryMessagesSettings.LoadSettings();
                 if (!messagesSettings.DontShowDownloadManagerWhatsUpMsg)
                 {
-                    var okResponse = new MessageBoxOption("LOCOKLabel", true, true);
-                    var dontShowResponse = new MessageBoxOption("LOCDontShowAgainTitle");
+                    var okResponse = new MessageBoxOption(LOC.Legendary3P_PlayniteOKLabel, true, true);
+                    var dontShowResponse = new MessageBoxOption(LOC.Legendary3P_PlayniteDontShowAgainTitle);
                     var response = playniteAPI.Dialogs.ShowMessage(LOC.LegendaryDownloadManagerWhatsUp, "", MessageBoxImage.Information, new List<MessageBoxOption> { okResponse, dontShowResponse });
                     if (response == dontShowResponse)
                     {
