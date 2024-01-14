@@ -276,20 +276,22 @@ namespace LegendaryLibraryNS
                                     }
                                     else
                                     {
+                                        InvokeOnStopped(new GameStoppedEventArgs());
                                         playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
                                     }
                                 }
                             }
                             else if (errorMessage.Contains("Game is out of date"))
                             {
+                                InvokeOnStopped(new GameStoppedEventArgs());
                                 LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
                                 await legendaryUpdateController.UpdateGame(Game.Name, Game.GameId);
                             }
                             else
                             {
+                                InvokeOnStopped(new GameStoppedEventArgs());
                                 playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), errorMessage));
                             }
-                            InvokeOnStopped(new GameStoppedEventArgs());
                         }
                         break;
                     default:
@@ -337,6 +339,15 @@ namespace LegendaryLibraryNS
                         var downloadData = new DownloadManagerData.Download { gameID = gameId, downloadProperties = downloadProperties };
                         LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
                         var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameId);
+                        if (wantedItem != null)
+                        {
+                            if (wantedItem.status == (int)DownloadStatus.Completed)
+                            {
+                                downloadManager.downloadManagerData.downloads.Remove(wantedItem);
+                                downloadManager.SaveData();
+                                wantedItem = null;
+                            }
+                        }
                         if (wantedItem != null)
                         {
                             playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), wantedItem.name), "", MessageBoxButton.OK, MessageBoxImage.Error);
