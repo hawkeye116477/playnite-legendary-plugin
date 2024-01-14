@@ -649,5 +649,25 @@ namespace System
         /// An error occurred while uploading {0} game playtime to the cloud.
         /// </summary>
         public const string LegendaryUploadPlaytimeError = "LOCLegendaryUploadPlaytimeError";
+        /// <summary>
+        /// Move
+        /// </summary>
+        public const string LegendaryMove = "LOCLegendaryMove";
+        /// <summary>
+        /// Are you sure you want to move {0} to "{1}"? This may take a long time.
+        /// </summary>
+        public const string LegendaryMoveConfirm = "LOCLegendaryMoveConfirm";
+        /// <summary>
+        /// Moving {0} to "{1}"...
+        /// </summary>
+        public const string LegendaryMovingGame = "LOCLegendaryMovingGame";
+        /// <summary>
+        /// {0} has been successfully moved to "{1}".
+        /// </summary>
+        public const string LegendaryMoveGameSuccess = "LOCLegendaryMoveGameSuccess";
+        /// <summary>
+        /// An error occurred while moving {0} to "{1}".
+        /// </summary>
+        public const string LegendaryMoveGameError = "LOCLegendaryMoveGameError";
     }
 }

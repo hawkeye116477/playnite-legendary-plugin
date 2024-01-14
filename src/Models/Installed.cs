@@ -2,7 +2,6 @@
 {
     public class Installed
     {
-        public string Key_name { get; set; }
         public string App_name { get; set; }
         public bool Can_run_offline { get; set; }
         public string Executable { get; set; }

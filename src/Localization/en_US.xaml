@@ -112,4 +112,9 @@
   <sys:String x:Key="LOCLegendarySyncPlaytime">Sync playtime to the cloud</sys:String>
   <sys:String x:Key="LOCLegendaryUploadingPlaytime">Uploading {0} game playtime to the cloud...</sys:String>
   <sys:String x:Key="LOCLegendaryUploadPlaytimeError">An error occurred while uploading {0} game playtime to the cloud.</sys:String>
+  <sys:String x:Key="LOCLegendaryMove">Move</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveConfirm">Are you sure you want to move {0} to "{1}"? This may take a long time.</sys:String>
+  <sys:String x:Key="LOCLegendaryMovingGame">Moving {0} to "{1}"...</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveGameSuccess">{0} has been successfully moved to "{1}".</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveGameError">An error occurred while moving {0} to "{1}".</sys:String>
 </ResourceDictionary>

@@ -1,4 +1,5 @@
 ﻿using CliWrap;
+using CliWrap.Buffered;
 using CliWrap.EventStream;
 using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
@@ -445,7 +446,7 @@ namespace LegendaryLibraryNS
             };
         }
 
-        public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
+        public void StopDownloadManager()
         {
             LegendaryDownloadManager downloadManager = GetLegendaryDownloadManager();
             var runningAndQueuedDownloads = downloadManager.downloadManagerData.downloads.Where(i => i.status == (int)DownloadStatus.Running
@@ -464,7 +465,11 @@ namespace LegendaryLibraryNS
                 }
                 downloadManager.SaveData();
             }
+        }
 
+        public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
+        {
+            StopDownloadManager();
             var settings = GetSettings();
             if (settings != null)
             {
@@ -537,6 +542,73 @@ namespace LegendaryLibraryNS
             {
                 if (game.PluginId == Id && game.IsInstalled)
                 {
+                    yield return new GameMenuItem
+                    {
+                        Description = ResourceProvider.GetString(LOC.LegendaryMove),
+                        Action = (args) =>
+                        {
+                            if (!LegendaryLauncher.IsInstalled)
+                            {
+                                throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                            }
+
+                            var newPath = PlayniteApi.Dialogs.SelectFolder();
+                            if (newPath != "")
+                            {
+                                var oldPath = game.InstallDirectory;
+                                if (Directory.Exists(oldPath) && Directory.Exists(newPath))
+                                {
+                                    string sepChar = Path.DirectorySeparatorChar.ToString();
+                                    string altChar = Path.AltDirectorySeparatorChar.ToString();
+                                    if (!oldPath.EndsWith(sepChar) && !oldPath.EndsWith(altChar))
+                                    {
+                                        oldPath += sepChar;
+                                    }
+                                    var folderName = Path.GetFileName(Path.GetDirectoryName(oldPath));
+                                    newPath = Path.Combine(newPath, folderName);
+                                    var moveConfirm = PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryMoveConfirm).Format(game.Name, newPath), ResourceProvider.GetString(LOC.LegendaryMove), MessageBoxButton.YesNo, MessageBoxImage.Question);
+                                    if (moveConfirm == MessageBoxResult.Yes)
+                                    {
+                                        GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryMovingGame).Format(game.Name, newPath), false);
+                                        PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+                                        {
+                                            a.ProgressMaxValue = 3;
+                                            a.CurrentProgressValue = 0;
+                                            _ = (Application.Current.Dispatcher?.BeginInvoke((Action)async delegate
+                                            {
+                                                try
+                                                {
+                                                    StopDownloadManager();
+                                                    Directory.Move(oldPath, newPath);
+                                                    a.CurrentProgressValue = 1;
+                                                    var rewriteResult = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                                                                 .WithArguments(new[] { "move", game.GameId, newPath, "--skip-move" })
+                                                                                 .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                                                                 .ExecuteBufferedAsync();
+                                                    if (rewriteResult.ExitCode != 0)
+                                                    {
+                                                        logger.Error($"[Legendary] {rewriteResult.StandardError}");
+                                                        logger.Error($"[Legendary] exit code: {rewriteResult.ExitCode}");
+                                                    }
+                                                    a.CurrentProgressValue = 2;
+                                                    game.InstallDirectory = newPath;
+                                                    PlayniteApi.Database.Games.Update(game);
+                                                    a.CurrentProgressValue = 3;
+                                                    PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryMoveGameSuccess).Format(game.Name, newPath));
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    a.CurrentProgressValue = 3;
+                                                    PlayniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryMoveGameError).Format(game.Name, newPath));
+                                                    logger.Error(e.Message);
+                                                }
+                                            }));
+                                        }, globalProgressOptions);
+                                    }
+                                }
+                            }
+                        }
+                    };
                     yield return new GameMenuItem
                     {
                         Description = ResourceProvider.GetString(LOC.LegendaryRepair),
