@@ -207,6 +207,7 @@ namespace LegendaryLibraryNS
                     }
                 }
             }
+            installCommand.Add("--skip-dlcs");
             if (gameID == "eos-overlay")
             {
                 installCommand = new List<string>() { "-y", "eos-overlay", "install", "--path", Path.Combine(downloadProperties.installPath, ".overlay") };
