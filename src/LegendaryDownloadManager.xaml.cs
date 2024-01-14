@@ -438,11 +438,10 @@ namespace LegendaryLibraryNS
 
         private void RemoveDownloadEntry(DownloadManagerData.Download selectedEntry)
         {
-            var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == selectedEntry.gameID);
-            wantedItem.PropertyChanged -= DoNextJobInQueue;
-            if (wantedItem.status != (int)DownloadStatus.Completed && wantedItem.status != (int)DownloadStatus.Canceled)
+            selectedEntry.PropertyChanged -= DoNextJobInQueue;
+            if (selectedEntry.status != (int)DownloadStatus.Completed && selectedEntry.status != (int)DownloadStatus.Canceled)
             {
-                if (wantedItem.status == (int)DownloadStatus.Running)
+                if (selectedEntry.status == (int)DownloadStatus.Running)
                 {
                     gracefulInstallerCTS?.Cancel();
                     gracefulInstallerCTS?.Dispose();
@@ -460,7 +459,7 @@ namespace LegendaryLibraryNS
             {
                 File.Delete(repairFile);
             }
-            if (selectedEntry.fullInstallPath != null && wantedItem.status != (int)DownloadStatus.Completed
+            if (selectedEntry.fullInstallPath != null && selectedEntry.status != (int)DownloadStatus.Completed
                 && selectedEntry.downloadProperties.downloadAction == (int)DownloadAction.Install)
             {
                 if (Directory.Exists(selectedEntry.fullInstallPath))
