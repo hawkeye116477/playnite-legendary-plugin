@@ -20,6 +20,7 @@
                 <StackPanel x:Name="AvailableDlcsSP">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
                         <Button x:Name="InstallBtn" Content="{DynamicResource LOCLegendary3P_PlayniteInstallGame}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xef07; {0}" Click="InstallBtn_Click" Margin="0,0,5,0" IsEnabled="False" />
+                        <Button x:Name="SelectAllAvDlcsBtn" Content="{DynamicResource LOCLegendaryCheckAllContent}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xeed9; {0}" Margin="0,0,5,0" Click="SelectAllAvDlcsBtn_Click"  />
                     </StackPanel>
                     <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="0,5,0,0" />
                     <ListBox BorderThickness="0" Name="AvailableDlcsLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="AvailableDlcsLB_SelectionChanged">
@@ -83,7 +84,9 @@
             <StackPanel Margin="5,5,0,5">
                 <StackPanel Name="InstalledDlcsSP">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
-                        <Button x:Name="UninstallBtn" Content="{DynamicResource LOCLegendary3P_PlayniteUninstallGame}" ContentStringFormat="&#xedec; {0}" FontFamily="{DynamicResource FontIcoFont}" Click="UninstallBtn_Click" IsEnabled="False" />
+                        <Button x:Name="UninstallBtn" Content="{DynamicResource LOCLegendary3P_PlayniteUninstallGame}" ContentStringFormat="&#xedec; {0}" FontFamily="{DynamicResource FontIcoFont}" Click="UninstallBtn_Click" IsEnabled="False" Margin="0,0,5,0" />
+                        <Button x:Name="SelectAllInDlcsBtn" Content="{DynamicResource LOCLegendaryCheckAllContent}" FontFamily="{DynamicResource FontIcoFont}" 
+                                ContentStringFormat="&#xeed9; {0}" Margin="0,0,5,0" Click="SelectAllInDlcsBtn_Click_1" />
                     </StackPanel>
                     <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="0,5,0,0" />
                     <ListBox BorderThickness="0" Name="InstalledDlcsLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="InstalledDlcsLB_SelectionChanged">

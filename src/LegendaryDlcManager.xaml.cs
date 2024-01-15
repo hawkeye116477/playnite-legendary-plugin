@@ -239,7 +239,36 @@ namespace LegendaryLibraryNS
             {
                 UninstallBtn.IsEnabled = true;
             }
+        }
 
+        private void SelectAllAvDlcsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (AvailableDlcsLB.Items.Count > 0)
+            {
+                if (AvailableDlcsLB.Items.Count == AvailableDlcsLB.SelectedItems.Count)
+                {
+                    AvailableDlcsLB.UnselectAll();
+                }
+                else
+                {
+                    AvailableDlcsLB.SelectAll();
+                }
+            }
+        }
+
+        private void SelectAllInDlcsBtn_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (InstalledDlcsLB.Items.Count > 0)
+            {
+                if (InstalledDlcsLB.Items.Count == InstalledDlcsLB.SelectedItems.Count)
+                {
+                    InstalledDlcsLB.UnselectAll();
+                }
+                else
+                {
+                    InstalledDlcsLB.SelectAll();
+                }
+            }
         }
     }
 }
