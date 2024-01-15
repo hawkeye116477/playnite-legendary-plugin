@@ -295,7 +295,7 @@ namespace LegendaryLibraryNS
 
         public static LegendaryGameInfo.Rootobject GetGameInfo(string gameID)
         {
-            GlobalProgressOptions metadataProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoadingLabel), false);
+            GlobalProgressOptions metadataProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.Legendary3P_PlayniteProgressMetadata), false);
             var manifest = new LegendaryGameInfo.Rootobject();
             var playniteAPI = API.Instance;
             var logger = LogManager.GetLogger();
@@ -310,6 +310,11 @@ namespace LegendaryLibraryNS
             {
                 if (File.GetLastWriteTime(cacheInfoFile) < DateTime.Now.AddDays(-7))
                 {
+                    var metadataFile = Path.Combine(LegendaryLauncher.ConfigPath, "metadata", gameID + ".json");
+                    if (File.Exists(metadataFile))
+                    {
+                        File.Delete(metadataFile);
+                    }
                     File.Delete(cacheInfoFile);
                 }
                 if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(cacheInfoFile), out manifest))
