@@ -1,4 +1,6 @@
-﻿using IniParser;
+﻿using CliWrap;
+using CliWrap.Buffered;
+using IniParser;
 using IniParser.Model;
 using LegendaryLibraryNS.Models;
 using Microsoft.Win32;
@@ -10,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace LegendaryLibraryNS
 {
@@ -289,5 +292,66 @@ namespace LegendaryLibraryNS
                 return envDict;
             }
         }
+
+        public static LegendaryGameInfo.Rootobject GetGameInfo(string gameID)
+        {
+            GlobalProgressOptions metadataProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoadingLabel), false);
+            var manifest = new LegendaryGameInfo.Rootobject();
+            var playniteAPI = API.Instance;
+            var logger = LogManager.GetLogger();
+            var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("infocache");
+            var cacheInfoFile = Path.Combine(cacheInfoPath, gameID + ".json");
+            if (!Directory.Exists(cacheInfoPath))
+            {
+                Directory.CreateDirectory(cacheInfoPath);
+            }
+            bool correctJson = false;
+            if (File.Exists(cacheInfoFile))
+            {
+                if (File.GetLastWriteTime(cacheInfoFile) < DateTime.Now.AddDays(-7))
+                {
+                    File.Delete(cacheInfoFile);
+                }
+                if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(cacheInfoFile), out manifest))
+                {
+                    if (manifest != null && manifest.Manifest != null)
+                    {
+                        correctJson = true;
+                    }
+                }
+            }
+            if (!correctJson)
+            {
+                playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
+                {
+                    if (!correctJson)
+                    {
+                        var result = await Cli.Wrap(ClientExecPath)
+                                          .WithArguments(new[] { "info", gameID, "--json" })
+                                          .WithValidation(CommandResultValidation.None)
+                                          .ExecuteBufferedAsync();
+                        if (result.ExitCode != 0)
+                        {
+                            logger.Error("[Legendary]" + result.StandardError);
+                            if (result.StandardError.Contains("Log in failed"))
+                            {
+                                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
+                            }
+                            else
+                            {
+                                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(ResourceProvider.GetString(LOC.LegendaryCheckLog)));
+                            }
+                        }
+                        else
+                        {
+                            File.WriteAllText(cacheInfoFile, result.StandardOutput);
+                            manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>(result.StandardOutput);
+                        }
+                    }
+                }, metadataProgressOptions);
+            }
+            return manifest;
+        }
+
     }
 }

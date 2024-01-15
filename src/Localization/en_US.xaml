@@ -117,4 +117,10 @@
   <sys:String x:Key="LOCLegendaryMovingGame">Moving {0} to "{1}"...</sys:String>
   <sys:String x:Key="LOCLegendaryMoveGameSuccess">{0} has been successfully moved to "{1}".</sys:String>
   <sys:String x:Key="LOCLegendaryMoveGameError">An error occurred while moving {0} to "{1}".</sys:String>
+  <sys:String x:Key="LOCLegendaryInstalledDlcs">Installed DLCs</sys:String>
+  <sys:String x:Key="LOCLegendaryAvailableDlcs">Available DLCs</sys:String>
+  <sys:String x:Key="LOCLegendaryManageDlcs">Manage DLCs</sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallSelectedDlcs">Are you sure you want to uninstall selected DLCs?</sys:String>
+  <sys:String x:Key="LOCLegendaryNoInstalledDlcs">No installed DLCs.</sys:String>
+  <sys:String x:Key="LOCLegendaryNoAvailableDlcs">No available DLCs.</sys:String>
 </ResourceDictionary>

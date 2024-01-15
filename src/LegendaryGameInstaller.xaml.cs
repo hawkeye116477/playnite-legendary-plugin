@@ -233,47 +233,10 @@ namespace LegendaryLibraryNS
             }
             if (GameID != "eos-overlay")
             {
-                bool correctJson = false;
-                if (File.Exists(cacheInfoFile))
+                manifest = LegendaryLauncher.GetGameInfo(GameID);
+                if (manifest == null && manifest.Manifest == null)
                 {
-                    if (File.GetLastWriteTime(cacheInfoFile) < DateTime.Now.AddDays(-7))
-                    {
-                        File.Delete(cacheInfoFile);
-                    }
-                    if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(cacheInfoFile), out manifest))
-                    {
-                        if (manifest != null && manifest.Manifest != null)
-                        {
-                            correctJson = true;
-                        }
-                    }
-                }
-                if (!correctJson)
-                {
-                    var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                      .WithArguments(new[] { "info", GameID, "--json" })
-                                      .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
-                                      .WithValidation(CommandResultValidation.None)
-                                      .ExecuteBufferedAsync();
-                    if (result.ExitCode != 0)
-                    {
-                        logger.Error("[Legendary]" + result.StandardError);
-                        if (result.StandardError.Contains("Log in failed"))
-                        {
-                            playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
-                        }
-                        else
-                        {
-                            playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryCheckLog)));
-                        }
-                        Window.GetWindow(this).Close();
-                        return;
-                    }
-                    else
-                    {
-                        File.WriteAllText(cacheInfoFile, result.StandardOutput);
-                        manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>(result.StandardOutput);
-                    }
+                    Window.GetWindow(this).Close();
                 }
                 if (manifest.Manifest.Install_tags.Length > 1 || manifest.Game.Owned_dlc.Length > 1)
                 {
@@ -373,39 +336,7 @@ namespace LegendaryLibraryNS
                                     Is_dlc = true
                                 };
                                 extraContentInfo.Add(dlc.App_name, dlcInfo);
-                                LegendaryGameInfo.Rootobject dlcManifest = new LegendaryGameInfo.Rootobject();
-                                bool correctDlcJson = false;
-                                var cacheDlcInfoFile = Path.Combine(cacheInfoPath, dlc.App_name + ".json");
-                                if (File.Exists(cacheDlcInfoFile))
-                                {
-                                    if (File.GetLastWriteTime(cacheDlcInfoFile) < DateTime.Now.AddDays(-7))
-                                    {
-                                        File.Delete(cacheDlcInfoFile);
-                                    }
-                                    if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(cacheDlcInfoFile), out dlcManifest))
-                                    {
-                                        if (dlcManifest != null && dlcManifest.Manifest != null)
-                                        {
-                                            correctDlcJson = true;
-                                        }
-                                    }
-                                }
-                                if (!correctDlcJson)
-                                {
-                                    var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                                      .WithArguments(new[] { "info", dlc.App_name, "--json" })
-                                                      .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
-                                                      .WithValidation(CommandResultValidation.None)
-                                                      .ExecuteBufferedAsync();
-                                    if (result.ExitCode != 0)
-                                    {
-                                        logger.Error("[Legendary]" + result.StandardError);
-                                    }
-                                    else
-                                    {
-                                        File.WriteAllText(cacheDlcInfoFile, result.StandardOutput);
-                                    }
-                                }
+                                var dlcManifest = LegendaryLauncher.GetGameInfo(dlc.App_name);
                             }
                         }
                         AllDlcsChk.Visibility = Visibility.Visible;

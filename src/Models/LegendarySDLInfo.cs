@@ -2,7 +2,7 @@
 
 namespace LegendaryLibraryNS.Models
 {
-    public class LegendarySDLInfo
+    public class LegendarySDLInfo : ObservableObject
     {
         public string Description { get; set; }
         public string Name { get; set; }

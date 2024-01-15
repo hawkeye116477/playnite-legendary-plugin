@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="LegendaryLibraryNS.LegendaryDlcManager"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LegendaryLibraryNS"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <sys:Boolean x:Key="True">True</sys:Boolean>
+        <sys:Boolean x:Key="False">False</sys:Boolean>
+        <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+    </UserControl.Resources>
+    <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled"
+        HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+        <TabItem Header="{DynamicResource LOCLegendaryAvailableDlcs}">
+            <StackPanel Margin="5,5,0,5">
+                <StackPanel x:Name="AvailableDlcsSP">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
+                        <Button x:Name="InstallBtn" Content="{DynamicResource LOCLegendary3P_PlayniteInstallGame}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xef07; {0}" Click="InstallBtn_Click" Margin="0,0,5,0" IsEnabled="False" />
+                    </StackPanel>
+                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="0,5,0,0" />
+                    <ListBox BorderThickness="0" Name="AvailableDlcsLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="AvailableDlcsLB_SelectionChanged">
+                        <ListBox.Resources>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <CheckBox Content="{Binding Value.Name}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Margin="0,5,0,0"/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.Resources>
+                    </ListBox>
+                    <Border BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Margin="0,5,0,0">
+                        <Expander Header="{DynamicResource LOCLegendaryAdvancedOptions}" Margin="2,2,5,2" HorizontalAlignment="Left" >
+                            <Grid Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <CheckBox Grid.Column="0" Grid.Row="0"
+                            Content="{DynamicResource LOCLegendaryEnableReordering}" Margin="0,0,0,5" Name="ReorderingChk"/>
+                                <TextBlock Text="{DynamicResource LOCLegendaryMaxWorkers}"
+                            Grid.Row="1" Grid.Column="0" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                <local:NumericInput Grid.Row="1" Grid.Column="1" Margin="15,0,0,5" MinValue="0" MaxValue="16" x:Name="MaxWorkersNI"/>
+                                <TextBlock Text="{DynamicResource LOCLegendaryMaxSharedMemory}" Grid.Row="2" Grid.Column="0" 
+                                   Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                <local:NumericInput Grid.Row="2" Grid.Column="1" Margin="15,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" x:Name="MaxSharedMemoryNI"/>
+                            </Grid>
+                        </Expander>
+                    </Border>
+                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="0,5,0,0" />
+                    <DockPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5">
+                            <TextBlock Text="{DynamicResource LOCLegendaryDownloadSize}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <TextBlock x:Name="DownloadSizeTB" Text="0 b"
+                    VerticalAlignment="Top" Margin="5,0,5,0" />
+                            <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendaryInstallSize}" Margin="10,0,0,0" />
+                            <TextBlock x:Name="InstallSizeTB" Text="0 b"
+                    VerticalAlignment="Top" Margin="5,0,5,0" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5" >
+                            <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendarySpaceAvailable}" Margin="10,0,0,0" />
+                            <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
+                    Margin="5,0,5,0" Name="SpaceTB" />
+                        </StackPanel>
+                    </DockPanel>
+                </StackPanel>
+                <TextBlock Text="{DynamicResource LOCLegendaryNoAvailableDlcs}" Margin="0,5,0,0" Visibility="Collapsed" Name="NoAvailableDlcsTB"/>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="{DynamicResource LOCLegendaryInstalledDlcs}" Name="InstalledDlcsTbI">
+            <StackPanel Margin="5,5,0,5">
+                <StackPanel Name="InstalledDlcsSP">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
+                        <Button x:Name="UninstallBtn" Content="{DynamicResource LOCLegendary3P_PlayniteUninstallGame}" ContentStringFormat="&#xedec; {0}" FontFamily="{DynamicResource FontIcoFont}" Click="UninstallBtn_Click" IsEnabled="False" />
+                    </StackPanel>
+                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="0,5,0,0" />
+                    <ListBox BorderThickness="0" Name="InstalledDlcsLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="InstalledDlcsLB_SelectionChanged">
+                        <ListBox.Resources>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <CheckBox Content="{Binding Value.Name}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Margin="0,5,0,0" Name="ExtraContentLBChk"/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.Resources>
+                    </ListBox>
+                </StackPanel>
+                <TextBlock Text="{DynamicResource LOCLegendaryNoInstalledDlcs}" Margin="5,5,0,0" Visibility="Collapsed" Name="NoInstalledDlcsTB"/>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
+</UserControl>

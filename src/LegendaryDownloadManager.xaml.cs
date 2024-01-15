@@ -308,17 +308,16 @@ namespace LegendaryLibraryNS
                                     {
                                         if (installedAppList.ContainsKey(gameID))
                                         {
-                                            var installInfo = new GameInstallationData
+                                            var installedGameInfo = installedAppList[gameID];
+                                            if (installedGameInfo.Is_dlc == false)
                                             {
-                                                InstallDirectory = installedAppList[gameID].Install_path
-                                            };
-                                            var game = playniteAPI.Database.Games.FirstOrDefault(
-                                                item => item.PluginId == LegendaryLibrary.Instance.Id && item.GameId == gameID);
-                                            game.InstallDirectory = installedAppList[gameID].Install_path;
-                                            game.Version = installedAppList[gameID].Version;
-                                            game.InstallSize = (ulong?)installedAppList[gameID].Install_size;
-                                            game.IsInstalled = true;
-                                            playniteAPI.Database.Games.Update(game);
+                                                var game = playniteAPI.Database.Games.FirstOrDefault(item => item.PluginId == LegendaryLibrary.Instance.Id && item.GameId == gameID);
+                                                game.InstallDirectory = installedGameInfo.Install_path;
+                                                game.Version = installedGameInfo.Version;
+                                                game.InstallSize = (ulong?)installedGameInfo.Install_size;
+                                                game.IsInstalled = true;
+                                                playniteAPI.Database.Games.Update(game);
+                                            }
                                         }
                                     }
                                 }));

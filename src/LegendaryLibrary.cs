@@ -140,7 +140,7 @@ namespace LegendaryLibraryNS
                     continue;
                 }
 
-                if (catalogItem?.categories?.Any(a => a.path == "dlc") == true)
+                if (catalogItem?.categories?.Any(a => a.path == "addons") == true)
                 {
                     continue;
                 }
@@ -653,6 +653,41 @@ namespace LegendaryLibraryNS
 
                             LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
                             await legendaryUpdateController.UpdateGame(game.Name, game.GameId);
+                        }
+                    };
+                    yield return new GameMenuItem
+                    {
+                        Description = ResourceProvider.GetString(LOC.LegendaryManageDlcs),
+                        Action = (args) =>
+                        {
+                            if (!LegendaryLauncher.IsInstalled)
+                            {
+                                throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                            }
+
+                            Window window = null;
+                            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+                            {
+                                window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                                {
+                                    ShowMaximizeButton = false,
+                                });
+                            }
+                            else
+                            {
+                                window = new Window
+                                {
+                                    Background = System.Windows.Media.Brushes.DodgerBlue
+                                };
+                            }
+                            window.Title = $"{ResourceProvider.GetString(LOC.LegendaryManageDlcs)} - {game.Name}";
+                            window.DataContext = game;
+                            window.Content = new LegendaryDlcManager();
+                            window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+                            window.SizeToContent = SizeToContent.WidthAndHeight;
+                            window.MinWidth = 600;
+                            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                            window.ShowDialog();
                         }
                     };
                     yield return new GameMenuItem

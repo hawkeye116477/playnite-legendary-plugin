@@ -669,5 +669,29 @@ namespace System
         /// An error occurred while moving {0} to "{1}".
         /// </summary>
         public const string LegendaryMoveGameError = "LOCLegendaryMoveGameError";
+        /// <summary>
+        /// Installed DLCs
+        /// </summary>
+        public const string LegendaryInstalledDlcs = "LOCLegendaryInstalledDlcs";
+        /// <summary>
+        /// Available DLCs
+        /// </summary>
+        public const string LegendaryAvailableDlcs = "LOCLegendaryAvailableDlcs";
+        /// <summary>
+        /// Manage DLCs
+        /// </summary>
+        public const string LegendaryManageDlcs = "LOCLegendaryManageDlcs";
+        /// <summary>
+        /// Are you sure you want to uninstall selected DLCs?
+        /// </summary>
+        public const string LegendaryUninstallSelectedDlcs = "LOCLegendaryUninstallSelectedDlcs";
+        /// <summary>
+        /// No installed DLCs.
+        /// </summary>
+        public const string LegendaryNoInstalledDlcs = "LOCLegendaryNoInstalledDlcs";
+        /// <summary>
+        /// No available DLCs.
+        /// </summary>
+        public const string LegendaryNoAvailableDlcs = "LOCLegendaryNoAvailableDlcs";
     }
 }

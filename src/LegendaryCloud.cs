@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LegendaryLibraryNS
 {
@@ -18,85 +19,12 @@ namespace LegendaryLibraryNS
         internal static string CalculateGameSavesPath(string gameName, string gameID, string gameInstallDir)
         {
             string cloudSaveFolder = "";
-            var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("infocache");
-            var cacheInfoFile = Path.Combine(cacheInfoPath, gameID + ".json");
-            bool correctJson = false;
-            LegendaryGameInfo.Rootobject manifest = null;
-            if (File.Exists(cacheInfoFile))
+            var manifest = LegendaryLauncher.GetGameInfo(gameID);
+            if (manifest.Game != null)
             {
-                var metadataFile = Path.Combine(LegendaryLauncher.ConfigPath, "metadata", gameID + ".json");
-                if (File.GetLastWriteTime(cacheInfoFile) < DateTime.Now.AddDays(-7))
-                {
-                    File.Delete(cacheInfoFile);
-                    if (File.Exists(metadataFile))
-                    {
-                        File.Delete(metadataFile);
-                    }
-                }
-                if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(cacheInfoFile), out manifest))
-                {
-                    if (manifest != null && manifest.Manifest != null)
-                    {
-                        correctJson = true;
-                    }
-                }
+                cloudSaveFolder = manifest.Game.Cloud_save_folder;
             }
-            else
-            {
-                if (!Directory.Exists(cacheInfoPath))
-                {
-                    Directory.CreateDirectory(cacheInfoPath);
-                }
-            }
-            if (!correctJson)
-            {
-                var playniteAPI = API.Instance;
-                var logger = LogManager.GetLogger();
-                GlobalProgressOptions metadataProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.Legendary3P_PlayniteProgressMetadata), false);
-                playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
-                {
-                    a.ProgressMaxValue = 100;
-                    a.CurrentProgressValue = 0;
-                    var stdOutBuffer = new StringBuilder();
-                    var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                 .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
-                                 .WithArguments(new[] { "info", gameID, "--json" });
-                    await foreach (var cmdEvent in cmd.ListenAsync())
-                    {
-                        switch (cmdEvent)
-                        {
-                            case StartedCommandEvent started:
-                                a.CurrentProgressValue = 1;
-                                break;
-                            case StandardOutputCommandEvent stdOut:
-                                stdOutBuffer.AppendLine(stdOut.Text);
-                                break;
-                            case StandardErrorCommandEvent stdErr:
-                                logger.Debug("[Legendary] " + stdErr.ToString());
-                                break;
-                            case ExitedCommandEvent exited:
-                                if (exited.ExitCode != 0)
-                                {
-                                    logger.Error("[Legendary] exit code: " + exited.ExitCode);
-                                    playniteAPI.Dialogs.ShowErrorMessage(playniteAPI.Resources.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(gameName));
-                                    return;
-                                }
-                                else
-                                {
-                                    File.WriteAllText(cacheInfoFile, stdOutBuffer.ToString());
-                                    manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>
-                                    (FileSystem.ReadFileAsStringSafe(cacheInfoFile));
-                                }
-                                a.CurrentProgressValue = 100;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }, metadataProgressOptions);
-            }
-            cloudSaveFolder = manifest.Game.Cloud_save_folder;
-            if (cloudSaveFolder != null)
+            if (!cloudSaveFolder.IsNullOrEmpty())
             {
                 if (File.Exists(LegendaryLauncher.TokensPath))
                 {
