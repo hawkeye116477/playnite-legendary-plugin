@@ -693,5 +693,21 @@ namespace System
         /// No available DLCs.
         /// </summary>
         public const string LegendaryNoAvailableDlcs = "LOCLegendaryNoAvailableDlcs";
+        /// <summary>
+        /// Check for updates only when launching games
+        /// </summary>
+        public const string LegendaryCheckUpdatesGameLaunch = "LOCLegendaryCheckUpdatesGameLaunch";
+        /// <summary>
+        /// Automatically update when Playnite starts
+        /// </summary>
+        public const string LegendaryAutoUpdate = "LOCLegendaryAutoUpdate";
+        /// <summary>
+        /// Never check for updates
+        /// </summary>
+        public const string LegendaryNeverUpdate = "LOCLegendaryNeverUpdate";
+        /// <summary>
+        /// Games update policy
+        /// </summary>
+        public const string LegendaryGamesUpdatePolicy = "LOCLegendaryGamesUpdatePolicy";
     }
 }

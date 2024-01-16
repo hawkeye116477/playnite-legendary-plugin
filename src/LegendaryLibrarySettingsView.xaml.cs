@@ -157,6 +157,14 @@ namespace LegendaryLibraryNS
             };
             AfterDownloadCompleteCBo.ItemsSource = downloadCompleteActions;
 
+            var updatePolicyOptions = new Dictionary<UpdatePolicy, string>
+            {
+                { UpdatePolicy.Auto, ResourceProvider.GetString(LOC.LegendaryAutoUpdate) },
+                { UpdatePolicy.GameLaunch, ResourceProvider.GetString(LOC.LegendaryCheckUpdatesGameLaunch) },
+                { UpdatePolicy.Never, ResourceProvider.GetString(LOC.LegendaryNeverUpdate) }
+            };
+            GamesUpdatesCBo.ItemsSource = updatePolicyOptions;
+
             var autoClearOptions = new Dictionary<int, string>
             {
                 { (int)ClearCacheTime.Day, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnceADay) },

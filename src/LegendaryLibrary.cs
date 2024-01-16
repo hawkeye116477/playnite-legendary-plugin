@@ -42,8 +42,8 @@ namespace LegendaryLibraryNS
             Instance = this;
             SettingsViewModel = new LegendaryLibrarySettingsViewModel(this, api);
             Load3pLocalization();
-            MigrateOnlineGames();
         }
+
 
         public static LegendaryLibrarySettings GetSettings()
         {
@@ -153,11 +153,7 @@ namespace LegendaryLibraryNS
                     Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") }
                 };
 
-                var gameSettings = new GameSettings();
-                if (gamesSettings.ContainsKey(newGame.GameId))
-                {
-                    gameSettings = gamesSettings[newGame.GameId];
-                }
+                var gameSettings = LegendaryGameSettingsView.LoadGameSettings(newGame.GameId);
                 var playtimeSyncEnabled = GetSettings().SyncPlaytime;
                 if (gameSettings.AutoSyncPlaytime != null)
                 {
@@ -346,29 +342,6 @@ namespace LegendaryLibraryNS
             }
         }
 
-        public void MigrateOnlineGames()
-        {
-            var globalSettings = GetSettings();
-            if (globalSettings.OnlineList.Count > 0)
-            {
-                var gamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
-                foreach (var onlineGame in globalSettings.OnlineList)
-                {
-                    if (!gamesSettings.ContainsKey(onlineGame))
-                    {
-                        gamesSettings.Add(onlineGame, new GameSettings());
-                    }
-                    gamesSettings[onlineGame].LaunchOffline = false;
-                }
-                var strConf = Serialization.ToJson(gamesSettings, true);
-                var dataDir = Instance.GetPluginUserDataPath();
-                var dataFile = Path.Combine(dataDir, "gamesSettings.json");
-                File.WriteAllText(dataFile, strConf);
-                globalSettings.OnlineList.Clear();
-                File.WriteAllText(Path.Combine(dataDir, "config.json"), Serialization.ToJson(globalSettings, true));
-            }
-        }
-
         public override void OnGameStarting(OnGameStartingEventArgs args)
         {
             LegendaryCloud.SyncGameSaves(args.Game.Name, args.Game.GameId, args.Game.InstallDirectory, CloudSyncAction.Download);
@@ -381,12 +354,7 @@ namespace LegendaryLibraryNS
             if (PlayniteApi.ApplicationSettings.PlaytimeImportMode != PlaytimeImportMode.Never)
             {
                 playtimeSyncEnabled = GetSettings().SyncPlaytime;
-                var gamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
-                var gameSettings = new GameSettings();
-                if (gamesSettings.ContainsKey(args.Game.GameId))
-                {
-                    gameSettings = gamesSettings[args.Game.GameId];
-                }
+                var gameSettings = LegendaryGameSettingsView.LoadGameSettings(args.Game.GameId);
                 if (gameSettings?.AutoSyncPlaytime != null)
                 {
                     playtimeSyncEnabled = (bool)gameSettings.AutoSyncPlaytime;
@@ -464,6 +432,36 @@ namespace LegendaryLibraryNS
                     download.status = (int)DownloadStatus.Paused;
                 }
                 downloadManager.SaveData();
+            }
+        }
+
+        public override async void OnApplicationStarted(OnApplicationStartedEventArgs args)
+        {
+            var globalSettings = GetSettings();
+            if (globalSettings != null)
+            {
+                if (globalSettings.GamesUpdatePolicy == UpdatePolicy.Auto)
+                {
+                    var appList = LegendaryLauncher.GetInstalledAppList();
+                    foreach (var game in appList)
+                    {
+                        if (!game.Value.Is_dlc)
+                        {
+                            var gameID = game.Value.App_name;
+                            var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameID);
+                            bool canUpdate = true;
+                            if (gameSettings.DisableGameVersionCheck == true)
+                            {
+                                canUpdate = false;
+                            }
+                            if (canUpdate)
+                            {
+                                LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
+                                await legendaryUpdateController.UpdateGame(game.Value.Title, gameID, true);
+                            }
+                        }
+                    }
+                }
             }
         }
 

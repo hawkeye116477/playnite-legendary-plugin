@@ -55,12 +55,7 @@ namespace LegendaryLibraryNS
         internal static void SyncGameSaves(string gameName, string gameID, string gameInstallDir, CloudSyncAction cloudSyncAction, bool manualSync = false)
         {
             var cloudSyncEnabled = LegendaryLibrary.GetSettings().SyncGameSaves;
-            var gamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
-            var gameSettings = new GameSettings();
-            if (gamesSettings.ContainsKey(gameID))
-            {
-                gameSettings = gamesSettings[gameID];
-            }
+            var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameID);
             if (gameSettings?.AutoSyncSaves != null)
             {
                 cloudSyncEnabled = (bool)gameSettings.AutoSyncSaves;

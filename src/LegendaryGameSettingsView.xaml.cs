@@ -53,6 +53,18 @@ namespace LegendaryLibraryNS
             return savedGamesSettings;
         }
 
+        public static GameSettings LoadGameSettings(string gameID)
+        {
+            var gamesSettings = LoadSavedGamesSettings();
+            var gameSettings = new GameSettings();
+            if (gamesSettings.ContainsKey(gameID))
+            {
+                gameSettings = gamesSettings[gameID];
+            }
+            return gameSettings;
+        }
+
+
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             var globalSettings = LegendaryLibrary.GetSettings();
@@ -61,7 +73,12 @@ namespace LegendaryLibraryNS
             {
                 newGameSettings.LaunchOffline = EnableOfflineModeChk.IsChecked;
             }
-            if (DisableGameUpdateCheckingChk.IsChecked != globalSettings.DisableGameVersionCheck)
+            bool globalDisableUpdates = false;
+            if (globalSettings.GamesUpdatePolicy == UpdatePolicy.Never)
+            {
+                globalDisableUpdates = true;
+            }
+            if (DisableGameUpdateCheckingChk.IsChecked != globalDisableUpdates)
             {
                 newGameSettings.DisableGameVersionCheck = DisableGameUpdateCheckingChk.IsChecked;
             }
@@ -108,7 +125,10 @@ namespace LegendaryLibraryNS
         {
             var globalSettings = LegendaryLibrary.GetSettings();
             EnableOfflineModeChk.IsChecked = globalSettings.LaunchOffline;
-            DisableGameUpdateCheckingChk.IsChecked = globalSettings.DisableGameVersionCheck;
+            if (globalSettings.GamesUpdatePolicy == UpdatePolicy.Never)
+            {
+                DisableGameUpdateCheckingChk.IsChecked = true;
+            }
             AutoSyncSavesChk.IsChecked = globalSettings.SyncGameSaves;
             AutoSyncPlaytimeChk.IsChecked = globalSettings.SyncPlaytime;
             if (gamesSettings.ContainsKey(GameID))

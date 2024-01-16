@@ -123,4 +123,8 @@
   <sys:String x:Key="LOCLegendaryUninstallSelectedDlcs">Are you sure you want to uninstall selected DLCs?</sys:String>
   <sys:String x:Key="LOCLegendaryNoInstalledDlcs">No installed DLCs.</sys:String>
   <sys:String x:Key="LOCLegendaryNoAvailableDlcs">No available DLCs.</sys:String>
+  <sys:String x:Key="LOCLegendaryCheckUpdatesGameLaunch">Check for updates only when launching games</sys:String>
+  <sys:String x:Key="LOCLegendaryAutoUpdate">Automatically update when Playnite starts</sys:String>
+  <sys:String x:Key="LOCLegendaryNeverUpdate">Never check for updates</sys:String>
+  <sys:String x:Key="LOCLegendaryGamesUpdatePolicy">Games update policy</sys:String>
 </ResourceDictionary>

@@ -1,6 +1,7 @@
 ﻿using CliWrap;
 using CliWrap.Buffered;
 using LegendaryLibraryNS.Enums;
+using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
 using Playnite.SDK;
 using System;
@@ -31,13 +32,40 @@ namespace LegendaryLibraryNS
         public bool DisableGameVersionCheck { get; set; } = false;
         public bool DisplayDownloadSpeedInBits { get; set; } = false;
         public bool SyncPlaytime { get; set; } = false;
+        public UpdatePolicy GamesUpdatePolicy { get; set; } = UpdatePolicy.GameLaunch;
     }
 
     public class LegendaryLibrarySettingsViewModel : PluginSettingsViewModel<LegendaryLibrarySettings, LegendaryLibrary>
     {
         public LegendaryLibrarySettingsViewModel(LegendaryLibrary library, IPlayniteAPI api) : base(library, api)
         {
-            Settings = LoadSavedSettings() ?? new LegendaryLibrarySettings();
+            var savedSettings = LoadSavedSettings();
+            if (savedSettings != null)
+            {
+                if (savedSettings.OnlineList.Count > 0)
+                {
+                    var gamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
+                    foreach (var onlineGame in savedSettings.OnlineList)
+                    {
+                        if (!gamesSettings.ContainsKey(onlineGame))
+                        {
+                            gamesSettings.Add(onlineGame, new GameSettings());
+                        }
+                        gamesSettings[onlineGame].LaunchOffline = false;
+                    }
+                    savedSettings.OnlineList.Clear();
+                }
+                if (savedSettings.DisableGameVersionCheck)
+                {
+                    savedSettings.GamesUpdatePolicy = UpdatePolicy.Never;
+                    savedSettings.DisableGameVersionCheck = false;
+                }
+            }
+            else
+            {
+                savedSettings = new LegendaryLibrarySettings();
+            }
+            Settings = savedSettings;
         }
 
         public override void EndEdit()

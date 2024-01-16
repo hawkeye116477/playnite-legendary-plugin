@@ -161,6 +161,7 @@
     <Compile Include="Enums\DownloadAction.cs" />
     <Compile Include="Enums\DownloadCompleteAction.cs" />
     <Compile Include="Enums\DownloadStatus.cs" />
+    <Compile Include="Enums\UpdatePolicy.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="LegendaryClient.cs" />
     <Compile Include="LegendaryCloud.cs" />
