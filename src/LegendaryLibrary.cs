@@ -462,6 +462,29 @@ namespace LegendaryLibraryNS
                         }
                     }
                 }
+                if (globalSettings.NotifyNewLauncherVersion && LegendaryLauncher.IsInstalled)
+                {
+                    var versionInfoContent = await LegendaryLauncher.GetVersionInfoContent();
+                    if (versionInfoContent.release_info != null)
+                    {
+                        var newVersion = versionInfoContent.release_info.version;
+                        var oldVersion = await LegendaryLauncher.GetLauncherVersion();
+                        if (oldVersion != "0" && newVersion != oldVersion)
+                        {
+                            var options = new List<MessageBoxOption>
+                            {
+                                new MessageBoxOption(ResourceProvider.GetString(LOC.LegendaryViewChangelog)),
+                                new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteOKLabel)),
+                            };
+                            var result = PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryNewVersionAvailable), "Legendary Launcher", newVersion), ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
+                            if (result == options[0])
+                            {
+                                var changelogURL = versionInfoContent.release_info.gh_url;
+                                Playnite.Commands.GlobalCommands.NavigateUrl(changelogURL);
+                            }
+                        }
+                    }
+                }
             }
         }
 

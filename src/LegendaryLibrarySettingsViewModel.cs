@@ -1,13 +1,7 @@
-﻿using CliWrap;
-using CliWrap.Buffered;
-using LegendaryLibraryNS.Enums;
+﻿using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
-using LegendaryLibraryNS.Services;
 using Playnite.SDK;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace LegendaryLibraryNS
 {
@@ -33,6 +27,7 @@ namespace LegendaryLibraryNS
         public bool DisplayDownloadSpeedInBits { get; set; } = false;
         public bool SyncPlaytime { get; set; } = false;
         public UpdatePolicy GamesUpdatePolicy { get; set; } = UpdatePolicy.GameLaunch;
+        public bool NotifyNewLauncherVersion { get; set; } = false;
     }
 
     public class LegendaryLibrarySettingsViewModel : PluginSettingsViewModel<LegendaryLibrarySettings, LegendaryLibrary>

@@ -126,4 +126,5 @@
   <sys:String x:Key="LOCLegendaryAutoUpdate">Automatically update when Playnite starts</sys:String>
   <sys:String x:Key="LOCLegendaryNeverUpdate">Never check for updates</sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatePolicy">Games update policy</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherUpdateNotify">Notify me when a new version of Legendary launcher will be available</sys:String>
 </ResourceDictionary>

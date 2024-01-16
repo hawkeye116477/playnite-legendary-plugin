@@ -11,7 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace LegendaryLibraryNS
@@ -272,6 +274,73 @@ namespace LegendaryLibraryNS
                 }, metadataProgressOptions);
             }
             return manifest;
+        }
+
+        public static async Task<string> GetLauncherVersion()
+        {
+            var version = "0";
+            if (IsInstalled)
+            {
+                var versionCmd = await Cli.Wrap(ClientExecPath)
+                                          .WithArguments(new[] { "-V" })
+                                          .WithEnvironmentVariables(DefaultEnvironmentVariables)
+                                          .WithValidation(CommandResultValidation.None)
+                                          .ExecuteBufferedAsync();
+                if (versionCmd.StandardOutput.Contains("version"))
+                {
+                    version = Regex.Match(versionCmd.StandardOutput, @"\d+(\.\d+)+").Value;
+                }
+            }
+            return version;
+        }
+
+        public static async Task<LauncherVersion.Rootobject> GetVersionInfoContent()
+        {
+            var newVersionInfoContent = new LauncherVersion.Rootobject();
+            var logger = LogManager.GetLogger();
+            if (!IsInstalled)
+            {
+                throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+            }
+            var cacheVersionPath = LegendaryLibrary.Instance.GetCachePath("infocache");
+            var cacheVersionFile = Path.Combine(cacheVersionPath, "legendaryVersion.json");
+            string content = null;
+            if (File.Exists(cacheVersionFile))
+            {
+                if (File.GetLastWriteTime(cacheVersionFile) < DateTime.Now.AddDays(-7))
+                {
+                    File.Delete(cacheVersionFile);
+                }
+            }
+            if (!File.Exists(cacheVersionFile))
+            {
+                var httpClient = new HttpClient();
+                var response = await httpClient.GetAsync("https://api.legendary.gl/v1/version.json");
+                if (response.IsSuccessStatusCode)
+                {
+                    content = await response.Content.ReadAsStringAsync();
+                    if (!Directory.Exists(cacheVersionPath))
+                    {
+                        Directory.CreateDirectory(cacheVersionPath);
+                    }
+                    File.WriteAllText(cacheVersionFile, content);
+                }
+                httpClient.Dispose();
+            }
+            else
+            {
+                content = FileSystem.ReadFileAsStringSafe(cacheVersionFile);
+            }
+            if (content.IsNullOrEmpty())
+            {
+                logger.Error("An error occurred while downloading Legendary's version info.");
+            }
+            var versionInfoContent = new LauncherVersion.Rootobject();
+            if (Serialization.TryFromJson(content, out versionInfoContent))
+            {
+                newVersionInfoContent = versionInfoContent;
+            }
+            return newVersionInfoContent;
         }
 
     }

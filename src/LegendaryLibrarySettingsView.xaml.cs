@@ -11,8 +11,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -147,13 +145,13 @@ namespace LegendaryLibraryNS
                 }
             }
 
-            var downloadCompleteActions = new Dictionary<int, string>
+            var downloadCompleteActions = new Dictionary<DownloadCompleteAction, string>
             {
-                { (int)DownloadCompleteAction.Nothing, ResourceProvider.GetString(LOC.Legendary3P_PlayniteDoNothing) },
-                { (int)DownloadCompleteAction.ShutDown, ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuShutdownSystem) },
-                { (int)DownloadCompleteAction.Reboot, ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuRestartSystem) },
-                { (int)DownloadCompleteAction.Hibernate, ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuHibernateSystem) },
-                { (int)DownloadCompleteAction.Sleep, ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuSuspendSystem) },
+                { DownloadCompleteAction.Nothing, ResourceProvider.GetString(LOC.Legendary3P_PlayniteDoNothing) },
+                { DownloadCompleteAction.ShutDown, ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuShutdownSystem) },
+                { DownloadCompleteAction.Reboot, ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuRestartSystem) },
+                { DownloadCompleteAction.Hibernate, ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuHibernateSystem) },
+                { DownloadCompleteAction.Sleep, ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuSuspendSystem) },
             };
             AfterDownloadCompleteCBo.ItemsSource = downloadCompleteActions;
 
@@ -165,28 +163,24 @@ namespace LegendaryLibraryNS
             };
             GamesUpdatesCBo.ItemsSource = updatePolicyOptions;
 
-            var autoClearOptions = new Dictionary<int, string>
+            var autoClearOptions = new Dictionary<ClearCacheTime, string>
             {
-                { (int)ClearCacheTime.Day, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnceADay) },
-                { (int)ClearCacheTime.Week, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnceAWeek) },
-                { (int)ClearCacheTime.Month, ResourceProvider.GetString(LOC.LegendaryOnceAMonth) },
-                { (int)ClearCacheTime.ThreeMonths, ResourceProvider.GetString(LOC.LegendaryOnceEvery3Months) },
-                { (int)ClearCacheTime.SixMonths, ResourceProvider.GetString(LOC.LegendaryOnceEvery6Months) },
-                { (int)ClearCacheTime.Never, ResourceProvider.GetString(LOC.Legendary3P_PlayniteSettingsPlaytimeImportModeNever) }
+                { ClearCacheTime.Day, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnceADay) },
+                { ClearCacheTime.Week, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnceAWeek) },
+                { ClearCacheTime.Month, ResourceProvider.GetString(LOC.LegendaryOnceAMonth) },
+                { ClearCacheTime.ThreeMonths, ResourceProvider.GetString(LOC.LegendaryOnceEvery3Months) },
+                { ClearCacheTime.SixMonths, ResourceProvider.GetString(LOC.LegendaryOnceEvery6Months) },
+                { ClearCacheTime.Never, ResourceProvider.GetString(LOC.Legendary3P_PlayniteSettingsPlaytimeImportModeNever) }
             };
             AutoClearCacheCBo.ItemsSource = autoClearOptions;
 
             troubleshootingInformation = new LegendaryTroubleshootingInformation();
             if (LegendaryLauncher.IsInstalled)
             {
-                var verionCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                         .WithArguments(new[] { "-V" })
-                                         .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
-                                         .WithValidation(CommandResultValidation.None)
-                                         .ExecuteBufferedAsync();
-                if (verionCmd.StandardOutput.Contains("version"))
+                var launcherVersion = await LegendaryLauncher.GetLauncherVersion();
+                if (launcherVersion != "0")
                 {
-                    troubleshootingInformation.LauncherVersion = Regex.Match(verionCmd.StandardOutput, @"\d+(\.\d+)+").Value;
+                    troubleshootingInformation.LauncherVersion = launcherVersion;
                     LauncherVersionTxt.Text = troubleshootingInformation.LauncherVersion;
                 }
                 LauncherBinaryTxt.Text = troubleshootingInformation.LauncherBinary;
@@ -344,45 +338,8 @@ namespace LegendaryLibraryNS
 
         private async void CheckForUpdatesBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (!LegendaryLauncher.IsInstalled)
-            {
-                throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
-            }
-            var cacheVersionPath = LegendaryLibrary.Instance.GetCachePath("infocache");
-            var cacheVersionFile = Path.Combine(cacheVersionPath, "legendaryVersion.json");
-            string content = null;
-            if (File.Exists(cacheVersionFile))
-            {
-                if (File.GetLastWriteTime(cacheVersionFile) < DateTime.Now.AddDays(-7))
-                {
-                    File.Delete(cacheVersionFile);
-                }
-            }
-            if (!File.Exists(cacheVersionFile))
-            {
-                var httpClient = new HttpClient();
-                var response = await httpClient.GetAsync("https://api.legendary.gl/v1/version.json");
-                if (response.IsSuccessStatusCode)
-                {
-                    content = await response.Content.ReadAsStringAsync();
-                    if (!Directory.Exists(cacheVersionPath))
-                    {
-                        Directory.CreateDirectory(cacheVersionPath);
-                    }
-                    File.WriteAllText(cacheVersionFile, content);
-                }
-                httpClient.Dispose();
-            }
-            else
-            {
-                content = FileSystem.ReadFileAsStringSafe(cacheVersionFile);
-            }
-            if (content.IsNullOrEmpty())
-            {
-                logger.Error("An error occurred while downloading Legendary's version info.");
-            }
-            var versionInfoContent = new LauncherVersion.Rootobject();
-            if (Serialization.TryFromJson(content, out versionInfoContent))
+            var versionInfoContent = await LegendaryLauncher.GetVersionInfoContent();
+            if (versionInfoContent.release_info != null)
             {
                 var newVersion = versionInfoContent.release_info.version;
                 if (troubleshootingInformation.LauncherVersion != newVersion)

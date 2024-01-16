@@ -709,5 +709,9 @@ namespace System
         /// Games update policy
         /// </summary>
         public const string LegendaryGamesUpdatePolicy = "LOCLegendaryGamesUpdatePolicy";
+        /// <summary>
+        /// Notify me when a new version of Legendary launcher will be available
+        /// </summary>
+        public const string LegendaryLauncherUpdateNotify = "LOCLegendaryLauncherUpdateNotify";
     }
 }

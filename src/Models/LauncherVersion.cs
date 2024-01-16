@@ -1,6 +1,6 @@
 ﻿namespace LegendaryLibraryNS.Models
 {
-    class LauncherVersion
+    public class LauncherVersion
     {
         public class Rootobject
         {
