@@ -46,11 +46,11 @@ namespace LegendaryLibraryNS
                 MaxSharedMemoryNI.Value = wantedItem.downloadProperties.maxSharedMemory.ToString();
                 TaskCBo.SelectedValue = wantedItem.downloadProperties.downloadAction;
             }
-            var downloadActionOptions = new Dictionary<int, string>
+            var downloadActionOptions = new Dictionary<DownloadAction, string>
             {
-                { (int)DownloadAction.Install, ResourceProvider.GetString(LOC.Legendary3P_PlayniteInstallGame) },
-                { (int)DownloadAction.Repair, ResourceProvider.GetString(LOC.LegendaryRepair) },
-                { (int)DownloadAction.Update, ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterInstallUpdate) }
+                { DownloadAction.Install, ResourceProvider.GetString(LOC.Legendary3P_PlayniteInstallGame) },
+                { DownloadAction.Repair, ResourceProvider.GetString(LOC.LegendaryRepair) },
+                { DownloadAction.Update, ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterInstallUpdate) }
             };
             TaskCBo.ItemsSource = downloadActionOptions;
 
@@ -102,7 +102,7 @@ namespace LegendaryLibraryNS
             var dataFile = Path.Combine(dataDir, "downloadManager.json");
             var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == SelectedDownload.gameID);
             wantedItem.downloadProperties.installPath = SelectedGamePathTxt.Text;
-            wantedItem.downloadProperties.downloadAction = (int)TaskCBo.SelectedValue;
+            wantedItem.downloadProperties.downloadAction = (DownloadAction)TaskCBo.SelectedValue;
             wantedItem.downloadProperties.enableReordering = (bool)ReorderingChk.IsChecked;
             wantedItem.downloadProperties.maxWorkers = int.Parse(MaxWorkersNI.Value);
             wantedItem.downloadProperties.maxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);

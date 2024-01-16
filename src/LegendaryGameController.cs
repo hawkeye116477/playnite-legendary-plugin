@@ -51,7 +51,7 @@ namespace LegendaryLibraryNS
                 };
             }
             window.Title = Game.Name;
-            var installProperties = new DownloadProperties { downloadAction = (int)Enums.DownloadAction.Install };
+            var installProperties = new DownloadProperties { downloadAction = DownloadAction.Install };
             var installData = new DownloadManagerData.Download { gameID = Game.GameId, downloadProperties = installProperties };
             window.DataContext = installData;
             window.Content = new LegendaryGameInstaller();
@@ -379,13 +379,13 @@ namespace LegendaryLibraryNS
                 {
                     foreach (var gameToUpdate in gamesToUpdate)
                     {
-                        var downloadProperties = new DownloadProperties() { downloadAction = (int)DownloadAction.Update };
+                        var downloadProperties = new DownloadProperties() { downloadAction = DownloadAction.Update };
                         var downloadData = new DownloadManagerData.Download { gameID = gameToUpdate.Key, downloadProperties = downloadProperties };
                         LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
                         var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameToUpdate.Key);
                         if (wantedItem != null)
                         {
-                            if (wantedItem.status == (int)DownloadStatus.Completed)
+                            if (wantedItem.status == DownloadStatus.Completed)
                             {
                                 downloadManager.downloadManagerData.downloads.Remove(wantedItem);
                                 downloadManager.SaveData();

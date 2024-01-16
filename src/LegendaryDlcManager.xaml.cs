@@ -178,7 +178,7 @@ namespace LegendaryLibraryNS
                     }
                     DownloadProperties downloadProperties = new DownloadProperties()
                     {
-                        downloadAction = (int)DownloadAction.Install,
+                        downloadAction = DownloadAction.Install,
                         enableReordering = enableReordering,
                         maxWorkers = maxWorkers,
                         maxSharedMemory = maxSharedMemory

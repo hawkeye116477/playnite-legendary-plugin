@@ -135,7 +135,7 @@ namespace LegendaryLibraryNS
                 DownloadProperties downloadProperties = new DownloadProperties()
                 {
                     installPath = installPath,
-                    downloadAction = (int)DownloadAction.Install,
+                    downloadAction = DownloadAction.Install,
                     enableReordering = enableReordering,
                     maxWorkers = maxWorkers,
                     maxSharedMemory = maxSharedMemory,
@@ -205,7 +205,7 @@ namespace LegendaryLibraryNS
 
         private async void LegendaryGameInstallerUC_Loaded(object sender, RoutedEventArgs e)
         {
-            if (InstallData.downloadProperties.downloadAction == (int)DownloadAction.Repair)
+            if (InstallData.downloadProperties.downloadAction == DownloadAction.Repair)
             {
                 FolderDP.Visibility = Visibility.Collapsed;
                 ImportBtn.Visibility = Visibility.Collapsed;
@@ -549,7 +549,7 @@ namespace LegendaryLibraryNS
                 DownloadProperties downloadProperties = new DownloadProperties()
                 {
                     installPath = "",
-                    downloadAction = (int)DownloadAction.Repair,
+                    downloadAction = DownloadAction.Repair,
                     enableReordering = enableReordering,
                     maxWorkers = maxWorkers,
                     maxSharedMemory = maxSharedMemory,

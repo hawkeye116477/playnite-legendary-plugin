@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using LegendaryLibraryNS.Enums;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace LegendaryLibraryNS.Models
@@ -38,8 +39,8 @@ namespace LegendaryLibraryNS.Models
                 set => SetValue(ref _completedTime, value);
             }
 
-            private int _status;
-            public int status
+            private DownloadStatus _status;
+            public DownloadStatus status
             {
                 get => _status;
                 set => SetValue(ref _status, value);
@@ -52,7 +53,7 @@ namespace LegendaryLibraryNS.Models
     public class DownloadProperties : ObservableObject
     {
         public string installPath { get; set; } = "";
-        public int downloadAction { get; set; }
+        public DownloadAction downloadAction { get; set; }
         public bool enableReordering { get; set; }
         public int maxWorkers { get; set; }
         public int maxSharedMemory { get; set; }

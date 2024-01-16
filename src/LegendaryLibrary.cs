@@ -417,19 +417,19 @@ namespace LegendaryLibraryNS
         public void StopDownloadManager()
         {
             LegendaryDownloadManager downloadManager = GetLegendaryDownloadManager();
-            var runningAndQueuedDownloads = downloadManager.downloadManagerData.downloads.Where(i => i.status == (int)DownloadStatus.Running
-                                                                                                     || i.status == (int)DownloadStatus.Queued).ToList();
+            var runningAndQueuedDownloads = downloadManager.downloadManagerData.downloads.Where(i => i.status == DownloadStatus.Running
+                                                                                                     || i.status == DownloadStatus.Queued).ToList();
             if (runningAndQueuedDownloads.Count > 0)
             {
                 foreach (var download in runningAndQueuedDownloads)
                 {
-                    if (download.status == (int)DownloadStatus.Running)
+                    if (download.status == DownloadStatus.Running)
                     {
                         downloadManager.gracefulInstallerCTS?.Cancel();
                         downloadManager.gracefulInstallerCTS?.Dispose();
                         downloadManager.forcefulInstallerCTS?.Dispose();
                     }
-                    download.status = (int)DownloadStatus.Paused;
+                    download.status = DownloadStatus.Paused;
                 }
                 downloadManager.SaveData();
             }
@@ -494,7 +494,7 @@ namespace LegendaryLibraryNS
             var settings = GetSettings();
             if (settings != null)
             {
-                if (settings.AutoClearCache != (int)ClearCacheTime.Never)
+                if (settings.AutoClearCache != ClearCacheTime.Never)
                 {
                     var cacheDirs = new List<string>()
                     {
@@ -651,7 +651,7 @@ namespace LegendaryLibraryNS
                                 };
                             }
                             window.Title = game.Name;
-                            var installProperties = new DownloadProperties { downloadAction = (int)DownloadAction.Repair };
+                            var installProperties = new DownloadProperties { downloadAction = DownloadAction.Repair };
                             var installData = new DownloadManagerData.Download { gameID = game.GameId, downloadProperties = installProperties };
                             window.DataContext = installData;
                             window.Content = new LegendaryGameInstaller();

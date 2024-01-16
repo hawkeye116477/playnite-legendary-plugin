@@ -67,12 +67,12 @@ namespace LegendaryLibraryNS
         {
             if (EditingClone.AutoClearCache != Settings.AutoClearCache)
             {
-                if (Settings.AutoClearCache != (int)ClearCacheTime.Never)
+                if (Settings.AutoClearCache != ClearCacheTime.Never)
                 {
                     Settings.NextClearingTime = LegendaryLibrary.GetNextClearingTime(Settings.AutoClearCache);
                 }
             }
-            if (Settings.AutoClearCache == (int)ClearCacheTime.Never)
+            if (Settings.AutoClearCache == ClearCacheTime.Never)
             {
                 Settings.NextClearingTime = 0;
             }

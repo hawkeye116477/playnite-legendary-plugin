@@ -82,7 +82,7 @@ namespace LegendaryLibraryNS
                 ShowMaximizeButton = false
             });
             window.Title = ResourceProvider.GetString(LOC.LegendaryEOSOverlay);
-            var installProperties = new DownloadProperties { downloadAction = (int)DownloadAction.Install };
+            var installProperties = new DownloadProperties { downloadAction = DownloadAction.Install };
             var installData = new DownloadManagerData.Download { gameID = "eos-overlay", downloadProperties = installProperties };
             window.DataContext = installData;
             window.Content = new LegendaryGameInstaller();

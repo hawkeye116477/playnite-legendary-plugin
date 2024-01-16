@@ -41,13 +41,13 @@ namespace LegendaryLibraryNS
             SetControlTextBlockStyle();
             SelectAllBtn.ToolTip = $"{ResourceProvider.GetResource(LOC.LegendarySelectAllEntries)} (Ctrl+A)";
             LoadSavedData();
-            var runningAndQueuedDownloads = downloadManagerData.downloads.Where(i => i.status == (int)DownloadStatus.Running
-                                                                                     || i.status == (int)DownloadStatus.Queued).ToList();
+            var runningAndQueuedDownloads = downloadManagerData.downloads.Where(i => i.status == DownloadStatus.Running
+                                                                                     || i.status == DownloadStatus.Queued).ToList();
             if (runningAndQueuedDownloads.Count > 0)
             {
                 foreach (var download in runningAndQueuedDownloads)
                 {
-                    download.status = (int)DownloadStatus.Paused;
+                    download.status = DownloadStatus.Paused;
                 }
                 SaveData();
             }
@@ -104,8 +104,8 @@ namespace LegendaryLibraryNS
 
         public async void DoNextJobInQueue(object _, PropertyChangedEventArgs arg)
         {
-            var running = downloadManagerData.downloads.Any(item => item.status == (int)DownloadStatus.Running);
-            var queuedList = downloadManagerData.downloads.Where(i => i.status == (int)DownloadStatus.Queued).ToList();
+            var running = downloadManagerData.downloads.Any(item => item.status == DownloadStatus.Running);
+            var queuedList = downloadManagerData.downloads.Where(i => i.status == DownloadStatus.Queued).ToList();
             if (!running && queuedList.Count > 0)
             {
                 await Install(queuedList[0].gameID, queuedList[0].name, queuedList[0].downloadSize, queuedList[0].downloadProperties);
@@ -141,15 +141,15 @@ namespace LegendaryLibraryNS
             {
                 DateTimeOffset now = DateTime.UtcNow;
                 downloadManagerData.downloads.Add(new DownloadManagerData.Download
-                { gameID = gameID, downloadSize = downloadSize, installSize = installSize, name = gameTitle, status = (int)DownloadStatus.Queued, addedTime = now.ToUnixTimeSeconds(), downloadProperties = downloadProperties });
+                { gameID = gameID, downloadSize = downloadSize, installSize = installSize, name = gameTitle, status = DownloadStatus.Queued, addedTime = now.ToUnixTimeSeconds(), downloadProperties = downloadProperties });
                 SaveData();
             }
             else
             {
-                wantedItem.status = (int)DownloadStatus.Queued;
+                wantedItem.status = DownloadStatus.Queued;
                 SaveData();
             }
-            var running = downloadManagerData.downloads.Any(item => item.status == (int)DownloadStatus.Running);
+            var running = downloadManagerData.downloads.Any(item => item.status == DownloadStatus.Running);
             if (!running)
             {
                 await Install(gameID, gameTitle, downloadSize, downloadProperties);
@@ -189,11 +189,11 @@ namespace LegendaryLibraryNS
             {
                 installCommand.Add("--enable-reordering");
             }
-            if (downloadProperties.downloadAction == (int)DownloadAction.Repair)
+            if (downloadProperties.downloadAction == DownloadAction.Repair)
             {
                 installCommand.Add("--repair");
             }
-            if (downloadProperties.downloadAction == (int)DownloadAction.Update)
+            if (downloadProperties.downloadAction == DownloadAction.Update)
             {
                 installCommand.Add("--update-only");
             }
@@ -227,7 +227,7 @@ namespace LegendaryLibraryNS
                     switch (cmdEvent)
                     {
                         case StartedCommandEvent started:
-                            wantedItem.status = (int)DownloadStatus.Running;
+                            wantedItem.status = DownloadStatus.Running;
                             DownloadPB.Value = 0;
                             EtaTB.Text = "";
                             ElapsedTB.Text = "";
@@ -297,7 +297,7 @@ namespace LegendaryLibraryNS
                         case ExitedCommandEvent exited:
                             if (exited.ExitCode == 0)
                             {
-                                wantedItem.status = (int)DownloadStatus.Completed;
+                                wantedItem.status = DownloadStatus.Completed;
                                 DateTimeOffset now = DateTime.UtcNow;
                                 wantedItem.completedTime = now.ToUnixTimeSeconds();
                                 SaveData();
@@ -325,7 +325,7 @@ namespace LegendaryLibraryNS
                             }
                             else
                             {
-                                wantedItem.status = (int)DownloadStatus.Paused;
+                                wantedItem.status = DownloadStatus.Paused;
                                 SaveData();
                                 var memoryErrorMatch = Regex.Match(stdOutBuffer.ToString(), @"MemoryError: Current shared memory cache is smaller than required: (\S+) MiB < (\S+) MiB");
                                 if (memoryErrorMatch.Length >= 2)
@@ -359,17 +359,17 @@ namespace LegendaryLibraryNS
             {
                 foreach (var selectedRow in DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
                 {
-                    if (selectedRow.status == (int)DownloadStatus.Running ||
-                        selectedRow.status == (int)DownloadStatus.Queued)
+                    if (selectedRow.status == DownloadStatus.Running ||
+                        selectedRow.status == DownloadStatus.Queued)
                     {
-                        if (selectedRow.status == (int)DownloadStatus.Running)
+                        if (selectedRow.status == DownloadStatus.Running)
                         {
                             gracefulInstallerCTS?.Cancel();
                             gracefulInstallerCTS?.Dispose();
                             forcefulInstallerCTS?.Dispose();
                             EtaTB.Text = "";
                         }
-                        selectedRow.status = (int)DownloadStatus.Paused;
+                        selectedRow.status = DownloadStatus.Paused;
                         SaveData();
                     }
                 }
@@ -382,8 +382,8 @@ namespace LegendaryLibraryNS
             {
                 foreach (var selectedRow in DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
                 {
-                    if (selectedRow.status == (int)DownloadStatus.Canceled ||
-                        selectedRow.status == (int)DownloadStatus.Paused)
+                    if (selectedRow.status == DownloadStatus.Canceled ||
+                        selectedRow.status == DownloadStatus.Paused)
                     {
                         await EnqueueJob(selectedRow.gameID, selectedRow.name, selectedRow.downloadSize, selectedRow.installSize, selectedRow.downloadProperties);
                     }
@@ -397,11 +397,11 @@ namespace LegendaryLibraryNS
             {
                 foreach (var selectedRow in DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
                 {
-                    if (selectedRow.status == (int)DownloadStatus.Running ||
-                        selectedRow.status == (int)DownloadStatus.Queued ||
-                        selectedRow.status == (int)DownloadStatus.Paused)
+                    if (selectedRow.status == DownloadStatus.Running ||
+                        selectedRow.status == DownloadStatus.Queued ||
+                        selectedRow.status == DownloadStatus.Paused)
                     {
-                        if (selectedRow.status == (int)DownloadStatus.Running)
+                        if (selectedRow.status == DownloadStatus.Running)
                         {
                             gracefulInstallerCTS?.Cancel();
                             gracefulInstallerCTS?.Dispose();
@@ -417,14 +417,14 @@ namespace LegendaryLibraryNS
                         {
                             File.Delete(repairFile);
                         }
-                        if (selectedRow.fullInstallPath != null && selectedRow.downloadProperties.downloadAction == (int)DownloadAction.Install)
+                        if (selectedRow.fullInstallPath != null && selectedRow.downloadProperties.downloadAction == DownloadAction.Install)
                         {
                             if (Directory.Exists(selectedRow.fullInstallPath))
                             {
                                 Directory.Delete(selectedRow.fullInstallPath, true);
                             }
                         }
-                        selectedRow.status = (int)DownloadStatus.Canceled;
+                        selectedRow.status = DownloadStatus.Canceled;
                         DownloadSpeedTB.Text = "";
                         DownloadedTB.Text = "";
                         ElapsedTB.Text = "";
@@ -439,15 +439,15 @@ namespace LegendaryLibraryNS
         private void RemoveDownloadEntry(DownloadManagerData.Download selectedEntry)
         {
             selectedEntry.PropertyChanged -= DoNextJobInQueue;
-            if (selectedEntry.status != (int)DownloadStatus.Completed && selectedEntry.status != (int)DownloadStatus.Canceled)
+            if (selectedEntry.status != DownloadStatus.Completed && selectedEntry.status != DownloadStatus.Canceled)
             {
-                if (selectedEntry.status == (int)DownloadStatus.Running)
+                if (selectedEntry.status == DownloadStatus.Running)
                 {
                     gracefulInstallerCTS?.Cancel();
                     gracefulInstallerCTS?.Dispose();
                     forcefulInstallerCTS?.Dispose();
                 }
-                selectedEntry.status = (int)DownloadStatus.Canceled;
+                selectedEntry.status = DownloadStatus.Canceled;
             }
             var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", selectedEntry.gameID + ".resume");
             if (File.Exists(resumeFile))
@@ -459,8 +459,8 @@ namespace LegendaryLibraryNS
             {
                 File.Delete(repairFile);
             }
-            if (selectedEntry.fullInstallPath != null && selectedEntry.status != (int)DownloadStatus.Completed
-                && selectedEntry.downloadProperties.downloadAction == (int)DownloadAction.Install)
+            if (selectedEntry.fullInstallPath != null && selectedEntry.status != DownloadStatus.Completed
+                && selectedEntry.downloadProperties.downloadAction == DownloadAction.Install)
             {
                 if (Directory.Exists(selectedEntry.fullInstallPath))
                 {
@@ -505,7 +505,7 @@ namespace LegendaryLibraryNS
                 {
                     foreach (var row in DownloadsDG.Items.Cast<DownloadManagerData.Download>().ToList())
                     {
-                        if (row.status == (int)DownloadStatus.Completed)
+                        if (row.status == DownloadStatus.Completed)
                         {
                             RemoveDownloadEntry(row);
                         }
@@ -527,10 +527,10 @@ namespace LegendaryLibraryNS
         private void DownloadFiltersChk_IsCheckedChanged(object sender, RoutedEventArgs e)
         {
             ICollectionView downloadsView = CollectionViewSource.GetDefaultView(downloadManagerData.downloads);
-            var checkedStatus = new List<int>();
+            var checkedStatus = new List<DownloadStatus>();
             foreach (CheckBox checkBox in FilterStatusSP.Children)
             {
-                var downloadStatus = (int)Enum.Parse(typeof(DownloadStatus), checkBox.Name.Replace("Chk", ""));
+                var downloadStatus = (DownloadStatus)Enum.Parse(typeof(DownloadStatus), checkBox.Name.Replace("Chk", ""));
                 if (checkBox.IsChecked == true)
                 {
                     checkedStatus.Add(downloadStatus);

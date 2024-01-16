@@ -10,21 +10,21 @@ namespace LegendaryLibraryNS.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            switch((int)value)
+            switch(value)
             {
-                case (int)DownloadStatus.Queued:
+                case DownloadStatus.Queued:
                     value = ResourceProvider.GetString(LOC.LegendaryDownloadQueued);
                     break;
-                case (int)DownloadStatus.Running:
+                case DownloadStatus.Running:
                     value = ResourceProvider.GetString(LOC.LegendaryDownloadRunning);
                     break;
-                case (int)DownloadStatus.Canceled:
+                case DownloadStatus.Canceled:
                     value = ResourceProvider.GetString(LOC.LegendaryDownloadCanceled);
                     break;
-                case (int)DownloadStatus.Paused:
+                case DownloadStatus.Paused:
                     value = ResourceProvider.GetString(LOC.LegendaryDownloadPaused);
                     break;
-                case (int)DownloadStatus.Completed:
+                case DownloadStatus.Completed:
                     value = ResourceProvider.GetString(LOC.LegendaryDownloadCompleted);
                     break;
             }
