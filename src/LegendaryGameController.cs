@@ -203,7 +203,7 @@ namespace LegendaryLibraryNS
                 {
                     updateCheckDisabled = true;
                 }
-                if (gameSettings?.DisableGameVersionCheck == null)
+                if (gameSettings?.DisableGameVersionCheck != null)
                 {
                     updateCheckDisabled = (bool)gameSettings.DisableGameVersionCheck;
                 }
