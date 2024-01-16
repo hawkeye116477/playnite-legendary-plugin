@@ -20,7 +20,7 @@ with open(pj(compiledPath, "extension.yaml"), 'w', encoding='utf-8') as extManif
     extManifest.write(data)
 
 # Remove inactive (not enough translated) languages
-active_languages = ["en_US", "pl_PL", "es_ES", "tr_TR"]
+active_languages = ["en_US", "pl_PL", "es_ES", "tr_TR", "pt_BR"]
 for root, dirs, files in os.walk(pj(compiledPath, "Localization")):
     for file in files:
         if not any(substring in file for substring in active_languages):
