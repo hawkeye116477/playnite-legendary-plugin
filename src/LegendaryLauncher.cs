@@ -1,7 +1,5 @@
 ﻿using CliWrap;
 using CliWrap.Buffered;
-using IniParser;
-using IniParser.Model;
 using LegendaryLibraryNS.Models;
 using Microsoft.Win32;
 using Playnite.Common;
