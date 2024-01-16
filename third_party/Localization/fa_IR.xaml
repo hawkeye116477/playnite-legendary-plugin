@@ -38,6 +38,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">حذف نصب</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">دوباره نمایش نده</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage">صفحه فروشگاه</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">به روز رسانیها</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">انتخاب فایل…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">انتخاب پوشه…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">یک بار در روز</sys:String>

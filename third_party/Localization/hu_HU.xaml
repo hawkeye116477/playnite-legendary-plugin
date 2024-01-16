@@ -38,6 +38,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Eltávolítás</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">Ne mutasd többször</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage">Áruházbeli oldala</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">Frissítések</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">Fájl kiválasztása…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Mappa kiválasztása…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Naponta egyszer</sys:String>

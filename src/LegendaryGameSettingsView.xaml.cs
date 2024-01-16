@@ -64,7 +64,6 @@ namespace LegendaryLibraryNS
             return gameSettings;
         }
 
-
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             var globalSettings = LegendaryLibrary.GetSettings();

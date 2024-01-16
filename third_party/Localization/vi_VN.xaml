@@ -38,6 +38,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Gỡ cài đặt</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">Không hiện thị lại</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage">Trang cửa hàng</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">Cập nhật</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">Chọn tập tin…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Chọn thư mục…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Mỗi ngày một lần</sys:String>

@@ -117,23 +117,6 @@ namespace LegendaryLibraryNS
             get
             {
                 var installPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Games");
-                if (IniConfig != null && !IniConfig["Legendary"]["install_dir"].IsNullOrEmpty())
-                {
-                    var newInstallPath = "";
-                    bool installPathIsValid = true;
-                    try
-                    {
-                        newInstallPath = Path.GetFullPath(IniConfig["Legendary"]["install_dir"]);
-                    }
-                    catch
-                    {
-                        installPathIsValid = false;
-                    }
-                    if (installPathIsValid)
-                    {
-                        installPath = newInstallPath;
-                    }
-                }
                 var playniteAPI = API.Instance;
                 if (playniteAPI.ApplicationInfo.IsPortable)
                 {
@@ -210,73 +193,6 @@ namespace LegendaryLibraryNS
             get
             {
                 return Path.Combine(ConfigPath, "user.json");
-            }
-        }
-
-        public static IniData IniConfig
-        {
-            get
-            {
-                var configIniPath = Path.Combine(ConfigPath, "config.ini");
-                IniData data = null;
-                if (File.Exists(configIniPath))
-                {
-                    var parser = new FileIniDataParser();
-                    data = parser.ReadFile(Path.Combine(ConfigPath, "config.ini"));
-                }
-                return data;
-            }
-        }
-
-        public static string DefaultPreferredCDN
-        {
-            get
-            {
-                var cdn = "";
-                if (IniConfig != null && !IniConfig["Legendary"]["preferred_cdn"].IsNullOrEmpty())
-                {
-                    cdn = IniConfig["Legendary"]["preferred_cdn"];
-                }
-                return cdn;
-            }
-        }
-
-        public static bool DefaultNoHttps
-        {
-            get
-            {
-                bool noHttps = false;
-                if (IniConfig != null && !IniConfig["Legendary"]["disable_https"].IsNullOrEmpty())
-                {
-                    noHttps = Convert.ToBoolean(IniConfig["Legendary"]["disable_https"]);
-                }
-                return noHttps;
-            }
-        }
-
-        public static int DefaultMaxWorkers
-        {
-            get
-            {
-                int maxWorkers = 0;
-                if (IniConfig != null && !IniConfig["Legendary"]["max_workers"].IsNullOrEmpty())
-                {
-                    maxWorkers = Convert.ToInt32(IniConfig["Legendary"]["max_workers"]);
-                }
-                return maxWorkers;
-            }
-        }
-
-        public static int DefaultMaxSharedMemory
-        {
-            get
-            {
-                int maxSharedMemory = 0;
-                if (IniConfig != null && !IniConfig["Legendary"]["max_memory"].IsNullOrEmpty())
-                {
-                    maxSharedMemory = Convert.ToInt32(IniConfig["Legendary"]["max_memory"]);
-                }
-                return maxSharedMemory;
             }
         }
 

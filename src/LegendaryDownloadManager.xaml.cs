@@ -116,16 +116,16 @@ namespace LegendaryLibraryNS
                 var downloadCompleteSettings = LegendaryLibrary.GetSettings().DoActionAfterDownloadComplete;
                 switch (downloadCompleteSettings)
                 {
-                    case (int)DownloadCompleteAction.ShutDown:
+                    case DownloadCompleteAction.ShutDown:
                         Process.Start("shutdown", "/s /t 0");
                         break;
-                    case (int)DownloadCompleteAction.Reboot:
+                    case DownloadCompleteAction.Reboot:
                         Process.Start("shutdown", "/r /t 0");
                         break;
-                    case (int)DownloadCompleteAction.Hibernate:
+                    case DownloadCompleteAction.Hibernate:
                         Playnite.Native.Powrprof.SetSuspendState(true, true, false);
                         break;
-                    case (int)DownloadCompleteAction.Sleep:
+                    case DownloadCompleteAction.Sleep:
                         Playnite.Native.Powrprof.SetSuspendState(false, true, false);
                         break;
                     default:

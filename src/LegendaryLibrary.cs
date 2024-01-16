@@ -508,24 +508,24 @@ namespace LegendaryLibraryNS
             }
         }
 
-        public static long GetNextClearingTime(int frequency)
+        public static long GetNextClearingTime(ClearCacheTime frequency)
         {
             DateTimeOffset clearingTime = DateTime.UtcNow;
             switch (frequency)
             {
-                case (int)ClearCacheTime.Day:
+                case ClearCacheTime.Day:
                     clearingTime = clearingTime.AddDays(1);
                     break;
-                case (int)ClearCacheTime.Week:
+                case ClearCacheTime.Week:
                     clearingTime = clearingTime.AddDays(7);
                     break;
-                case (int)ClearCacheTime.Month:
+                case ClearCacheTime.Month:
                     clearingTime = clearingTime.AddMonths(1);
                     break;
-                case (int)ClearCacheTime.ThreeMonths:
+                case ClearCacheTime.ThreeMonths:
                     clearingTime = clearingTime.AddMonths(3);
                     break;
-                case (int)ClearCacheTime.SixMonths:
+                case ClearCacheTime.SixMonths:
                     clearingTime = clearingTime.AddMonths(6);
                     break;
                 default:

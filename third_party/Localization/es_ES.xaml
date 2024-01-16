@@ -38,6 +38,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Desinstalar</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">No mostrar de nuevo</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage">Página de la tienda</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">Actualizaciones</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">Selecciona archivo…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Selecciona carpeta...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Una vez al día</sys:String>

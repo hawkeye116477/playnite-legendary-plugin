@@ -44,21 +44,32 @@
                     </StackPanel>
                 </StackPanel>
                 <Button Content="{DynamicResource LOCLegendaryMigrateGamesEpic}" HorizontalAlignment="Left" Margin="0,5,0,15" Name="MigrateEpicBtn" IsEnabled="False" Click="MigrateEpicBtn_Click"></Button>
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                    <TextBlock Text="{DynamicResource LOCLegendaryGamesUpdatePolicy}"  VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
-                    <ComboBox Grid.Row="0" Grid.Column="1" x:Name="GamesUpdatesCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.GamesUpdatePolicy}" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Margin="10,0,0,0" />
-                </StackPanel>
-                <CheckBox DockPanel.Dock="Top" Margin="0,0,0,0"
+                <CheckBox DockPanel.Dock="Top" Margin="0,0,0,10"
                         IsChecked="{Binding Settings.LaunchOffline}"
                         Content="{DynamicResource LOCLegendaryLaunchOffline}" />
-                <CheckBox DockPanel.Dock="Top"
-                    Margin="0,10,0,0"
+                <StackPanel Margin="0,10">
+                    <TextBlock Text="{DynamicResource LOCLegendary3P_PlayniteExtensionsUpdates}" FontSize="18"
+                        Margin="0,0,0,2" />
+                    <Separator Margin="0,0,0,10" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{DynamicResource LOCLegendaryGamesUpdatePolicy}"  VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="GamesUpdatesCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.GamesUpdatePolicy}" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Margin="10,0,0,0" />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Margin="0,10,0,0">
+                    <TextBlock Text="{DynamicResource LOCLegendaryCloud}" FontSize="18"
+                        Margin="0,0,0,2" />
+                    <Separator Margin="0,0,0,10" />
+                    <CheckBox DockPanel.Dock="Top"
+                    Margin="0,0,0,10"
                     IsChecked="{Binding Settings.SyncPlaytime}"
                     Content="{DynamicResource LOCLegendarySyncPlaytime}" Name="SyncPlaytimeChk" />
-                <CheckBox DockPanel.Dock="Top"
-                    Margin="0,10,0,0"
+                    <CheckBox DockPanel.Dock="Top"
+                    Margin="0"
                     IsChecked="{Binding Settings.SyncGameSaves}"
                     Content="{DynamicResource LOCLegendarySyncGameSaves}" Name="SyncGameSavesChk" Click="SyncGameSavesChk_Click" />
+                </StackPanel>
             </StackPanel>
         </TabItem>
         <TabItem Header="{DynamicResource LOCLegendary3P_PlayniteSettingsAdvancedLabel}">

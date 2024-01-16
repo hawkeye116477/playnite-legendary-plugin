@@ -38,6 +38,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">설치 제거</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">다시 표시 안함</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage">상점 페이지</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">업데이트</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">파일 선택...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">폴더 선택...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">하루에 한 번</sys:String>

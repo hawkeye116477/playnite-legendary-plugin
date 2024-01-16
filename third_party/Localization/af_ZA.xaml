@@ -36,6 +36,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame" />
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle" />
   <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates" />
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip" />
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip" />
 </ResourceDictionary>
