@@ -377,9 +377,14 @@ namespace LegendaryLibraryNS
                 }
                 if (canUpdate)
                 {
+                    if (silently)
+                    {
+                        var playniteApi = API.Instance;
+                        playniteApi.Notifications.Add(new NotificationMessage("LegendaryGamesUpdates", ResourceProvider.GetString(LOC.LegendaryGamesUpdatesUnderway), NotificationType.Info));
+                    }
+                    var downloadProperties = new DownloadProperties() { downloadAction = DownloadAction.Update };
                     foreach (var gameToUpdate in gamesToUpdate)
                     {
-                        var downloadProperties = new DownloadProperties() { downloadAction = DownloadAction.Update };
                         var downloadData = new DownloadManagerData.Download { gameID = gameToUpdate.Key, downloadProperties = downloadProperties };
                         LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
                         var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameToUpdate.Key);

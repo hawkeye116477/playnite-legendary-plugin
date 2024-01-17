@@ -566,7 +566,7 @@ namespace System
         /// </summary>
         public const string LegendaryLanguageCode = "LOCLegendaryLanguageCode";
         /// <summary>
-        /// Legendary launcher settings
+        /// Modify launch settings
         /// </summary>
         public const string LegendaryLauncherSettings = "LOCLegendaryLauncherSettings";
         /// <summary>
@@ -713,5 +713,9 @@ namespace System
         /// Notify me when a new version of Legendary launcher will be available
         /// </summary>
         public const string LegendaryLauncherUpdateNotify = "LOCLegendaryLauncherUpdateNotify";
+        /// <summary>
+        /// Updates for games from Epic Games being downloaded.
+        /// </summary>
+        public const string LegendaryGamesUpdatesUnderway = "LOCLegendaryGamesUpdatesUnderway";
     }
 }
