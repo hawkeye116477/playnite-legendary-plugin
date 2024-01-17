@@ -372,15 +372,10 @@ namespace LegendaryLibraryNS
                         var userData = Serialization.FromJson<OauthResponse>(FileSystem.ReadFileAsStringSafe(LegendaryLauncher.TokensPath));
                         httpClient.DefaultRequestHeaders.Add("Authorization", userData.token_type + " " + userData.access_token);
                         var uri = $"https://library-service.live.use1a.on.epicgames.com/library/api/public/playtime/account/{userData.account_id}";
-                        var machineName = Environment.MachineName;
-                        if (machineName.IsNullOrEmpty())
-                        {
-                            machineName = "Computer";
-                        }
                         PlaytimePayload playtimePayload = new PlaytimePayload
                         {
                             artifactId = args.Game.GameId,
-                            machineId = machineName
+                            machineId = GetSettings().SyncPlaytimeMachineId
                         };
                         DateTime now = DateTime.UtcNow;
                         playtimePayload.endTime = now;

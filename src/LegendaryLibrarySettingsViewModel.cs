@@ -26,6 +26,7 @@ namespace LegendaryLibraryNS
         public bool DisableGameVersionCheck { get; set; } = false;
         public bool DisplayDownloadSpeedInBits { get; set; } = false;
         public bool SyncPlaytime { get; set; } = false;
+        public string SyncPlaytimeMachineId { get; set; } = System.Guid.NewGuid().ToString("N");
         public UpdatePolicy GamesUpdatePolicy { get; set; } = UpdatePolicy.GameLaunch;
         public bool NotifyNewLauncherVersion { get; set; } = false;
     }
