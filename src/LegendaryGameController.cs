@@ -304,9 +304,9 @@ namespace LegendaryLibraryNS
     {
         private IPlayniteAPI playniteAPI = API.Instance;
         private static ILogger logger = LogManager.GetLogger();
-        public Dictionary<string, Installed> CheckGameUpdates(string gameTitle, string gameId)
+        public async Task<Dictionary<string, Installed>> CheckGameUpdates(string gameTitle, string gameId)
         {
-            var newGameInfo = LegendaryLauncher.GetGameInfo(gameId);
+            var newGameInfo = await LegendaryLauncher.GetGameInfo(gameId);
             var gamesToUpdate = new Dictionary<string, Installed>();
             if (newGameInfo.Game != null)
             {
@@ -331,7 +331,7 @@ namespace LegendaryLibraryNS
                             if (installedAppList.ContainsKey(dlc.App_name))
                             {
                                 var oldDlcInfo = installedAppList[dlc.App_name];
-                                var newDlcInfo = LegendaryLauncher.GetGameInfo(dlc.App_name);
+                                var newDlcInfo = await LegendaryLauncher.GetGameInfo(dlc.App_name);
                                 if (newDlcInfo.Game != null)
                                 {
                                     if (oldDlcInfo.Version != newDlcInfo.Game.Version)
@@ -358,7 +358,7 @@ namespace LegendaryLibraryNS
 
         public async Task UpdateGame(string gameTitle, string gameId, bool silently = false)
         {
-            var gamesToUpdate = CheckGameUpdates(gameTitle, gameId);
+            var gamesToUpdate = await CheckGameUpdates(gameTitle, gameId);
             if (gamesToUpdate.Count > 0)
             {
                 bool canUpdate = true;

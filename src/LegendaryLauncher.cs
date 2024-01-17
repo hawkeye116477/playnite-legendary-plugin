@@ -209,7 +209,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        public static LegendaryGameInfo.Rootobject GetGameInfo(string gameID)
+        public static async Task<LegendaryGameInfo.Rootobject> GetGameInfo(string gameID)
         {
             GlobalProgressOptions metadataProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.Legendary3P_PlayniteProgressMetadata), false);
             var manifest = new LegendaryGameInfo.Rootobject();
@@ -235,7 +235,7 @@ namespace LegendaryLibraryNS
                 }
                 if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(cacheInfoFile), out manifest))
                 {
-                    if (manifest != null && manifest.Manifest != null)
+                    if (manifest != null && manifest.Manifest != null && manifest.Game != null)
                     {
                         correctJson = true;
                     }
@@ -243,33 +243,27 @@ namespace LegendaryLibraryNS
             }
             if (!correctJson)
             {
-                playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
+                var result = await Cli.Wrap(ClientExecPath)
+                                      .WithArguments(new[] { "info", gameID, "--json" })
+                                      .WithValidation(CommandResultValidation.None)
+                                      .ExecuteBufferedAsync();
+                if (result.ExitCode != 0)
                 {
-                    if (!correctJson)
+                    logger.Error("[Legendary]" + result.StandardError);
+                    if (result.StandardError.Contains("Log in failed"))
                     {
-                        var result = await Cli.Wrap(ClientExecPath)
-                                          .WithArguments(new[] { "info", gameID, "--json" })
-                                          .WithValidation(CommandResultValidation.None)
-                                          .ExecuteBufferedAsync();
-                        if (result.ExitCode != 0)
-                        {
-                            logger.Error("[Legendary]" + result.StandardError);
-                            if (result.StandardError.Contains("Log in failed"))
-                            {
-                                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
-                            }
-                            else
-                            {
-                                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(ResourceProvider.GetString(LOC.LegendaryCheckLog)));
-                            }
-                        }
-                        else
-                        {
-                            File.WriteAllText(cacheInfoFile, result.StandardOutput);
-                            manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>(result.StandardOutput);
-                        }
+                        playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
                     }
-                }, metadataProgressOptions);
+                    else
+                    {
+                        playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(ResourceProvider.GetString(LOC.LegendaryCheckLog)));
+                    }
+                }
+                else
+                {
+                    File.WriteAllText(cacheInfoFile, result.StandardOutput);
+                    manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>(result.StandardOutput);
+                }
             }
             return manifest;
         }

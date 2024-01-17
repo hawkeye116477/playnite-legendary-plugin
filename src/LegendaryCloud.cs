@@ -9,8 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LegendaryLibraryNS
 {
@@ -19,7 +17,15 @@ namespace LegendaryLibraryNS
         internal static string CalculateGameSavesPath(string gameName, string gameID, string gameInstallDir)
         {
             string cloudSaveFolder = "";
-            var manifest = LegendaryLauncher.GetGameInfo(gameID);
+            var playniteAPI = API.Instance;
+            GlobalProgressOptions metadataProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.Legendary3P_PlayniteProgressMetadata), false);
+
+            var manifest = new LegendaryGameInfo.Rootobject();
+            playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
+            {
+                manifest = await LegendaryLauncher.GetGameInfo(gameID);
+            }, metadataProgressOptions);
+
             if (manifest.Game != null)
             {
                 cloudSaveFolder = manifest.Game.Cloud_save_folder;

@@ -233,7 +233,7 @@ namespace LegendaryLibraryNS
             }
             if (GameID != "eos-overlay")
             {
-                manifest = LegendaryLauncher.GetGameInfo(GameID);
+                manifest = await LegendaryLauncher.GetGameInfo(GameID);
                 if (manifest == null && manifest.Manifest == null)
                 {
                     Window.GetWindow(this).Close();
@@ -336,7 +336,7 @@ namespace LegendaryLibraryNS
                                     Is_dlc = true
                                 };
                                 extraContentInfo.Add(dlc.App_name, dlcInfo);
-                                var dlcManifest = LegendaryLauncher.GetGameInfo(dlc.App_name);
+                                var dlcManifest = await LegendaryLauncher.GetGameInfo(dlc.App_name);
                             }
                         }
                         AllDlcsChk.Visibility = Visibility.Visible;

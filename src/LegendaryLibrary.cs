@@ -44,7 +44,6 @@ namespace LegendaryLibraryNS
             Load3pLocalization();
         }
 
-
         public static LegendaryLibrarySettings GetSettings()
         {
             return Instance.SettingsViewModel?.Settings ?? null;

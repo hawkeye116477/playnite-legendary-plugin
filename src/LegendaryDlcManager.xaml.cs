@@ -28,38 +28,39 @@ namespace LegendaryLibraryNS
         private IPlayniteAPI playniteAPI = API.Instance;
         private ILogger logger = LogManager.GetLogger();
         public Window DlcManagerWindow => Window.GetWindow(this);
-        public ObservableCollection<KeyValuePair<string, LegendarySDLInfo>> installedDLCs;
-        public ObservableCollection<KeyValuePair<string, LegendarySDLInfo>> notInstalledDLCs;
+        public ObservableCollection<KeyValuePair<string, LegendaryGameInfo.Rootobject>> installedDLCs;
+        public ObservableCollection<KeyValuePair<string, LegendaryGameInfo.Rootobject>> notInstalledDLCs;
 
         public LegendaryDlcManager()
         {
             InitializeComponent();
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            manifest = LegendaryLauncher.GetGameInfo(GameId);
+            AvailableDlcsSP.Visibility = Visibility.Collapsed;
+            InstalledDlcsSP.Visibility = Visibility.Collapsed;
+            LoadingATB.Visibility = Visibility.Visible;
+            LoadingITB.Visibility = Visibility.Visible;
+            manifest = await LegendaryLauncher.GetGameInfo(GameId);
             if (manifest != null && manifest.Manifest != null)
             {
                 if (manifest.Game.Owned_dlc.Length > 1)
                 {
                     var installedAppList = LegendaryLauncher.GetInstalledAppList();
-                    installedDLCs = new ObservableCollection<KeyValuePair<string, LegendarySDLInfo>>();
-                    notInstalledDLCs = new ObservableCollection<KeyValuePair<string, LegendarySDLInfo>>();
+                    installedDLCs = new ObservableCollection<KeyValuePair<string, LegendaryGameInfo.Rootobject>>();
+                    notInstalledDLCs = new ObservableCollection<KeyValuePair<string, LegendaryGameInfo.Rootobject>>();
                     foreach (var dlc in manifest.Game.Owned_dlc.OrderBy(obj => obj.Title))
                     {
-                        var dlcInfo = new LegendarySDLInfo
-                        {
-                            Name = dlc.Title.RemoveTrademarks(),
-                            Is_dlc = true
-                        };
+                        var dlcInfo = await LegendaryLauncher.GetGameInfo(dlc.App_name);
+                        dlcInfo.Game.Title = dlcInfo.Game.Title.RemoveTrademarks();
                         if (installedAppList.ContainsKey(dlc.App_name))
                         {
-                            installedDLCs.Add(new KeyValuePair<string, LegendarySDLInfo>(dlc.App_name, dlcInfo));
+                            installedDLCs.Add(new KeyValuePair<string, LegendaryGameInfo.Rootobject>(dlc.App_name, dlcInfo));
                         }
                         else
                         {
-                            notInstalledDLCs.Add(new KeyValuePair<string, LegendarySDLInfo>(dlc.App_name, dlcInfo));
+                            notInstalledDLCs.Add(new KeyValuePair<string, LegendaryGameInfo.Rootobject>(dlc.App_name, dlcInfo));
                         }
                     }
                     InstalledDlcsLB.ItemsSource = installedDLCs;
@@ -91,6 +92,10 @@ namespace LegendaryLibraryNS
                     InstalledDlcsTbI.Visibility = Visibility.Collapsed;
                 }
             }
+            LoadingATB.Visibility = Visibility.Collapsed;
+            LoadingITB.Visibility = Visibility.Collapsed;
+            AvailableDlcsSP.Visibility = Visibility.Visible;
+            InstalledDlcsSP.Visibility = Visibility.Visible;
         }
 
         private async void UninstallBtn_Click(object sender, RoutedEventArgs e)
@@ -98,8 +103,8 @@ namespace LegendaryLibraryNS
             var result = new MessageBoxResult();
             if (InstalledDlcsLB.SelectedItems.Count == 1)
             {
-                var selectedDLC = (KeyValuePair<string, LegendarySDLInfo>)InstalledDlcsLB.SelectedItems[0];
-                result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryUninstallGameConfirm).Format(selectedDLC.Value.Name),
+                var selectedDLC = (KeyValuePair<string, LegendaryGameInfo.Rootobject>)InstalledDlcsLB.SelectedItems[0];
+                result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryUninstallGameConfirm).Format(selectedDLC.Value.Game.Title),
                                                          ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstallGame),
                                                          MessageBoxButton.YesNo,
                                                          MessageBoxImage.Question);
@@ -113,7 +118,7 @@ namespace LegendaryLibraryNS
             }
             if (result == MessageBoxResult.Yes)
             {
-                foreach (var selectedDlc in InstalledDlcsLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().ToList())
+                foreach (var selectedDlc in InstalledDlcsLB.SelectedItems.Cast<KeyValuePair<string, LegendaryGameInfo.Rootobject>>().ToList())
                 {
                     var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                        .WithArguments(new[] { "-y", "uninstall", selectedDlc.Key })
@@ -155,7 +160,7 @@ namespace LegendaryLibraryNS
             bool enableReordering = Convert.ToBoolean(ReorderingChk.IsChecked);
             DlcManagerWindow.Close();
             LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
-            foreach (var selectedOption in AvailableDlcsLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().ToList())
+            foreach (var selectedOption in AvailableDlcsLB.SelectedItems.Cast<KeyValuePair<string, LegendaryGameInfo.Rootobject>>().ToList())
             {
                 var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == selectedOption.Key);
                 if (wantedItem != null)
@@ -183,7 +188,7 @@ namespace LegendaryLibraryNS
                         maxWorkers = maxWorkers,
                         maxSharedMemory = maxSharedMemory
                     };
-                    var dlcInfo = LegendaryLauncher.GetGameInfo(selectedOption.Key);
+                    var dlcInfo = selectedOption.Value;
                     var downloadSize = "0 b";
                     var installSize = "0 b";
                     if (dlcInfo.Manifest != null)
@@ -191,7 +196,7 @@ namespace LegendaryLibraryNS
                         downloadSize = Helpers.FormatSize(dlcInfo.Manifest.Download_size);
                         installSize = Helpers.FormatSize(dlcInfo.Manifest.Disk_size);
                     }
-                    await downloadManager.EnqueueJob(selectedOption.Key, selectedOption.Value.Name, downloadSize, installSize, downloadProperties);
+                    await downloadManager.EnqueueJob(selectedOption.Key, selectedOption.Value.Game.Title, downloadSize, installSize, downloadProperties);
                 }
 
             }
@@ -209,9 +214,9 @@ namespace LegendaryLibraryNS
             }
             double initialDownloadSizeNumber = 0;
             double initialInstallSizeNumber = 0;
-            foreach (var selectedOption in AvailableDlcsLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().ToList())
+            foreach (var selectedOption in AvailableDlcsLB.SelectedItems.Cast<KeyValuePair<string, LegendaryGameInfo.Rootobject>>().ToList())
             {
-                LegendaryGameInfo.Rootobject dlcManifest = LegendaryLauncher.GetGameInfo(selectedOption.Key);
+                var dlcManifest = selectedOption.Value;
                 bool correctDlcJson = false;
                 if (dlcManifest != null && dlcManifest.Manifest != null)
                 {

@@ -161,7 +161,7 @@ namespace LegendaryLibraryNS
                 {
                     SelectedSavePathTxt.Text = gamesSettings[GameID].CloudSaveFolder;
                 }
-                if (!gameSettings.AutoSyncPlaytime != null) 
+                if (!gameSettings.AutoSyncPlaytime != null)
                 {
                     AutoSyncPlaytimeChk.IsChecked = gameSettings.AutoSyncPlaytime;
                 }
@@ -188,12 +188,15 @@ namespace LegendaryLibraryNS
             ManualSyncSavesCBo.ItemsSource = cloudSyncActions;
             ManualSyncSavesCBo.SelectedIndex = 0;
 
-            cloudPath = LegendaryCloud.CalculateGameSavesPath(Game.Name, Game.GameId, Game.InstallDirectory);
-            if (cloudPath.IsNullOrEmpty())
+            Dispatcher.BeginInvoke((Action)(() =>
             {
-                CloudSavesSP.Visibility = Visibility.Collapsed;
-                CloudSavesNotSupportedTB.Visibility = Visibility.Visible;
-            }
+                cloudPath = LegendaryCloud.CalculateGameSavesPath(Game.Name, Game.GameId, Game.InstallDirectory);
+                if (cloudPath.IsNullOrEmpty())
+                {
+                    CloudSavesSP.Visibility = Visibility.Collapsed;
+                    CloudSavesNotSupportedTB.Visibility = Visibility.Visible;
+                }
+            }));
         }
 
         private void ChooseAlternativeExeBtn_Click(object sender, RoutedEventArgs e)
