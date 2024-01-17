@@ -238,7 +238,7 @@ namespace LegendaryLibraryNS
                 {
                     Window.GetWindow(this).Close();
                 }
-                if (manifest.Manifest.Install_tags.Length > 1 || manifest.Game.Owned_dlc.Length > 1)
+                if (manifest.Manifest.Install_tags.Length > 1 || manifest.Game.Owned_dlc.Length > 0)
                 {
                     Dictionary<string, LegendarySDLInfo> extraContentInfo = new Dictionary<string, LegendarySDLInfo>();
                     if (manifest.Manifest.Install_tags.Length > 1)
@@ -324,7 +324,7 @@ namespace LegendaryLibraryNS
                             installSize = Helpers.FormatSize(installSizeNumber);
                         }
                     }
-                    if (manifest.Game.Owned_dlc.Length > 1)
+                    if (manifest.Game.Owned_dlc.Length > 0)
                     {
                         foreach (var dlc in manifest.Game.Owned_dlc.OrderBy(obj => obj.Title))
                         {

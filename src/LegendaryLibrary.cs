@@ -73,7 +73,7 @@ namespace LegendaryLibraryNS
                 }
 
                 // DLC
-                if (app.Is_dlc)
+                if (app.Is_dlc && app.Executable.IsNullOrEmpty())
                 {
                     continue;
                 }
@@ -139,7 +139,7 @@ namespace LegendaryLibraryNS
                     continue;
                 }
 
-                if (catalogItem?.categories?.Any(a => a.path == "addons") == true)
+                if ((catalogItem?.categories?.Any(a => a.path == "addons") == true) && (catalogItem?.categories?.Any(a => a.path == "addons/launchable") == false))
                 {
                     continue;
                 }

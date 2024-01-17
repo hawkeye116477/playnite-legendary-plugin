@@ -319,14 +319,25 @@ namespace LegendaryLibraryNS
                                         if (installedAppList.ContainsKey(gameID))
                                         {
                                             var installedGameInfo = installedAppList[gameID];
+                                            Playnite.SDK.Models.Game game = new Playnite.SDK.Models.Game();
                                             if (installedGameInfo.Is_dlc == false)
                                             {
-                                                var game = playniteAPI.Database.Games.FirstOrDefault(item => item.PluginId == LegendaryLibrary.Instance.Id && item.GameId == gameID);
+                                                game = playniteAPI.Database.Games.FirstOrDefault(item => item.PluginId == LegendaryLibrary.Instance.Id && item.GameId == gameID);
+                                            }
+                                            if (!installedGameInfo.Executable.IsNullOrEmpty())
+                                            {
                                                 game.InstallDirectory = installedGameInfo.Install_path;
                                                 game.Version = installedGameInfo.Version;
                                                 game.InstallSize = (ulong?)installedGameInfo.Install_size;
                                                 game.IsInstalled = true;
+                                            }
+                                            if (installedGameInfo.Is_dlc == false)
+                                            {
                                                 playniteAPI.Database.Games.Update(game);
+                                            }
+                                            else if (!installedGameInfo.Executable.IsNullOrEmpty())
+                                            {
+                                                playniteAPI.Database.Games.Add(game);
                                             }
                                         }
                                     }
