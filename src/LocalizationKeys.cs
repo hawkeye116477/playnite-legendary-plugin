@@ -714,7 +714,7 @@ namespace System
         /// </summary>
         public const string LegendaryLauncherUpdateNotify = "LOCLegendaryLauncherUpdateNotify";
         /// <summary>
-        /// Updates for games from Epic Games being downloaded.
+        /// Updates for games from Epic Games are being downloaded.
         /// </summary>
         public const string LegendaryGamesUpdatesUnderway = "LOCLegendaryGamesUpdatesUnderway";
     }
