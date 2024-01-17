@@ -161,8 +161,18 @@ namespace LegendaryLibraryNS
             }
         }
 
+        public async Task WaitUntilLegendaryCloses()
+        {
+            if (File.Exists(Path.Combine(LegendaryLauncher.ConfigPath, "installed.json.lock")))
+            {
+                await Task.Delay(1000);
+                await WaitUntilLegendaryCloses();
+            }
+        }
+
         public async Task Install(string gameID, string gameTitle, string downloadSize, DownloadProperties downloadProperties)
         {
+            await WaitUntilLegendaryCloses();
             var installCommand = new List<string>() { "-y", "install", gameID };
             if (downloadProperties.installPath != "")
             {
