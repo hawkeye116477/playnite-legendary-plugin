@@ -37,10 +37,14 @@ namespace LegendaryLibraryNS
                         {
                             gameInfo.Developers = new HashSet<MetadataProperty>() { new MetadataNameProperty(legendaryMetadata.metadata.developer) };
                         }
-                        var legendaryReleaseDate = legendaryMetadata.metadata.releaseInfo[0].dateAdded;
-                        if (legendaryReleaseDate != null)
+                        var legendaryReleaseInfo = legendaryMetadata.metadata.releaseInfo;
+                        if (legendaryReleaseInfo != null && legendaryReleaseInfo.Length > 0)
                         {
-                            gameInfo.ReleaseDate = new ReleaseDate(legendaryReleaseDate.Year, legendaryReleaseDate.Month, legendaryReleaseDate.Day);
+                            var legendaryReleaseDate = legendaryMetadata.metadata.releaseInfo[0].dateAdded;
+                            if (legendaryReleaseDate != default)
+                            {
+                                gameInfo.ReleaseDate = new ReleaseDate(legendaryReleaseDate.Year, legendaryReleaseDate.Month, legendaryReleaseDate.Day);
+                            }
                         }
                         var legendaryImages = legendaryMetadata.metadata.keyImages;
                         if (legendaryImages.Length > 0)
