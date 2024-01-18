@@ -144,7 +144,7 @@ namespace LegendaryLibraryNS
                     continue;
                 }
 
-                if ((catalogItem?.customAttributes?.ContainsKey("partnerLinkType") == true) && (catalogItem.customAttributes["partnerLinkType"].value == "ubisoft"))
+                if ((catalogItem?.customAttributes?.PartnerLinkType != null) && (catalogItem?.customAttributes.PartnerLinkType.value == "ubisoft"))
                 {
                     continue;
                 }

@@ -1,178 +1,101 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace LegendaryLibraryNS.Models
 {
-    class LegendaryMetadata
+    public class LegendaryMetadata
     {
         public class Rootobject
         {
-            public string app_name { get; set; }
-            public string app_title { get; set; }
-            public Asset_Infos asset_infos { get; set; }
-            public string[] base_urls { get; set; }
-            public Metadata metadata { get; set; }
+            public string app_name;
+            public string app_title;
+            public Dictionary<string, AssetInfo> asset_infos;
+            public string[] base_urls;
+            public Metadata metadata;
         }
 
-        public class Asset_Infos
+        public class CustomAttribute
         {
-            public Windows Windows { get; set; }
+            public string type;
+            public string value;
         }
 
-        public class Windows
+        public class AssetInfo
         {
-            public string app_name { get; set; }
-            public string asset_id { get; set; }
-            public string build_version { get; set; }
-            public string catalog_item_id { get; set; }
-            public string label_name { get; set; }
-            public Metadata metadata { get; set; }
-            public string _namespace { get; set; }
+            public string app_name;
+            public string asset_id;
+            public string build_version;
+            public string catalog_item_id;
+            public string label_name;
+            public Metadata metadata;
+            public string _namespace;
+        }
+
+        public class CustomAttributeType
+        {
+            public CustomAttribute CanRunOffline;
+            public CustomAttribute CanSkipKoreanIdVerification;
+            public CustomAttribute CloudIncludeList;
+            public CustomAttribute CloudSaveFolder;
+            public CustomAttribute FolderName;
+            public CustomAttribute MonitorPresence;
+            public CustomAttribute PresenceId;
+            public CustomAttribute RequirementsJson;
+            public CustomAttribute UseAccessControl;
         }
 
         public class Metadata
         {
-            public Agegatings ageGatings { get; set; }
-            public string applicationId { get; set; }
-            public Category[] categories { get; set; }
-            public DateTime creationDate { get; set; }
-            public Customattributes customAttributes { get; set; }
-            public string description { get; set; }
-            public string developer { get; set; }
-            public string developerId { get; set; }
-            public bool endOfSupport { get; set; }
-            public string entitlementName { get; set; }
-            public string entitlementType { get; set; }
-            public string[] eulaIds { get; set; }
-            public string id { get; set; }
-            public string itemType { get; set; }
-            public Keyimage[] keyImages { get; set; }
-            public DateTime lastModifiedDate { get; set; }
-            public Maingameitem mainGameItem { get; set; }
-            public string _namespace { get; set; }
-            public Releaseinfo[] releaseInfo { get; set; }
-            public string status { get; set; }
-            public string title { get; set; }
-            public bool unsearchable { get; set; }
-        }
-
-        public class Maingameitem
-        {
-            public Agegatings ageGatings { get; set; }
-            public string applicationId { get; set; }
-            public Category[] categories { get; set; }
-            public DateTime creationDate { get; set; }
-            public Customattributes customAttributes { get; set; }
-            public string description { get; set; }
-            public string developer { get; set; }
-            public string developerId { get; set; }
-            public bool endOfSupport { get; set; }
-            public string entitlementName { get; set; }
-            public string entitlementType { get; set; }
-            public string[] eulaIds { get; set; }
-            public string id { get; set; }
-            public string itemType { get; set; }
-            public Keyimage[] keyImages { get; set; }
-            public DateTime lastModifiedDate { get; set; }
-            public string _namespace { get; set; }
-            public Releaseinfo[] releaseInfo { get; set; }
-            public string status { get; set; }
-            public string title { get; set; }
-            public bool unsearchable { get; set; }
+            public Agegatings ageGatings;
+            public string applicationId;
+            public Category[] categories;
+            public DateTime creationDate;
+            public CustomAttributeType customAttributes;
+            public string description;
+            public string developer;
+            public string developerId;
+            public bool endOfSupport;
+            public string entitlementName;
+            public string entitlementType;
+            public string[] eulaIds;
+            public string id;
+            public string itemType;
+            public Keyimage[] keyImages;
+            public DateTime lastModifiedDate;
+            public Metadata mainGameItem;
+            public string _namespace;
+            public Releaseinfo[] releaseInfo;
+            public string status;
+            public string title;
+            public bool unsearchable;
         }
 
         public class Agegatings
         {
         }
 
-        public class Customattributes
-        {
-            public Canrunoffline CanRunOffline { get; set; }
-            public Canskipkoreanidverification CanSkipKoreanIdVerification { get; set; }
-            public Cloudincludelist CloudIncludeList { get; set; }
-            public Cloudsavefolder CloudSaveFolder { get; set; }
-            public Foldername FolderName { get; set; }
-            public Monitorpresence MonitorPresence { get; set; }
-            public Presenceid PresenceId { get; set; }
-            public Requirementsjson RequirementsJson { get; set; }
-            public Useaccesscontrol UseAccessControl { get; set; }
-        }
-
-        public class Canrunoffline
-        {
-            public string type { get; set; }
-            public string value { get; set; }
-        }
-
-        public class Canskipkoreanidverification
-        {
-            public string type { get; set; }
-            public string value { get; set; }
-        }
-
-        public class Cloudincludelist
-        {
-            public string type { get; set; }
-            public string value { get; set; }
-        }
-
-        public class Cloudsavefolder
-        {
-            public string type { get; set; }
-            public string value { get; set; }
-        }
-
-        public class Foldername
-        {
-            public string type { get; set; }
-            public string value { get; set; }
-        }
-
-        public class Monitorpresence
-        {
-            public string type { get; set; }
-            public string value { get; set; }
-        }
-
-        public class Presenceid
-        {
-            public string type { get; set; }
-            public string value { get; set; }
-        }
-
-        public class Requirementsjson
-        {
-            public string type { get; set; }
-            public string value { get; set; }
-        }
-
-        public class Useaccesscontrol
-        {
-            public string type { get; set; }
-            public string value { get; set; }
-        }
-
         public class Category
         {
-            public string path { get; set; }
+            public string path;
         }
 
         public class Keyimage
         {
-            public int height { get; set; }
-            public string md5 { get; set; }
-            public int size { get; set; }
-            public string type { get; set; }
-            public DateTime uploadedDate { get; set; }
-            public string url { get; set; }
-            public int width { get; set; }
+            public int height;
+            public string md5;
+            public int size;
+            public string type;
+            public DateTime uploadedDate;
+            public string url;
+            public int width;
         }
 
         public class Releaseinfo
         {
-            public string appId { get; set; }
-            public DateTime dateAdded { get; set; }
-            public string id { get; set; }
-            public string[] platform { get; set; }
+            public string appId;
+            public DateTime dateAdded;
+            public string id;
+            public string[] platform;
         }
 
     }

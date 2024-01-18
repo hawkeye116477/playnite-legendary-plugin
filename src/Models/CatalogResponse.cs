@@ -16,8 +16,13 @@ namespace LegendaryLibraryNS.Models
 
         public class Image
         {
-            public string url;
-            public string type;
+            public int height { get; set; }
+            public string md5 { get; set; }
+            public int size { get; set; }
+            public string type { get; set; }
+            public DateTime uploadedDate { get; set; }
+            public string url { get; set; }
+            public int width { get; set; }
         }
 
         public class Category
@@ -41,7 +46,7 @@ namespace LegendaryLibraryNS.Models
         public string status;
         public DateTime? creationDate;
         public DateTime? lastModifiedDate;
-        public Dictionary<string, CustomAttribute> customAttributes;
+        public CustomAttributeType customAttributes;
         public string entitlementName;
         public string entitlementType;
         public string itemType;
@@ -49,7 +54,17 @@ namespace LegendaryLibraryNS.Models
         public string developer;
         public string developerId;
         public bool endOfSupport;
+
+        public class CustomAttributeType
+        {
+            public CustomAttribute CanRunOffline;
+            public CustomAttribute CanSkipKoreanIdVerification;
+            public CustomAttribute CloudIncludeList;
+            public CustomAttribute CloudSaveFolder;
+            public CustomAttribute FolderName;
+            public CustomAttribute PartnerLinkType;
+            public CustomAttribute ThirdPartyManagedApp;
+        }
+
     }
-
-
 }
