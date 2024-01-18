@@ -599,6 +599,7 @@ namespace LegendaryLibraryNS
                                                 try
                                                 {
                                                     StopDownloadManager();
+                                                    await LegendaryDownloadManager.WaitUntilLegendaryCloses();
                                                     Directory.Move(oldPath, newPath);
                                                     a.CurrentProgressValue = 1;
                                                     var rewriteResult = await Cli.Wrap(LegendaryLauncher.ClientExecPath)

@@ -161,7 +161,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        public async Task WaitUntilLegendaryCloses()
+        public static async Task WaitUntilLegendaryCloses()
         {
             if (File.Exists(Path.Combine(LegendaryLauncher.ConfigPath, "installed.json.lock")))
             {
@@ -319,22 +319,19 @@ namespace LegendaryLibraryNS
                                         {
                                             var installedGameInfo = installedAppList[gameID];
                                             Playnite.SDK.Models.Game game = new Playnite.SDK.Models.Game();
-                                            if (installedGameInfo.Is_dlc == false)
+                                            if (installedGameInfo.Is_dlc == false || !installedGameInfo.Executable.IsNullOrEmpty())
                                             {
                                                 game = playniteAPI.Database.Games.FirstOrDefault(item => item.PluginId == LegendaryLibrary.Instance.Id && item.GameId == gameID);
-                                            }
-                                            if (!installedGameInfo.Executable.IsNullOrEmpty())
-                                            {
                                                 game.InstallDirectory = installedGameInfo.Install_path;
                                                 game.Version = installedGameInfo.Version;
                                                 game.InstallSize = (ulong?)installedGameInfo.Install_size;
                                                 game.IsInstalled = true;
                                             }
-                                            if (installedGameInfo.Is_dlc == false)
+                                            if (installedGameInfo.Is_dlc == false || !installedGameInfo.Executable.IsNullOrEmpty())
                                             {
                                                 playniteAPI.Database.Games.Update(game);
                                             }
-                                            else if (!installedGameInfo.Executable.IsNullOrEmpty())
+                                            else
                                             {
                                                 playniteAPI.Database.Games.Add(game);
                                             }
