@@ -139,7 +139,12 @@ namespace LegendaryLibraryNS
                     continue;
                 }
 
-                if ((catalogItem?.categories?.Any(a => a.path == "addons") == true) && (catalogItem?.categories?.Any(a => a.path == "addons/launchable") == false))
+                if ((catalogItem?.categories?.Any(a => a.path == "addons") == true) && (catalogItem.categories.Any(a => a.path == "addons/launchable") == false))
+                {
+                    continue;
+                }
+
+                if ((catalogItem?.customAttributes?.ContainsKey("partnerLinkType") == true) && (catalogItem.customAttributes["partnerLinkType"].value == "ubisoft"))
                 {
                     continue;
                 }
