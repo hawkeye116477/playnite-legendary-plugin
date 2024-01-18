@@ -262,7 +262,6 @@ namespace LegendaryLibraryNS
                             {
                                 wantedItem.fullInstallPath = fullInstallPathMatch.Groups[1].Value;
                             }
-                            SaveData();
                             var verificationProgressMatch = Regex.Match(stdErr.Text, @"Verification progress:.*\((\d.*%)");
                             var progressMatch = Regex.Match(stdErr.Text, @"Progress: (\d.*%)");
                             if (verificationProgressMatch.Length >= 2)
