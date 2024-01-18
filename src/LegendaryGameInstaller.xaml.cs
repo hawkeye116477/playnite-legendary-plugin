@@ -285,8 +285,10 @@ namespace LegendaryLibraryNS
                         {
                             logger.Error("An error occurred while downloading SDL data.");
                         }
+                        bool correctSdlJson = false;
                         if (Serialization.TryFromJson(content, out extraContentInfo))
                         {
+                            correctSdlJson = true;
                             if (extraContentInfo.ContainsKey("__required"))
                             {
                                 foreach (var tag in extraContentInfo["__required"].Tags)
@@ -329,6 +331,10 @@ namespace LegendaryLibraryNS
                             }
                             downloadSize = Helpers.FormatSize(downloadSizeNumber);
                             installSize = Helpers.FormatSize(installSizeNumber);
+                        }
+                        if (!correctSdlJson)
+                        {
+                            extraContentInfo = new Dictionary<string, LegendarySDLInfo>();
                         }
                     }
                     if (manifest.Game.Owned_dlc.Length > 0)
