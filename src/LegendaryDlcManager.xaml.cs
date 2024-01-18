@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -160,6 +161,7 @@ namespace LegendaryLibraryNS
             bool enableReordering = Convert.ToBoolean(ReorderingChk.IsChecked);
             DlcManagerWindow.Close();
             LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
+            var tasks = new List<Task>();
             foreach (var selectedOption in AvailableDlcsLB.SelectedItems.Cast<KeyValuePair<string, LegendaryGameInfo.Rootobject>>().ToList())
             {
                 var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == selectedOption.Key);
@@ -196,9 +198,12 @@ namespace LegendaryLibraryNS
                         downloadSize = Helpers.FormatSize(dlcInfo.Manifest.Download_size);
                         installSize = Helpers.FormatSize(dlcInfo.Manifest.Disk_size);
                     }
-                    await downloadManager.EnqueueJob(selectedOption.Key, selectedOption.Value.Game.Title, downloadSize, installSize, downloadProperties);
+                    tasks.Add(downloadManager.EnqueueJob(selectedOption.Key, selectedOption.Value.Game.Title, downloadSize, installSize, downloadProperties));
                 }
-
+            }
+            if (tasks.Count > 0)
+            {
+                await Task.WhenAll(tasks);
             }
         }
 

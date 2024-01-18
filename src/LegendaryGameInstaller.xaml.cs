@@ -141,7 +141,10 @@ namespace LegendaryLibraryNS
                     maxSharedMemory = maxSharedMemory,
                     extraContent = selectedExtraContent
                 };
-                await downloadManager.EnqueueJob(GameID, InstallerWindow.Title, downloadSize, installSize, downloadProperties);
+                var downloadTasks = new List<Task>
+                {
+                    downloadManager.EnqueueJob(GameID, InstallerWindow.Title, downloadSize, installSize, downloadProperties)
+                };
 
                 if (ExtraContentLB.Items.Count > 0)
                 {
@@ -172,10 +175,14 @@ namespace LegendaryLibraryNS
                                         }
                                     }
                                 }
-                                await downloadManager.EnqueueJob(selectedOption.Key, selectedOption.Value.Name, downloadSize, installSize, downloadProperties);
+                                downloadTasks.Add(downloadManager.EnqueueJob(selectedOption.Key, selectedOption.Value.Name, downloadSize, installSize, downloadProperties));
                             }
                         }
                     }
+                }
+                if (downloadTasks.Count > 0)
+                {
+                    await Task.WhenAll(downloadTasks);
                 }
             }
         }
