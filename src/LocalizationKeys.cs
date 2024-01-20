@@ -42,6 +42,14 @@ namespace System
         /// </summary>
         public const string Legendary3P_PlayniteCancelLabel = "LOCLegendary3P_PlayniteCancelLabel";
         /// <summary>
+        /// Yes
+        /// </summary>
+        public const string Legendary3P_PlayniteYesLabel = "LOCLegendary3P_PlayniteYesLabel";
+        /// <summary>
+        /// No
+        /// </summary>
+        public const string Legendary3P_PlayniteNoLabel = "LOCLegendary3P_PlayniteNoLabel";
+        /// <summary>
         /// Loading…
         /// </summary>
         public const string Legendary3P_PlayniteLoadingLabel = "LOCLegendary3P_PlayniteLoadingLabel";
@@ -717,5 +725,9 @@ namespace System
         /// Updates for games from Epic Games are being downloaded.
         /// </summary>
         public const string LegendaryGamesUpdatesUnderway = "LOCLegendaryGamesUpdatesUnderway";
+        /// <summary>
+        /// Remove game launch settings
+        /// </summary>
+        public const string LegendaryRemoveGameLaunchSettings = "LOCLegendaryRemoveGameLaunchSettings";
     }
 }

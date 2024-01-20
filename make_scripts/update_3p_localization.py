@@ -26,7 +26,7 @@ PLAYNITE_LOC_KEYS = ["LOCUninstallGame", "LOCGameStartError", "LOCLoginRequired"
                      "LOCMenuRestartSystem", "LOCMenuHibernateSystem",
                      "LOCMenuSuspendSystem", "LOCOptionOnceADay", "LOCOptionOnceAWeek",
                      "LOCSettingsPlaytimeImportModeNever", "LOCSettingsClearCacheTitle",
-                     "LOCOKLabel", "LOCDontShowAgainTitle", "LOCGameInstallError",
+                     "LOCOKLabel", "LOCYesLabel", "LOCNoLabel","LOCDontShowAgainTitle", "LOCGameInstallError",
                      "LOCLibraryImportError", "LOCProgressMetadata", "LOCMetadataDownloadError",
                      "LOCCommonLinksStorePage", "LOCInstallGame", "LOCFilterActiveLabel",
                      "LOCSettingsGeneralLabel", "LOCSelectDirectoryTooltip", "LOCSelectFileTooltip", "LOCCancelLabel",

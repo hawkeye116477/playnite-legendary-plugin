@@ -2,6 +2,7 @@
 using System.IO;
 using System.Management;
 using ByteSizeLib;
+using Playnite.SDK.Data;
 
 namespace LegendaryLibraryNS
 {
@@ -65,6 +66,21 @@ namespace LegendaryLibraryNS
             // Uri's use forward slashes so convert back to backward slashes
             // Uri's also escape some chars, co convert back to unescaped format
             return Uri.UnescapeDataString(relativeUri.ToString().Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar));
+        }
+
+        public static void SaveJsonSettingsToFile(object jsonSettings, string fileName)
+        {
+            var strConf = Serialization.ToJson(jsonSettings, true);
+            if (!strConf.IsNullOrEmpty())
+            {
+                var dataDir = LegendaryLibrary.Instance.GetPluginUserDataPath();
+                if (!Directory.Exists(dataDir))
+                {
+                    Directory.CreateDirectory(dataDir);
+                }
+                var dataFile = Path.Combine(dataDir, $"{fileName}.json");
+                File.WriteAllText(dataFile, strConf);
+            }
         }
     }
 }

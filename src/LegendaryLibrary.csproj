@@ -150,6 +150,9 @@
     <Compile Include="..\third_party\PlayniteExtensions\source\Generic\PlayniteExtensions.Common\PluginSettingsViewModel.cs">
       <Link>Shared\Playnite\PluginSettingsViewModel.cs</Link>
     </Compile>
+    <Compile Include="MessageCheckBoxDialog.xaml.cs">
+      <DependentUpon>MessageCheckBoxDialog.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\DownloadStatusEnumToStringConverter.cs" />
@@ -269,6 +272,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NumericInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MessageCheckBoxDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

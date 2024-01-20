@@ -89,17 +89,7 @@ namespace LegendaryLibraryNS
 
         public void SaveData()
         {
-            var dataDir = LegendaryLibrary.Instance.GetPluginUserDataPath();
-            var dataFile = Path.Combine(dataDir, "downloadManager.json");
-            if (!Directory.Exists(dataDir))
-            {
-                Directory.CreateDirectory(dataDir);
-            }
-            var strConf = Serialization.ToJson(downloadManagerData, true);
-            if (!strConf.IsNullOrEmpty())
-            {
-                File.WriteAllText(dataFile, strConf);
-            }
+            Helpers.SaveJsonSettingsToFile(downloadManagerData, "downloadManager");
         }
 
         public async void DoNextJobInQueue(object _, PropertyChangedEventArgs arg)

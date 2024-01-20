@@ -5,6 +5,7 @@ using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
 using Playnite.Common;
 using Playnite.SDK;
+using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
@@ -102,11 +103,8 @@ namespace LegendaryLibraryNS
             }
 
             Dispose();
-            var result = playniteAPI.Dialogs.ShowMessage(
-                string.Format(ResourceProvider.GetString(LOC.LegendaryUninstallGameConfirm), Game.Name),
-                ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstallGame),
-                MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.No)
+            var result = MessageCheckBoxDialog.ShowMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstallGame), ResourceProvider.GetString(LOC.LegendaryUninstallGameConfirm).Format(Game.Name), LOC.LegendaryRemoveGameLaunchSettings, MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result.Result == false)
             {
                 Game.IsUninstalling = false;
             }
@@ -119,6 +117,15 @@ namespace LegendaryLibraryNS
                                    .ExecuteBufferedAsync();
                 if (cmd.StandardError.Contains("has been uninstalled"))
                 {
+                    if (result.CheckboxChecked)
+                    {
+                        var savedGamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
+                        if (savedGamesSettings.ContainsKey(Game.GameId))
+                        {
+                            savedGamesSettings.Remove(Game.GameId);
+                        }
+                        Helpers.SaveJsonSettingsToFile(savedGamesSettings, "gamesSettings");
+                    }
                     InvokeOnUninstalled(new GameUninstalledEventArgs());
                 }
                 else
@@ -408,10 +415,8 @@ namespace LegendaryLibraryNS
                                 var messagesSettings = LegendaryMessagesSettings.LoadSettings();
                                 if (!messagesSettings.DontShowDownloadManagerWhatsUpMsg)
                                 {
-                                    var okResponse = new MessageBoxOption(LOC.Legendary3P_PlayniteOKLabel, true, true);
-                                    var dontShowResponse = new MessageBoxOption(LOC.Legendary3P_PlayniteDontShowAgainTitle);
-                                    var response = playniteAPI.Dialogs.ShowMessage(LOC.LegendaryDownloadManagerWhatsUp, "", MessageBoxImage.Information, new List<MessageBoxOption> { okResponse, dontShowResponse });
-                                    if (response == dontShowResponse)
+                                    var result = MessageCheckBoxDialog.ShowMessage("", ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp), ResourceProvider.GetString(LOC.Legendary3P_PlayniteDontShowAgainTitle), MessageBoxButton.OK, MessageBoxImage.Information);
+                                    if (result.CheckboxChecked)
                                     {
                                         messagesSettings.DontShowDownloadManagerWhatsUpMsg = true;
                                         LegendaryMessagesSettings.SaveSettings(messagesSettings);

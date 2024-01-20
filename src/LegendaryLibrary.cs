@@ -157,7 +157,11 @@ namespace LegendaryLibraryNS
                     Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") }
                 };
 
-                var gameSettings = LegendaryGameSettingsView.LoadGameSettings(newGame.GameId);
+                var gameSettings = new GameSettings();
+                if (gamesSettings.ContainsKey(newGame.GameId))
+                {
+                    gameSettings = gamesSettings[newGame.GameId];
+                }
                 var playtimeSyncEnabled = GetSettings().SyncPlaytime;
                 if (gameSettings.AutoSyncPlaytime != null)
                 {

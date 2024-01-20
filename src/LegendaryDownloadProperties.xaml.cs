@@ -98,8 +98,6 @@ namespace LegendaryLibraryNS
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            var dataDir = LegendaryLibrary.Instance.GetPluginUserDataPath();
-            var dataFile = Path.Combine(dataDir, "downloadManager.json");
             var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == SelectedDownload.gameID);
             wantedItem.downloadProperties.installPath = SelectedGamePathTxt.Text;
             wantedItem.downloadProperties.downloadAction = (DownloadAction)TaskCBo.SelectedValue;
@@ -130,8 +128,7 @@ namespace LegendaryLibraryNS
                 }
             }
             wantedItem.downloadProperties.extraContent = selectedExtraContent;
-            var strConf = Serialization.ToJson(downloadManagerData, true);
-            File.WriteAllText(dataFile, strConf);
+            Helpers.SaveJsonSettingsToFile(downloadManagerData, "downloadManager");
             var downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
             var previouslySelected = downloadManager.DownloadsDG.SelectedIndex;
             for (int i = 0; i < downloadManager.downloadManagerData.downloads.Count; i++)

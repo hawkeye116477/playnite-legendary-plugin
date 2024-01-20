@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!--
-  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/c33df30eed393305f9615423fd4385f3737d8d42 and https://github.com/JosefNemec/Playnite/tree/ef9effdd273f1448f05d53c3f5eacc5448d6f1ee.
+  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/c33df30eed393305f9615423fd4385f3737d8d42 and https://github.com/JosefNemec/Playnite/tree/642ce6fc4ce540078e9c6df6f0d46f8dafceb2be.
   DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
@@ -13,6 +13,8 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">확인</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSaveLabel">저장</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel">취소</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteYesLabel">예</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteNoLabel">아니오</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">로딩 중…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata">메타데이터 다운로드 중...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">시스템 재시작</sys:String>

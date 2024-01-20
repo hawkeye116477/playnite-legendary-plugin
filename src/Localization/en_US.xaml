@@ -128,4 +128,5 @@
   <sys:String x:Key="LOCLegendaryGamesUpdatePolicy">Games update policy</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherUpdateNotify">Notify me when a new version of Legendary launcher will be available</sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Updates for games from Epic Games are being downloaded.</sys:String>
+  <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings">Remove game launch settings</sys:String>
 </ResourceDictionary>

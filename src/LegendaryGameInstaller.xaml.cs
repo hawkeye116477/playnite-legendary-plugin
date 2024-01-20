@@ -122,10 +122,8 @@ namespace LegendaryLibraryNS
                 var messagesSettings = LegendaryMessagesSettings.LoadSettings();
                 if (!messagesSettings.DontShowDownloadManagerWhatsUpMsg)
                 {
-                    var okResponse = new MessageBoxOption(LOC.Legendary3P_PlayniteOKLabel, true, true);
-                    var dontShowResponse = new MessageBoxOption(LOC.Legendary3P_PlayniteDontShowAgainTitle);
-                    var response = playniteAPI.Dialogs.ShowMessage(LOC.LegendaryDownloadManagerWhatsUp, "", MessageBoxImage.Information, new List<MessageBoxOption> { okResponse, dontShowResponse });
-                    if (response == dontShowResponse)
+                    var result = MessageCheckBoxDialog.ShowMessage("", ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp), ResourceProvider.GetString(LOC.Legendary3P_PlayniteDontShowAgainTitle), MessageBoxButton.OK, MessageBoxImage.Information);
+                    if (result.CheckboxChecked)
                     {
                         messagesSettings.DontShowDownloadManagerWhatsUpMsg = true;
                         LegendaryMessagesSettings.SaveSettings(messagesSettings);
@@ -549,10 +547,8 @@ namespace LegendaryLibraryNS
                 var messagesSettings = LegendaryMessagesSettings.LoadSettings();
                 if (!messagesSettings.DontShowDownloadManagerWhatsUpMsg)
                 {
-                    var okResponse = new MessageBoxOption(LOC.Legendary3P_PlayniteOKLabel, true, true);
-                    var dontShowResponse = new MessageBoxOption(LOC.Legendary3P_PlayniteDontShowAgainTitle);
-                    var response = playniteAPI.Dialogs.ShowMessage(LOC.LegendaryDownloadManagerWhatsUp, "", MessageBoxImage.Information, new List<MessageBoxOption> { okResponse, dontShowResponse });
-                    if (response == dontShowResponse)
+                    var result = MessageCheckBoxDialog.ShowMessage("", ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp), ResourceProvider.GetString(LOC.Legendary3P_PlayniteDontShowAgainTitle), MessageBoxButton.OK, MessageBoxImage.Information);
+                    if (result.CheckboxChecked)
                     {
                         messagesSettings.DontShowDownloadManagerWhatsUpMsg = true;
                         LegendaryMessagesSettings.SaveSettings(messagesSettings);

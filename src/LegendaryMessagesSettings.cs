@@ -34,17 +34,7 @@ namespace LegendaryLibraryNS
 
         public static void SaveSettings(LegendaryMessagesSettingsModel messagesSettings)
         {
-            var dataDir = LegendaryLibrary.Instance.GetPluginUserDataPath();
-            var dataFile = Path.Combine(dataDir, "messages.json");
-            if (!Directory.Exists(dataDir))
-            {
-                Directory.CreateDirectory(dataDir);
-            }
-            var strConf = Serialization.ToJson(messagesSettings, true);
-            if (!strConf.IsNullOrEmpty())
-            {
-                File.WriteAllText(dataFile, strConf);
-            }
+            Helpers.SaveJsonSettingsToFile(messagesSettings, "messages");
         }
     }
 }

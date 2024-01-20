@@ -55,11 +55,11 @@ namespace LegendaryLibraryNS
 
         public static GameSettings LoadGameSettings(string gameID)
         {
-            var gamesSettings = LoadSavedGamesSettings();
+            var savedGamesSettings = LoadSavedGamesSettings();
             var gameSettings = new GameSettings();
-            if (gamesSettings.ContainsKey(gameID))
+            if (savedGamesSettings.ContainsKey(gameID))
             {
-                gameSettings = gamesSettings[gameID];
+                gameSettings = savedGamesSettings[gameID];
             }
             return gameSettings;
         }
@@ -112,10 +112,7 @@ namespace LegendaryLibraryNS
                     gamesSettings.Remove(GameID);
                 }
                 gamesSettings.Add(GameID, newGameSettings);
-                var strConf = Serialization.ToJson(gamesSettings, true);
-                var dataDir = LegendaryLibrary.Instance.GetPluginUserDataPath();
-                var dataFile = Path.Combine(dataDir, "gamesSettings.json");
-                File.WriteAllText(dataFile, strConf);
+                Helpers.SaveJsonSettingsToFile(gamesSettings, "gamesSettings");
             }
             Window.GetWindow(this).Close();
         }
