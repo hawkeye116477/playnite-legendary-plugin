@@ -46,15 +46,6 @@ namespace LegendaryLibraryNS
                                 gameInfo.ReleaseDate = new ReleaseDate(legendaryReleaseDate.Year, legendaryReleaseDate.Month, legendaryReleaseDate.Day);
                             }
                         }
-                        var legendaryImages = legendaryMetadata.metadata.keyImages;
-                        if (legendaryImages.Length > 0)
-                        {
-                            var legendaryCover = legendaryMetadata.metadata.keyImages?.FirstOrDefault(a => a.type == "DieselGameBoxTall").url;
-                            if (!legendaryCover.IsNullOrEmpty())
-                            {
-                                gameInfo.CoverImage = new MetadataFile(legendaryCover);
-                            }
-                        }
                         gameInfo.Features = new HashSet<MetadataProperty>() { };
                         if (legendaryMetadata.metadata.customAttributes?.CloudSaveFolder != null)
                         {
