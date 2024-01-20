@@ -85,7 +85,7 @@
                         </ListBox>
                         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="7,0,0,5" />
                         <CheckBox Margin="7,0,0,5" Content="{DynamicResource LOCLegendaryCheckAllDlcs}" x:Name="AllDlcsChk" Checked="AllDlcsChk_Checked" Unchecked="AllDlcsChk_Unchecked" Visibility="Collapsed"/>
-                        <CheckBox Margin="7,0,0,5" Content="{DynamicResource LOCLegendaryCheckAllContent}" x:Name="AllOrNothingChk" Checked="AllOrNothingChk_Checked" Unchecked="AllOrNothingChk_Unchecked" />
+                        <CheckBox Margin="7,0,0,5" Content="{DynamicResource LOCLegendaryCheckAllContent}" x:Name="AllOrNothingChk" Checked="AllOrNothingChk_Checked" Visibility="Collapsed" Unchecked="AllOrNothingChk_Unchecked" />
                     </StackPanel>
                 </Expander>
             </Border>

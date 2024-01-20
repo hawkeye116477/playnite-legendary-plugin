@@ -334,6 +334,10 @@ namespace LegendaryLibraryNS
                         {
                             extraContentInfo = new Dictionary<string, LegendarySDLInfo>();
                         }
+                        else
+                        {
+                            AllOrNothingChk.Visibility = Visibility.Visible;
+                        }
                     }
                     if (manifest.Game.Owned_dlc.Length > 0)
                     {
