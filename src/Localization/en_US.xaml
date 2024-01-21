@@ -130,8 +130,8 @@
   <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Updates for games from Epic Games are being downloaded.</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings">Remove game launch settings</sys:String>
   <sys:String x:Key="LOCLegendaryAdditionalServices">Additional services</sys:String>
-  <sys:String x:Key="LOCLegendaryNoLinkedAccount">No linked {0} account found! Link your accounts via your browser and try again.</sys:String>
-  <sys:String x:Key="LOCLegendaryAllActivatedUbisoft">All of your games have already been activated on your {0} account.</sys:String>
+  <sys:String x:Key="LOCLegendaryNoLinkedAccount">No linked {0} account found! Link your account via your browser and try again.</sys:String>
+  <sys:String x:Key="LOCLegendaryAllActivatedUbisoft">All games have already been activated on your {0} account.</sys:String>
   <sys:String x:Key="LOCLegendaryContinueActivation">Are you sure you want to activate games on your {0} account?</sys:String>
   <sys:String x:Key="LOCLegendaryGamesActivateSuccess">All games have been successfully activated on your {0} account.</sys:String>
   <sys:String x:Key="LOCLegendaryActivateGames">Activate games</sys:String>
