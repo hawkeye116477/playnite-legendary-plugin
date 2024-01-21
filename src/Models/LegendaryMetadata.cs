@@ -7,8 +7,8 @@ namespace LegendaryLibraryNS.Models
     {
         public class Rootobject
         {
-            public string app_name;
-            public string app_title;
+            public string app_name {get; set;}
+            public string app_title { get; set; }
             public Dictionary<string, AssetInfo> asset_infos;
             public string[] base_urls;
             public Metadata metadata;
@@ -33,6 +33,7 @@ namespace LegendaryLibraryNS.Models
 
         public class CustomAttributeType
         {
+            public CustomAttribute AdditionalCommandline;
             public CustomAttribute CanRunOffline;
             public CustomAttribute CanSkipKoreanIdVerification;
             public CustomAttribute CloudIncludeList;
@@ -41,6 +42,7 @@ namespace LegendaryLibraryNS.Models
             public CustomAttribute MonitorPresence;
             public CustomAttribute PresenceId;
             public CustomAttribute RequirementsJson;
+            public CustomAttribute ThirdPartyManagedApp;
             public CustomAttribute UseAccessControl;
         }
 

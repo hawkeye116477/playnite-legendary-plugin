@@ -1,5 +1,6 @@
 ﻿using CliWrap;
 using CliWrap.Buffered;
+using CliWrap.EventStream;
 using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
@@ -11,6 +12,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -423,6 +426,87 @@ namespace LegendaryLibraryNS
                 LoginBtn.IsChecked = false;
             }
             LoginBtn.IsEnabled = true;
+        }
+
+        private async void ActivateUbisoftBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (!LegendaryLauncher.IsInstalled)
+            {
+                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                return;
+            }
+            var result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryContinueActivation).Format("Ubisoft"), "", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                bool errorDisplayed = false;
+                var stdOutBuffer = new StringBuilder();
+                var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                             .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                             .WithArguments(new[] { "activate", "-U" })
+                             .WithValidation(CommandResultValidation.None);
+                await foreach (CommandEvent cmdEvent in cmd.ListenAsync())
+                {
+                    switch (cmdEvent)
+                    {
+                        case StartedCommandEvent started:
+                            break;
+                        case StandardErrorCommandEvent stdErr:
+                            var activatedTitlesMatch = Regex.Match(stdErr.Text, @"(\d+) titles have already been activated on your Ubisoft account");
+                            if (activatedTitlesMatch.Length >= 1)
+                            {
+                                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryAllActivatedUbisoft).Format(activatedTitlesMatch.Groups[1].Value));
+                            }
+                            if (stdErr.Text.Contains("Redeemed all"))
+                            {
+                                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryGamesActivateSuccess).Format("Ubisoft"));
+                            }
+                            if(stdErr.Text.Contains("ERROR") || stdErr.Text.Contains("WARNING"))
+                            {
+                                errorDisplayed = true;
+                                stdOutBuffer.AppendLine(stdErr.Text);
+                            }
+                            break;
+                        case ExitedCommandEvent exited:
+                            if (errorDisplayed)
+                            {
+                                var errorMessage = stdOutBuffer.ToString();
+                                logger.Error($"[Legendary] {errorMessage}");
+                                if (errorMessage.Contains("No linked"))
+                                {
+                                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryNoLinkedAccount).Format("Ubisoft"));
+                                    Process.Start("https://www.epicgames.com/id/link/ubisoft");
+                                }
+                                else if (errorMessage.Contains("Failed to establish a new connection")
+                                    || errorMessage.Contains("Log in failed")
+                                    || errorMessage.Contains("No saved credentials"))
+                                {
+                                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryGamesActivateFailure).Format("Ubisoft", ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
+                                }
+                                else
+                                {
+                                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryGamesActivateFailure).Format("Ubisoft", ResourceProvider.GetString(LOC.LegendaryCheckLog)));
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+
+        }
+
+        private void ActivateEaBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
+            {
+                ShowMaximizeButton = false
+            });
+            window.Title = $"{ResourceProvider.GetString(LOC.LegendaryActivateGames)} (EA)";
+            window.Content = new LegendaryEaActivate();
+            window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
+            window.SizeToContent = SizeToContent.Height;
+            window.Width = 600;
+            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            window.ShowDialog();
         }
     }
 }

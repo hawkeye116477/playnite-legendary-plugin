@@ -73,6 +73,46 @@
                 </StackPanel>
             </StackPanel>
         </TabItem>
+        <TabItem Header="{DynamicResource LOCLegendaryAdditionalServices}">
+            <StackPanel Margin="20,15,20,20">
+                <StackPanel Margin="0,0,0,20">
+                    <TextBlock Text="{DynamicResource LOCLegendaryEOSOverlay}" FontSize="18"
+                        Margin="0,0,0,2" />
+                    <Separator Margin="0,0,0,10" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Button Content="{DynamicResource LOCLegendary3P_PlayniteInstallGame}" Grid.Row="0"
+                            Grid.Column="0" Margin="5,0,0,0" Name="EOSOInstallBtn" Visibility="Collapsed"
+                            Click="EOSOInstallBtn_Click" HorizontalAlignment="Left"></Button>
+                        <Button Content="{DynamicResource LOCLegendaryDisable}" Grid.Row="0"
+                            Grid.Column="0" Margin="10,0,0,0" Name="EOSOToggleBtn"
+                            Click="EOSOToggleBtn_Click" HorizontalAlignment="Left"/>
+                        <Button Content="{DynamicResource LOCLegendary3P_PlayniteUninstallGame}" Name="EOSOUninstallBtn"
+                            Grid.Row="0" Grid.Column="1" Margin="10,0,0,0"
+                            Click="EOSOUninstallBtn_Click" HorizontalAlignment="Left"></Button>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Margin="0,0,0,20">
+                    <TextBlock Text="Ubisoft Connect" FontSize="18" Margin="0,0,0,2" />
+                    <Separator Margin="0,0,0,10" />
+                    <Button Content="{DynamicResource LOCLegendaryActivateGames}" HorizontalAlignment="Left" Margin="5,0,0,0" Name="ActivateUbisoftBtn" Click="ActivateUbisoftBtn_Click"></Button>
+                </StackPanel>
+                <StackPanel Margin="0,0,0,20">
+                    <TextBlock Text="EA App" FontSize="18" Margin="0,0,0,2" />
+                    <Separator Margin="0,0,0,10" />
+                    <Button Content="{DynamicResource LOCLegendaryActivateGames}" HorizontalAlignment="Left" Margin="5,0,0,0" Name="ActivateEaBtn" Click="ActivateEaBtn_Click"></Button>
+                </StackPanel>
+            </StackPanel>
+        </TabItem>
         <TabItem Header="{DynamicResource LOCLegendary3P_PlayniteSettingsAdvancedLabel}">
             <StackPanel Margin="20">
                 <Grid>
@@ -163,32 +203,6 @@
                         <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource LOCLegendaryAutoClearCache}" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                         <ComboBox Grid.Row="0" Grid.Column="1" x:Name="AutoClearCacheCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.AutoClearCache}" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  Margin="10,0,0,5" HorizontalAlignment="Left" />
                         <Button Grid.Row="1" Content="{DynamicResource LOCLegendaryClearCache}" Name="ClearCacheBtn" Click="ClearCacheBtn_Click" HorizontalAlignment="Left" />
-                    </Grid>
-                </StackPanel>
-                <StackPanel Margin="0,20,0,0">
-                    <TextBlock Text="{DynamicResource LOCLegendaryEOSOverlay}" FontSize="18"
-                        Margin="0,0,0,2" />
-                    <Separator Margin="0,0,0,10" />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Button Content="{DynamicResource LOCLegendary3P_PlayniteInstallGame}" Grid.Row="0"
-                            Grid.Column="0" Name="EOSOInstallBtn" Visibility="Collapsed"
-                            Click="EOSOInstallBtn_Click" HorizontalAlignment="Left"></Button>
-                        <Button Content="{DynamicResource LOCLegendaryDisable}" Grid.Row="0"
-                            Grid.Column="0" Margin="10,0,0,0" Name="EOSOToggleBtn"
-                            Click="EOSOToggleBtn_Click" HorizontalAlignment="Left"/>
-                        <Button Content="{DynamicResource LOCLegendary3P_PlayniteUninstallGame}" Name="EOSOUninstallBtn"
-                            Grid.Row="0" Grid.Column="1" Margin="10,0,0,0"
-                            Click="EOSOUninstallBtn_Click" HorizontalAlignment="Left"></Button>
                     </Grid>
                 </StackPanel>
             </StackPanel>

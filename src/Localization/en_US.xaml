@@ -129,4 +129,14 @@
   <sys:String x:Key="LOCLegendaryLauncherUpdateNotify">Notify me when a new version of Legendary launcher will be available</sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Updates for games from Epic Games are being downloaded.</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings">Remove game launch settings</sys:String>
+  <sys:String x:Key="LOCLegendaryAdditionalServices">Additional services</sys:String>
+  <sys:String x:Key="LOCLegendaryNoLinkedAccount">No linked {0} account found! Link your accounts via your browser and try again.</sys:String>
+  <sys:String x:Key="LOCLegendaryAllActivatedUbisoft">All of your games have already been activated on your {0} account.</sys:String>
+  <sys:String x:Key="LOCLegendaryContinueActivation">Are you sure you want to activate games on your {0} account?</sys:String>
+  <sys:String x:Key="LOCLegendaryGamesActivateSuccess">All games have been successfully activated on your {0} account.</sys:String>
+  <sys:String x:Key="LOCLegendaryActivateGames">Activate games</sys:String>
+  <sys:String x:Key="LOCLegendaryGamesActivateFailure">Failed to activate games on your {0} account. Reason: {1}.</sys:String>
+  <sys:String x:Key="LOCLegendaryNoAvailableEaGames">No available EA Games.</sys:String>
+  <sys:String x:Key="LOCLegendaryActivateNextConfirm">Do you want to activate next game?</sys:String>
+  <sys:String x:Key="LOCLegendaryEANotice">It is currently unknown which game requires activation, so an attempt will be made to activate everything. If EA App asks you to install game rather than to activate, then it has already been activated and the dialog can be dismissed.</sys:String>
 </ResourceDictionary>

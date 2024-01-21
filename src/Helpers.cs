@@ -68,12 +68,16 @@ namespace LegendaryLibraryNS
             return Uri.UnescapeDataString(relativeUri.ToString().Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar));
         }
 
-        public static void SaveJsonSettingsToFile(object jsonSettings, string fileName)
+        public static void SaveJsonSettingsToFile(object jsonSettings, string fileName, string subDir = "")
         {
             var strConf = Serialization.ToJson(jsonSettings, true);
             if (!strConf.IsNullOrEmpty())
             {
                 var dataDir = LegendaryLibrary.Instance.GetPluginUserDataPath();
+                if (!subDir.IsNullOrEmpty())
+                {
+                    dataDir = Path.Combine(dataDir, subDir);
+                }
                 if (!Directory.Exists(dataDir))
                 {
                     Directory.CreateDirectory(dataDir);
