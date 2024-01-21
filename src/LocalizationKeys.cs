@@ -734,11 +734,11 @@ namespace System
         /// </summary>
         public const string LegendaryAdditionalServices = "LOCLegendaryAdditionalServices";
         /// <summary>
-        /// No linked {0} account found! Link your accounts via your browser and try again.
+        /// No linked {0} account found! Link your account via your browser and try again.
         /// </summary>
         public const string LegendaryNoLinkedAccount = "LOCLegendaryNoLinkedAccount";
         /// <summary>
-        /// All of your games have already been activated on your {0} account.
+        /// All games have already been activated on your {0} account.
         /// </summary>
         public const string LegendaryAllActivatedUbisoft = "LOCLegendaryAllActivatedUbisoft";
         /// <summary>
@@ -769,5 +769,9 @@ namespace System
         /// It is currently unknown which game requires activation, so an attempt will be made to activate everything. If EA App asks you to install game rather than to activate, then it has already been activated and the dialog can be dismissed.
         /// </summary>
         public const string LegendaryEANotice = "LOCLegendaryEANotice";
+        /// <summary>
+        /// May the Force be with you, Padawan.
+        /// </summary>
+        public const string LegendaryStarWarsMessage = "LOCLegendaryStarWarsMessage";
     }
 }

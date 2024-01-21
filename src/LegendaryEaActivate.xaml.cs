@@ -84,6 +84,7 @@ namespace LegendaryLibraryNS
                 }
                 else
                 {
+                    bool jediFound = false;
                     var eaGamesOutput = new List<LegendaryMetadata.Rootobject>();
                     if (Serialization.TryFromJson(result.StandardOutput, out eaGamesOutput))
                     {
@@ -93,11 +94,19 @@ namespace LegendaryLibraryNS
                             {
                                 eaGame.app_title = eaGame.app_title.RemoveTrademarks();
                                 eaGamesOnly.Add(eaGame);
+                                if (eaGame.app_title.Contains("Star Wars"))
+                                {
+                                    jediFound = true;
+                                }
                             }
                         }
                     }
                     if (eaGamesOnly.Count > 0)
                     {
+                        if (jediFound)
+                        {
+                            playniteAPI.Dialogs.ShowMessage(LOC.LegendaryStarWarsMessage, "", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
                         Helpers.SaveJsonSettingsToFile(eaGamesOnly, "_allEaGames", cacheInfoPath);
                     }
                 }
