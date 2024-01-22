@@ -8,6 +8,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteFilters">Филтри</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">Не може да стартира играта: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">Не може да се инсталира играта: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError">Не може да се деинсталира играта: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">Размер на инсталиране</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">Добавено</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">OK</sys:String>

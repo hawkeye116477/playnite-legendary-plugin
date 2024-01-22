@@ -8,6 +8,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteFilters">تصفيات</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">تعذّر بدأ اللعبة:{0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">تعذّر تثبيت اللعبة:{0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError">تعذّر إلغاء تثبيت اللعبة:{0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">حجم التثبيت</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">أضيف</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">موافق</sys:String>

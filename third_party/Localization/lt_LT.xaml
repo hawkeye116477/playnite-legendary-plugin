@@ -8,6 +8,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteFilters">Filtrai</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">Nepavyko paleisti žaidimo: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">Nepavyko įrašyti žaidimo: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError">Nepavyko ištrinti žaidimo: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">Įdiegtas dydis</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">Pridėta</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">Gerai</sys:String>

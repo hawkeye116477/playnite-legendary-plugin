@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +14,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.IO;
 using LegendaryLibraryNS.Models;
-using Playnite.SDK.Plugins;
 using LegendaryLibraryNS.Enums;
 using Playnite.SDK.Data;
 using Playnite.Common;
@@ -216,7 +214,9 @@ namespace LegendaryLibraryNS
             gracefulInstallerCTS = new CancellationTokenSource();
             try
             {
-                var stdOutBuffer = new StringBuilder();
+                bool errorDisplayed = false;
+                bool loginErrorDisplayed = false;
+                string memoryErrorMessage = "";
                 var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
                              .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                              .WithArguments(installCommand)
@@ -291,15 +291,51 @@ namespace LegendaryLibraryNS
                                 string downloadSpeed = Helpers.FormatSize(double.Parse(downloadSpeedMatch.Groups[1].Value, CultureInfo.InvariantCulture), downloadSpeedMatch.Groups[2].Value, inBits);
                                 DownloadSpeedTB.Text = downloadSpeed + "/s";
                             }
-                            stdOutBuffer.AppendLine(stdErr.Text);
+                            var errorMessage = stdErr.Text;
+                            if (errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") || errorMessage.Contains("Error"))
+                            {
+                                logger.Error($"[Legendary] {errorMessage}");
+                                if (errorMessage.Contains("Failed to establish a new connection")
+                                    || errorMessage.Contains("Log in failed")
+                                    || errorMessage.Contains("Login failed")
+                                    || errorMessage.Contains("No saved credentials"))
+                                {
+                                    loginErrorDisplayed = true;
+                                } 
+                                else if (errorMessage.Contains("MemoryError"))
+                                {
+                                    memoryErrorMessage = errorMessage;
+                                }
+                                errorDisplayed = true;
+                            } 
+                            else if (errorMessage.Contains("WARNING"))
+                            {
+                                logger.Warn($"[Legendary] {errorMessage}");
+                            }
                             break;
                         case ExitedCommandEvent exited:
-                            if (exited.ExitCode == 0)
+                            if (errorDisplayed || exited.ExitCode != 0)
+                            {
+                                if (loginErrorDisplayed)
+                                {
+                                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError).Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
+                                }
+                                else if (memoryErrorMessage != "")
+                                {
+                                    var memoryErrorMatch = Regex.Match(memoryErrorMessage, @"MemoryError: Current shared memory cache is smaller than required: (\S+) MiB < (\S+) MiB");
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), string.Format(ResourceProvider.GetString(LOC.LegendaryMemoryError), memoryErrorMatch.Groups[1] + " MB", memoryErrorMatch.Groups[2] + " MB")));
+                                }
+                                else
+                                {
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryCheckLog)));
+                                }
+                                wantedItem.status = DownloadStatus.Paused;
+                            }
+                            else
                             {
                                 wantedItem.status = DownloadStatus.Completed;
                                 DateTimeOffset now = DateTime.UtcNow;
                                 wantedItem.completedTime = now.ToUnixTimeSeconds();
-                                SaveData();
                                 _ = (Application.Current.Dispatcher?.BeginInvoke((Action)delegate
                                 {
                                     var installedAppList = LegendaryLauncher.GetInstalledAppList();
@@ -330,22 +366,7 @@ namespace LegendaryLibraryNS
                                 }));
                                 Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), gameTitle, ResourceProvider.GetString(LOC.LegendaryInstallationFinished), null);
                             }
-                            else
-                            {
-                                wantedItem.status = DownloadStatus.Paused;
-                                SaveData();
-                                var memoryErrorMatch = Regex.Match(stdOutBuffer.ToString(), @"MemoryError: Current shared memory cache is smaller than required: (\S+) MiB < (\S+) MiB");
-                                if (memoryErrorMatch.Length >= 2)
-                                {
-                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), string.Format(ResourceProvider.GetString(LOC.LegendaryMemoryError), memoryErrorMatch.Groups[1] + " MB", memoryErrorMatch.Groups[2] + " MB")));
-                                }
-                                else
-                                {
-                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryCheckLog)));
-                                }
-                                logger.Error("[Legendary]: " + stdOutBuffer.ToString());
-                                logger.Error("[Legendary] exit code: " + exited.ExitCode);
-                            }
+                            SaveData();
                             gracefulInstallerCTS?.Dispose();
                             forcefulInstallerCTS?.Dispose();
                             break;

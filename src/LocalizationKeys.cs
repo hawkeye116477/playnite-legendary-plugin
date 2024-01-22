@@ -22,6 +22,10 @@ namespace System
         /// </summary>
         public const string Legendary3P_PlayniteGameInstallError = "LOCLegendary3P_PlayniteGameInstallError";
         /// <summary>
+        /// Cannot un-install game: {0}
+        /// </summary>
+        public const string Legendary3P_PlayniteGameUninstallError = "LOCLegendary3P_PlayniteGameUninstallError";
+        /// <summary>
         /// Install Size
         /// </summary>
         public const string Legendary3P_PlayniteInstallSizeLabel = "LOCLegendary3P_PlayniteInstallSizeLabel";

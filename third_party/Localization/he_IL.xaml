@@ -8,6 +8,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteFilters">מסננים</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">אי אפשר להתחיל משחק: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">לא ניתן להתקין את המשחק: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError">לא ניתן להסיר את המשחק: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">גודל ההתקנה</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">נוסף</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">אישור</sys:String>

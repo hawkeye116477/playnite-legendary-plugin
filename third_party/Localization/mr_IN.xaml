@@ -8,6 +8,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteFilters">गाळण्या</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">गेम सुरू करता आला नाही: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">गेम स्थापित करता आला नाही: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError">गेम विस्थापित करता आला नाही: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">स्थापनेचा आकार</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">जोडले</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">ओके</sys:String>

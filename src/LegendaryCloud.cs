@@ -62,6 +62,8 @@ namespace LegendaryLibraryNS
         {
             var cloudSyncEnabled = LegendaryLibrary.GetSettings().SyncGameSaves;
             var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameID);
+            bool errorDisplayed = false;
+            bool loginErrorDisplayed = false;
             if (gameSettings?.AutoSyncSaves != null)
             {
                 cloudSyncEnabled = (bool)gameSettings.AutoSyncSaves;
@@ -116,14 +118,40 @@ namespace LegendaryLibraryNS
                                         a.CurrentProgressValue = 1;
                                         break;
                                     case StandardErrorCommandEvent stdErr:
-                                        logger.Debug("[Legendary] " + stdErr.ToString());
+                                        var errorMessage = stdErr.Text;
+                                        if (errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") || errorMessage.Contains("Error"))
+                                        {
+                                            if (errorMessage.Contains("Failed to establish a new connection")
+                                            || errorMessage.Contains("Log in failed")
+                                            || errorMessage.Contains("Login failed")
+                                            || errorMessage.Contains("No saved credentials"))
+                                            {
+                                                loginErrorDisplayed = true;
+                                            }
+                                            logger.Error($"[Legendary] {errorMessage}");
+                                            errorDisplayed = true;
+                                        }
+                                        else if (errorMessage.Contains("WARNING"))
+                                        {
+                                            logger.Warn($"[Legendary] {errorMessage}");
+                                        }
+                                        else
+                                        {
+                                            logger.Debug("[Legendary] " + stdErr.ToString());
+                                        }
                                         break;
                                     case ExitedCommandEvent exited:
                                         a.CurrentProgressValue = 100;
-                                        if (exited.ExitCode != 0)
+                                        if (exited.ExitCode != 0 || errorDisplayed)
                                         {
-                                            logger.Error("[Legendary] exit code: " + exited.ExitCode);
-                                            playniteAPI.Dialogs.ShowErrorMessage(playniteAPI.Resources.GetString(LOC.LegendarySyncError).Format(gameName));
+                                            if (loginErrorDisplayed)
+                                            {
+                                                playniteAPI.Dialogs.ShowErrorMessage($"{playniteAPI.Resources.GetString(LOC.LegendarySyncError).Format(gameName)} {ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)}.");
+                                            }
+                                            else
+                                            {
+                                                playniteAPI.Dialogs.ShowErrorMessage($"{playniteAPI.Resources.GetString(LOC.LegendarySyncError).Format(gameName)} {ResourceProvider.GetString(LOC.LegendaryCheckLog)}");
+                                            }
                                         }
                                         break;
                                     default:

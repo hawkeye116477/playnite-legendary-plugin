@@ -47,15 +47,19 @@ namespace LegendaryLibraryNS
                 }
             }
 
+            var eaGamesOutput = new List<LegendaryMetadata.Rootobject>();
             string content;
             if (File.Exists(cacheInfoFile))
             {
-                var eaGamesOutput = new List<LegendaryMetadata.Rootobject>();
                 content = FileSystem.ReadFileAsStringSafe(cacheInfoFile);
                 if (!content.IsNullOrEmpty())
                 {
-                    if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(cacheInfoFile), out eaGamesOutput))
+                    if (Serialization.TryFromJson(content, out eaGamesOutput))
                     {
+                        foreach (LegendaryMetadata.Rootobject eaGame in eaGamesOutput)
+                        {
+                            eaGamesOnly.Add(eaGame);
+                        }
                         correctJson = true;
                     }
                 }
@@ -64,15 +68,16 @@ namespace LegendaryLibraryNS
             if (!correctJson)
             {
                 var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                      .WithArguments(new[] { "list", "-T", "--json" })
+                                      .WithArguments(new[] { "list", "-T", "--json", "--force-refresh" })
                                       .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                                       .WithValidation(CommandResultValidation.None)
                                       .ExecuteBufferedAsync();
-                if (result.ExitCode != 0)
+                if (result.StandardOutput.IsNullOrEmpty())
                 {
                     logger.Error("[Legendary]" + result.StandardError);
                     if (result.StandardError.Contains("Failed to establish a new connection")
                         || result.StandardError.Contains("Log in failed")
+                        || result.StandardError.Contains("Login failed")
                         || result.StandardError.Contains("No saved credentials"))
                     {
                         playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
@@ -85,7 +90,6 @@ namespace LegendaryLibraryNS
                 else
                 {
                     bool jediFound = false;
-                    var eaGamesOutput = new List<LegendaryMetadata.Rootobject>();
                     if (Serialization.TryFromJson(result.StandardOutput, out eaGamesOutput))
                     {
                         foreach (LegendaryMetadata.Rootobject eaGame in eaGamesOutput)
@@ -94,7 +98,7 @@ namespace LegendaryLibraryNS
                             {
                                 eaGame.app_title = eaGame.app_title.RemoveTrademarks();
                                 eaGamesOnly.Add(eaGame);
-                                if (eaGame.app_title.Contains("Star Wars"))
+                                if (!jediFound && eaGame.app_title.Contains("Star Wars"))
                                 {
                                     jediFound = true;
                                 }
@@ -108,21 +112,6 @@ namespace LegendaryLibraryNS
                             playniteAPI.Dialogs.ShowMessage(LOC.LegendaryStarWarsMessage, "", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                         Helpers.SaveJsonSettingsToFile(eaGamesOnly, "_allEaGames", cacheInfoPath);
-                    }
-                }
-            }
-            else
-            {
-                var eaGamesOutput = new List<LegendaryMetadata.Rootobject>();
-                content = FileSystem.ReadFileAsStringSafe(cacheInfoFile);
-                if (!content.IsNullOrEmpty())
-                {
-                    if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(cacheInfoFile), out eaGamesOutput))
-                    {
-                        foreach (LegendaryMetadata.Rootobject eaGame in eaGamesOutput)
-                        {
-                            eaGamesOnly.Add(eaGame);
-                        }
                     }
                 }
             }
@@ -202,6 +191,7 @@ namespace LegendaryLibraryNS
                     }
                     else if (errorMessage.Contains("Failed to establish a new connection")
                         || errorMessage.Contains("Log in failed")
+                        || errorMessage.Contains("Login failed")
                         || errorMessage.Contains("No saved credentials"))
                     {
                         playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired));

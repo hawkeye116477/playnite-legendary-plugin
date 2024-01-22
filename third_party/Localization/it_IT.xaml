@@ -8,6 +8,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteFilters">Filtri</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">Impossibile avviare gioco: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">Impossibile installare il gioco: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError">Impossibile disinstallare il gioco: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">Dimensione Installazione</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">Aggiunto</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">OK</sys:String>

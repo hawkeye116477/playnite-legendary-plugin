@@ -383,10 +383,13 @@ namespace LegendaryLibraryNS
                                       .WithStandardInputPipe(PipeSource.FromString("n"))
                                       .WithValidation(CommandResultValidation.None)
                                       .ExecuteBufferedAsync();
-                if (result.ExitCode != 0)
+                if (result.ExitCode != 0 || result.StandardError.Contains("ERROR") || result.StandardError.Contains("CRITICAL") || result.StandardError.Contains("Error"))
                 {
                     logger.Error("[Legendary]" + result.StandardError);
-                    if (result.StandardError.Contains("Failed to establish a new connection"))
+                    if (result.StandardError.Contains("Failed to establish a new connection") 
+                        || result.StandardError.Contains("Log in failed")
+                        || result.StandardError.Contains("Login failed")
+                        || result.StandardError.Contains("No saved credentials"))
                     {
                         playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
                     }

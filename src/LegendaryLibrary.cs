@@ -610,9 +610,10 @@ namespace LegendaryLibraryNS
                                                                                  .WithArguments(new[] { "move", game.GameId, newPath, "--skip-move" })
                                                                                  .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                                                                                  .ExecuteBufferedAsync();
-                                                    if (rewriteResult.ExitCode != 0)
+                                                    var errorMessage = rewriteResult.StandardError;
+                                                    if (rewriteResult.ExitCode != 0 || errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") || errorMessage.Contains("Error"))
                                                     {
-                                                        logger.Error($"[Legendary] {rewriteResult.StandardError}");
+                                                        logger.Error($"[Legendary] {errorMessage}");
                                                         logger.Error($"[Legendary] exit code: {rewriteResult.ExitCode}");
                                                     }
                                                     a.CurrentProgressValue = 2;

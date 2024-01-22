@@ -8,6 +8,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteFilters">Bộ lọc</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">Không thể bắt đầu trò chơi: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">Không thể cài đặt trò chơi: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError">Không thể gỡ cài đặt trò chơi: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">Dung Lượng Cài Đặt</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">Đã thêm vào.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">OK</sys:String>

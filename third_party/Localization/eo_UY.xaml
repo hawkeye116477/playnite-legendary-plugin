@@ -8,6 +8,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteFilters">Filtriloj</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError" />
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError" />
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel" />
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel" />
   <sys:String x:Key="LOCLegendary3P_PlayniteSaveLabel" />

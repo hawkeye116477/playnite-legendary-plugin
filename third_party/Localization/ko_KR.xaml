@@ -8,6 +8,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteFilters">필터</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">게임을 시작할 수 없습니다: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">게임을 설치할 수 없습니다: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError">게임을 삭제할 수 없습니다: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">설치 용량</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">추가일</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">확인</sys:String>

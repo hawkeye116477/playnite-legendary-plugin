@@ -8,6 +8,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteFilters">Szűrők</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">Nem lehet elindítani a játékot: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">{0} játék nem telepíthető</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError">{0} játék nem eltávolítható</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">Telepített méret</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">Hozzáadva</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">OK</sys:String>

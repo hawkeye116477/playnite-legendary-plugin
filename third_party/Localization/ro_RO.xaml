@@ -8,6 +8,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteFilters">Filtre</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">Nu poate fi pornită camera: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">Nu se poate instala jocul: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError">Nu se poate dezinstala jocul: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel" />
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">Adăugat</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">OK</sys:String>

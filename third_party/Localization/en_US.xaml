@@ -8,6 +8,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteFilters">Filters</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">Cannot start game: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">Cannot install game: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError">Cannot un-install game: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">Install Size</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">Added</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">OK</sys:String>

@@ -245,12 +245,17 @@ namespace LegendaryLibraryNS
             {
                 var result = await Cli.Wrap(ClientExecPath)
                                       .WithArguments(new[] { "info", gameID, "--json" })
+                                      .WithEnvironmentVariables(DefaultEnvironmentVariables)
                                       .WithValidation(CommandResultValidation.None)
                                       .ExecuteBufferedAsync();
-                if (result.ExitCode != 0)
+                var errorMessage = result.StandardError;
+                if (result.ExitCode != 0 || errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") || errorMessage.Contains("Error"))
                 {
                     logger.Error("[Legendary]" + result.StandardError);
-                    if (result.StandardError.Contains("Log in failed"))
+                    if (result.StandardError.Contains("Failed to establish a new connection")
+                        || result.StandardError.Contains("Log in failed")
+                        || result.StandardError.Contains("Login failed")
+                        || result.StandardError.Contains("No saved credentials"))
                     {
                         playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
                     }

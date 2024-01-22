@@ -8,6 +8,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteFilters">Filtreler</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">Oyun başlatılamıyor: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">Oyun kurulamıyor: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError">Oyun kaldırılamıyor: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">Kurulu Boyut</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">Eklenme</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">TAMAM</sys:String>

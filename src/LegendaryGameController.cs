@@ -132,6 +132,7 @@ namespace LegendaryLibraryNS
                 {
                     logger.Debug("[Legendary] " + cmd.StandardError);
                     logger.Error("[Legendary] exit code: " + cmd.ExitCode);
+                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameUninstallError).Format(LOC.LegendaryCheckLog));
                     Game.IsUninstalling = false;
                 }
             }
@@ -263,7 +264,10 @@ namespace LegendaryLibraryNS
                             var errorMessage = stdOutBuffer.ToString();
                             logger.Debug("[Legendary] " + errorMessage);
                             logger.Error("[Legendary] exit code: " + exited.ExitCode);
-                            if (errorMessage.Contains("login failed") || errorMessage.Contains("No saved credentials"))
+                            if (errorMessage.Contains("Failed to establish a new connection")
+                                || errorMessage.Contains("Log in failed")
+                                || errorMessage.Contains("Login failed")
+                                || errorMessage.Contains("No saved credentials"))
                             {
                                 var appList = LegendaryLauncher.GetInstalledAppList();
                                 if (appList.ContainsKey(Game.GameId))
@@ -272,7 +276,7 @@ namespace LegendaryLibraryNS
                                     {
                                         var tryOfflineResponse = new MessageBoxOption(LOC.LegendaryEnableOfflineMode);
                                         var okResponse = new MessageBoxOption(LOC.Legendary3P_PlayniteOKLabel, true, true);
-                                        var offlineConfirm = playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)), "", MessageBoxImage.Error, 
+                                        var offlineConfirm = playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)), "", MessageBoxImage.Error,
                                             new List<MessageBoxOption> { tryOfflineResponse, okResponse });
                                         if (offlineConfirm == tryOfflineResponse)
                                         {
@@ -298,6 +302,10 @@ namespace LegendaryLibraryNS
                                 InvokeOnStopped(new GameStoppedEventArgs());
                                 playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), errorMessage));
                             }
+                        }
+                        else
+                        {
+                            stdOutBuffer = null;
                         }
                         break;
                     default:

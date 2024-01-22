@@ -438,8 +438,11 @@ namespace LegendaryLibraryNS
             var result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryContinueActivation).Format("Ubisoft"), "", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
+                bool warningDisplayed = false;
                 bool errorDisplayed = false;
-                var stdOutBuffer = new StringBuilder();
+                bool successDisplayed = false;
+                var errorBuffer = new StringBuilder();
+                var warningBuffer = new StringBuilder();
                 var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
                              .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                              .WithArguments(new[] { "activate", "-U" })
@@ -454,22 +457,29 @@ namespace LegendaryLibraryNS
                             var activatedTitlesMatch = Regex.Match(stdErr.Text, @"(\d+) titles have already been activated on your Ubisoft account");
                             if (activatedTitlesMatch.Length >= 1)
                             {
+                                successDisplayed = true;
                                 playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryAllActivatedUbisoft).Format(activatedTitlesMatch.Groups[1].Value));
                             }
                             if (stdErr.Text.Contains("Redeemed all"))
                             {
+                                successDisplayed = true;
                                 playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryGamesActivateSuccess).Format("Ubisoft"));
                             }
-                            if(stdErr.Text.Contains("ERROR") || stdErr.Text.Contains("WARNING"))
+                            if (stdErr.Text.Contains("WARNING"))
+                            {
+                                warningDisplayed = true;
+                                warningBuffer.AppendLine(stdErr.Text);
+                            }
+                            if (stdErr.Text.Contains("ERROR"))
                             {
                                 errorDisplayed = true;
-                                stdOutBuffer.AppendLine(stdErr.Text);
+                                errorBuffer.AppendLine(stdErr.Text);
                             }
                             break;
                         case ExitedCommandEvent exited:
                             if (errorDisplayed)
                             {
-                                var errorMessage = stdOutBuffer.ToString();
+                                var errorMessage = errorBuffer.ToString();
                                 logger.Error($"[Legendary] {errorMessage}");
                                 if (errorMessage.Contains("No linked"))
                                 {
@@ -478,11 +488,21 @@ namespace LegendaryLibraryNS
                                 }
                                 else if (errorMessage.Contains("Failed to establish a new connection")
                                     || errorMessage.Contains("Log in failed")
+                                    || errorMessage.Contains("Login failed")
                                     || errorMessage.Contains("No saved credentials"))
                                 {
                                     playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryGamesActivateFailure).Format("Ubisoft", ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
                                 }
                                 else
+                                {
+                                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryGamesActivateFailure).Format("Ubisoft", ResourceProvider.GetString(LOC.LegendaryCheckLog)));
+                                }
+                            }
+                            if (warningDisplayed)
+                            {
+                                var warningMessage = warningBuffer.ToString();
+                                logger.Warn($"[Legendary] {warningMessage}");
+                                if (!successDisplayed && !errorDisplayed)
                                 {
                                     playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryGamesActivateFailure).Format("Ubisoft", ResourceProvider.GetString(LOC.LegendaryCheckLog)));
                                 }
