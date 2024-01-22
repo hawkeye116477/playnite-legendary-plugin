@@ -95,8 +95,14 @@ namespace LegendaryLibraryNS
             }
             LoadingATB.Visibility = Visibility.Collapsed;
             LoadingITB.Visibility = Visibility.Collapsed;
-            AvailableDlcsSP.Visibility = Visibility.Visible;
-            InstalledDlcsSP.Visibility = Visibility.Visible;
+            if (InstalledDlcsLB.Items.Count > 0)
+            {
+                InstalledDlcsSP.Visibility = Visibility.Visible;
+            }
+            if (AvailableDlcsLB.Items.Count > 0)
+            {
+                AvailableDlcsSP.Visibility = Visibility.Visible;
+            }
         }
 
         private async void UninstallBtn_Click(object sender, RoutedEventArgs e)
