@@ -458,7 +458,7 @@ namespace LegendaryLibraryNS
                             if (activatedTitlesMatch.Length >= 1)
                             {
                                 successDisplayed = true;
-                                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryAllActivatedUbisoft).Format(activatedTitlesMatch.Groups[1].Value));
+                                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryAllActivatedUbisoft).Format("Ubisoft");
                             }
                             if (stdErr.Text.Contains("Redeemed all"))
                             {
