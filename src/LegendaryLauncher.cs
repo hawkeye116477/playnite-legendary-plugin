@@ -226,7 +226,7 @@ namespace LegendaryLibraryNS
             {
                 if (File.GetLastWriteTime(cacheInfoFile) < DateTime.Now.AddDays(-7))
                 {
-                    var metadataFile = Path.Combine(LegendaryLauncher.ConfigPath, "metadata", gameID + ".json");
+                    var metadataFile = Path.Combine(ConfigPath, "metadata", gameID + ".json");
                     if (File.Exists(metadataFile))
                     {
                         File.Delete(metadataFile);

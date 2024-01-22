@@ -96,6 +96,22 @@ namespace LegendaryLibraryNS
                         {
                             if (eaGame.metadata?.customAttributes?.ThirdPartyManagedApp?.value == "Origin" || eaGame.metadata?.customAttributes?.ThirdPartyManagedApp?.value == "the EA app")
                             {
+                                if (eaGame.metadata?.customAttributes?.ThirdPartyManagedApp?.value == "the EA app")
+                                {
+                                    eaGame.metadata.customAttributes.ThirdPartyManagedApp.value = "Origin";
+                                    var metadataFile = Path.Combine(LegendaryLauncher.ConfigPath, "metadata", eaGame.app_name + ".json");
+                                    if (File.Exists(metadataFile))
+                                    {
+                                        content = FileSystem.ReadFileAsStringSafe(metadataFile);
+                                        if (!content.IsNullOrEmpty())
+                                        {
+                                            var contentObject = Serialization.FromJson<LegendaryMetadata.Rootobject>(content);
+                                            contentObject.metadata.customAttributes.ThirdPartyManagedApp.value = "Origin";
+                                            var strConf = Serialization.ToJson(contentObject, true);
+                                            File.WriteAllText(metadataFile, strConf);
+                                        }
+                                    }
+                                }
                                 eaGame.app_title = eaGame.app_title.RemoveTrademarks();
                                 eaGamesOnly.Add(eaGame);
                                 if (!jediFound && eaGame.app_title.Contains("Star Wars"))
