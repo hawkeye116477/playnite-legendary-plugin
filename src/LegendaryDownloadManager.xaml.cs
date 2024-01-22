@@ -364,14 +364,7 @@ namespace LegendaryLibraryNS
                                                         game.Playtime = playtimeItem.totalTime;
                                                     }
                                                 }
-                                            }
-                                            if (installedGameInfo.Is_dlc == false || !installedGameInfo.Executable.IsNullOrEmpty())
-                                            {
                                                 playniteAPI.Database.Games.Update(game);
-                                            }
-                                            else
-                                            {
-                                                playniteAPI.Database.Games.Add(game);
                                             }
                                         }
                                     }
