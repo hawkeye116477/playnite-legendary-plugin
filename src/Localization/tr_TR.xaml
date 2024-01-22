@@ -90,7 +90,7 @@
   <sys:String x:Key="LOCLegendaryDisableGameUpdateChecking">Güncelleme kontrolünü kapat</sys:String>
   <sys:String x:Key="LOCLegendaryStartupArguments">Başlangıç ​​etkenleri</sys:String>
   <sys:String x:Key="LOCLegendaryLanguageCode">Dil (RFC 1766 biçiminde kod)</sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherSettings">Legendary başlatıcı ayarları</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherSettings">Başlatma ayarlarını değiştir</sys:String>
   <sys:String x:Key="LOCLegendaryAlternativeExe">Alternatif yürütülebilir dosya</sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaves">Bulut kayıtları</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">İndirme hızını saniyedeki bit cinsinden göster</sys:String>
@@ -127,4 +127,17 @@
   <sys:String x:Key="LOCLegendaryNeverUpdate">Güncellemeleri asla denetleme</sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatePolicy">Oyun güncelleme politikası</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherUpdateNotify">Legandary başlatıcı yeni bir sürümü kullanıma sunulduğunda bildir</sys:String>
+  <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Epic Games oyunlarına yönelik güncellemeler indiriliyor.</sys:String>
+  <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings">Oyun başlatma ayarlarını kaldır</sys:String>
+  <sys:String x:Key="LOCLegendaryAdditionalServices">Ek servisler</sys:String>
+  <sys:String x:Key="LOCLegendaryNoLinkedAccount">Bağlı bir {0} hesabı bulunamadı! Hesabınızı tarayıcınız aracılığıyla bağlayın ve tekrar deneyin.</sys:String>
+  <sys:String x:Key="LOCLegendaryAllActivatedUbisoft">{0} hesabınızda tüm oyunlar zaten etkinleştirildi.</sys:String>
+  <sys:String x:Key="LOCLegendaryContinueActivation">{0} hesabınızda oyunları etkinleştirmek istediğinizden emin misiniz?</sys:String>
+  <sys:String x:Key="LOCLegendaryGamesActivateSuccess">{0} hesabınızdaki tüm oyunlar başarıyla etkinleştirildi.</sys:String>
+  <sys:String x:Key="LOCLegendaryActivateGames">Oyunları etkinleştir</sys:String>
+  <sys:String x:Key="LOCLegendaryGamesActivateFailure">{0} hesabınızdaki oyunlar etkinleştirilemedi. Sebep: {1}.</sys:String>
+  <sys:String x:Key="LOCLegendaryNoAvailableEaGames">Kullanılabilir EA Oyunu yok.</sys:String>
+  <sys:String x:Key="LOCLegendaryActivateNextConfirm">Bir sonraki oyunu etkinleştirmek istiyor musunuz?</sys:String>
+  <sys:String x:Key="LOCLegendaryEANotice">Şu anda hangi oyunun aktivasyon gerektirdiği bilinmiyor, bu nedenle her şeyin etkinleştirilmesi için girişimde bulunulacak. EA Uygulaması sizden oyunu etkinleştirmek yerine kurmanızı isterse, oyun zaten etkinleştirilmiştir ve iletişim kutusu kapatılabilir.</sys:String>
+   <sys:String x:Key="LOCLegendaryStarWarsMessage">Güç seninle olsun Padawan.</sys:String>
 </ResourceDictionary>
