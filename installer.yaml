@@ -1,5 +1,40 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.4.0
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2024-01-22
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.4.0/LegendaryLibrary_1_4_0.pext
+    Changelog:
+      - Added possibility to upload playtime to cloud (experimental feature)
+      - Added cloud settings to per game settings (manual sync, etc)
+      - Added possibility to move games to other base path
+      - Added DLC Manager for installed games (so non-launchable DLCs won't be longer
+        added to library, instead they will show up here)
+      - Added question if user wants to switch offline mode for playing game if can't
+        sign in
+      - Added possibility to display download speed in bits per second
+      - Added possibility to check all extra content in Game Installer
+      - Added offline mode as possible feature to metadata provider
+      - Improved games updating (added optional automatic updates and now DLCs will
+        be updated together with base game)
+      - Added possibility to display message when new launcher version will appear
+      - Added possibility to remove game settings while uninstalling game
+      - Added possibility to activate Ubisoft and EA titles (Plugin settings=>Additional
+        services)
+      - Improved clearing cache
+      - Improved Game Installer appearance
+      - Moved EOS Overlay settings to new Additional services tab
+      - Renamed game menu item 'Legendary launcher settings' to 'Modify launch settings'
+      - Playtime synchronization is now disabled by default
+      - Ubisoft Connect games won't be imported to library now
+      - All DLCs shouldn't start downloading now if user don't want them
+      - Disabled few things from metadata provider, cuz they can be not proper
+      - Removed parsing ini config file (that was used only to set some values as
+        default)
+      - Fixed detecting installed games for Heroic 2.9.0+
+      - Fixed few Download Manager bugs
+      - Improved error handling
+      - Added Portuguese (Brazilian) translation by BrutuZ
   - Version: 1.3.1
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2024-01-07
