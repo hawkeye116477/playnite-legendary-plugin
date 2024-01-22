@@ -125,7 +125,7 @@ namespace LegendaryLibraryNS.Services
 
         public async Task<bool> GetIsUserLoggedIn()
         {
-            var tokens = loadTokens();
+            var tokens = LoadTokens();
             if (tokens == null)
             {
                 return false;
@@ -140,8 +140,8 @@ namespace LegendaryLibraryNS.Services
             {
                 if (e is TokenException)
                 {
-                    await renewTokens();
-                    tokens = loadTokens();
+                    await RenewTokens();
+                    tokens = LoadTokens();
                     if (tokens is null)
                     {
                         return false;
@@ -164,7 +164,7 @@ namespace LegendaryLibraryNS.Services
                 throw new Exception("User is not authenticated.");
             }
 
-            var response = await InvokeRequest<List<Asset>>(assetsUrl, loadTokens());
+            var response = await InvokeRequest<List<Asset>>(assetsUrl, LoadTokens());
             return response.Item2;
         }
 
@@ -175,7 +175,7 @@ namespace LegendaryLibraryNS.Services
                 throw new Exception("User is not authenticated.");
             }
 
-            var tokens = loadTokens();
+            var tokens = LoadTokens();
             var formattedPlaytimeUrl = string.Format(playtimeUrl, tokens.account_id);
             var response = await InvokeRequest<List<PlaytimeItem>>(formattedPlaytimeUrl, tokens);
             return response.Item2;
@@ -199,7 +199,7 @@ namespace LegendaryLibraryNS.Services
             if (result == null)
             {
                 var url = string.Format("{0}/bulk/items?id={1}&country=US&locale=en-US", nameSpace, id);
-                var catalogResponse = InvokeRequest<Dictionary<string, CatalogItem>>(catalogUrl + url, loadTokens()).GetAwaiter().GetResult();
+                var catalogResponse = InvokeRequest<Dictionary<string, CatalogItem>>(catalogUrl + url, LoadTokens()).GetAwaiter().GetResult();
                 result = catalogResponse.Item2;
                 FileSystem.WriteStringToFile(cachePath, catalogResponse.Item1);
             }
@@ -214,7 +214,7 @@ namespace LegendaryLibraryNS.Services
             }
         }
 
-        private async Task renewTokens()
+        private async Task RenewTokens()
         {
             var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
                          .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
@@ -282,7 +282,7 @@ namespace LegendaryLibraryNS.Services
             }
         }
 
-        private OauthResponse loadTokens()
+        private OauthResponse LoadTokens()
         {
             if (File.Exists(tokensPath))
             {
