@@ -90,7 +90,7 @@
   <sys:String x:Key="LOCLegendaryDisableGameUpdateChecking">Desativar verificação de atualização</sys:String>
   <sys:String x:Key="LOCLegendaryStartupArguments">Argumentos de inicialização</sys:String>
   <sys:String x:Key="LOCLegendaryLanguageCode">Idioma (código no formato RFC 1766)</sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherSettings">Configurações do inicializador Legendary</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherSettings">Modificar configurações de inicialização</sys:String>
   <sys:String x:Key="LOCLegendaryAlternativeExe">Arquivo executável alternativo</sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaves">Salvamento na nuvem</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Exibir a velocidade de download em bits por segundo</sys:String>
@@ -127,4 +127,17 @@
   <sys:String x:Key="LOCLegendaryNeverUpdate">Nunca procurar atualizações</sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatePolicy">Política de atualização</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherUpdateNotify">Notificar quando uma nova versão do Inicializador Legendary estiver disponível</sys:String>
+  <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Atualizações de jogos da Epic Games estão sendo baixadas.</sys:String>
+  <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings">Remover configurações de inicialização</sys:String>
+  <sys:String x:Key="LOCLegendaryAdditionalServices">Serviços adicionais</sys:String>
+  <sys:String x:Key="LOCLegendaryNoLinkedAccount">Nenhuma conta {0} vinculada! Conecte sua conta através do seu navegador e tente novamente.</sys:String>
+  <sys:String x:Key="LOCLegendaryAllActivatedUbisoft">Todos os jogos já foram ativados na sua conta {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryContinueActivation">Tem certeza que deseja ativar jogos na sua conta {0}?</sys:String>
+  <sys:String x:Key="LOCLegendaryGamesActivateSuccess">Todos os jogos foram ativados com sucesso na sua conta {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryActivateGames">Ativar jogos</sys:String>
+  <sys:String x:Key="LOCLegendaryGamesActivateFailure">Falha ao ativar jogos na sua conta {0}. Motivo: {1}.</sys:String>
+  <sys:String x:Key="LOCLegendaryNoAvailableEaGames">Nenhum jogo EA disponível.</sys:String>
+  <sys:String x:Key="LOCLegendaryActivateNextConfirm">Deseja ativar o próximo jogo?</sys:String>
+  <sys:String x:Key="LOCLegendaryEANotice">Não se sabe qual jogo requer ativação, então será feita uma tentativa para ativar tudo. Se o aplicativo EA solicitar que você instale o jogo ao invés de ativá-lo, então ele já foi ativado e a caixa de diálogo pode ser descartada.</sys:String>
+   <sys:String x:Key="LOCLegendaryStarWarsMessage">Que a Força esteja com você, Padawan.</sys:String>
 </ResourceDictionary>

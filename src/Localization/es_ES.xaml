@@ -90,7 +90,7 @@
   <sys:String x:Key="LOCLegendaryDisableGameUpdateChecking">Desactivar comprobación de actualización</sys:String>
   <sys:String x:Key="LOCLegendaryStartupArguments">Argumentos de inicio</sys:String>
   <sys:String x:Key="LOCLegendaryLanguageCode">Idioma (código en formato RFC 1766)</sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherSettings">Configuración del cliente Legendary</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherSettings"></sys:String>
   <sys:String x:Key="LOCLegendaryAlternativeExe">Archivo ejecutable alternativo</sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaves">Guardados en la nube</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Mostrar velocidad de descarga en bits por segundo</sys:String>
@@ -127,4 +127,17 @@
   <sys:String x:Key="LOCLegendaryNeverUpdate"></sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatePolicy"></sys:String>
   <sys:String x:Key="LOCLegendaryLauncherUpdateNotify"></sys:String>
+  <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway"></sys:String>
+  <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings"></sys:String>
+  <sys:String x:Key="LOCLegendaryAdditionalServices"></sys:String>
+  <sys:String x:Key="LOCLegendaryNoLinkedAccount"></sys:String>
+  <sys:String x:Key="LOCLegendaryAllActivatedUbisoft"></sys:String>
+  <sys:String x:Key="LOCLegendaryContinueActivation"></sys:String>
+  <sys:String x:Key="LOCLegendaryGamesActivateSuccess"></sys:String>
+  <sys:String x:Key="LOCLegendaryActivateGames"></sys:String>
+  <sys:String x:Key="LOCLegendaryGamesActivateFailure"></sys:String>
+  <sys:String x:Key="LOCLegendaryNoAvailableEaGames"></sys:String>
+  <sys:String x:Key="LOCLegendaryActivateNextConfirm"></sys:String>
+  <sys:String x:Key="LOCLegendaryEANotice"></sys:String>
+   <sys:String x:Key="LOCLegendaryStarWarsMessage"></sys:String>
 </ResourceDictionary>

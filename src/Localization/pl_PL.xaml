@@ -90,7 +90,7 @@
   <sys:String x:Key="LOCLegendaryDisableGameUpdateChecking">Wyłącz sprawdzanie aktualizacji</sys:String>
   <sys:String x:Key="LOCLegendaryStartupArguments">Argumenty startowe</sys:String>
   <sys:String x:Key="LOCLegendaryLanguageCode">Język (kod w formacie RFC 1766)</sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherSettings">Ustawienia launchera Legendary</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherSettings">Modyfikuj ustawienia uruchamiania</sys:String>
   <sys:String x:Key="LOCLegendaryAlternativeExe">Alternatywny plik wykonywalny</sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaves">Zapisy w chmurze</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Wyświetlaj prędkość pobierania w bitach na sekundę</sys:String>
@@ -112,10 +112,10 @@
   <sys:String x:Key="LOCLegendaryUploadingPlaytime">Przesyłanie czasu grania w grę {0} do chmury...</sys:String>
   <sys:String x:Key="LOCLegendaryUploadPlaytimeError">Wystąpił błąd podczas przesyłania czasu grania w grę {0} do chmury.</sys:String>
   <sys:String x:Key="LOCLegendaryMove">Przenieś</sys:String>
-  <sys:String x:Key="LOCLegendaryMoveConfirm">Czy na pewno chcesz przenieść grę {0} do &quot;{1}&quot;? To może zająć sporo czasu.</sys:String>
-  <sys:String x:Key="LOCLegendaryMovingGame">Przenoszenie gry {0} do &quot;{1}&quot;...</sys:String>
-  <sys:String x:Key="LOCLegendaryMoveGameSuccess">Gra {0} została pomyślnie przeniesiona do &quot;{1}&quot;.</sys:String>
-  <sys:String x:Key="LOCLegendaryMoveGameError">Wystąpił błąd podczas przenoszenia gry {0} do &quot;{1}&quot;.</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveConfirm">Czy na pewno chcesz przenieść grę {0} do „{1}”? To może zająć sporo czasu.</sys:String>
+  <sys:String x:Key="LOCLegendaryMovingGame">Przenoszenie gry {0} do „{1}”...</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveGameSuccess">Gra {0} została pomyślnie przeniesiona do „{1}”.</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveGameError">Wystąpił błąd podczas przenoszenia gry {0} do „{1}”.</sys:String>
   <sys:String x:Key="LOCLegendaryInstalledDlcs">Zainstalowane DLC</sys:String>
   <sys:String x:Key="LOCLegendaryAvailableDlcs">Dostępne DLC</sys:String>
   <sys:String x:Key="LOCLegendaryManageDlcs">Zarządzaj dodatkami (DLC)</sys:String>
@@ -127,4 +127,17 @@
   <sys:String x:Key="LOCLegendaryNeverUpdate">Nigdy nie sprawdzaj aktualizacji</sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatePolicy">Polityka aktualizacji gier</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherUpdateNotify">Powiadom mnie, gdy nowa wersja launchera Legendary będzie dostępna</sys:String>
+  <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Trwa pobieranie aktualizacji dla gier z Epic Games.</sys:String>
+  <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings">Usuń ustawienia uruchamiania gry</sys:String>
+  <sys:String x:Key="LOCLegendaryAdditionalServices">Dodatkowe usługi</sys:String>
+  <sys:String x:Key="LOCLegendaryNoLinkedAccount">Nie znaleziono powiązanego konta {0}! Połącz swoje konto za pomocą przeglądarki i spróbuj ponownie.</sys:String>
+  <sys:String x:Key="LOCLegendaryAllActivatedUbisoft">Wszystkie gry zostały już aktywowane na Twoim koncie {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryContinueActivation">Czy na pewno chcesz aktywować gry na swoim koncie {0}?</sys:String>
+  <sys:String x:Key="LOCLegendaryGamesActivateSuccess">Wszystkie gry zostały pomyślnie aktywowane na Twoim koncie {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryActivateGames">Aktywuj gry</sys:String>
+  <sys:String x:Key="LOCLegendaryGamesActivateFailure">Nie udało się aktywować gier na Twoim koncie {0}. Powód: {1}.</sys:String>
+  <sys:String x:Key="LOCLegendaryNoAvailableEaGames">Brak dostępnych gier EA.</sys:String>
+  <sys:String x:Key="LOCLegendaryActivateNextConfirm">Czy chcesz aktywować kolejną grę?</sys:String>
+  <sys:String x:Key="LOCLegendaryEANotice">Obecnie nie wiadomo, która gra wymaga aktywacji, więc zostanie podjęta próba aktywacji wszystkiego. Jeśli EA App zapyta cię o zainstalowanie gry zamiast jej aktywację, to oznacza, że została już aktywowana, a okno dialogowe może zostać odrzucone.</sys:String>
+   <sys:String x:Key="LOCLegendaryStarWarsMessage">Niech Moc będzie z tobą, Padawanie.</sys:String>
 </ResourceDictionary>
