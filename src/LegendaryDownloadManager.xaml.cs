@@ -19,6 +19,7 @@ using Playnite.SDK.Data;
 using Playnite.Common;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using LegendaryLibraryNS.Services;
 
 namespace LegendaryLibraryNS
 {
@@ -336,7 +337,7 @@ namespace LegendaryLibraryNS
                                 wantedItem.status = DownloadStatus.Completed;
                                 DateTimeOffset now = DateTime.UtcNow;
                                 wantedItem.completedTime = now.ToUnixTimeSeconds();
-                                _ = (Application.Current.Dispatcher?.BeginInvoke((Action)delegate
+                                _ = (Application.Current.Dispatcher?.BeginInvoke((Action)async delegate
                                 {
                                     var installedAppList = LegendaryLauncher.GetInstalledAppList();
                                     if (installedAppList != null)
@@ -352,6 +353,17 @@ namespace LegendaryLibraryNS
                                                 game.Version = installedGameInfo.Version;
                                                 game.InstallSize = (ulong?)installedGameInfo.Install_size;
                                                 game.IsInstalled = true;
+                                                var playtimeSyncEnabled = LegendaryLibrary.GetSettings().SyncPlaytime;
+                                                if (playtimeSyncEnabled)
+                                                {
+                                                    var accountApi = new EpicAccountClient(playniteAPI, LegendaryLauncher.TokensPath);
+                                                    var playtimeItems = await accountApi.GetPlaytimeItems();
+                                                    var playtimeItem = playtimeItems?.FirstOrDefault(x => x.artifactId == gameID);
+                                                    if (playtimeItem != null)
+                                                    {
+                                                        game.Playtime = playtimeItem.totalTime;
+                                                    }
+                                                }
                                             }
                                             if (installedGameInfo.Is_dlc == false || !installedGameInfo.Executable.IsNullOrEmpty())
                                             {
