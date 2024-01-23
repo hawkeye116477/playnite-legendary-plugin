@@ -22,5 +22,6 @@ namespace LegendaryLibraryNS.Models
         public string app;
         public string in_app_id;
         public string device_id;
+        public string displayName;
     }
 }

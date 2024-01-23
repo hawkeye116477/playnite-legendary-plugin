@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Importeer niet-geïnstalleerde spellen</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Accounts koppelen</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Verificatiestatus aan het controleren...</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">De gebruiker is niet geverifieerd.</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Verificatie vereist</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Kan gebruiker te verifiëren</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Verifiëren</sys:String>

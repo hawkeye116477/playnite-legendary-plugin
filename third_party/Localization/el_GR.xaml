@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Εισαγωγή μη εγκατεστημένων παιχνιδιών</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Σύνδεση λογαριασμού</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Έλεγχος κατάστασης πιστοποίησης...</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">Ο χρήστης είναι πιστοποιημένος</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Απαιτείται πιστοποίηση</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Αδυναμία πιστοποίησης του χρήστη</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Πιστοποίηση</sys:String>

@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Імпортувати не встановлені ігри</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Під'єднати обліковий запис</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Перевірка стану автентифікації...</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">Користувача автентифіковано</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Необхідна автентифікація</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Не вдалося автентифікувати користувача.</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Автентифікація</sys:String>

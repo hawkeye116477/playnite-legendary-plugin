@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">インストールされていないゲームをインポート</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">アカウントに接続</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">認証ステータスを確認しています...</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">ユーザーは認証されています</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">認証が必要です</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">ユーザー認証に失敗しました。</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">認証</sys:String>

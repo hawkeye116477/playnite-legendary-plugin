@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Nem telepített játékok importálása</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Összekapcsolás a fiókkal</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Hitelesítés ellenőrzése…</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">Felhasználó hitelesítve</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Felhasználói hitelesítés szükséges.</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Felhasználói hitelesítés sikertelen.</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Bejelentkezés</sys:String>

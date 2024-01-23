@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">导入未安装的游戏</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">连接账户</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">正在检查身份认证状态…</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">用户已通过身份验证</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">需要身份认证</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">用户身份验证失败。</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">身份验证</sys:String>

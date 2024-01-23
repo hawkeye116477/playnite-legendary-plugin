@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Impor game tidak terpasang</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Hubungkan akun</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Mengecek status autentikasi…</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">Pengguna terautentikasi</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Memerlukan autentikasi</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Gagal mengautentikasi pengguna</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Autentikasi</sys:String>

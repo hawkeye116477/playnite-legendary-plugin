@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Nhập vào các trò chơi chưa được cài đặt</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Kết nối tài khoản</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Đang kiểm tra trạng thái xác thực…</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">Người dùng được xác thực</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Yêu cầu xác thực</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Không xác thực được người dùng.</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Xác thực</sys:String>

@@ -415,7 +415,7 @@ namespace LegendaryLibraryNS
             var userLoggedIn = await clientApi.GetIsUserLoggedIn();
             if (userLoggedIn)
             {
-                AuthStatusTB.Text = ResourceProvider.GetString(LOC.Legendary3P_EpicLoggedIn);
+                AuthStatusTB.Text = ResourceProvider.GetString(LOC.LegendarySignedInAs).Format(clientApi.GetUsername());
                 LoginBtn.Content = ResourceProvider.GetString(LOC.LegendarySignOut);
                 LoginBtn.IsChecked = true;
             }

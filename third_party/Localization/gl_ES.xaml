@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Importar xogos non instalados</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Vincular conta</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Comprobando estado da verificación</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">O usuario xa está verificado</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Requírese verificación</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Erro na verificación do usuario</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Verificar</sys:String>

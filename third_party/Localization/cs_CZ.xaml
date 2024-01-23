@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Importovat neinstalované hry</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Připojit účet</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Ověřuji stav přihlášení…</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">Uživatel je přihlášen</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Vyžaduje přihlášení</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Přihlášení se nezdařilo.</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Autentizovat</sys:String>

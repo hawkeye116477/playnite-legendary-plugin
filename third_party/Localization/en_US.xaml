@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Import not installed games</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Connect account</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Checking authentication status…</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">User is authenticated</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Requires authentication</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Failed to authenticate user.</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Authenticate</sys:String>

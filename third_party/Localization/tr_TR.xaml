@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Kurulu olmayan oyunları içe aktar</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Hesap bağla</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Kimlik doğrulama durumu kontrol ediliyor…</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">Kullanıcı kimliği doğrulandı</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Kimlik doğrulaması gerektiriyor</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Kullanıcı kimliği doğrulanamadı.</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Kimlik Doğrulaması</sys:String>

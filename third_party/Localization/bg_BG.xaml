@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Импортиране на неинсталирани игри</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Свързване на акаун</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Проверява се състоянието на удостоверяване...</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">Потребителят е удостоверен</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Изисква удостоверяване</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Неуспешно удостоверяване на потребителя.</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Удостоверяване</sys:String>

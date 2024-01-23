@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">واردات بازی های نصب نشده</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">اتصال حساب</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">بررسی وضیعت تایید…</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">کاربر تایید شد</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">نیاز به تائید هویت</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">شکست در تایید کاربر.</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">احراز هویت</sys:String>

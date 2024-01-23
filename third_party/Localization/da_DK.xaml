@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Importer ikke installerede spil</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Forbind konto</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Tjekker godkendelsesstatus…</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">Brugeren er verificeret</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Kræver verificering</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Det lykkedes ikke at verificere brugeren</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Verificering</sys:String>

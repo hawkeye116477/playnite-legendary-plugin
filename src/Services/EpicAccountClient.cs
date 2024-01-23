@@ -123,6 +123,12 @@ namespace LegendaryLibraryNS.Services
             }
         }
 
+        public string GetUsername()
+        {
+            var tokens = LoadTokens();
+            return tokens.displayName;
+        }
+
         public async Task<bool> GetIsUserLoggedIn()
         {
             var tokens = LoadTokens();

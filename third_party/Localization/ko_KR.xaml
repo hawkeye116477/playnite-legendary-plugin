@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">설치되지 않은 게임 가져오기</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">계정 연결</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">인증 상태 확인하는 중…</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">사용자 인증됨</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">인증이 필요함</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">사용자 인증에 실패하였습니다.</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">인증</sys:String>

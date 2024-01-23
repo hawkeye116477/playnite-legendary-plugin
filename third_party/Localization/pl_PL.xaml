@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Importuj niezainstalowane gry</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Połącz z kontem</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Sprawdzanie statusu uwierzytelnienia…</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">Użytkownik jest uwierzytelniony</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Wymagane uwierzytelnienie</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Nie powiodło się uwierzytelnienie użytkownika</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Uwierzytelnij</sys:String>

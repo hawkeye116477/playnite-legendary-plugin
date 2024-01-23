@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Importa giochi non installati</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Connetti l'account</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Controllo stato di autenticazione in corso…</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">L'utente è autenticato</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Richiede autenticazione</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Autenticazione utente fallita.</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Connetti</sys:String>

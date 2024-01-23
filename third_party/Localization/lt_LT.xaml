@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Importuoti neįdiegtus žaidimus</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Susieti paskyrą</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Tikrinama autentifikavimo būsena...</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">Vartotojas autentifikuotas</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Reikalinga autentifikavimas</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Nepavyko autentifikuoti vartotojo.</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Autentifikuoti</sys:String>

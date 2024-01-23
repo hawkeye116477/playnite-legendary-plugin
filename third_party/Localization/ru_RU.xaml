@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Импортировать неустановленные игры</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Подключить аккаунт</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Проверка статуса аутентификации…</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">Пользователь авторизован </sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Требуется авторизация</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Не удалось авторизовать пользователя.</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Аутентификация</sys:String>

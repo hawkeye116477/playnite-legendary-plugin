@@ -17,7 +17,7 @@ src_path = pj(main_path, "src")
 
 EPIC_LOC_KEYS = ["LOCEpicSettingsImportInstalledLabel", "LOCEpicSettingsConnectAccount",
                  "LOCEpicSettingsImportUninstalledLabel", "LOCEpicAuthenticateLabel",
-                 "LOCEpicLoggedIn", "LOCEpicNotLoggedIn", "LOCEpicLoginChecking",  
+                 "LOCEpicNotLoggedIn", "LOCEpicLoginChecking",  
                  "LOCEpicTroubleShootingIssues", "LOCEpicStartUsingClient",
                  "LOCEpicNotLoggedInError"]
 

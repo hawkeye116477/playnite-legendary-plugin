@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Importer spill som ikke er installert</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Tilknytt konto</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Kontrollerer autentiseringsstatus …</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">Brukeren er autentisert</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Krever autentisering</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Brukerautentisering mislyktes.</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Autentiser</sys:String>

@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Увези неинсталиране игре</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Повежи налог</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Проверавање статуса аутентификације...</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">Корисник је проверен</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Захтева аутентификацију</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Неуспешна аутентификација корисника</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Аутентификуј</sys:String>

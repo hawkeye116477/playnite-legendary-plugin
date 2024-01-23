@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">匯入未安裝遊戲</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">連結帳號</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">正在檢查驗證狀態...</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">使用者已驗證</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">需要驗證</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">無法驗證用戶</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">驗證</sys:String>

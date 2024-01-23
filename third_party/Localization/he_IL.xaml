@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">ייבא משחקים שלא הותקנו</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">חבר חשבון</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">בודק מצב אימות…</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">המשתמש מאומת</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">מחייב אימות</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">נכשל באימות משתמש.</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">אימות</sys:String>

@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">استيراد الألعاب الغير المثبتة</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">ربط الحساب</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">جاري التحقق من حالة المصادقة…</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">تم مصادقة المستخدم</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">يتطلب المصادقة</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">فشل في مصادقة المستخدم.</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">مصادقة</sys:String>

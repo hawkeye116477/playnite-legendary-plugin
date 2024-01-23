@@ -49,6 +49,5 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteOpen">Abrir</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">Importar jogos instalados</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Importar jogos não instalados</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">O utilizador já está autenticado</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Requer autenticação</sys:String>
 </ResourceDictionary>

@@ -777,5 +777,9 @@ namespace System
         /// May the Force be with you, Padawan.
         /// </summary>
         public const string LegendaryStarWarsMessage = "LOCLegendaryStarWarsMessage";
+        /// <summary>
+        /// Signed in as {0}
+        /// </summary>
+        public const string LegendarySignedInAs = "LOCLegendarySignedInAs";
     }
 }

@@ -51,7 +51,6 @@
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Impordi paigaldamata mängud</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Ühenda konto</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Autentimise oleku kontrollimine…</sys:String>
-  <sys:String x:Key="LOCLegendary3P_EpicLoggedIn">Kasutaja on autenditud</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Vajalik on autentimine</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Kasutaja autentimine ebaõnnestus.</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Autendi</sys:String>
