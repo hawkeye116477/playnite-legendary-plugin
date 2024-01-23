@@ -24,9 +24,24 @@ namespace LegendaryLibraryNS
             {
                 var legendaryConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".config", "legendary");
                 var heroicLegendaryConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "heroic", "legendaryConfig", "legendary");
-                if (Directory.Exists(heroicLegendaryConfigPath) && LauncherPath.Contains("heroic"))
+                if (LauncherPath == HeroicLegendaryPath)
                 {
-                    legendaryConfigPath = heroicLegendaryConfigPath;
+                    var originalLegendaryinstallListPath = Path.Combine(ConfigPath, "installed.json");
+                    var heroicLegendaryInstallListPath = Path.Combine(heroicLegendaryConfigPath, "installed.json");
+                    if (!File.Exists(originalLegendaryinstallListPath) || File.Exists(heroicLegendaryInstallListPath))
+                    {
+                        if (File.Exists(originalLegendaryinstallListPath))
+                        {
+                            if (File.GetLastWriteTime(heroicLegendaryInstallListPath) > File.GetLastWriteTime(originalLegendaryinstallListPath))
+                            {
+                                legendaryConfigPath = heroicLegendaryConfigPath;
+                            }
+                        }
+                        else
+                        {
+                            legendaryConfigPath = heroicLegendaryConfigPath;
+                        }
+                    }
                 }
                 return legendaryConfigPath;
             }
@@ -41,6 +56,9 @@ namespace LegendaryLibraryNS
             }
         }
 
+        public static string HeroicLegendaryPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                                    @"Programs\heroic\resources\app.asar.unpacked\build\bin\win32\");
+
         public static string LauncherPath
         {
             get
@@ -54,11 +72,9 @@ namespace LegendaryLibraryNS
                 {
                     launcherPath = envPath;
                 }
-                else if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                                                  @"Programs\heroic\resources\app.asar.unpacked\build\bin\win32\legendary.exe")))
+                else if (File.Exists(Path.Combine(HeroicLegendaryPath, "legendary.exe")))
                 {
-                    launcherPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                                                @"Programs\heroic\resources\app.asar.unpacked\build\bin\win32\");
+                    launcherPath = HeroicLegendaryPath;
                 }
                 else
                 {
