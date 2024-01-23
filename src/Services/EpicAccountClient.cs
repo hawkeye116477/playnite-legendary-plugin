@@ -126,6 +126,14 @@ namespace LegendaryLibraryNS.Services
         public string GetUsername()
         {
             var tokens = LoadTokens();
+            var username = "";
+            if (tokens != null)
+            {
+                if (!tokens.displayName.IsNullOrEmpty())
+                {
+                    username = tokens.displayName;
+                }
+            }
             return tokens.displayName;
         }
 

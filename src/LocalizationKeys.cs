@@ -194,10 +194,6 @@ namespace System
         /// </summary>
         public const string Legendary3P_EpicLoginChecking = "LOCLegendary3P_EpicLoginChecking";
         /// <summary>
-        /// User is authenticated
-        /// </summary>
-        public const string Legendary3P_EpicLoggedIn = "LOCLegendary3P_EpicLoggedIn";
-        /// <summary>
         /// Requires authentication
         /// </summary>
         public const string Legendary3P_EpicNotLoggedIn = "LOCLegendary3P_EpicNotLoggedIn";
@@ -781,5 +777,9 @@ namespace System
         /// Signed in as {0}
         /// </summary>
         public const string LegendarySignedInAs = "LOCLegendarySignedInAs";
+        /// <summary>
+        /// Are you sure you want to sign out {0}?
+        /// </summary>
+        public const string LegendarySignOutConfirm = "LOCLegendarySignOutConfirm";
     }
 }

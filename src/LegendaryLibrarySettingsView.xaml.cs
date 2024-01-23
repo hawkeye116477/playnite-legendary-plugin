@@ -390,21 +390,30 @@ namespace LegendaryLibraryNS
                     playniteAPI.Dialogs.ShowErrorMessage(playniteAPI.Resources.GetString(LOC.Legendary3P_EpicNotLoggedInError), "");
                     logger.Error(ex, "Failed to authenticate user.");
                 }
+                UpdateAuthStatus();
             }
             else
             {
-                var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                      .WithArguments(new[] { "auth", "--delete" })
-                                      .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
-                                      .WithValidation(CommandResultValidation.None)
-                                      .ExecuteBufferedAsync();
-                if (result.ExitCode != 0 && !result.StandardError.Contains("User data deleted"))
+                var answer = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendarySignOutConfirm).Format(clientApi.GetUsername()), LOC.LegendarySignOut, MessageBoxButton.YesNo);
+                if (answer == MessageBoxResult.Yes)
                 {
-                    logger.Error($"[Legendary] Failed to sign out. Error: {result.StandardError}");
-                    return;
+                    var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                          .WithArguments(new[] { "auth", "--delete" })
+                                          .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                          .WithValidation(CommandResultValidation.None)
+                                          .ExecuteBufferedAsync();
+                    if (result.ExitCode != 0 && !result.StandardError.Contains("User data deleted"))
+                    {
+                        logger.Error($"[Legendary] Failed to sign out. Error: {result.StandardError}");
+                        return;
+                    }
+                    UpdateAuthStatus();
+                }
+                else
+                {
+                    LoginBtn.IsChecked = true;
                 }
             }
-            UpdateAuthStatus();
         }
 
         private async void UpdateAuthStatus()
