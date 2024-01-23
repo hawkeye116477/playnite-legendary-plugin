@@ -24,7 +24,7 @@ namespace LegendaryLibraryNS
             {
                 var legendaryConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".config", "legendary");
                 var heroicLegendaryConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "heroic", "legendaryConfig", "legendary");
-                var originalLegendaryinstallListPath = Path.Combine(ConfigPath, "installed.json");
+                var originalLegendaryinstallListPath = Path.Combine(legendaryConfigPath, "installed.json");
                 var heroicLegendaryInstallListPath = Path.Combine(heroicLegendaryConfigPath, "installed.json");
                 if (!File.Exists(originalLegendaryinstallListPath) || File.Exists(heroicLegendaryInstallListPath))
                 {
