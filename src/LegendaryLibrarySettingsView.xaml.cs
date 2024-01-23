@@ -394,7 +394,7 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                var answer = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendarySignOutConfirm).Format(clientApi.GetUsername()), LOC.LegendarySignOut, MessageBoxButton.YesNo);
+                var answer = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendarySignOutConfirm), LOC.LegendarySignOut, MessageBoxButton.YesNo);
                 if (answer == MessageBoxResult.Yes)
                 {
                     var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
