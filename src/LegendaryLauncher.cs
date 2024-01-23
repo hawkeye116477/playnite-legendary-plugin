@@ -24,23 +24,20 @@ namespace LegendaryLibraryNS
             {
                 var legendaryConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".config", "legendary");
                 var heroicLegendaryConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "heroic", "legendaryConfig", "legendary");
-                if (LauncherPath == HeroicLegendaryPath)
+                var originalLegendaryinstallListPath = Path.Combine(ConfigPath, "installed.json");
+                var heroicLegendaryInstallListPath = Path.Combine(heroicLegendaryConfigPath, "installed.json");
+                if (!File.Exists(originalLegendaryinstallListPath) || File.Exists(heroicLegendaryInstallListPath))
                 {
-                    var originalLegendaryinstallListPath = Path.Combine(ConfigPath, "installed.json");
-                    var heroicLegendaryInstallListPath = Path.Combine(heroicLegendaryConfigPath, "installed.json");
-                    if (!File.Exists(originalLegendaryinstallListPath) || File.Exists(heroicLegendaryInstallListPath))
+                    if (File.Exists(originalLegendaryinstallListPath))
                     {
-                        if (File.Exists(originalLegendaryinstallListPath))
-                        {
-                            if (File.GetLastWriteTime(heroicLegendaryInstallListPath) > File.GetLastWriteTime(originalLegendaryinstallListPath))
-                            {
-                                legendaryConfigPath = heroicLegendaryConfigPath;
-                            }
-                        }
-                        else
+                        if (File.GetLastWriteTime(heroicLegendaryInstallListPath) > File.GetLastWriteTime(originalLegendaryinstallListPath))
                         {
                             legendaryConfigPath = heroicLegendaryConfigPath;
                         }
+                    }
+                    else
+                    {
+                        legendaryConfigPath = heroicLegendaryConfigPath;
                     }
                 }
                 return legendaryConfigPath;
