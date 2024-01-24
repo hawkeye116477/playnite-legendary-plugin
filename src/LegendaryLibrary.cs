@@ -394,6 +394,7 @@ namespace LegendaryLibraryNS
                         {
                             globalSettings.NextGamesUpdateTime = GetNextUpdateCheckTime(globalSettings.GamesUpdatePolicy);
                             SavePluginSettings(globalSettings);
+                            var updateTasks = new List<Task>();
                             var appList = LegendaryLauncher.GetInstalledAppList();
                             foreach (var game in appList)
                             {
@@ -409,9 +410,36 @@ namespace LegendaryLibraryNS
                                     if (canUpdate)
                                     {
                                         LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
-                                        await legendaryUpdateController.UpdateGame(game.Value.Title, gameID, true);
+                                        if (globalSettings.AutoUpdateGames)
+                                        {
+                                            updateTasks.Add(legendaryUpdateController.UpdateGame(game.Value.Title, gameID, true));
+                                        }
+                                        else
+                                        {
+                                            var gamesUpdates = await legendaryUpdateController.CheckAllGamesUpdates();
+                                            if (gamesUpdates.Count > 0)
+                                            {
+                                                Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                                                {
+                                                    ShowMaximizeButton = false,
+                                                });
+                                                window.DataContext = gamesUpdates;
+                                                window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
+                                                window.Content = new LegendaryUpdater();
+                                                window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+                                                window.SizeToContent = SizeToContent.WidthAndHeight;
+                                                window.MinWidth = 600;
+                                                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                                                window.ShowDialog();
+                                            }
+                                        }
+                                        
                                     }
                                 }
+                            }
+                            if (updateTasks.Count > 0)
+                            {
+                                await Task.WhenAll(updateTasks);
                             }
                         }
                     }

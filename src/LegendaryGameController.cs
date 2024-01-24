@@ -400,7 +400,8 @@ namespace LegendaryLibraryNS
                         var updateInfo = new Installed
                         {
                             Version = newGameInfo.Game.Version,
-                            Title = newGameInfo.Game.Title
+                            Title = newGameInfo.Game.Title,
+                            App_name = gameId,
                         };
                         gamesToUpdate.Add(oldGameInfo.App_name, updateInfo);
                     }
@@ -420,7 +421,8 @@ namespace LegendaryLibraryNS
                                         var updateDlcInfo = new Installed
                                         {
                                             Version = newDlcInfo.Game.Version,
-                                            Title = newDlcInfo.Game.Title
+                                            Title = newDlcInfo.Game.Title,
+                                            App_name = dlc.App_name
                                         };
                                         gamesToUpdate.Add(oldDlcInfo.App_name, updateDlcInfo);
                                     }

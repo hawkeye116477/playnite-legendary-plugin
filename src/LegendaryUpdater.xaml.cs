@@ -1,18 +1,11 @@
 ﻿using LegendaryLibraryNS.Models;
+using Playnite.SDK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace LegendaryLibraryNS
 {
@@ -22,6 +15,7 @@ namespace LegendaryLibraryNS
     public partial class LegendaryUpdater : UserControl
     {
         public Dictionary<string, Installed> UpdatesList => (Dictionary<string, Installed>)DataContext;
+        private IPlayniteAPI playniteAPI = API.Instance;
         public LegendaryUpdater()
         {
             InitializeComponent();
@@ -56,10 +50,18 @@ namespace LegendaryLibraryNS
 
         private async void UpdateBtn_Click(object sender, RoutedEventArgs e)
         {
-            LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
-            foreach (var selectedOption in UpdatesLB.SelectedItems.Cast<KeyValuePair<string, Installed>>().ToList())
+            if (UpdatesLB.SelectedItems.Count > 0)
             {
-                await legendaryUpdateController.UpdateGame(selectedOption.Value.Title, selectedOption.Value.App_name, true);
+                LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
+                var downloadTasks = new List<Task>();
+                foreach (var selectedOption in UpdatesLB.SelectedItems.Cast<KeyValuePair<string, Installed>>().ToList())
+                {
+                    downloadTasks.Add(legendaryUpdateController.UpdateGame(selectedOption.Value.Title, selectedOption.Key, true));
+                }
+                if (downloadTasks.Count > 0)
+                {
+                    await Task.WhenAll(downloadTasks);
+                }
             }
         }
     }
