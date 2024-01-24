@@ -219,6 +219,7 @@ namespace LegendaryLibraryNS
                 bool loginErrorDisplayed = false;
                 string memoryErrorMessage = "";
                 bool permissionErrorDisplayed = false;
+                bool diskSpaceErrorDisplayed = false;
                 var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
                              .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                              .WithArguments(installCommand)
@@ -294,7 +295,7 @@ namespace LegendaryLibraryNS
                                 DownloadSpeedTB.Text = downloadSpeed + "/s";
                             }
                             var errorMessage = stdErr.Text;
-                            if (errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") || errorMessage.Contains("Error"))
+                            if (errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") || errorMessage.Contains("Error") || errorMessage.Contains("Failure"))
                             {
                                 logger.Error($"[Legendary] {errorMessage}");
                                 if (errorMessage.Contains("Failed to establish a new connection")
@@ -311,6 +312,10 @@ namespace LegendaryLibraryNS
                                 else if (errorMessage.Contains("PermissionError"))
                                 {
                                     permissionErrorDisplayed = true;
+                                }
+                                else if (errorMessage.Contains("Not enough available disk space"))
+                                {
+                                    diskSpaceErrorDisplayed = true;
                                 }
                                 errorDisplayed = true;
                             } 
@@ -334,6 +339,10 @@ namespace LegendaryLibraryNS
                                 else if (permissionErrorDisplayed)
                                 {
                                     playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryPermissionError)));
+                                }
+                                else if (diskSpaceErrorDisplayed)
+                                {
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryNotEnoughSpace)));
                                 }
                                 else
                                 {

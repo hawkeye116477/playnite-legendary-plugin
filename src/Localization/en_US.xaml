@@ -144,4 +144,5 @@
   <sys:String x:Key="LOCLegendarySignOutConfirm">Are you sure you want to sign out?</sys:String>
   <sys:String x:Key="LOCLegendaryPermissionError">User doesn't have write access to the specified path. Change permissions or launch Playnite as administrator.</sys:String>
   <sys:String x:Key="LOCLegendaryCheckForGamesUpdatesButton">Check for games updates</sys:String>
+  <sys:String x:Key="LOCLegendaryNotEnoughSpace">Not enough free disk space.</sys:String>
 </ResourceDictionary>

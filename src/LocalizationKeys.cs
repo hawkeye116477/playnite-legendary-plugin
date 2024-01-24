@@ -792,6 +792,10 @@ namespace System
         /// <summary>
         /// Check for games updates
         /// </summary>
-        public const string LegendaryCheckForGamesUpdatesMenu = "LOCLegendaryCheckForGamesUpdatesMenu";
+        public const string LegendaryCheckForGamesUpdatesButton = "LOCLegendaryCheckForGamesUpdatesButton";
+        /// <summary>
+        /// Not enough free disk space.
+        /// </summary>
+        public const string LegendaryNotEnoughSpace = "LOCLegendaryNotEnoughSpace";
     }
 }
