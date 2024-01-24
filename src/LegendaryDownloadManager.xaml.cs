@@ -309,7 +309,7 @@ namespace LegendaryLibraryNS
                                 }
                                 errorDisplayed = true;
                             } 
-                            else if (errorMessage.Contains("WARNING"))
+                            else if (errorMessage.Contains("WARNING") && !errorMessage.Contains("exit requested"))
                             {
                                 logger.Warn($"[Legendary] {errorMessage}");
                             }
