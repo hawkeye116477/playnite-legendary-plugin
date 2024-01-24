@@ -212,7 +212,7 @@ namespace LegendaryLibraryNS
         {
             if (cloudPath.IsNullOrEmpty())
             {
-                cloudPath = LegendaryCloud.CalculateGameSavesPath(Game.Name, Game.GameId, Game.InstallDirectory);
+                cloudPath = LegendaryCloud.CalculateGameSavesPath(Game.Name, Game.GameId, Game.InstallDirectory, false);
             }
             if (!cloudPath.IsNullOrEmpty())
             {

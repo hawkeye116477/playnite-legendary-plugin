@@ -14,7 +14,7 @@ namespace LegendaryLibraryNS
 {
     public class LegendaryCloud
     {
-        internal static string CalculateGameSavesPath(string gameName, string gameID, string gameInstallDir)
+        internal static string CalculateGameSavesPath(string gameName, string gameID, string gameInstallDir, bool skipRefreshingMetadata = true)
         {
             string cloudSaveFolder = "";
             var playniteAPI = API.Instance;
@@ -23,7 +23,7 @@ namespace LegendaryLibraryNS
             var manifest = new LegendaryGameInfo.Rootobject();
             playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
             {
-                manifest = await LegendaryLauncher.GetGameInfo(gameID);
+                manifest = await LegendaryLauncher.GetGameInfo(gameID, skipRefreshingMetadata);
             }, metadataProgressOptions);
 
             if (manifest.Game != null)
@@ -58,7 +58,7 @@ namespace LegendaryLibraryNS
         }
 
 
-        internal static void SyncGameSaves(string gameName, string gameID, string gameInstallDir, CloudSyncAction cloudSyncAction, bool manualSync = false)
+        internal static void SyncGameSaves(string gameName, string gameID, string gameInstallDir, CloudSyncAction cloudSyncAction, bool manualSync = false, bool skipRefreshingMetadata = true)
         {
             var cloudSyncEnabled = LegendaryLibrary.GetSettings().SyncGameSaves;
             var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameID);
@@ -74,7 +74,7 @@ namespace LegendaryLibraryNS
             }
             if (cloudSyncEnabled)
             {
-                var cloudSaveFolder = CalculateGameSavesPath(gameName, gameID, gameInstallDir);
+                var cloudSaveFolder = CalculateGameSavesPath(gameName, gameID, gameInstallDir, skipRefreshingMetadata);
                 if (!gameSettings.CloudSaveFolder.IsNullOrEmpty())
                 {
                     cloudSaveFolder = gameSettings.CloudSaveFolder;

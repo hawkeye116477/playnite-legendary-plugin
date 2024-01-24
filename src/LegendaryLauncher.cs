@@ -222,7 +222,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        public static async Task<LegendaryGameInfo.Rootobject> GetGameInfo(string gameID)
+        public static async Task<LegendaryGameInfo.Rootobject> GetGameInfo(string gameID, bool skipRefreshing = false)
         {
             GlobalProgressOptions metadataProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.Legendary3P_PlayniteProgressMetadata), false);
             var manifest = new LegendaryGameInfo.Rootobject();
@@ -237,15 +237,21 @@ namespace LegendaryLibraryNS
             bool correctJson = false;
             if (File.Exists(cacheInfoFile))
             {
-                if (File.GetLastWriteTime(cacheInfoFile) < DateTime.Now.AddDays(-7))
+                if (!skipRefreshing)
                 {
-                    var metadataFile = Path.Combine(ConfigPath, "metadata", gameID + ".json");
-                    if (File.Exists(metadataFile))
+                    if (File.GetLastWriteTime(cacheInfoFile) < DateTime.Now.AddDays(-7))
                     {
-                        File.Delete(metadataFile);
+                        var metadataFile = Path.Combine(ConfigPath, "metadata", gameID + ".json");
+                        if (File.Exists(metadataFile))
+                        {
+                            File.Delete(metadataFile);
+                        }
+                        File.Delete(cacheInfoFile);
                     }
-                    File.Delete(cacheInfoFile);
                 }
+            }
+            if (File.Exists(cacheInfoFile))
+            {
                 if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(cacheInfoFile), out manifest))
                 {
                     if (manifest != null && manifest.Manifest != null && manifest.Game != null)
