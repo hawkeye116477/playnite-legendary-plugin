@@ -1,12 +1,10 @@
 ﻿using CliWrap;
 using CliWrap.Buffered;
-using CliWrap.EventStream;
 using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
 using Playnite.Common;
 using Playnite.SDK;
-using Playnite.SDK.Data;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
@@ -14,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -346,69 +343,6 @@ namespace LegendaryLibraryNS
                 if (File.Exists(langXaml))
                 {
                     loadString(langXaml);
-                }
-            }
-        }
-
-        public override void OnGameStarting(OnGameStartingEventArgs args)
-        {
-            LegendaryCloud.SyncGameSaves(args.Game.Name, args.Game.GameId, args.Game.InstallDirectory, CloudSyncAction.Download);
-        }
-
-        public override void OnGameStopped(OnGameStoppedEventArgs args)
-        {
-            LegendaryCloud.SyncGameSaves(args.Game.Name, args.Game.GameId, args.Game.InstallDirectory, CloudSyncAction.Upload);
-            var playtimeSyncEnabled = false;
-            if (PlayniteApi.ApplicationSettings.PlaytimeImportMode != PlaytimeImportMode.Never)
-            {
-                playtimeSyncEnabled = GetSettings().SyncPlaytime;
-                var gameSettings = LegendaryGameSettingsView.LoadGameSettings(args.Game.GameId);
-                if (gameSettings?.AutoSyncPlaytime != null)
-                {
-                    playtimeSyncEnabled = (bool)gameSettings.AutoSyncPlaytime;
-                }
-            }
-            if (playtimeSyncEnabled)
-            {
-                using (var httpClient = new HttpClient())
-                {
-                    GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryUploadingPlaytime).Format(args.Game.Name), false);
-                    PlayniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
-                    {
-                        a.ProgressMaxValue = 100;
-                        a.CurrentProgressValue = 0;
-                        httpClient.DefaultRequestHeaders.Clear();
-                        if (File.Exists(LegendaryLauncher.TokensPath))
-                        {
-                            var userData = Serialization.FromJson<OauthResponse>(FileSystem.ReadFileAsStringSafe(LegendaryLauncher.TokensPath));
-                            httpClient.DefaultRequestHeaders.Add("Authorization", userData.token_type + " " + userData.access_token);
-                            var uri = $"https://library-service.live.use1a.on.epicgames.com/library/api/public/playtime/account/{userData.account_id}";
-                            PlaytimePayload playtimePayload = new PlaytimePayload
-                            {
-                                artifactId = args.Game.GameId,
-                                machineId = GetSettings().SyncPlaytimeMachineId
-                            };
-                            DateTime now = DateTime.UtcNow;
-                            playtimePayload.endTime = now;
-                            var totalSeconds = args.ElapsedSeconds;
-                            var startTime = now.AddSeconds(-(double)totalSeconds);
-                            playtimePayload.startTime = now.AddSeconds(-(double)totalSeconds);
-                            var playtimeJson = Serialization.ToJson(playtimePayload);
-                            var content = new StringContent(playtimeJson, System.Text.Encoding.UTF8, "application/json");
-                            a.CurrentProgressValue = 1;
-                            var result = await httpClient.PutAsync(uri, content);
-                            if (!result.IsSuccessStatusCode)
-                            {
-                                PlayniteApi.Dialogs.ShowErrorMessage(PlayniteApi.Resources.GetString(LOC.LegendarySyncError).Format(args.Game.Name));
-                                logger.Error($"An error occured during uploading playtime to the cloud. Status code: {result.StatusCode}.");
-                            }
-                        }
-                        else
-                        {
-                            PlayniteApi.Dialogs.ShowErrorMessage(PlayniteApi.Resources.GetString(LOC.LegendarySyncError).Format(args.Game.Name));
-                        }
-                        a.CurrentProgressValue = 100;
-                    }, globalProgressOptions);
                 }
             }
         }

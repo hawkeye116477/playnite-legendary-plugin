@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -166,11 +167,75 @@ namespace LegendaryLibraryNS
             Dispose();
             if (Directory.Exists(Game.InstallDirectory))
             {
+                OnGameStarting();
                 await LaunchGame();
             }
             else
             {
                 InvokeOnStopped(new GameStoppedEventArgs());
+            }
+        }
+
+        public void OnGameStarting()
+        {
+            LegendaryCloud.SyncGameSaves(Game.Name, Game.GameId, Game.InstallDirectory, CloudSyncAction.Download);
+        }
+
+        public void OnGameClosed(double sessionLength)
+        {
+            LegendaryCloud.SyncGameSaves(Game.Name, Game.GameId, Game.InstallDirectory, CloudSyncAction.Upload);
+            var playtimeSyncEnabled = false;
+            if (playniteAPI.ApplicationSettings.PlaytimeImportMode != PlaytimeImportMode.Never)
+            {
+                playtimeSyncEnabled = LegendaryLibrary.GetSettings().SyncPlaytime;
+                var gameSettings = LegendaryGameSettingsView.LoadGameSettings(Game.GameId);
+                if (gameSettings?.AutoSyncPlaytime != null)
+                {
+                    playtimeSyncEnabled = (bool)gameSettings.AutoSyncPlaytime;
+                }
+            }
+            if (playtimeSyncEnabled)
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryUploadingPlaytime).Format(Game.Name), false);
+                    playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
+                    {
+                        a.ProgressMaxValue = 100;
+                        a.CurrentProgressValue = 0;
+                        httpClient.DefaultRequestHeaders.Clear();
+                        if (File.Exists(LegendaryLauncher.TokensPath))
+                        {
+                            var userData = Serialization.FromJson<OauthResponse>(FileSystem.ReadFileAsStringSafe(LegendaryLauncher.TokensPath));
+                            httpClient.DefaultRequestHeaders.Add("Authorization", userData.token_type + " " + userData.access_token);
+                            var uri = $"https://library-service.live.use1a.on.epicgames.com/library/api/public/playtime/account/{userData.account_id}";
+                            PlaytimePayload playtimePayload = new PlaytimePayload
+                            {
+                                artifactId = Game.GameId,
+                                machineId = LegendaryLibrary.GetSettings().SyncPlaytimeMachineId
+                            };
+                            DateTime now = DateTime.UtcNow;
+                            playtimePayload.endTime = now;
+                            var totalSeconds = sessionLength;
+                            var startTime = now.AddSeconds(-(double)totalSeconds);
+                            playtimePayload.startTime = now.AddSeconds(-(double)totalSeconds);
+                            var playtimeJson = Serialization.ToJson(playtimePayload);
+                            var content = new StringContent(playtimeJson, Encoding.UTF8, "application/json");
+                            a.CurrentProgressValue = 1;
+                            var result = await httpClient.PutAsync(uri, content);
+                            if (!result.IsSuccessStatusCode)
+                            {
+                                playniteAPI.Dialogs.ShowErrorMessage(playniteAPI.Resources.GetString(LOC.LegendarySyncError).Format(Game.Name));
+                                logger.Error($"An error occured during uploading playtime to the cloud. Status code: {result.StatusCode}.");
+                            }
+                        }
+                        else
+                        {
+                            playniteAPI.Dialogs.ShowErrorMessage(playniteAPI.Resources.GetString(LOC.LegendarySyncError).Format(Game.Name));
+                        }
+                        a.CurrentProgressValue = 100;
+                    }, globalProgressOptions);
+                }
             }
         }
 
@@ -241,6 +306,7 @@ namespace LegendaryLibraryNS
             procMon.TreeDestroyed += (_, __) =>
             {
                 stopWatch.Stop();
+                OnGameClosed(stopWatch.Elapsed.TotalSeconds);
                 InvokeOnStopped(new GameStoppedEventArgs { SessionLength = Convert.ToUInt64(stopWatch.Elapsed.TotalSeconds) });
             };
             var stdOutBuffer = new StringBuilder();
