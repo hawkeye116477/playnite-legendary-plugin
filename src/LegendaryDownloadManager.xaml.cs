@@ -218,6 +218,7 @@ namespace LegendaryLibraryNS
                 bool errorDisplayed = false;
                 bool loginErrorDisplayed = false;
                 string memoryErrorMessage = "";
+                bool permissionErrorDisplayed = false;
                 var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
                              .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                              .WithArguments(installCommand)
@@ -307,6 +308,10 @@ namespace LegendaryLibraryNS
                                 {
                                     memoryErrorMessage = errorMessage;
                                 }
+                                else if (errorMessage.Contains("PermissionError"))
+                                {
+                                    permissionErrorDisplayed = true;
+                                }
                                 errorDisplayed = true;
                             } 
                             else if (errorMessage.Contains("WARNING") && !errorMessage.Contains("exit requested"))
@@ -325,6 +330,10 @@ namespace LegendaryLibraryNS
                                 {
                                     var memoryErrorMatch = Regex.Match(memoryErrorMessage, @"MemoryError: Current shared memory cache is smaller than required: (\S+) MiB < (\S+) MiB");
                                     playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), string.Format(ResourceProvider.GetString(LOC.LegendaryMemoryError), memoryErrorMatch.Groups[1] + " MB", memoryErrorMatch.Groups[2] + " MB")));
+                                }
+                                else if (permissionErrorDisplayed)
+                                {
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryPermissionError)));
                                 }
                                 else
                                 {

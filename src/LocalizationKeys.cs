@@ -778,8 +778,12 @@ namespace System
         /// </summary>
         public const string LegendarySignedInAs = "LOCLegendarySignedInAs";
         /// <summary>
-        /// Are you sure you want to sign out {0}?
+        /// Are you sure you want to sign out?
         /// </summary>
         public const string LegendarySignOutConfirm = "LOCLegendarySignOutConfirm";
+        /// <summary>
+        /// User doesn't have write access to the specified path. Change permissions or launch Playnite as administrator.
+        /// </summary>
+        public const string LegendaryPermissionError = "LOCLegendaryPermissionError";
     }
 }

@@ -142,4 +142,5 @@
   <sys:String x:Key="LOCLegendaryStarWarsMessage">May the Force be with you, Padawan.</sys:String>
   <sys:String x:Key="LOCLegendarySignedInAs">Signed in as {0}</sys:String>
   <sys:String x:Key="LOCLegendarySignOutConfirm">Are you sure you want to sign out?</sys:String>
+  <sys:String x:Key="LOCLegendaryPermissionError">User doesn't have write access to the specified path. Change permissions or launch Playnite as administrator.</sys:String>
 </ResourceDictionary>
