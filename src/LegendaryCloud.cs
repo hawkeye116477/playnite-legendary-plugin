@@ -58,7 +58,7 @@ namespace LegendaryLibraryNS
         }
 
 
-        internal static void SyncGameSaves(string gameName, string gameID, string gameInstallDir, CloudSyncAction cloudSyncAction, bool manualSync = false, bool skipRefreshingMetadata = true)
+        internal static void SyncGameSaves(string gameName, string gameID, string gameInstallDir, CloudSyncAction cloudSyncAction, bool manualSync = false, bool skipRefreshingMetadata = true, string cloudSaveFolder = "")
         {
             var cloudSyncEnabled = LegendaryLibrary.GetSettings().SyncGameSaves;
             var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameID);
@@ -74,26 +74,28 @@ namespace LegendaryLibraryNS
             }
             if (cloudSyncEnabled)
             {
-                var cloudSaveFolder = "";
-                if (!gameSettings.CloudSaveFolder.IsNullOrEmpty())
+                if (cloudSaveFolder == "")
                 {
-                    cloudSaveFolder = gameSettings.CloudSaveFolder;
-                }
-                else
-                {
-                    var installedList = LegendaryLauncher.GetInstalledAppList();
-                    if (installedList.ContainsKey(gameID))
+                    if (!gameSettings.CloudSaveFolder.IsNullOrEmpty())
                     {
-                        var installedGame = installedList[gameID];
-                        if (!installedGame.Save_path.IsNullOrEmpty())
+                        cloudSaveFolder = gameSettings.CloudSaveFolder;
+                    }
+                    else
+                    {
+                        var installedList = LegendaryLauncher.GetInstalledAppList();
+                        if (installedList.ContainsKey(gameID))
                         {
-                            cloudSaveFolder = installedGame.Save_path;
+                            var installedGame = installedList[gameID];
+                            if (!installedGame.Save_path.IsNullOrEmpty())
+                            {
+                                cloudSaveFolder = installedGame.Save_path;
+                            }
                         }
                     }
-                }
-                if (cloudSaveFolder == "" || !Directory.Exists(cloudSaveFolder))
-                {
-                    cloudSaveFolder = CalculateGameSavesPath(gameName, gameID, gameInstallDir, skipRefreshingMetadata);
+                    if (cloudSaveFolder == "" || !Directory.Exists(cloudSaveFolder))
+                    {
+                        cloudSaveFolder = CalculateGameSavesPath(gameName, gameID, gameInstallDir, skipRefreshingMetadata);
+                    }
                 }
                 if (cloudSaveFolder != null)
                 {

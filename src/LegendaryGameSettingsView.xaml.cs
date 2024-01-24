@@ -243,7 +243,15 @@ namespace LegendaryLibraryNS
             if (result == MessageBoxResult.Yes)
             {
                 CloudSyncAction selectedCloudSyncAction = (CloudSyncAction)ManualSyncSavesCBo.SelectedValue;
-                LegendaryCloud.SyncGameSaves(Game.Name, GameID, Game.InstallDirectory, selectedCloudSyncAction, true);
+                var selectedSavePath = SelectedSavePathTxt.Text;
+                if (selectedSavePath != "")
+                {
+                    LegendaryCloud.SyncGameSaves(Game.Name, GameID, Game.InstallDirectory, selectedCloudSyncAction, true, true, selectedSavePath);
+                }
+                else
+                {
+                    LegendaryCloud.SyncGameSaves(Game.Name, GameID, Game.InstallDirectory, selectedCloudSyncAction, true);
+                }
             }
         }
     }
