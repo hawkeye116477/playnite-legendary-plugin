@@ -10,5 +10,6 @@
         public bool Is_dlc { get; set; } = false;
         public string Title { get; set; }
         public string Version { get; set; }
+        public string Save_path { get; set; }
     }
 }

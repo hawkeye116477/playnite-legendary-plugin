@@ -74,10 +74,26 @@ namespace LegendaryLibraryNS
             }
             if (cloudSyncEnabled)
             {
-                var cloudSaveFolder = CalculateGameSavesPath(gameName, gameID, gameInstallDir, skipRefreshingMetadata);
+                var cloudSaveFolder = "";
                 if (!gameSettings.CloudSaveFolder.IsNullOrEmpty())
                 {
                     cloudSaveFolder = gameSettings.CloudSaveFolder;
+                }
+                else
+                {
+                    var installedList = LegendaryLauncher.GetInstalledAppList();
+                    if (installedList.ContainsKey(gameID))
+                    {
+                        var installedGame = installedList[gameID];
+                        if (!installedGame.Save_path.IsNullOrEmpty())
+                        {
+                            cloudSaveFolder = installedGame.Save_path;
+                        }
+                    }
+                }
+                if (cloudSaveFolder == "" || !Directory.Exists(cloudSaveFolder))
+                {
+                    cloudSaveFolder = CalculateGameSavesPath(gameName, gameID, gameInstallDir, skipRefreshingMetadata);
                 }
                 if (cloudSaveFolder != null)
                 {
