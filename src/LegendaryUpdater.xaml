@@ -6,19 +6,21 @@
              xmlns:local="clr-namespace:LegendaryLibraryNS"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
+             d:DesignHeight="330" d:DesignWidth="600" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <sys:Boolean x:Key="True">True</sys:Boolean>
         <sys:Boolean x:Key="False">False</sys:Boolean>
         <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
         <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
     </UserControl.Resources>
-    <StackPanel Margin="10">
+    <StackPanel Margin="5">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
             <Button x:Name="UpdateBtn" Content="{DynamicResource LOCLegendary3P_PlayniteUpdaterInstallUpdate}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xef07; {0}" Margin="0,0,5,0" IsEnabled="False" Click="UpdateBtn_Click" />
             <Button x:Name="SelectAllBtn" Content="{DynamicResource LOCLegendaryCheckAllContent}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xeed9; {0}" Margin="0,0,5,0" Click="SelectAllBtn_Click"  />
+            <Button x:Name="CancelBtn" Content="{DynamicResource LOCLegendary3P_PlayniteCancelLabel}" ContentStringFormat="&#xec4f; {0}" FontFamily="{DynamicResource FontIcoFont}"
+                    Margin="0,0,5,0" IsCancel="True" Click="CancelBtn_Click" />
         </StackPanel>
-        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="0,5,0,0" />
+        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}"  Margin="0,5,0,0" />
         <ListBox BorderThickness="0" Name="UpdatesLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="UpdatesLB_SelectionChanged">
             <ListBox.Resources>
                 <Style TargetType="ListBoxItem">
@@ -32,5 +34,40 @@
                 </Style>
             </ListBox.Resources>
         </ListBox>
+        <Border BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Margin="0,5,0,0">
+            <Expander Header="{DynamicResource LOCLegendaryAdvancedOptions}" Margin="2,2,5,2" HorizontalAlignment="Left" >
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <CheckBox Grid.Column="0" Grid.Row="0"
+                            Content="{DynamicResource LOCLegendaryEnableReordering}" Margin="0,0,0,5" Name="ReorderingChk"/>
+                    <TextBlock Text="{DynamicResource LOCLegendaryMaxWorkers}"
+                            Grid.Row="1" Grid.Column="0" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                    <local:NumericInput Grid.Row="1" Grid.Column="1" Margin="15,0,0,5" MinValue="0" MaxValue="16" x:Name="MaxWorkersNI"/>
+                    <TextBlock Text="{DynamicResource LOCLegendaryMaxSharedMemory}" Grid.Row="2" Grid.Column="0" 
+                                   Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                    <local:NumericInput Grid.Row="2" Grid.Column="1" Margin="15,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" x:Name="MaxSharedMemoryNI"/>
+                </Grid>
+            </Expander>
+        </Border>
+        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="0,5,0,0" />
+        <DockPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0">
+                <TextBlock Text="{DynamicResource LOCLegendaryDownloadSize}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                <TextBlock x:Name="DownloadSizeTB" Text="0 b"
+                    VerticalAlignment="Top" Margin="5,0,5,0" />
+                <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendaryInstallSize}" Margin="10,0,0,0" />
+                <TextBlock x:Name="InstallSizeTB" Text="0 b"
+                    VerticalAlignment="Top" Margin="5,0,5,0" />
+            </StackPanel>
+        </DockPanel>
     </StackPanel>
 </UserControl>

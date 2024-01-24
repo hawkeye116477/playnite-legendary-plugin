@@ -472,7 +472,7 @@ namespace LegendaryLibraryNS
         }
 
 
-        public async Task UpdateGame(string gameTitle, string gameId, bool silently = false)
+        public async Task UpdateGame(string gameTitle, string gameId, bool silently = false, DownloadProperties downloadProperties = null)
         {
             var gamesToUpdate = await CheckGameUpdates(gameTitle, gameId);
             if (gamesToUpdate.Count > 0)
@@ -498,7 +498,10 @@ namespace LegendaryLibraryNS
                         var playniteApi = API.Instance;
                         playniteApi.Notifications.Add(new NotificationMessage("LegendaryGamesUpdates", ResourceProvider.GetString(LOC.LegendaryGamesUpdatesUnderway), NotificationType.Info));
                     }
-                    var downloadProperties = new DownloadProperties() { downloadAction = DownloadAction.Update };
+                    if (downloadProperties == null)
+                    {
+                        downloadProperties = new DownloadProperties() { downloadAction = DownloadAction.Update };
+                    }
                     foreach (var gameToUpdate in gamesToUpdate)
                     {
                         var downloadData = new DownloadManagerData.Download { gameID = gameToUpdate.Key, downloadProperties = downloadProperties };

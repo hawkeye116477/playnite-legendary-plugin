@@ -395,51 +395,33 @@ namespace LegendaryLibraryNS
                             globalSettings.NextGamesUpdateTime = GetNextUpdateCheckTime(globalSettings.GamesUpdatePolicy);
                             SavePluginSettings(globalSettings);
                             var updateTasks = new List<Task>();
-                            var appList = LegendaryLauncher.GetInstalledAppList();
-                            foreach (var game in appList)
+                            LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
+                            var gamesUpdates = await legendaryUpdateController.CheckAllGamesUpdates();
+                            if (gamesUpdates.Count > 0)
                             {
-                                if (!game.Value.Is_dlc)
+                                if (globalSettings.AutoUpdateGames)
                                 {
-                                    var gameID = game.Value.App_name;
-                                    var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameID);
-                                    bool canUpdate = true;
-                                    if (gameSettings.DisableGameVersionCheck == true)
+                                    foreach (var gameUpdate in gamesUpdates)
                                     {
-                                        canUpdate = false;
+                                        updateTasks.Add(legendaryUpdateController.UpdateGame(gameUpdate.Value.Title, gameUpdate.Key, true));
                                     }
-                                    if (canUpdate)
-                                    {
-                                        LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
-                                        if (globalSettings.AutoUpdateGames)
-                                        {
-                                            updateTasks.Add(legendaryUpdateController.UpdateGame(game.Value.Title, gameID, true));
-                                        }
-                                        else
-                                        {
-                                            var gamesUpdates = await legendaryUpdateController.CheckAllGamesUpdates();
-                                            if (gamesUpdates.Count > 0)
-                                            {
-                                                Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
-                                                {
-                                                    ShowMaximizeButton = false,
-                                                });
-                                                window.DataContext = gamesUpdates;
-                                                window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
-                                                window.Content = new LegendaryUpdater();
-                                                window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
-                                                window.SizeToContent = SizeToContent.WidthAndHeight;
-                                                window.MinWidth = 600;
-                                                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                                                window.ShowDialog();
-                                            }
-                                        }
-                                        
-                                    }
+                                    await Task.WhenAll(updateTasks);
                                 }
-                            }
-                            if (updateTasks.Count > 0)
-                            {
-                                await Task.WhenAll(updateTasks);
+                                else
+                                {
+                                    Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                                    {
+                                        ShowMaximizeButton = false,
+                                    });
+                                    window.DataContext = gamesUpdates;
+                                    window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
+                                    window.Content = new LegendaryUpdater();
+                                    window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+                                    window.SizeToContent = SizeToContent.WidthAndHeight;
+                                    window.MinWidth = 600;
+                                    window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                                    window.ShowDialog();
+                                }
                             }
                         }
                     }

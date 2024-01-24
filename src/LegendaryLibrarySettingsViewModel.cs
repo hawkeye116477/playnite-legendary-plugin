@@ -80,10 +80,32 @@ namespace LegendaryLibraryNS
                 {
                     Settings.NextClearingTime = LegendaryLibrary.GetNextClearingTime(Settings.AutoClearCache);
                 }
+                else
+                {
+                    Settings.NextClearingTime = 0;
+                }
             }
-            if (Settings.AutoClearCache == ClearCacheTime.Never)
+            if (EditingClone.GamesUpdatePolicy != Settings.GamesUpdatePolicy)
             {
-                Settings.NextClearingTime = 0;
+                if (Settings.GamesUpdatePolicy != UpdatePolicy.Never && Settings.GamesUpdatePolicy != UpdatePolicy.GameLaunch)
+                {
+                    Settings.NextGamesUpdateTime = LegendaryLibrary.GetNextUpdateCheckTime(Settings.GamesUpdatePolicy);
+                }
+                else
+                {
+                    Settings.NextGamesUpdateTime = 0;
+                }
+            }
+            if (EditingClone.LauncherUpdatePolicy != Settings.LauncherUpdatePolicy)
+            {
+                if (Settings.LauncherUpdatePolicy != UpdatePolicy.Never)
+                {
+                    Settings.NextLauncherUpdateTime = LegendaryLibrary.GetNextUpdateCheckTime(Settings.LauncherUpdatePolicy);
+                }
+                else
+                {
+                    Settings.NextLauncherUpdateTime = 0;
+                }
             }
             base.EndEdit();
         }
