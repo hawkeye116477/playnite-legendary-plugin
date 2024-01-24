@@ -384,50 +384,71 @@ namespace LegendaryLibraryNS
             var globalSettings = GetSettings();
             if (globalSettings != null)
             {
-                if (globalSettings.GamesUpdatePolicy == UpdatePolicy.Auto)
+                if (globalSettings.GamesUpdatePolicy != UpdatePolicy.GameLaunch && globalSettings.GamesUpdatePolicy != UpdatePolicy.Never)
                 {
-                    var appList = LegendaryLauncher.GetInstalledAppList();
-                    foreach (var game in appList)
+                    var nextGamesUpdateTime = globalSettings.NextGamesUpdateTime;
+                    if (nextGamesUpdateTime != 0)
                     {
-                        if (!game.Value.Is_dlc)
+                        DateTimeOffset now = DateTime.UtcNow;
+                        if (now.ToUnixTimeSeconds() >= nextGamesUpdateTime)
                         {
-                            var gameID = game.Value.App_name;
-                            var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameID);
-                            bool canUpdate = true;
-                            if (gameSettings.DisableGameVersionCheck == true)
+                            globalSettings.NextGamesUpdateTime = GetNextUpdateCheckTime(globalSettings.GamesUpdatePolicy);
+                            SavePluginSettings(globalSettings);
+                            var appList = LegendaryLauncher.GetInstalledAppList();
+                            foreach (var game in appList)
                             {
-                                canUpdate = false;
-                            }
-                            if (canUpdate)
-                            {
-                                LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
-                                await legendaryUpdateController.UpdateGame(game.Value.Title, gameID, true);
+                                if (!game.Value.Is_dlc)
+                                {
+                                    var gameID = game.Value.App_name;
+                                    var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameID);
+                                    bool canUpdate = true;
+                                    if (gameSettings.DisableGameVersionCheck == true)
+                                    {
+                                        canUpdate = false;
+                                    }
+                                    if (canUpdate)
+                                    {
+                                        LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
+                                        await legendaryUpdateController.UpdateGame(game.Value.Title, gameID, true);
+                                    }
+                                }
                             }
                         }
                     }
                 }
-                if (globalSettings.NotifyNewLauncherVersion && LegendaryLauncher.IsInstalled)
+                if (globalSettings.LauncherUpdatePolicy != UpdatePolicy.Never && LegendaryLauncher.IsInstalled)
                 {
-                    var versionInfoContent = await LegendaryLauncher.GetVersionInfoContent();
-                    if (versionInfoContent.release_info != null)
+                    var nextLauncherUpdateTime = globalSettings.NextLauncherUpdateTime;
+                    if (nextLauncherUpdateTime != 0)
                     {
-                        var newVersion = versionInfoContent.release_info.version;
-                        var oldVersion = await LegendaryLauncher.GetLauncherVersion();
-                        if (oldVersion != "0" && newVersion != oldVersion)
+                        DateTimeOffset now = DateTime.UtcNow;
+                        if (now.ToUnixTimeSeconds() >= nextLauncherUpdateTime)
                         {
-                            var options = new List<MessageBoxOption>
+                            globalSettings.NextLauncherUpdateTime = GetNextUpdateCheckTime(globalSettings.LauncherUpdatePolicy);
+                            SavePluginSettings(globalSettings);
+                            var versionInfoContent = await LegendaryLauncher.GetVersionInfoContent();
+                            if (versionInfoContent.release_info != null)
                             {
-                                new MessageBoxOption(ResourceProvider.GetString(LOC.LegendaryViewChangelog)),
-                                new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteOKLabel)),
-                            };
-                            var result = PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryNewVersionAvailable), "Legendary Launcher", newVersion), ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
-                            if (result == options[0])
-                            {
-                                var changelogURL = versionInfoContent.release_info.gh_url;
-                                Playnite.Commands.GlobalCommands.NavigateUrl(changelogURL);
+                                var newVersion = versionInfoContent.release_info.version;
+                                var oldVersion = await LegendaryLauncher.GetLauncherVersion();
+                                if (oldVersion != "0" && newVersion != oldVersion)
+                                {
+                                    var options = new List<MessageBoxOption>
+                                    {
+                                        new MessageBoxOption(ResourceProvider.GetString(LOC.LegendaryViewChangelog), true),
+                                        new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteOKLabel), false, true),
+                                    };
+                                    var result = PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryNewVersionAvailable), "Legendary Launcher", newVersion), ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
+                                    if (result == options[0])
+                                    {
+                                        var changelogURL = versionInfoContent.release_info.gh_url;
+                                        Playnite.Commands.GlobalCommands.NavigateUrl(changelogURL);
+                                    }
+                                }
                             }
                         }
                     }
+
                 }
             }
         }
@@ -449,10 +470,10 @@ namespace LegendaryLibraryNS
                         Path.Combine(LegendaryLauncher.ConfigPath, "metadata")
                     };
 
-                    DateTimeOffset now = DateTime.UtcNow;
                     var nextClearingTime = settings.NextClearingTime;
                     if (nextClearingTime != 0)
                     {
+                        DateTimeOffset now = DateTime.UtcNow;
                         if (now.ToUnixTimeSeconds() >= nextClearingTime)
                         {
                             foreach (var cacheDir in cacheDirs)
@@ -475,30 +496,61 @@ namespace LegendaryLibraryNS
             }
         }
 
-        public static long GetNextClearingTime(ClearCacheTime frequency)
-        {
-            DateTimeOffset clearingTime = DateTime.UtcNow;
+       public static long GetNextUpdateCheckTime(UpdatePolicy frequency)
+       {
+            DateTimeOffset? updateTime = null;
+            DateTimeOffset now = DateTime.UtcNow;
             switch (frequency)
             {
-                case ClearCacheTime.Day:
-                    clearingTime = clearingTime.AddDays(1);
+                case UpdatePolicy.PlayniteLaunch:
+                    updateTime = now;
                     break;
-                case ClearCacheTime.Week:
-                    clearingTime = clearingTime.AddDays(7);
+                case UpdatePolicy.Day:
+                    updateTime = now.AddDays(1);
                     break;
-                case ClearCacheTime.Month:
-                    clearingTime = clearingTime.AddMonths(1);
+                case UpdatePolicy.Week:
+                    updateTime = now.AddDays(7);
                     break;
-                case ClearCacheTime.ThreeMonths:
-                    clearingTime = clearingTime.AddMonths(3);
+                case UpdatePolicy.Month:
+                    updateTime = now.AddMonths(1);
                     break;
-                case ClearCacheTime.SixMonths:
-                    clearingTime = clearingTime.AddMonths(6);
+                case UpdatePolicy.ThreeMonths:
+                    updateTime = now.AddMonths(3);
+                    break;
+                case UpdatePolicy.SixMonths:
+                    updateTime = now.AddMonths(6);
                     break;
                 default:
                     break;
             }
-            return clearingTime.ToUnixTimeSeconds();
+            return updateTime?.ToUnixTimeSeconds() ?? 0;
+        }
+
+        public static long GetNextClearingTime(ClearCacheTime frequency)
+        {
+            DateTimeOffset? clearingTime = null;
+            DateTimeOffset now = DateTime.UtcNow;
+            switch (frequency)
+            {
+                case ClearCacheTime.Day:
+                    clearingTime = now.AddDays(1);
+                    break;
+                case ClearCacheTime.Week:
+                    clearingTime = now.AddDays(7);
+                    break;
+                case ClearCacheTime.Month:
+                    clearingTime = now.AddMonths(1);
+                    break;
+                case ClearCacheTime.ThreeMonths:
+                    clearingTime = now.AddMonths(3);
+                    break;
+                case ClearCacheTime.SixMonths:
+                    clearingTime = now.AddMonths(6);
+                    break;
+                default:
+                    break;
+            }
+            return clearingTime?.ToUnixTimeSeconds() ?? 0;
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)

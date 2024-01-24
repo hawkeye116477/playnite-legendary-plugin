@@ -437,6 +437,39 @@ namespace LegendaryLibraryNS
             return gamesToUpdate;
         }
 
+        public async Task<Dictionary<string, Installed>> CheckAllGamesUpdates()
+        {
+            var appList = LegendaryLauncher.GetInstalledAppList();
+            var gamesToUpdate = new Dictionary<string, Installed>();
+            foreach (var game in appList)
+            {
+                if (!game.Value.Is_dlc)
+                {
+                    var gameID = game.Value.App_name;
+                    var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameID);
+                    bool canUpdate = true;
+                    if (gameSettings.DisableGameVersionCheck == true)
+                    {
+                        canUpdate = false;
+                    }
+                    if (canUpdate)
+                    {
+                        LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
+                        var gameAndDlcToUpdate = await legendaryUpdateController.CheckGameUpdates(game.Value.Title, gameID);
+                        if (gameAndDlcToUpdate.Count > 0)
+                        {
+                            foreach (var singleGame in gameAndDlcToUpdate)
+                            {
+                                gamesToUpdate.Add(singleGame.Key, singleGame.Value);
+                            }
+                        }
+                    }
+                }
+            }
+            return gamesToUpdate;
+        }
+
+
         public async Task UpdateGame(string gameTitle, string gameId, bool silently = false)
         {
             var gamesToUpdate = await CheckGameUpdates(gameTitle, gameId);

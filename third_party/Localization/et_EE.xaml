@@ -44,6 +44,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">Värskendused</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">Vali fail…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Vali kaust…</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnlyManually">Ainult käsitsi</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Kord päevas</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">Kord nädalas</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOpen">Ava</sys:String>

@@ -44,6 +44,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">Aggiornamenti</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">Seleziona un file...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Seleziona cartella...</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnlyManually">Solo manualmente</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Una volta al giorno</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">Una volta a settimana</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOpen">Apri</sys:String>

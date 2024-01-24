@@ -11,5 +11,6 @@
         public string Title { get; set; }
         public string Version { get; set; }
         public string Save_path { get; set; }
+        public string Title_for_updater { get; set; } = "";
     }
 }

@@ -44,6 +44,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">Güncellemeler</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">Dosya seç…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Klasör seç…</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnlyManually">Sadece el ile</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Günde bir</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">Haftada bir</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOpen">Aç</sys:String>

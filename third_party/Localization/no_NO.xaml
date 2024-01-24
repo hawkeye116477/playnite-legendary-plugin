@@ -44,6 +44,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">Oppdateringer</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">Velg fil …</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Velg mappe …</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnlyManually">Bare manuelt</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">En gang om dagen</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">En gang i uken</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOpen">Åpne</sys:String>

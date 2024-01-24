@@ -4,6 +4,11 @@
     {
         Never,
         GameLaunch,
-        Auto
+        PlayniteLaunch,
+        Day,
+        Week,
+        Month,
+        ThreeMonths,
+        SixMonths
     }
 }

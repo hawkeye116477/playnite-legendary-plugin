@@ -44,6 +44,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">עדכונים</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">בחר קובץ...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">בחר תיקיה...</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnlyManually">רק באופן ידני</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">פעם ביום</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">פעם בשבוע</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOpen">פתח</sys:String>

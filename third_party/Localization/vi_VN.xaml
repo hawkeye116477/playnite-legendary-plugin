@@ -44,6 +44,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">Cập nhật</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">Chọn tập tin…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Chọn thư mục…</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnlyManually">Chỉ chạy thủ công</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Mỗi ngày một lần</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">Mỗi tuần một lần</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOpen">Mở</sys:String>

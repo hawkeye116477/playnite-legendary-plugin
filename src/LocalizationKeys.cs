@@ -166,6 +166,10 @@ namespace System
         /// </summary>
         public const string Legendary3P_PlayniteSelectDirectoryTooltip = "LOCLegendary3P_PlayniteSelectDirectoryTooltip";
         /// <summary>
+        /// Only manually
+        /// </summary>
+        public const string Legendary3P_PlayniteOptionOnlyManually = "LOCLegendary3P_PlayniteOptionOnlyManually";
+        /// <summary>
         /// Once a day
         /// </summary>
         public const string Legendary3P_PlayniteOptionOnceADay = "LOCLegendary3P_PlayniteOptionOnceADay";
@@ -702,25 +706,25 @@ namespace System
         /// </summary>
         public const string LegendaryNoAvailableDlcs = "LOCLegendaryNoAvailableDlcs";
         /// <summary>
-        /// Check for updates only when launching games
+        /// Only when launching games
         /// </summary>
         public const string LegendaryCheckUpdatesGameLaunch = "LOCLegendaryCheckUpdatesGameLaunch";
         /// <summary>
-        /// Automatically update when Playnite starts
+        /// Automatically update games
         /// </summary>
         public const string LegendaryAutoUpdate = "LOCLegendaryAutoUpdate";
         /// <summary>
-        /// Never check for updates
-        /// </summary>
-        public const string LegendaryNeverUpdate = "LOCLegendaryNeverUpdate";
-        /// <summary>
-        /// Games update policy
+        /// Check for games updates
         /// </summary>
         public const string LegendaryGamesUpdatePolicy = "LOCLegendaryGamesUpdatePolicy";
         /// <summary>
-        /// Notify me when a new version of Legendary launcher will be available
+        /// On every Playnite startup
         /// </summary>
-        public const string LegendaryLauncherUpdateNotify = "LOCLegendaryLauncherUpdateNotify";
+        public const string LegendaryCheckUpdatesEveryPlayniteStartup = "LOCLegendaryCheckUpdatesEveryPlayniteStartup";
+        /// <summary>
+        /// Check for Legendary launcher updates
+        /// </summary>
+        public const string LegendaryLauncherUpdatePolicy = "LOCLegendaryLauncherUpdatePolicy";
         /// <summary>
         /// Updates for games from Epic Games are being downloaded.
         /// </summary>
@@ -785,5 +789,9 @@ namespace System
         /// User doesn't have write access to the specified path. Change permissions or launch Playnite as administrator.
         /// </summary>
         public const string LegendaryPermissionError = "LOCLegendaryPermissionError";
+        /// <summary>
+        /// Check for games updates
+        /// </summary>
+        public const string LegendaryCheckForGamesUpdatesMenu = "LOCLegendaryCheckForGamesUpdatesMenu";
     }
 }

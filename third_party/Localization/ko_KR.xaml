@@ -44,6 +44,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">업데이트</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">파일 선택...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">폴더 선택...</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnlyManually">수동으로만</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">하루에 한 번</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">일주일에 한 번</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOpen">열기</sys:String>

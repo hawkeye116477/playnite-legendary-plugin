@@ -44,6 +44,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">Aktualizace</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">Vybrat soubor...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Vybrat adresář...</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnlyManually">Pouze ručně</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Jednou denně</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">Jednou týdně</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOpen">Otevřít</sys:String>

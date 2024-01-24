@@ -44,6 +44,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">更新</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">ファイルを選択</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">フォルダを選択…</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnlyManually">手動のみ</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">1日に1回</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">週に1回</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOpen">開く</sys:String>

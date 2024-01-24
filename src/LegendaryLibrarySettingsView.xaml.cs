@@ -160,11 +160,28 @@ namespace LegendaryLibraryNS
 
             var updatePolicyOptions = new Dictionary<UpdatePolicy, string>
             {
-                { UpdatePolicy.Auto, ResourceProvider.GetString(LOC.LegendaryAutoUpdate) },
+                { UpdatePolicy.PlayniteLaunch, ResourceProvider.GetString(LOC.LegendaryCheckUpdatesEveryPlayniteStartup) },
+                { UpdatePolicy.Day, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnceADay) },
+                { UpdatePolicy.Week, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnceAWeek) },
+                { UpdatePolicy.Month, ResourceProvider.GetString(LOC.LegendaryOnceAMonth) },
+                { UpdatePolicy.ThreeMonths, ResourceProvider.GetString(LOC.LegendaryOnceEvery3Months) },
+                { UpdatePolicy.SixMonths, ResourceProvider.GetString(LOC.LegendaryOnceEvery6Months) },
                 { UpdatePolicy.GameLaunch, ResourceProvider.GetString(LOC.LegendaryCheckUpdatesGameLaunch) },
-                { UpdatePolicy.Never, ResourceProvider.GetString(LOC.LegendaryNeverUpdate) }
+                { UpdatePolicy.Never, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnlyManually) }
             };
             GamesUpdatesCBo.ItemsSource = updatePolicyOptions;
+
+            var launcherUpdatePolicyOptions = new Dictionary<UpdatePolicy, string>
+            {
+                { UpdatePolicy.PlayniteLaunch, ResourceProvider.GetString(LOC.LegendaryCheckUpdatesEveryPlayniteStartup) },
+                { UpdatePolicy.Day, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnceADay) },
+                { UpdatePolicy.Week, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnceAWeek) },
+                { UpdatePolicy.Month, ResourceProvider.GetString(LOC.LegendaryOnceAMonth) },
+                { UpdatePolicy.ThreeMonths, ResourceProvider.GetString(LOC.LegendaryOnceEvery3Months) },
+                { UpdatePolicy.SixMonths, ResourceProvider.GetString(LOC.LegendaryOnceEvery6Months) },
+                { UpdatePolicy.Never, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnlyManually) }
+            };
+            LauncherUpdatesCBo.ItemsSource = launcherUpdatePolicyOptions;
 
             var autoClearOptions = new Dictionary<ClearCacheTime, string>
             {
@@ -536,6 +553,35 @@ namespace LegendaryLibraryNS
             window.Width = 600;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.ShowDialog();
+        }
+
+        private async void GamesUpdateCheckBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (!LegendaryLauncher.IsInstalled)
+            {
+                throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+            }
+            LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
+            var gamesUpdates = await legendaryUpdateController.CheckAllGamesUpdates();
+            if (gamesUpdates.Count > 0)
+            {
+                Window window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
+                {
+                    ShowMaximizeButton = false,
+                });
+                window.DataContext = gamesUpdates;
+                window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
+                window.Content = new LegendaryUpdater();
+                window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
+                window.SizeToContent = SizeToContent.WidthAndHeight;
+                window.MinWidth = 600;
+                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                window.ShowDialog();
+            }
+            else
+            {
+                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryNoUpdatesAvailable));
+            }
         }
     }
 }

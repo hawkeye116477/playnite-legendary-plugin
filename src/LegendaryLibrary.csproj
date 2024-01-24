@@ -153,6 +153,9 @@
     <Compile Include="LegendaryEaActivate.xaml.cs">
       <DependentUpon>LegendaryEaActivate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LegendaryUpdater.xaml.cs">
+      <DependentUpon>LegendaryUpdater.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MessageCheckBoxDialog.xaml.cs">
       <DependentUpon>MessageCheckBoxDialog.xaml</DependentUpon>
     </Compile>
@@ -275,6 +278,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LegendaryLibrarySettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LegendaryUpdater.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

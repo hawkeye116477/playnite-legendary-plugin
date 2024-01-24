@@ -28,6 +28,10 @@ namespace LegendaryLibraryNS
         public bool SyncPlaytime { get; set; } = false;
         public string SyncPlaytimeMachineId { get; set; } = System.Guid.NewGuid().ToString("N");
         public UpdatePolicy GamesUpdatePolicy { get; set; } = UpdatePolicy.GameLaunch;
+        public long NextGamesUpdateTime { get; set; } = 0;
+        public bool AutoUpdateGames { get; set; } = false;
+        public UpdatePolicy LauncherUpdatePolicy { get; set; } = UpdatePolicy.Never;
+        public long NextLauncherUpdateTime { get; set; } = 0;
         public bool NotifyNewLauncherVersion { get; set; } = false;
     }
 
@@ -55,6 +59,10 @@ namespace LegendaryLibraryNS
                 {
                     savedSettings.GamesUpdatePolicy = UpdatePolicy.Never;
                     savedSettings.DisableGameVersionCheck = false;
+                }
+                if (savedSettings.NotifyNewLauncherVersion)
+                {
+                    savedSettings.LauncherUpdatePolicy = UpdatePolicy.Month;
                 }
             }
             else

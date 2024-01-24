@@ -44,6 +44,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">Оновлення</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">Обрати файл...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Обрати теку...</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnlyManually">Тільки вручну</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">Раз на день</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">Раз на тиждень</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOpen">Відкрити</sys:String>

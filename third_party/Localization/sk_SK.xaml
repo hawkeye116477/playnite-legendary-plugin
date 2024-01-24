@@ -44,6 +44,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates" />
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip" />
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnlyManually" />
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay" />
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek" />
   <sys:String x:Key="LOCLegendary3P_PlayniteOpen" />

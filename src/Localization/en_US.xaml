@@ -122,11 +122,11 @@
   <sys:String x:Key="LOCLegendaryUninstallSelectedDlcs">Are you sure you want to uninstall selected DLCs?</sys:String>
   <sys:String x:Key="LOCLegendaryNoInstalledDlcs">No installed DLCs.</sys:String>
   <sys:String x:Key="LOCLegendaryNoAvailableDlcs">No available DLCs.</sys:String>
-  <sys:String x:Key="LOCLegendaryCheckUpdatesGameLaunch">Check for updates only when launching games</sys:String>
-  <sys:String x:Key="LOCLegendaryAutoUpdate">Automatically update when Playnite starts</sys:String>
-  <sys:String x:Key="LOCLegendaryNeverUpdate">Never check for updates</sys:String>
-  <sys:String x:Key="LOCLegendaryGamesUpdatePolicy">Games update policy</sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherUpdateNotify">Notify me when a new version of Legendary launcher will be available</sys:String>
+  <sys:String x:Key="LOCLegendaryCheckUpdatesGameLaunch">Only when launching games</sys:String>
+  <sys:String x:Key="LOCLegendaryAutoUpdate">Automatically update games</sys:String>
+  <sys:String x:Key="LOCLegendaryGamesUpdatePolicy">Check for games updates</sys:String>
+  <sys:String x:Key="LOCLegendaryCheckUpdatesEveryPlayniteStartup">On every Playnite startup</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy">Check for Legendary launcher updates</sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Updates for games from Epic Games are being downloaded.</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings">Remove game launch settings</sys:String>
   <sys:String x:Key="LOCLegendaryAdditionalServices">Additional services</sys:String>
@@ -143,4 +143,5 @@
   <sys:String x:Key="LOCLegendarySignedInAs">Signed in as {0}</sys:String>
   <sys:String x:Key="LOCLegendarySignOutConfirm">Are you sure you want to sign out?</sys:String>
   <sys:String x:Key="LOCLegendaryPermissionError">User doesn't have write access to the specified path. Change permissions or launch Playnite as administrator.</sys:String>
+  <sys:String x:Key="LOCLegendaryCheckForGamesUpdatesButton">Check for games updates</sys:String>
 </ResourceDictionary>
