@@ -101,6 +101,10 @@ namespace LegendaryLibraryNS
             }
             else if (!running)
             {
+                DownloadSpeedTB.Text = "";
+                DownloadedTB.Text = "";
+                ElapsedTB.Text = "";
+                EtaTB.Text = "";
                 DownloadPB.Value = 0;
                 var downloadCompleteSettings = LegendaryLibrary.GetSettings().DoActionAfterDownloadComplete;
                 switch (downloadCompleteSettings)
