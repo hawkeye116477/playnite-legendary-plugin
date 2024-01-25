@@ -122,11 +122,11 @@
   <sys:String x:Key="LOCLegendaryUninstallSelectedDlcs">Seçili DLC içerikleri kaldırmak istediğinizden emin misiniz?</sys:String>
   <sys:String x:Key="LOCLegendaryNoInstalledDlcs">Kurulu DLC yok.</sys:String>
   <sys:String x:Key="LOCLegendaryNoAvailableDlcs">Mevcut DLC yok.</sys:String>
-  <sys:String x:Key="LOCLegendaryCheckUpdatesGameLaunch">Güncellemeleri sadece oyun başlangıcında denetle</sys:String>
-  <sys:String x:Key="LOCLegendaryAutoUpdate">Playnite başladığında otomatik olarak güncelle</sys:String>
-  <sys:String x:Key="LOCLegendaryNeverUpdate">Güncellemeleri asla denetleme</sys:String>
-  <sys:String x:Key="LOCLegendaryGamesUpdatePolicy">Oyun güncelleme politikası</sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherUpdateNotify">Legandary başlatıcı yeni bir sürümü kullanıma sunulduğunda bildir</sys:String>
+  <sys:String x:Key="LOCLegendaryCheckUpdatesGameLaunch">Yalnızca oyunları başlatırken</sys:String>
+  <sys:String x:Key="LOCLegendaryAutoUpdate">Oyunları otomatik olarak güncelle</sys:String>
+  <sys:String x:Key="LOCLegendaryGamesUpdatePolicy">Oyun güncellemelerini denetle</sys:String>
+  <sys:String x:Key="LOCLegendaryCheckUpdatesEveryPlayniteStartup">Playnite her başlangıcında</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy">Legendary başlatıcı güncellemelerini denetle</sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Epic Games oyunlarına yönelik güncellemeler indiriliyor.</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings">Oyun başlatma ayarlarını kaldır</sys:String>
   <sys:String x:Key="LOCLegendaryAdditionalServices">Ek servisler</sys:String>
@@ -139,5 +139,10 @@
   <sys:String x:Key="LOCLegendaryNoAvailableEaGames">Kullanılabilir EA Oyunu yok.</sys:String>
   <sys:String x:Key="LOCLegendaryActivateNextConfirm">Bir sonraki oyunu etkinleştirmek istiyor musunuz?</sys:String>
   <sys:String x:Key="LOCLegendaryEANotice">Şu anda hangi oyunun aktivasyon gerektirdiği bilinmiyor, bu nedenle her şeyin etkinleştirilmesi için girişimde bulunulacak. EA Uygulaması sizden oyunu etkinleştirmek yerine kurmanızı isterse, oyun zaten etkinleştirilmiştir ve iletişim kutusu kapatılabilir.</sys:String>
-   <sys:String x:Key="LOCLegendaryStarWarsMessage">Güç seninle olsun Padawan.</sys:String>
+  <sys:String x:Key="LOCLegendaryStarWarsMessage">Güç seninle olsun Padawan.</sys:String>
+  <sys:String x:Key="LOCLegendarySignedInAs">{0} olarak oturum açıldı</sys:String>
+  <sys:String x:Key="LOCLegendarySignOutConfirm">Oturumu kapatmak istiyor musunuz?</sys:String>
+  <sys:String x:Key="LOCLegendaryPermissionError">Kullanıcının belirtilen yola yazma erişimi yok. İzinleri değiştirin veya Playnite programını yönetici olarak başlatın.</sys:String>
+  <sys:String x:Key="LOCLegendaryCheckForGamesUpdatesButton">Oyun güncellemelerini denetle</sys:String>
+  <sys:String x:Key="LOCLegendaryNotEnoughSpace">Yeterli boş disk alanı yok.</sys:String>
 </ResourceDictionary>
