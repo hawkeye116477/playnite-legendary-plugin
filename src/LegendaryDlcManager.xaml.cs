@@ -151,7 +151,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private async void InstallBtn_Click(object sender, RoutedEventArgs e)
+        private void InstallBtn_Click(object sender, RoutedEventArgs e)
         {
             if (AvailableDlcsLB.SelectedItems.Count > 0)
             {
@@ -208,7 +208,7 @@ namespace LegendaryLibraryNS
                 }
                 if (tasks.Count > 0)
                 {
-                    await downloadManager.EnqueueMultipleJobs(tasks);
+                    downloadManager.EnqueueMultipleJobs(tasks);
                 }
             }
         }

@@ -73,7 +73,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private async void UpdateBtn_Click(object sender, RoutedEventArgs e)
+        private void UpdateBtn_Click(object sender, RoutedEventArgs e)
         {
             if (UpdatesLB.SelectedItems.Count > 0)
             {
@@ -103,7 +103,7 @@ namespace LegendaryLibraryNS
                 {
                     updatesList.Add(selectedOption.Key, selectedOption.Value);
                 }
-                await legendaryUpdateController.UpdateGame(updatesList, "", false, downloadProperties);
+                legendaryUpdateController.UpdateGame(updatesList, "", false, downloadProperties);
             }
         }
 

@@ -59,7 +59,7 @@ namespace LegendaryLibraryNS
             Window.GetWindow(this).Close();
         }
 
-        private async void InstallBtn_Click(object sender, RoutedEventArgs e)
+        private void InstallBtn_Click(object sender, RoutedEventArgs e)
         {
             var settings = LegendaryLibrary.GetSettings();
             var installPath = SelectedGamePathTxt.Text;
@@ -183,7 +183,7 @@ namespace LegendaryLibraryNS
                 }
                 if (downloadTasks.Count > 0)
                 {
-                    await downloadManager.EnqueueMultipleJobs(downloadTasks);
+                    downloadManager.EnqueueMultipleJobs(downloadTasks);
                 }
             }
         }
@@ -520,7 +520,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private async void RepairBtn_Click(object sender, RoutedEventArgs e)
+        private void RepairBtn_Click(object sender, RoutedEventArgs e)
         {
             var settings = LegendaryLibrary.GetSettings();
             int maxWorkers = settings.MaxWorkers;
@@ -572,7 +572,7 @@ namespace LegendaryLibraryNS
                     maxSharedMemory = maxSharedMemory,
                     extraContent = selectedExtraContent
                 };
-                await downloadManager.EnqueueJob(GameID, InstallerWindow.Title, downloadSize, installSize, downloadProperties);
+                downloadManager.EnqueueJob(GameID, InstallerWindow.Title, downloadSize, installSize, downloadProperties);
             }
         }
 

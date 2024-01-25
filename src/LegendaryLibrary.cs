@@ -400,7 +400,7 @@ namespace LegendaryLibraryNS
                             {
                                 if (globalSettings.AutoUpdateGames)
                                 {
-                                    await legendaryUpdateController.UpdateGame(gamesUpdates, "", true);
+                                    legendaryUpdateController.UpdateGame(gamesUpdates, "", true);
                                 }
                                 else
                                 {

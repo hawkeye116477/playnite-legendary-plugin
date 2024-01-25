@@ -91,7 +91,7 @@ namespace LegendaryLibraryNS
             Helpers.SaveJsonSettingsToFile(downloadManagerData, "downloadManager");
         }
 
-        public async void DoNextJobInQueue(object _, PropertyChangedEventArgs arg)
+        public async void DoNextJobInQueue()
         {
             var running = downloadManagerData.downloads.Any(item => item.status == DownloadStatus.Running);
             var queuedList = downloadManagerData.downloads.Where(i => i.status == DownloadStatus.Queued).ToList();
@@ -137,7 +137,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        public async Task EnqueueMultipleJobs(List<DownloadManagerData.Download> downloadManagerDataList, bool silently = false)
+        public void EnqueueMultipleJobs(List<DownloadManagerData.Download> downloadManagerDataList, bool silently = false)
         {
             if (!silently)
             {
@@ -157,20 +157,11 @@ namespace LegendaryLibraryNS
                     wantedItem.status = DownloadStatus.Queued;
                 }
             }
-            var running = downloadManagerData.downloads.Any(item => item.status == DownloadStatus.Running);
-            if (!running)
-            {
-                var firstJob = downloadManagerDataList[0];
-                await Install(firstJob.gameID, firstJob.name, firstJob.downloadSize, firstJob.downloadProperties);
-            }
-            foreach (DownloadManagerData.Download download in downloadManagerData.downloads)
-            {
-                download.PropertyChanged -= DoNextJobInQueue;
-                download.PropertyChanged += DoNextJobInQueue;
-            }
+            SaveData();
+            DoNextJobInQueue();
         }
 
-        public async Task EnqueueJob(string gameID, string gameTitle, string downloadSize, string installSize, DownloadProperties downloadProperties)
+        public void EnqueueJob(string gameID, string gameTitle, string downloadSize, string installSize, DownloadProperties downloadProperties)
         {
             DisplayGreeting();
             var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameID);
@@ -179,23 +170,13 @@ namespace LegendaryLibraryNS
                 DateTimeOffset now = DateTime.UtcNow;
                 downloadManagerData.downloads.Add(new DownloadManagerData.Download
                 { gameID = gameID, downloadSize = downloadSize, installSize = installSize, name = gameTitle, status = DownloadStatus.Queued, addedTime = now.ToUnixTimeSeconds(), downloadProperties = downloadProperties });
-                SaveData();
             }
             else
             {
                 wantedItem.status = DownloadStatus.Queued;
-                SaveData();
             }
-            var running = downloadManagerData.downloads.Any(item => item.status == DownloadStatus.Running);
-            if (!running)
-            {
-                await Install(gameID, gameTitle, downloadSize, downloadProperties);
-            }
-            foreach (DownloadManagerData.Download download in downloadManagerData.downloads)
-            {
-                download.PropertyChanged -= DoNextJobInQueue;
-                download.PropertyChanged += DoNextJobInQueue;
-            }
+            SaveData();
+            DoNextJobInQueue();
         }
 
         public static async Task WaitUntilLegendaryCloses()
@@ -453,6 +434,10 @@ namespace LegendaryLibraryNS
             {
                 // Command was canceled
             }
+            finally
+            {
+                DoNextJobInQueue();
+            }
         }
 
         private void PauseBtn_Click(object sender, RoutedEventArgs e)
@@ -478,7 +463,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private async void ResumeDownloadBtn_Click(object sender, RoutedEventArgs e)
+        private void ResumeDownloadBtn_Click(object sender, RoutedEventArgs e)
         {
             if (DownloadsDG.SelectedIndex != -1)
             {
@@ -487,7 +472,7 @@ namespace LegendaryLibraryNS
                     if (selectedRow.status == DownloadStatus.Canceled ||
                         selectedRow.status == DownloadStatus.Paused)
                     {
-                        await EnqueueJob(selectedRow.gameID, selectedRow.name, selectedRow.downloadSize, selectedRow.installSize, selectedRow.downloadProperties);
+                        EnqueueJob(selectedRow.gameID, selectedRow.name, selectedRow.downloadSize, selectedRow.installSize, selectedRow.downloadProperties);
                     }
                 }
             }
@@ -540,7 +525,6 @@ namespace LegendaryLibraryNS
 
         private void RemoveDownloadEntry(DownloadManagerData.Download selectedEntry)
         {
-            selectedEntry.PropertyChanged -= DoNextJobInQueue;
             if (selectedEntry.status != DownloadStatus.Completed && selectedEntry.status != DownloadStatus.Canceled)
             {
                 if (selectedEntry.status == DownloadStatus.Running)
