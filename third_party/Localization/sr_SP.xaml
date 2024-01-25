@@ -9,6 +9,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">Не може да се покрене игра: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">Не може да се инсталира игра: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError">Не може да се деинсталира игра: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteImportLabel">Увези</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel" />
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">Додато</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">ОК</sys:String>

@@ -9,6 +9,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">Peliä ei voida käynnistää: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">Peliä ei voida asentaa: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError">Peliä ei voida poistaa: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteImportLabel">Tuo</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">Koko asennettuna</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">Lisätty</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">OK</sys:String>

@@ -9,6 +9,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError" />
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError" />
   <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteImportLabel">ආයාත කරන්න</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel" />
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">හරි</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSaveLabel">සුරකින්න</sys:String>

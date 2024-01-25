@@ -26,6 +26,10 @@ namespace System
         /// </summary>
         public const string Legendary3P_PlayniteGameUninstallError = "LOCLegendary3P_PlayniteGameUninstallError";
         /// <summary>
+        /// Import
+        /// </summary>
+        public const string Legendary3P_PlayniteImportLabel = "LOCLegendary3P_PlayniteImportLabel";
+        /// <summary>
         /// Install Size
         /// </summary>
         public const string Legendary3P_PlayniteInstallSizeLabel = "LOCLegendary3P_PlayniteInstallSizeLabel";
@@ -273,10 +277,6 @@ namespace System
         /// Enable
         /// </summary>
         public const string LegendaryEnable = "LOCLegendaryEnable";
-        /// <summary>
-        /// Import game
-        /// </summary>
-        public const string LegendaryImportEGL = "LOCLegendaryImportEGL";
         /// <summary>
         /// Space Available:
         /// </summary>

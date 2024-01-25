@@ -14,7 +14,6 @@
   <sys:String x:Key="LOCLegendaryEOSOverlay">EOS Overlay</sys:String>
   <sys:String x:Key="LOCLegendaryDisable">Disable</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Enable</sys:String>
-  <sys:String x:Key="LOCLegendaryImportEGL">Import game</sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable">Space Available:</sys:String>
   <sys:String x:Key="LOCLegendaryDownloaded">Downloaded:</sys:String>
   <sys:String x:Key="LOCLegendaryETA">ETA:</sys:String>

@@ -9,6 +9,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">Hra sa neda spustiť: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">Hra sa nedá nainštalovať: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError">Hra sa nedá odinštalovať: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteImportLabel">Importovať</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel" />
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">Pridané</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">OK</sys:String>

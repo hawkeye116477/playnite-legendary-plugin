@@ -15,61 +15,61 @@
         <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
     </UserControl.Resources>
     <DockPanel Margin="10">
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0"
-                VerticalAlignment="Bottom" Grid.Row="6" Grid.Column="2" DockPanel.Dock="Bottom">
-            <Button x:Name="RepairBtn" Content="{DynamicResource LOCLegendaryRepair}" ContentStringFormat="&#xefd2; {0}" FontFamily="{DynamicResource FontIcoFont}"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0" Visibility="Collapsed" IsEnabled="False" Click="RepairBtn_Click" />
-            <Button x:Name="ImportBtn" Content="{DynamicResource LOCLegendaryImportEGL}" ContentStringFormat="&#xef08; {0}" FontFamily="{DynamicResource FontIcoFont}"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
-                    Click="ImportBtn_Click" />
-            <Button x:Name="InstallBtn" Content="{DynamicResource LOCLegendary3P_PlayniteInstallGame}" ContentStringFormat="&#xef07; {0}" FontFamily="{DynamicResource FontIcoFont}"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
-                    Click="InstallBtn_Click" IsEnabled="False" />
-            <Button x:Name="CancelBtn" Content="{DynamicResource LOCLegendary3P_PlayniteCancelLabel}" ContentStringFormat="&#xec4f; {0}" FontFamily="{DynamicResource FontIcoFont}"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                    Click="CancelBtn_Click" IsCancel="True" />
-        </StackPanel>
-        <Grid VerticalAlignment="Top" DockPanel.Dock="Top" Name="InstallerPage">
+        <Grid DockPanel.Dock="Bottom" Margin="0,5,0,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <DockPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,15" Name="FolderDP">
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="0,5,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5" Grid.Row="1" Grid.Column="0">
+                <TextBlock Text="{DynamicResource LOCLegendaryDownloadSize}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                <TextBlock x:Name="DownloadSizeTB" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
+                    VerticalAlignment="Top" Margin="5,0,5,0" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" Grid.Row="2" Grid.Column="0">
+                <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendaryInstallSize}" Margin="0,0,0,0" />
+                <TextBlock x:Name="InstallSizeTB" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}" VerticalAlignment="Top" Margin="5,0,5,0" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5" Grid.Row="1" Grid.Column="1">
+                <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendarySpaceAvailable}" Margin="0,0,0,0" />
+                <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
+                    Margin="5,0,5,0" Name="SpaceTB" />
+            </StackPanel>
+        </Grid>
+        <StackPanel x:Name="TopSP" DockPanel.Dock="Top">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,0"
+                VerticalAlignment="Top">
+                <Button x:Name="RepairBtn" Content="{DynamicResource LOCLegendaryRepair}" ContentStringFormat="&#xefd2; {0}" 
+                    FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                    Margin="0,0,5,0" Visibility="Collapsed" IsEnabled="False" Click="RepairBtn_Click" />
+                <Button x:Name="ImportBtn" Content="{DynamicResource LOCLegendary3P_PlayniteImportLabel}" ContentStringFormat="&#xef08; {0}" 
+                    FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0" 
+                    Click="ImportBtn_Click" />
+                <Button x:Name="InstallBtn" Content="{DynamicResource LOCLegendary3P_PlayniteInstallGame}" ContentStringFormat="&#xef07; {0}"
+                    FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
+                    Click="InstallBtn_Click" IsEnabled="False" />
+                <Button x:Name="CancelBtn" Content="{DynamicResource LOCLegendary3P_PlayniteCancelLabel}" ContentStringFormat="&#xec4f; {0}"
+                    FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                    Click="CancelBtn_Click" IsCancel="True" />
+            </StackPanel>
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="0,5"/>
+            <DockPanel Margin="0,0,0,5" Name="FolderDP">
                 <TextBlock Text="{DynamicResource LOCLegendary3P_PlayniteGameInstallDirTitle}" VerticalAlignment="Center" Margin="0,0,10,0"></TextBlock>
                 <Button DockPanel.Dock="Right" Padding="5" Margin="5 0 0 0" Content="&#xec5b;"
                     Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteSelectDirectoryTooltip}" />
-                <TextBox Name="SelectedGamePathTxt" Text="" VerticalAlignment="Top" Margin="0,5" />
+                <TextBox Name="SelectedGamePathTxt" Text="" VerticalAlignment="Center" Margin="0" />
             </DockPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="0">
-                <TextBlock Text="{DynamicResource LOCLegendaryDownloadSize}" VerticalAlignment="Top"
-                    HorizontalAlignment="Left" Margin="0,0,0,5" />
-                <TextBlock x:Name="DownloadSizeTB" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
-                    VerticalAlignment="Top" Margin="5,0,0,0" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Margin="0,0,0,15">
-                <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendaryInstallSize}" />
-                <TextBlock x:Name="InstallSizeTB" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
-                    VerticalAlignment="Top" Margin="5,0,0,0" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2"
-                Grid.Column="1">
-                <TextBlock VerticalAlignment="Top"
-                    Text="{DynamicResource LOCLegendarySpaceAvailable}" />
-                <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
-                    Margin="5,0,0,0" Name="SpaceTB" />
-            </StackPanel>
-            <Border Grid.Row="4" Grid.Column="0" BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Name="ExtraContentBrd" Visibility="Collapsed" Margin="0,0,0,5">
+            <Border BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Name="ExtraContentBrd" Visibility="Collapsed" Margin="0,0,0,5">
                 <Expander Header="{DynamicResource LOCLegendaryExtraContent}" Margin="2,2,5,2" HorizontalAlignment="Left">
-                    <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                        <CheckBox Margin="7,0,0,5" Content="{DynamicResource LOCLegendaryCheckAllContent}" x:Name="AllOrNothingChk" Checked="AllOrNothingChk_Checked" Visibility="Collapsed" Unchecked="AllOrNothingChk_Unchecked" />
+                        <CheckBox Margin="7,0,0,5" Content="{DynamicResource LOCLegendaryCheckAllDlcs}" x:Name="AllDlcsChk" Checked="AllDlcsChk_Checked" Unchecked="AllDlcsChk_Unchecked" Visibility="Collapsed"/>
+                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="7,0,0,5" />
                         <ListBox BorderThickness="0" Name="ExtraContentLB" SelectionMode="Multiple" SelectionChanged="ExtraContentLB_SelectionChanged" Margin="5,0,5,5">
                             <ListBox.Resources>
                                 <Style TargetType="ListBoxItem">
@@ -83,13 +83,10 @@
                                 </Style>
                             </ListBox.Resources>
                         </ListBox>
-                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="7,0,0,5" />
-                        <CheckBox Margin="7,0,0,5" Content="{DynamicResource LOCLegendaryCheckAllDlcs}" x:Name="AllDlcsChk" Checked="AllDlcsChk_Checked" Unchecked="AllDlcsChk_Unchecked" Visibility="Collapsed"/>
-                        <CheckBox Margin="7,0,0,5" Content="{DynamicResource LOCLegendaryCheckAllContent}" x:Name="AllOrNothingChk" Checked="AllOrNothingChk_Checked" Visibility="Collapsed" Unchecked="AllOrNothingChk_Unchecked" />
                     </StackPanel>
                 </Expander>
             </Border>
-            <Border Grid.Row="5" Grid.Column="0" BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2">
+            <Border BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                 <Expander Header="{DynamicResource LOCLegendaryAdvancedOptions}" Margin="2,2,5,2" HorizontalAlignment="Left" >
                     <Grid Margin="5">
                         <Grid.ColumnDefinitions>
@@ -113,6 +110,6 @@
                     </Grid>
                 </Expander>
             </Border>
-        </Grid>
+        </StackPanel>
     </DockPanel>
 </UserControl>

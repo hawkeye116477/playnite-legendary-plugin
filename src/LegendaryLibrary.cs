@@ -649,6 +649,7 @@ namespace LegendaryLibraryNS
                                 window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
                                 {
                                     ShowMaximizeButton = false,
+                                    ShowMinimizeButton = false
                                 });
                             }
                             else
