@@ -362,7 +362,19 @@ namespace LegendaryLibraryNS
                             {
                                 InvokeOnStopped(new GameStoppedEventArgs());
                                 LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
-                                await legendaryUpdateController.UpdateGame(Game.Name, Game.GameId);
+                                var gamesToUpdate = await legendaryUpdateController.CheckGameUpdates(Game.Name, Game.GameId);
+                                Window window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
+                                {
+                                    ShowMaximizeButton = false,
+                                });
+                                window.DataContext = gamesToUpdate;
+                                window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
+                                window.Content = new LegendaryUpdater();
+                                window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
+                                window.SizeToContent = SizeToContent.WidthAndHeight;
+                                window.MinWidth = 600;
+                                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                                window.ShowDialog();
                             }
                             else
                             {
@@ -472,26 +484,12 @@ namespace LegendaryLibraryNS
             return gamesToUpdate;
         }
 
-
-        public async Task UpdateGame(string gameTitle, string gameId, bool silently = false, DownloadProperties downloadProperties = null)
+        public async Task UpdateGame(Dictionary<string, Installed> gamesToUpdate, string gameTitle = "", bool silently = false, DownloadProperties downloadProperties = null)
         {
-            var gamesToUpdate = await CheckGameUpdates(gameTitle, gameId);
+            var updateTasks = new List<Task>();
             if (gamesToUpdate.Count > 0)
             {
                 bool canUpdate = true;
-                if (!silently)
-                {
-                    var options = new List<MessageBoxOption>
-                    {
-                        new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterInstallUpdate)),
-                        new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteCancelLabel)),
-                    };
-                    var result = playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryNewVersionAvailable), gameTitle, gamesToUpdate.First().Value.Version), ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
-                    if (result != options[0])
-                    {
-                        canUpdate = false;
-                    }
-                }
                 if (canUpdate)
                 {
                     if (silently)
@@ -519,25 +517,32 @@ namespace LegendaryLibraryNS
                         }
                         if (wantedItem != null)
                         {
-                            playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), wantedItem.name), "", MessageBoxButton.OK, MessageBoxImage.Error);
+                            if (!silently)
+                            {
+                                playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), wantedItem.name), "", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
                         }
                         else
                         {
-                            if (!silently)
+                            updateTasks.Add(downloadManager.EnqueueJob(gameToUpdate.Key, gameToUpdate.Value.Title, "", "", downloadProperties));
+                        }
+                    }
+                    if (updateTasks.Count > 0)
+                    {
+                        if (!silently)
+                        {
+                            var messagesSettings = LegendaryMessagesSettings.LoadSettings();
+                            if (!messagesSettings.DontShowDownloadManagerWhatsUpMsg)
                             {
-                                var messagesSettings = LegendaryMessagesSettings.LoadSettings();
-                                if (!messagesSettings.DontShowDownloadManagerWhatsUpMsg)
+                                var result = MessageCheckBoxDialog.ShowMessage("", ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp), ResourceProvider.GetString(LOC.Legendary3P_PlayniteDontShowAgainTitle), MessageBoxButton.OK, MessageBoxImage.Information);
+                                if (result.CheckboxChecked)
                                 {
-                                    var result = MessageCheckBoxDialog.ShowMessage("", ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp), ResourceProvider.GetString(LOC.Legendary3P_PlayniteDontShowAgainTitle), MessageBoxButton.OK, MessageBoxImage.Information);
-                                    if (result.CheckboxChecked)
-                                    {
-                                        messagesSettings.DontShowDownloadManagerWhatsUpMsg = true;
-                                        LegendaryMessagesSettings.SaveSettings(messagesSettings);
-                                    }
+                                    messagesSettings.DontShowDownloadManagerWhatsUpMsg = true;
+                                    LegendaryMessagesSettings.SaveSettings(messagesSettings);
                                 }
                             }
-                            await downloadManager.EnqueueJob(gameToUpdate.Key, gameToUpdate.Value.Title, "", "", downloadProperties);
                         }
+                        await Task.WhenAll(updateTasks);
                     }
                 }
             }

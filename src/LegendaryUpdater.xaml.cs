@@ -97,26 +97,13 @@ namespace LegendaryLibraryNS
                     maxSharedMemory = maxSharedMemory,
                     enableReordering = enableReordering
                 };
-                var downloadTasks = new List<Task>();
+                Window.GetWindow(this).Close();
+                var updatesList = new Dictionary<string, Installed>();
                 foreach (var selectedOption in UpdatesLB.SelectedItems.Cast<KeyValuePair<string, Installed>>().ToList())
                 {
-                    downloadTasks.Add(legendaryUpdateController.UpdateGame(selectedOption.Value.Title, selectedOption.Key, true, downloadProperties));
+                    updatesList.Add(selectedOption.Key, selectedOption.Value);
                 }
-                var messagesSettings = LegendaryMessagesSettings.LoadSettings();
-                if (!messagesSettings.DontShowDownloadManagerWhatsUpMsg)
-                {
-                    var result = MessageCheckBoxDialog.ShowMessage("", ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp), ResourceProvider.GetString(LOC.Legendary3P_PlayniteDontShowAgainTitle), MessageBoxButton.OK, MessageBoxImage.Information);
-                    if (result.CheckboxChecked)
-                    {
-                        messagesSettings.DontShowDownloadManagerWhatsUpMsg = true;
-                        LegendaryMessagesSettings.SaveSettings(messagesSettings);
-                    }
-                }
-                Window.GetWindow(this).Close();
-                if (downloadTasks.Count > 0)
-                {
-                    await Task.WhenAll(downloadTasks);
-                }
+                await legendaryUpdateController.UpdateGame(updatesList, "", false, downloadProperties);
             }
         }
 

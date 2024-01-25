@@ -583,5 +583,18 @@ namespace LegendaryLibraryNS
                 playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryNoUpdatesAvailable));
             }
         }
+
+        private void GamesUpdatesCBo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedValue = (KeyValuePair<UpdatePolicy, string>)GamesUpdatesCBo.SelectedItem;
+            if (selectedValue.Key == UpdatePolicy.Never || selectedValue.Key == UpdatePolicy.GameLaunch)
+            {
+                AutoUpdateGamesChk.IsEnabled = false;
+            }
+            else
+            {
+                AutoUpdateGamesChk.IsEnabled = true;
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@
     {
         Never,
         GameLaunch,
+        Auto,
         PlayniteLaunch,
         Day,
         Week,

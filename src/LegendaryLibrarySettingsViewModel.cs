@@ -63,6 +63,12 @@ namespace LegendaryLibraryNS
                 if (savedSettings.NotifyNewLauncherVersion)
                 {
                     savedSettings.LauncherUpdatePolicy = UpdatePolicy.Month;
+                    savedSettings.NextLauncherUpdateTime = LegendaryLibrary.GetNextUpdateCheckTime(UpdatePolicy.Month);
+                }
+                if (savedSettings.GamesUpdatePolicy == UpdatePolicy.Auto)
+                {
+                    savedSettings.GamesUpdatePolicy = UpdatePolicy.Month;
+                    savedSettings.NextGamesUpdateTime = LegendaryLibrary.GetNextUpdateCheckTime(UpdatePolicy.Month);
                 }
             }
             else
