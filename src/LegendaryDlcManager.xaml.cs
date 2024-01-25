@@ -39,7 +39,8 @@ namespace LegendaryLibraryNS
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            AvailableDlcsSP.Visibility = Visibility.Collapsed;
+            BottomADGrd.Visibility = Visibility.Collapsed;
+            TopADSP.Visibility = Visibility.Collapsed;
             InstalledDlcsSP.Visibility = Visibility.Collapsed;
             LoadingATB.Visibility = Visibility.Visible;
             LoadingITB.Visibility = Visibility.Visible;
@@ -82,14 +83,16 @@ namespace LegendaryLibraryNS
                     }
                     if (AvailableDlcsLB.Items.Count == 0)
                     {
-                        AvailableDlcsSP.Visibility = Visibility.Collapsed;
+                        BottomADGrd.Visibility = Visibility.Collapsed;
+                        TopADSP.Visibility = Visibility.Collapsed;
                         NoAvailableDlcsTB.Visibility = Visibility.Visible;
                     }
                 }
                 else
                 {
                     NoAvailableDlcsTB.Visibility = Visibility.Visible;
-                    AvailableDlcsSP.Visibility = Visibility.Collapsed;
+                    BottomADGrd.Visibility = Visibility.Collapsed;
+                    TopADSP.Visibility = Visibility.Collapsed;
                     InstalledDlcsTbI.Visibility = Visibility.Collapsed;
                 }
             }
@@ -101,7 +104,8 @@ namespace LegendaryLibraryNS
             }
             if (AvailableDlcsLB.Items.Count > 0)
             {
-                AvailableDlcsSP.Visibility = Visibility.Visible;
+                BottomADGrd.Visibility = Visibility.Visible;
+                TopADSP.Visibility = Visibility.Visible;
             }
         }
 

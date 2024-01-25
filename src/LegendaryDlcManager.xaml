@@ -16,9 +16,35 @@
     <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled"
         HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
         <TabItem Header="{DynamicResource LOCLegendaryAvailableDlcs}">
-            <StackPanel Margin="5,5,0,5">
-                <StackPanel x:Name="AvailableDlcsSP">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
+            <DockPanel Margin="10,5,0,5">
+                <Grid DockPanel.Dock="Bottom" Margin="0,5,0,0" x:Name="BottomADGrd">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="0,5,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5" Grid.Row="1" Grid.Column="0">
+                            <TextBlock Text="{DynamicResource LOCLegendaryDownloadSize}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <TextBlock x:Name="DownloadSizeTB" Text="0 B"
+                    VerticalAlignment="Top" Margin="5,0,5,0" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" Grid.Row="2" Grid.Column="0">
+                            <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendaryInstallSize}" Margin="0,0,0,0" />
+                        <TextBlock x:Name="InstallSizeTB" Text="0 B" VerticalAlignment="Top" Margin="5,0,5,0" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5" Grid.Row="1" Grid.Column="1">
+                            <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendarySpaceAvailable}" Margin="0,0,0,0" />
+                            <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
+                    Margin="5,0,5,0" Name="SpaceTB" />
+                        </StackPanel>
+                    </Grid>
+                <StackPanel x:Name="TopADSP" DockPanel.Dock="Top">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" DockPanel.Dock="Top">
                         <Button x:Name="InstallBtn" Content="{DynamicResource LOCLegendary3P_PlayniteInstallGame}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xef07; {0}" Click="InstallBtn_Click" Margin="0,0,5,0" IsEnabled="False" />
                         <Button x:Name="SelectAllAvDlcsBtn" Content="{DynamicResource LOCLegendaryCheckAllContent}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xeed9; {0}" Margin="0,0,5,0" Click="SelectAllAvDlcsBtn_Click"  />
                     </StackPanel>
@@ -36,7 +62,7 @@
                             </Style>
                         </ListBox.Resources>
                     </ListBox>
-                    <Border BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Margin="0,5,0,0">
+                    <Border BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom"  Margin="0,5,0,0">
                         <Expander Header="{DynamicResource LOCLegendaryAdvancedOptions}" Margin="2,2,5,2" HorizontalAlignment="Left" >
                             <Grid Margin="5">
                                 <Grid.ColumnDefinitions>
@@ -60,26 +86,11 @@
                             </Grid>
                         </Expander>
                     </Border>
-                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="0,5,0,0" />
-                    <DockPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5">
-                            <TextBlock Text="{DynamicResource LOCLegendaryDownloadSize}" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                            <TextBlock x:Name="DownloadSizeTB" Text="0 b"
-                    VerticalAlignment="Top" Margin="5,0,5,0" />
-                            <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendaryInstallSize}" Margin="10,0,0,0" />
-                            <TextBlock x:Name="InstallSizeTB" Text="0 b"
-                    VerticalAlignment="Top" Margin="5,0,5,0" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5" >
-                            <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendarySpaceAvailable}" Margin="10,0,0,0" />
-                            <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
-                    Margin="5,0,5,0" Name="SpaceTB" />
-                        </StackPanel>
-                    </DockPanel>
                 </StackPanel>
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="0,5,0,0" />
                 <TextBlock Text="{DynamicResource LOCLegendaryNoAvailableDlcs}" Margin="0,5,0,0" Visibility="Collapsed" Name="NoAvailableDlcsTB"/>
                 <TextBlock Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}" Margin="0,5,0,0"  Visibility="Collapsed" Name="LoadingATB" />
-            </StackPanel>
+            </DockPanel>
         </TabItem>
         <TabItem Header="{DynamicResource LOCLegendaryInstalledDlcs}" Name="InstalledDlcsTbI">
             <StackPanel Margin="5,5,0,5">
