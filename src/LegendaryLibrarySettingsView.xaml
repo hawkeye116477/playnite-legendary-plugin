@@ -56,7 +56,7 @@
                         <TextBlock Text="{DynamicResource LOCLegendaryGamesUpdatePolicy}" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                         <ComboBox Grid.Row="0" Grid.Column="1" x:Name="GamesUpdatesCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.GamesUpdatePolicy}" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Margin="10,0,0,0" SelectionChanged="GamesUpdatesCBo_SelectionChanged" />
                     </StackPanel>
-                    <CheckBox Content="{DynamicResource LOCLegendaryAutoUpdate}" Margin="0,0,0,10" Name="AutoUpdateGamesChk"></CheckBox>
+                    <CheckBox Content="{DynamicResource LOCLegendaryAutoUpdate}" Margin="0,0,0,10" Name="AutoUpdateGamesChk" IsChecked="{Binding Settings.AutoUpdateGames}"></CheckBox>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
                         <TextBlock Text="{DynamicResource LOCLegendaryLauncherUpdatePolicy}" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                         <ComboBox Grid.Row="0" Grid.Column="1" x:Name="LauncherUpdatesCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.LauncherUpdatePolicy}" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Margin="10,0,0,0" />
