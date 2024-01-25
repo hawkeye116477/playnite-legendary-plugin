@@ -87,7 +87,6 @@
                         </Expander>
                     </Border>
                 </StackPanel>
-                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="0,5,0,0" />
                 <TextBlock Text="{DynamicResource LOCLegendaryNoAvailableDlcs}" Margin="0,5,0,0" Visibility="Collapsed" Name="NoAvailableDlcsTB"/>
                 <TextBlock Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}" Margin="0,5,0,0"  Visibility="Collapsed" Name="LoadingATB" />
             </DockPanel>
