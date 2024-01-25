@@ -1,5 +1,20 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.5.0
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2024-01-25
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.5.0/LegendaryLibrary_1_5_0.pext
+    Changelog:
+      - Added possibility to manually check for all games updates at once
+      - Improved updating (more choices in settings and because of that you may need
+        to review and reapply update settings to make them working again)
+      - Added displaying account name to plugin settings
+      - Added confirmation dialog to sign out
+      - Added nice descriptions for more Launcher's error messages
+      - Improved Game Installer and DLC Manager appearance
+      - Fixed potential problems with new Heroic config path
+      - Fixed bugs in clouds
+      - Fixed bugs related with queuing downloads
   - Version: 1.4.0
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2024-01-22
