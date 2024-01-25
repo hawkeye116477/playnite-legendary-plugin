@@ -153,29 +153,60 @@ namespace LegendaryLibraryNS
 
         private async void InstallBtn_Click(object sender, RoutedEventArgs e)
         {
-            var settings = LegendaryLibrary.GetSettings();
-            int maxWorkers = settings.MaxWorkers;
-            if (MaxWorkersNI.Value != "")
+            if (AvailableDlcsLB.SelectedItems.Count > 0)
             {
-                maxWorkers = int.Parse(MaxWorkersNI.Value);
-            }
-            int maxSharedMemory = settings.MaxSharedMemory;
-            if (MaxSharedMemoryNI.Value != "")
-            {
-                maxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
-            }
-            bool enableReordering = Convert.ToBoolean(ReorderingChk.IsChecked);
-            DlcManagerWindow.Close();
-            LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
-            var tasks = new List<Task>();
-            foreach (var selectedOption in AvailableDlcsLB.SelectedItems.Cast<KeyValuePair<string, LegendaryGameInfo.Rootobject>>().ToList())
-            {
-                var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == selectedOption.Key);
-                if (wantedItem != null)
+                var settings = LegendaryLibrary.GetSettings();
+                int maxWorkers = settings.MaxWorkers;
+                if (MaxWorkersNI.Value != "")
                 {
-                    playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), wantedItem.name), "", MessageBoxButton.OK, MessageBoxImage.Error);
+                    maxWorkers = int.Parse(MaxWorkersNI.Value);
                 }
-                else
+                int maxSharedMemory = settings.MaxSharedMemory;
+                if (MaxSharedMemoryNI.Value != "")
+                {
+                    maxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
+                }
+                bool enableReordering = Convert.ToBoolean(ReorderingChk.IsChecked);
+                DlcManagerWindow.Close();
+                LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
+
+                var tasks = new List<DownloadManagerData.Download>();
+                foreach (var selectedOption in AvailableDlcsLB.SelectedItems.Cast<KeyValuePair<string, LegendaryGameInfo.Rootobject>>())
+                {
+                    var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == selectedOption.Key);
+                    if (wantedItem != null)
+                    {
+                        playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), wantedItem.name), "", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        DownloadProperties downloadProperties = new DownloadProperties()
+                        {
+                            downloadAction = DownloadAction.Install,
+                            enableReordering = enableReordering,
+                            maxWorkers = maxWorkers,
+                            maxSharedMemory = maxSharedMemory
+                        };
+                        var dlcInfo = selectedOption.Value;
+                        var downloadSize = "0 b";
+                        var installSize = "0 b";
+                        if (dlcInfo.Manifest != null)
+                        {
+                            downloadSize = Helpers.FormatSize(dlcInfo.Manifest.Download_size);
+                            installSize = Helpers.FormatSize(dlcInfo.Manifest.Disk_size);
+                        }
+                        var downloadTask = new DownloadManagerData.Download
+                        {
+                            gameID = selectedOption.Key,
+                            name = selectedOption.Value.Game.Title,
+                            downloadSize = downloadSize,
+                            installSize = installSize,
+                            downloadProperties = downloadProperties
+                        };
+                        tasks.Add(downloadTask);
+                    }
+                }
+                if (tasks.Count > 0)
                 {
                     var messagesSettings = LegendaryMessagesSettings.LoadSettings();
                     if (!messagesSettings.DontShowDownloadManagerWhatsUpMsg)
@@ -187,27 +218,8 @@ namespace LegendaryLibraryNS
                             LegendaryMessagesSettings.SaveSettings(messagesSettings);
                         }
                     }
-                    DownloadProperties downloadProperties = new DownloadProperties()
-                    {
-                        downloadAction = DownloadAction.Install,
-                        enableReordering = enableReordering,
-                        maxWorkers = maxWorkers,
-                        maxSharedMemory = maxSharedMemory
-                    };
-                    var dlcInfo = selectedOption.Value;
-                    var downloadSize = "0 b";
-                    var installSize = "0 b";
-                    if (dlcInfo.Manifest != null)
-                    {
-                        downloadSize = Helpers.FormatSize(dlcInfo.Manifest.Download_size);
-                        installSize = Helpers.FormatSize(dlcInfo.Manifest.Disk_size);
-                    }
-                    tasks.Add(downloadManager.EnqueueJob(selectedOption.Key, selectedOption.Value.Game.Title, downloadSize, installSize, downloadProperties));
+                    await downloadManager.EnqueueMultipleJobs(tasks);
                 }
-            }
-            if (tasks.Count > 0)
-            {
-                await Task.WhenAll(tasks);
             }
         }
 

@@ -123,6 +123,35 @@ namespace LegendaryLibraryNS
             }
         }
 
+        public async Task EnqueueMultipleJobs(List<DownloadManagerData.Download> downloadManagerDataList)
+        {
+            foreach (var downloadJob in downloadManagerDataList)
+            {
+                var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == downloadJob.gameID);
+                if (wantedItem == null)
+                {
+                    DateTimeOffset now = DateTime.UtcNow;
+                    downloadManagerData.downloads.Add(new DownloadManagerData.Download
+                    { gameID = downloadJob.gameID, downloadSize = downloadJob.downloadSize, installSize = downloadJob.installSize, name = downloadJob.name, status = DownloadStatus.Queued, addedTime = now.ToUnixTimeSeconds(), downloadProperties = downloadJob.downloadProperties });
+                }
+                else
+                {
+                    wantedItem.status = DownloadStatus.Queued;
+                }
+            }
+            var running = downloadManagerData.downloads.Any(item => item.status == DownloadStatus.Running);
+            if (!running)
+            {
+                var firstJob = downloadManagerDataList[0];
+                await Install(firstJob.gameID, firstJob.name, firstJob.downloadSize, firstJob.downloadProperties);
+            }
+            foreach (DownloadManagerData.Download download in downloadManagerData.downloads)
+            {
+                download.PropertyChanged -= DoNextJobInQueue;
+                download.PropertyChanged += DoNextJobInQueue;
+            }
+        }
+
         public async Task EnqueueJob(string gameID, string gameTitle, string downloadSize, string installSize, DownloadProperties downloadProperties)
         {
             var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameID);

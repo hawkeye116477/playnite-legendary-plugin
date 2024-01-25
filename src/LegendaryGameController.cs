@@ -486,7 +486,7 @@ namespace LegendaryLibraryNS
 
         public async Task UpdateGame(Dictionary<string, Installed> gamesToUpdate, string gameTitle = "", bool silently = false, DownloadProperties downloadProperties = null)
         {
-            var updateTasks = new List<Task>();
+            var updateTasks = new List<DownloadManagerData.Download>();
             if (gamesToUpdate.Count > 0)
             {
                 bool canUpdate = true;
@@ -501,10 +501,10 @@ namespace LegendaryLibraryNS
                     {
                         downloadProperties = new DownloadProperties() { downloadAction = DownloadAction.Update };
                     }
+                    LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
                     foreach (var gameToUpdate in gamesToUpdate)
                     {
                         var downloadData = new DownloadManagerData.Download { gameID = gameToUpdate.Key, downloadProperties = downloadProperties };
-                        LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
                         var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameToUpdate.Key);
                         if (wantedItem != null)
                         {
@@ -524,7 +524,15 @@ namespace LegendaryLibraryNS
                         }
                         else
                         {
-                            updateTasks.Add(downloadManager.EnqueueJob(gameToUpdate.Key, gameToUpdate.Value.Title, "", "", downloadProperties));
+                            var updateTask = new DownloadManagerData.Download
+                            {
+                                gameID = gameToUpdate.Key,
+                                name = gameToUpdate.Value.Title,
+                                downloadSize = "",
+                                installSize = "",
+                                downloadProperties = downloadProperties
+                            };
+                            updateTasks.Add(updateTask);
                         }
                     }
                     if (updateTasks.Count > 0)
@@ -542,7 +550,7 @@ namespace LegendaryLibraryNS
                                 }
                             }
                         }
-                        await Task.WhenAll(updateTasks);
+                        await downloadManager.EnqueueMultipleJobs(updateTasks);
                     }
                 }
             }

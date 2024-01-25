@@ -139,9 +139,16 @@ namespace LegendaryLibraryNS
                     maxSharedMemory = maxSharedMemory,
                     extraContent = selectedExtraContent
                 };
-                var downloadTasks = new List<Task>
+                var downloadTasks = new List<DownloadManagerData.Download>
                 {
-                    downloadManager.EnqueueJob(GameID, InstallerWindow.Title, downloadSize, installSize, downloadProperties)
+                    new DownloadManagerData.Download
+                    {
+                        gameID = GameID,
+                        name = InstallerWindow.Title,
+                        downloadSize = downloadSize,
+                        installSize = installSize,
+                        downloadProperties = downloadProperties
+                    }
                 };
 
                 if (ExtraContentLB.Items.Count > 0)
@@ -173,14 +180,21 @@ namespace LegendaryLibraryNS
                                         }
                                     }
                                 }
-                                downloadTasks.Add(downloadManager.EnqueueJob(selectedOption.Key, selectedOption.Value.Name, downloadSize, installSize, downloadProperties));
+                                downloadTasks.Add(new DownloadManagerData.Download
+                                {
+                                    gameID = selectedOption.Key,
+                                    name = selectedOption.Value.Name,
+                                    downloadSize = downloadSize,
+                                    installSize = installSize,
+                                    downloadProperties = downloadProperties
+                                });
                             }
                         }
                     }
                 }
                 if (downloadTasks.Count > 0)
                 {
-                    await Task.WhenAll(downloadTasks);
+                    await downloadManager.EnqueueMultipleJobs(downloadTasks);
                 }
             }
         }
