@@ -537,20 +537,7 @@ namespace LegendaryLibraryNS
                     }
                     if (updateTasks.Count > 0)
                     {
-                        if (!silently)
-                        {
-                            var messagesSettings = LegendaryMessagesSettings.LoadSettings();
-                            if (!messagesSettings.DontShowDownloadManagerWhatsUpMsg)
-                            {
-                                var result = MessageCheckBoxDialog.ShowMessage("", ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp), ResourceProvider.GetString(LOC.Legendary3P_PlayniteDontShowAgainTitle), MessageBoxButton.OK, MessageBoxImage.Information);
-                                if (result.CheckboxChecked)
-                                {
-                                    messagesSettings.DontShowDownloadManagerWhatsUpMsg = true;
-                                    LegendaryMessagesSettings.SaveSettings(messagesSettings);
-                                }
-                            }
-                        }
-                        await downloadManager.EnqueueMultipleJobs(updateTasks);
+                        await downloadManager.EnqueueMultipleJobs(updateTasks, silently);
                     }
                 }
             }

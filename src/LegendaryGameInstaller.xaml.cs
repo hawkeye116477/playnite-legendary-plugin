@@ -119,17 +119,6 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                var messagesSettings = LegendaryMessagesSettings.LoadSettings();
-                if (!messagesSettings.DontShowDownloadManagerWhatsUpMsg)
-                {
-                    var result = MessageCheckBoxDialog.ShowMessage("", ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp), ResourceProvider.GetString(LOC.Legendary3P_PlayniteDontShowAgainTitle), MessageBoxButton.OK, MessageBoxImage.Information);
-                    if (result.CheckboxChecked)
-                    {
-                        messagesSettings.DontShowDownloadManagerWhatsUpMsg = true;
-                        LegendaryMessagesSettings.SaveSettings(messagesSettings);
-                    }
-                }
-
                 DownloadProperties downloadProperties = new DownloadProperties()
                 {
                     installPath = installPath,
@@ -574,17 +563,6 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                var messagesSettings = LegendaryMessagesSettings.LoadSettings();
-                if (!messagesSettings.DontShowDownloadManagerWhatsUpMsg)
-                {
-                    var result = MessageCheckBoxDialog.ShowMessage("", ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp), ResourceProvider.GetString(LOC.Legendary3P_PlayniteDontShowAgainTitle), MessageBoxButton.OK, MessageBoxImage.Information);
-                    if (result.CheckboxChecked)
-                    {
-                        messagesSettings.DontShowDownloadManagerWhatsUpMsg = true;
-                        LegendaryMessagesSettings.SaveSettings(messagesSettings);
-                    }
-                }
-
                 DownloadProperties downloadProperties = new DownloadProperties()
                 {
                     installPath = "",

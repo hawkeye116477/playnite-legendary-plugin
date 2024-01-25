@@ -123,8 +123,26 @@ namespace LegendaryLibraryNS
             }
         }
 
-        public async Task EnqueueMultipleJobs(List<DownloadManagerData.Download> downloadManagerDataList)
+        public void DisplayGreeting()
         {
+            var messagesSettings = LegendaryMessagesSettings.LoadSettings();
+            if (!messagesSettings.DontShowDownloadManagerWhatsUpMsg)
+            {
+                var result = MessageCheckBoxDialog.ShowMessage("", ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp), ResourceProvider.GetString(LOC.Legendary3P_PlayniteDontShowAgainTitle), MessageBoxButton.OK, MessageBoxImage.Information);
+                if (result.CheckboxChecked)
+                {
+                    messagesSettings.DontShowDownloadManagerWhatsUpMsg = true;
+                    LegendaryMessagesSettings.SaveSettings(messagesSettings);
+                }
+            }
+        }
+
+        public async Task EnqueueMultipleJobs(List<DownloadManagerData.Download> downloadManagerDataList, bool silently = false)
+        {
+            if (!silently)
+            {
+                DisplayGreeting();
+            }
             foreach (var downloadJob in downloadManagerDataList)
             {
                 var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == downloadJob.gameID);
@@ -154,6 +172,7 @@ namespace LegendaryLibraryNS
 
         public async Task EnqueueJob(string gameID, string gameTitle, string downloadSize, string installSize, DownloadProperties downloadProperties)
         {
+            DisplayGreeting();
             var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameID);
             if (wantedItem == null)
             {
