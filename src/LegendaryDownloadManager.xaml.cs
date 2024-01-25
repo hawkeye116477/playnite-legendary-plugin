@@ -365,7 +365,10 @@ namespace LegendaryLibraryNS
                                 {
                                     diskSpaceErrorDisplayed = true;
                                 }
-                                errorDisplayed = true;
+                                if (!errorMessage.Contains("old manifest"))
+                                {
+                                    errorDisplayed = true;
+                                }
                             } 
                             else if (errorMessage.Contains("WARNING") && !errorMessage.Contains("exit requested"))
                             {
