@@ -122,11 +122,11 @@
   <sys:String x:Key="LOCLegendaryUninstallSelectedDlcs">Tem certeza que deseja desinstalar os DLC selecionados?</sys:String>
   <sys:String x:Key="LOCLegendaryNoInstalledDlcs">Nenhum DLC instalado.</sys:String>
   <sys:String x:Key="LOCLegendaryNoAvailableDlcs">Nenhum DLC disponível.</sys:String>
-  <sys:String x:Key="LOCLegendaryCheckUpdatesGameLaunch">Procurar por atualizações apenas ao iniciar jogos</sys:String>
-  <sys:String x:Key="LOCLegendaryAutoUpdate">Atualizar automaticamente ao iniciar o Playnite</sys:String>
-  <sys:String x:Key="LOCLegendaryNeverUpdate">Nunca procurar atualizações</sys:String>
-  <sys:String x:Key="LOCLegendaryGamesUpdatePolicy">Política de atualização</sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherUpdateNotify">Notificar quando uma nova versão do Inicializador Legendary estiver disponível</sys:String>
+  <sys:String x:Key="LOCLegendaryCheckUpdatesGameLaunch">Ao iniciá-los</sys:String>
+  <sys:String x:Key="LOCLegendaryAutoUpdate">Atualizar jogos automaticamente</sys:String>
+  <sys:String x:Key="LOCLegendaryGamesUpdatePolicy">Verificar atualizações de jogos</sys:String>
+  <sys:String x:Key="LOCLegendaryCheckUpdatesEveryPlayniteStartup">Em toda inicialização do Playnite</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy">Procurar por atualizações do inicializador Legendary</sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Atualizações de jogos da Epic Games estão sendo baixadas.</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings">Remover configurações de inicialização</sys:String>
   <sys:String x:Key="LOCLegendaryAdditionalServices">Serviços adicionais</sys:String>
@@ -139,5 +139,10 @@
   <sys:String x:Key="LOCLegendaryNoAvailableEaGames">Nenhum jogo EA disponível.</sys:String>
   <sys:String x:Key="LOCLegendaryActivateNextConfirm">Deseja ativar o próximo jogo?</sys:String>
   <sys:String x:Key="LOCLegendaryEANotice">Não se sabe qual jogo requer ativação, então será feita uma tentativa para ativar tudo. Se o aplicativo EA solicitar que você instale o jogo ao invés de ativá-lo, então ele já foi ativado e a caixa de diálogo pode ser descartada.</sys:String>
-   <sys:String x:Key="LOCLegendaryStarWarsMessage">Que a Força esteja com você, Padawan.</sys:String>
+  <sys:String x:Key="LOCLegendaryStarWarsMessage">Que a Força esteja com você, Padawan.</sys:String>
+  <sys:String x:Key="LOCLegendarySignedInAs">Conectado como {0}</sys:String>
+  <sys:String x:Key="LOCLegendarySignOutConfirm">Tem certeza de que deseja sair?</sys:String>
+  <sys:String x:Key="LOCLegendaryPermissionError">Usuário não tem permissão de escrita no caminho especificado. Altere as permissões ou inicie o Playnite como administrador.</sys:String>
+  <sys:String x:Key="LOCLegendaryCheckForGamesUpdatesButton">Verificar atualizações de jogos</sys:String>
+  <sys:String x:Key="LOCLegendaryNotEnoughSpace">Espaço em disco insuficiente.</sys:String>
 </ResourceDictionary>

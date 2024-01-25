@@ -124,9 +124,9 @@
   <sys:String x:Key="LOCLegendaryNoAvailableDlcs"></sys:String>
   <sys:String x:Key="LOCLegendaryCheckUpdatesGameLaunch"></sys:String>
   <sys:String x:Key="LOCLegendaryAutoUpdate"></sys:String>
-  <sys:String x:Key="LOCLegendaryNeverUpdate"></sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatePolicy"></sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherUpdateNotify"></sys:String>
+  <sys:String x:Key="LOCLegendaryCheckUpdatesEveryPlayniteStartup"></sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy"></sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway"></sys:String>
   <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings"></sys:String>
   <sys:String x:Key="LOCLegendaryAdditionalServices"></sys:String>
@@ -139,5 +139,10 @@
   <sys:String x:Key="LOCLegendaryNoAvailableEaGames"></sys:String>
   <sys:String x:Key="LOCLegendaryActivateNextConfirm"></sys:String>
   <sys:String x:Key="LOCLegendaryEANotice"></sys:String>
-   <sys:String x:Key="LOCLegendaryStarWarsMessage"></sys:String>
+  <sys:String x:Key="LOCLegendaryStarWarsMessage"></sys:String>
+  <sys:String x:Key="LOCLegendarySignedInAs"></sys:String>
+  <sys:String x:Key="LOCLegendarySignOutConfirm"></sys:String>
+  <sys:String x:Key="LOCLegendaryPermissionError"></sys:String>
+  <sys:String x:Key="LOCLegendaryCheckForGamesUpdatesButton"></sys:String>
+  <sys:String x:Key="LOCLegendaryNotEnoughSpace"></sys:String>
 </ResourceDictionary>
