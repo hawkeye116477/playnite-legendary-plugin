@@ -56,13 +56,16 @@ namespace LegendaryLibraryNS
                     {
                         var dlcInfo = await LegendaryLauncher.GetGameInfo(dlc.App_name);
                         dlcInfo.Game.Title = dlcInfo.Game.Title.RemoveTrademarks();
-                        if (installedAppList.ContainsKey(dlc.App_name))
+                        if (!dlc.App_name.IsNullOrEmpty())
                         {
-                            installedDLCs.Add(new KeyValuePair<string, LegendaryGameInfo.Rootobject>(dlc.App_name, dlcInfo));
-                        }
-                        else
-                        {
-                            notInstalledDLCs.Add(new KeyValuePair<string, LegendaryGameInfo.Rootobject>(dlc.App_name, dlcInfo));
+                            if (installedAppList.ContainsKey(dlc.App_name))
+                            {
+                                installedDLCs.Add(new KeyValuePair<string, LegendaryGameInfo.Rootobject>(dlc.App_name, dlcInfo));
+                            }
+                            else
+                            {
+                                notInstalledDLCs.Add(new KeyValuePair<string, LegendaryGameInfo.Rootobject>(dlc.App_name, dlcInfo));
+                            }
                         }
                     }
                     InstalledDlcsLB.ItemsSource = installedDLCs;

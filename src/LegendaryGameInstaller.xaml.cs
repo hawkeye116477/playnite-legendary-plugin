@@ -344,7 +344,7 @@ namespace LegendaryLibraryNS
                         {
                             foreach (var dlc in manifest.Game.Owned_dlc.OrderBy(obj => obj.Title))
                             {
-                                if (dlc.App_name != null)
+                                if (!dlc.App_name.IsNullOrEmpty())
                                 {
                                     var dlcInfo = new LegendarySDLInfo
                                     {
