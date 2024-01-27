@@ -398,7 +398,7 @@ namespace LegendaryLibraryNS
     {
         private IPlayniteAPI playniteAPI = API.Instance;
         private static ILogger logger = LogManager.GetLogger();
-        public async Task<Dictionary<string, Installed>> CheckGameUpdates(string gameTitle, string gameId)
+        public async Task<Dictionary<string, Installed>> CheckGameUpdates(string gameTitle, string gameId, bool skipDlc = false)
         {
             var newGameInfo = await LegendaryLauncher.GetGameInfo(gameId);
             var gamesToUpdate = new Dictionary<string, Installed>();
@@ -418,28 +418,31 @@ namespace LegendaryLibraryNS
                         };
                         gamesToUpdate.Add(oldGameInfo.App_name, updateInfo);
                     }
-                    // We need to also check for DLCs updates (see https://github.com/derrod/legendary/issues/506)
-                    if (newGameInfo.Game.Owned_dlc.Length > 0)
+                    if (!skipDlc)
                     {
-                        foreach (var dlc in newGameInfo.Game.Owned_dlc)
+                        // We need to also check for DLCs updates (see https://github.com/derrod/legendary/issues/506)
+                        if (newGameInfo.Game.Owned_dlc.Length > 0)
                         {
-                            if (!dlc.App_name.IsNullOrEmpty())
+                            foreach (var dlc in newGameInfo.Game.Owned_dlc)
                             {
-                                if (installedAppList.ContainsKey(dlc.App_name))
+                                if (!dlc.App_name.IsNullOrEmpty())
                                 {
-                                    var oldDlcInfo = installedAppList[dlc.App_name];
-                                    var newDlcInfo = await LegendaryLauncher.GetGameInfo(dlc.App_name);
-                                    if (newDlcInfo.Game != null)
+                                    if (installedAppList.ContainsKey(dlc.App_name))
                                     {
-                                        if (oldDlcInfo.Version != newDlcInfo.Game.Version)
+                                        var oldDlcInfo = installedAppList[dlc.App_name];
+                                        var newDlcInfo = await LegendaryLauncher.GetGameInfo(dlc.App_name);
+                                        if (newDlcInfo.Game != null)
                                         {
-                                            var updateDlcInfo = new Installed
+                                            if (oldDlcInfo.Version != newDlcInfo.Game.Version)
                                             {
-                                                Version = newDlcInfo.Game.Version,
-                                                Title = newDlcInfo.Game.Title,
-                                                App_name = dlc.App_name
-                                            };
-                                            gamesToUpdate.Add(oldDlcInfo.App_name, updateDlcInfo);
+                                                var updateDlcInfo = new Installed
+                                                {
+                                                    Version = newDlcInfo.Game.Version,
+                                                    Title = newDlcInfo.Game.Title,
+                                                    App_name = dlc.App_name
+                                                };
+                                                gamesToUpdate.Add(oldDlcInfo.App_name, updateDlcInfo);
+                                            }
                                         }
                                     }
                                 }
@@ -459,27 +462,24 @@ namespace LegendaryLibraryNS
         {
             var appList = LegendaryLauncher.GetInstalledAppList();
             var gamesToUpdate = new Dictionary<string, Installed>();
-            foreach (var game in appList)
+            foreach (var game in appList.OrderBy(item => item.Value.Title))
             {
-                if (!game.Value.Is_dlc)
+                var gameID = game.Value.App_name;
+                var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameID);
+                bool canUpdate = true;
+                if (gameSettings.DisableGameVersionCheck == true)
                 {
-                    var gameID = game.Value.App_name;
-                    var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameID);
-                    bool canUpdate = true;
-                    if (gameSettings.DisableGameVersionCheck == true)
+                    canUpdate = false;
+                }
+                if (canUpdate)
+                {
+                    LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
+                    var gameToUpdate = await legendaryUpdateController.CheckGameUpdates(game.Value.Title, gameID, true);
+                    if (gameToUpdate.Count > 0)
                     {
-                        canUpdate = false;
-                    }
-                    if (canUpdate)
-                    {
-                        LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
-                        var gameAndDlcToUpdate = await legendaryUpdateController.CheckGameUpdates(game.Value.Title, gameID);
-                        if (gameAndDlcToUpdate.Count > 0)
+                        foreach (var singleGame in gameToUpdate)
                         {
-                            foreach (var singleGame in gameAndDlcToUpdate)
-                            {
-                                gamesToUpdate.Add(singleGame.Key, singleGame.Value);
-                            }
+                            gamesToUpdate.Add(singleGame.Key, singleGame.Value);
                         }
                     }
                 }
