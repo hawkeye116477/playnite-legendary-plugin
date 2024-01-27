@@ -423,21 +423,24 @@ namespace LegendaryLibraryNS
                     {
                         foreach (var dlc in newGameInfo.Game.Owned_dlc)
                         {
-                            if (installedAppList.ContainsKey(dlc.App_name))
+                            if (!dlc.App_name.IsNullOrEmpty())
                             {
-                                var oldDlcInfo = installedAppList[dlc.App_name];
-                                var newDlcInfo = await LegendaryLauncher.GetGameInfo(dlc.App_name);
-                                if (newDlcInfo.Game != null)
+                                if (installedAppList.ContainsKey(dlc.App_name))
                                 {
-                                    if (oldDlcInfo.Version != newDlcInfo.Game.Version)
+                                    var oldDlcInfo = installedAppList[dlc.App_name];
+                                    var newDlcInfo = await LegendaryLauncher.GetGameInfo(dlc.App_name);
+                                    if (newDlcInfo.Game != null)
                                     {
-                                        var updateDlcInfo = new Installed
+                                        if (oldDlcInfo.Version != newDlcInfo.Game.Version)
                                         {
-                                            Version = newDlcInfo.Game.Version,
-                                            Title = newDlcInfo.Game.Title,
-                                            App_name = dlc.App_name
-                                        };
-                                        gamesToUpdate.Add(oldDlcInfo.App_name, updateDlcInfo);
+                                            var updateDlcInfo = new Installed
+                                            {
+                                                Version = newDlcInfo.Game.Version,
+                                                Title = newDlcInfo.Game.Title,
+                                                App_name = dlc.App_name
+                                            };
+                                            gamesToUpdate.Add(oldDlcInfo.App_name, updateDlcInfo);
+                                        }
                                     }
                                 }
                             }
