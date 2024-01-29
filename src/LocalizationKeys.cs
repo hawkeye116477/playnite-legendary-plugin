@@ -338,6 +338,10 @@ namespace System
         /// </summary>
         public const string LegendaryImportFinished = "LOCLegendaryImportFinished";
         /// <summary>
+        /// Failed to import game. Reason: {0}.
+        /// </summary>
+        public const string LegendaryGameImportFailure = "LOCLegendaryGameImportFailure";
+        /// <summary>
         /// Maximum number of worker processes
         /// </summary>
         public const string LegendaryMaxWorkers = "LOCLegendaryMaxWorkers";

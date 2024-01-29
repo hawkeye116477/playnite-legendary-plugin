@@ -200,10 +200,12 @@ namespace LegendaryLibraryNS
                                          .ExecuteBufferedAsync();
                 if (importCmd.StandardError.Contains("has been imported"))
                 {
+                    playniteAPI.Dialogs.ShowMessage(LOC.LegendaryImportFinished);
                     InstallerWindow.DialogResult = true;
                 }
                 else
                 {
+                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryGameImportFailure).Format(LOC.LegendaryCheckLog));
                     logger.Debug("[Legendary] " + importCmd.StandardError);
                     logger.Error("[Legendary] exit code: " + importCmd.ExitCode);
                 }
