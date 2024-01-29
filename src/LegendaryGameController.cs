@@ -398,7 +398,7 @@ namespace LegendaryLibraryNS
     {
         private IPlayniteAPI playniteAPI = API.Instance;
         private static ILogger logger = LogManager.GetLogger();
-        public async Task<Dictionary<string, Installed>> CheckGameUpdates(string gameTitle, string gameId, bool skipDlc = false)
+        public async Task<Dictionary<string, Installed>> CheckGameUpdates(string gameTitle, string gameId)
         {
             var newGameInfo = await LegendaryLauncher.GetGameInfo(gameId);
             var gamesToUpdate = new Dictionary<string, Installed>();
@@ -418,31 +418,28 @@ namespace LegendaryLibraryNS
                         };
                         gamesToUpdate.Add(oldGameInfo.App_name, updateInfo);
                     }
-                    if (!skipDlc)
+                    // We need to also check for DLCs updates (see https://github.com/derrod/legendary/issues/506)
+                    if (newGameInfo.Game.Owned_dlc.Length > 0)
                     {
-                        // We need to also check for DLCs updates (see https://github.com/derrod/legendary/issues/506)
-                        if (newGameInfo.Game.Owned_dlc.Length > 0)
+                        foreach (var dlc in newGameInfo.Game.Owned_dlc)
                         {
-                            foreach (var dlc in newGameInfo.Game.Owned_dlc)
+                            if (!dlc.App_name.IsNullOrEmpty())
                             {
-                                if (!dlc.App_name.IsNullOrEmpty())
+                                if (installedAppList.ContainsKey(dlc.App_name))
                                 {
-                                    if (installedAppList.ContainsKey(dlc.App_name))
+                                    var oldDlcInfo = installedAppList[dlc.App_name];
+                                    var newDlcInfo = await LegendaryLauncher.GetGameInfo(dlc.App_name);
+                                    if (newDlcInfo.Game != null)
                                     {
-                                        var oldDlcInfo = installedAppList[dlc.App_name];
-                                        var newDlcInfo = await LegendaryLauncher.GetGameInfo(dlc.App_name);
-                                        if (newDlcInfo.Game != null)
+                                        if (oldDlcInfo.Version != newDlcInfo.Game.Version)
                                         {
-                                            if (oldDlcInfo.Version != newDlcInfo.Game.Version)
+                                            var updateDlcInfo = new Installed
                                             {
-                                                var updateDlcInfo = new Installed
-                                                {
-                                                    Version = newDlcInfo.Game.Version,
-                                                    Title = newDlcInfo.Game.Title,
-                                                    App_name = dlc.App_name
-                                                };
-                                                gamesToUpdate.Add(oldDlcInfo.App_name, updateDlcInfo);
-                                            }
+                                                Version = newDlcInfo.Game.Version,
+                                                Title = newDlcInfo.Game.Title,
+                                                App_name = dlc.App_name
+                                            };
+                                            gamesToUpdate.Add(oldDlcInfo.App_name, updateDlcInfo);
                                         }
                                     }
                                 }
@@ -462,7 +459,7 @@ namespace LegendaryLibraryNS
         {
             var appList = LegendaryLauncher.GetInstalledAppList();
             var gamesToUpdate = new Dictionary<string, Installed>();
-            foreach (var game in appList.OrderBy(item => item.Value.Title))
+            foreach (var game in appList.Where(item => item.Value.Is_dlc == false).OrderBy(item => item.Value.Title))
             {
                 var gameID = game.Value.App_name;
                 var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameID);
@@ -474,7 +471,7 @@ namespace LegendaryLibraryNS
                 if (canUpdate)
                 {
                     LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
-                    var gameToUpdate = await legendaryUpdateController.CheckGameUpdates(game.Value.Title, gameID, true);
+                    var gameToUpdate = await legendaryUpdateController.CheckGameUpdates(game.Value.Title, gameID);
                     if (gameToUpdate.Count > 0)
                     {
                         foreach (var singleGame in gameToUpdate)

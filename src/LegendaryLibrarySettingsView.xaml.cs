@@ -554,14 +554,20 @@ namespace LegendaryLibraryNS
             window.ShowDialog();
         }
 
-        private async void GamesUpdateCheckBtn_Click(object sender, RoutedEventArgs e)
+        private void GamesUpdateCheckBtn_Click(object sender, RoutedEventArgs e)
         {
             if (!LegendaryLauncher.IsInstalled)
             {
                 throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
             }
+
+            var gamesUpdates = new Dictionary<string, Installed>();
             LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
-            var gamesUpdates = await legendaryUpdateController.CheckAllGamesUpdates();
+            GlobalProgressOptions updateCheckProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryCheckingForUpdates), false) { IsIndeterminate = true };
+            playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
+            {
+                gamesUpdates = await legendaryUpdateController.CheckAllGamesUpdates();
+            }, updateCheckProgressOptions);
             if (gamesUpdates.Count > 0)
             {
                 Window window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions

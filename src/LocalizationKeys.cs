@@ -797,5 +797,9 @@ namespace System
         /// Not enough free disk space.
         /// </summary>
         public const string LegendaryNotEnoughSpace = "LOCLegendaryNotEnoughSpace";
+        /// <summary>
+        /// Checking for updates...
+        /// </summary>
+        public const string LegendaryCheckingForUpdates = "LOCLegendaryCheckingForUpdates";
     }
 }

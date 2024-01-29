@@ -669,14 +669,19 @@ namespace LegendaryLibraryNS
                     yield return new GameMenuItem
                     {
                         Description = ResourceProvider.GetString(LOC.Legendary3P_PlayniteCheckForUpdates),
-                        Action = async (args) =>
+                        Action = (args) =>
                         {
                             if (!LegendaryLauncher.IsInstalled)
                             {
                                 throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
                             }
                             LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
-                            var gamesToUpdate = await legendaryUpdateController.CheckGameUpdates(game.Name, game.GameId);
+                            var gamesToUpdate = new Dictionary<string, Installed>();
+                            GlobalProgressOptions updateCheckProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryCheckingForUpdates), false) { IsIndeterminate = true };
+                            PlayniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
+                            {
+                                gamesToUpdate = await legendaryUpdateController.CheckGameUpdates(game.Name, game.GameId);
+                            }, updateCheckProgressOptions);
                             if (gamesToUpdate.Count > 0)
                             {
                                 Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
