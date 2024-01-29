@@ -801,5 +801,9 @@ namespace System
         /// Checking for updates...
         /// </summary>
         public const string LegendaryCheckingForUpdates = "LOCLegendaryCheckingForUpdates";
+        /// <summary>
+        /// {0} has been successfully uninstalled.
+        /// </summary>
+        public const string LegendaryUninstallSuccess = "LOCLegendaryUninstallSuccess";
     }
 }

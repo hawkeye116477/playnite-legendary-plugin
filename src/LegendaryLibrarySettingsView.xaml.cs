@@ -69,6 +69,7 @@ namespace LegendaryLibraryNS
                     EOSOInstallBtn.Visibility = Visibility.Visible;
                     EOSOUninstallBtn.Visibility = Visibility.Collapsed;
                     EOSOToggleBtn.Visibility = Visibility.Collapsed;
+                    playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryUninstallSuccess).Format(ResourceProvider.GetString(LOC.LegendaryEOSOverlay)));
                 }
             }
         }

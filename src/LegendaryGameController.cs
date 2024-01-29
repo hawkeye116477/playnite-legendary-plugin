@@ -128,6 +128,7 @@ namespace LegendaryLibraryNS
                         }
                         Helpers.SaveJsonSettingsToFile(savedGamesSettings, "gamesSettings");
                     }
+                    playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryUninstallSuccess).Format(Game.Name));
                     InvokeOnUninstalled(new GameUninstalledEventArgs());
                 }
                 else
