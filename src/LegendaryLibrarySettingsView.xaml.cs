@@ -419,12 +419,23 @@ namespace LegendaryLibraryNS
                                           .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                                           .WithValidation(CommandResultValidation.None)
                                           .ExecuteBufferedAsync();
-                    if (result.ExitCode != 0 && !result.StandardError.Contains("User data deleted"))
+                    if (!result.StandardError.Contains("User data deleted"))
                     {
                         logger.Error($"[Legendary] Failed to sign out. Error: {result.StandardError}");
                         return;
                     }
-                    UpdateAuthStatus();
+                    else
+                    {
+                        using (var view = playniteAPI.WebViews.CreateView(new WebViewSettings
+                        {
+                            WindowWidth = 580,
+                            WindowHeight = 700,
+                        }))
+                        {
+                            view.DeleteDomainCookies(".epicgames.com");
+                        }
+                        UpdateAuthStatus();
+                    }
                 }
                 else
                 {
