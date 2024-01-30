@@ -116,7 +116,7 @@ namespace LegendaryLibraryNS.Services
                                   .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                                   .WithValidation(CommandResultValidation.None)
                                   .ExecuteBufferedAsync();
-            if (result.ExitCode != 0 && !result.StandardError.Contains("Successfully"))
+            if (!result.StandardError.Contains("Successfully"))
             {
                 logger.Error($"[Legendary] Failed to authenticate with the Epic Games Store. Error: {result.StandardError}");
                 return;
