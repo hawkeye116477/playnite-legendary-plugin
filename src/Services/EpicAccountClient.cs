@@ -111,15 +111,22 @@ namespace LegendaryLibraryNS.Services
                 return;
             }
 
-            var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                  .WithArguments(new[] { "auth", "--code", authorizationCode })
-                                  .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
-                                  .WithValidation(CommandResultValidation.None)
-                                  .ExecuteBufferedAsync();
-            if (!result.StandardError.Contains("Successfully"))
+            using var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Clear();
+            httpClient.DefaultRequestHeaders.Add("Authorization", "basic " + authEncodedString);
+            using var content = new StringContent($"grant_type=authorization_code&code={authorizationCode}&token_type=eg1");
+            content.Headers.Clear();
+            content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+            var response = await httpClient.PostAsync(oauthUrl, content);
+            if (response.IsSuccessStatusCode)
             {
-                logger.Error($"[Legendary] Failed to authenticate with the Epic Games Store. Error: {result.StandardError}");
-                return;
+                var respContent = await response.Content.ReadAsStringAsync();
+                FileSystem.CreateDirectory(Path.GetDirectoryName(tokensPath));
+                File.WriteAllText(tokensPath, respContent);
+            }
+            else
+            {
+                logger.Error($"Failed to authenticate with the Epic Games Store. Error: {response.ReasonPhrase}");
             }
         }
 
@@ -154,7 +161,7 @@ namespace LegendaryLibraryNS.Services
             {
                 if (e is TokenException)
                 {
-                    await RenewTokens();
+                    await RenewTokens(tokens.refresh_token);
                     tokens = LoadTokens();
                     if (tokens is null)
                     {
@@ -228,42 +235,24 @@ namespace LegendaryLibraryNS.Services
             }
         }
 
-        private async Task RenewTokens()
+        private async Task RenewTokens(string refreshToken)
         {
-            var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                         .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
-                         .WithArguments("auth");
-            using var forcefulCTS = new CancellationTokenSource();
-            using var gracefulCTS = new CancellationTokenSource();
-            try
+            using var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Clear();
+            httpClient.DefaultRequestHeaders.Add("Authorization", "basic " + authEncodedString);
+            using var content = new StringContent($"grant_type=refresh_token&refresh_token={refreshToken}&token_type=eg1");
+            content.Headers.Clear();
+            content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+            var response = await httpClient.PostAsync(oauthUrl, content);
+            if (response.IsSuccessStatusCode)
             {
-                await foreach (CommandEvent cmdEvent in cmd.ListenAsync(Console.OutputEncoding, Console.OutputEncoding, forcefulCTS.Token, gracefulCTS.Token))
-                {
-                    switch (cmdEvent)
-                    {
-                        case StandardErrorCommandEvent stdErr:
-                            // If tokens can't be renewed, Legendary will try to open web browser
-                            // and demand an answer from user,
-                            // so we need to prevent that.
-                            if (stdErr.Text.Contains("no longer valid"))
-                            {
-                                gracefulCTS.Cancel();
-                                gracefulCTS?.Dispose();
-                                forcefulCTS?.Dispose();
-                            }
-                            break;
-                        case ExitedCommandEvent exited:
-                            gracefulCTS?.Dispose();
-                            forcefulCTS?.Dispose();
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                var respContent = await response.Content.ReadAsStringAsync();
+                FileSystem.CreateDirectory(Path.GetDirectoryName(tokensPath));
+                File.WriteAllText(tokensPath, respContent);
             }
-            catch (OperationCanceledException)
+            else
             {
-                // Command was canceled
+                logger.Error("Failed to renew tokens.");
             }
         }
 
