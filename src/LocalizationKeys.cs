@@ -282,6 +282,10 @@ namespace System
         /// </summary>
         public const string LegendarySpaceAvailable = "LOCLegendarySpaceAvailable";
         /// <summary>
+        /// After Installing:
+        /// </summary>
+        public const string LegendaryAfterInstalling = "LOCLegendaryAfterInstalling";
+        /// <summary>
         /// Downloaded:
         /// </summary>
         public const string LegendaryDownloaded = "LOCLegendaryDownloaded";

@@ -31,6 +31,7 @@ namespace LegendaryLibraryNS
         public Window DlcManagerWindow => Window.GetWindow(this);
         public ObservableCollection<KeyValuePair<string, LegendaryGameInfo.Rootobject>> installedDLCs;
         public ObservableCollection<KeyValuePair<string, LegendaryGameInfo.Rootobject>> notInstalledDLCs;
+        public long availableFreeSpace;
 
         public LegendaryDlcManager()
         {
@@ -73,7 +74,9 @@ namespace LegendaryLibraryNS
                     DriveInfo dDrive = new DriveInfo(Path.GetFullPath(Game.InstallDirectory));
                     if (dDrive.IsReady)
                     {
-                        SpaceTB.Text = Helpers.FormatSize(dDrive.AvailableFreeSpace);
+                        availableFreeSpace = dDrive.AvailableFreeSpace;
+                        SpaceTB.Text = Helpers.FormatSize(availableFreeSpace);
+                        AfterInstallingTB.Text = Helpers.FormatSize(availableFreeSpace);
                     }
                     var settings = LegendaryLibrary.GetSettings();
                     MaxWorkersNI.Value = settings.MaxWorkers.ToString();
@@ -250,6 +253,8 @@ namespace LegendaryLibraryNS
             DownloadSizeTB.Text = downloadSize;
             var installSize = Helpers.FormatSize(initialInstallSizeNumber);
             InstallSizeTB.Text = installSize;
+            double afterInstallSizeNumber = (double)(availableFreeSpace - initialInstallSizeNumber);
+            AfterInstallingTB.Text = Helpers.FormatSize(afterInstallSizeNumber);
         }
 
         private void InstalledDlcsLB_SelectionChanged(object sender, SelectionChangedEventArgs e)

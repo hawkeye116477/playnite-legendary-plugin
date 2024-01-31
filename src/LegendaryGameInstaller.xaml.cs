@@ -30,6 +30,8 @@ namespace LegendaryLibraryNS
         public List<string> requiredThings;
         public double downloadSizeNumber;
         public double installSizeNumber;
+        public double? installSizeNumberAfterMod;
+        public long availableFreeSpace;
         private LegendaryGameInfo.Rootobject manifest;
         public bool uncheckedByUser = true;
 
@@ -376,6 +378,7 @@ namespace LegendaryLibraryNS
                         installSize = Helpers.FormatSize(installSizeNumber);
                     }
                 }
+                UpdateAfterInstallingSize();
                 DownloadSizeTB.Text = downloadSize;
                 InstallSizeTB.Text = installSize;
             }
@@ -422,8 +425,10 @@ namespace LegendaryLibraryNS
                         if (line.Contains(installSizeText))
                         {
                             var installSizeSplittedString = line.Substring(line.IndexOf(installSizeText) + installSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                            installSize = Helpers.FormatSize(double.Parse(installSizeSplittedString[0], CultureInfo.InvariantCulture), installSizeSplittedString[1]);
+                            installSizeNumber = double.Parse(installSizeSplittedString[0], CultureInfo.InvariantCulture);
+                            installSize = Helpers.FormatSize(installSizeNumber, installSizeSplittedString[1]);
                             InstallSizeTB.Text = installSize;
+                            UpdateAfterInstallingSize();
                         }
                     }
                 }
@@ -445,8 +450,20 @@ namespace LegendaryLibraryNS
             DriveInfo dDrive = new DriveInfo(path);
             if (dDrive.IsReady)
             {
-                SpaceTB.Text = Helpers.FormatSize(dDrive.AvailableFreeSpace);
+                availableFreeSpace = dDrive.AvailableFreeSpace;
+                SpaceTB.Text = Helpers.FormatSize(availableFreeSpace);
             }
+            UpdateAfterInstallingSize();
+        }
+
+        private void UpdateAfterInstallingSize()
+        {
+            double afterInstallSizeNumber = (double)(availableFreeSpace - installSizeNumber);
+            if (installSizeNumberAfterMod != null)
+            {
+                afterInstallSizeNumber = (double)(availableFreeSpace - installSizeNumberAfterMod);
+            }
+            AfterInstallingTB.Text = Helpers.FormatSize(afterInstallSizeNumber);
         }
 
         private void ExtraContentLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -504,6 +521,8 @@ namespace LegendaryLibraryNS
             DownloadSizeTB.Text = downloadSize;
             installSize = Helpers.FormatSize(initialInstallSizeNumber);
             InstallSizeTB.Text = installSize;
+            installSizeNumberAfterMod = initialInstallSizeNumber;
+            UpdateAfterInstallingSize();
         }
 
         private void SetControlStyles()
