@@ -117,7 +117,7 @@ namespace LegendaryLibraryNS
 
         private async void UninstallBtn_Click(object sender, RoutedEventArgs e)
         {
-            var result = new MessageBoxResult();
+            MessageBoxResult result;
             if (InstalledDlcsLB.SelectedItems.Count == 1)
             {
                 var selectedDLC = (KeyValuePair<string, LegendaryGameInfo.Rootobject>)InstalledDlcsLB.SelectedItems[0];
@@ -198,8 +198,8 @@ namespace LegendaryLibraryNS
                             maxSharedMemory = maxSharedMemory
                         };
                         var dlcInfo = selectedOption.Value;
-                        var downloadSize = "0 b";
-                        var installSize = "0 b";
+                        var downloadSize = "0 B";
+                        var installSize = "0 B";
                         if (dlcInfo.Manifest != null)
                         {
                             downloadSize = Helpers.FormatSize(dlcInfo.Manifest.Download_size);

@@ -224,7 +224,6 @@ namespace LegendaryLibraryNS
 
         public static async Task<LegendaryGameInfo.Rootobject> GetGameInfo(string gameID, bool skipRefreshing = false)
         {
-            GlobalProgressOptions metadataProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.Legendary3P_PlayniteProgressMetadata), false);
             var manifest = new LegendaryGameInfo.Rootobject();
             var playniteAPI = API.Instance;
             var logger = LogManager.GetLogger();
@@ -351,8 +350,7 @@ namespace LegendaryLibraryNS
             {
                 logger.Error("An error occurred while downloading Legendary's version info.");
             }
-            var versionInfoContent = new LauncherVersion.Rootobject();
-            if (Serialization.TryFromJson(content, out versionInfoContent))
+            if (Serialization.TryFromJson(content, out LauncherVersion.Rootobject versionInfoContent))
             {
                 newVersionInfoContent = versionInfoContent;
             }
