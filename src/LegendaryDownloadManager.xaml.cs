@@ -328,7 +328,11 @@ namespace LegendaryLibraryNS
                                 DownloadSpeedTB.Text = downloadSpeed + "/s";
                             }
                             var errorMessage = stdErr.Text;
-                            if (errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") || errorMessage.Contains("Error") || errorMessage.Contains("Failure"))
+                            if (errorMessage.Contains("WARNING") && !errorMessage.Contains("exit requested"))
+                            {
+                                logger.Warn($"[Legendary] {errorMessage}");
+                            }
+                            else if (errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") || errorMessage.Contains("Error") || errorMessage.Contains("Failure"))
                             {
                                 logger.Error($"[Legendary] {errorMessage}");
                                 if (errorMessage.Contains("Failed to establish a new connection")
@@ -337,7 +341,7 @@ namespace LegendaryLibraryNS
                                     || errorMessage.Contains("No saved credentials"))
                                 {
                                     loginErrorDisplayed = true;
-                                } 
+                                }
                                 else if (errorMessage.Contains("MemoryError"))
                                 {
                                     memoryErrorMessage = errorMessage;
@@ -354,10 +358,6 @@ namespace LegendaryLibraryNS
                                 {
                                     errorDisplayed = true;
                                 }
-                            } 
-                            else if (errorMessage.Contains("WARNING") && !errorMessage.Contains("exit requested"))
-                            {
-                                logger.Warn($"[Legendary] {errorMessage}");
                             }
                             break;
                         case ExitedCommandEvent exited:
