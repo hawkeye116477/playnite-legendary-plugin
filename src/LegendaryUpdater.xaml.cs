@@ -16,7 +16,6 @@ namespace LegendaryLibraryNS
     public partial class LegendaryUpdater : UserControl
     {
         public Dictionary<string, Installed> UpdatesList => (Dictionary<string, Installed>)DataContext;
-        private IPlayniteAPI playniteAPI = API.Instance;
         public LegendaryUpdater()
         {
             InitializeComponent();

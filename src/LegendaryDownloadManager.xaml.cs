@@ -195,55 +195,69 @@ namespace LegendaryLibraryNS
         public async Task Install(string gameID, string gameTitle, string downloadSize, DownloadProperties downloadProperties)
         {
             await WaitUntilLegendaryCloses();
-            var installCommand = new List<string>() { "-y", "install", gameID };
-            if (downloadProperties.installPath != "")
-            {
-                installCommand.AddRange(new[] { "--base-path", downloadProperties.installPath });
-            }
+            var installCommand = new List<string>();
             var settings = LegendaryLibrary.GetSettings();
-            if (settings.PreferredCDN != "")
-            {
-                installCommand.AddRange(new[] { "--preferred-cdn", settings.PreferredCDN });
-            }
-            if (settings.NoHttps)
-            {
-                installCommand.Add("--no-https");
-            }
-            if (downloadProperties.maxWorkers != 0)
-            {
-                installCommand.AddRange(new[] { "--max-workers", downloadProperties.maxWorkers.ToString() });
-            }
-            if (downloadProperties.maxSharedMemory != 0)
-            {
-                installCommand.AddRange(new[] { "--max-shared-memory", downloadProperties.maxSharedMemory.ToString() });
-            }
-            if (downloadProperties.enableReordering)
-            {
-                installCommand.Add("--enable-reordering");
-            }
-            if (downloadProperties.downloadAction == DownloadAction.Repair)
-            {
-                installCommand.Add("--repair");
-            }
-            if (downloadProperties.downloadAction == DownloadAction.Update)
-            {
-                installCommand.Add("--update-only");
-            }
-            if (downloadProperties.extraContent != null)
-            {
-                if (downloadProperties.extraContent.Count > 0)
-                {
-                    foreach (var singleSelectedContent in downloadProperties.extraContent)
-                    {
-                        installCommand.Add("--install-tag=" + singleSelectedContent);
-                    }
-                }
-            }
-            installCommand.Add("--skip-dlcs");
             if (gameID == "eos-overlay")
             {
-                installCommand = new List<string>() { "-y", "eos-overlay", "install", "--path", Path.Combine(downloadProperties.installPath, ".overlay") };
+                installCommand = new List<string>() { "-y", "eos-overlay" };
+                if (downloadProperties.downloadAction == DownloadAction.Update)
+                {
+
+                    installCommand.Add("update");
+                }
+                else
+                {
+                    installCommand.AddRange(new[] { "install", "--path", Path.Combine(downloadProperties.installPath, ".overlay") });
+                }
             }
+            else
+            {
+                installCommand = new List<string>() { "-y", "install", gameID };
+                if (downloadProperties.installPath != "")
+                {
+                    installCommand.AddRange(new[] { "--base-path", downloadProperties.installPath });
+                }
+                if (settings.PreferredCDN != "")
+                {
+                    installCommand.AddRange(new[] { "--preferred-cdn", settings.PreferredCDN });
+                }
+                if (settings.NoHttps)
+                {
+                    installCommand.Add("--no-https");
+                }
+                if (downloadProperties.maxWorkers != 0)
+                {
+                    installCommand.AddRange(new[] { "--max-workers", downloadProperties.maxWorkers.ToString() });
+                }
+                if (downloadProperties.maxSharedMemory != 0)
+                {
+                    installCommand.AddRange(new[] { "--max-shared-memory", downloadProperties.maxSharedMemory.ToString() });
+                }
+                if (downloadProperties.enableReordering)
+                {
+                    installCommand.Add("--enable-reordering");
+                }
+                if (downloadProperties.downloadAction == DownloadAction.Repair)
+                {
+                    installCommand.Add("--repair");
+                }
+                if (downloadProperties.downloadAction == DownloadAction.Update)
+                {
+                    installCommand.Add("--update-only");
+                }
+                if (downloadProperties.extraContent != null)
+                {
+                    if (downloadProperties.extraContent.Count > 0)
+                    {
+                        foreach (var singleSelectedContent in downloadProperties.extraContent)
+                        {
+                            installCommand.Add("--install-tag=" + singleSelectedContent);
+                        }
+                    }
+                }
+                installCommand.Add("--skip-dlcs");
+            }
+
             forcefulInstallerCTS = new CancellationTokenSource();
             gracefulInstallerCTS = new CancellationTokenSource();
             try

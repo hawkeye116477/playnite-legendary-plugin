@@ -69,6 +69,7 @@ namespace LegendaryLibraryNS
                     EOSOInstallBtn.Visibility = Visibility.Visible;
                     EOSOUninstallBtn.Visibility = Visibility.Collapsed;
                     EOSOToggleBtn.Visibility = Visibility.Collapsed;
+                    EOSOCheckForUpdatesBtn.Visibility = Visibility.Collapsed;
                     playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryUninstallSuccess).Format(ResourceProvider.GetString(LOC.LegendaryEOSOverlay)));
                 }
             }
@@ -103,6 +104,7 @@ namespace LegendaryLibraryNS
                     EOSOUninstallBtn.Visibility = Visibility.Visible;
                     EOSOToggleBtn.Content = ResourceProvider.GetString(LOC.LegendaryDisable);
                     EOSOToggleBtn.Visibility = Visibility.Visible;
+                    EOSOCheckForUpdatesBtn.Visibility = Visibility.Visible;
                 }
             }
         }
@@ -614,6 +616,55 @@ namespace LegendaryLibraryNS
         private void OpenLogFilesPathBtn_Click(object sender, RoutedEventArgs e)
         {
             ProcessStarter.StartProcess("explorer.exe", playniteAPI.Paths.ConfigurationPath);
+        }
+
+        private async void EOSOCheckForUpdatesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                               .WithArguments(new[] { "eos-overlay", "update" })
+                               .WithStandardInputPipe(PipeSource.FromString("n"))
+                               .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                               .WithValidation(CommandResultValidation.None)
+                               .ExecuteBufferedAsync();
+            if (cmd.StandardError.Contains("is up to date"))
+            {
+                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryNoUpdatesAvailable), ResourceProvider.GetString(LOC.LegendaryEOSOverlay));
+            }
+            else
+            {
+                var options = new List<MessageBoxOption>
+                {
+                    new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterInstallUpdate)),
+                    new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteOKLabel)),
+                };
+                var result = playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryNewVersionAvailable), ResourceProvider.GetString(LOC.LegendaryEOSOverlay), ""), ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
+                if (result == options[0])
+                {
+                    LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
+                    var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == "eos-overlay");
+                    if (wantedItem != null)
+                    {
+                        if (wantedItem.status == DownloadStatus.Completed)
+                        {
+                            downloadManager.downloadManagerData.downloads.Remove(wantedItem);
+                            downloadManager.SaveData();
+                            wantedItem = null;
+                        }
+                    }
+                    if (wantedItem != null)
+                    {
+                        playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), wantedItem.name), "", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        DownloadProperties downloadProperties = new DownloadProperties()
+                        {
+                            downloadAction = DownloadAction.Update,
+                        };
+                        downloadManager.EnqueueJob("eos-overlay", ResourceProvider.GetString(LOC.LegendaryEOSOverlay), "", "", downloadProperties);
+                    }
+                }
+            }
         }
     }
 }

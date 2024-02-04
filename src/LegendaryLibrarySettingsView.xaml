@@ -98,11 +98,13 @@
                         <Button Content="{DynamicResource LOCLegendary3P_PlayniteInstallGame}" Grid.Row="0"
                             Grid.Column="0" Margin="5,0,0,0" Name="EOSOInstallBtn" Visibility="Collapsed"
                             Click="EOSOInstallBtn_Click" HorizontalAlignment="Left"></Button>
+                        <Button x:Name="EOSOCheckForUpdatesBtn" Grid.Column="0" Grid.Row="0" Margin="5,0,0,0" HorizontalAlignment="Left"
+                            Content="{DynamicResource LOCLegendary3P_PlayniteCheckForUpdates}" Click="EOSOCheckForUpdatesBtn_Click" />
                         <Button Content="{DynamicResource LOCLegendaryDisable}" Grid.Row="0"
-                            Grid.Column="0" Margin="10,0,0,0" Name="EOSOToggleBtn"
+                            Grid.Column="1" Margin="10,0,0,0" Name="EOSOToggleBtn"
                             Click="EOSOToggleBtn_Click" HorizontalAlignment="Left"/>
                         <Button Content="{DynamicResource LOCLegendary3P_PlayniteUninstallGame}" Name="EOSOUninstallBtn"
-                            Grid.Row="0" Grid.Column="1" Margin="10,0,0,0"
+                            Grid.Row="0" Grid.Column="2" Margin="10,0,0,0"
                             Click="EOSOUninstallBtn_Click" HorizontalAlignment="Left"></Button>
                     </Grid>
                 </StackPanel>
