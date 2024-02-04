@@ -217,6 +217,7 @@ namespace LegendaryLibraryNS
             PlayniteVersionTxt.Text = troubleshootingInformation.PlayniteVersion;
             PluginVersionTxt.Text = troubleshootingInformation.PluginVersion;
             GamesInstallationPathTxt.Text = troubleshootingInformation.GamesInstallationPath;
+            LogFilesPathTxt.Text = playniteAPI.Paths.ConfigurationPath;
             ReportBugHyp.NavigateUri = new Uri($"https://github.com/hawkeye116477/playnite-legendary-plugin/issues/new?assignees=&labels=bug&projects=&template=bugs.yml&legendaryV={troubleshootingInformation.PluginVersion}&playniteV={troubleshootingInformation.PlayniteVersion}&launcherV={troubleshootingInformation.LauncherVersion}");
 
             if (playniteAPI.ApplicationSettings.PlaytimeImportMode == PlaytimeImportMode.Never)
@@ -334,10 +335,6 @@ namespace LegendaryLibraryNS
             Clipboard.SetText(troubleshootingJSON);
         }
 
-        private void LogFilesFolderHyp_Click(object sender, RoutedEventArgs e)
-        {
-            ProcessStarter.StartProcess("explorer.exe", playniteAPI.Paths.ConfigurationPath);
-        }
 
         private void OpenGamesInstallationPathBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -612,6 +609,11 @@ namespace LegendaryLibraryNS
             {
                 AutoUpdateGamesChk.IsEnabled = true;
             }
+        }
+
+        private void OpenLogFilesPathBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ProcessStarter.StartProcess("explorer.exe", playniteAPI.Paths.ConfigurationPath);
         }
     }
 }

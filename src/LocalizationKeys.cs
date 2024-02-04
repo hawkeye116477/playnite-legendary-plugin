@@ -546,9 +546,9 @@ namespace System
         /// </summary>
         public const string LegendaryCopyRawDataToClipboard = "LOCLegendaryCopyRawDataToClipboard";
         /// <summary>
-        /// Log files folder
+        /// Log Files Path
         /// </summary>
-        public const string LegendaryLogFilesFolder = "LOCLegendaryLogFilesFolder";
+        public const string LegendaryLogFilesPath = "LOCLegendaryLogFilesPath";
         /// <summary>
         /// The specified path does not exist.
         /// </summary>
