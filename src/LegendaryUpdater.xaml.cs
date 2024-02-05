@@ -15,7 +15,7 @@ namespace LegendaryLibraryNS
     /// </summary>
     public partial class LegendaryUpdater : UserControl
     {
-        public Dictionary<string, Installed> UpdatesList => (Dictionary<string, Installed>)DataContext;
+        public Dictionary<string, UpdateInfo> UpdatesList => (Dictionary<string, UpdateInfo>)DataContext;
         public LegendaryUpdater()
         {
             InitializeComponent();
@@ -35,24 +35,15 @@ namespace LegendaryLibraryNS
             ReorderingChk.IsChecked = settings.EnableReordering;
         }
 
-        private async void UpdatesLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void UpdatesLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateBtn.IsEnabled = UpdatesLB.SelectedIndex != -1;
             double initialDownloadSizeNumber = 0;
             double initialInstallSizeNumber = 0;
-            foreach (var selectedOption in UpdatesLB.SelectedItems.Cast<KeyValuePair<string, Installed>>().ToList())
+            foreach (var selectedOption in UpdatesLB.SelectedItems.Cast<KeyValuePair<string, UpdateInfo>>().ToList())
             {
-                var manifest = await LegendaryLauncher.GetGameInfo(selectedOption.Key);
-                bool correctJson = false;
-                if (manifest != null && manifest.Manifest != null)
-                {
-                    correctJson = true;
-                }
-                if (correctJson)
-                {
-                    initialDownloadSizeNumber += manifest.Manifest.Download_size;
-                    initialInstallSizeNumber += manifest.Manifest.Disk_size;
-                }
+                initialDownloadSizeNumber += selectedOption.Value.Download_size;
+                initialInstallSizeNumber += selectedOption.Value.Disk_size;
             }
             var downloadSize = Helpers.FormatSize(initialDownloadSizeNumber);
             DownloadSizeTB.Text = downloadSize;
@@ -97,8 +88,8 @@ namespace LegendaryLibraryNS
                     enableReordering = enableReordering
                 };
                 Window.GetWindow(this).Close();
-                var updatesList = new Dictionary<string, Installed>();
-                foreach (var selectedOption in UpdatesLB.SelectedItems.Cast<KeyValuePair<string, Installed>>().ToList())
+                var updatesList = new Dictionary<string, UpdateInfo>();
+                foreach (var selectedOption in UpdatesLB.SelectedItems.Cast<KeyValuePair<string, UpdateInfo>>().ToList())
                 {
                     updatesList.Add(selectedOption.Key, selectedOption.Value);
                 }

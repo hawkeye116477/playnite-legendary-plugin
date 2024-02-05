@@ -11,11 +11,11 @@ using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -398,10 +398,53 @@ namespace LegendaryLibraryNS
     {
         private IPlayniteAPI playniteAPI = API.Instance;
         private static ILogger logger = LogManager.GetLogger();
-        public async Task<Dictionary<string, Installed>> CheckGameUpdates(string gameTitle, string gameId)
+        public async Task<Dictionary<string, UpdateInfo>> CheckGameUpdates(string gameTitle, string gameId)
         {
+            var gamesToUpdate = new Dictionary<string, UpdateInfo>();
+            if (gameId == "eos-overlay")
+            {
+                var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                              .WithArguments(new[] { "eos-overlay", "update" })
+                              .WithStandardInputPipe(PipeSource.FromString("n"))
+                              .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                              .WithValidation(CommandResultValidation.None)
+                              .ExecuteBufferedAsync();
+                if (!cmd.StandardError.Contains("is up to date"))
+                {
+                    double downloadSizeNumber = 0;
+                    double installSizeNumber = 0;
+                    string downloadSizeUnit = "B";
+                    string installSizeUnit = "B";
+                    string[] lines = cmd.StandardError.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                    foreach (var line in lines)
+                    {
+                        var downloadSizeText = "Download size:";
+                        if (line.Contains(downloadSizeText))
+                        {
+                            var downloadSizeSplittedString = line.Substring(line.IndexOf(downloadSizeText) + downloadSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            downloadSizeNumber = double.Parse(downloadSizeSplittedString[0], CultureInfo.InvariantCulture);
+                            downloadSizeUnit = downloadSizeSplittedString[1];
+                        }
+                        var installSizeText = "Install size:";
+                        if (line.Contains(installSizeText))
+                        {
+                            var installSizeSplittedString = line.Substring(line.IndexOf(installSizeText) + installSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            installSizeNumber = double.Parse(installSizeSplittedString[0], CultureInfo.InvariantCulture);
+                            installSizeUnit = installSizeSplittedString[1];
+                        }
+                    }
+                    var updateInfo = new UpdateInfo
+                    {
+                        Version = "",
+                        Title = ResourceProvider.GetString(LOC.LegendaryEOSOverlay),
+                        Download_size = Helpers.ToBytes(downloadSizeNumber, downloadSizeUnit),
+                        Disk_size = Helpers.ToBytes(installSizeNumber, installSizeUnit),
+                    };
+                    gamesToUpdate.Add(gameId, updateInfo);
+                }
+                return gamesToUpdate;
+            }
             var newGameInfo = await LegendaryLauncher.GetGameInfo(gameId);
-            var gamesToUpdate = new Dictionary<string, Installed>();
             if (newGameInfo.Game != null)
             {
                 var installedAppList = LegendaryLauncher.GetInstalledAppList();
@@ -410,11 +453,12 @@ namespace LegendaryLibraryNS
                     var oldGameInfo = installedAppList[gameId];
                     if (oldGameInfo.Version != newGameInfo.Game.Version)
                     {
-                        var updateInfo = new Installed
+                        var updateInfo = new UpdateInfo
                         {
                             Version = newGameInfo.Game.Version,
                             Title = newGameInfo.Game.Title,
-                            App_name = gameId,
+                            Download_size = newGameInfo.Manifest.Download_size,
+                            Disk_size = newGameInfo.Manifest.Disk_size
                         };
                         gamesToUpdate.Add(oldGameInfo.App_name, updateInfo);
                     }
@@ -433,11 +477,12 @@ namespace LegendaryLibraryNS
                                     {
                                         if (oldDlcInfo.Version != newDlcInfo.Game.Version)
                                         {
-                                            var updateDlcInfo = new Installed
+                                            var updateDlcInfo = new UpdateInfo
                                             {
                                                 Version = newDlcInfo.Game.Version,
                                                 Title = newDlcInfo.Game.Title,
-                                                App_name = dlc.App_name
+                                                Download_size = newDlcInfo.Manifest.Download_size,
+                                                Disk_size = newDlcInfo.Manifest.Disk_size
                                             };
                                             gamesToUpdate.Add(oldDlcInfo.App_name, updateDlcInfo);
                                         }
@@ -455,10 +500,10 @@ namespace LegendaryLibraryNS
             return gamesToUpdate;
         }
 
-        public async Task<Dictionary<string, Installed>> CheckAllGamesUpdates()
+        public async Task<Dictionary<string, UpdateInfo>> CheckAllGamesUpdates()
         {
             var appList = LegendaryLauncher.GetInstalledAppList();
-            var gamesToUpdate = new Dictionary<string, Installed>();
+            var gamesToUpdate = new Dictionary<string, UpdateInfo>();
             foreach (var game in appList.Where(item => item.Value.Is_dlc == false).OrderBy(item => item.Value.Title))
             {
                 var gameID = game.Value.App_name;
@@ -484,7 +529,7 @@ namespace LegendaryLibraryNS
             return gamesToUpdate;
         }
 
-        public void UpdateGame(Dictionary<string, Installed> gamesToUpdate, string gameTitle = "", bool silently = false, DownloadProperties downloadProperties = null)
+        public void UpdateGame(Dictionary<string, UpdateInfo> gamesToUpdate, string gameTitle = "", bool silently = false, DownloadProperties downloadProperties = null)
         {
             var updateTasks = new List<DownloadManagerData.Download>();
             if (gamesToUpdate.Count > 0)
@@ -528,8 +573,8 @@ namespace LegendaryLibraryNS
                             {
                                 gameID = gameToUpdate.Key,
                                 name = gameToUpdate.Value.Title,
-                                downloadSize = "",
-                                installSize = "",
+                                downloadSize = Helpers.FormatSize(gameToUpdate.Value.Download_size),
+                                installSize = Helpers.FormatSize(gameToUpdate.Value.Disk_size),
                                 downloadProperties = downloadProperties
                             };
                             updateTasks.Add(updateTask);

@@ -22,6 +22,11 @@ namespace LegendaryLibraryNS
             return finalSize.Replace("i", "");
         }
 
+        public static double ToBytes(double size, string unit)
+        {
+            return ByteSize.Parse($"{size} {unit}").Bytes;
+        }
+
         public static int TotalRAM
         {
             get

@@ -675,7 +675,7 @@ namespace LegendaryLibraryNS
                                 throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
                             }
                             LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
-                            var gamesToUpdate = new Dictionary<string, Installed>();
+                            var gamesToUpdate = new Dictionary<string, UpdateInfo>();
                             GlobalProgressOptions updateCheckProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryCheckingForUpdates), false) { IsIndeterminate = true };
                             PlayniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
                             {

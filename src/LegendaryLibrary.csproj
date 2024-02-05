@@ -207,6 +207,7 @@
     <Compile Include="Models\LegendaryGameInfo.cs" />
     <Compile Include="Models\LegendaryMetadata.cs" />
     <Compile Include="Models\LegendarySDLInfo.cs" />
+    <Compile Include="Models\UpdateInfo.cs" />
     <Compile Include="Models\OauthResponse.cs" />
     <Compile Include="EpicMetadataProvider.cs" />
     <Compile Include="Models\PlaytimePayload.cs" />

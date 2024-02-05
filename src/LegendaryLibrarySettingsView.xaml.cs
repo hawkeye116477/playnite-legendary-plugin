@@ -142,6 +142,7 @@ namespace LegendaryLibraryNS
                 EOSOInstallBtn.Visibility = Visibility.Visible;
                 EOSOToggleBtn.Visibility = Visibility.Collapsed;
                 EOSOUninstallBtn.Visibility = Visibility.Collapsed;
+                EOSOCheckForUpdatesBtn.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -572,7 +573,7 @@ namespace LegendaryLibraryNS
                 throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
             }
 
-            var gamesUpdates = new Dictionary<string, Installed>();
+            var gamesUpdates = new Dictionary<string, UpdateInfo>();
             LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
             GlobalProgressOptions updateCheckProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryCheckingForUpdates), false) { IsIndeterminate = true };
             playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
@@ -618,53 +619,35 @@ namespace LegendaryLibraryNS
             ProcessStarter.StartProcess("explorer.exe", playniteAPI.Paths.ConfigurationPath);
         }
 
-        private async void EOSOCheckForUpdatesBtn_Click(object sender, RoutedEventArgs e)
+        private void EOSOCheckForUpdatesBtn_Click(object sender, RoutedEventArgs e)
         {
-            var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                               .WithArguments(new[] { "eos-overlay", "update" })
-                               .WithStandardInputPipe(PipeSource.FromString("n"))
-                               .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
-                               .WithValidation(CommandResultValidation.None)
-                               .ExecuteBufferedAsync();
-            if (cmd.StandardError.Contains("is up to date"))
+            LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
+            var gamesToUpdate = new Dictionary<string, UpdateInfo>();
+            GlobalProgressOptions updateCheckProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryCheckingForUpdates), false) { IsIndeterminate = true };
+            playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
             {
-                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryNoUpdatesAvailable), ResourceProvider.GetString(LOC.LegendaryEOSOverlay));
+                gamesToUpdate = await legendaryUpdateController.CheckGameUpdates(ResourceProvider.GetString(LOC.LegendaryEOSOverlay), "eos-overlay");
+            }, updateCheckProgressOptions);
+            if (gamesToUpdate.Count > 0)
+            {
+                Window window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
+                {
+                    ShowMaximizeButton = false,
+                });
+                window.DataContext = gamesToUpdate;
+                window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
+                window.Content = new LegendaryUpdater();
+                window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
+                window.SizeToContent = SizeToContent.WidthAndHeight;
+                window.MinWidth = 600;
+                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                window.ShowDialog();
             }
             else
             {
-                var options = new List<MessageBoxOption>
-                {
-                    new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterInstallUpdate)),
-                    new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteOKLabel)),
-                };
-                var result = playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryNewVersionAvailable), ResourceProvider.GetString(LOC.LegendaryEOSOverlay), ""), ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
-                if (result == options[0])
-                {
-                    LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
-                    var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == "eos-overlay");
-                    if (wantedItem != null)
-                    {
-                        if (wantedItem.status == DownloadStatus.Completed)
-                        {
-                            downloadManager.downloadManagerData.downloads.Remove(wantedItem);
-                            downloadManager.SaveData();
-                            wantedItem = null;
-                        }
-                    }
-                    if (wantedItem != null)
-                    {
-                        playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), wantedItem.name), "", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                    else
-                    {
-                        DownloadProperties downloadProperties = new DownloadProperties()
-                        {
-                            downloadAction = DownloadAction.Update,
-                        };
-                        downloadManager.EnqueueJob("eos-overlay", ResourceProvider.GetString(LOC.LegendaryEOSOverlay), "", "", downloadProperties);
-                    }
-                }
+                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryNoUpdatesAvailable), ResourceProvider.GetString(LOC.LegendaryEOSOverlay));
             }
+
         }
     }
 }
