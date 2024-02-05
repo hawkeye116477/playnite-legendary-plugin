@@ -1,5 +1,23 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.6.0
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2024-02-05
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.6.0/LegendaryLibrary_1_6_0.pext
+    Changelog:
+      - Added after installing size for Game Installer and DLC Manager
+      - Improved Game Updater
+      - Added message about successful uninstalling
+      - Added success and fail messages for import installed game feature
+      - Improved authentication and sign out functions
+      - Game Installer will now add missing registry key for Dishonored Death of the
+        Outsider and Fallout New Vegas if needed
+      - Added possibility to update EOS Overlay
+      - Improved appearance of Troubleshooting Info tab in plugin's settings
+      - Fixed problems related with launcher's config path
+      - Added missing null checking to prevent crashing (some DLCs IDs can be null)
+      - Improved error handling
+      - Thanks for all bug hunters and translators!
   - Version: 1.5.0
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2024-01-25
