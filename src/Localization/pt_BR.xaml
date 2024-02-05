@@ -14,8 +14,8 @@
   <sys:String x:Key="LOCLegendaryEOSOverlay">Sobreposição EOS</sys:String>
   <sys:String x:Key="LOCLegendaryDisable">Desabilitar</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Habilitar</sys:String>
-  <sys:String x:Key="LOCLegendaryImportEGL">Importar jogo</sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable">Espaço Disponível:</sys:String>
+  <sys:String x:Key="LOCLegendaryAfterInstalling">Após a instalação:</sys:String>
   <sys:String x:Key="LOCLegendaryDownloaded">Baixado:</sys:String>
   <sys:String x:Key="LOCLegendaryETA">Tempo Restante:</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSpeed">Veloc. de Download:</sys:String>
@@ -30,6 +30,7 @@
   <sys:String x:Key="LOCLegendarySyncError">Ocorreu um erro ao sincronizar {0} jogo(s) salvo(s) na nuvem.</sys:String>
   <sys:String x:Key="LOCLegendaryImportingGame">Importando {0}...</sys:String>
   <sys:String x:Key="LOCLegendaryImportFinished">Importação concluída. Divirta-se.</sys:String>
+  <sys:String x:Key="LOCLegendaryGameImportFailure">Falha ao importar o jogo. Motivo: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryMaxWorkers">Número máximo de processos</sys:String>
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">Quantidade máxima de memória compartilhada (MB)</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">Gerenciador de Downloads</sys:String>
@@ -80,7 +81,7 @@
   <sys:String x:Key="LOCLegendaryLauncherVersion">Versão do inicializador</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherBinary">Executável do inicializador</sys:String>
   <sys:String x:Key="LOCLegendaryCopyRawDataToClipboard">Copiar para a área de transferência</sys:String>
-  <sys:String x:Key="LOCLegendaryLogFilesFolder">Pasta de arquivos de registro</sys:String>
+  <sys:String x:Key="LOCLegendaryLogFilesPath">Caminho para Arquivos de Log</sys:String>
   <sys:String x:Key="LOCLegendaryPathNotExist">O caminho especificado não existe.</sys:String>
   <sys:String x:Key="LOCLegendaryReportBug">Reportar um erro</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherNotInstalled">Inicializador Legendary não está instalado.</sys:String>
@@ -145,4 +146,6 @@
   <sys:String x:Key="LOCLegendaryPermissionError">Usuário não tem permissão de escrita no caminho especificado. Altere as permissões ou inicie o Playnite como administrador.</sys:String>
   <sys:String x:Key="LOCLegendaryCheckForGamesUpdatesButton">Verificar atualizações de jogos</sys:String>
   <sys:String x:Key="LOCLegendaryNotEnoughSpace">Espaço em disco insuficiente.</sys:String>
+  <sys:String x:Key="LOCLegendaryCheckingForUpdates">Procurando atualizações...</sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallSuccess">{0} foi desinstalado com sucesso.</sys:String>
 </ResourceDictionary>

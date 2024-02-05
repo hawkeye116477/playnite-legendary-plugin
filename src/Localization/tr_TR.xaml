@@ -14,8 +14,8 @@
   <sys:String x:Key="LOCLegendaryEOSOverlay">EOS Kaplaması</sys:String>
   <sys:String x:Key="LOCLegendaryDisable">Etkisizleştir</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Etkinleştir</sys:String>
-  <sys:String x:Key="LOCLegendaryImportEGL">Oyunu içe aktar</sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable">Mevcut Alan:</sys:String>
+  <sys:String x:Key="LOCLegendaryAfterInstalling">Kurulumdan Sonra:</sys:String>
   <sys:String x:Key="LOCLegendaryDownloaded">İndirilen:</sys:String>
   <sys:String x:Key="LOCLegendaryETA">TTS:</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSpeed">İndirme Hızı:</sys:String>
@@ -30,6 +30,7 @@
   <sys:String x:Key="LOCLegendarySyncError">{0} oyun kaydı buluta eşitlenirken bir hata oluştu.</sys:String>
   <sys:String x:Key="LOCLegendaryImportingGame">İçe aktarılıyor {0}...</sys:String>
   <sys:String x:Key="LOCLegendaryImportFinished">İçe aktarma tamamlandı. İyi eğlenceler.</sys:String>
+  <sys:String x:Key="LOCLegendaryGameImportFailure">Oyun içe aktarılamadı. Sebep: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryMaxWorkers">En fazla çalışan işlem sayısı</sys:String>
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">En fazla paylaşılan bellek miktarı (MB)</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">İndirme Yöneticisi</sys:String>
@@ -80,7 +81,7 @@
   <sys:String x:Key="LOCLegendaryLauncherVersion">Başlatıcı sürümü</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherBinary">Başlatıcı binary</sys:String>
   <sys:String x:Key="LOCLegendaryCopyRawDataToClipboard">Ham verileri panoya kopyala</sys:String>
-  <sys:String x:Key="LOCLegendaryLogFilesFolder">Günlük dosyaları klasörü</sys:String>
+  <sys:String x:Key="LOCLegendaryLogFilesPath">Günlük Dosyaları Yolu</sys:String>
   <sys:String x:Key="LOCLegendaryPathNotExist">Belirtilen yol mevcut değil.</sys:String>
   <sys:String x:Key="LOCLegendaryReportBug">Bir hata bildir</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherNotInstalled">Legendary Launcher kurulu değil.</sys:String>
@@ -145,4 +146,6 @@
   <sys:String x:Key="LOCLegendaryPermissionError">Kullanıcının belirtilen yola yazma erişimi yok. İzinleri değiştirin veya Playnite programını yönetici olarak başlatın.</sys:String>
   <sys:String x:Key="LOCLegendaryCheckForGamesUpdatesButton">Oyun güncellemelerini denetle</sys:String>
   <sys:String x:Key="LOCLegendaryNotEnoughSpace">Yeterli boş disk alanı yok.</sys:String>
+  <sys:String x:Key="LOCLegendaryCheckingForUpdates">Güncellemeler kontrol ediliyor...</sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallSuccess">{0} başarıyla kaldırıldı.</sys:String>
 </ResourceDictionary>
