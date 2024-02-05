@@ -96,7 +96,7 @@
             </DockPanel>
         </TabItem>
         <TabItem Header="{DynamicResource LOCLegendaryInstalledDlcs}" Name="InstalledDlcsTbI">
-            <StackPanel Margin="5,5,0,5">
+            <StackPanel Margin="10,5,0,5">
                 <StackPanel Name="InstalledDlcsSP">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
                         <Button x:Name="UninstallBtn" Content="{DynamicResource LOCLegendary3P_PlayniteUninstallGame}" ContentStringFormat="&#xedec; {0}" FontFamily="{DynamicResource FontIcoFont}" Click="UninstallBtn_Click" IsEnabled="False" Margin="0,0,5,0" />

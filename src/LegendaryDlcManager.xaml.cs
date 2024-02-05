@@ -55,10 +55,10 @@ namespace LegendaryLibraryNS
                     notInstalledDLCs = new ObservableCollection<KeyValuePair<string, LegendaryGameInfo.Rootobject>>();
                     foreach (var dlc in manifest.Game.Owned_dlc.OrderBy(obj => obj.Title))
                     {
-                        var dlcInfo = await LegendaryLauncher.GetGameInfo(dlc.App_name);
-                        dlcInfo.Game.Title = dlcInfo.Game.Title.RemoveTrademarks();
                         if (!dlc.App_name.IsNullOrEmpty())
                         {
+                            var dlcInfo = await LegendaryLauncher.GetGameInfo(dlc.App_name);
+                            dlcInfo.Game.Title = dlcInfo.Game.Title.RemoveTrademarks();
                             if (installedAppList.ContainsKey(dlc.App_name))
                             {
                                 installedDLCs.Add(new KeyValuePair<string, LegendaryGameInfo.Rootobject>(dlc.App_name, dlcInfo));
