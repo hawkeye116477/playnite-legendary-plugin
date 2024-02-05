@@ -14,8 +14,8 @@
   <sys:String x:Key="LOCLegendaryEOSOverlay"></sys:String>
   <sys:String x:Key="LOCLegendaryDisable"></sys:String>
   <sys:String x:Key="LOCLegendaryEnable"></sys:String>
-  <sys:String x:Key="LOCLegendaryImportEGL"></sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable"></sys:String>
+  <sys:String x:Key="LOCLegendaryAfterInstalling"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloaded"></sys:String>
   <sys:String x:Key="LOCLegendaryETA"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSpeed"></sys:String>
@@ -30,6 +30,7 @@
   <sys:String x:Key="LOCLegendarySyncError"></sys:String>
   <sys:String x:Key="LOCLegendaryImportingGame"></sys:String>
   <sys:String x:Key="LOCLegendaryImportFinished"></sys:String>
+  <sys:String x:Key="LOCLegendaryGameImportFailure"></sys:String>
   <sys:String x:Key="LOCLegendaryMaxWorkers"></sys:String>
   <sys:String x:Key="LOCLegendaryMaxSharedMemory"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager"></sys:String>
@@ -80,7 +81,7 @@
   <sys:String x:Key="LOCLegendaryLauncherVersion"></sys:String>
   <sys:String x:Key="LOCLegendaryLauncherBinary"></sys:String>
   <sys:String x:Key="LOCLegendaryCopyRawDataToClipboard"></sys:String>
-  <sys:String x:Key="LOCLegendaryLogFilesFolder"></sys:String>
+  <sys:String x:Key="LOCLegendaryLogFilesPath"></sys:String>
   <sys:String x:Key="LOCLegendaryPathNotExist"></sys:String>
   <sys:String x:Key="LOCLegendaryReportBug"></sys:String>
   <sys:String x:Key="LOCLegendaryLauncherNotInstalled"></sys:String>
@@ -145,4 +146,6 @@
   <sys:String x:Key="LOCLegendaryPermissionError"></sys:String>
   <sys:String x:Key="LOCLegendaryCheckForGamesUpdatesButton"></sys:String>
   <sys:String x:Key="LOCLegendaryNotEnoughSpace"></sys:String>
+  <sys:String x:Key="LOCLegendaryCheckingForUpdates"></sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallSuccess"></sys:String>
 </ResourceDictionary>

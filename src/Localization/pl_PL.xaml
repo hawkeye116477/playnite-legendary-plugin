@@ -14,8 +14,8 @@
   <sys:String x:Key="LOCLegendaryEOSOverlay">Nakładka EOS</sys:String>
   <sys:String x:Key="LOCLegendaryDisable">Wyłącz</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Włącz</sys:String>
-  <sys:String x:Key="LOCLegendaryImportEGL">Importuj grę</sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable">Dostępne miejsce:</sys:String>
+  <sys:String x:Key="LOCLegendaryAfterInstalling">Po zainstalowaniu:</sys:String>
   <sys:String x:Key="LOCLegendaryDownloaded">Pobrano:</sys:String>
   <sys:String x:Key="LOCLegendaryETA">Pozostało:</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSpeed">Prędkość pobierania:</sys:String>
@@ -30,6 +30,7 @@
   <sys:String x:Key="LOCLegendarySyncError">Wystąpił błąd podczas synchronizacji zapisów gry {0} z chmurą.</sys:String>
   <sys:String x:Key="LOCLegendaryImportingGame">Importowanie gry {0}...</sys:String>
   <sys:String x:Key="LOCLegendaryImportFinished">Importowanie zakończone. Dobrej zabawy.</sys:String>
+  <sys:String x:Key="LOCLegendaryGameImportFailure">Nie udało się zaimportować gry. Powód: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryMaxWorkers">Maksymalna liczba procesów roboczych</sys:String>
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">Maksymalna ilość pamięci współdzielonej (MB)</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">Menedżer pobierania</sys:String>
@@ -80,7 +81,7 @@
   <sys:String x:Key="LOCLegendaryLauncherVersion">Wersja launchera</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherBinary">Plik binarny launchera</sys:String>
   <sys:String x:Key="LOCLegendaryCopyRawDataToClipboard">Skopiuj nieprzetworzone dane do schowka</sys:String>
-  <sys:String x:Key="LOCLegendaryLogFilesFolder">Folder plików log</sys:String>
+  <sys:String x:Key="LOCLegendaryLogFilesPath">Ścieżka plików log</sys:String>
   <sys:String x:Key="LOCLegendaryPathNotExist">Podana ścieżka nie istnieje.</sys:String>
   <sys:String x:Key="LOCLegendaryReportBug">Zgłoś błąd</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherNotInstalled">Program uruchamiający Legendary nie jest zainstalowany.</sys:String>
@@ -145,4 +146,6 @@
   <sys:String x:Key="LOCLegendaryPermissionError">Użytkownik nie ma dostępu do zapisu w określonej ścieżce. Zmień uprawnienia lub uruchom Playnite jako administrator.</sys:String>
   <sys:String x:Key="LOCLegendaryCheckForGamesUpdatesButton">Sprawdź aktualizacje gier</sys:String>
   <sys:String x:Key="LOCLegendaryNotEnoughSpace">Za mało wolnego miejsca na dysku.</sys:String>
+  <sys:String x:Key="LOCLegendaryCheckingForUpdates">Sprawdzanie aktualizacji...</sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallSuccess">Program {0} został pomyślnie odinstalowany.</sys:String>
 </ResourceDictionary>

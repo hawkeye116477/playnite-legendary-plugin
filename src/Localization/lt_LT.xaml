@@ -14,8 +14,8 @@
   <sys:String x:Key="LOCLegendaryEOSOverlay">EOS Užklojimas</sys:String>
   <sys:String x:Key="LOCLegendaryDisable">Išjungti</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Įjungti</sys:String>
-  <sys:String x:Key="LOCLegendaryImportEGL">Importuoti žaidimą</sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable">Yra vietos:</sys:String>
+  <sys:String x:Key="LOCLegendaryAfterInstalling"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloaded">Atsisiųsta:</sys:String>
   <sys:String x:Key="LOCLegendaryETA">Numatomas baigties laikas:</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSpeed">Siuntimosi greitis:</sys:String>
@@ -30,6 +30,7 @@
   <sys:String x:Key="LOCLegendarySyncError"></sys:String>
   <sys:String x:Key="LOCLegendaryImportingGame">Importuojama {0}...</sys:String>
   <sys:String x:Key="LOCLegendaryImportFinished">Importas baigtas. Smagaus.</sys:String>
+  <sys:String x:Key="LOCLegendaryGameImportFailure"></sys:String>
   <sys:String x:Key="LOCLegendaryMaxWorkers"></sys:String>
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">Maksimalus bendros atminties kiekis (MB)</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">Atsisiuntimų Tvarkyklė</sys:String>
@@ -80,7 +81,7 @@
   <sys:String x:Key="LOCLegendaryLauncherVersion"></sys:String>
   <sys:String x:Key="LOCLegendaryLauncherBinary"></sys:String>
   <sys:String x:Key="LOCLegendaryCopyRawDataToClipboard"></sys:String>
-  <sys:String x:Key="LOCLegendaryLogFilesFolder"></sys:String>
+  <sys:String x:Key="LOCLegendaryLogFilesPath"></sys:String>
   <sys:String x:Key="LOCLegendaryPathNotExist"></sys:String>
   <sys:String x:Key="LOCLegendaryReportBug"></sys:String>
   <sys:String x:Key="LOCLegendaryLauncherNotInstalled"></sys:String>
@@ -145,4 +146,6 @@
   <sys:String x:Key="LOCLegendaryPermissionError"></sys:String>
   <sys:String x:Key="LOCLegendaryCheckForGamesUpdatesButton"></sys:String>
   <sys:String x:Key="LOCLegendaryNotEnoughSpace"></sys:String>
+  <sys:String x:Key="LOCLegendaryCheckingForUpdates"></sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallSuccess"></sys:String>
 </ResourceDictionary>
