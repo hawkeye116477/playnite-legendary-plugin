@@ -389,11 +389,6 @@ namespace LegendaryLibraryNS
 
         private async void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (!LegendaryLauncher.IsInstalled)
-            {
-                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
-                return;
-            }
             var clientApi = new EpicAccountClient(playniteAPI, LegendaryLauncher.TokensPath);
             var userLoggedIn = LoginBtn.IsChecked;
             if (!userLoggedIn == false)
@@ -414,28 +409,32 @@ namespace LegendaryLibraryNS
                 var answer = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendarySignOutConfirm), LOC.LegendarySignOut, MessageBoxButton.YesNo);
                 if (answer == MessageBoxResult.Yes)
                 {
-                    var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                          .WithArguments(new[] { "auth", "--delete" })
-                                          .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
-                                          .WithValidation(CommandResultValidation.None)
-                                          .ExecuteBufferedAsync();
-                    if (!result.StandardError.Contains("User data deleted"))
+                    if (LegendaryLauncher.IsInstalled)
                     {
-                        logger.Error($"[Legendary] Failed to sign out. Error: {result.StandardError}");
-                        return;
+                        var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                              .WithArguments(new[] { "auth", "--delete" })
+                                              .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                              .WithValidation(CommandResultValidation.None)
+                                              .ExecuteBufferedAsync();
+                        if (!result.StandardError.Contains("User data deleted"))
+                        {
+                            logger.Error($"[Legendary] Failed to sign out. Error: {result.StandardError}");
+                            return;
+                        }
                     }
                     else
                     {
-                        using (var view = playniteAPI.WebViews.CreateView(new WebViewSettings
-                        {
-                            WindowWidth = 580,
-                            WindowHeight = 700,
-                        }))
-                        {
-                            view.DeleteDomainCookies(".epicgames.com");
-                        }
-                        UpdateAuthStatus();
+                        File.Delete(LegendaryLauncher.TokensPath);
                     }
+                    using (var view = playniteAPI.WebViews.CreateView(new WebViewSettings
+                    {
+                        WindowWidth = 580,
+                        WindowHeight = 700,
+                    }))
+                    {
+                        view.DeleteDomainCookies(".epicgames.com");
+                    }
+                    UpdateAuthStatus();
                 }
                 else
                 {
