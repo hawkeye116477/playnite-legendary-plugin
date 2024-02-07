@@ -1,7 +1,4 @@
-﻿using Playnite.Common;
-using Playnite.SDK;
-using System.Diagnostics;
-using System.Linq;
+﻿using Playnite.SDK;
 
 namespace LegendaryLibraryNS
 {

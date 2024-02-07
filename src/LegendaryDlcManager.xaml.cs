@@ -2,9 +2,7 @@
 using CliWrap.Buffered;
 using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
-using Playnite.Common;
 using Playnite.SDK;
-using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
@@ -12,7 +10,6 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 

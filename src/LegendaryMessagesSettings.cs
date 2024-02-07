@@ -1,6 +1,5 @@
 ﻿using Playnite.Common;
 using Playnite.SDK.Data;
-using System;
 using System.IO;
 
 namespace LegendaryLibraryNS

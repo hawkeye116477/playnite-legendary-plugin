@@ -1,7 +1,4 @@
-﻿using CliWrap;
-using CliWrap.Buffered;
-using CliWrap.EventStream;
-using LegendaryLibraryNS.Models;
+﻿using LegendaryLibraryNS.Models;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
@@ -9,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace LegendaryLibraryNS.Services
