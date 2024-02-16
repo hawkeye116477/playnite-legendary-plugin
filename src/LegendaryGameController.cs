@@ -16,6 +16,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -152,6 +153,7 @@ namespace LegendaryLibraryNS
         private static ILogger logger = LogManager.GetLogger();
         private ProcessMonitor procMon;
         private Stopwatch stopWatch;
+        private CancellationTokenSource watcherToken;
 
         public LegendaryPlayController(Game game) : base(game)
         {
@@ -161,6 +163,7 @@ namespace LegendaryLibraryNS
         public override void Dispose()
         {
             procMon?.Dispose();
+            watcherToken?.Dispose();
         }
 
         public override async void Play(PlayActionArgs args)
@@ -320,7 +323,31 @@ namespace LegendaryLibraryNS
                 switch (cmdEvent)
                 {
                     case StartedCommandEvent started:
-                        Task watchGameProcess = procMon.WatchDirectoryProcesses(Game.InstallDirectory, false);
+                        if (File.Exists(Path.Combine(Game.InstallDirectory, "UplayLaunch.exe")))
+                        {
+                            // Borrowed from https://github.com/JosefNemec/PlayniteExtensions/blob/d3b1b50f45aa174751852198172a28a5ae947c6d/source/Libraries/UplayLibrary/UplayGameController.cs#L146
+                            while (true)
+                            {
+                                logger.Debug($"{Game.Name} requires Ubisoft launcher to run, waiting for it to start properly.");
+                                // Solves issues with game process being started/shutdown multiple times during startup via Ubisoft Connect
+                                watcherToken = new CancellationTokenSource();
+                                if (watcherToken.IsCancellationRequested)
+                                {
+                                    return;
+                                }
+
+                                if (ProcessExtensions.IsRunning("UbisoftGameLauncher"))
+                                {
+                                    Task watchGameProcess = procMon.WatchDirectoryProcesses(Game.InstallDirectory, false);
+                                    return;
+                                }
+                                await Task.Delay(5000);
+                            }
+                        }
+                        else
+                        {
+                            Task watchGameProcess = procMon.WatchDirectoryProcesses(Game.InstallDirectory, false);
+                        }
                         break;
                     case StandardErrorCommandEvent stdErr:
                         stdOutBuffer.AppendLine(stdErr.Text);
