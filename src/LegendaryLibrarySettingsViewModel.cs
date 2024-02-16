@@ -10,6 +10,7 @@ namespace LegendaryLibraryNS
         public bool ImportInstalledGames { get; set; } = LegendaryLauncher.IsInstalled;
         public bool ConnectAccount { get; set; } = false;
         public bool ImportUninstalledGames { get; set; } = false;
+        public bool ImportUbisoftLauncherGames { get; set; } = false;
         public string SelectedLauncherPath { get; set; } = "";
         public string GamesInstallationPath { get; set; } = "";
         public bool LaunchOffline { get; set; } = false;

@@ -141,9 +141,12 @@ namespace LegendaryLibraryNS
                     continue;
                 }
 
-                if ((catalogItem?.customAttributes?.PartnerLinkType != null) && (catalogItem?.customAttributes.PartnerLinkType.value == "ubisoft"))
+                if (!GetSettings().ImportUbisoftLauncherGames)
                 {
-                    continue;
+                    if ((catalogItem?.customAttributes?.PartnerLinkType != null) && (catalogItem?.customAttributes.PartnerLinkType.value == "ubisoft"))
+                    {
+                        continue;
+                    }
                 }
 
                 var newGame = new GameMetadata
