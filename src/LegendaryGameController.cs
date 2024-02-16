@@ -326,11 +326,11 @@ namespace LegendaryLibraryNS
                         if (File.Exists(Path.Combine(Game.InstallDirectory, "UplayLaunch.exe")))
                         {
                             // Borrowed from https://github.com/JosefNemec/PlayniteExtensions/blob/d3b1b50f45aa174751852198172a28a5ae947c6d/source/Libraries/UplayLibrary/UplayGameController.cs#L146
+                            logger.Debug($"{Game.Name} requires Ubisoft launcher to run, waiting for it to start properly.");
+                            // Solves issues with game process being started/shutdown multiple times during startup via Ubisoft Connect
+                            watcherToken = new CancellationTokenSource();
                             while (true)
                             {
-                                logger.Debug($"{Game.Name} requires Ubisoft launcher to run, waiting for it to start properly.");
-                                // Solves issues with game process being started/shutdown multiple times during startup via Ubisoft Connect
-                                watcherToken = new CancellationTokenSource();
                                 if (watcherToken.IsCancellationRequested)
                                 {
                                     return;
