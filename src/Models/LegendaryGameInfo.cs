@@ -34,6 +34,7 @@
             public string[] Install_tags { get; set; }
             public Tag_Disk_Size[] Tag_disk_size { get; set; }
             public Tag_Download_Size[] Tag_download_size { get; set; }
+            public Prerequisite Prerequisites { get; set; }
         }
 
         public class Tag_Disk_Size
@@ -48,6 +49,14 @@
             public string Tag { get; set; }
             public double Size { get; set; }
             public int Count { get; set; }
+        }
+
+        public class Prerequisite
+        {
+           public string[] ids { get; set; }
+           public string name { get; set; }
+           public string path { get; set; }
+           public string args { get; set; }
         }
     }
 }

@@ -821,5 +821,9 @@ namespace System
         /// Games only require 1 launcher and not all of them can be installed via Legendary. For this reason, it is recommended to go to Additional services => {0} => Activate games and then install directly via {0} launcher.
         /// </summary>
         public const string LegendaryThirdPartyLauncherImportWarn = "LOCLegendaryThirdPartyLauncherImportWarn";
+        /// <summary>
+        /// This game requires direct installation via {0} launcher.
+        /// </summary>
+        public const string LegendaryRequiredInstallViaThirdPartyLauncher = "LOCLegendaryRequiredInstallViaThirdPartyLauncher";
     }
 }

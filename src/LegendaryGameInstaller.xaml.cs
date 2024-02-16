@@ -247,6 +247,28 @@ namespace LegendaryLibraryNS
                 manifest = await LegendaryLauncher.GetGameInfo(GameID);
                 if (manifest != null && manifest.Manifest != null && manifest.Game != null)
                 {
+                    if (manifest.Manifest.Prerequisites != null)
+                    {
+                        if (manifest.Manifest.Prerequisites.ids != null && manifest.Manifest.Prerequisites.ids.Length > 0)
+                        {
+                            if (manifest.Manifest.Prerequisites.ids.Contains("uplay"))
+                            {
+                                var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                                      .WithArguments(new[] { "install", GameID })
+                                                      .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                                      .WithStandardInputPipe(PipeSource.FromString("n"))
+                                                      .WithValidation(CommandResultValidation.None)
+                                                      .ExecuteBufferedAsync();
+                                if (result.StandardOutput.Contains("Failure") && result.StandardOutput.Contains("Uplay"))
+                                {
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryRequiredInstallViaThirdPartyLauncher).Format("Ubisoft Connect")));
+                                    Window.GetWindow(this).Close();
+                                    return;
+                                }
+                            }
+                        }
+
+                    }
                     if (manifest.Manifest.Install_tags.Length > 1 || manifest.Game.Owned_dlc.Length > 0)
                     {
                         Dictionary<string, LegendarySDLInfo> extraContentInfo = new Dictionary<string, LegendarySDLInfo>();
