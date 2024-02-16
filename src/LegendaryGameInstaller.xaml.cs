@@ -33,6 +33,7 @@ namespace LegendaryLibraryNS
         public long availableFreeSpace;
         private LegendaryGameInfo.Rootobject manifest;
         public bool uncheckedByUser = true;
+        public string prereqName = "";
 
         public LegendaryGameInstaller()
         {
@@ -124,6 +125,8 @@ namespace LegendaryLibraryNS
                 {
                     installPath = installPath,
                     downloadAction = DownloadAction.Install,
+                    installPrerequisites = (bool)PrerequisitesChk.IsChecked,
+                    prerequisitesName = prereqName,
                     enableReordering = enableReordering,
                     maxWorkers = maxWorkers,
                     maxSharedMemory = maxSharedMemory,
@@ -249,8 +252,19 @@ namespace LegendaryLibraryNS
                 {
                     if (manifest.Manifest.Prerequisites != null)
                     {
-                        if (manifest.Manifest.Prerequisites.ids != null && manifest.Manifest.Prerequisites.ids.Length > 0)
+                        if (manifest.Manifest.Prerequisites.ids != null && manifest.Manifest.Prerequisites.ids.Length > 0 && !manifest.Manifest.Prerequisites.path.IsNullOrEmpty())
                         {
+                            PrerequisitesChk.IsChecked = true;
+                            PrerequisitesChk.Visibility = Visibility.Visible;
+                            if (!manifest.Manifest.Prerequisites.name.IsNullOrEmpty())
+                            {
+                                prereqName = manifest.Manifest.Prerequisites.name;
+                            }
+                            else
+                            {
+                                prereqName = Path.GetFileName(manifest.Manifest.Prerequisites.path);
+                            }
+                            PrerequisitesChk.Content = string.Format(PrerequisitesChk.Content.ToString(), prereqName);
                             if (manifest.Manifest.Prerequisites.ids.Contains("uplay"))
                             {
                                 var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)

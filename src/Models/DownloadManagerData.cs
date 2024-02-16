@@ -54,6 +54,8 @@ namespace LegendaryLibraryNS.Models
     {
         public string installPath { get; set; } = "";
         public DownloadAction downloadAction { get; set; }
+        public bool installPrerequisites { get; set; }
+        public string prerequisitesName { get; set; }
         public bool enableReordering { get; set; }
         public int maxWorkers { get; set; }
         public int maxSharedMemory { get; set; }

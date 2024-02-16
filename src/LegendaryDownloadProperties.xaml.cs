@@ -85,6 +85,12 @@ namespace LegendaryLibraryNS
                     ExtraContentTbI.Visibility = Visibility.Visible;
                 }
             }
+            if (!wantedItem.downloadProperties.prerequisitesName.IsNullOrEmpty())
+            {
+                PrerequisitesChk.IsChecked = wantedItem.downloadProperties.installPrerequisites;
+                PrerequisitesChk.Visibility = Visibility.Visible;
+                PrerequisitesChk.Content = string.Format(PrerequisitesChk.Content.ToString(), wantedItem.downloadProperties.prerequisitesName);
+            }
         }
 
         private void ChooseGamePathBtn_Click(object sender, RoutedEventArgs e)

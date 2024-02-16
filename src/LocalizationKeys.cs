@@ -825,5 +825,9 @@ namespace System
         /// This game requires direct installation via {0} launcher.
         /// </summary>
         public const string LegendaryRequiredInstallViaThirdPartyLauncher = "LOCLegendaryRequiredInstallViaThirdPartyLauncher";
+        /// <summary>
+        /// Install prerequisites ({0})
+        /// </summary>
+        public const string LegendaryInstallPrerequisites = "LOCLegendaryInstallPrerequisites";
     }
 }

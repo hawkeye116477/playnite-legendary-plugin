@@ -441,12 +441,40 @@ namespace LegendaryLibraryNS
                                                         Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\com.epicgames.launcher");
                                                     }
                                                 }
+                                                if (downloadProperties.installPrerequisites)
+                                                {
+                                                    if (installedGameInfo.Prereq_info != null)
+                                                    {
+                                                        var prereq = installedGameInfo.Prereq_info;
+                                                        var prereqPath = "";
+                                                        if (!prereq.path.IsNullOrEmpty())
+                                                        {
+                                                            prereqPath = prereq.path;
+                                                        }
+                                                        var prereqArgs = "";
+                                                        if (!prereq.args.IsNullOrEmpty())
+                                                        {
+                                                            prereqArgs = prereq.args;
+                                                        }
+                                                        if (prereqPath != "")
+                                                        {
+                                                            try
+                                                            {
+                                                                ProcessStarter.StartProcessWait(Path.GetFullPath(Path.Combine(installedGameInfo.Install_path, prereqPath)), prereqArgs, "");
+                                                            }
+                                                            catch (Exception ex)
+                                                            {
+                                                                logger.Error($"Failed to launch prerequisites executable: {ex.Message}");
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                                 playniteAPI.Database.Games.Update(game);
                                             }
                                         }
                                     }
+                                    Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), gameTitle, ResourceProvider.GetString(LOC.LegendaryInstallationFinished), null);
                                 }));
-                                Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), gameTitle, ResourceProvider.GetString(LOC.LegendaryInstallationFinished), null);
                             }
                             SaveData();
                             gracefulInstallerCTS?.Dispose();
