@@ -648,5 +648,13 @@ namespace LegendaryLibraryNS
             }
 
         }
+
+        private void ImportUbisoftLauncherGamesChk_Click(object sender, RoutedEventArgs e)
+        {
+            if (ImportUbisoftLauncherGamesChk.IsChecked == true)
+            {
+                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryThirdPartyLauncherImportWarn).Format("Ubisoft Connect"), "", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
 }

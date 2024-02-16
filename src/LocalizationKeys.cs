@@ -813,5 +813,13 @@ namespace System
         /// {0} has been successfully uninstalled.
         /// </summary>
         public const string LegendaryUninstallSuccess = "LOCLegendaryUninstallSuccess";
+        /// <summary>
+        /// Import games requiring {0} launcher
+        /// </summary>
+        public const string LegendaryImportThirdPartyLauncherGames = "LOCLegendaryImportThirdPartyLauncherGames";
+        /// <summary>
+        /// Not all games can be installed via Legendary. For this reason, it is recommended to go to Additional services => {0} => Activate games and then install directly via {0} launcher.
+        /// </summary>
+        public const string LegendaryThirdPartyLauncherImportWarn = "LOCLegendaryThirdPartyLauncherImportWarn";
     }
 }

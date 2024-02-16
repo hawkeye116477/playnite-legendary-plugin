@@ -43,9 +43,9 @@
                         <TextBlock VerticalAlignment="Center" Margin="10,5,5,5" Name="AuthStatusTB" Text="{DynamicResource LOCLegendary3P_EpicLoginChecking}"/>
                     </StackPanel>
                 </StackPanel>
-                <CheckBox DockPanel.Dock="Top"
+                <CheckBox DockPanel.Dock="Top" Name="ImportUbisoftLauncherGamesChk"
                     IsChecked="{Binding Settings.ImportUbisoftLauncherGames}"
-                    Content="Ubisoft Connect" ContentStringFormat="{DynamicResource LOCLegendaryImportThirdPartyLauncherGames}" Margin="0,0,0,10" />
+                    Content="Ubisoft Connect" ContentStringFormat="{DynamicResource LOCLegendaryImportThirdPartyLauncherGames}" Margin="0,0,0,10" Click="ImportUbisoftLauncherGamesChk_Click" />
                 <Button Content="{DynamicResource LOCLegendaryMigrateGamesEpic}" HorizontalAlignment="Left" Margin="0,5,0,15" Name="MigrateEpicBtn" IsEnabled="False" Click="MigrateEpicBtn_Click"></Button>
                 <CheckBox DockPanel.Dock="Top" Margin="0,0,0,10"
                         IsChecked="{Binding Settings.LaunchOffline}"
