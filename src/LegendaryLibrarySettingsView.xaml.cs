@@ -574,7 +574,8 @@ namespace LegendaryLibraryNS
         {
             if (!LegendaryLauncher.IsInstalled)
             {
-                throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                return;
             }
 
             var gamesUpdates = new Dictionary<string, UpdateInfo>();
