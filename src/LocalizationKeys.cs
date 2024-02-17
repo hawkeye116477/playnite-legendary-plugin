@@ -814,20 +814,24 @@ namespace System
         /// </summary>
         public const string LegendaryUninstallSuccess = "LOCLegendaryUninstallSuccess";
         /// <summary>
-        /// Import games requiring {0} launcher
+        /// Import games requiring {0}
         /// </summary>
         public const string LegendaryImportThirdPartyLauncherGames = "LOCLegendaryImportThirdPartyLauncherGames";
         /// <summary>
-        /// Games only require 1 launcher and not all of them can be installed via Legendary. For this reason, it is recommended to go to Additional services => {0} => Activate games and then install directly via {0} launcher.
+        /// These types of games doesn't require Legendary and not all of them can be installed via Legendary. It's recommended to go to Additional services => {0} => Activate games, and then install them directly via {0}.
         /// </summary>
         public const string LegendaryThirdPartyLauncherImportWarn = "LOCLegendaryThirdPartyLauncherImportWarn";
         /// <summary>
-        /// This game requires direct installation via {0} launcher.
+        /// This game requires direct installation via {0}.
         /// </summary>
-        public const string LegendaryRequiredInstallViaThirdPartyLauncher = "LOCLegendaryRequiredInstallViaThirdPartyLauncher";
+        public const string LegendaryRequiredInstallViaThirdPartyLauncherError = "LOCLegendaryRequiredInstallViaThirdPartyLauncherError";
         /// <summary>
         /// Install prerequisites ({0})
         /// </summary>
         public const string LegendaryInstallPrerequisites = "LOCLegendaryInstallPrerequisites";
+        /// <summary>
+        /// This game requires installation of {0}. It's recommended to go to Plugin settings => Additional services => {0} => Activate games, and then install it directly via {0}.
+        /// </summary>
+        public const string LegendaryRequiredInstallOfThirdPartyLauncher = "LOCLegendaryRequiredInstallOfThirdPartyLauncher";
     }
 }

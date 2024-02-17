@@ -275,9 +275,13 @@ namespace LegendaryLibraryNS
                                                       .ExecuteBufferedAsync();
                                 if (result.StandardOutput.Contains("Failure") && result.StandardOutput.Contains("Uplay"))
                                 {
-                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryRequiredInstallViaThirdPartyLauncher).Format("Ubisoft Connect")));
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryRequiredInstallViaThirdPartyLauncherError).Format("Ubisoft Connect")));
                                     Window.GetWindow(this).Close();
                                     return;
+                                }
+                                else if (result.StandardOutput.Contains("Uplay"))
+                                {
+                                    playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryRequiredInstallOfThirdPartyLauncher).Format("Ubisoft Connect"), "", MessageBoxButton.OK, MessageBoxImage.Information);
                                 }
                             }
                         }
