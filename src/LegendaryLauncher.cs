@@ -361,17 +361,25 @@ namespace LegendaryLibraryNS
         {
             get
             {
+                var logger = LogManager.GetLogger();
                 var launcherPath = "";
-                using (var regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Electronic Arts\EA Desktop"))
+                try
                 {
-                    if (regKey != null)
+                    using (var regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Electronic Arts\EA Desktop", false))
                     {
-                        var launcherPathObj = regKey.GetValue("ClientPath");
-                        if (launcherPathObj != null)
+                        if (regKey != null)
                         {
-                            launcherPath = launcherPathObj.ToString();
+                            var launcherPathObj = regKey.GetValue("ClientPath");
+                            if (launcherPathObj != null)
+                            {
+                                launcherPath = launcherPathObj.ToString();
+                            }
                         }
                     }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex.Message);
                 }
                 return !string.IsNullOrEmpty(launcherPath) && File.Exists(launcherPath);
             }

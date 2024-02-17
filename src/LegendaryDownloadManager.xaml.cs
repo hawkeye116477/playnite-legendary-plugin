@@ -435,10 +435,19 @@ namespace LegendaryLibraryNS
                                                 // Dishonored: Death of the Outsider and Fallout: New Vegas need specific key in registry
                                                 if (gameID == "2fb8273dcf6f41e4899c0c881e047053" || gameID == "5daeb974a22a435988892319b3a4f476")
                                                 {
-                                                    var regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey("com.epicgames.launcher");
-                                                    if (regKey == null)
+                                                    try
                                                     {
-                                                        Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\com.epicgames.launcher");
+                                                        using (var regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey("com.epicgames.launcher", false))
+                                                        {
+                                                            if (regKey == null)
+                                                            {
+                                                                Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\com.epicgames.launcher");
+                                                            }
+                                                        }
+                                                    }
+                                                    catch (Exception ex)
+                                                    {
+                                                        logger.Error(ex.Message);
                                                     }
                                                 }
                                                 if (downloadProperties.installPrerequisites)
