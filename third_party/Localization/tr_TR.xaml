@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!--
-  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/c33df30eed393305f9615423fd4385f3737d8d42 and https://github.com/JosefNemec/Playnite/tree/642ce6fc4ce540078e9c6df6f0d46f8dafceb2be.
+  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/4371c9d9561ab3e9da13886965025c4ee53c3e29 and https://github.com/JosefNemec/Playnite/tree/642ce6fc4ce540078e9c6df6f0d46f8dafceb2be.
   DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
@@ -40,6 +40,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">Yeni sürüm kontrol edilemedi.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Kur</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Kurulumu Kaldır</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteClientNotInstalledError">{0} istemcisi kurulmamış.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">Bir Daha Gösterme</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage">Mağaza Sayfası</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">Güncellemeler</sys:String>

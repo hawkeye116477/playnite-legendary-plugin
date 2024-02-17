@@ -150,6 +150,10 @@ namespace System
         /// </summary>
         public const string Legendary3P_PlayniteUninstallGame = "LOCLegendary3P_PlayniteUninstallGame";
         /// <summary>
+        /// {0} client is not installed.
+        /// </summary>
+        public const string Legendary3P_PlayniteClientNotInstalledError = "LOCLegendary3P_PlayniteClientNotInstalledError";
+        /// <summary>
         /// Don't Show Again
         /// </summary>
         public const string Legendary3P_PlayniteDontShowAgainTitle = "LOCLegendary3P_PlayniteDontShowAgainTitle";

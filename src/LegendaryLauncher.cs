@@ -357,5 +357,24 @@ namespace LegendaryLibraryNS
             return newVersionInfoContent;
         }
 
+        public static bool IsEaAppInstalled
+        {
+            get
+            {
+                var launcherPath = "";
+                using (var regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Electronic Arts\EA Desktop"))
+                {
+                    if (regKey != null)
+                    {
+                        var launcherPathObj = regKey.GetValue("ClientPath");
+                        if (launcherPathObj != null)
+                        {
+                            launcherPath = launcherPathObj.ToString();
+                        }
+                    }
+                }
+                return !string.IsNullOrEmpty(launcherPath) && File.Exists(launcherPath);
+            }
+        }
     }
 }

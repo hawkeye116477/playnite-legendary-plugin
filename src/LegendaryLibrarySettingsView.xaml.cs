@@ -552,6 +552,11 @@ namespace LegendaryLibraryNS
 
         private void ActivateEaBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (!LegendaryLauncher.IsEaAppInstalled)
+            {
+                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteClientNotInstalledError).Format("EA App"));
+                return;
+            }
             var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
             {
                 ShowMaximizeButton = false
