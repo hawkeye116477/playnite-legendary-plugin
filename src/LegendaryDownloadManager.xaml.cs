@@ -447,7 +447,7 @@ namespace LegendaryLibraryNS
                                                     }
                                                     catch (Exception ex)
                                                     {
-                                                        logger.Error(ex.Message);
+                                                        logger.Error($"Failed to create registry key for {gameTitle}. Error: {ex.Message}");
                                                     }
                                                 }
                                                 if (downloadProperties.installPrerequisites)
@@ -473,7 +473,7 @@ namespace LegendaryLibraryNS
                                                             }
                                                             catch (Exception ex)
                                                             {
-                                                                logger.Error($"Failed to launch prerequisites executable: {ex.Message}");
+                                                                logger.Error($"Failed to launch prerequisites executable. Error: {ex.Message}");
                                                             }
                                                         }
                                                     }

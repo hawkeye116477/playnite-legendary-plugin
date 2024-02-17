@@ -379,7 +379,7 @@ namespace LegendaryLibraryNS
                 }
                 catch (Exception ex)
                 {
-                    logger.Error(ex.Message);
+                    logger.Error($"Failed to get launcher path. Error: {ex.Message}");
                 }
                 return !string.IsNullOrEmpty(launcherPath) && File.Exists(launcherPath);
             }
