@@ -818,7 +818,7 @@ namespace System
         /// </summary>
         public const string LegendaryImportThirdPartyLauncherGames = "LOCLegendaryImportThirdPartyLauncherGames";
         /// <summary>
-        /// These types of games doesn't require Legendary and not all of them can be installed via Legendary. It's recommended to go to Additional services => {0} => Activate games, and then install them directly via {0}.
+        /// These types of games doesn't require Legendary and not all of them can be installed via it. It's recommended to go to Additional services => {0} => Activate games, and then install them directly via {0}.
         /// </summary>
         public const string LegendaryThirdPartyLauncherImportWarn = "LOCLegendaryThirdPartyLauncherImportWarn";
         /// <summary>
