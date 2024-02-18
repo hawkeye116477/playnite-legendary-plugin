@@ -358,6 +358,10 @@ namespace System
         /// </summary>
         public const string LegendaryMaxSharedMemory = "LOCLegendaryMaxSharedMemory";
         /// <summary>
+        /// Connection timeout (sec)
+        /// </summary>
+        public const string LegendaryConnectionTimeout = "LOCLegendaryConnectionTimeout";
+        /// <summary>
         /// Download Manager
         /// </summary>
         public const string LegendaryDownloadManager = "LOCLegendaryDownloadManager";
@@ -397,6 +401,22 @@ namespace System
         /// Are you sure you want to remove {0} from list?
         /// </summary>
         public const string LegendaryRemoveEntryConfirm = "LOCLegendaryRemoveEntryConfirm";
+        /// <summary>
+        /// Move entry to top
+        /// </summary>
+        public const string LegendaryMoveEntryTop = "LOCLegendaryMoveEntryTop";
+        /// <summary>
+        /// Move entry up
+        /// </summary>
+        public const string LegendaryMoveEntryUp = "LOCLegendaryMoveEntryUp";
+        /// <summary>
+        /// Move entry down
+        /// </summary>
+        public const string LegendaryMoveEntryDown = "LOCLegendaryMoveEntryDown";
+        /// <summary>
+        /// Move entry to bottom
+        /// </summary>
+        public const string LegendaryMoveEntryBottom = "LOCLegendaryMoveEntryBottom";
         /// <summary>
         /// Remove completed downloads
         /// </summary>
@@ -493,6 +513,10 @@ namespace System
         /// Open download directory
         /// </summary>
         public const string LegendaryOpenDownloadDirectory = "LOCLegendaryOpenDownloadDirectory";
+        /// <summary>
+        /// The specified path does not exist.
+        /// </summary>
+        public const string LegendaryPathNotExistsError = "LOCLegendaryPathNotExistsError";
         /// <summary>
         /// Task
         /// </summary>

@@ -802,9 +802,13 @@ namespace LegendaryLibraryNS
         {
             var selectedItem = DownloadsDG.SelectedItems[0] as DownloadManagerData.Download;
             var fullInstallPath = selectedItem.fullInstallPath;
-            if (fullInstallPath != "")
+            if (fullInstallPath != "" && Directory.Exists(fullInstallPath))
             {
-                Process.Start("explorer.exe", selectedItem.fullInstallPath);
+                ProcessStarter.StartProcess("explorer.exe", selectedItem.fullInstallPath);
+            }
+            else
+            {
+                playniteAPI.Dialogs.ShowErrorMessage($"{selectedItem.fullInstallPath}\n{ResourceProvider.GetString(LOC.LegendaryPathNotExistsError)}");
             }
         }
 
