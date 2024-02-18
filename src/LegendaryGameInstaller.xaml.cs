@@ -404,6 +404,32 @@ namespace LegendaryLibraryNS
                         {
                             ExtraContentLB.ItemsSource = extraContentInfo;
                             ExtraContentBrd.Visibility = Visibility.Visible;
+                            if (InstallData.downloadProperties.downloadAction == DownloadAction.Repair)
+                            {
+                                string[] installedTags = default;
+                                var installedAppList = LegendaryLauncher.GetInstalledAppList();
+                                if (installedAppList != null)
+                                {
+                                    if (installedAppList.ContainsKey(GameID))
+                                    {
+                                        var installedGameData = installedAppList[GameID];
+                                        if (installedGameData.Install_tags != null && installedGameData.Install_tags.Length > 1)
+                                        {
+                                            installedTags = installedGameData.Install_tags;
+                                        }
+                                    }
+                                }
+                                foreach (KeyValuePair<string, LegendarySDLInfo> extraCheckbox in ExtraContentLB.Items)
+                                {
+                                    if (extraCheckbox.Value.Tags.Count > 0)
+                                    {
+                                        if (installedTags.Contains(extraCheckbox.Value.Tags[0]))
+                                        {
+                                            ExtraContentLB.SelectedItems.Add(extraCheckbox);
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }

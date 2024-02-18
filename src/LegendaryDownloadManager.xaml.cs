@@ -253,6 +253,10 @@ namespace LegendaryLibraryNS
                         {
                             installCommand.Add("--install-tag=" + singleSelectedContent);
                         }
+                        if (downloadProperties.downloadAction == DownloadAction.Repair)
+                        {
+                            installCommand.Add("--reset-sdl");
+                        }
                     }
                 }
                 installCommand.Add("--skip-dlcs");
@@ -368,7 +372,7 @@ namespace LegendaryLibraryNS
                                 {
                                     diskSpaceErrorDisplayed = true;
                                 }
-                                if (!errorMessage.Contains("old manifest"))
+                                if (!errorMessage.Contains("old manifest") && !errorMessage.Contains("Failed removing directory"))
                                 {
                                     errorDisplayed = true;
                                 }
