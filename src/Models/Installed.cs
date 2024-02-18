@@ -13,6 +13,6 @@
         public string Save_path { get; set; }
         public string Title_for_updater { get; set; } = "";
         public Prerequisite Prereq_info { get; set; }
-        public string[] Install_tags { get; set; } = default;
+        public string[] Install_tags { get; set; }
     }
 }

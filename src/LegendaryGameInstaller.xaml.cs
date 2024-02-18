@@ -423,7 +423,7 @@ namespace LegendaryLibraryNS
                                 {
                                     if (extraCheckbox.Value.Tags.Count > 0)
                                     {
-                                        if (installedTags.Contains(extraCheckbox.Value.Tags[0]))
+                                        if (installedTags != null && installedTags.Length > 0 && installedTags.Contains(extraCheckbox.Value.Tags[0]))
                                         {
                                             ExtraContentLB.SelectedItems.Add(extraCheckbox);
                                         }
