@@ -21,6 +21,7 @@ namespace LegendaryLibraryNS
         public DownloadManagerData.Rootobject downloadManagerData;
         private IPlayniteAPI playniteAPI = API.Instance;
         public List<string> requiredThings;
+        public bool uncheckedByUser = true;
 
         public LegendaryDownloadProperties()
         {
@@ -147,6 +148,29 @@ namespace LegendaryLibraryNS
             }
             downloadManager.DownloadsDG.SelectedIndex = previouslySelected;
             Window.GetWindow(this).Close();
+        }
+
+        private void AllOrNothingChk_Checked(object sender, RoutedEventArgs e)
+        {
+            ExtraContentLB.SelectAll();
+        }
+
+        private void AllOrNothingChk_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (uncheckedByUser)
+            {
+                ExtraContentLB.SelectedItems.Clear();
+            }
+        }
+
+        private void ExtraContentChk_Unchecked(object sender, RoutedEventArgs e)
+        {
+            uncheckedByUser = false;
+            if (AllOrNothingChk.IsChecked == true)
+            {
+                AllOrNothingChk.IsChecked = false;
+            }
+            uncheckedByUser = true;
         }
     }
 }
