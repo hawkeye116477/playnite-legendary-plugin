@@ -267,6 +267,7 @@ namespace LegendaryLibraryNS
             try
             {
                 bool errorDisplayed = false;
+                bool successDisplayed = false;
                 bool loginErrorDisplayed = false;
                 string memoryErrorMessage = "";
                 bool permissionErrorDisplayed = false;
@@ -288,6 +289,14 @@ namespace LegendaryLibraryNS
                             DownloadedTB.Text = "";
                             DownloadSpeedTB.Text = "";
                             break;
+                        case StandardOutputCommandEvent stdOut:
+                            var verificationProgressMatch = Regex.Match(stdOut.Text, @"Verification progress:.*\((\d.*%)");
+                            if (verificationProgressMatch.Length >= 2)
+                            {
+                                double progress = double.Parse(verificationProgressMatch.Groups[1].Value.Replace("%", ""), CultureInfo.InvariantCulture);
+                                DownloadPB.Value = progress;
+                            }
+                            break;
                         case StandardErrorCommandEvent stdErr:
                             var downloadSizeMatch = Regex.Match(stdErr.Text, @"Download size: (\S+) (\wiB)");
                             if (downloadSizeMatch.Length >= 2)
@@ -306,14 +315,8 @@ namespace LegendaryLibraryNS
                             {
                                 wantedItem.fullInstallPath = fullInstallPathMatch.Groups[1].Value;
                             }
-                            var verificationProgressMatch = Regex.Match(stdErr.Text, @"Verification progress:.*\((\d.*%)");
                             var progressMatch = Regex.Match(stdErr.Text, @"Progress: (\d.*%)");
-                            if (verificationProgressMatch.Length >= 2)
-                            {
-                                double progress = double.Parse(verificationProgressMatch.Groups[1].Value.Replace("%", ""), CultureInfo.InvariantCulture);
-                                DownloadPB.Value = progress;
-                            }
-                            else if (progressMatch.Length >= 2)
+                            if (progressMatch.Length >= 2)
                             {
                                 double progress = double.Parse(progressMatch.Groups[1].Value.Replace("%", ""), CultureInfo.InvariantCulture);
                                 DownloadPB.Value = progress;
@@ -346,7 +349,11 @@ namespace LegendaryLibraryNS
                                 DownloadSpeedTB.Text = downloadSpeed + "/s";
                             }
                             var errorMessage = stdErr.Text;
-                            if (errorMessage.Contains("WARNING") && !errorMessage.Contains("exit requested"))
+                            if (errorMessage.Contains("finished successfully") || errorMessage.Contains("already up to date"))
+                            {
+                                successDisplayed = true;
+                            }
+                            else if (errorMessage.Contains("WARNING") && !errorMessage.Contains("exit requested") && !errorMessage.Contains("PermissionError"))
                             {
                                 logger.Warn($"[Legendary] {errorMessage}");
                             }
@@ -372,14 +379,14 @@ namespace LegendaryLibraryNS
                                 {
                                     diskSpaceErrorDisplayed = true;
                                 }
-                                if (!errorMessage.Contains("old manifest") && !errorMessage.Contains("Failed removing directory"))
+                                if (!errorMessage.Contains("old manifest"))
                                 {
                                     errorDisplayed = true;
                                 }
                             }
                             break;
                         case ExitedCommandEvent exited:
-                            if (errorDisplayed || exited.ExitCode != 0)
+                            if ((!successDisplayed && errorDisplayed) || exited.ExitCode != 0)
                             {
                                 if (loginErrorDisplayed)
                                 {
