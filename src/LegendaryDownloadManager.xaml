@@ -49,14 +49,27 @@
             <Button x:Name="PauseBtn" ToolTip="{DynamicResource LOCLegendaryPauseDownload}" Content="&#xec72;" FontFamily="{DynamicResource FontIcoFont}" Click="PauseBtn_Click" Margin="5,0,0,0" IsEnabled="False" />
             <Button x:Name="CancelDownloadBtn" Content="&#xec73;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteCancelLabel}"
                    Margin="5,0,0,0" IsCancel="True" Click="CancelDownloadBtn_Click" IsEnabled="False" />
-            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="5,0,0,0" />
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="10,0,5,0" />
+            <Button Name="MoveTopBtn" Content="&#xea95;" FontFamily="{DynamicResource FontIcoFont}"
+                    Margin="5,0,0,0" Click="MoveTopBtn_Click" ToolTip="{DynamicResource LOCLegendaryMoveEntryTop}"
+                    IsEnabled="False" />
+            <Button Name="MoveUpBtn" Content="&#xea5e;" FontFamily="{DynamicResource FontIcoFont}"
+                    Margin="5,0,0,0" Click="MoveUpBtn_Click" ToolTip="{DynamicResource LOCLegendaryMoveEntryUp}"
+                    IsEnabled="False" />
+            <Button Name="MoveDownBtn" Content="&#xea5b;" FontFamily="{DynamicResource FontIcoFont}"
+                    Margin="5,0,0,0" Click="MoveDownBtn_Click" ToolTip="{DynamicResource LOCLegendaryMoveEntryDown}"
+                    IsEnabled="False" />
+            <Button Name="MoveBottomBtn" Content="&#xea92;" FontFamily="{DynamicResource FontIcoFont}"
+                    Margin="5,0,0,0" Click="MoveBottomBtn_Click" ToolTip="{DynamicResource LOCLegendaryMoveEntryBottom}"
+                    IsEnabled="False" />
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="10,0,5,0" />
             <Button x:Name="SelectAllBtn" Content="&#xeed9;" FontFamily="{DynamicResource FontIcoFont}"
                     Margin="5,0,0,0" Click="SelectAllBtn_Click" />
             <Button x:Name="RemoveDownloadBtn" Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendaryRemoveEntry}"
                     Margin="5,0,0,0" Click="RemoveDownloadBtn_Click" IsEnabled="False" />
             <Button x:Name="RemoveCompletedDownloadsBtn" Content="&#xef9f;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendaryRemoveCompletedDownloads}"
                     Margin="5,0,0,0" Click="RemoveCompletedDownloadsBtn_Click" />
-            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="5,0,0,0" />
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="10,0,5,0" />
             <Button x:Name="DownloadPropertiesBtn" Content="&#xefe2;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendaryEditSelectedDownloadProperties}"
                     Margin="5,0,0,0" Click="DownloadPropertiesBtn_Click" IsEnabled="False" />
             <Button x:Name="OpenDownloadDirectoryBtn" Content="&#xef35;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendaryOpenDownloadDirectory}"

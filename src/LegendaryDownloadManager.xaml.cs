@@ -633,7 +633,6 @@ namespace LegendaryLibraryNS
                 }
             }
             downloadManagerData.downloads.Remove(selectedEntry);
-            SaveData();
         }
 
         private void RemoveDownloadBtn_Click(object sender, RoutedEventArgs e)
@@ -658,6 +657,7 @@ namespace LegendaryLibraryNS
                         RemoveDownloadEntry(selectedRow);
                     }
                 }
+                SaveData();
             }
         }
 
@@ -675,6 +675,7 @@ namespace LegendaryLibraryNS
                             RemoveDownloadEntry(row);
                         }
                     }
+                    SaveData();
                 }
             }
         }
@@ -759,6 +760,10 @@ namespace LegendaryLibraryNS
                 PauseBtn.IsEnabled = true;
                 CancelDownloadBtn.IsEnabled = true;
                 RemoveDownloadBtn.IsEnabled = true;
+                MoveBottomBtn.IsEnabled = true;
+                MoveDownBtn.IsEnabled = true;
+                MoveTopBtn.IsEnabled = true;
+                MoveUpBtn.IsEnabled = true;
                 if (DownloadsDG.SelectedItems.Count == 1)
                 {
                     DownloadPropertiesBtn.IsEnabled = true;
@@ -778,6 +783,10 @@ namespace LegendaryLibraryNS
                 RemoveDownloadBtn.IsEnabled = false;
                 DownloadPropertiesBtn.IsEnabled = false;
                 OpenDownloadDirectoryBtn.IsEnabled = false;
+                MoveBottomBtn.IsEnabled = false;
+                MoveDownBtn.IsEnabled = false;
+                MoveTopBtn.IsEnabled = false;
+                MoveUpBtn.IsEnabled = false;
             }
         }
 
@@ -797,6 +806,69 @@ namespace LegendaryLibraryNS
             {
                 Process.Start("explorer.exe", selectedItem.fullInstallPath);
             }
+        }
+
+        private enum EntryPosition
+        {
+            Up,
+            Down,
+            Top,
+            Bottom
+        }
+
+        private void MoveEntries(EntryPosition entryPosition)
+        {
+            if (DownloadsDG.SelectedIndex != -1)
+            {
+                foreach (var selectedRow in DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
+                {
+                    var selectedIndex = DownloadsDG.Items.IndexOf(selectedRow);
+                    int newIndex = selectedIndex;
+                    switch (entryPosition)
+                    {
+                        case EntryPosition.Up:
+                            if (selectedIndex != 0)
+                            {
+                                newIndex = selectedIndex - 1;
+                            }
+                            break;
+                        case EntryPosition.Down:
+                            var lastIndex = downloadManagerData.downloads.Count - 1;
+                            if (selectedIndex != lastIndex)
+                            {
+                                newIndex = selectedIndex + 1;
+                            }
+                            break;
+                        case EntryPosition.Top:
+                            newIndex = 0;
+                            break;
+                        case EntryPosition.Bottom:
+                            newIndex = downloadManagerData.downloads.Count - 1;
+                            break;
+                    }
+                    downloadManagerData.downloads.Move(selectedIndex, newIndex);
+                }
+                SaveData();
+            }
+        }
+
+        private void MoveUpBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MoveEntries(EntryPosition.Up);
+        }
+        private void MoveTopBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MoveEntries(EntryPosition.Top);
+        }
+
+        private void MoveDownBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MoveEntries(EntryPosition.Down);
+        }
+
+        private void MoveBottomBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MoveEntries(EntryPosition.Bottom);
         }
     }
 }

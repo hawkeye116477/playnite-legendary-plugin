@@ -44,6 +44,10 @@
   <sys:String x:Key="LOCLegendaryCurrentDownloadSummary">Summary of the current download</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveEntry">Remove entry</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveEntryConfirm">Are you sure you want to remove {0} from list?</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveEntryTop">Move entry to top</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveEntryUp">Move entry up</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveEntryDown">Move entry down</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveEntryBottom">Move entry to bottom</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveCompletedDownloads">Remove completed downloads</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveCompletedDownloadsConfirm">Are you sure you want to remove all completed downloads from list?</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveSelectedEntriesConfirm">Are you sure you want to remove selected entries from list?</sys:String>
