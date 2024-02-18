@@ -33,6 +33,7 @@
   <sys:String x:Key="LOCLegendaryGameImportFailure">Failed to import game. Reason: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryMaxWorkers">Maximum number of worker processes</sys:String>
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">Maximum amount of shared memory (MB)</sys:String>
+  <sys:String x:Key="LOCLegendaryConnectionTimeout">Connection timeout (sec)</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">Download Manager</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadStatus">Status</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadCompletedColumn">Completed</sys:String>

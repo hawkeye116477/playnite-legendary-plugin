@@ -172,6 +172,7 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <CheckBox Grid.Column="0" Grid.Row="0"
                             Content="{DynamicResource LOCLegendaryDisplayDownloadSpeedInBits}"
@@ -188,14 +189,17 @@
                         <TextBlock Text="{DynamicResource LOCLegendaryMaxSharedMemory}" Grid.Column="0"
                             Grid.Row="4" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         <local:NumericInput Grid.Row="4" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" Value="{Binding Settings.MaxSharedMemory}" HorizontalAlignment="Left"/>
-                        <TextBlock Text="{DynamicResource LOCLegendaryPreferredCDN}" Grid.Column="0"
+                        <TextBlock Text="{DynamicResource LOCLegendaryConnectionTimeout}" Grid.Column="0"
                             Grid.Row="5" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        <local:NumericInput Grid.Row="5" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="600" StepSize="5" Value="{Binding Settings.ConnectionTimeout}" HorizontalAlignment="Left"/>
+                        <TextBlock Text="{DynamicResource LOCLegendaryPreferredCDN}" Grid.Column="0"
+                            Grid.Row="6" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         <TextBox
                             Text="{Binding Settings.PreferredCDN, UpdateSourceTrigger=PropertyChanged}"
-                            Grid.Column="1" Grid.Row="5" Margin="0,0,0,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" />
-                        <TextBlock Grid.Column="0" Grid.Row="6"
+                            Grid.Column="1" Grid.Row="6" Margin="0,0,0,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" />
+                        <TextBlock Grid.Column="0" Grid.Row="7"
                             Text="{DynamicResource LOCLegendaryAfterDownloadComplete}" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"  />
-                        <ComboBox Grid.Column="1" Grid.Row="6" x:Name="AfterDownloadCompleteCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.DoActionAfterDownloadComplete}" SelectedValuePath="Key"  VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Margin="0,0,0,5" HorizontalAlignment="Left"/>
+                        <ComboBox Grid.Column="1" Grid.Row="7" x:Name="AfterDownloadCompleteCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.DoActionAfterDownloadComplete}" SelectedValuePath="Key"  VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Margin="0,0,0,5" HorizontalAlignment="Left"/>
                     </Grid>
                 </StackPanel>
                 <StackPanel Margin="0,20,0,0">

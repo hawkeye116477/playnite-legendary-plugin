@@ -237,6 +237,10 @@ namespace LegendaryLibraryNS
                 {
                     installCommand.Add("--enable-reordering");
                 }
+                if (settings.ConnectionTimeout != 0)
+                {
+                    installCommand.AddRange(new[] { "--dl-timeout", settings.ConnectionTimeout.ToString() });
+                }
                 if (downloadProperties.downloadAction == DownloadAction.Repair)
                 {
                     installCommand.Add("--repair");

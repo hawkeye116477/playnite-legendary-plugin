@@ -21,6 +21,7 @@ namespace LegendaryLibraryNS
         public bool SyncGameSaves { get; set; } = false;
         public int MaxWorkers { get; set; } = 0;
         public int MaxSharedMemory { get; set; } = 0;
+        public int ConnectionTimeout { get; set; } = 0;
         public bool EnableReordering { get; set; } = false;
         public ClearCacheTime AutoClearCache { get; set; } = ClearCacheTime.Never;
         public long NextClearingTime { get; set; } = 0;
