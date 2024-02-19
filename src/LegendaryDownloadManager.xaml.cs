@@ -106,6 +106,7 @@ namespace LegendaryLibraryNS
                 ElapsedTB.Text = "";
                 EtaTB.Text = "";
                 DownloadPB.Value = 0;
+                DescriptionTB.Text = "";
                 var downloadCompleteSettings = LegendaryLibrary.GetSettings().DoActionAfterDownloadComplete;
                 switch (downloadCompleteSettings)
                 {
@@ -292,13 +293,30 @@ namespace LegendaryLibraryNS
                             ElapsedTB.Text = "";
                             DownloadedTB.Text = "";
                             DownloadSpeedTB.Text = "";
+                            DescriptionTB.Text = "";
                             break;
                         case StandardOutputCommandEvent stdOut:
-                            var verificationProgressMatch = Regex.Match(stdOut.Text, @"Verification progress:.*\((\d.*%)");
-                            if (verificationProgressMatch.Length >= 2)
+                            if (downloadProperties.downloadAction == DownloadAction.Repair)
                             {
-                                double progress = double.Parse(verificationProgressMatch.Groups[1].Value.Replace("%", ""), CultureInfo.InvariantCulture);
-                                DownloadPB.Value = progress;
+                                var verificationProgressMatch = Regex.Match(stdOut.Text, @"Verification progress:.*\((\d.*%)");
+                                if (verificationProgressMatch.Length >= 2)
+                                {
+                                    double progress = double.Parse(verificationProgressMatch.Groups[1].Value.Replace("%", ""), CultureInfo.InvariantCulture);
+                                    DownloadPB.Value = progress;
+                                }
+                                var verificationFileProgressMatch = Regex.Match(stdOut.Text, @"Verifying large file \""(.*)""\: (\d.*%) \((\d+\.\d+)\/(\d+\.\d+) (\wiB)");
+                                if (verificationFileProgressMatch.Length >= 2)
+                                {
+                                    string fileName = verificationFileProgressMatch.Groups[1].Value;
+                                    string largeProgressPercent = verificationFileProgressMatch.Groups[2].Value;
+                                    string readSize = Helpers.FormatSize(double.Parse(verificationFileProgressMatch.Groups[3].Value, CultureInfo.InvariantCulture), verificationFileProgressMatch.Groups[5].Value);
+                                    string fullSize = Helpers.FormatSize(double.Parse(verificationFileProgressMatch.Groups[4].Value, CultureInfo.InvariantCulture), verificationFileProgressMatch.Groups[5].Value);
+                                    DescriptionTB.Text = ResourceProvider.GetString(LOC.LegendaryVerifyingLargeFile).Format(fileName, $"{largeProgressPercent} ({readSize}/{fullSize})");
+                                }
+                                else if (stdOut.Text.Contains("Verification"))
+                                {
+                                    DescriptionTB.Text = ResourceProvider.GetString(LOC.LegendaryVerifying);
+                                }
                             }
                             break;
                         case StandardErrorCommandEvent stdErr:
@@ -323,6 +341,7 @@ namespace LegendaryLibraryNS
                             if (progressMatch.Length >= 2)
                             {
                                 double progress = double.Parse(progressMatch.Groups[1].Value.Replace("%", ""), CultureInfo.InvariantCulture);
+                                DescriptionTB.Text = ResourceProvider.GetString(LOC.Legendary3P_PlayniteDownloadingLabel);
                                 DownloadPB.Value = progress;
                             }
                             var ETAMatch = Regex.Match(stdErr.Text, @"ETA: (\d\d:\d\d:\d\d)");
@@ -596,6 +615,7 @@ namespace LegendaryLibraryNS
                         ElapsedTB.Text = "";
                         EtaTB.Text = "";
                         DownloadPB.Value = 0;
+                        DescriptionTB.Text = "";
                         SaveData();
                     }
                 }

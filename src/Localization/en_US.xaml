@@ -20,6 +20,8 @@
   <sys:String x:Key="LOCLegendaryETA">ETA:</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSpeed">Download Speed:</sys:String>
   <sys:String x:Key="LOCLegendaryElapsed">Elapsed:</sys:String>
+  <sys:String x:Key="LOCLegendaryVerifying">Verifying...</sys:String>
+  <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Verifying large file "{0}": {1}</sys:String>
   <sys:String x:Key="LOCLegendaryPauseDownload">Pause</sys:String>
   <sys:String x:Key="LOCLegendaryResumeDownload">Resume</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadPaused">Paused</sys:String>

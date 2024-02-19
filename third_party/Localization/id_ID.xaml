@@ -17,6 +17,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel">Batal</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteYesLabel">Ya</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteNoLabel">Tidak</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDownloadingLabel">Mengunduh…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">Memuat...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata">Mendownload metadata...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">Restart Sistem</sys:String>

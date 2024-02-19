@@ -17,6 +17,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel">Cancel</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteYesLabel">Yes</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteNoLabel">No</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDownloadingLabel">Downloading…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">Loading…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata">Downloading metadata…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">Restart System</sys:String>

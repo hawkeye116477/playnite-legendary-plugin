@@ -16,6 +16,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel">අවලංගු කරන්න</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteYesLabel">ඔව්</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteNoLabel">නැහැ</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDownloadingLabel">බාගත වෙමින්…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">පූරණය වෙමින්…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata" />
   <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem" />

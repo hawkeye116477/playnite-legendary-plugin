@@ -17,6 +17,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel">Откажи</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteYesLabel">Да</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteNoLabel">Не</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDownloadingLabel">Преузимање…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">Учитавање...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata">Преузимање метаподатака…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">Рестартуј систем</sys:String>

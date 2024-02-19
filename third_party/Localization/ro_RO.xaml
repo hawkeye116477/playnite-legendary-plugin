@@ -17,6 +17,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel">Anulează</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteYesLabel">Da</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteNoLabel">Nu</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDownloadingLabel">Se descarcă...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">Se încarcă...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata">Se descarcă metadata...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">Repornire Sistem</sys:String>

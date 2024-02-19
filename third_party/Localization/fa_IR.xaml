@@ -17,6 +17,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel">لغو</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteYesLabel">تایید</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteNoLabel">خیر</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDownloadingLabel">بارگيري...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">بارگذاری…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata">در حال بارگیری ابرداده...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">راه اندازی مجدد سیستم</sys:String>

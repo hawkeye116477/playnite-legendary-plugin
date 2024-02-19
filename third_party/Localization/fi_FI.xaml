@@ -17,6 +17,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel">Peruuta</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteYesLabel">Kyllä</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteNoLabel">Ei</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDownloadingLabel">Ladataan…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">Ladataan…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata">Ladataan metadataa…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">Käynnistä järjestelmä uudelleen</sys:String>

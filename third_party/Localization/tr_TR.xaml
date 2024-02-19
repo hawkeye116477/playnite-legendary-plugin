@@ -17,6 +17,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel">İptal</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteYesLabel">Evet</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteNoLabel">Hayır</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDownloadingLabel">İndiriliyor…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">Yükleniyor…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata">Üst veriler indiriliyor…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">Sistemi Yeniden Başlat</sys:String>

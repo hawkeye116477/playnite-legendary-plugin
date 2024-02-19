@@ -37,7 +37,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Separator Grid.Row="0" Grid.ColumnSpan="2" Margin="0,15,0,5"></Separator>
-            <TextBlock Text="{DynamicResource LOCLegendaryCurrentDownloadSummary}" Grid.Row="1" Margin="0,0,0,5" VerticalAlignment="Bottom"></TextBlock>
+            <TextBlock x:Name="DescriptionTB" HorizontalAlignment="Left" Margin="0,0,0,5" Grid.Row="1" VerticalAlignment="Bottom"></TextBlock>
             <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="0,0,0,10">
                 <ProgressBar Value="0" Name="DownloadPB"/>
                 <TextBlock Text="{Binding ElementName=DownloadPB, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5">

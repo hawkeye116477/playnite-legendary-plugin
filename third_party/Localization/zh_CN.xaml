@@ -17,6 +17,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel">取消</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteYesLabel">是</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteNoLabel">否</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDownloadingLabel">正在下载…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">正在加载…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata">正在下载资料数据…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">重启系统</sys:String>

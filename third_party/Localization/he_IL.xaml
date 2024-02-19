@@ -17,6 +17,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel">ביטול</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteYesLabel">כן</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteNoLabel">לא</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDownloadingLabel">מוריד…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">טוען…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata">מוריד נתונים…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">איתחול מערכת</sys:String>

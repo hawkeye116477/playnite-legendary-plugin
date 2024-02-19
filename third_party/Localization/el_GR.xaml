@@ -17,6 +17,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel">Ακύρωση</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteYesLabel">Ναι</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteNoLabel">Όχι</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDownloadingLabel">Λήψη...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">Φόρτωση…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata">Λήψη metadata...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">Επανεκκίνηση του Συστήματος</sys:String>

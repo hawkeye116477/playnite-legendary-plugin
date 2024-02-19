@@ -58,6 +58,10 @@ namespace System
         /// </summary>
         public const string Legendary3P_PlayniteNoLabel = "LOCLegendary3P_PlayniteNoLabel";
         /// <summary>
+        /// Downloading…
+        /// </summary>
+        public const string Legendary3P_PlayniteDownloadingLabel = "LOCLegendary3P_PlayniteDownloadingLabel";
+        /// <summary>
         /// Loading…
         /// </summary>
         public const string Legendary3P_PlayniteLoadingLabel = "LOCLegendary3P_PlayniteLoadingLabel";
@@ -305,6 +309,14 @@ namespace System
         /// Elapsed:
         /// </summary>
         public const string LegendaryElapsed = "LOCLegendaryElapsed";
+        /// <summary>
+        /// Verifying...
+        /// </summary>
+        public const string LegendaryVerifying = "LOCLegendaryVerifying";
+        /// <summary>
+        /// Verifying large file "{0}": {1}
+        /// </summary>
+        public const string LegendaryVerifyingLargeFile = "LOCLegendaryVerifyingLargeFile";
         /// <summary>
         /// Pause
         /// </summary>

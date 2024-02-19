@@ -17,6 +17,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel">Hủy bỏ</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteYesLabel">Có</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteNoLabel">Không</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDownloadingLabel">Đang tải xuống…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">Đang tải…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata">Đang tải xuống Siêu dữ liệu...</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">Khởi động lại hệ thống</sys:String>

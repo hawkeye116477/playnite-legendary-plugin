@@ -17,6 +17,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel">रद्द करा</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteYesLabel">होय</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteNoLabel">नाही</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDownloadingLabel">डाउनलोड करत आहे…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">लोड करत आहे…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata">मेटाडेटा डाउनलोड करत आहे…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">सिस्टम रीस्टार्ट करा</sys:String>

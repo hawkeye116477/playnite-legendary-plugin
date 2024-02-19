@@ -17,6 +17,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel">Zrušit</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteYesLabel">Ano</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteNoLabel">Ne</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDownloadingLabel">Stahování…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">Načítání…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata">Stahují se metadata…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">Restartovat Systém</sys:String>
