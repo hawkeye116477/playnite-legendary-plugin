@@ -225,6 +225,7 @@ namespace LegendaryLibraryNS
                 ImportBtn.Visibility = Visibility.Collapsed;
                 InstallBtn.Visibility = Visibility.Collapsed;
                 RepairBtn.Visibility = Visibility.Visible;
+                AfterInstallingSP.Visibility = Visibility.Collapsed;
             }
             var settings = LegendaryLibrary.GetSettings();
             var installPath = LegendaryLauncher.GamesInstallationPath;
