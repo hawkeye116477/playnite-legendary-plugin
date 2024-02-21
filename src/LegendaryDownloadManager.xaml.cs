@@ -869,11 +869,19 @@ namespace LegendaryLibraryNS
                             {
                                 newIndex = selectedIndex - 1;
                             }
+                            else
+                            {
+                                return;
+                            }
                             break;
                         case EntryPosition.Down:
                             if (selectedIndex != lastIndex)
                             {
                                 newIndex = selectedIndex + 1;
+                            }
+                            else
+                            {
+                                return;
                             }
                             break;
                         case EntryPosition.Top:
