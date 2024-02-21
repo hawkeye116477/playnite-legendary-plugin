@@ -852,13 +852,16 @@ namespace LegendaryLibraryNS
                     selectedIndexes.Add(selectedIndex);
                 }
                 selectedIndexes.Sort();
-                if (entryPosition == EntryPosition.Down)
+                if (entryPosition == EntryPosition.Down || entryPosition == EntryPosition.Top)
                 {
                     selectedIndexes.Reverse();
                 }
-                foreach (var selectedIndex in selectedIndexes)
+                var lastIndex = downloadManagerData.downloads.Count - 1;
+                int loopIndex = 0;
+                foreach (int selectedIndex in selectedIndexes)
                 {
                     int newIndex = selectedIndex;
+                    int newSelectedIndex = selectedIndex;
                     switch (entryPosition)
                     {
                         case EntryPosition.Up:
@@ -868,20 +871,22 @@ namespace LegendaryLibraryNS
                             }
                             break;
                         case EntryPosition.Down:
-                            var lastIndex = downloadManagerData.downloads.Count - 1;
                             if (selectedIndex != lastIndex)
                             {
                                 newIndex = selectedIndex + 1;
                             }
                             break;
                         case EntryPosition.Top:
+                            newSelectedIndex += loopIndex;
                             newIndex = 0;
                             break;
                         case EntryPosition.Bottom:
-                            newIndex = downloadManagerData.downloads.Count - 1;
+                            newIndex = lastIndex;
+                            newSelectedIndex -= loopIndex;
                             break;
                     }
-                    downloadManagerData.downloads.Move(selectedIndex, newIndex);
+                    downloadManagerData.downloads.Move(newSelectedIndex, newIndex);
+                    loopIndex++;
                 }
                 SaveData();
             }
