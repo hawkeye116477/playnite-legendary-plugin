@@ -844,9 +844,20 @@ namespace LegendaryLibraryNS
         {
             if (DownloadsDG.SelectedIndex != -1)
             {
+                var selectedIndexes = new List<int>();
+                var allItems = DownloadsDG.Items;
                 foreach (var selectedRow in DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
                 {
-                    var selectedIndex = DownloadsDG.Items.IndexOf(selectedRow);
+                    var selectedIndex = allItems.IndexOf(selectedRow);
+                    selectedIndexes.Add(selectedIndex);
+                }
+                selectedIndexes.Sort();
+                if (entryPosition == EntryPosition.Down)
+                {
+                    selectedIndexes.Reverse();
+                }
+                foreach (var selectedIndex in selectedIndexes)
+                {
                     int newIndex = selectedIndex;
                     switch (entryPosition)
                     {
