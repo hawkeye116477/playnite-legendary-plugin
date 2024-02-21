@@ -90,7 +90,6 @@
   <sys:String x:Key="LOCLegendaryLauncherBinary">Launcher binary</sys:String>
   <sys:String x:Key="LOCLegendaryCopyRawDataToClipboard">Copy raw data to clipboard</sys:String>
   <sys:String x:Key="LOCLegendaryLogFilesPath">Log Files Path</sys:String>
-  <sys:String x:Key="LOCLegendaryPathNotExist">The specified path does not exist.</sys:String>
   <sys:String x:Key="LOCLegendaryReportBug">Report a bug</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherNotInstalled">Legendary Launcher is not installed.</sys:String>
   <sys:String x:Key="LOCLegendaryNewVersionAvailable">A new version is available: {0} {1}.</sys:String>

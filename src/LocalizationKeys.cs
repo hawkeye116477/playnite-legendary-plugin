@@ -590,10 +590,6 @@ namespace System
         /// </summary>
         public const string LegendaryLogFilesPath = "LOCLegendaryLogFilesPath";
         /// <summary>
-        /// The specified path does not exist.
-        /// </summary>
-        public const string LegendaryPathNotExist = "LOCLegendaryPathNotExist";
-        /// <summary>
         /// Report a bug
         /// </summary>
         public const string LegendaryReportBug = "LOCLegendaryReportBug";

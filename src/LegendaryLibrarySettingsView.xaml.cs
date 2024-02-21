@@ -347,7 +347,7 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                playniteAPI.Dialogs.ShowErrorMessage(LOC.LegendaryPathNotExist);
+                playniteAPI.Dialogs.ShowErrorMessage(LOC.LegendaryPathNotExistsError);
             }
         }
 
