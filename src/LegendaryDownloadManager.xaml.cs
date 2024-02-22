@@ -154,8 +154,9 @@ namespace LegendaryLibraryNS
                 if (wantedItem == null)
                 {
                     DateTimeOffset now = DateTime.UtcNow;
-                    downloadManagerData.downloads.Add(new DownloadManagerData.Download
-                    { gameID = downloadJob.gameID, downloadSize = downloadJob.downloadSize, installSize = downloadJob.installSize, name = downloadJob.name, status = DownloadStatus.Queued, addedTime = now.ToUnixTimeSeconds(), downloadProperties = downloadJob.downloadProperties });
+                    downloadJob.status = DownloadStatus.Queued;
+                    downloadJob.addedTime = now.ToUnixTimeSeconds();
+                    downloadManagerData.downloads.Add(downloadJob);
                 }
                 else
                 {
