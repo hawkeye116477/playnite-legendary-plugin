@@ -272,6 +272,7 @@ namespace LegendaryLibraryNS
             gracefulInstallerCTS = new CancellationTokenSource();
             try
             {
+                bool errorDisplayed = false;
                 bool successDisplayed = false;
                 bool loginErrorDisplayed = false;
                 string memoryErrorMessage = "";
@@ -402,21 +403,53 @@ namespace LegendaryLibraryNS
                                 {
                                     diskSpaceErrorDisplayed = true;
                                 }
+                                if (!errorMessage.Contains("old manifest"))
+                                {
+                                    errorDisplayed = true;
+                                }
                             }
                             break;
                         case ExitedCommandEvent exited:
-                            if (!successDisplayed && exited.ExitCode == 0)
+                            if ((!successDisplayed && errorDisplayed) || exited.ExitCode != 0)
                             {
-                                var installedAppList = LegendaryLauncher.GetInstalledAppList();
-                                if (installedAppList != null)
+                                if (loginErrorDisplayed)
                                 {
-                                    if (installedAppList.ContainsKey(gameID))
+                                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError).Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
+                                }
+                                else if (memoryErrorMessage != "")
+                                {
+                                    var memoryErrorMatch = Regex.Match(memoryErrorMessage, @"MemoryError: Current shared memory cache is smaller than required: (\S+) MiB < (\S+) MiB");
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), string.Format(ResourceProvider.GetString(LOC.LegendaryMemoryError), memoryErrorMatch.Groups[1] + " MB", memoryErrorMatch.Groups[2] + " MB")));
+                                }
+                                else if (permissionErrorDisplayed)
+                                {
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryPermissionError)));
+                                }
+                                else if (diskSpaceErrorDisplayed)
+                                {
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryNotEnoughSpace)));
+                                }
+                                else
+                                {
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryCheckLog)));
+                                }
+                                wantedItem.status = DownloadStatus.Paused;
+                            }
+                            else
+                            {
+                                wantedItem.status = DownloadStatus.Completed;
+                                DateTimeOffset now = DateTime.UtcNow;
+                                wantedItem.completedTime = now.ToUnixTimeSeconds();
+                                _ = (Application.Current.Dispatcher?.BeginInvoke((Action)async delegate
+                                {
+                                    var installedAppList = LegendaryLauncher.GetInstalledAppList();
+                                    if (installedAppList != null)
                                     {
-                                        var installedGameInfo = installedAppList[gameID];
-                                        Playnite.SDK.Models.Game game = new Playnite.SDK.Models.Game();
-                                        if (installedGameInfo.Is_dlc == false || !installedGameInfo.Executable.IsNullOrEmpty())
+                                        if (installedAppList.ContainsKey(gameID))
                                         {
-                                            _ = (Application.Current.Dispatcher?.BeginInvoke((Action)async delegate
+                                            var installedGameInfo = installedAppList[gameID];
+                                            Playnite.SDK.Models.Game game = new Playnite.SDK.Models.Game();
+                                            if (installedGameInfo.Is_dlc == false || !installedGameInfo.Executable.IsNullOrEmpty())
                                             {
                                                 game = playniteAPI.Database.Games.FirstOrDefault(item => item.PluginId == LegendaryLibrary.Instance.Id && item.GameId == gameID);
                                                 game.InstallDirectory = installedGameInfo.Install_path;
@@ -471,9 +504,7 @@ namespace LegendaryLibraryNS
                                                         {
                                                             try
                                                             {
-                                                                ProcessStarter.StartProcessWait(
-                                                                    Path.GetFullPath(Path.Combine(installedGameInfo.Install_path, prereqPath)),
-                                                                    prereqArgs, "");
+                                                                ProcessStarter.StartProcessWait(Path.GetFullPath(Path.Combine(installedGameInfo.Install_path, prereqPath)), prereqArgs, "");
                                                             }
                                                             catch (Exception ex)
                                                             {
@@ -483,44 +514,11 @@ namespace LegendaryLibraryNS
                                                     }
                                                 }
                                                 playniteAPI.Database.Games.Update(game);
-                                            }));
+                                            }
                                         }
-                                        successDisplayed = true;
                                     }
-                                }
-                            }
-
-                            if (successDisplayed)
-                            {
-                                Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), gameTitle, ResourceProvider.GetString(LOC.LegendaryInstallationFinished), null);
-                                wantedItem.status = DownloadStatus.Completed;
-                                DateTimeOffset now = DateTime.UtcNow;
-                                wantedItem.completedTime = now.ToUnixTimeSeconds();
-                            }
-                            else
-                            {
-                                if (loginErrorDisplayed)
-                                {
-                                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError).Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
-                                }
-                                else if (memoryErrorMessage != "")
-                                {
-                                    var memoryErrorMatch = Regex.Match(memoryErrorMessage, @"MemoryError: Current shared memory cache is smaller than required: (\S+) MiB < (\S+) MiB");
-                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), string.Format(ResourceProvider.GetString(LOC.LegendaryMemoryError), memoryErrorMatch.Groups[1] + " MB", memoryErrorMatch.Groups[2] + " MB")));
-                                }
-                                else if (permissionErrorDisplayed)
-                                {
-                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryPermissionError)));
-                                }
-                                else if (diskSpaceErrorDisplayed)
-                                {
-                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryNotEnoughSpace)));
-                                }
-                                else
-                                {
-                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryCheckLog)));
-                                }
-                                wantedItem.status = DownloadStatus.Paused;
+                                    Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), gameTitle, ResourceProvider.GetString(LOC.LegendaryInstallationFinished), null);
+                                }));
                             }
                             SaveData();
                             gracefulInstallerCTS?.Dispose();
