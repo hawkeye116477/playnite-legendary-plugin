@@ -318,6 +318,10 @@ namespace System
         /// </summary>
         public const string LegendaryVerifyingLargeFile = "LOCLegendaryVerifyingLargeFile";
         /// <summary>
+        /// Downloading update...
+        /// </summary>
+        public const string LegendaryDownloadingUpdate = "LOCLegendaryDownloadingUpdate";
+        /// <summary>
         /// Pause
         /// </summary>
         public const string LegendaryPauseDownload = "LOCLegendaryPauseDownload";

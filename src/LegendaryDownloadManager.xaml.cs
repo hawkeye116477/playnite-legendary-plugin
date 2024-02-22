@@ -344,18 +344,25 @@ namespace LegendaryLibraryNS
                             if (progressMatch.Length >= 2)
                             {
                                 double progress = double.Parse(progressMatch.Groups[1].Value.Replace("%", ""), CultureInfo.InvariantCulture);
-                                DescriptionTB.Text = ResourceProvider.GetString(LOC.Legendary3P_PlayniteDownloadingLabel);
+                                if (downloadProperties.downloadAction != DownloadAction.Update)
+                                {
+                                    DescriptionTB.Text = ResourceProvider.GetString(LOC.Legendary3P_PlayniteDownloadingLabel);
+                                }
+                                else
+                                {
+                                    DescriptionTB.Text = ResourceProvider.GetString(LOC.LegendaryDownloadingUpdate);
+                                }
                                 DownloadPB.Value = progress;
-                            }
-                            var ETAMatch = Regex.Match(stdErr.Text, @"ETA: (\d\d:\d\d:\d\d)");
-                            if (ETAMatch.Length >= 2)
-                            {
-                                EtaTB.Text = ETAMatch.Groups[1].Value;
                             }
                             var elapsedMatch = Regex.Match(stdErr.Text, @"Running for (\d\d:\d\d:\d\d)");
                             if (elapsedMatch.Length >= 2)
                             {
                                 ElapsedTB.Text = elapsedMatch.Groups[1].Value;
+                            }
+                            var ETAMatch = Regex.Match(stdErr.Text, @"ETA: (\d\d:\d\d:\d\d)");
+                            if (ETAMatch.Length >= 2)
+                            {
+                                EtaTB.Text = ETAMatch.Groups[1].Value;
                             }
                             var downloadedMatch = Regex.Match(stdErr.Text, @"Downloaded: (\S+) (\wiB)");
                             if (downloadedMatch.Length >= 2)
