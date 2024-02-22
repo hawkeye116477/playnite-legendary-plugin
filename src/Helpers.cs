@@ -2,6 +2,7 @@
 using System.IO;
 using System.Management;
 using ByteSizeLib;
+using Playnite.SDK;
 using Playnite.SDK.Data;
 
 namespace LegendaryLibraryNS
@@ -89,6 +90,31 @@ namespace LegendaryLibraryNS
                 }
                 var dataFile = Path.Combine(dataDir, $"{fileName}.json");
                 File.WriteAllText(dataFile, strConf);
+            }
+        }
+
+        public static bool IsDirectoryWritable(string folderPath)
+        {
+            try
+            {
+                using (FileStream fs = File.Create(Path.Combine(folderPath, Path.GetRandomFileName()),
+                                                   1,
+                                                   FileOptions.DeleteOnClose)
+                )
+                { }
+                return true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                var playniteAPI = API.Instance;
+                playniteAPI.Dialogs.ShowErrorMessage(LOC.LegendaryPermissionError);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                var logger = LogManager.GetLogger();
+                logger.Error($"An error occured during checking if directory {folderPath} is writable: {ex.Message}");
+                return true;
             }
         }
     }

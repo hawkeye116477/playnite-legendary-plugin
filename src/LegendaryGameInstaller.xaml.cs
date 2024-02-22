@@ -74,6 +74,10 @@ namespace LegendaryLibraryNS
             {
                 installPath = installPath.Replace(playniteDirectoryVariable, playniteAPI.Paths.ApplicationPath);
             }
+            if (!Helpers.IsDirectoryWritable(installPath))
+            {
+                return;
+            }
             int maxWorkers = settings.MaxWorkers;
             if (MaxWorkersNI.Value != "")
             {
@@ -503,9 +507,8 @@ namespace LegendaryLibraryNS
             if (!downloadSize.IsNullOrEmpty() && !installSize.IsNullOrEmpty())
             {
                 InstallBtn.IsEnabled = true;
-                RepairBtn.IsEnabled = true;
             }
-            else
+            else if (InstallData.downloadProperties.downloadAction != DownloadAction.Repair) 
             {
                 InstallerWindow.Close();
             }

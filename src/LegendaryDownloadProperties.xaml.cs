@@ -106,7 +106,17 @@ namespace LegendaryLibraryNS
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == SelectedDownload.gameID);
-            wantedItem.downloadProperties.installPath = SelectedGamePathTxt.Text;
+            var installPath = SelectedGamePathTxt.Text;
+            var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory.ToString();
+            if (installPath.Contains(playniteDirectoryVariable))
+            {
+                installPath = installPath.Replace(playniteDirectoryVariable, playniteAPI.Paths.ApplicationPath);
+            }
+            if (!Helpers.IsDirectoryWritable(installPath))
+            {
+                return;
+            }
+            wantedItem.downloadProperties.installPath = installPath;
             wantedItem.downloadProperties.downloadAction = (DownloadAction)TaskCBo.SelectedValue;
             wantedItem.downloadProperties.enableReordering = (bool)ReorderingChk.IsChecked;
             wantedItem.downloadProperties.maxWorkers = int.Parse(MaxWorkersNI.Value);
