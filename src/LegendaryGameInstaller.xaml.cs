@@ -26,6 +26,8 @@ namespace LegendaryLibraryNS
         public string installCommand;
         public string downloadSize;
         public string installSize;
+        public string downloadSizeWithoutDlcs;
+        public string installSizeWithoutDlcs;
         public List<string> requiredThings;
         public double downloadSizeNumber;
         public double installSizeNumber;
@@ -142,8 +144,8 @@ namespace LegendaryLibraryNS
                     {
                         gameID = GameID,
                         name = InstallerWindow.Title,
-                        downloadSize = downloadSize,
-                        installSize = installSize,
+                        downloadSize = downloadSizeWithoutDlcs,
+                        installSize = installSizeWithoutDlcs,
                         downloadProperties = downloadProperties
                     }
                 };
@@ -168,7 +170,7 @@ namespace LegendaryLibraryNS
                                 if (File.Exists(cacheDlcInfoFile))
                                 {
                                     LegendaryGameInfo.Rootobject dlcManifest = new LegendaryGameInfo.Rootobject();
-                                    if (Serialization.TryFromJson<LegendaryGameInfo.Rootobject>(FileSystem.ReadFileAsStringSafe(cacheDlcInfoFile), out dlcManifest))
+                                    if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(cacheDlcInfoFile), out dlcManifest))
                                     {
                                         if (dlcManifest != null && dlcManifest.Manifest != null)
                                         {
@@ -181,8 +183,8 @@ namespace LegendaryLibraryNS
                                 {
                                     gameID = selectedOption.Key,
                                     name = selectedOption.Value.Name,
-                                    downloadSize = downloadSize,
-                                    installSize = installSize,
+                                    downloadSize = dlcDownloadSize,
+                                    installSize = dlcInstallSize,
                                     downloadProperties = downloadProperties
                                 });
                             }
@@ -537,6 +539,8 @@ namespace LegendaryLibraryNS
 
         private void ExtraContentLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            double allDlcsDownloadSizeNumber = 0;
+            double allDlcsInstallSizeNumber = 0;
             var initialDownloadSizeNumber = downloadSizeNumber;
             var initialInstallSizeNumber = installSizeNumber;
             foreach (var selectedOption in ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().ToList())
@@ -583,6 +587,8 @@ namespace LegendaryLibraryNS
                     {
                         initialDownloadSizeNumber += dlcManifest.Manifest.Download_size;
                         initialInstallSizeNumber += dlcManifest.Manifest.Disk_size;
+                        allDlcsDownloadSizeNumber += dlcManifest.Manifest.Download_size;
+                        allDlcsInstallSizeNumber += dlcManifest.Manifest.Disk_size;
                     }
                 }
             }
@@ -592,6 +598,10 @@ namespace LegendaryLibraryNS
             InstallSizeTB.Text = installSize;
             installSizeNumberAfterMod = initialInstallSizeNumber;
             UpdateAfterInstallingSize();
+            double downloadSizeWithoutDlcsNumber = initialDownloadSizeNumber - allDlcsDownloadSizeNumber;
+            downloadSizeWithoutDlcs = Helpers.FormatSize(downloadSizeWithoutDlcsNumber);
+            double installSizeWithoutDlcsNumber = initialInstallSizeNumber - allDlcsInstallSizeNumber;
+            installSizeWithoutDlcs = Helpers.FormatSize(installSizeWithoutDlcsNumber);
         }
 
         private void SetControlStyles()
