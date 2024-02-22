@@ -38,24 +38,25 @@
             </Grid.RowDefinitions>
             <Separator Grid.Row="0" Grid.ColumnSpan="2" Margin="0,15,0,5"></Separator>
             <TextBlock x:Name="DescriptionTB" HorizontalAlignment="Left" Margin="0,0,0,5" Grid.Row="1" VerticalAlignment="Bottom"></TextBlock>
-            <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="0,0,0,10">
+            <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="0,0,0,5">
                 <ProgressBar Value="0" Name="DownloadPB"/>
                 <TextBlock Text="{Binding ElementName=DownloadPB, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5">
                 </TextBlock>
             </Grid>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="0" Margin="0,0,0,5" VerticalAlignment="Top">
+            <TextBlock Name="GameTitleTB" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="0" Margin="0,0,0,5"></TextBlock>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="0" Margin="0,0,0,5" VerticalAlignment="Top">
                 <TextBlock Text="{DynamicResource LOCLegendaryDownloadSpeed}"></TextBlock>
                 <TextBlock Name="DownloadSpeedTB" HorizontalAlignment="Left" Margin="5,0,30,0"></TextBlock>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="0" Margin="0,0,0,5" VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="0" Margin="0,0,0,5" VerticalAlignment="Top">
                 <TextBlock Text="{DynamicResource LOCLegendaryDownloaded}"></TextBlock>
                 <TextBlock Name="DownloadedTB" HorizontalAlignment="Left" Margin="5,0,30,0"></TextBlock>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Top">
                 <TextBlock Text="{DynamicResource LOCLegendaryElapsed}"></TextBlock>
                 <TextBlock Name="ElapsedTB" HorizontalAlignment="Left" Margin="5,0,0,0"></TextBlock>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Top">
                 <TextBlock Text="{DynamicResource LOCLegendaryETA}"></TextBlock>
                 <TextBlock Name="EtaTB" HorizontalAlignment="Left" Margin="5,0,0,0"></TextBlock>
             </StackPanel>

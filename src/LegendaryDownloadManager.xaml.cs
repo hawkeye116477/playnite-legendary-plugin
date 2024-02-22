@@ -107,6 +107,7 @@ namespace LegendaryLibraryNS
                 EtaTB.Text = "";
                 DownloadPB.Value = 0;
                 DescriptionTB.Text = "";
+                GameTitleTB.Text = "";
                 var downloadCompleteSettings = LegendaryLibrary.GetSettings().DoActionAfterDownloadComplete;
                 switch (downloadCompleteSettings)
                 {
@@ -289,6 +290,7 @@ namespace LegendaryLibraryNS
                     {
                         case StartedCommandEvent started:
                             wantedItem.status = DownloadStatus.Running;
+                            GameTitleTB.Text = gameTitle;
                             DownloadPB.Value = 0;
                             EtaTB.Text = "";
                             ElapsedTB.Text = "";
@@ -556,6 +558,7 @@ namespace LegendaryLibraryNS
                             EtaTB.Text = "";
                             DescriptionTB.Text = "";
                             DownloadSpeedTB.Text = "";
+                            GameTitleTB.Text = "";
                         }
                         selectedRow.status = DownloadStatus.Paused;
                     }
@@ -619,6 +622,7 @@ namespace LegendaryLibraryNS
                         EtaTB.Text = "";
                         DownloadPB.Value = 0;
                         DescriptionTB.Text = "";
+                        GameTitleTB.Text = "";
                     }
                 }
                 SaveData();
