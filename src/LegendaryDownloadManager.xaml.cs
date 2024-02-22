@@ -545,7 +545,7 @@ namespace LegendaryLibraryNS
                 foreach (var selectedRow in DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
                 {
                     if (selectedRow.status == DownloadStatus.Running ||
-                        selectedRow.status == DownloadStatus.Queued)
+                               selectedRow.status == DownloadStatus.Queued)
                     {
                         if (selectedRow.status == DownloadStatus.Running)
                         {
@@ -553,11 +553,13 @@ namespace LegendaryLibraryNS
                             gracefulInstallerCTS?.Dispose();
                             forcefulInstallerCTS?.Dispose();
                             EtaTB.Text = "";
+                            DescriptionTB.Text = "";
+                            DownloadSpeedTB.Text = "";
                         }
                         selectedRow.status = DownloadStatus.Paused;
-                        SaveData();
                     }
                 }
+                SaveData();
             }
         }
 
@@ -616,9 +618,9 @@ namespace LegendaryLibraryNS
                         EtaTB.Text = "";
                         DownloadPB.Value = 0;
                         DescriptionTB.Text = "";
-                        SaveData();
                     }
                 }
+                SaveData();
             }
         }
 
