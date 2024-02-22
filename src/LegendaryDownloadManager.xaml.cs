@@ -487,8 +487,8 @@ namespace LegendaryLibraryNS
                                                     }
                                                 }
                                                 playniteAPI.Database.Games.Update(game);
-                                                successDisplayed = true;
                                             }
+                                            successDisplayed = true;
                                         }
                                     }
                                 }));
@@ -501,7 +501,7 @@ namespace LegendaryLibraryNS
                                 DateTimeOffset now = DateTime.UtcNow;
                                 wantedItem.completedTime = now.ToUnixTimeSeconds();
                             }
-                            else if (exited.ExitCode != 0 || errorDisplayed)
+                            else
                             {
                                 if (loginErrorDisplayed)
                                 {
