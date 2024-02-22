@@ -271,7 +271,6 @@ namespace LegendaryLibraryNS
             gracefulInstallerCTS = new CancellationTokenSource();
             try
             {
-                bool errorDisplayed = false;
                 bool successDisplayed = false;
                 bool loginErrorDisplayed = false;
                 string memoryErrorMessage = "";
@@ -402,25 +401,21 @@ namespace LegendaryLibraryNS
                                 {
                                     diskSpaceErrorDisplayed = true;
                                 }
-                                if (!errorMessage.Contains("old manifest"))
-                                {
-                                    errorDisplayed = true;
-                                }
                             }
                             break;
                         case ExitedCommandEvent exited:
                             if (!successDisplayed && exited.ExitCode == 0)
                             {
-                                _ = (Application.Current.Dispatcher?.BeginInvoke((Action)async delegate
+                                var installedAppList = LegendaryLauncher.GetInstalledAppList();
+                                if (installedAppList != null)
                                 {
-                                    var installedAppList = LegendaryLauncher.GetInstalledAppList();
-                                    if (installedAppList != null)
+                                    if (installedAppList.ContainsKey(gameID))
                                     {
-                                        if (installedAppList.ContainsKey(gameID))
+                                        var installedGameInfo = installedAppList[gameID];
+                                        Playnite.SDK.Models.Game game = new Playnite.SDK.Models.Game();
+                                        if (installedGameInfo.Is_dlc == false || !installedGameInfo.Executable.IsNullOrEmpty())
                                         {
-                                            var installedGameInfo = installedAppList[gameID];
-                                            Playnite.SDK.Models.Game game = new Playnite.SDK.Models.Game();
-                                            if (installedGameInfo.Is_dlc == false || !installedGameInfo.Executable.IsNullOrEmpty())
+                                            _ = (Application.Current.Dispatcher?.BeginInvoke((Action)async delegate
                                             {
                                                 game = playniteAPI.Database.Games.FirstOrDefault(item => item.PluginId == LegendaryLibrary.Instance.Id && item.GameId == gameID);
                                                 game.InstallDirectory = installedGameInfo.Install_path;
@@ -487,11 +482,11 @@ namespace LegendaryLibraryNS
                                                     }
                                                 }
                                                 playniteAPI.Database.Games.Update(game);
-                                            }
-                                            successDisplayed = true;
+                                            }));
                                         }
+                                        successDisplayed = true;
                                     }
-                                }));
+                                }
                             }
 
                             if (successDisplayed)
