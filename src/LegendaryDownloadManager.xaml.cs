@@ -466,7 +466,7 @@ namespace LegendaryLibraryNS
                                                 game.InstallSize = (ulong?)installedGameInfo.Install_size;
                                                 game.IsInstalled = true;
                                                 var playtimeSyncEnabled = LegendaryLibrary.GetSettings().SyncPlaytime;
-                                                if (playtimeSyncEnabled)
+                                                if (playtimeSyncEnabled && downloadProperties.downloadAction != DownloadAction.Update)
                                                 {
                                                     var accountApi = new EpicAccountClient(playniteAPI, LegendaryLauncher.TokensPath);
                                                     var playtimeItems = await accountApi.GetPlaytimeItems();
