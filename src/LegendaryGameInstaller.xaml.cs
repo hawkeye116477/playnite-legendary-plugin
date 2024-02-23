@@ -198,43 +198,11 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private async void ImportBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var path = playniteAPI.Dialogs.SelectFolder();
-            if (path != "")
-            {
-                bool canContinue = LegendaryLibrary.Instance.StopDownloadManager(true);
-                if (!canContinue)
-                {
-                    return;
-                }
-                await LegendaryDownloadManager.WaitUntilLegendaryCloses();
-                var importCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                         .WithArguments(new[] { "-y", "import", GameID, path })
-                                         .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
-                                         .WithValidation(CommandResultValidation.None)
-                                         .ExecuteBufferedAsync();
-                if (importCmd.StandardError.Contains("has been imported"))
-                {
-                    playniteAPI.Dialogs.ShowMessage(LOC.LegendaryImportFinished);
-                    InstallerWindow.DialogResult = true;
-                }
-                else
-                {
-                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryGameImportFailure).Format(LOC.LegendaryCheckLog));
-                    logger.Debug("[Legendary] " + importCmd.StandardError);
-                    logger.Error("[Legendary] exit code: " + importCmd.ExitCode);
-                }
-                InstallerWindow.Close();
-            }
-        }
-
         private async void LegendaryGameInstallerUC_Loaded(object sender, RoutedEventArgs e)
         {
             if (InstallData.downloadProperties.downloadAction == DownloadAction.Repair)
             {
                 FolderDP.Visibility = Visibility.Collapsed;
-                ImportBtn.Visibility = Visibility.Collapsed;
                 InstallBtn.Visibility = Visibility.Collapsed;
                 RepairBtn.Visibility = Visibility.Visible;
                 AfterInstallingSP.Visibility = Visibility.Collapsed;
@@ -462,9 +430,6 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                ImportBtn.IsEnabled = false;
-                ImportBtn.Visibility = Visibility.Collapsed;
-
                 var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                       .WithArguments(new[] { GameID, "install" })
                                       .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)

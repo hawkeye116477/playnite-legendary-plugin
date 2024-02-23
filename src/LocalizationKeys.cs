@@ -366,6 +366,10 @@ namespace System
         /// </summary>
         public const string LegendarySyncError = "LOCLegendarySyncError";
         /// <summary>
+        /// Import installed game
+        /// </summary>
+        public const string LegendaryImportInstalledGame = "LOCLegendaryImportInstalledGame";
+        /// <summary>
         /// Importing {0}...
         /// </summary>
         public const string LegendaryImportingGame = "LOCLegendaryImportingGame";

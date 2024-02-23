@@ -67,23 +67,6 @@ namespace LegendaryLibraryNS
             {
                 Game.IsInstalling = false;
             }
-            else
-            {
-                _ = (Application.Current.Dispatcher?.BeginInvoke((Action)delegate
-                {
-                    var installedAppList = LegendaryLauncher.GetInstalledAppList();
-                    if (installedAppList.ContainsKey(Game.GameId))
-                    {
-                        var installInfo = new GameInstallationData
-                        {
-                            InstallDirectory = installedAppList[Game.GameId].Install_path
-                        };
-                        InvokeOnInstalled(new GameInstalledEventArgs(installInfo));
-                        return;
-                    }
-                }));
-            }
-
         }
     }
 

@@ -34,6 +34,7 @@
   <sys:String x:Key="LOCLegendarySyncGameSaves">Sync game saves to the cloud</sys:String>
   <sys:String x:Key="LOCLegendarySyncing">Syncing {0} game saves to the cloud...</sys:String>
   <sys:String x:Key="LOCLegendarySyncError">An error occurred while syncing {0} game saves to the cloud.</sys:String>
+  <sys:String x:Key="LOCLegendaryImportInstalledGame">Import installed game</sys:String>
   <sys:String x:Key="LOCLegendaryImportingGame">Importing {0}...</sys:String>
   <sys:String x:Key="LOCLegendaryImportFinished">Import finished. Have fun.</sys:String>
   <sys:String x:Key="LOCLegendaryGameImportFailure">Failed to import game. Reason: {0}.</sys:String>

@@ -52,9 +52,6 @@
                 <Button x:Name="RepairBtn" Content="{DynamicResource LOCLegendaryRepair}" ContentStringFormat="&#xefd2; {0}" 
                     FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
                     Margin="0,0,5,0" Visibility="Collapsed" Click="RepairBtn_Click" />
-                <Button x:Name="ImportBtn" Content="{DynamicResource LOCLegendary3P_PlayniteImportLabel}" ContentStringFormat="&#xef08; {0}" 
-                    FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0" 
-                    Click="ImportBtn_Click" />
                 <Button x:Name="InstallBtn" Content="{DynamicResource LOCLegendary3P_PlayniteInstallGame}" ContentStringFormat="&#xef07; {0}"
                     FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
                     Click="InstallBtn_Click" IsEnabled="False" />
