@@ -90,7 +90,6 @@ namespace LegendaryLibraryNS
             {
                 maxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
             }
-            bool enableReordering = Convert.ToBoolean(ReorderingChk.IsChecked);
             var selectedExtraContent = new List<string>();
             if (requiredThings.Count > 0)
             {
@@ -133,7 +132,8 @@ namespace LegendaryLibraryNS
                     downloadAction = DownloadAction.Install,
                     installPrerequisites = (bool)PrerequisitesChk.IsChecked,
                     prerequisitesName = prereqName,
-                    enableReordering = enableReordering,
+                    enableReordering = (bool)ReorderingChk.IsChecked,
+                    ignoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked,
                     maxWorkers = maxWorkers,
                     maxSharedMemory = maxSharedMemory,
                     extraContent = selectedExtraContent

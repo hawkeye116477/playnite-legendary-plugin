@@ -240,6 +240,10 @@ namespace LegendaryLibraryNS
                 {
                     installCommand.Add("--enable-reordering");
                 }
+                if (downloadProperties.ignoreFreeSpace)
+                {
+                    installCommand.Add("--ignore-free-space");
+                }
                 if (settings.ConnectionTimeout != 0)
                 {
                     installCommand.AddRange(new[] { "--dl-timeout", settings.ConnectionTimeout.ToString() });

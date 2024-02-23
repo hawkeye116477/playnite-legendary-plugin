@@ -173,7 +173,6 @@ namespace LegendaryLibraryNS
                 {
                     maxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
                 }
-                bool enableReordering = Convert.ToBoolean(ReorderingChk.IsChecked);
                 DlcManagerWindow.Close();
                 LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
 
@@ -190,9 +189,10 @@ namespace LegendaryLibraryNS
                         DownloadProperties downloadProperties = new DownloadProperties()
                         {
                             downloadAction = DownloadAction.Install,
-                            enableReordering = enableReordering,
+                            enableReordering = (bool)ReorderingChk.IsChecked,
                             maxWorkers = maxWorkers,
-                            maxSharedMemory = maxSharedMemory
+                            maxSharedMemory = maxSharedMemory,
+                            ignoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked
                         };
                         var dlcInfo = selectedOption.Value;
                         var downloadSize = "0 B";

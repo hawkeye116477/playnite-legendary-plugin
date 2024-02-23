@@ -181,7 +181,7 @@
                             Content="{DynamicResource LOCLegendaryHttpOnlyDownload}"
                             IsChecked="{Binding Settings.NoHttps}" Margin="0,0,0,10" />
                         <CheckBox Grid.Column="0" Grid.Row="2"
-                            Content="{DynamicResource LOCLegendaryEnableReordering}"
+                            Content="{DynamicResource LOCLegendaryEnableReordering}" ToolTip="LOCLegendaryEnableReorderingToolTip"
                             IsChecked="{Binding Settings.EnableReordering}" Margin="0,0,0,5"/>
                         <TextBlock Text="{DynamicResource LOCLegendaryMaxWorkers}" Grid.Column="0"
                             Grid.Row="3" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />

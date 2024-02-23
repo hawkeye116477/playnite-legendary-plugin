@@ -121,6 +121,11 @@ namespace LegendaryLibraryNS
             wantedItem.downloadProperties.enableReordering = (bool)ReorderingChk.IsChecked;
             wantedItem.downloadProperties.maxWorkers = int.Parse(MaxWorkersNI.Value);
             wantedItem.downloadProperties.maxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
+            if (PrerequisitesChk.IsEnabled)
+            {
+                wantedItem.downloadProperties.installPrerequisites = (bool)PrerequisitesChk.IsChecked;
+            }
+            wantedItem.downloadProperties.ignoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked;
             var selectedExtraContent = new List<string>();
             if (requiredThings.Count > 0)
             {

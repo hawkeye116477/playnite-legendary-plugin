@@ -76,14 +76,14 @@ namespace LegendaryLibraryNS
                 {
                     maxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
                 }
-                bool enableReordering = Convert.ToBoolean(ReorderingChk.IsChecked);
                 LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
                 DownloadProperties downloadProperties = new DownloadProperties
                 {
                     downloadAction = DownloadAction.Update,
                     maxWorkers = maxWorkers,
                     maxSharedMemory = maxSharedMemory,
-                    enableReordering = enableReordering
+                    enableReordering = (bool)ReorderingChk.IsChecked,
+                    ignoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked
                 };
                 Window.GetWindow(this).Close();
                 var updatesList = new Dictionary<string, UpdateInfo>();

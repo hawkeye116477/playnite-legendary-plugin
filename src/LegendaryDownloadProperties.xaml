@@ -75,17 +75,19 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <CheckBox Grid.Column="0" Grid.Row="0"
-                            Content="{DynamicResource LOCLegendaryInstallPrerequisites}" Margin="0,0,0,5" Name="PrerequisitesChk" Visibility="Collapsed"/>
-                    <CheckBox Grid.Column="0" Grid.Row="1"
-                            Content="{DynamicResource LOCLegendaryEnableReordering}"
-                            Margin="0,0,0,5" Name="ReorderingChk"/>
+                    <CheckBox Grid.Column="0" Grid.Row="0" Content="{DynamicResource LOCLegendaryInstallPrerequisites}" 
+                              Margin="0,0,0,5" Name="PrerequisitesChk" Visibility="Collapsed"/>
+                    <CheckBox Grid.Column="0" Grid.Row="1" Content="{DynamicResource LOCLegendaryIgnoreFreeSpace}" 
+                              Margin="0,0,0,5" Name="IgnoreFreeSpaceChk" ToolTip="{DynamicResource LOCLegendaryIgnoreFreeSpaceToolTip}"/>
+                    <CheckBox Grid.Column="0" Grid.Row="2" Content="{DynamicResource LOCLegendaryEnableReordering}"
+                              ToolTip="{DynamicResource LOCLegendaryEnableReorderingToolTip}"
+                              Margin="0,0,0,5" Name="ReorderingChk"/>
                     <TextBlock Text="{DynamicResource LOCLegendaryMaxWorkers}" Grid.Column="0"
-                            Grid.Row="2" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                    <local:NumericInput Grid.Row="2" Grid.Column="1" Margin="10,0,0,5" MinValue="0" MaxValue="16" x:Name="MaxWorkersNI"/>
+                               Grid.Row="3" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                    <local:NumericInput Grid.Row="3" Grid.Column="1" Margin="10,0,0,5" MinValue="0" MaxValue="16" x:Name="MaxWorkersNI"/>
                     <TextBlock Text="{DynamicResource LOCLegendaryMaxSharedMemory}" Grid.Column="0"
-                            Grid.Row="3" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                    <local:NumericInput Grid.Row="3" Grid.Column="1" Margin="10,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" x:Name="MaxSharedMemoryNI"/>
+                               Grid.Row="4" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                    <local:NumericInput Grid.Row="4" Grid.Column="1" Margin="10,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" x:Name="MaxSharedMemoryNI"/>
                 </Grid>
             </TabItem>
         </TabControl>

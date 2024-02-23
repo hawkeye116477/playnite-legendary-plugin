@@ -64,7 +64,10 @@
   <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} is already in the download list. You can see status of the download by accessing Legendary Panel via Menu => View or sidebar.</sys:String>
   <sys:String x:Key="LOCLegendaryRepair">Repair</sys:String>
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Advanced Options</sys:String>
+  <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Ignore free space</sys:String>
+  <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip">Do not abort if not enough free space is available.</sys:String>
   <sys:String x:Key="LOCLegendaryEnableReordering">Enable reordering optimization</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">This can reduce RAM requirements during download, but may also have adverse results for some titles.</sys:String>
   <sys:String x:Key="LOCLegendaryExtraContent">Extra Content</sys:String>
   <sys:String x:Key="LOCLegendaryCache">Cache</sys:String>
   <sys:String x:Key="LOCLegendaryClearCache">Clear cache</sys:String>
