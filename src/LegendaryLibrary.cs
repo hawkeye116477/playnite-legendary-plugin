@@ -656,6 +656,11 @@ namespace LegendaryLibraryNS
                             Description = ResourceProvider.GetString(LOC.LegendaryRepair),
                             Action = (args) =>
                             {
+                                if (!LegendaryLauncher.IsInstalled)
+                                {
+                                    throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                                }
+
                                 Window window = null;
                                 if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
                                 {
@@ -692,6 +697,7 @@ namespace LegendaryLibraryNS
                                 {
                                     throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
                                 }
+
                                 LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
                                 var gamesToUpdate = new Dictionary<string, UpdateInfo>();
                                 GlobalProgressOptions updateCheckProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryCheckingForUpdates), false) { IsIndeterminate = true };
@@ -760,6 +766,10 @@ namespace LegendaryLibraryNS
                             Description = ResourceProvider.GetString(LOC.LegendaryLauncherSettings),
                             Action = (args) =>
                             {
+                                if (!LegendaryLauncher.IsInstalled)
+                                {
+                                    throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                                }
                                 Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
                                 {
                                     ShowMaximizeButton = false
@@ -786,6 +796,7 @@ namespace LegendaryLibraryNS
                                 {
                                     throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
                                 }
+
                                 var path = PlayniteApi.Dialogs.SelectFolder();
                                 if (path != "")
                                 {
