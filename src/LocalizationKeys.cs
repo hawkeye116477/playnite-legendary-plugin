@@ -850,6 +850,10 @@ namespace System
         /// </summary>
         public const string LegendaryPermissionError = "LOCLegendaryPermissionError";
         /// <summary>
+        /// Only one instance of Legendary may install/import/move applications at a time. Do you want to pause download manager tasks to continue?
+        /// </summary>
+        public const string LegendaryInstanceNotice = "LOCLegendaryInstanceNotice";
+        /// <summary>
         /// Check for games updates
         /// </summary>
         public const string LegendaryCheckForGamesUpdatesButton = "LOCLegendaryCheckForGamesUpdatesButton";

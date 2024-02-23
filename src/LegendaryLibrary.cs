@@ -361,13 +361,21 @@ namespace LegendaryLibraryNS
             };
         }
 
-        public void StopDownloadManager()
+        public bool StopDownloadManager(bool displayConfirm = false)
         {
             LegendaryDownloadManager downloadManager = GetLegendaryDownloadManager();
             var runningAndQueuedDownloads = downloadManager.downloadManagerData.downloads.Where(i => i.status == DownloadStatus.Running
                                                                                                      || i.status == DownloadStatus.Queued).ToList();
             if (runningAndQueuedDownloads.Count > 0)
             {
+                if (displayConfirm)
+                {
+                    var stopConfirm = PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryInstanceNotice), "", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (stopConfirm == MessageBoxResult.No)
+                    {
+                        return false;
+                    }
+                }
                 foreach (var download in runningAndQueuedDownloads)
                 {
                     if (download.status == DownloadStatus.Running)
@@ -380,6 +388,7 @@ namespace LegendaryLibraryNS
                 }
                 downloadManager.SaveData();
             }
+            return true;
         }
 
         public override async void OnApplicationStarted(OnApplicationStartedEventArgs args)
@@ -603,7 +612,11 @@ namespace LegendaryLibraryNS
                                             {
                                                 try
                                                 {
-                                                    StopDownloadManager();
+                                                    bool canContinue = StopDownloadManager(true);
+                                                    if (!canContinue)
+                                                    {
+                                                        return;
+                                                    }
                                                     await LegendaryDownloadManager.WaitUntilLegendaryCloses();
                                                     Directory.Move(oldPath, newPath);
                                                     a.CurrentProgressValue = 1;

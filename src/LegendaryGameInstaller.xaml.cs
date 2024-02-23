@@ -203,6 +203,12 @@ namespace LegendaryLibraryNS
             var path = playniteAPI.Dialogs.SelectFolder();
             if (path != "")
             {
+                bool canContinue = LegendaryLibrary.Instance.StopDownloadManager(true);
+                if (!canContinue)
+                {
+                    return;
+                }
+                await LegendaryDownloadManager.WaitUntilLegendaryCloses();
                 var importCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                          .WithArguments(new[] { "-y", "import", GameID, path })
                                          .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)

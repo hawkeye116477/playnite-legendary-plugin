@@ -99,12 +99,11 @@ namespace LegendaryLibraryNS
 
         public override async void Uninstall(UninstallActionArgs args)
         {
+            Dispose();
             if (!LegendaryLauncher.IsInstalled)
             {
                 throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
             }
-
-            Dispose();
             var result = MessageCheckBoxDialog.ShowMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstallGame), ResourceProvider.GetString(LOC.LegendaryUninstallGameConfirm).Format(Game.Name), LOC.LegendaryRemoveGameLaunchSettings, MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result.Result == false)
             {
@@ -112,6 +111,13 @@ namespace LegendaryLibraryNS
             }
             else
             {
+                var canContinue = LegendaryLibrary.Instance.StopDownloadManager(true);
+                if (!canContinue)
+                {
+                    Game.IsUninstalling = false;
+                    return;
+                }
+                await LegendaryDownloadManager.WaitUntilLegendaryCloses();
                 var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                    .WithArguments(new[] { "-y", "uninstall", Game.GameId })
                                    .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
@@ -135,7 +141,7 @@ namespace LegendaryLibraryNS
                 {
                     logger.Debug("[Legendary] " + cmd.StandardError);
                     logger.Error("[Legendary] exit code: " + cmd.ExitCode);
-                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameUninstallError).Format(LOC.LegendaryCheckLog));
+                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameUninstallError).Format(ResourceProvider.GetString(LOC.LegendaryCheckLog)));
                     Game.IsUninstalling = false;
                 }
             }

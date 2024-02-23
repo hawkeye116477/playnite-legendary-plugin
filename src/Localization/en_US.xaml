@@ -155,6 +155,7 @@
   <sys:String x:Key="LOCLegendarySignedInAs">Signed in as {0}</sys:String>
   <sys:String x:Key="LOCLegendarySignOutConfirm">Are you sure you want to sign out?</sys:String>
   <sys:String x:Key="LOCLegendaryPermissionError">User doesn't have write access to the specified path. Change permissions or launch Playnite as administrator.</sys:String>
+  <sys:String x:Key="LOCLegendaryInstanceNotice">Only one instance of Legendary may install/import/move applications at a time. Do you want to pause download manager tasks to continue?</sys:String>
   <sys:String x:Key="LOCLegendaryCheckForGamesUpdatesButton">Check for games updates</sys:String>
   <sys:String x:Key="LOCLegendaryNotEnoughSpace">Not enough free disk space.</sys:String>
   <sys:String x:Key="LOCLegendaryCheckingForUpdates">Checking for updates...</sys:String>
