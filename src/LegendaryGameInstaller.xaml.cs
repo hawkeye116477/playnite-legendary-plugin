@@ -540,6 +540,10 @@ namespace LegendaryLibraryNS
             {
                 afterInstallSizeNumber = (double)(availableFreeSpace - installSizeNumberAfterMod);
             }
+            if (afterInstallSizeNumber < 0)
+            {
+                afterInstallSizeNumber = 0;
+            }
             AfterInstallingTB.Text = Helpers.FormatSize(afterInstallSizeNumber);
         }
 
