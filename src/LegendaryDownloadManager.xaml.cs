@@ -369,6 +369,23 @@ namespace LegendaryLibraryNS
                             {
                                 string downloaded = Helpers.FormatSize(double.Parse(downloadedMatch.Groups[1].Value, CultureInfo.InvariantCulture), downloadedMatch.Groups[2].Value);
                                 DownloadedTB.Text = downloaded + " / " + downloadSize;
+                                if (downloaded == downloadSize)
+                                {
+                                    switch (downloadProperties.downloadAction)
+                                    {
+                                        case DownloadAction.Install:
+                                            DescriptionTB.Text = ResourceProvider.GetString(LOC.LegendaryFinishingInstallation);
+                                            break;
+                                        case DownloadAction.Update:
+                                            DescriptionTB.Text = ResourceProvider.GetString(LOC.LegendaryFinishingUpdate);
+                                            break;
+                                        case DownloadAction.Repair:
+                                            DescriptionTB.Text = ResourceProvider.GetString(LOC.LegendaryFinishingRepair);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
                             }
                             var downloadSpeedMatch = Regex.Match(stdErr.Text, @"Download\t- (\S+) (\wiB)");
                             if (downloadSpeedMatch.Length >= 2)
@@ -446,88 +463,87 @@ namespace LegendaryLibraryNS
                             }
                             else
                             {
+                                var installedAppList = LegendaryLauncher.GetInstalledAppList();
+                                if (installedAppList != null)
+                                {
+                                    if (installedAppList.ContainsKey(gameID))
+                                    {
+                                        var installedGameInfo = installedAppList[gameID];
+                                        Playnite.SDK.Models.Game game = new Playnite.SDK.Models.Game();
+                                        if (installedGameInfo.Is_dlc == false || !installedGameInfo.Executable.IsNullOrEmpty())
+                                        {
+                                            game = playniteAPI.Database.Games.FirstOrDefault(item => item.PluginId == LegendaryLibrary.Instance.Id && item.GameId == gameID);
+                                            game.InstallDirectory = installedGameInfo.Install_path;
+                                            game.Version = installedGameInfo.Version;
+                                            game.InstallSize = (ulong?)installedGameInfo.Install_size;
+                                            game.IsInstalled = true;
+                                            var playtimeSyncEnabled = LegendaryLibrary.GetSettings().SyncPlaytime;
+                                            if (playtimeSyncEnabled && downloadProperties.downloadAction != DownloadAction.Update)
+                                            {
+                                                var accountApi = new EpicAccountClient(playniteAPI, LegendaryLauncher.TokensPath);
+                                                var playtimeItems = await accountApi.GetPlaytimeItems();
+                                                var playtimeItem = playtimeItems?.FirstOrDefault(x => x.artifactId == gameID);
+                                                if (playtimeItem != null)
+                                                {
+                                                    game.Playtime = playtimeItem.totalTime;
+                                                }
+                                            }
+                                            // Dishonored: Death of the Outsider and Fallout: New Vegas need specific key in registry
+                                            if (gameID == "2fb8273dcf6f41e4899c0c881e047053" || gameID == "5daeb974a22a435988892319b3a4f476")
+                                            {
+                                                try
+                                                {
+                                                    using (var regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey("com.epicgames.launcher", false))
+                                                    {
+                                                        if (regKey == null)
+                                                        {
+                                                            Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\com.epicgames.launcher");
+                                                        }
+                                                    }
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    logger.Error($"Failed to create registry key for {gameTitle}. Error: {ex.Message}");
+                                                }
+                                            }
+                                            if (downloadProperties.installPrerequisites)
+                                            {
+                                                if (installedGameInfo.Prereq_info != null)
+                                                {
+                                                    var prereq = installedGameInfo.Prereq_info;
+                                                    var prereqPath = "";
+                                                    if (!prereq.path.IsNullOrEmpty())
+                                                    {
+                                                        prereqPath = prereq.path;
+                                                    }
+                                                    var prereqArgs = "";
+                                                    if (!prereq.args.IsNullOrEmpty())
+                                                    {
+                                                        prereqArgs = prereq.args;
+                                                    }
+                                                    if (prereqPath != "")
+                                                    {
+                                                        try
+                                                        {
+                                                            ProcessStarter.StartProcessWait(Path.GetFullPath(Path.Combine(installedGameInfo.Install_path, prereqPath)),
+                                                                                            prereqArgs,
+                                                                                            "");
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+                                                            logger.Error($"Failed to launch prerequisites executable. Error: {ex.Message}");
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            playniteAPI.Database.Games.Update(game);
+                                        }
+                                    }
+                                }
                                 wantedItem.status = DownloadStatus.Completed;
                                 DateTimeOffset now = DateTime.UtcNow;
                                 wantedItem.completedTime = now.ToUnixTimeSeconds();
-                                _ = (Application.Current.Dispatcher?.BeginInvoke((Action)async delegate
-                                {
-                                    var installedAppList = LegendaryLauncher.GetInstalledAppList();
-                                    if (installedAppList != null)
-                                    {
-                                        if (installedAppList.ContainsKey(gameID))
-                                        {
-                                            var installedGameInfo = installedAppList[gameID];
-                                            Playnite.SDK.Models.Game game = new Playnite.SDK.Models.Game();
-                                            if (installedGameInfo.Is_dlc == false || !installedGameInfo.Executable.IsNullOrEmpty())
-                                            {
-                                                game = playniteAPI.Database.Games.FirstOrDefault(item => item.PluginId == LegendaryLibrary.Instance.Id && item.GameId == gameID);
-                                                game.InstallDirectory = installedGameInfo.Install_path;
-                                                game.Version = installedGameInfo.Version;
-                                                game.InstallSize = (ulong?)installedGameInfo.Install_size;
-                                                game.IsInstalled = true;
-                                                var playtimeSyncEnabled = LegendaryLibrary.GetSettings().SyncPlaytime;
-                                                if (playtimeSyncEnabled && downloadProperties.downloadAction != DownloadAction.Update)
-                                                {
-                                                    var accountApi = new EpicAccountClient(playniteAPI, LegendaryLauncher.TokensPath);
-                                                    var playtimeItems = await accountApi.GetPlaytimeItems();
-                                                    var playtimeItem = playtimeItems?.FirstOrDefault(x => x.artifactId == gameID);
-                                                    if (playtimeItem != null)
-                                                    {
-                                                        game.Playtime = playtimeItem.totalTime;
-                                                    }
-                                                }
-                                                // Dishonored: Death of the Outsider and Fallout: New Vegas need specific key in registry
-                                                if (gameID == "2fb8273dcf6f41e4899c0c881e047053" || gameID == "5daeb974a22a435988892319b3a4f476")
-                                                {
-                                                    try
-                                                    {
-                                                        using (var regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey("com.epicgames.launcher", false))
-                                                        {
-                                                            if (regKey == null)
-                                                            {
-                                                                Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\com.epicgames.launcher");
-                                                            }
-                                                        }
-                                                    }
-                                                    catch (Exception ex)
-                                                    {
-                                                        logger.Error($"Failed to create registry key for {gameTitle}. Error: {ex.Message}");
-                                                    }
-                                                }
-                                                if (downloadProperties.installPrerequisites)
-                                                {
-                                                    if (installedGameInfo.Prereq_info != null)
-                                                    {
-                                                        var prereq = installedGameInfo.Prereq_info;
-                                                        var prereqPath = "";
-                                                        if (!prereq.path.IsNullOrEmpty())
-                                                        {
-                                                            prereqPath = prereq.path;
-                                                        }
-                                                        var prereqArgs = "";
-                                                        if (!prereq.args.IsNullOrEmpty())
-                                                        {
-                                                            prereqArgs = prereq.args;
-                                                        }
-                                                        if (prereqPath != "")
-                                                        {
-                                                            try
-                                                            {
-                                                                ProcessStarter.StartProcessWait(Path.GetFullPath(Path.Combine(installedGameInfo.Install_path, prereqPath)), prereqArgs, "");
-                                                            }
-                                                            catch (Exception ex)
-                                                            {
-                                                                logger.Error($"Failed to launch prerequisites executable. Error: {ex.Message}");
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                playniteAPI.Database.Games.Update(game);
-                                            }
-                                        }
-                                    }
-                                    Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), gameTitle, ResourceProvider.GetString(LOC.LegendaryInstallationFinished), null);
-                                }));
+                                Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), gameTitle, ResourceProvider.GetString(LOC.LegendaryInstallationFinished), null);
                             }
                             SaveData();
                             gracefulInstallerCTS?.Dispose();

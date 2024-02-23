@@ -23,6 +23,9 @@
   <sys:String x:Key="LOCLegendaryVerifying">Verifying...</sys:String>
   <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Verifying large file "{0}": {1}</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadingUpdate">Downloading update...</sys:String>
+  <sys:String x:Key="LOCLegendaryFinishingInstallation">Finishing installation...</sys:String>
+  <sys:String x:Key="LOCLegendaryFinishingUpdate">Finishing update...</sys:String>
+  <sys:String x:Key="LOCLegendaryFinishingRepair">Finishing repair...</sys:String>
   <sys:String x:Key="LOCLegendaryPauseDownload">Pause</sys:String>
   <sys:String x:Key="LOCLegendaryResumeDownload">Resume</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadPaused">Paused</sys:String>

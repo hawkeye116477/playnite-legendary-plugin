@@ -322,6 +322,18 @@ namespace System
         /// </summary>
         public const string LegendaryDownloadingUpdate = "LOCLegendaryDownloadingUpdate";
         /// <summary>
+        /// Finishing installation...
+        /// </summary>
+        public const string LegendaryFinishingInstallation = "LOCLegendaryFinishingInstallation";
+        /// <summary>
+        /// Finishing update...
+        /// </summary>
+        public const string LegendaryFinishingUpdate = "LOCLegendaryFinishingUpdate";
+        /// <summary>
+        /// Finishing repair...
+        /// </summary>
+        public const string LegendaryFinishingRepair = "LOCLegendaryFinishingRepair";
+        /// <summary>
         /// Pause
         /// </summary>
         public const string LegendaryPauseDownload = "LOCLegendaryPauseDownload";
