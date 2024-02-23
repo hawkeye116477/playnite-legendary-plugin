@@ -492,13 +492,13 @@ namespace System
         /// <summary>
         /// Do not abort if not enough free space is available.
         /// </summary>
-        public const string LegendaryIgnoreFreeSpaceTooltip = "LOCLegendaryIgnoreFreeSpaceTooltip";
+        public const string LegendaryIgnoreFreeSpaceToolTip = "LOCLegendaryIgnoreFreeSpaceToolTip";
         /// <summary>
         /// Enable reordering optimization
         /// </summary>
         public const string LegendaryEnableReordering = "LOCLegendaryEnableReordering";
         /// <summary>
-        /// This can reduce RAM requirements during download, but may also have adverse results for some titles.
+        /// This can reduce RAM requirements during download (may not work properly for some titles).
         /// </summary>
         public const string LegendaryEnableReorderingToolTip = "LOCLegendaryEnableReorderingToolTip";
         /// <summary>

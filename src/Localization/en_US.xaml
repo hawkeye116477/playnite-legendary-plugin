@@ -67,7 +67,7 @@
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Ignore free space</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip">Do not abort if not enough free space is available.</sys:String>
   <sys:String x:Key="LOCLegendaryEnableReordering">Enable reordering optimization</sys:String>
-  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">This can reduce RAM requirements during download, but may also have adverse results for some titles.</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">This can reduce RAM requirements during download (may not work properly for some titles).</sys:String>
   <sys:String x:Key="LOCLegendaryExtraContent">Extra Content</sys:String>
   <sys:String x:Key="LOCLegendaryCache">Cache</sys:String>
   <sys:String x:Key="LOCLegendaryClearCache">Clear cache</sys:String>
