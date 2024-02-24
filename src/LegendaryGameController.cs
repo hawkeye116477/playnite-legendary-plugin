@@ -560,7 +560,14 @@ namespace LegendaryLibraryNS
                     }
                     if (downloadProperties == null)
                     {
-                        downloadProperties = new DownloadProperties() { downloadAction = DownloadAction.Update };
+                        var settings = LegendaryLibrary.GetSettings();
+                        downloadProperties = new DownloadProperties()
+                        {
+                            downloadAction = DownloadAction.Update,
+                            enableReordering = settings.EnableReordering,
+                            maxWorkers = settings.MaxWorkers,
+                            maxSharedMemory = settings.MaxSharedMemory,
+                        };
                     }
                     LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
                     foreach (var gameToUpdate in gamesToUpdate)
