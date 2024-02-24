@@ -95,11 +95,7 @@ namespace LegendaryLibraryNS
         {
             var running = downloadManagerData.downloads.Any(item => item.status == DownloadStatus.Running);
             var queuedList = downloadManagerData.downloads.Where(i => i.status == DownloadStatus.Queued).ToList();
-            if (!running && queuedList.Count > 0)
-            {
-                await Install(queuedList[0].gameID, queuedList[0].name, queuedList[0].downloadSize, queuedList[0].downloadProperties);
-            }
-            else if (!running)
+            if (!running)
             {
                 DownloadSpeedTB.Text = "";
                 DownloadedTB.Text = "";
@@ -108,6 +104,13 @@ namespace LegendaryLibraryNS
                 DownloadPB.Value = 0;
                 DescriptionTB.Text = "";
                 GameTitleTB.Text = "";
+            }
+            if (!running && queuedList.Count > 0)
+            {
+                await Install(queuedList[0]);
+            }
+            else if (!running)
+            {
                 var downloadCompleteSettings = LegendaryLibrary.GetSettings().DoActionAfterDownloadComplete;
                 switch (downloadCompleteSettings)
                 {
@@ -168,15 +171,15 @@ namespace LegendaryLibraryNS
             DoNextJobInQueue();
         }
 
-        public void EnqueueJob(string gameID, string gameTitle, string downloadSize, string installSize, DownloadProperties downloadProperties)
+        public void EnqueueJob(DownloadManagerData.Download taskData)
         {
             DisplayGreeting();
-            var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameID);
+            var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == taskData.gameID);
             if (wantedItem == null)
             {
                 DateTimeOffset now = DateTime.UtcNow;
                 downloadManagerData.downloads.Add(new DownloadManagerData.Download
-                { gameID = gameID, downloadSize = downloadSize, installSize = installSize, name = gameTitle, status = DownloadStatus.Queued, addedTime = now.ToUnixTimeSeconds(), downloadProperties = downloadProperties });
+                { gameID = taskData.gameID, downloadSize = taskData.downloadSize, installSize = taskData.installSize, name = taskData.name, status = DownloadStatus.Queued, addedTime = now.ToUnixTimeSeconds(), downloadProperties = taskData.downloadProperties });
             }
             else
             {
@@ -195,11 +198,15 @@ namespace LegendaryLibraryNS
             }
         }
 
-        public async Task Install(string gameID, string gameTitle, string downloadSize, DownloadProperties downloadProperties)
+        public async Task Install(DownloadManagerData.Download taskData)
         {
             await WaitUntilLegendaryCloses();
             var installCommand = new List<string>();
             var settings = LegendaryLibrary.GetSettings();
+            var gameID = taskData.gameID;
+            var downloadProperties = taskData.downloadProperties;
+            var gameTitle = taskData.name;
+            var downloadSize = taskData.downloadSize;
             if (gameID == "eos-overlay")
             {
                 installCommand = new List<string>() { "-y", "eos-overlay" };
@@ -296,11 +303,6 @@ namespace LegendaryLibraryNS
                             wantedItem.status = DownloadStatus.Running;
                             GameTitleTB.Text = gameTitle;
                             DownloadPB.Value = 0;
-                            EtaTB.Text = "";
-                            ElapsedTB.Text = "";
-                            DownloadedTB.Text = "";
-                            DownloadSpeedTB.Text = "";
-                            DescriptionTB.Text = "";
                             break;
                         case StandardOutputCommandEvent stdOut:
                             if (downloadProperties.downloadAction == DownloadAction.Repair)
@@ -582,10 +584,6 @@ namespace LegendaryLibraryNS
                             gracefulInstallerCTS?.Cancel();
                             gracefulInstallerCTS?.Dispose();
                             forcefulInstallerCTS?.Dispose();
-                            EtaTB.Text = "";
-                            DescriptionTB.Text = "";
-                            DownloadSpeedTB.Text = "";
-                            GameTitleTB.Text = "";
                         }
                         selectedRow.status = DownloadStatus.Paused;
                     }
@@ -603,7 +601,7 @@ namespace LegendaryLibraryNS
                     if (selectedRow.status == DownloadStatus.Canceled ||
                         selectedRow.status == DownloadStatus.Paused)
                     {
-                        EnqueueJob(selectedRow.gameID, selectedRow.name, selectedRow.downloadSize, selectedRow.installSize, selectedRow.downloadProperties);
+                        EnqueueJob(selectedRow);
                     }
                 }
             }

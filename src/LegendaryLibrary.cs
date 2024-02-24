@@ -678,7 +678,7 @@ namespace LegendaryLibraryNS
                                 }
                                 window.Title = game.Name;
                                 var installProperties = new DownloadProperties { downloadAction = DownloadAction.Repair };
-                                var installData = new DownloadManagerData.Download { gameID = game.GameId, downloadProperties = installProperties };
+                                var installData = new DownloadManagerData.Download { gameID = game.GameId, name = game.Name, downloadProperties = installProperties };
                                 window.DataContext = installData;
                                 window.Content = new LegendaryGameInstaller();
                                 window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();

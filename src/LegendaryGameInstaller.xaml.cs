@@ -24,8 +24,6 @@ namespace LegendaryLibraryNS
         private ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI playniteAPI = API.Instance;
         public string installCommand;
-        public string downloadSize;
-        public string installSize;
         public string downloadSizeWithoutDlcs;
         public string installSizeWithoutDlcs;
         public List<string> requiredThings;
@@ -80,43 +78,6 @@ namespace LegendaryLibraryNS
             {
                 return;
             }
-            int maxWorkers = settings.MaxWorkers;
-            if (MaxWorkersNI.Value != "")
-            {
-                maxWorkers = int.Parse(MaxWorkersNI.Value);
-            }
-            int maxSharedMemory = settings.MaxSharedMemory;
-            if (MaxSharedMemoryNI.Value != "")
-            {
-                maxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
-            }
-            var selectedExtraContent = new List<string>();
-            if (requiredThings.Count > 0)
-            {
-                selectedExtraContent.Add("");
-                foreach (var requiredThing in requiredThings)
-                {
-                    selectedExtraContent.Add(requiredThing);
-                }
-            }
-            if (ExtraContentLB.Items.Count > 0)
-            {
-                var anyNonDlc = ExtraContentLB.Items.Cast<KeyValuePair<string, LegendarySDLInfo>>().FirstOrDefault(a => a.Value.Is_dlc == false);
-                if (anyNonDlc.Key != null)
-                {
-                    selectedExtraContent.AddMissing("");
-                    foreach (var selectedOption in ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().ToList())
-                    {
-                        if (!selectedOption.Value.Is_dlc)
-                        {
-                            foreach (var tag in selectedOption.Value.Tags)
-                            {
-                                selectedExtraContent.AddMissing(tag);
-                            }
-                        }
-                    }
-                }
-            }
             InstallerWindow.Close();
             LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
             var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == GameID);
@@ -126,28 +87,19 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                DownloadProperties downloadProperties = new DownloadProperties()
+                var downloadProperties = GetDownloadProperties(DownloadAction.Install, installPath);
+                InstallData.downloadProperties = downloadProperties;
+                if (!downloadSizeWithoutDlcs.IsNullOrEmpty())
                 {
-                    installPath = installPath,
-                    downloadAction = DownloadAction.Install,
-                    installPrerequisites = (bool)PrerequisitesChk.IsChecked,
-                    prerequisitesName = prereqName,
-                    enableReordering = (bool)ReorderingChk.IsChecked,
-                    ignoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked,
-                    maxWorkers = maxWorkers,
-                    maxSharedMemory = maxSharedMemory,
-                    extraContent = selectedExtraContent
-                };
+                    InstallData.downloadSize = downloadSizeWithoutDlcs;
+                }
+                if (!installSizeWithoutDlcs.IsNullOrEmpty())
+                {
+                    InstallData.installSize = installSizeWithoutDlcs;
+                }
                 var downloadTasks = new List<DownloadManagerData.Download>
                 {
-                    new DownloadManagerData.Download
-                    {
-                        gameID = GameID,
-                        name = InstallerWindow.Title,
-                        downloadSize = downloadSizeWithoutDlcs,
-                        installSize = installSizeWithoutDlcs,
-                        downloadProperties = downloadProperties
-                    }
+                    InstallData
                 };
 
                 if (ExtraContentLB.Items.Count > 0)
@@ -196,6 +148,61 @@ namespace LegendaryLibraryNS
                     downloadManager.EnqueueMultipleJobs(downloadTasks);
                 }
             }
+        }
+
+        public DownloadProperties GetDownloadProperties(DownloadAction downloadAction, string installPath = "")
+        {
+            var settings = LegendaryLibrary.GetSettings();
+            int maxWorkers = settings.MaxWorkers;
+            if (MaxWorkersNI.Value != "")
+            {
+                maxWorkers = int.Parse(MaxWorkersNI.Value);
+            }
+            int maxSharedMemory = settings.MaxSharedMemory;
+            if (MaxSharedMemoryNI.Value != "")
+            {
+                maxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
+            }
+            var selectedExtraContent = new List<string>();
+            if (requiredThings.Count > 0)
+            {
+                selectedExtraContent.Add("");
+                foreach (var requiredThing in requiredThings)
+                {
+                    selectedExtraContent.Add(requiredThing);
+                }
+            }
+            if (ExtraContentLB.Items.Count > 0)
+            {
+                var anyNonDlc = ExtraContentLB.Items.Cast<KeyValuePair<string, LegendarySDLInfo>>().FirstOrDefault(a => a.Value.Is_dlc == false);
+                if (anyNonDlc.Key != null)
+                {
+                    selectedExtraContent.AddMissing("");
+                    foreach (var selectedOption in ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().ToList())
+                    {
+                        if (!selectedOption.Value.Is_dlc)
+                        {
+                            foreach (var tag in selectedOption.Value.Tags)
+                            {
+                                selectedExtraContent.AddMissing(tag);
+                            }
+                        }
+                    }
+                }
+            }
+            DownloadProperties downloadProperties = new DownloadProperties()
+            {
+                downloadAction = downloadAction,
+                installPath = installPath,
+                installPrerequisites = (bool)PrerequisitesChk.IsChecked,
+                prerequisitesName = prereqName,
+                enableReordering = (bool)ReorderingChk.IsChecked,
+                ignoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked,
+                maxWorkers = maxWorkers,
+                maxSharedMemory = maxSharedMemory,
+                extraContent = selectedExtraContent
+            };
+            return downloadProperties;
         }
 
         private async void LegendaryGameInstallerUC_Loaded(object sender, RoutedEventArgs e)
@@ -266,7 +273,6 @@ namespace LegendaryLibraryNS
                                 }
                             }
                         }
-
                     }
                     if (manifest.Manifest.Install_tags.Length > 1 || manifest.Game.Owned_dlc.Length > 0)
                     {
@@ -352,8 +358,8 @@ namespace LegendaryLibraryNS
                                         break;
                                     }
                                 }
-                                downloadSize = Helpers.FormatSize(downloadSizeNumber);
-                                installSize = Helpers.FormatSize(installSizeNumber);
+                                InstallData.downloadSize = Helpers.FormatSize(downloadSizeNumber);
+                                InstallData.installSize = Helpers.FormatSize(installSizeNumber);
                             }
                             if (!correctSdlJson)
                             {
@@ -414,19 +420,19 @@ namespace LegendaryLibraryNS
                         }
                     }
                 }
-                if (downloadSize.IsNullOrEmpty() || installSize.IsNullOrEmpty())
+                if (InstallData.downloadSize.IsNullOrEmpty() || InstallData.installSize.IsNullOrEmpty())
                 {
                     if (manifest.Manifest != null)
                     {
                         downloadSizeNumber = manifest.Manifest.Download_size;
                         installSizeNumber = manifest.Manifest.Disk_size;
-                        downloadSize = Helpers.FormatSize(downloadSizeNumber);
-                        installSize = Helpers.FormatSize(installSizeNumber);
+                        InstallData.downloadSize = Helpers.FormatSize(downloadSizeNumber);
+                        InstallData.installSize = Helpers.FormatSize(installSizeNumber);
                     }
                 }
                 UpdateAfterInstallingSize();
-                DownloadSizeTB.Text = downloadSize;
-                InstallSizeTB.Text = installSize;
+                DownloadSizeTB.Text = InstallData.downloadSize;
+                InstallSizeTB.Text = InstallData.installSize;
             }
             else
             {
@@ -461,23 +467,23 @@ namespace LegendaryLibraryNS
                         if (line.Contains(downloadSizeText))
                         {
                             var downloadSizeSplittedString = line.Substring(line.IndexOf(downloadSizeText) + downloadSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                            downloadSize = Helpers.FormatSize(double.Parse(downloadSizeSplittedString[0], CultureInfo.InvariantCulture), downloadSizeSplittedString[1]);
-                            DownloadSizeTB.Text = downloadSize;
+                            InstallData.downloadSize = Helpers.FormatSize(double.Parse(downloadSizeSplittedString[0], CultureInfo.InvariantCulture), downloadSizeSplittedString[1]);
+                            DownloadSizeTB.Text = InstallData.downloadSize;
                         }
                         var installSizeText = "Install size:";
                         if (line.Contains(installSizeText))
                         {
                             var installSizeSplittedString = line.Substring(line.IndexOf(installSizeText) + installSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                             installSizeNumber = double.Parse(installSizeSplittedString[0], CultureInfo.InvariantCulture);
-                            installSize = Helpers.FormatSize(installSizeNumber, installSizeSplittedString[1]);
-                            InstallSizeTB.Text = installSize;
+                            InstallData.installSize = Helpers.FormatSize(installSizeNumber, installSizeSplittedString[1]);
+                            InstallSizeTB.Text = InstallData.installSize;
                             UpdateAfterInstallingSize();
                         }
                     }
                 }
 
             }
-            if (!downloadSize.IsNullOrEmpty() && !installSize.IsNullOrEmpty())
+            if (!InstallData.downloadSize.IsNullOrEmpty() && !InstallData.installSize.IsNullOrEmpty())
             {
                 InstallBtn.IsEnabled = true;
             }
@@ -567,10 +573,10 @@ namespace LegendaryLibraryNS
                     }
                 }
             }
-            downloadSize = Helpers.FormatSize(initialDownloadSizeNumber);
-            DownloadSizeTB.Text = downloadSize;
-            installSize = Helpers.FormatSize(initialInstallSizeNumber);
-            InstallSizeTB.Text = installSize;
+            InstallData.downloadSize = Helpers.FormatSize(initialDownloadSizeNumber);
+            DownloadSizeTB.Text = InstallData.downloadSize;
+            InstallData.installSize = Helpers.FormatSize(initialInstallSizeNumber);
+            InstallSizeTB.Text = InstallData.installSize;
             installSizeNumberAfterMod = initialInstallSizeNumber;
             UpdateAfterInstallingSize();
             double downloadSizeWithoutDlcsNumber = initialDownloadSizeNumber - allDlcsDownloadSizeNumber;
@@ -597,38 +603,6 @@ namespace LegendaryLibraryNS
 
         private void RepairBtn_Click(object sender, RoutedEventArgs e)
         {
-            var settings = LegendaryLibrary.GetSettings();
-            int maxWorkers = settings.MaxWorkers;
-            if (MaxWorkersNI.Value != "")
-            {
-                maxWorkers = int.Parse(MaxWorkersNI.Value);
-            }
-            int maxSharedMemory = settings.MaxSharedMemory;
-            if (MaxSharedMemoryNI.Value != "")
-            {
-                maxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
-            }
-            bool enableReordering = Convert.ToBoolean(ReorderingChk.IsChecked);
-            var selectedExtraContent = new List<string>();
-            if (requiredThings.Count > 0)
-            {
-                selectedExtraContent.Add("");
-                foreach (var requiredThing in requiredThings)
-                {
-                    selectedExtraContent.Add(requiredThing);
-                }
-            }
-            if (ExtraContentLB.Items.Count > 0)
-            {
-                selectedExtraContent.AddMissing("");
-                foreach (var selectedOption in ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().ToList())
-                {
-                    foreach (var tag in selectedOption.Value.Tags)
-                    {
-                        selectedExtraContent.AddMissing(tag);
-                    }
-                }
-            }
             InstallerWindow.Close();
             LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
             var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == GameID);
@@ -638,16 +612,16 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                DownloadProperties downloadProperties = new DownloadProperties()
+                InstallData.downloadProperties = GetDownloadProperties(DownloadAction.Repair);
+                if (!downloadSizeWithoutDlcs.IsNullOrEmpty())
                 {
-                    installPath = "",
-                    downloadAction = DownloadAction.Repair,
-                    enableReordering = enableReordering,
-                    maxWorkers = maxWorkers,
-                    maxSharedMemory = maxSharedMemory,
-                    extraContent = selectedExtraContent
-                };
-                downloadManager.EnqueueJob(GameID, InstallerWindow.Title, downloadSize, installSize, downloadProperties);
+                    InstallData.downloadSize = downloadSizeWithoutDlcs;
+                }
+                if (!installSizeWithoutDlcs.IsNullOrEmpty())
+                {
+                    InstallData.installSize = installSizeWithoutDlcs;
+                }
+                downloadManager.EnqueueJob(InstallData);
             }
         }
 
