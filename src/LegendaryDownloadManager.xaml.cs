@@ -20,6 +20,7 @@ using Playnite.Common;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using LegendaryLibraryNS.Services;
+using System.Windows.Input;
 
 namespace LegendaryLibraryNS
 {
@@ -38,7 +39,15 @@ namespace LegendaryLibraryNS
         {
             InitializeComponent();
             SetControlTextBlockStyle();
-            SelectAllBtn.ToolTip = $"{ResourceProvider.GetResource(LOC.LegendarySelectAllEntries)} (Ctrl+A)";
+
+            SelectAllBtn.ToolTip = GetToolTipWithKey(LOC.LegendarySelectAllEntries, "Ctrl+A");
+            RemoveDownloadBtn.ToolTip = GetToolTipWithKey(LOC.LegendaryRemoveEntry, "Delete");
+            MoveTopBtn.ToolTip = GetToolTipWithKey(LOC.LegendaryMoveEntryTop, "Alt+Home");
+            MoveUpBtn.ToolTip = GetToolTipWithKey(LOC.LegendaryMoveEntryUp, "Alt+Up");
+            MoveDownBtn.ToolTip = GetToolTipWithKey(LOC.LegendaryMoveEntryDown, "Alt+Down");
+            MoveBottomBtn.ToolTip = GetToolTipWithKey(LOC.LegendaryMoveEntryBottom, "Alt+End");
+            DownloadPropertiesBtn.ToolTip = GetToolTipWithKey(LOC.LegendaryEditSelectedDownloadProperties, "Ctrl+P");
+            OpenDownloadDirectoryBtn.ToolTip = GetToolTipWithKey(LOC.LegendaryOpenDownloadDirectory, "Ctrl+O");
             LoadSavedData();
             var runningAndQueuedDownloads = downloadManagerData.downloads.Where(i => i.status == DownloadStatus.Running
                                                                                      || i.status == DownloadStatus.Queued).ToList();
@@ -58,6 +67,11 @@ namespace LegendaryLibraryNS
             {
                 playniteAPI.MainView.SwitchToLibraryView();
             });
+        }
+
+        public string GetToolTipWithKey(string description, string shortcut)
+        {
+            return $"{ResourceProvider.GetString(description)} [{shortcut}]";
         }
 
         public DownloadManagerData.Rootobject LoadSavedData()
@@ -872,7 +886,7 @@ namespace LegendaryLibraryNS
             Bottom
         }
 
-        private void MoveEntries(EntryPosition entryPosition)
+        private void MoveEntries(EntryPosition entryPosition, bool moveFocus = false)
         {
             if (DownloadsDG.SelectedIndex != -1)
             {
@@ -928,6 +942,10 @@ namespace LegendaryLibraryNS
                     downloadManagerData.downloads.Move(newSelectedIndex, newIndex);
                     loopIndex++;
                 }
+                if (moveFocus)
+                {
+                    DownloadsDG.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                }
                 SaveData();
             }
         }
@@ -949,6 +967,38 @@ namespace LegendaryLibraryNS
         private void MoveBottomBtn_Click(object sender, RoutedEventArgs e)
         {
             MoveEntries(EntryPosition.Bottom);
+        }
+
+        private void LegendaryDownloadManagerUC_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                RemoveDownloadBtn_Click(sender, e);
+            }
+            else if (Keyboard.IsKeyDown(Key.LeftAlt) && Keyboard.IsKeyDown(Key.Home))
+            {
+                MoveEntries(EntryPosition.Top, true);
+            }
+            else if (Keyboard.IsKeyDown(Key.LeftAlt) && Keyboard.IsKeyDown(Key.Up))
+            {
+                MoveEntries(EntryPosition.Up, true);
+            }
+            else if (Keyboard.IsKeyDown(Key.LeftAlt) && Keyboard.IsKeyDown(Key.Down))
+            {
+                MoveEntries(EntryPosition.Down, true);
+            }
+            else if (Keyboard.IsKeyDown(Key.LeftAlt) && Keyboard.IsKeyDown(Key.End))
+            {
+                MoveEntries(EntryPosition.Bottom, true);
+            }
+            else if ((Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) && e.Key == Key.P)
+            {
+                DownloadPropertiesBtn_Click(sender, e);
+            }
+            else if ((Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) && e.Key == Key.O)
+            {
+                OpenDownloadDirectoryBtn_Click(sender, e);
+            }
         }
     }
 }

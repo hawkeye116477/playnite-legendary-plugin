@@ -8,7 +8,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:pcmd="clr-namespace:Playnite.Commands"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="800" DataContext="{Binding RelativeSource={RelativeSource Self}}" Name="LegendaryDownloadManagerUC">
+             d:DesignHeight="300" d:DesignWidth="800" DataContext="{Binding RelativeSource={RelativeSource Self}}" Name="LegendaryDownloadManagerUC" PreviewKeyDown="LegendaryDownloadManagerUC_PreviewKeyDown">
 
     <UserControl.Resources>
         <sys:Boolean x:Key="True">True</sys:Boolean>
@@ -78,34 +78,34 @@
                    Margin="5,0,0,0" IsCancel="True" Click="CancelDownloadBtn_Click" IsEnabled="False" />
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="10,0,5,0" />
                 <Button Name="MoveTopBtn" Content="&#xea95;" FontFamily="{DynamicResource FontIcoFont}"
-                    Margin="5,0,0,0" Click="MoveTopBtn_Click" ToolTip="{DynamicResource LOCLegendaryMoveEntryTop}"
+                    Margin="5,0,0,0" Click="MoveTopBtn_Click"
                     IsEnabled="False" />
                 <Button Name="MoveUpBtn" Content="&#xea5e;" FontFamily="{DynamicResource FontIcoFont}"
-                    Margin="5,0,0,0" Click="MoveUpBtn_Click" ToolTip="{DynamicResource LOCLegendaryMoveEntryUp}"
+                    Margin="5,0,0,0" Click="MoveUpBtn_Click"
                     IsEnabled="False" />
                 <Button Name="MoveDownBtn" Content="&#xea5b;" FontFamily="{DynamicResource FontIcoFont}"
-                    Margin="5,0,0,0" Click="MoveDownBtn_Click" ToolTip="{DynamicResource LOCLegendaryMoveEntryDown}"
+                    Margin="5,0,0,0" Click="MoveDownBtn_Click"
                     IsEnabled="False" />
                 <Button Name="MoveBottomBtn" Content="&#xea92;" FontFamily="{DynamicResource FontIcoFont}"
-                    Margin="5,0,0,0" Click="MoveBottomBtn_Click" ToolTip="{DynamicResource LOCLegendaryMoveEntryBottom}"
+                    Margin="5,0,0,0" Click="MoveBottomBtn_Click"
                     IsEnabled="False" />
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="10,0,5,0" />
                 <Button x:Name="SelectAllBtn" Content="&#xeed9;" FontFamily="{DynamicResource FontIcoFont}"
                     Margin="5,0,0,0" Click="SelectAllBtn_Click" />
-                <Button x:Name="RemoveDownloadBtn" Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendaryRemoveEntry}"
+                <Button x:Name="RemoveDownloadBtn" Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}"
                     Margin="5,0,0,0" Click="RemoveDownloadBtn_Click" IsEnabled="False" />
                 <Button x:Name="RemoveCompletedDownloadsBtn" Content="&#xef9f;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendaryRemoveCompletedDownloads}"
                     Margin="5,0,0,0" Click="RemoveCompletedDownloadsBtn_Click" />
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="10,0,5,0" />
-                <Button x:Name="DownloadPropertiesBtn" Content="&#xefe2;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendaryEditSelectedDownloadProperties}"
+                <Button x:Name="DownloadPropertiesBtn" Content="&#xefe2;" FontFamily="{DynamicResource FontIcoFont}"
                     Margin="5,0,0,0" Click="DownloadPropertiesBtn_Click" IsEnabled="False" />
-                <Button x:Name="OpenDownloadDirectoryBtn" Content="&#xef35;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendaryOpenDownloadDirectory}"
+                <Button x:Name="OpenDownloadDirectoryBtn" Content="&#xef35;" FontFamily="{DynamicResource FontIcoFont}"
                     Margin="5,0,0,0" Click="OpenDownloadDirectoryBtn_Click" IsEnabled="False" />
                 <ToggleButton x:Name="FilterDownloadBtn" Content="&#xef29;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteFilters}"
                     Margin="5,0,0,0" Checked="FilterDownloadBtn_Checked" Unchecked="FilterDownloadBtn_Unchecked" />
             </StackPanel>
             <Separator Margin="0,5,0,5"></Separator>
-            <DataGrid x:Name="DownloadsDG" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,10" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" ColumnWidth="*" CanUserSortColumns="True" CanUserResizeColumns="True" SelectionChanged="DownloadsDG_SelectionChanged" >
+            <DataGrid x:Name="DownloadsDG" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,10" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" ColumnWidth="*" CanUserSortColumns="True" CanUserResizeColumns="True" SelectionChanged="DownloadsDG_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{DynamicResource LOCLegendary3P_PlayniteGameNameTitle}" Binding="{Binding name}"></DataGridTextColumn>
                     <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloadStatus}" Binding="{Binding status, Converter={StaticResource DownloadStatusEnumToStringConverter}}"/>
