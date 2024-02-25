@@ -137,7 +137,7 @@ namespace LegendaryLibraryNS.Services
                     username = tokens.displayName;
                 }
             }
-            return tokens.displayName;
+            return username;
         }
 
         public async Task<bool> GetIsUserLoggedIn()
