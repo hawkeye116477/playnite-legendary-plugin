@@ -20,6 +20,12 @@
   <sys:String x:Key="LOCLegendaryETA">Numatomas baigties laikas:</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSpeed">Siuntimosi greitis:</sys:String>
   <sys:String x:Key="LOCLegendaryElapsed">Praėjo:</sys:String>
+  <sys:String x:Key="LOCLegendaryVerifying"></sys:String>
+  <sys:String x:Key="LOCLegendaryVerifyingLargeFile"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadingUpdate"></sys:String>
+  <sys:String x:Key="LOCLegendaryFinishingInstallation"></sys:String>
+  <sys:String x:Key="LOCLegendaryFinishingUpdate"></sys:String>
+  <sys:String x:Key="LOCLegendaryFinishingRepair"></sys:String>
   <sys:String x:Key="LOCLegendaryPauseDownload">Pristabdyti</sys:String>
   <sys:String x:Key="LOCLegendaryResumeDownload">Pratęsti</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadPaused">Pristabdyta</sys:String>
@@ -28,11 +34,13 @@
   <sys:String x:Key="LOCLegendarySyncGameSaves"></sys:String>
   <sys:String x:Key="LOCLegendarySyncing"></sys:String>
   <sys:String x:Key="LOCLegendarySyncError"></sys:String>
+  <sys:String x:Key="LOCLegendaryImportInstalledGame"></sys:String>
   <sys:String x:Key="LOCLegendaryImportingGame">Importuojama {0}...</sys:String>
   <sys:String x:Key="LOCLegendaryImportFinished">Importas baigtas. Smagaus.</sys:String>
   <sys:String x:Key="LOCLegendaryGameImportFailure"></sys:String>
   <sys:String x:Key="LOCLegendaryMaxWorkers"></sys:String>
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">Maksimalus bendros atminties kiekis (MB)</sys:String>
+  <sys:String x:Key="LOCLegendaryConnectionTimeout"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">Atsisiuntimų Tvarkyklė</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadStatus">Būsena</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadCompletedColumn">Baigta</sys:String>
@@ -43,6 +51,10 @@
   <sys:String x:Key="LOCLegendaryCurrentDownloadSummary">Dabartinio siuntimosi santrauka</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveEntry">Pašalinti įrašą</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveEntryConfirm">Ar tikrai norite pašalinti {0} iš sąrašo?</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveEntryTop"></sys:String>
+  <sys:String x:Key="LOCLegendaryMoveEntryUp"></sys:String>
+  <sys:String x:Key="LOCLegendaryMoveEntryDown"></sys:String>
+  <sys:String x:Key="LOCLegendaryMoveEntryBottom"></sys:String>
   <sys:String x:Key="LOCLegendaryRemoveCompletedDownloads"></sys:String>
   <sys:String x:Key="LOCLegendaryRemoveCompletedDownloadsConfirm"></sys:String>
   <sys:String x:Key="LOCLegendaryRemoveSelectedEntriesConfirm"></sys:String>
@@ -53,7 +65,10 @@
   <sys:String x:Key="LOCLegendaryDownloadAlreadyExists"></sys:String>
   <sys:String x:Key="LOCLegendaryRepair">Sutaisyti</sys:String>
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Išplėstinės Parinktys</sys:String>
+  <sys:String x:Key="LOCLegendaryIgnoreFreeSpace"></sys:String>
+  <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip"></sys:String>
   <sys:String x:Key="LOCLegendaryEnableReordering">Įjungti perrūšiavimo optimizaciją</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip"></sys:String>
   <sys:String x:Key="LOCLegendaryExtraContent">Papildomas turinys</sys:String>
   <sys:String x:Key="LOCLegendaryCache">Podėlis</sys:String>
   <sys:String x:Key="LOCLegendaryClearCache">Išvalyti podėlį</sys:String>
@@ -67,6 +82,7 @@
   <sys:String x:Key="LOCLegendaryMemoryError"></sys:String>
   <sys:String x:Key="LOCLegendaryEditSelectedDownloadProperties"></sys:String>
   <sys:String x:Key="LOCLegendaryOpenDownloadDirectory"></sys:String>
+  <sys:String x:Key="LOCLegendaryPathNotExistsError"></sys:String>
   <sys:String x:Key="LOCLegendaryTask"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadProperties"></sys:String>
   <sys:String x:Key="LOCLegendaryMigrateGamesEpic"></sys:String>
@@ -82,7 +98,6 @@
   <sys:String x:Key="LOCLegendaryLauncherBinary"></sys:String>
   <sys:String x:Key="LOCLegendaryCopyRawDataToClipboard"></sys:String>
   <sys:String x:Key="LOCLegendaryLogFilesPath"></sys:String>
-  <sys:String x:Key="LOCLegendaryPathNotExist"></sys:String>
   <sys:String x:Key="LOCLegendaryReportBug"></sys:String>
   <sys:String x:Key="LOCLegendaryLauncherNotInstalled"></sys:String>
   <sys:String x:Key="LOCLegendaryNewVersionAvailable"></sys:String>
@@ -144,8 +159,14 @@
   <sys:String x:Key="LOCLegendarySignedInAs"></sys:String>
   <sys:String x:Key="LOCLegendarySignOutConfirm"></sys:String>
   <sys:String x:Key="LOCLegendaryPermissionError"></sys:String>
+  <sys:String x:Key="LOCLegendaryInstanceNotice"></sys:String>
   <sys:String x:Key="LOCLegendaryCheckForGamesUpdatesButton"></sys:String>
   <sys:String x:Key="LOCLegendaryNotEnoughSpace"></sys:String>
   <sys:String x:Key="LOCLegendaryCheckingForUpdates"></sys:String>
   <sys:String x:Key="LOCLegendaryUninstallSuccess"></sys:String>
+  <sys:String x:Key="LOCLegendaryImportThirdPartyLauncherGames"></sys:String>
+  <sys:String x:Key="LOCLegendaryThirdPartyLauncherImportWarn"></sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError"></sys:String>
+  <sys:String x:Key="LOCLegendaryInstallPrerequisites"></sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher"></sys:String>
 </ResourceDictionary>
