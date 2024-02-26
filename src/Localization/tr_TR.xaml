@@ -20,6 +20,12 @@
   <sys:String x:Key="LOCLegendaryETA">TTS:</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSpeed">İndirme Hızı:</sys:String>
   <sys:String x:Key="LOCLegendaryElapsed">Geçen:</sys:String>
+  <sys:String x:Key="LOCLegendaryVerifying">Verifying...</sys:String>
+  <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Büyük dosya doğrulanıyor &quot;{0}&quot;: {1}</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadingUpdate">Güncelleştirme indiriliyor...</sys:String>
+  <sys:String x:Key="LOCLegendaryFinishingInstallation">Kurulum tamamlanıyor...</sys:String>
+  <sys:String x:Key="LOCLegendaryFinishingUpdate">Güncelleme tamamlanıyor...</sys:String>
+  <sys:String x:Key="LOCLegendaryFinishingRepair">Onarım tamamlanıyor...</sys:String>
   <sys:String x:Key="LOCLegendaryPauseDownload">Duraklat</sys:String>
   <sys:String x:Key="LOCLegendaryResumeDownload">Sürdür</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadPaused">Duraklatıldı</sys:String>
@@ -28,11 +34,13 @@
   <sys:String x:Key="LOCLegendarySyncGameSaves">Oyun kayıtlarını buluta eşitle</sys:String>
   <sys:String x:Key="LOCLegendarySyncing">{0} oyun kaydı buluta eşitleniyor...</sys:String>
   <sys:String x:Key="LOCLegendarySyncError">{0} oyun kaydı buluta eşitlenirken bir hata oluştu.</sys:String>
+  <sys:String x:Key="LOCLegendaryImportInstalledGame">Kurulu oyunu içe aktar</sys:String>
   <sys:String x:Key="LOCLegendaryImportingGame">İçe aktarılıyor {0}...</sys:String>
   <sys:String x:Key="LOCLegendaryImportFinished">İçe aktarma tamamlandı. İyi eğlenceler.</sys:String>
   <sys:String x:Key="LOCLegendaryGameImportFailure">Oyun içe aktarılamadı. Sebep: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryMaxWorkers">En fazla çalışan işlem sayısı</sys:String>
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">En fazla paylaşılan bellek miktarı (MB)</sys:String>
+  <sys:String x:Key="LOCLegendaryConnectionTimeout">Bağlantı zaman aşımı (sn)</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">İndirme Yöneticisi</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadStatus">Durum</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadCompletedColumn">Tamamlandı</sys:String>
@@ -43,6 +51,10 @@
   <sys:String x:Key="LOCLegendaryCurrentDownloadSummary">Mevcut indirmenin özeti</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveEntry">Girdiyi kaldır</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveEntryConfirm">{0} öğesini listeden çıkarmak istediğinizden emin misiniz?</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveEntryTop">Girişi en üste taşı</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveEntryUp">Girişi üste taşı</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveEntryDown">Girişi alta taşı</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveEntryBottom">Girişi en alta taşı</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveCompletedDownloads">Tamamlanan indirmeleri kaldır</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveCompletedDownloadsConfirm">Tamamlanan tüm indirmeleri listeden kaldırmak istiyor musunuz?</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveSelectedEntriesConfirm">Seçilen girişleri listeden kaldırmak istiyor musunuz?</sys:String>
@@ -53,7 +65,10 @@
   <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} zaten indirme listesinde. Menü =&gt; Görünüm veya kenar çubuğundan Legendary Panel üstünden indirmenin durumunu görebilirsiniz.</sys:String>
   <sys:String x:Key="LOCLegendaryRepair">Onar</sys:String>
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Gelişmiş Seçenekler</sys:String>
+  <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Boş alanı yoksay</sys:String>
+  <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip">Yeterli boş alan yoksa iptal etmeyin.</sys:String>
   <sys:String x:Key="LOCLegendaryEnableReordering">Yeniden sıralama düzeltmesini etkinleştir</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">Bu, indirme sırasında RAM gereksinimlerini azaltabilir (bazı başlıklar için düzgün çalışmayabilir).</sys:String>
   <sys:String x:Key="LOCLegendaryExtraContent">Ekstra İçerik</sys:String>
   <sys:String x:Key="LOCLegendaryCache">Önbellek</sys:String>
   <sys:String x:Key="LOCLegendaryClearCache">Önbelleği temizle</sys:String>
@@ -67,6 +82,7 @@
   <sys:String x:Key="LOCLegendaryMemoryError">Mevcut paylaşılan bellek önbelleği gerekenden daha küçük: {0} &lt; {1}. Bellek kullanımını azaltmak veya en fazla paylaşılan bellek miktarını artırmak için yeniden sıralama optimizasyonunu etkinleştirmeyi deneyin.</sys:String>
   <sys:String x:Key="LOCLegendaryEditSelectedDownloadProperties">Girdi özelliklerini düzenle</sys:String>
   <sys:String x:Key="LOCLegendaryOpenDownloadDirectory">İndirilenler dizinini aç</sys:String>
+  <sys:String x:Key="LOCLegendaryPathNotExistsError">Belirtilen yol mevcut değil.</sys:String>
   <sys:String x:Key="LOCLegendaryTask">Görev</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadProperties">İndirme Özellikleri</sys:String>
   <sys:String x:Key="LOCLegendaryMigrateGamesEpic">Epic eklentisinden tüm oyunları taşıyın</sys:String>
@@ -82,7 +98,6 @@
   <sys:String x:Key="LOCLegendaryLauncherBinary">Başlatıcı binary</sys:String>
   <sys:String x:Key="LOCLegendaryCopyRawDataToClipboard">Ham verileri panoya kopyala</sys:String>
   <sys:String x:Key="LOCLegendaryLogFilesPath">Günlük Dosyaları Yolu</sys:String>
-  <sys:String x:Key="LOCLegendaryPathNotExist">Belirtilen yol mevcut değil.</sys:String>
   <sys:String x:Key="LOCLegendaryReportBug">Bir hata bildir</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherNotInstalled">Legendary Launcher kurulu değil.</sys:String>
   <sys:String x:Key="LOCLegendaryNewVersionAvailable">Yeni bir sürüm mevcut: {0} {1}.</sys:String>
@@ -144,8 +159,14 @@
   <sys:String x:Key="LOCLegendarySignedInAs">{0} olarak oturum açıldı</sys:String>
   <sys:String x:Key="LOCLegendarySignOutConfirm">Oturumu kapatmak istiyor musunuz?</sys:String>
   <sys:String x:Key="LOCLegendaryPermissionError">Kullanıcının belirtilen yola yazma erişimi yok. İzinleri değiştirin veya Playnite programını yönetici olarak başlatın.</sys:String>
+  <sys:String x:Key="LOCLegendaryInstanceNotice">Aynı anda yalnızca bir Legendary örneği uygulamaları kurulabilir/içe aktarabilir/taşıyabilir. Devam etmek için indirme yöneticisi görevlerini duraklatmak istiyor musunuz?</sys:String>
   <sys:String x:Key="LOCLegendaryCheckForGamesUpdatesButton">Oyun güncellemelerini denetle</sys:String>
   <sys:String x:Key="LOCLegendaryNotEnoughSpace">Yeterli boş disk alanı yok.</sys:String>
   <sys:String x:Key="LOCLegendaryCheckingForUpdates">Güncellemeler kontrol ediliyor...</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallSuccess">{0} başarıyla kaldırıldı.</sys:String>
+  <sys:String x:Key="LOCLegendaryImportThirdPartyLauncherGames">{0} gerektiren oyunları içe aktar</sys:String>
+  <sys:String x:Key="LOCLegendaryThirdPartyLauncherImportWarn">Bu tür oyunlar Legendary gerektirmez ve tümü bu oyun aracılığıyla kurulamaz. Ek hizmetler =&gt; {0} =&gt; Oyunları etkinleştir'e gitmeniz ve ardından bunları doğrudan {0} aracılığıyla yüklemeniz önerilir.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">Bu oyun, {0} aracılığıyla doğrudan kurulum gerektirir.</sys:String>
+  <sys:String x:Key="LOCLegendaryInstallPrerequisites">Gerekenleri kur ({0})</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">Bu oyun, {0} kurulumu gerektiriyor. Eklenti ayarları =&gt; Ek hizmetler =&gt; {0} =&gt; Oyunları etkinleştir seçeneğine gitmeniz ve ardından doğrudan {0} aracılığıyla kurmanız önerilir.</sys:String>
 </ResourceDictionary>
