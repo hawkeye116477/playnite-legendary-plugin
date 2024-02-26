@@ -104,6 +104,7 @@ namespace LegendaryLibraryNS
                 var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                    .WithArguments(new[] { "-y", "uninstall", Game.GameId })
                                    .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                   .AddCommandToLog()
                                    .WithValidation(CommandResultValidation.None)
                                    .ExecuteBufferedAsync();
                 if (cmd.StandardError.Contains("has been uninstalled"))
@@ -306,6 +307,7 @@ namespace LegendaryLibraryNS
             var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
                          .WithArguments(playArgs)
                          .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                         .AddCommandToLog()
                          .WithValidation(CommandResultValidation.None);
             await foreach (var cmdEvent in cmd.ListenAsync())
             {
@@ -423,6 +425,7 @@ namespace LegendaryLibraryNS
                               .WithArguments(new[] { "eos-overlay", "update" })
                               .WithStandardInputPipe(PipeSource.FromString("n"))
                               .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                              .AddCommandToLog()
                               .WithValidation(CommandResultValidation.None)
                               .ExecuteBufferedAsync();
                 if (!cmd.StandardError.Contains("is up to date"))

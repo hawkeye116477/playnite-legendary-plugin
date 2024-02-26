@@ -70,6 +70,7 @@ namespace LegendaryLibraryNS
                 var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                       .WithArguments(new[] { "list", "-T", "--json", "--force-refresh" })
                                       .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                      .AddCommandToLog()
                                       .WithValidation(CommandResultValidation.None)
                                       .ExecuteBufferedAsync();
                 if (result.StandardOutput.IsNullOrEmpty())
@@ -197,6 +198,7 @@ namespace LegendaryLibraryNS
                     var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                           .WithArguments(new[] { "launch", selectedGame.app_name, "--origin" })
                                           .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                          .AddCommandToLog()
                                           .WithValidation(CommandResultValidation.None)
                                           .ExecuteBufferedAsync();
                     var errorMessage = result.StandardError;

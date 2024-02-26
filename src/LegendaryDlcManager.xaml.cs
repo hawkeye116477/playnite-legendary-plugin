@@ -137,6 +137,7 @@ namespace LegendaryLibraryNS
                     var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                        .WithArguments(new[] { "-y", "uninstall", selectedDlc.Key })
                                        .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                       .AddCommandToLog()
                                        .WithValidation(CommandResultValidation.None)
                                        .ExecuteBufferedAsync();
                     if (!cmd.StandardError.Contains("has been uninstalled"))

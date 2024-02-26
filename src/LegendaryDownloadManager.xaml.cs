@@ -307,6 +307,7 @@ namespace LegendaryLibraryNS
                 var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
                              .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                              .WithArguments(installCommand)
+                             .AddCommandToLog()
                              .WithValidation(CommandResultValidation.None);
                 var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameID);
                 await foreach (CommandEvent cmdEvent in cmd.ListenAsync(Console.OutputEncoding, Console.OutputEncoding, forcefulInstallerCTS.Token, gracefulInstallerCTS.Token))

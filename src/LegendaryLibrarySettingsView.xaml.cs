@@ -63,6 +63,7 @@ namespace LegendaryLibraryNS
                                    .WithValidation(CommandResultValidation.None)
                                    .WithArguments(new[] { "-y", "eos-overlay", "remove" })
                                    .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                   .AddCommandToLog()
                                    .ExecuteBufferedAsync();
                 if (cmd.StandardError.Contains("Done"))
                 {
@@ -119,6 +120,7 @@ namespace LegendaryLibraryNS
             await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                      .WithArguments(new[] { "-y", "eos-overlay", toggleCommand })
                      .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                     .AddCommandToLog()
                      .WithValidation(CommandResultValidation.None)
                      .ExecuteAsync();
             var toggleTxt = LOC.LegendaryEnable;
@@ -296,6 +298,7 @@ namespace LegendaryLibraryNS
                                     var importCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                                              .WithArguments(new[] { "-y", "import", game.GameId, game.InstallDirectory })
                                                              .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                                             .AddCommandToLog()
                                                              .WithValidation(CommandResultValidation.None)
                                                              .ExecuteBufferedAsync();
                                     if (!importCmd.StandardError.Contains("has been imported"))
@@ -414,6 +417,7 @@ namespace LegendaryLibraryNS
                         var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                               .WithArguments(new[] { "auth", "--delete" })
                                               .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                              .AddCommandToLog()
                                               .WithValidation(CommandResultValidation.None)
                                               .ExecuteBufferedAsync();
                         if (!result.StandardError.Contains("User data deleted"))
@@ -482,6 +486,7 @@ namespace LegendaryLibraryNS
                 var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
                              .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                              .WithArguments(new[] { "activate", "-U" })
+                             .AddCommandToLog()
                              .WithValidation(CommandResultValidation.None);
                 await foreach (CommandEvent cmdEvent in cmd.ListenAsync())
                 {
@@ -520,7 +525,7 @@ namespace LegendaryLibraryNS
                                 if (errorMessage.Contains("No linked"))
                                 {
                                     playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryNoLinkedAccount).Format("Ubisoft"));
-                                    Process.Start("https://www.epicgames.com/id/link/ubisoft");
+                                    ProcessStarter.StartUrl("https://www.epicgames.com/id/link/ubisoft");
                                 }
                                 else if (errorMessage.Contains("Failed to establish a new connection")
                                     || errorMessage.Contains("Log in failed")

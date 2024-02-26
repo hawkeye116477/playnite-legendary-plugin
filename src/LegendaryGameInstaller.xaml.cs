@@ -259,6 +259,7 @@ namespace LegendaryLibraryNS
                                                       .WithArguments(new[] { "install", GameID })
                                                       .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                                                       .WithStandardInputPipe(PipeSource.FromString("n"))
+                                                      .AddCommandToLog()
                                                       .WithValidation(CommandResultValidation.None)
                                                       .ExecuteBufferedAsync();
                                 if (result.StandardOutput.Contains("Failure") && result.StandardOutput.Contains("Uplay"))
@@ -440,6 +441,7 @@ namespace LegendaryLibraryNS
                                       .WithArguments(new[] { GameID, "install" })
                                       .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                                       .WithStandardInputPipe(PipeSource.FromString("n"))
+                                      .AddCommandToLog()
                                       .WithValidation(CommandResultValidation.None)
                                       .ExecuteBufferedAsync();
                 if (result.ExitCode != 0 || result.StandardError.Contains("ERROR") || result.StandardError.Contains("CRITICAL") || result.StandardError.Contains("Error"))

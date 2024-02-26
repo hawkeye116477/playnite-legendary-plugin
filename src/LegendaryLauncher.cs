@@ -264,6 +264,7 @@ namespace LegendaryLibraryNS
                 var result = await Cli.Wrap(ClientExecPath)
                                       .WithArguments(new[] { "info", gameID, "--json" })
                                       .WithEnvironmentVariables(DefaultEnvironmentVariables)
+                                      .AddCommandToLog()
                                       .WithValidation(CommandResultValidation.None)
                                       .ExecuteBufferedAsync();
                 var errorMessage = result.StandardError;
@@ -299,6 +300,7 @@ namespace LegendaryLibraryNS
                 var versionCmd = await Cli.Wrap(ClientExecPath)
                                           .WithArguments(new[] { "-V" })
                                           .WithEnvironmentVariables(DefaultEnvironmentVariables)
+                                          .AddCommandToLog()
                                           .WithValidation(CommandResultValidation.None)
                                           .ExecuteBufferedAsync();
                 if (versionCmd.StandardOutput.Contains("version"))

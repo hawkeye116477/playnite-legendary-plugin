@@ -150,6 +150,7 @@
     <Compile Include="..\third_party\PlayniteExtensions\source\Generic\PlayniteExtensions.Common\PluginSettingsViewModel.cs">
       <Link>Shared\Playnite\PluginSettingsViewModel.cs</Link>
     </Compile>
+    <Compile Include="CliWrapCommandExtensions.cs" />
     <Compile Include="LegendaryEaActivate.xaml.cs">
       <DependentUpon>LegendaryEaActivate.xaml</DependentUpon>
     </Compile>
