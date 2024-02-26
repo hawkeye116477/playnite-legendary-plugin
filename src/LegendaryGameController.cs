@@ -482,7 +482,7 @@ namespace LegendaryLibraryNS
                         gamesToUpdate.Add(oldGameInfo.App_name, updateInfo);
                     }
                     // We need to also check for DLCs updates (see https://github.com/derrod/legendary/issues/506)
-                    if (newGameInfo.Game.Owned_dlc.Length > 0)
+                    if (newGameInfo.Game.Owned_dlc.Count > 0)
                     {
                         foreach (var dlc in newGameInfo.Game.Owned_dlc)
                         {

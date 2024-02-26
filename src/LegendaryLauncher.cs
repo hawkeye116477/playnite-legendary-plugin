@@ -7,6 +7,7 @@ using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -251,22 +252,40 @@ namespace LegendaryLibraryNS
             }
             if (File.Exists(cacheInfoFile))
             {
-                if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(cacheInfoFile), out manifest))
+                var content = FileSystem.ReadFileAsStringSafe(cacheInfoFile);
+                if(!content.IsNullOrEmpty())
                 {
-                    if (manifest != null && manifest.Manifest != null && manifest.Game != null)
+                    if (Serialization.TryFromJson(content, out manifest))
                     {
-                        correctJson = true;
+                        if (manifest != null && manifest.Manifest != null && manifest.Game != null)
+                        {
+                            correctJson = true;
+                        }
                     }
                 }
             }
             if (!correctJson)
             {
-                var result = await Cli.Wrap(ClientExecPath)
+                BufferedCommandResult result;
+                if (gameID == "eos-overlay")
+                {
+                    result = await Cli.Wrap(ClientExecPath)
+                                      .WithArguments(new[] { "eos-overlay", "install" })
+                                      .WithEnvironmentVariables(DefaultEnvironmentVariables)
+                                      .WithStandardInputPipe(PipeSource.FromString("n"))
+                                      .AddCommandToLog()
+                                      .WithValidation(CommandResultValidation.None)
+                                      .ExecuteBufferedAsync();
+                }
+                else
+                {
+                    result = await Cli.Wrap(ClientExecPath)
                                       .WithArguments(new[] { "info", gameID, "--json" })
                                       .WithEnvironmentVariables(DefaultEnvironmentVariables)
                                       .AddCommandToLog()
                                       .WithValidation(CommandResultValidation.None)
                                       .ExecuteBufferedAsync();
+                }
                 var errorMessage = result.StandardError;
                 if (result.ExitCode != 0 || errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") || errorMessage.Contains("Error"))
                 {
@@ -282,6 +301,32 @@ namespace LegendaryLibraryNS
                     {
                         playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(ResourceProvider.GetString(LOC.LegendaryCheckLog)));
                     }
+                }
+                else if (gameID == "eos-overlay")
+                {
+                    manifest.Game = new LegendaryGameInfo.Game
+                    {
+                        App_name = gameID,
+                        Title = ResourceProvider.GetString(LOC.LegendaryEOSOverlay)
+                    };
+                    manifest.Manifest = new LegendaryGameInfo.Manifest();
+                    string[] lines = result.StandardError.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                    foreach (var line in lines)
+                    {
+                        var downloadSizeText = "Download size:";
+                        if (line.Contains(downloadSizeText))
+                        {
+                            var downloadSizeSplittedString = line.Substring(line.IndexOf(downloadSizeText) + downloadSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            manifest.Manifest.Download_size = Helpers.ToBytes(double.Parse(downloadSizeSplittedString[0], CultureInfo.InvariantCulture), downloadSizeSplittedString[1]);
+                        }
+                        var installSizeText = "Install size:";
+                        if (line.Contains(installSizeText))
+                        {
+                            var installSizeSplittedString = line.Substring(line.IndexOf(installSizeText) + installSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            manifest.Manifest.Disk_size = Helpers.ToBytes(double.Parse(installSizeSplittedString[0], CultureInfo.InvariantCulture), installSizeSplittedString[1]);
+                        }
+                    }
+                    File.WriteAllText(cacheInfoFile, Serialization.ToJson(manifest));
                 }
                 else
                 {

@@ -1,4 +1,6 @@
-﻿namespace LegendaryLibraryNS.Models
+﻿using System.Collections.Generic;
+
+namespace LegendaryLibraryNS.Models
 {
     public class LegendaryGameInfo
     {
@@ -16,7 +18,7 @@
             public bool Cloud_saves_supported { get; set; }
             public string Cloud_save_folder { get; set; }
             public bool Is_dlc { get; set; }
-            public Owned_Dlc[] Owned_dlc { get; set; }
+            public List<Owned_Dlc> Owned_dlc { get; set; } = new List<Owned_Dlc>();
         }
 
         public class Owned_Dlc
@@ -31,7 +33,7 @@
             public double Disk_size { get; set; }
             public double Download_size { get; set; }
             public string Launch_exe { get; set; }
-            public string[] Install_tags { get; set; }
+            public List<string> Install_tags { get; set; } = new List<string>();
             public Tag_Disk_Size[] Tag_disk_size { get; set; }
             public Tag_Download_Size[] Tag_download_size { get; set; }
             public Prerequisite Prerequisites { get; set; }

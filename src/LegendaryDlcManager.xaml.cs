@@ -45,7 +45,7 @@ namespace LegendaryLibraryNS
             manifest = await LegendaryLauncher.GetGameInfo(GameId);
             if (manifest != null && manifest.Manifest != null)
             {
-                if (manifest.Game.Owned_dlc.Length > 0)
+                if (manifest.Game.Owned_dlc.Count > 0)
                 {
                     var installedAppList = LegendaryLauncher.GetInstalledAppList();
                     installedDLCs = new ObservableCollection<KeyValuePair<string, LegendaryGameInfo.Rootobject>>();
