@@ -5,6 +5,7 @@ Packages:
     ReleaseDate: 2024-02-27
     PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.7.0/LegendaryLibrary_1_7_0.pext
     Changelog:
+      - Added possibility to install prerequisites
       - Added few keyboard shortcuts for Download Manager
       - Added missing advanced settings for autoupdating games
       - Added possibility to authenticate and import not installed games without Legendary
