@@ -1,5 +1,36 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.7.0
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2024-02-27
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.7.0/LegendaryLibrary_1_7_0.pext
+    Changelog:
+      - Added few keyboard shortcuts for Download Manager
+      - Added missing advanced settings for autoupdating games
+      - Added possibility to authenticate and import not installed games without Legendary
+        launcher installed
+      - Added displaying all executed Legendary commands to log file
+      - Added caching EOS Overlay info
+      - Added checking if EA App is installed after clicking to activate EA games
+      - Added possibility to check all extra content in download properties window
+        of Download Manager
+      - Improved repairing games with SDLs
+      - Added possibility to change connection timeout
+      - Added possibility to move entries of Download Manager in 4 directions
+      - Added possibility to ignore free space
+      - Improved Download Manager layout
+      - Added checking if path is writable before downloading (that should prevent
+        situation when Legendary tries to write to some non-writable path few hours)
+      - Added displaying message when it's not possible to do multiple tasks at once
+      - Added tooltips for few settings which explain what's up
+      - Moved importing installed game to separate menu item
+      - Added possibility to import games requiring Ubisoft Connect (disabled by default)
+      - Fixed tracking playtime for Ubisoft Connect games
+      - Fixed displaying verification progress
+      - Fixed calculating sizes of games with DLCs for Download Manager
+      - Fixed displaying after install size
+      - Fixed possible crashes
+      - Improved error handling
   - Version: 1.6.0
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2024-02-05
