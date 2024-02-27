@@ -200,27 +200,35 @@ namespace LegendaryLibraryNS
                         httpClient.DefaultRequestHeaders.Clear();
                         if (File.Exists(LegendaryLauncher.TokensPath))
                         {
-                            var userData = Serialization.FromJson<OauthResponse>(FileSystem.ReadFileAsStringSafe(LegendaryLauncher.TokensPath));
-                            httpClient.DefaultRequestHeaders.Add("Authorization", userData.token_type + " " + userData.access_token);
-                            var uri = $"https://library-service.live.use1a.on.epicgames.com/library/api/public/playtime/account/{userData.account_id}";
-                            PlaytimePayload playtimePayload = new PlaytimePayload
+                            var tokensContent = FileSystem.ReadFileAsStringSafe(LegendaryLauncher.TokensPath);
+                            if (!tokensContent.IsNullOrWhiteSpace() && Serialization.TryFromJson(tokensContent, out OauthResponse userData))
                             {
-                                artifactId = Game.GameId,
-                                machineId = LegendaryLibrary.GetSettings().SyncPlaytimeMachineId
-                            };
-                            DateTime now = DateTime.UtcNow;
-                            playtimePayload.endTime = now;
-                            var totalSeconds = sessionLength;
-                            var startTime = now.AddSeconds(-(double)totalSeconds);
-                            playtimePayload.startTime = now.AddSeconds(-(double)totalSeconds);
-                            var playtimeJson = Serialization.ToJson(playtimePayload);
-                            var content = new StringContent(playtimeJson, Encoding.UTF8, "application/json");
-                            a.CurrentProgressValue = 1;
-                            var result = await httpClient.PutAsync(uri, content);
-                            if (!result.IsSuccessStatusCode)
+                                httpClient.DefaultRequestHeaders.Add("Authorization", userData.token_type + " " + userData.access_token);
+                                var uri = $"https://library-service.live.use1a.on.epicgames.com/library/api/public/playtime/account/{userData.account_id}";
+                                PlaytimePayload playtimePayload = new PlaytimePayload
+                                {
+                                    artifactId = Game.GameId,
+                                    machineId = LegendaryLibrary.GetSettings().SyncPlaytimeMachineId
+                                };
+                                DateTime now = DateTime.UtcNow;
+                                playtimePayload.endTime = now;
+                                var totalSeconds = sessionLength;
+                                var startTime = now.AddSeconds(-(double)totalSeconds);
+                                playtimePayload.startTime = now.AddSeconds(-(double)totalSeconds);
+                                var playtimeJson = Serialization.ToJson(playtimePayload);
+                                var content = new StringContent(playtimeJson, Encoding.UTF8, "application/json");
+                                a.CurrentProgressValue = 1;
+                                var result = await httpClient.PutAsync(uri, content);
+                                if (!result.IsSuccessStatusCode)
+                                {
+                                    playniteAPI.Dialogs.ShowErrorMessage(playniteAPI.Resources.GetString(LOC.LegendarySyncError).Format(Game.Name));
+                                    logger.Error($"An error occured during uploading playtime to the cloud. Status code: {result.StatusCode}.");
+                                }
+                            }
+                            else
                             {
+                                logger.Error("An error occured during reading tokens file.");
                                 playniteAPI.Dialogs.ShowErrorMessage(playniteAPI.Resources.GetString(LOC.LegendarySyncError).Format(Game.Name));
-                                logger.Error($"An error occured during uploading playtime to the cloud. Status code: {result.StatusCode}.");
                             }
                         }
                         else

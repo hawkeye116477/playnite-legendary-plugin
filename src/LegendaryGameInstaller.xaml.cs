@@ -122,7 +122,8 @@ namespace LegendaryLibraryNS
                                 if (File.Exists(cacheDlcInfoFile))
                                 {
                                     LegendaryGameInfo.Rootobject dlcManifest = new LegendaryGameInfo.Rootobject();
-                                    if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(cacheDlcInfoFile), out dlcManifest))
+                                    var cacheDlcContent = FileSystem.ReadFileAsStringSafe(cacheDlcInfoFile);
+                                    if (!cacheDlcContent.IsNullOrWhiteSpace() && Serialization.TryFromJson(cacheDlcContent, out dlcManifest))
                                     {
                                         if (dlcManifest != null && dlcManifest.Manifest != null)
                                         {
@@ -309,12 +310,8 @@ namespace LegendaryLibraryNS
                         {
                             content = FileSystem.ReadFileAsStringSafe(cacheSDLFile);
                         }
-                        if (content.IsNullOrEmpty())
-                        {
-                            logger.Error("An error occurred while downloading SDL data.");
-                        }
                         bool correctSdlJson = false;
-                        if (Serialization.TryFromJson(content, out extraContentInfo))
+                        if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out extraContentInfo))
                         {
                             correctSdlJson = true;
                             if (extraContentInfo.ContainsKey("__required"))
@@ -359,6 +356,10 @@ namespace LegendaryLibraryNS
                             }
                             InstallData.downloadSize = Helpers.FormatSize(downloadSizeNumber);
                             InstallData.installSize = Helpers.FormatSize(installSizeNumber);
+                        }
+                        else
+                        {
+                            logger.Error("An error occurred while reading SDL data.");
                         }
                         if (!correctSdlJson)
                         {
@@ -505,7 +506,8 @@ namespace LegendaryLibraryNS
                     var cacheDlcInfoFile = Path.Combine(cacheInfoPath, selectedOption.Key + ".json");
                     if (File.Exists(cacheDlcInfoFile))
                     {
-                        if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(cacheDlcInfoFile), out dlcManifest))
+                        var cacheDlcContent = FileSystem.ReadFileAsStringSafe(cacheDlcInfoFile);
+                        if (!cacheDlcContent.IsNullOrWhiteSpace() && Serialization.TryFromJson(cacheDlcContent, out dlcManifest))
                         {
                             if (dlcManifest != null && dlcManifest.Manifest != null)
                             {

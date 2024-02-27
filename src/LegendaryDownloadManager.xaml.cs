@@ -81,7 +81,8 @@ namespace LegendaryLibraryNS
             bool correctJson = false;
             if (File.Exists(dataFile))
             {
-                if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(dataFile), out downloadManagerData))
+                var content = FileSystem.ReadFileAsStringSafe(dataFile);
+                if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out downloadManagerData))
                 {
                     if (downloadManagerData != null && downloadManagerData.downloads != null)
                     {

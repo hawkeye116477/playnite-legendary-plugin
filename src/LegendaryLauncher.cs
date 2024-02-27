@@ -193,12 +193,15 @@ namespace LegendaryLibraryNS
         public static Dictionary<string, Installed> GetInstalledAppList()
         {
             var installListPath = Path.Combine(ConfigPath, "installed.json");
-            if (!File.Exists(installListPath))
+            var list = new Dictionary<string, Installed>();
+            if (File.Exists(installListPath))
             {
-                return new Dictionary<string, Installed>();
+                var content = FileSystem.ReadFileAsStringSafe(installListPath);
+                if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out Dictionary<string, Installed> nonEmptyList))
+                {
+                    list = nonEmptyList;
+                }
             }
-
-            var list = Serialization.FromJson<Dictionary<string, Installed>>(FileSystem.ReadFileAsStringSafe(installListPath));
             return list;
         }
 
@@ -253,14 +256,11 @@ namespace LegendaryLibraryNS
             if (File.Exists(cacheInfoFile))
             {
                 var content = FileSystem.ReadFileAsStringSafe(cacheInfoFile);
-                if(!content.IsNullOrEmpty())
+                if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out manifest))
                 {
-                    if (Serialization.TryFromJson(content, out manifest))
+                    if (manifest != null && manifest.Manifest != null && manifest.Game != null)
                     {
-                        if (manifest != null && manifest.Manifest != null && manifest.Game != null)
-                        {
-                            correctJson = true;
-                        }
+                        correctJson = true;
                     }
                 }
             }
@@ -393,11 +393,11 @@ namespace LegendaryLibraryNS
             {
                 content = FileSystem.ReadFileAsStringSafe(cacheVersionFile);
             }
-            if (content.IsNullOrEmpty())
+            if (content.IsNullOrWhiteSpace())
             {
                 logger.Error("An error occurred while downloading Legendary's version info.");
             }
-            if (Serialization.TryFromJson(content, out LauncherVersion.Rootobject versionInfoContent))
+            else if (Serialization.TryFromJson(content, out LauncherVersion.Rootobject versionInfoContent))
             {
                 newVersionInfoContent = versionInfoContent;
             }

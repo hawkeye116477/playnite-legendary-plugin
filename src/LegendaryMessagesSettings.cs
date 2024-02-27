@@ -1,5 +1,6 @@
 ﻿using Playnite.Common;
 using Playnite.SDK.Data;
+using System;
 using System.IO;
 
 namespace LegendaryLibraryNS
@@ -19,7 +20,8 @@ namespace LegendaryLibraryNS
             bool correctJson = false;
             if (File.Exists(dataFile))
             {
-                if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(dataFile), out messagesSettings))
+                var content = FileSystem.ReadFileAsStringSafe(dataFile);
+                if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out messagesSettings))
                 {
                     correctJson = true;
                 }
