@@ -153,22 +153,29 @@ namespace LegendaryLibraryNS.Services
                 var account = await InvokeRequest<AccountResponse>(accountUrl + tokens.account_id, tokens);
                 return account.Item2.id == tokens.account_id;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                if (e is TokenException)
+                if (ex is TokenException)
                 {
-                    await RenewTokens(tokens.refresh_token);
-                    tokens = LoadTokens();
-                    if (tokens is null)
+                    var renewSuccess = await RenewTokens(tokens.refresh_token);
+                    if (renewSuccess)
                     {
-                        return false;
+                        try
+                        {
+                            var account = await InvokeRequest<AccountResponse>(accountUrl + tokens.account_id, tokens);
+                            return account.Item2.id == tokens.account_id;
+                        }
+                        catch (Exception ex2)
+                        {
+                            logger.Error(ex2, "Failed to validation Epic authentication.");
+                            return false;
+                        }
                     }
-                    var account = await InvokeRequest<AccountResponse>(accountUrl + tokens.account_id, tokens);
-                    return account.Item2.id == tokens.account_id;
+                    return false;
                 }
                 else
                 {
-                    logger.Error(e, "Failed to validation Epic authentication.");
+                    logger.Error(ex, "Failed to validation Epic authentication.");
                     return false;
                 }
             }
@@ -231,7 +238,7 @@ namespace LegendaryLibraryNS.Services
             }
         }
 
-        private async Task RenewTokens(string refreshToken)
+        private async Task<bool> RenewTokens(string refreshToken)
         {
             using var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Clear();
@@ -245,10 +252,12 @@ namespace LegendaryLibraryNS.Services
                 var respContent = await response.Content.ReadAsStringAsync();
                 FileSystem.CreateDirectory(Path.GetDirectoryName(tokensPath));
                 File.WriteAllText(tokensPath, respContent);
+                return true;
             }
             else
             {
                 logger.Error("Failed to renew tokens.");
+                return false;
             }
         }
 
