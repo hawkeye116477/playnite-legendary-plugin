@@ -708,18 +708,26 @@ namespace LegendaryLibraryNS
                                 }, updateCheckProgressOptions);
                                 if (gamesToUpdate.Count > 0)
                                 {
-                                    Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                                    var successUpdates = gamesToUpdate.Where(i => i.Value.Success).ToList();
+                                    if (successUpdates.Count > 0)
                                     {
-                                        ShowMaximizeButton = false,
-                                    });
-                                    window.DataContext = gamesToUpdate;
-                                    window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
-                                    window.Content = new LegendaryUpdater();
-                                    window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
-                                    window.SizeToContent = SizeToContent.WidthAndHeight;
-                                    window.MinWidth = 600;
-                                    window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                                    window.ShowDialog();
+                                        Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                                        {
+                                            ShowMaximizeButton = false,
+                                        });
+                                        window.DataContext = successUpdates;
+                                        window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
+                                        window.Content = new LegendaryUpdater();
+                                        window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+                                        window.SizeToContent = SizeToContent.WidthAndHeight;
+                                        window.MinWidth = 600;
+                                        window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                                        window.ShowDialog();
+                                    }
+                                    else
+                                    {
+                                        PlayniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage), game.Name);
+                                    }
                                 }
                                 else
                                 {

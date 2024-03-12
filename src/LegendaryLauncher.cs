@@ -226,7 +226,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        public static async Task<LegendaryGameInfo.Rootobject> GetGameInfo(string gameID, bool skipRefreshing = false)
+        public static async Task<LegendaryGameInfo.Rootobject> GetGameInfo(string gameID, bool skipRefreshing = false, bool silently = false)
         {
             var manifest = new LegendaryGameInfo.Rootobject();
             var playniteAPI = API.Instance;
@@ -290,16 +290,19 @@ namespace LegendaryLibraryNS
                 if (result.ExitCode != 0 || errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") || errorMessage.Contains("Error"))
                 {
                     logger.Error("[Legendary]" + result.StandardError);
-                    if (result.StandardError.Contains("Failed to establish a new connection")
-                        || result.StandardError.Contains("Log in failed")
-                        || result.StandardError.Contains("Login failed")
-                        || result.StandardError.Contains("No saved credentials"))
+                    if (!silently)
                     {
-                        playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
-                    }
-                    else
-                    {
-                        playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(ResourceProvider.GetString(LOC.LegendaryCheckLog)));
+                        if (result.StandardError.Contains("Failed to establish a new connection")
+                            || result.StandardError.Contains("Log in failed")
+                            || result.StandardError.Contains("Login failed")
+                            || result.StandardError.Contains("No saved credentials"))
+                        {
+                            playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
+                        }
+                        else
+                        {
+                            playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(ResourceProvider.GetString(LOC.LegendaryCheckLog)));
+                        }
                     }
                 }
                 else if (gameID == "eos-overlay")

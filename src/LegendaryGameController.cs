@@ -471,7 +471,7 @@ namespace LegendaryLibraryNS
                 }
                 return gamesToUpdate;
             }
-            var newGameInfo = await LegendaryLauncher.GetGameInfo(gameId);
+            var newGameInfo = await LegendaryLauncher.GetGameInfo(gameId, false, true);
             if (newGameInfo.Game != null)
             {
                 var installedAppList = LegendaryLauncher.GetInstalledAppList();
@@ -499,7 +499,7 @@ namespace LegendaryLibraryNS
                                 if (installedAppList.ContainsKey(dlc.App_name))
                                 {
                                     var oldDlcInfo = installedAppList[dlc.App_name];
-                                    var newDlcInfo = await LegendaryLauncher.GetGameInfo(dlc.App_name);
+                                    var newDlcInfo = await LegendaryLauncher.GetGameInfo(dlc.App_name, false, true);
                                     if (newDlcInfo.Game != null)
                                     {
                                         if (oldDlcInfo.Version != newDlcInfo.Game.Version)
@@ -522,7 +522,16 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage), gameTitle);
+                logger.Error($"An error occured during checking {gameTitle} updates.");
+                var updateInfo = new UpdateInfo
+                {
+                    Version = "0",
+                    Title = gameTitle,
+                    Download_size = 0,
+                    Disk_size = 0,
+                    Success = false
+                };
+                gamesToUpdate.Add(gameId, updateInfo);
             }
             return gamesToUpdate;
         }
