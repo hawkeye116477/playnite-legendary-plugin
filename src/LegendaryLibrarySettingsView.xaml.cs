@@ -592,7 +592,7 @@ namespace LegendaryLibraryNS
             }, updateCheckProgressOptions);
             if (gamesUpdates.Count > 0)
             {
-                var successUpdates = gamesUpdates.Where(i => i.Value.Success).ToList();
+                var successUpdates = gamesUpdates.Where(i => i.Value.Success).ToDictionary(i => i.Key, i => i.Value);
                 if (successUpdates.Count > 0)
                 {
                     Window window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
