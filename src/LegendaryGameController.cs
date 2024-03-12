@@ -562,6 +562,15 @@ namespace LegendaryLibraryNS
                     }
                 }
             }
+            if (LegendaryLauncher.IsEOSOverlayInstalled)
+            {
+                LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
+                var overlayToUpdate = await legendaryUpdateController.CheckGameUpdates(ResourceProvider.GetString(LOC.LegendaryEOSOverlay), "eos-overlay");
+                if (overlayToUpdate.Count > 0)
+                {
+                    gamesToUpdate.Add("eos-overlay", overlayToUpdate["eos-overlay"]);
+                }
+            }
             return gamesToUpdate;
         }
 
