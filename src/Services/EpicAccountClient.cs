@@ -171,13 +171,9 @@ namespace LegendaryLibraryNS.Services
                             return false;
                         }
                     }
-                    return false;
                 }
-                else
-                {
-                    logger.Error(ex, "Failed to validation Epic authentication.");
-                    return false;
-                }
+                logger.Error(ex, "Failed to validation Epic authentication.");
+                return false;
             }
         }
 
