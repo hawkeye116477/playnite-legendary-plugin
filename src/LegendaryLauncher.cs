@@ -274,7 +274,13 @@ namespace LegendaryLibraryNS
                                    .WithValidation(CommandResultValidation.None)
                                    .ExecuteBufferedAsync();
                 }
-                if (!cmd.StandardError.Contains("up to date"))
+                var errorMessage = cmd.StandardError;
+                if (cmd.ExitCode != 0 || errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") || errorMessage.Contains("Error"))
+                {
+                    var logger = LogManager.GetLogger();
+                    logger.Error("[Legendary]" + cmd.StandardError);
+                }
+                else if (!cmd.StandardError.Contains("up to date"))
                 {
                     double downloadSizeNumber = 0;
                     double installSizeNumber = 0;

@@ -429,17 +429,85 @@ namespace LegendaryLibraryNS
             var gamesToUpdate = new Dictionary<string, UpdateInfo>();
             if (gameId == "eos-overlay")
             {
-                var result = await LegendaryLauncher.GetUpdateSizes("eos-overlay");
-                if (result.Download_size != 0)
+                var cacheVersionFile = Path.Combine(LegendaryLauncher.ConfigPath, "overlay_version.json");
+                var newVersion = "";
+                if (File.Exists(cacheVersionFile))
                 {
-                    var updateInfo = new UpdateInfo
+                    if (File.GetLastWriteTime(cacheVersionFile) < DateTime.Now.AddDays(-7))
                     {
-                        Version = "",
-                        Title = ResourceProvider.GetString(LOC.LegendaryEOSOverlay),
-                        Download_size = result.Download_size,
-                        Disk_size = result.Disk_size,
-                    };
-                    gamesToUpdate.Add(gameId, updateInfo);
+                        File.Delete(cacheVersionFile);
+                    }
+                }
+                bool correctJson = false;
+                var overlayVersionInfo = new OverlayVersion.Rootobject();
+                if (File.Exists(cacheVersionFile))
+                {
+                    var content = FileSystem.ReadFileAsStringSafe(cacheVersionFile);
+                    if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out overlayVersionInfo))
+                    {
+                        if (overlayVersionInfo != null && overlayVersionInfo.Data != null && overlayVersionInfo.Data.BuildVersion != null)
+                        {
+                            correctJson = true;
+                        }
+                    }
+                }
+                if (!correctJson)
+                {
+                    var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                       .WithArguments(new[] { "status", "--json" })
+                                       .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                       .AddCommandToLog()
+                                       .WithValidation(CommandResultValidation.None)
+                                       .ExecuteBufferedAsync();
+                    var errorMessage = cmd.StandardError;
+                    if (cmd.ExitCode != 0 || errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") || errorMessage.Contains("Error"))
+                    {
+                        logger.Error("[Legendary]" + cmd.StandardError);
+                    }
+                    else
+                    {
+                        var content = FileSystem.ReadFileAsStringSafe(cacheVersionFile);
+                        if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out overlayVersionInfo))
+                        {
+                            if (overlayVersionInfo != null && overlayVersionInfo.Data != null && overlayVersionInfo.Data.BuildVersion != null)
+                            {
+                                correctJson = true;
+                            }
+                        }
+                    }
+                }
+                if (correctJson)
+                {
+                    newVersion = overlayVersionInfo.Data.BuildVersion;
+                    var overlayInstallInfo = new Installed();
+                    var overlayInstallFile = Path.Combine(LegendaryLauncher.ConfigPath, "overlay_install.json");
+                    var overlayInstallContent = FileSystem.ReadFileAsStringSafe(overlayInstallFile);
+                    if (!overlayInstallContent.IsNullOrWhiteSpace() && Serialization.TryFromJson(overlayInstallContent, out overlayInstallInfo))
+                    {
+                        if (overlayInstallInfo != null && overlayInstallInfo.Version != null)
+                        {
+                            if (overlayInstallInfo.Version == newVersion)
+                            {
+                                return gamesToUpdate;
+                            }
+                        }
+                    }
+                    var result = await LegendaryLauncher.GetUpdateSizes("eos-overlay");
+                    if (result.Download_size != 0)
+                    {
+                        var updateInfo = new UpdateInfo
+                        {
+                            Version = newVersion,
+                            Title = gameTitle,
+                            Download_size = result.Download_size,
+                            Disk_size = result.Disk_size,
+                        };
+                        gamesToUpdate.Add(gameId, updateInfo);
+                    }
+                }
+                else
+                {
+                    logger.Error($"An error occured during checking {gameTitle} updates.");
                 }
                 return gamesToUpdate;
             }
