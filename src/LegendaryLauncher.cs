@@ -226,6 +226,93 @@ namespace LegendaryLibraryNS
             }
         }
 
+        public static async Task<UpdateInfo> GetUpdateSizes(string gameID)
+        {
+            var updateInfo = new UpdateInfo();
+            var cacheUpdateInfoPath = LegendaryLibrary.Instance.GetCachePath("updateinfocache");
+            var cacheUpdateInfoFile = Path.Combine(cacheUpdateInfoPath, gameID + ".json");
+            if (File.Exists(cacheUpdateInfoFile))
+            {
+                if (File.GetLastWriteTime(cacheUpdateInfoFile) < DateTime.Now.AddDays(-7))
+                {
+                    File.Delete(cacheUpdateInfoFile);
+                }
+            }
+            bool correctJson = false;
+            if (File.Exists(cacheUpdateInfoFile))
+            {
+                var content = FileSystem.ReadFileAsStringSafe(cacheUpdateInfoFile);
+                if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out updateInfo))
+                {
+                    if (updateInfo != null && updateInfo.Download_size != 0)
+                    {
+                        correctJson = true;
+                    }
+                }
+            }
+
+            if (!correctJson)
+            {
+                BufferedCommandResult cmd;
+                if (gameID == "eos-overlay")
+                {
+                    cmd = await Cli.Wrap(ClientExecPath)
+                                   .WithArguments(new[] { "eos-overlay", "update" })
+                                   .WithEnvironmentVariables(DefaultEnvironmentVariables)
+                                   .WithStandardInputPipe(PipeSource.FromString("n"))
+                                   .AddCommandToLog()
+                                   .WithValidation(CommandResultValidation.None)
+                                   .ExecuteBufferedAsync();
+                }
+                else
+                {
+                    cmd = await Cli.Wrap(ClientExecPath)
+                                   .WithArguments(new[] { "update", gameID })
+                                   .WithStandardInputPipe(PipeSource.FromString("n"))
+                                   .WithEnvironmentVariables(DefaultEnvironmentVariables)
+                                   .AddCommandToLog()
+                                   .WithValidation(CommandResultValidation.None)
+                                   .ExecuteBufferedAsync();
+                }
+                if (!cmd.StandardError.Contains("up to date"))
+                {
+                    double downloadSizeNumber = 0;
+                    double installSizeNumber = 0;
+                    string downloadSizeUnit = "B";
+                    string installSizeUnit = "B";
+                    string[] lines = cmd.StandardError.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                    foreach (var line in lines)
+                    {
+                        var downloadSizeText = "Download size:";
+                        if (line.Contains(downloadSizeText))
+                        {
+                            var downloadSizeSplittedString = line.Substring(line.IndexOf(downloadSizeText) + downloadSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            downloadSizeNumber = double.Parse(downloadSizeSplittedString[0], CultureInfo.InvariantCulture);
+                            downloadSizeUnit = downloadSizeSplittedString[1];
+                            updateInfo.Download_size = Helpers.ToBytes(downloadSizeNumber, downloadSizeUnit);
+                        }
+                        var installSizeText = "Install size:";
+                        if (line.Contains(installSizeText))
+                        {
+                            var installSizeSplittedString = line.Substring(line.IndexOf(installSizeText) + installSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            installSizeNumber = double.Parse(installSizeSplittedString[0], CultureInfo.InvariantCulture);
+                            installSizeUnit = installSizeSplittedString[1];
+                            updateInfo.Disk_size = Helpers.ToBytes(installSizeNumber, installSizeUnit);
+                        }
+                    }
+                    if (updateInfo.Download_size != 0 && updateInfo.Disk_size != 0)
+                    {
+                        if (!Directory.Exists(cacheUpdateInfoPath))
+                        {
+                            Directory.CreateDirectory(cacheUpdateInfoPath);
+                        }
+                        File.WriteAllText(cacheUpdateInfoFile, Serialization.ToJson(updateInfo));
+                    }
+                }
+            }
+            return updateInfo;
+        }
+
         public static async Task<LegendaryGameInfo.Rootobject> GetGameInfo(string gameID, bool skipRefreshing = false, bool silently = false)
         {
             var manifest = new LegendaryGameInfo.Rootobject();

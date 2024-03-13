@@ -429,43 +429,15 @@ namespace LegendaryLibraryNS
             var gamesToUpdate = new Dictionary<string, UpdateInfo>();
             if (gameId == "eos-overlay")
             {
-                var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                              .WithArguments(new[] { "eos-overlay", "update" })
-                              .WithStandardInputPipe(PipeSource.FromString("n"))
-                              .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
-                              .AddCommandToLog()
-                              .WithValidation(CommandResultValidation.None)
-                              .ExecuteBufferedAsync();
-                if (!cmd.StandardError.Contains("is up to date"))
+                var result = await LegendaryLauncher.GetUpdateSizes("eos-overlay");
+                if (result.Download_size != 0)
                 {
-                    double downloadSizeNumber = 0;
-                    double installSizeNumber = 0;
-                    string downloadSizeUnit = "B";
-                    string installSizeUnit = "B";
-                    string[] lines = cmd.StandardError.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-                    foreach (var line in lines)
-                    {
-                        var downloadSizeText = "Download size:";
-                        if (line.Contains(downloadSizeText))
-                        {
-                            var downloadSizeSplittedString = line.Substring(line.IndexOf(downloadSizeText) + downloadSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                            downloadSizeNumber = double.Parse(downloadSizeSplittedString[0], CultureInfo.InvariantCulture);
-                            downloadSizeUnit = downloadSizeSplittedString[1];
-                        }
-                        var installSizeText = "Install size:";
-                        if (line.Contains(installSizeText))
-                        {
-                            var installSizeSplittedString = line.Substring(line.IndexOf(installSizeText) + installSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                            installSizeNumber = double.Parse(installSizeSplittedString[0], CultureInfo.InvariantCulture);
-                            installSizeUnit = installSizeSplittedString[1];
-                        }
-                    }
                     var updateInfo = new UpdateInfo
                     {
                         Version = "",
                         Title = ResourceProvider.GetString(LOC.LegendaryEOSOverlay),
-                        Download_size = Helpers.ToBytes(downloadSizeNumber, downloadSizeUnit),
-                        Disk_size = Helpers.ToBytes(installSizeNumber, installSizeUnit),
+                        Download_size = result.Download_size,
+                        Disk_size = result.Disk_size,
                     };
                     gamesToUpdate.Add(gameId, updateInfo);
                 }
@@ -480,14 +452,18 @@ namespace LegendaryLibraryNS
                     var oldGameInfo = installedAppList[gameId];
                     if (oldGameInfo.Version != newGameInfo.Game.Version)
                     {
-                        var updateInfo = new UpdateInfo
+                        var resultUpdateSizes = await LegendaryLauncher.GetUpdateSizes(gameId);
+                        if (resultUpdateSizes.Download_size != 0)
                         {
-                            Version = newGameInfo.Game.Version,
-                            Title = newGameInfo.Game.Title,
-                            Download_size = newGameInfo.Manifest.Download_size,
-                            Disk_size = newGameInfo.Manifest.Disk_size
-                        };
-                        gamesToUpdate.Add(oldGameInfo.App_name, updateInfo);
+                            var updateInfo = new UpdateInfo
+                            {
+                                Version = newGameInfo.Game.Version,
+                                Title = newGameInfo.Game.Title,
+                                Download_size = resultUpdateSizes.Download_size,
+                                Disk_size = resultUpdateSizes.Disk_size,
+                            };
+                            gamesToUpdate.Add(oldGameInfo.App_name, updateInfo);
+                        }
                     }
                     // We need to also check for DLCs updates (see https://github.com/derrod/legendary/issues/506)
                     if (newGameInfo.Game.Owned_dlc.Count > 0)
@@ -504,14 +480,18 @@ namespace LegendaryLibraryNS
                                     {
                                         if (oldDlcInfo.Version != newDlcInfo.Game.Version)
                                         {
-                                            var updateDlcInfo = new UpdateInfo
+                                            var resultDlcUpdateSizes = await LegendaryLauncher.GetUpdateSizes(gameId);
+                                            if (resultDlcUpdateSizes.Download_size != 0)
                                             {
-                                                Version = newDlcInfo.Game.Version,
-                                                Title = newDlcInfo.Game.Title,
-                                                Download_size = newDlcInfo.Manifest.Download_size,
-                                                Disk_size = newDlcInfo.Manifest.Disk_size
-                                            };
-                                            gamesToUpdate.Add(oldDlcInfo.App_name, updateDlcInfo);
+                                                var updateDlcInfo = new UpdateInfo
+                                                {
+                                                    Version = newDlcInfo.Game.Version,
+                                                    Title = newDlcInfo.Game.Title,
+                                                    Download_size = resultDlcUpdateSizes.Download_size,
+                                                    Disk_size = resultDlcUpdateSizes.Disk_size
+                                                };
+                                                gamesToUpdate.Add(oldDlcInfo.App_name, updateDlcInfo);
+                                            }
                                         }
                                     }
                                 }
