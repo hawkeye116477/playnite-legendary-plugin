@@ -521,5 +521,24 @@ namespace LegendaryLibraryNS
                 return !string.IsNullOrEmpty(launcherPath) && File.Exists(launcherPath);
             }
         }
+
+        public static void ClearCache()
+        {
+            var cacheDirs = new List<string>()
+            {
+                LegendaryLibrary.Instance.GetCachePath("catalogcache"),
+                LegendaryLibrary.Instance.GetCachePath("infocache"),
+                LegendaryLibrary.Instance.GetCachePath("sdlcache"),
+                LegendaryLibrary.Instance.GetCachePath("updateinfocache"),
+                Path.Combine(ConfigPath, "metadata")
+            };
+            foreach (var cacheDir in cacheDirs)
+            {
+                if (Directory.Exists(cacheDir))
+                {
+                    Directory.Delete(cacheDir, true);
+                }
+            }
+        }
     }
 }

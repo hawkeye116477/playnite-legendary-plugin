@@ -478,28 +478,13 @@ namespace LegendaryLibraryNS
             {
                 if (settings.AutoClearCache != ClearCacheTime.Never)
                 {
-                    var cacheDirs = new List<string>()
-                    {
-                        GetCachePath("catalogcache"),
-                        GetCachePath("infocache"),
-                        GetCachePath("sdlcache"),
-                        Path.Combine(LegendaryLauncher.ConfigPath, "manifests"),
-                        Path.Combine(LegendaryLauncher.ConfigPath, "metadata")
-                    };
-
                     var nextClearingTime = settings.NextClearingTime;
                     if (nextClearingTime != 0)
                     {
                         DateTimeOffset now = DateTime.UtcNow;
                         if (now.ToUnixTimeSeconds() >= nextClearingTime)
                         {
-                            foreach (var cacheDir in cacheDirs)
-                            {
-                                if (Directory.Exists(cacheDir))
-                                {
-                                    Directory.Delete(cacheDir, true);
-                                }
-                            }
+                            LegendaryLauncher.ClearCache();
                             settings.NextClearingTime = GetNextClearingTime(settings.AutoClearCache);
                             SavePluginSettings(settings);
                         }
@@ -513,8 +498,8 @@ namespace LegendaryLibraryNS
             }
         }
 
-       public static long GetNextUpdateCheckTime(UpdatePolicy frequency)
-       {
+        public static long GetNextUpdateCheckTime(UpdatePolicy frequency)
+        {
             DateTimeOffset? updateTime = null;
             DateTimeOffset now = DateTime.UtcNow;
             switch (frequency)

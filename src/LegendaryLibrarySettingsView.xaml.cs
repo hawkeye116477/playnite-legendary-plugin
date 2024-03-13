@@ -236,20 +236,7 @@ namespace LegendaryLibraryNS
             var result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryClearCacheConfirm), ResourceProvider.GetString(LOC.Legendary3P_PlayniteSettingsClearCacheTitle), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
-                var cacheDirs = new List<string>()
-                {
-                    LegendaryLibrary.Instance.GetCachePath("catalogcache"),
-                    LegendaryLibrary.Instance.GetCachePath("infocache"),
-                    LegendaryLibrary.Instance.GetCachePath("sdlcache"),
-                    Path.Combine(LegendaryLauncher.ConfigPath, "metadata")
-                };
-                foreach (var cacheDir in cacheDirs)
-                {
-                    if (Directory.Exists(cacheDir))
-                    {
-                        Directory.Delete(cacheDir, true);
-                    }
-                }
+                LegendaryLauncher.ClearCache();
             }
         }
 
