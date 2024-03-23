@@ -557,8 +557,9 @@ namespace LegendaryLibraryNS
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            foreach (var game in args.Games)
+            if (args.Games.Count == 1)
             {
+                Game game = args.Games.FirstOrDefault();
                 if (game.PluginId == Id)
                 {
                     if (game.IsInstalled)
