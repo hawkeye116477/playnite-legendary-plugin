@@ -162,6 +162,11 @@ namespace LegendaryLibraryNS.Services
                     {
                         try
                         {
+                            tokens = LoadTokens();
+                            if (tokens == null)
+                            {
+                                return false;
+                            }
                             var account = await InvokeRequest<AccountResponse>(accountUrl + tokens.account_id, tokens);
                             return account.Item2.id == tokens.account_id;
                         }
