@@ -39,6 +39,7 @@ namespace LegendaryLibraryNS
             Instance = this;
             SettingsViewModel = new LegendaryLibrarySettingsViewModel(this, api);
             Load3pLocalization();
+            LoadMenuIcons();
         }
 
         public static LegendaryLibrarySettings GetSettings()
@@ -306,14 +307,7 @@ namespace LegendaryLibraryNS
                     res.Source = new Uri(xamlPath, UriKind.Absolute);
                     foreach (var key in res.Keys)
                     {
-                        if (res[key] is string locString)
-                        {
-                            if (locString.IsNullOrEmpty())
-                            {
-                                res.Remove(key);
-                            }
-                        }
-                        else
+                        if (res[key] is string locString && locString.IsNullOrEmpty())
                         {
                             res.Remove(key);
                         }
@@ -348,6 +342,16 @@ namespace LegendaryLibraryNS
                     loadString(langXaml);
                 }
             }
+        }
+
+        public void LoadMenuIcons()
+        {
+            var dictionaries = Application.Current.Resources.MergedDictionaries;
+            ResourceDictionary iconsDict = new ResourceDictionary
+            {
+                Source = new Uri("/LegendaryLibrary;component/Resources/Icons.xaml", UriKind.RelativeOrAbsolute)
+            };
+            dictionaries.Add(iconsDict);
         }
 
         public override IEnumerable<SidebarItem> GetSidebarItems()
@@ -567,6 +571,7 @@ namespace LegendaryLibraryNS
                         yield return new GameMenuItem
                         {
                             Description = ResourceProvider.GetString(LOC.LegendaryMove),
+                            Icon = "MoveIcon",
                             Action = (args) =>
                             {
                                 if (!LegendaryLauncher.IsInstalled)
@@ -641,6 +646,7 @@ namespace LegendaryLibraryNS
                         yield return new GameMenuItem
                         {
                             Description = ResourceProvider.GetString(LOC.LegendaryRepair),
+                            Icon = "RepairIcon",
                             Action = (args) =>
                             {
                                 if (!LegendaryLauncher.IsInstalled)
@@ -678,6 +684,7 @@ namespace LegendaryLibraryNS
                         yield return new GameMenuItem
                         {
                             Description = ResourceProvider.GetString(LOC.Legendary3P_PlayniteCheckForUpdates),
+                            Icon = "UpdateDbIcon",
                             Action = (args) =>
                             {
                                 if (!LegendaryLauncher.IsInstalled)
@@ -724,6 +731,7 @@ namespace LegendaryLibraryNS
                         yield return new GameMenuItem
                         {
                             Description = ResourceProvider.GetString(LOC.LegendaryManageDlcs),
+                            Icon = "AddonsIcon",
                             Action = (args) =>
                             {
                                 if (!LegendaryLauncher.IsInstalled)
@@ -759,6 +767,7 @@ namespace LegendaryLibraryNS
                         yield return new GameMenuItem
                         {
                             Description = ResourceProvider.GetString(LOC.LegendaryLauncherSettings),
+                            Icon = "ModifyLaunchSettingsIcon",
                             Action = (args) =>
                             {
                                 if (!LegendaryLauncher.IsInstalled)
@@ -785,6 +794,7 @@ namespace LegendaryLibraryNS
                         yield return new GameMenuItem
                         {
                             Description = ResourceProvider.GetString(LOC.LegendaryImportInstalledGame),
+                            Icon = "AddGameIcon",
                             Action = async (args) =>
                             {
                                 if (!LegendaryLauncher.IsInstalled)

@@ -1,0 +1,7 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <TextBlock x:Key="RepairIcon" Text="&#xefd2;" FontFamily="{DynamicResource FontIcoFont}" FontWeight="Light" Foreground="{DynamicResource TextBrush}" />
+    <TextBlock x:Key="MoveIcon" Text="&#xea5d;" FontFamily="{DynamicResource FontIcoFont}" />
+    <TextBlock x:Key="ModifyLaunchSettingsIcon" Text="&#xefe2;" FontFamily="{DynamicResource FontIcoFont}" FontWeight="Light" Foreground="{DynamicResource TextBrush}" />
+</ResourceDictionary>
