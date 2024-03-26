@@ -311,6 +311,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
+    <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=Dev:/playnite-legendary-plugin/src</PathMap>
     <LocalAppData>$([System.Environment]::GetFolderPath(SpecialFolder.LocalApplicationData))</LocalAppData>
     <PostBuildEvent>"$(ProjectDir)..\make_scripts\after_build.py" $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
