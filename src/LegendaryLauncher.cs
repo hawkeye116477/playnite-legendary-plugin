@@ -14,6 +14,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace LegendaryLibraryNS
 {
@@ -544,6 +545,51 @@ namespace LegendaryLibraryNS
                 {
                     Directory.Delete(cacheDir, true);
                 }
+            }
+        }
+
+        public static void ShowCheckAllGamesUpdatesDialog()
+        {
+            IPlayniteAPI playniteAPI = API.Instance;
+            if (!IsInstalled)
+            {
+                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                return;
+            }
+
+            var gamesUpdates = new Dictionary<string, UpdateInfo>();
+            LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
+            GlobalProgressOptions updateCheckProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryCheckingForUpdates), false) { IsIndeterminate = true };
+            playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
+            {
+                gamesUpdates = await legendaryUpdateController.CheckAllGamesUpdates();
+            }, updateCheckProgressOptions);
+            if (gamesUpdates.Count > 0)
+            {
+                var successUpdates = gamesUpdates.Where(i => i.Value.Success).ToDictionary(i => i.Key, i => i.Value);
+                if (successUpdates.Count > 0)
+                {
+                    Window window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
+                    {
+                        ShowMaximizeButton = false,
+                    });
+                    window.DataContext = successUpdates;
+                    window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
+                    window.Content = new LegendaryUpdater();
+                    window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
+                    window.SizeToContent = SizeToContent.WidthAndHeight;
+                    window.MinWidth = 600;
+                    window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    window.ShowDialog();
+                }
+                else
+                {
+                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage));
+                }
+            }
+            else
+            {
+                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryNoUpdatesAvailable));
             }
         }
     }

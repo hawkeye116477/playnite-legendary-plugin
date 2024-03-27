@@ -858,5 +858,19 @@ namespace LegendaryLibraryNS
             }
         }
 
+        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+        {
+            yield return new MainMenuItem
+            {
+                Description = ResourceProvider.GetString(LOC.LegendaryCheckForGamesUpdatesButton),
+                MenuSection = $"@{Instance.Name}",
+                Icon = "UpdateDbIcon",
+                Action = (args) =>
+                {
+                    LegendaryLauncher.ShowCheckAllGamesUpdatesDialog();
+                }
+            };
+        }
+
     }
 }
