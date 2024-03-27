@@ -562,11 +562,6 @@ namespace LegendaryLibraryNS
             window.ShowDialog();
         }
 
-        private void GamesUpdateCheckBtn_Click(object sender, RoutedEventArgs e)
-        {
-            LegendaryLauncher.ShowCheckAllGamesUpdatesDialog();
-        }
-
         private void GamesUpdatesCBo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedValue = (KeyValuePair<UpdatePolicy, string>)GamesUpdatesCBo.SelectedItem;
