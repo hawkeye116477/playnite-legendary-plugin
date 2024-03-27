@@ -1,11 +1,18 @@
-name: Feature request
-description: Suggest an idea for this project
+name: ✨ Feature request
+description: Suggest an idea for this project.
 labels: ["enhancement"]
 body:
   - type: markdown
     attributes:
       value: |
         Thanks for taking the time to fill out this form!
+  - type: checkboxes
+    id: nonDuplicateVerify
+    attributes:
+      label: Prerequisites
+      options:
+        - label: I've looked through [existing issues](https://github.com/hawkeye116477/playnite-legendary-plugin/issues) to make sure that this feature hasn't been requested before .
+          required: true
   - type: textarea
     id: related-problem
     attributes:

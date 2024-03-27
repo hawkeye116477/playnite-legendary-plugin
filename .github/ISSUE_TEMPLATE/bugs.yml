@@ -1,5 +1,5 @@
-name: Bugs
-description: File a bug report
+name: 🐛 Bug report
+description: Report broken functionality.
 labels: ["bug"]
 body:
   - type: markdown
@@ -9,8 +9,11 @@ body:
   - type: checkboxes
     id: nonDuplicateVerify
     attributes:
+      label: Prerequisites
       options:
-        - label: I verified that this issue is not a duplicate. (Search [here](https://github.com/hawkeye116477/playnite-legendary-plugin/issues) to find out.)
+        - label: I've looked through [existing issues](https://github.com/hawkeye116477/playnite-legendary-plugin/issues) to make sure that this bug hasn't been reported before.
+          required: true
+        - label: I've read the [GitHub Community Guidelines](https://docs.github.com/en/github/site-policy/github-community-guidelines) and know netiquette.
           required: true
   - type: input
     id: playniteV
