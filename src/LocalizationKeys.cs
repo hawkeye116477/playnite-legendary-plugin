@@ -905,5 +905,9 @@ namespace System
         /// This game requires installation of {0}. It's recommended to go to Plugin settings => Additional services => {0} => Activate games, and then install it directly via {0}.
         /// </summary>
         public const string LegendaryRequiredInstallOfThirdPartyLauncher = "LOCLegendaryRequiredInstallOfThirdPartyLauncher";
+        /// <summary>
+        /// Installing prerequisites ({0})...
+        /// </summary>
+        public const string LegendaryInstallingPrerequisites = "LOCLegendaryInstallingPrerequisites";
     }
 }

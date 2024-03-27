@@ -249,6 +249,56 @@ namespace LegendaryLibraryNS
             var globalSettings = LegendaryLibrary.GetSettings();
             var offlineModeEnabled = globalSettings.LaunchOffline;
             var gameSettings = LegendaryGameSettingsView.LoadGameSettings(Game.GameId);
+
+            if (gameSettings.InstallPrerequisites)
+            {
+                var gamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
+                gameSettings.InstallPrerequisites = false;
+                gamesSettings[Game.GameId] = gameSettings;
+                Helpers.SaveJsonSettingsToFile(gamesSettings, "gamesSettings");
+                var appList = LegendaryLauncher.GetInstalledAppList();
+                if (appList.ContainsKey(Game.GameId))
+                {
+                    var installedGameInfo = appList[Game.GameId];
+                    if (installedGameInfo.Prereq_info != null)
+                    {
+                        var prereq = installedGameInfo.Prereq_info;
+                        var prereqName = "";
+                        if (!prereq.name.IsNullOrEmpty())
+                        {
+                            prereqName = prereq.name;
+                        }
+                        var prereqPath = "";
+                        if (!prereq.path.IsNullOrEmpty())
+                        {
+                            prereqPath = prereq.path;
+                        }
+                        var prereqArgs = "";
+                        if (!prereq.args.IsNullOrEmpty())
+                        {
+                            prereqArgs = prereq.args;
+                        }
+                        if (prereqPath != "")
+                        {
+                            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryInstallingPrerequisites).Format(prereqName), false);
+                            playniteAPI.Dialogs.ActivateGlobalProgress((a) =>
+                            {
+                                try
+                                {
+                                    ProcessStarter.StartProcessWait(Path.GetFullPath(Path.Combine(installedGameInfo.Install_path, prereqPath)),
+                                                                    prereqArgs,
+                                                                    "");
+                                }
+                                catch (Exception ex)
+                                {
+                                    logger.Error($"Failed to launch prerequisites executable. Error: {ex.Message}");
+                                }
+                            }, globalProgressOptions);
+                        }
+                    }
+                }
+            }
+
             if (gameSettings?.LaunchOffline != null)
             {
                 offlineModeEnabled = (bool)gameSettings.LaunchOffline;

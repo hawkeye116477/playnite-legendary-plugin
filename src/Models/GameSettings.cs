@@ -12,5 +12,6 @@ namespace LegendaryLibraryNS.Models
         public bool? AutoSyncSaves { get; set; }
         public string CloudSaveFolder { get; set; } = "";
         public bool? AutoSyncPlaytime { get; set; }
+        public bool InstallPrerequisites { get; set; } = false;
     }
 }

@@ -534,30 +534,13 @@ namespace LegendaryLibraryNS
                                             {
                                                 if (installedGameInfo.Prereq_info != null)
                                                 {
-                                                    var prereq = installedGameInfo.Prereq_info;
-                                                    var prereqPath = "";
-                                                    if (!prereq.path.IsNullOrEmpty())
+                                                    var gamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
+                                                    var gameSettings = new GameSettings
                                                     {
-                                                        prereqPath = prereq.path;
-                                                    }
-                                                    var prereqArgs = "";
-                                                    if (!prereq.args.IsNullOrEmpty())
-                                                    {
-                                                        prereqArgs = prereq.args;
-                                                    }
-                                                    if (prereqPath != "")
-                                                    {
-                                                        try
-                                                        {
-                                                            ProcessStarter.StartProcessWait(Path.GetFullPath(Path.Combine(installedGameInfo.Install_path, prereqPath)),
-                                                                                            prereqArgs,
-                                                                                            "");
-                                                        }
-                                                        catch (Exception ex)
-                                                        {
-                                                            logger.Error($"Failed to launch prerequisites executable. Error: {ex.Message}");
-                                                        }
-                                                    }
+                                                        InstallPrerequisites = true
+                                                    };
+                                                    gamesSettings.Add(gameID, gameSettings);
+                                                    Helpers.SaveJsonSettingsToFile(gamesSettings, "gamesSettings");
                                                 }
                                             }
                                             playniteAPI.Database.Games.Update(game);
