@@ -121,7 +121,6 @@ namespace LegendaryLibraryNS
             }
 
             var playtimeItems = await accountApi.GetPlaytimeItems();
-            var gamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
             foreach (var gameAsset in assets.Where(a => a.@namespace != "ue"))
             {
                 if (cancelToken.IsCancellationRequested)
@@ -158,11 +157,7 @@ namespace LegendaryLibraryNS
                     Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") }
                 };
 
-                var gameSettings = new GameSettings();
-                if (gamesSettings.ContainsKey(newGame.GameId))
-                {
-                    gameSettings = gamesSettings[newGame.GameId];
-                }
+                var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameAsset.appName);
                 var playtimeSyncEnabled = GetSettings().SyncPlaytime;
                 if (gameSettings.AutoSyncPlaytime != null)
                 {

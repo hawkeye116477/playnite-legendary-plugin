@@ -111,12 +111,11 @@ namespace LegendaryLibraryNS
                 {
                     if (result.CheckboxChecked)
                     {
-                        var savedGamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
-                        if (savedGamesSettings.ContainsKey(Game.GameId))
+                        var gameSettingsFile = Path.Combine(Path.Combine(LegendaryLibrary.Instance.GetPluginUserDataPath(), "GamesSettings", $"{Game.GameId}.json"));
+                        if (File.Exists(gameSettingsFile))
                         {
-                            savedGamesSettings.Remove(Game.GameId);
+                            File.Delete(gameSettingsFile);
                         }
-                        Helpers.SaveJsonSettingsToFile(savedGamesSettings, "gamesSettings");
                     }
                     playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryUninstallSuccess).Format(Game.Name));
                     InvokeOnUninstalled(new GameUninstalledEventArgs());
@@ -252,10 +251,8 @@ namespace LegendaryLibraryNS
 
             if (gameSettings.InstallPrerequisites)
             {
-                var gamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
                 gameSettings.InstallPrerequisites = false;
-                gamesSettings[Game.GameId] = gameSettings;
-                Helpers.SaveJsonSettingsToFile(gamesSettings, "gamesSettings");
+                Helpers.SaveJsonSettingsToFile(gameSettings, Game.GameId, "GamesSettings");
                 var appList = LegendaryLauncher.GetInstalledAppList();
                 if (appList.ContainsKey(Game.GameId))
                 {

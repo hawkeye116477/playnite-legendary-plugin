@@ -534,13 +534,11 @@ namespace LegendaryLibraryNS
                                             {
                                                 if (installedGameInfo.Prereq_info != null)
                                                 {
-                                                    var gamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
                                                     var gameSettings = new GameSettings
                                                     {
                                                         InstallPrerequisites = true
                                                     };
-                                                    gamesSettings.Add(gameID, gameSettings);
-                                                    Helpers.SaveJsonSettingsToFile(gamesSettings, "gamesSettings");
+                                                    Helpers.SaveJsonSettingsToFile(gameSettings, gameID, "GamesSettings");
                                                 }
                                             }
                                             playniteAPI.Database.Games.Update(game);

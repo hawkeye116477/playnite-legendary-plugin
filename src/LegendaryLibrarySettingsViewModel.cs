@@ -1,7 +1,10 @@
 ﻿using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
+using Playnite.Common;
 using Playnite.SDK;
+using Playnite.SDK.Data;
 using System.Collections.Generic;
+using System.IO;
 
 namespace LegendaryLibraryNS
 {
@@ -42,18 +45,31 @@ namespace LegendaryLibraryNS
         public LegendaryLibrarySettingsViewModel(LegendaryLibrary library, IPlayniteAPI api) : base(library, api)
         {
             var savedSettings = LoadSavedSettings();
+            // TODO: Remove migration of old settings in next big version
             if (savedSettings != null)
             {
+                var gamesSettingsFile = Path.Combine(LegendaryLibrary.Instance.GetPluginUserDataPath(), "gamesSettings.json");
+                if (File.Exists(gamesSettingsFile))
+                {
+                    if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(gamesSettingsFile), out Dictionary<string, GameSettings> savedGamesSettings))
+                    {
+                        if (savedGamesSettings != null)
+                        {
+                            foreach (var game in savedGamesSettings.Keys)
+                            {
+                                Helpers.SaveJsonSettingsToFile(savedGamesSettings[game], game, "GamesSettings");
+                            }
+                        }
+                    }
+                    File.Move(gamesSettingsFile, Path.Combine(LegendaryLibrary.Instance.GetPluginUserDataPath(), "gamesSettings.json.migrated"));
+                }
                 if (savedSettings.OnlineList.Count > 0)
                 {
-                    var gamesSettings = LegendaryGameSettingsView.LoadSavedGamesSettings();
                     foreach (var onlineGame in savedSettings.OnlineList)
                     {
-                        if (!gamesSettings.ContainsKey(onlineGame))
-                        {
-                            gamesSettings.Add(onlineGame, new GameSettings());
-                        }
-                        gamesSettings[onlineGame].LaunchOffline = false;
+                        var gameSettings = LegendaryGameSettingsView.LoadGameSettings(onlineGame);
+                        gameSettings.LaunchOffline = false;
+                        Helpers.SaveJsonSettingsToFile(gameSettings, onlineGame, "GamesSettings");
                     }
                     savedSettings.OnlineList.Clear();
                 }
