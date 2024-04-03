@@ -1,5 +1,20 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.7.3
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2024-04-03
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.7.3/LegendaryLibrary_1_7_3.pext
+    Changelog:
+      - Removed duplicated "Check for games updates" option (that one at main Playnite
+        menu remained)
+      - Prerequisites should be installed now only during first launch of game instead
+        of after downloading. That was done to avoid potential noises at night
+      - Moved games settings to separate files (old file will be migrated, but it
+        will still remain renamed as `gamesSettings.json.migrated` as a backup, but
+        it can be safely removed if everything will be fine)
+      - Added support for using `LEGENDARY_CONFIG_PATH` environment variable (it will
+        be used if exists instead of original Legendary's config path)
+      - Added Italian translation by AlienLogic
   - Version: 1.7.2
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2024-03-27
