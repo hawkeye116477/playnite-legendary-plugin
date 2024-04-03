@@ -14,7 +14,6 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace LegendaryLibraryNS
 {
@@ -41,6 +40,11 @@ namespace LegendaryLibraryNS
                     {
                         legendaryConfigPath = heroicLegendaryConfigPath;
                     }
+                }
+                var envLegendaryConfigPath = Environment.GetEnvironmentVariable("LEGENDARY_CONFIG_PATH");
+                if (!envLegendaryConfigPath.IsNullOrWhiteSpace() && Directory.Exists(envLegendaryConfigPath))
+                {
+                    legendaryConfigPath = envLegendaryConfigPath;
                 }
                 return legendaryConfigPath;
             }
