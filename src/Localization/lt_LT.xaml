@@ -169,4 +169,5 @@
   <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError"></sys:String>
   <sys:String x:Key="LOCLegendaryInstallPrerequisites"></sys:String>
   <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher"></sys:String>
+  <sys:String x:Key="LOCLegendaryInstallingPrerequisites"></sys:String>
 </ResourceDictionary>

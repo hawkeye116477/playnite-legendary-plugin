@@ -169,4 +169,5 @@
   <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">Bu oyun, {0} aracılığıyla doğrudan kurulum gerektirir.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallPrerequisites">Gerekenleri kur ({0})</sys:String>
   <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">Bu oyun, {0} kurulumu gerektiriyor. Eklenti ayarları =&gt; Ek hizmetler =&gt; {0} =&gt; Oyunları etkinleştir seçeneğine gitmeniz ve ardından doğrudan {0} aracılığıyla kurmanız önerilir.</sys:String>
+  <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Ön koşullar kuruluyor ({0})...</sys:String>
 </ResourceDictionary>
