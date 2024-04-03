@@ -169,4 +169,5 @@
   <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">Este jogo requer instalação direta via {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallPrerequisites">Instalar Pré-requisitos ({0})</sys:String>
   <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">Este jogo requer a instalação de {0}. É recomendado ir nas Configurações da Extensão =&gt; Serviços adicionais =&gt; {0} =&gt; Ativar jogos, e então instalá-lo diretamente via {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Instalando pré-requisitos ({0})...</sys:String>
 </ResourceDictionary>

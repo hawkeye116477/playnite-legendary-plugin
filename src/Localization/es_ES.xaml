@@ -20,12 +20,12 @@
   <sys:String x:Key="LOCLegendaryETA">Estimado:</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSpeed">Velocidad de descarga:</sys:String>
   <sys:String x:Key="LOCLegendaryElapsed">Transcurrido:</sys:String>
-  <sys:String x:Key="LOCLegendaryVerifying"></sys:String>
-  <sys:String x:Key="LOCLegendaryVerifyingLargeFile"></sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadingUpdate"></sys:String>
-  <sys:String x:Key="LOCLegendaryFinishingInstallation"></sys:String>
-  <sys:String x:Key="LOCLegendaryFinishingUpdate"></sys:String>
-  <sys:String x:Key="LOCLegendaryFinishingRepair"></sys:String>
+  <sys:String x:Key="LOCLegendaryVerifying">Verificando...</sys:String>
+  <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Verificando archivo grande &quot;{0}&quot;: {1}</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadingUpdate">Descargando actualización...</sys:String>
+  <sys:String x:Key="LOCLegendaryFinishingInstallation">Finalizando instalación...</sys:String>
+  <sys:String x:Key="LOCLegendaryFinishingUpdate">Finalizando actualización...</sys:String>
+  <sys:String x:Key="LOCLegendaryFinishingRepair">Finalizando reparación...</sys:String>
   <sys:String x:Key="LOCLegendaryPauseDownload">Pausar</sys:String>
   <sys:String x:Key="LOCLegendaryResumeDownload">Reanudar</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadPaused">Pausado</sys:String>
@@ -34,7 +34,7 @@
   <sys:String x:Key="LOCLegendarySyncGameSaves">Sincronizar partidas guardadas en la nube</sys:String>
   <sys:String x:Key="LOCLegendarySyncing">Sincronizando {0} partidas guardadas en la nube...</sys:String>
   <sys:String x:Key="LOCLegendarySyncError">Se ha producido un error al sincronizar {0} juegos guardados en la nube.</sys:String>
-  <sys:String x:Key="LOCLegendaryImportInstalledGame"></sys:String>
+  <sys:String x:Key="LOCLegendaryImportInstalledGame">Importar juego instalado</sys:String>
   <sys:String x:Key="LOCLegendaryImportingGame">Importando {0}...</sys:String>
   <sys:String x:Key="LOCLegendaryImportFinished">Importación terminada. Diviértete.</sys:String>
   <sys:String x:Key="LOCLegendaryGameImportFailure">No se pudo importar el juego. Razón: {0}.</sys:String>
@@ -65,10 +65,10 @@
   <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} ya está en la lista de descarga. Puede ver el estado de la descarga accediendo al Panel Legendario desde Menú =&gt; Vista o barra lateral.</sys:String>
   <sys:String x:Key="LOCLegendaryRepair">Reparar</sys:String>
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Opciones Avanzadas</sys:String>
-  <sys:String x:Key="LOCLegendaryIgnoreFreeSpace"></sys:String>
-  <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip"></sys:String>
+  <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Ignorar espacio libre</sys:String>
+  <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip">No abortar si no hay suficiente espacio libre disponible.</sys:String>
   <sys:String x:Key="LOCLegendaryEnableReordering">Habilitar optimización de reordenación</sys:String>
-  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip"></sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">Esto puede reducir los requisitos de RAM durante la descarga (es posible que no funcione correctamente en algunos títulos).</sys:String>
   <sys:String x:Key="LOCLegendaryExtraContent">Contenido extra</sys:String>
   <sys:String x:Key="LOCLegendaryCache">Caché</sys:String>
   <sys:String x:Key="LOCLegendaryClearCache">Borrar caché</sys:String>
@@ -159,7 +159,7 @@
   <sys:String x:Key="LOCLegendarySignedInAs">Sesión iniciada como {0}</sys:String>
   <sys:String x:Key="LOCLegendarySignOutConfirm">¿Estás seguro de que quieres cerrar sesión?</sys:String>
   <sys:String x:Key="LOCLegendaryPermissionError">El usuario no tiene acceso de escritura a la ruta especificada. Cambie los permisos o ejecute Playnite como administrador.</sys:String>
-  <sys:String x:Key="LOCLegendaryInstanceNotice"></sys:String>
+  <sys:String x:Key="LOCLegendaryInstanceNotice">Sólo una instancia de Legendary puede instalar/importar/mover aplicaciones a la vez. ¿Quieres pausar las tareas del administrador de descargas para continuar?</sys:String>
   <sys:String x:Key="LOCLegendaryCheckForGamesUpdatesButton">Buscar actualizaciones de juegos</sys:String>
   <sys:String x:Key="LOCLegendaryNotEnoughSpace">No hay suficiente espacio libre en disco.</sys:String>
   <sys:String x:Key="LOCLegendaryCheckingForUpdates">Buscando actualizaciones...</sys:String>
@@ -169,4 +169,5 @@
   <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">Este juego requiere una instalación directa a través de {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallPrerequisites">Instalar requisitos previos ({0})</sys:String>
   <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">Este juego requiere la instalación de {0}. Se recomienda ir a la configuración del plugin =&gt; Servicios adicionales =&gt; {0} =&gt; Activar juegos y luego instalarlo directamente a través de {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Instalando requisitos previos ({0})...</sys:String>
 </ResourceDictionary>
