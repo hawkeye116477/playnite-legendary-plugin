@@ -140,9 +140,8 @@ namespace LegendaryLibraryNS
     {
         private IPlayniteAPI playniteAPI = API.Instance;
         private static ILogger logger = LogManager.GetLogger();
-        private ProcessMonitor procMon;
-        private Stopwatch stopWatch;
         private CancellationTokenSource watcherToken;
+        private CancellationTokenSource ubisoftWatcherToken;
 
         public LegendaryPlayController(Game game) : base(game)
         {
@@ -151,8 +150,8 @@ namespace LegendaryLibraryNS
 
         public override void Dispose()
         {
-            procMon?.Dispose();
             watcherToken?.Dispose();
+            ubisoftWatcherToken?.Dispose();
         }
 
         public override async void Play(PlayActionArgs args)
@@ -346,18 +345,6 @@ namespace LegendaryLibraryNS
             {
                 playArgs.AddRange(new[] { "--override-exe", gameSettings?.OverrideExe });
             }
-            procMon = new ProcessMonitor();
-            procMon.TreeStarted += (_, treeArgs) =>
-            {
-                stopWatch = Stopwatch.StartNew();
-                InvokeOnStarted(new GameStartedEventArgs { StartedProcessId = treeArgs.StartedId });
-            };
-            procMon.TreeDestroyed += (_, __) =>
-            {
-                stopWatch.Stop();
-                OnGameClosed(stopWatch.Elapsed.TotalSeconds);
-                InvokeOnStopped(new GameStoppedEventArgs { SessionLength = Convert.ToUInt64(stopWatch.Elapsed.TotalSeconds) });
-            };
             var stdOutBuffer = new StringBuilder();
             var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
                          .WithArguments(playArgs)
@@ -369,30 +356,36 @@ namespace LegendaryLibraryNS
                 switch (cmdEvent)
                 {
                     case StartedCommandEvent started:
-                        if (File.Exists(Path.Combine(Game.InstallDirectory, "UplayLaunch.exe")))
+                        var monitor = new MonitorDirectory(Game.InstallDirectory);
+                        if (monitor.IsTrackable())
                         {
-                            // Borrowed from https://github.com/JosefNemec/PlayniteExtensions/blob/d3b1b50f45aa174751852198172a28a5ae947c6d/source/Libraries/UplayLibrary/UplayGameController.cs#L146
-                            logger.Debug($"{Game.Name} requires Ubisoft launcher to run, waiting for it to start properly.");
-                            // Solves issues with game process being started/shutdown multiple times during startup via Ubisoft Connect
-                            watcherToken = new CancellationTokenSource();
-                            while (true)
+                            if (File.Exists(Path.Combine(Game.InstallDirectory, "UplayLaunch.exe")))
                             {
-                                if (watcherToken.IsCancellationRequested)
+                                // Borrowed from https://github.com/JosefNemec/PlayniteExtensions/blob/d3b1b50f45aa174751852198172a28a5ae947c6d/source/Libraries/UplayLibrary/UplayGameController.cs#L146
+                                logger.Debug($"{Game.Name} requires Ubisoft launcher to run, waiting for it to start properly.");
+                                // Solves issues with game process being started/shutdown multiple times during startup via Ubisoft Connect
+                                ubisoftWatcherToken = new CancellationTokenSource();
+                                while (true)
                                 {
-                                    return;
-                                }
+                                    if (ubisoftWatcherToken.IsCancellationRequested)
+                                    {
+                                        return;
+                                    }
 
-                                if (ProcessExtensions.IsRunning("UbisoftGameLauncher"))
-                                {
-                                    Task watchGameProcess = procMon.WatchDirectoryProcesses(Game.InstallDirectory, false);
-                                    return;
+                                    if (ProcessExtensions.IsRunning("UbisoftGameLauncher"))
+                                    {
+                                        StartTracking(() => monitor.IsProcessRunning() > 0,
+                                                      startupCheck: () => monitor.IsProcessRunning());
+                                        return;
+                                    }
+                                    await Task.Delay(5000);
                                 }
-                                await Task.Delay(5000);
                             }
-                        }
-                        else
-                        {
-                            Task watchGameProcess = procMon.WatchDirectoryProcesses(Game.InstallDirectory, false);
+                            else
+                            {
+                                StartTracking(() => monitor.IsProcessRunning() > 0,
+                                              startupCheck: () => monitor.IsProcessRunning());
+                            }
                         }
                         break;
                     case StandardErrorCommandEvent stdErr:
@@ -464,6 +457,109 @@ namespace LegendaryLibraryNS
                         break;
                 }
             }
+        }
+
+        public void StartTracking(Func<bool> trackingAction,
+                                  Func<int> startupCheck = null,
+                                  int trackingFrequency = 2000,
+                                  int trackingStartDelay = 0)
+        {
+            if (watcherToken != null)
+            {
+                throw new Exception("Game is already being tracked.");
+            }
+
+            watcherToken = new CancellationTokenSource();
+            Task.Run(async () =>
+            {
+                ulong playTimeMs = 0;
+                var trackingWatch = new Stopwatch();
+                var maxFailCount = 5;
+                var failCount = 0;
+
+                if (trackingStartDelay > 0)
+                {
+                    await Task.Delay(trackingStartDelay, watcherToken.Token).ContinueWith(task => { });
+                }
+
+                if (startupCheck != null)
+                {
+                    while (true)
+                    {
+                        if (watcherToken.IsCancellationRequested)
+                        {
+                            return;
+                        }
+
+                        if (failCount >= maxFailCount)
+                        {
+                            InvokeOnStopped(new GameStoppedEventArgs(0));
+                            return;
+                        }
+
+                        try
+                        {
+                            var id = startupCheck();
+                            if (id > 0)
+                            {
+                                InvokeOnStarted(new GameStartedEventArgs { StartedProcessId = id });
+                                break;
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            failCount++;
+                            logger.Error(e, "Game startup tracking iteration failed.");
+                        }
+
+                        await Task.Delay(trackingFrequency, watcherToken.Token).ContinueWith(task => { });
+                    }
+                }
+
+                while (true)
+                {
+                    failCount = 0;
+                    if (watcherToken.IsCancellationRequested)
+                    {
+                        return;
+                    }
+
+                    if (failCount >= maxFailCount)
+                    {
+                        OnGameClosed(playTimeMs / 1000);
+                        InvokeOnStopped(new GameStoppedEventArgs(playTimeMs / 1000));
+                        return;
+                    }
+
+                    try
+                    {
+                        trackingWatch.Restart();
+                        if (!trackingAction())
+                        {
+                            OnGameClosed(playTimeMs / 1000);
+                            InvokeOnStopped(new GameStoppedEventArgs(playTimeMs / 1000));
+                            return;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        failCount++;
+                        logger.Error(e, "Game tracking iteration failed.");
+                    }
+
+                    await Task.Delay(trackingFrequency, watcherToken.Token).ContinueWith(task => { });
+                    trackingWatch.Stop();
+                    if (trackingWatch.ElapsedMilliseconds > (trackingFrequency + 30_000))
+                    {
+                        // This is for cases where system is put into sleep or hibernation.
+                        // Realistically speaking, one tracking interation should never take 30+ seconds,
+                        // but lets use that as safe value in case this runs super slowly on some weird PCs.
+                        continue;
+                    }
+
+                    playTimeMs += (ulong)trackingWatch.ElapsedMilliseconds;
+                }
+            });
         }
     }
 
