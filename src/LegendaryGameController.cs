@@ -532,8 +532,9 @@ namespace LegendaryLibraryNS
 
                     if (failCount >= maxFailCount)
                     {
-                        OnGameClosed(playTimeMs / 1000);
-                        InvokeOnStopped(new GameStoppedEventArgs(playTimeMs / 1000));
+                        var playTimeS = playTimeMs / 1000;
+                        OnGameClosed(playTimeS);
+                        InvokeOnStopped(new GameStoppedEventArgs(playTimeS));
                         return;
                     }
 
@@ -542,8 +543,9 @@ namespace LegendaryLibraryNS
                         trackingWatch.Restart();
                         if (!trackingAction())
                         {
-                            OnGameClosed(playTimeMs / 1000);
-                            InvokeOnStopped(new GameStoppedEventArgs(playTimeMs / 1000));
+                            var playTimeS = playTimeMs / 1000;
+                            OnGameClosed(playTimeS);
+                            InvokeOnStopped(new GameStoppedEventArgs(playTimeS));
                             return;
                         }
                     }
