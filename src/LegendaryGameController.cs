@@ -151,6 +151,7 @@ namespace LegendaryLibraryNS
         public override void Dispose()
         {
             watcherToken?.Dispose();
+            watcherToken = null;
             ubisoftWatcherToken?.Dispose();
         }
 
@@ -413,8 +414,13 @@ namespace LegendaryLibraryNS
                                             new List<MessageBoxOption> { tryOfflineResponse, okResponse });
                                         if (offlineConfirm == tryOfflineResponse)
                                         {
+                                            watcherToken.Cancel();
                                             await LaunchGame(true);
                                             return;
+                                        }
+                                        else
+                                        {
+                                            InvokeOnStopped(new GameStoppedEventArgs());
                                         }
                                     }
                                     else
