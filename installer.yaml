@@ -1,5 +1,11 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.7.5
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2024-04-28
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.7.5/LegendaryLibrary_1_7_5.pext
+    Changelog:
+      - 'Removed support for "offline" updates (bug #65)'
   - Version: 1.7.4
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2024-04-21
