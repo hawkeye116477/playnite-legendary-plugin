@@ -1,5 +1,5 @@
 # playnite-legendary-plugin
-Epic Games Store library integration with [Legendary Launcher](https://github.com/derrod/legendary#prebuilt-standalone-binary-windows-macos-and-linux) for Playnite, based on [Epic Store library integration](https://github.com/JosefNemec/PlayniteExtensions/tree/master/source/Libraries/EpicLibrary).
+Epic Games Store library integration with [Legendary Launcher](https://github.com/derrod/legendary#prebuilt-standalone-binary-windows-macos-and-linux) for [Playnite](https://github.com/JosefNemec/Playnite), based on [Epic Store library integration](https://github.com/JosefNemec/PlayniteExtensions/tree/master/source/Libraries/EpicLibrary).
 
 [![Crowdin](https://badges.crowdin.net/playnite-legendary-plugin/localized.svg)](https://crowdin.com/project/playnite-legendary-plugin)
 [![GitHub release (latest by date)](https://img.shields.io/github/downloads/hawkeye116477/playnite-legendary-plugin/latest/total)](https://github.com/hawkeye116477/playnite-legendary-plugin/releases/latest)
