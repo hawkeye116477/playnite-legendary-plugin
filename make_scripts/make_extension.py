@@ -47,7 +47,7 @@ else:
     shutil.rmtree(releasesPath)
 
 # Remove inactive (not enough translated) languages
-active_languages = ["en_US", "it_IT", "pl_PL", "es_ES", "tr_TR", "pt_BR"]
+active_languages = ["en_US", "it_IT", "pl_PL", "es_ES", "tr_TR", "pt_BR", "ru_RU"]
 for root, dirs, files in os.walk(pj(compiledPath, "Localization")):
     for file in files:
         if not any(substring in file for substring in active_languages):
