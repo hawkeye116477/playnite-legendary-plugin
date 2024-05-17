@@ -1,5 +1,12 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.7.6
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2024-05-17
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.7.6/LegendaryLibrary_1_7_6.pext
+    Changelog:
+      - Solved problems with activating some EA games
+      - Added Russian translations made by FerNikoMF
   - Version: 1.7.5
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2024-04-28
