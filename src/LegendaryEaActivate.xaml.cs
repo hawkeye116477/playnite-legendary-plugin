@@ -95,9 +95,10 @@ namespace LegendaryLibraryNS
                     {
                         foreach (LegendaryMetadata.Rootobject eaGame in eaGamesOutput)
                         {
-                            if (eaGame.metadata?.customAttributes?.ThirdPartyManagedApp?.value == "Origin" || eaGame.metadata?.customAttributes?.ThirdPartyManagedApp?.value == "the EA app")
+                            var thirdPartyManagedApp = eaGame.metadata?.customAttributes?.ThirdPartyManagedApp?.value.ToLower();
+                            if (thirdPartyManagedApp == "origin" || thirdPartyManagedApp == "the ea app")
                             {
-                                if (eaGame.metadata?.customAttributes?.ThirdPartyManagedApp?.value == "the EA app")
+                                if (thirdPartyManagedApp == "the ea app")
                                 {
                                     eaGame.metadata.customAttributes.ThirdPartyManagedApp.value = "Origin";
                                     var metadataFile = Path.Combine(LegendaryLauncher.ConfigPath, "metadata", eaGame.app_name + ".json");
