@@ -136,7 +136,12 @@ namespace LegendaryLibraryNS
                     continue;
                 }
 
-                if ((catalogItem?.categories?.Any(a => a.path == "addons") == true) && (catalogItem.categories.Any(a => a.path == "addons/launchable") == false))
+                if ((catalogItem?.mainGameItem != null) && (catalogItem.categories?.Any(a => a.path == "addons/launchable") == false))
+                {
+                    continue;
+                }
+
+                if (catalogItem?.categories?.Any(a => a.path == "digitalextras") == true)
                 {
                     continue;
                 }

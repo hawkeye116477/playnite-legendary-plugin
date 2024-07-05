@@ -37,6 +37,22 @@ namespace LegendaryLibraryNS.Models
             public DateTime? dateAdded;
         }
 
+        public class CustomAttributeType
+        {
+            public CustomAttribute CanRunOffline;
+            public CustomAttribute CanSkipKoreanIdVerification;
+            public CustomAttribute CloudIncludeList;
+            public CustomAttribute CloudSaveFolder;
+            public CustomAttribute FolderName;
+            public CustomAttribute PartnerLinkType;
+            public CustomAttribute ThirdPartyManagedApp;
+        }
+
+        public class MainGameItem
+        {
+            public string id;
+        }
+
         public string id;
         public string title;
         public string description;
@@ -54,17 +70,6 @@ namespace LegendaryLibraryNS.Models
         public string developer;
         public string developerId;
         public bool endOfSupport;
-
-        public class CustomAttributeType
-        {
-            public CustomAttribute CanRunOffline;
-            public CustomAttribute CanSkipKoreanIdVerification;
-            public CustomAttribute CloudIncludeList;
-            public CustomAttribute CloudSaveFolder;
-            public CustomAttribute FolderName;
-            public CustomAttribute PartnerLinkType;
-            public CustomAttribute ThirdPartyManagedApp;
-        }
-
+        public MainGameItem mainGameItem;
     }
 }
