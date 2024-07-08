@@ -187,7 +187,10 @@ namespace LegendaryLibraryNS
 
         public static void StartClient()
         {
-            ProcessStarter.StartProcess(ClientExecPath);
+            if (!ClientExecPath.IsNullOrEmpty())
+            {
+                ProcessStarter.StartProcess(ClientExecPath);
+            }
         }
 
         internal static string GetExecutablePath(string rootPath)

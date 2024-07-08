@@ -158,7 +158,7 @@ namespace LegendaryLibraryNS
         public override async void Play(PlayActionArgs args)
         {
             Dispose();
-            if (Directory.Exists(Game.InstallDirectory))
+            if (Directory.Exists(Game.InstallDirectory) && LegendaryLauncher.IsInstalled)
             {
                 OnGameStarting();
                 await LaunchGame();
@@ -166,6 +166,10 @@ namespace LegendaryLibraryNS
             else
             {
                 InvokeOnStopped(new GameStoppedEventArgs());
+                if (!LegendaryLauncher.IsInstalled)
+                {
+                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                }
             }
         }
 
