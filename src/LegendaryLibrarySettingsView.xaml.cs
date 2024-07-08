@@ -204,7 +204,7 @@ namespace LegendaryLibraryNS
             if (LegendaryLauncher.IsInstalled)
             {
                 var launcherVersion = await LegendaryLauncher.GetLauncherVersion();
-                if (launcherVersion != "0")
+                if (!launcherVersion.IsNullOrWhiteSpace())
                 {
                     troubleshootingInformation.LauncherVersion = launcherVersion;
                     LauncherVersionTxt.Text = troubleshootingInformation.LauncherVersion;
@@ -213,6 +213,7 @@ namespace LegendaryLibraryNS
             }
             else
             {
+                troubleshootingInformation.LauncherVersion = "Not%20installed";
                 LauncherVersionTxt.Text = ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled);
                 LauncherBinaryTxt.Text = ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled);
                 CheckForUpdatesBtn.IsEnabled = false;
