@@ -343,7 +343,20 @@ namespace LegendaryLibraryNS
             {
                 if (!skipRefreshing)
                 {
+                    var metadatafile = Path.Combine(ConfigPath, "metadata", gameID + ".json");
+                    bool isRefreshNeeded = false;
+                    if (File.Exists(metadatafile))
+                    {
+                        if (File.GetLastWriteTime(cacheInfoFile) < File.GetLastWriteTime(metadatafile))
+                        {
+                            isRefreshNeeded = true;
+                        }
+                    }
                     if (File.GetLastWriteTime(cacheInfoFile) < DateTime.Now.AddDays(-7))
+                    {
+                        isRefreshNeeded = true;
+                    }
+                    if (isRefreshNeeded)
                     {
                         var metadataFile = Path.Combine(ConfigPath, "metadata", gameID + ".json");
                         if (File.Exists(metadataFile))
