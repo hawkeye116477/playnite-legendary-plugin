@@ -33,10 +33,6 @@ namespace LegendaryLibraryNS
                 {
                     if (legendaryMetadata != null)
                     {
-                        if (!legendaryMetadata.metadata.developer.IsNullOrEmpty())
-                        {
-                            gameInfo.Developers = new HashSet<MetadataProperty>() { new MetadataNameProperty(legendaryMetadata.metadata.developer) };
-                        }
                         gameInfo.Features = new HashSet<MetadataProperty>() { };
                         if (legendaryMetadata.metadata.customAttributes?.CloudSaveFolder != null)
                         {
