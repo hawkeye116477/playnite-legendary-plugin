@@ -438,7 +438,7 @@ namespace LegendaryLibraryNS
                             {
                                 InvokeOnStopped(new GameStoppedEventArgs());
                                 LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
-                                var gamesToUpdate = await legendaryUpdateController.CheckGameUpdates(Game.Name, Game.GameId);
+                                var gamesToUpdate = await legendaryUpdateController.CheckGameUpdates(Game.Name, Game.GameId, true);
                                 Window window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
                                 {
                                     ShowMaximizeButton = false,
@@ -579,7 +579,7 @@ namespace LegendaryLibraryNS
     {
         private IPlayniteAPI playniteAPI = API.Instance;
         private static ILogger logger = LogManager.GetLogger();
-        public async Task<Dictionary<string, UpdateInfo>> CheckGameUpdates(string gameTitle, string gameId)
+        public async Task<Dictionary<string, UpdateInfo>> CheckGameUpdates(string gameTitle, string gameId, bool forceRefreshCache = false)
         {
             var gamesToUpdate = new Dictionary<string, UpdateInfo>();
             if (gameId == "eos-overlay")
@@ -666,7 +666,7 @@ namespace LegendaryLibraryNS
                 }
                 return gamesToUpdate;
             }
-            var newGameInfo = await LegendaryLauncher.GetGameInfo(gameId, false, true);
+            var newGameInfo = await LegendaryLauncher.GetGameInfo(gameId, false, true, forceRefreshCache);
             if (newGameInfo.Game != null)
             {
                 var installedAppList = LegendaryLauncher.GetInstalledAppList();
@@ -698,7 +698,7 @@ namespace LegendaryLibraryNS
                                 if (installedAppList.ContainsKey(dlc.App_name))
                                 {
                                     var oldDlcInfo = installedAppList[dlc.App_name];
-                                    var newDlcInfo = await LegendaryLauncher.GetGameInfo(dlc.App_name, false, true);
+                                    var newDlcInfo = await LegendaryLauncher.GetGameInfo(dlc.App_name, false, true, forceRefreshCache);
                                     if (newDlcInfo.Game != null)
                                     {
                                         if (oldDlcInfo.Version != newDlcInfo.Game.Version)

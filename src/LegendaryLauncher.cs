@@ -327,7 +327,7 @@ namespace LegendaryLibraryNS
             return updateInfo;
         }
 
-        public static async Task<LegendaryGameInfo.Rootobject> GetGameInfo(string gameID, bool skipRefreshing = false, bool silently = false)
+        public static async Task<LegendaryGameInfo.Rootobject> GetGameInfo(string gameID, bool skipRefreshing = false, bool silently = false, bool forceRefreshCache = false)
         {
             var manifest = new LegendaryGameInfo.Rootobject();
             var playniteAPI = API.Instance;
@@ -343,7 +343,7 @@ namespace LegendaryLibraryNS
             {
                 if (!skipRefreshing)
                 {
-                    if (File.GetLastWriteTime(cacheInfoFile) < DateTime.Now.AddDays(-7))
+                    if (File.GetLastWriteTime(cacheInfoFile) < DateTime.Now.AddDays(-7) || forceRefreshCache)
                     {
                         var metadataFile = Path.Combine(ConfigPath, "metadata", gameID + ".json");
                         if (File.Exists(metadataFile))
