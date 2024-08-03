@@ -61,7 +61,7 @@ namespace LegendaryLibraryNS
             Window.GetWindow(this).Close();
         }
 
-        private void InstallBtn_Click(object sender, RoutedEventArgs e)
+        public void Install()
         {
             var settings = LegendaryLibrary.GetSettings();
             var installPath = SelectedGamePathTxt.Text;
@@ -149,6 +149,11 @@ namespace LegendaryLibraryNS
                     downloadManager.EnqueueMultipleJobs(downloadTasks);
                 }
             }
+        }
+
+        private void InstallBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Install();
         }
 
         public DownloadProperties GetDownloadProperties(DownloadAction downloadAction, string installPath = "")
@@ -440,6 +445,10 @@ namespace LegendaryLibraryNS
             else if (InstallData.downloadProperties.downloadAction != DownloadAction.Repair)
             {
                 InstallerWindow.Close();
+            }
+            if (settings.UnattendedInstall && (InstallData.downloadProperties.downloadAction == DownloadAction.Install))
+            {
+                Install();
             }
         }
 

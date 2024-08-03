@@ -909,5 +909,13 @@ namespace System
         /// Installing prerequisites ({0})...
         /// </summary>
         public const string LegendaryInstallingPrerequisites = "LOCLegendaryInstallingPrerequisites";
+        /// <summary>
+        /// Enable unattended installation mode
+        /// </summary>
+        public const string LegendaryUnattendedInstall = "LOCLegendaryUnattendedInstall";
+        /// <summary>
+        /// You won't have to choose anything in the installer window and the installation will start automatically after downloading the required information.
+        /// </summary>
+        public const string LegendaryUnattendedInstallToolTip = "LOCLegendaryUnattendedInstallToolTip";
     }
 }
