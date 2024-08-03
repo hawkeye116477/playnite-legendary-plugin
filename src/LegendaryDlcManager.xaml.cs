@@ -68,12 +68,16 @@ namespace LegendaryLibraryNS
                     }
                     InstalledDlcsLB.ItemsSource = installedDLCs;
                     AvailableDlcsLB.ItemsSource = notInstalledDLCs;
-                    DriveInfo dDrive = new DriveInfo(Path.GetFullPath(Game.InstallDirectory));
-                    if (dDrive.IsReady)
+
+                    if (!Game.InstallDirectory.IsNullOrEmpty())
                     {
-                        availableFreeSpace = dDrive.AvailableFreeSpace;
-                        SpaceTB.Text = Helpers.FormatSize(availableFreeSpace);
-                        AfterInstallingTB.Text = Helpers.FormatSize(availableFreeSpace);
+                        DriveInfo dDrive = new DriveInfo(Path.GetFullPath(Game.InstallDirectory));
+                        if (dDrive.IsReady)
+                        {
+                            availableFreeSpace = dDrive.AvailableFreeSpace;
+                            SpaceTB.Text = Helpers.FormatSize(availableFreeSpace);
+                            AfterInstallingTB.Text = Helpers.FormatSize(availableFreeSpace);
+                        }
                     }
                     var settings = LegendaryLibrary.GetSettings();
                     MaxWorkersNI.Value = settings.MaxWorkers.ToString();
@@ -109,6 +113,12 @@ namespace LegendaryLibraryNS
             {
                 BottomADGrd.Visibility = Visibility.Visible;
                 TopADSP.Visibility = Visibility.Visible;
+            }
+            if (Game.InstallDirectory.IsNullOrEmpty())
+            {
+                AvailableDlcsActionSP.Visibility = Visibility.Collapsed;
+                BottomADGrd.Visibility = Visibility.Collapsed;
+                AvailableDlcsAOBrd.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -223,6 +233,10 @@ namespace LegendaryLibraryNS
 
         private void AvailableDlcsLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (Game.InstallDirectory.IsNullOrEmpty())
+            {
+                return;
+            }
             if (AvailableDlcsLB.SelectedIndex == -1)
             {
                 InstallBtn.IsEnabled = false;

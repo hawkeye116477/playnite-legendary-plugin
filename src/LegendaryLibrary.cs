@@ -740,42 +740,6 @@ namespace LegendaryLibraryNS
                         };
                         yield return new GameMenuItem
                         {
-                            Description = ResourceProvider.GetString(LOC.LegendaryManageDlcs),
-                            Icon = "AddonsIcon",
-                            Action = (args) =>
-                            {
-                                if (!LegendaryLauncher.IsInstalled)
-                                {
-                                    throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
-                                }
-
-                                Window window = null;
-                                if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
-                                {
-                                    window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
-                                    {
-                                        ShowMaximizeButton = false,
-                                    });
-                                }
-                                else
-                                {
-                                    window = new Window
-                                    {
-                                        Background = System.Windows.Media.Brushes.DodgerBlue
-                                    };
-                                }
-                                window.Title = $"{ResourceProvider.GetString(LOC.LegendaryManageDlcs)} - {game.Name}";
-                                window.DataContext = game;
-                                window.Content = new LegendaryDlcManager();
-                                window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
-                                window.SizeToContent = SizeToContent.WidthAndHeight;
-                                window.MinWidth = 600;
-                                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                                window.ShowDialog();
-                            }
-                        };
-                        yield return new GameMenuItem
-                        {
                             Description = ResourceProvider.GetString(LOC.LegendaryLauncherSettings),
                             Icon = "ModifyLaunchSettingsIcon",
                             Action = (args) =>
@@ -864,6 +828,31 @@ namespace LegendaryLibraryNS
                             }
                         };
                     }
+                    yield return new GameMenuItem
+                    {
+                        Description = ResourceProvider.GetString(LOC.LegendaryManageDlcs),
+                        Icon = "AddonsIcon",
+                        Action = (args) =>
+                        {
+                            if (!LegendaryLauncher.IsInstalled)
+                            {
+                                throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                            }
+
+                            Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                            {
+                                ShowMaximizeButton = false,
+                            });
+                            window.Title = $"{ResourceProvider.GetString(LOC.LegendaryManageDlcs)} - {game.Name}";
+                            window.DataContext = game;
+                            window.Content = new LegendaryDlcManager();
+                            window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+                            window.SizeToContent = SizeToContent.WidthAndHeight;
+                            window.MinWidth = 600;
+                            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                            window.ShowDialog();
+                        }
+                    };
                 }
             }
         }
