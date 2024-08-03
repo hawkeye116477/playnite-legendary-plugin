@@ -313,6 +313,6 @@
   <PropertyGroup>
     <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)/..'))=Dev:/playnite-legendary-plugin</PathMap>
     <LocalAppData>$([System.Environment]::GetFolderPath(SpecialFolder.LocalApplicationData))</LocalAppData>
-    <PostBuildEvent>python "$(ProjectDir)..\make_scripts\after_build.py" $(TargetDir)</PostBuildEvent>
+    <PostBuildEvent>"$(ProjectDir)..\make_scripts\after_build.py" $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
 </Project>
