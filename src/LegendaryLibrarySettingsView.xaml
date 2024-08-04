@@ -173,36 +173,40 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <CheckBox Grid.Column="0" Grid.Row="0"
                             Content="{DynamicResource LOCLegendaryDisplayDownloadSpeedInBits}"
                             IsChecked="{Binding Settings.DisplayDownloadSpeedInBits}" Margin="0,0,0,10" />
                         <CheckBox Grid.Column="0" Grid.Row="1"
+                            Content="{DynamicResource LOCLegendaryDownloadAllDlcs}"
+                            IsChecked="{Binding Settings.DownloadAllDlcs}" Margin="0,0,0,10" />
+                        <CheckBox Grid.Column="0" Grid.Row="2"
                             Content="{DynamicResource LOCLegendaryHttpOnlyDownload}"
                             IsChecked="{Binding Settings.NoHttps}" Margin="0,0,0,10" />
-                        <CheckBox Grid.Column="0" Grid.Row="2"
+                        <CheckBox Grid.Column="0" Grid.Row="3"
                             Content="{DynamicResource LOCLegendaryEnableReordering}" ToolTip="{DynamicResource LOCLegendaryEnableReorderingToolTip}"
                             IsChecked="{Binding Settings.EnableReordering}" Margin="0,0,0,10"/>
-                        <CheckBox Grid.Column="0" Grid.Row="3"
+                        <CheckBox Grid.Column="0" Grid.Row="4"
                             Content="{DynamicResource LOCLegendaryUnattendedInstall}" ToolTip="{DynamicResource LOCLegendaryUnattendedInstallToolTip}"
                             IsChecked="{Binding Settings.UnattendedInstall}" Margin="0,0,0,5" />
                         <TextBlock Text="{DynamicResource LOCLegendaryMaxWorkers}" Grid.Column="0"
-                            Grid.Row="4" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        <local:NumericInput Grid.Row="4" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="16" Value="{Binding Settings.MaxWorkers}" HorizontalAlignment="Left"/>
-                        <TextBlock Text="{DynamicResource LOCLegendaryMaxSharedMemory}" Grid.Column="0"
                             Grid.Row="5" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        <local:NumericInput Grid.Row="5" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" Value="{Binding Settings.MaxSharedMemory}" HorizontalAlignment="Left"/>
-                        <TextBlock Text="{DynamicResource LOCLegendaryConnectionTimeout}" Grid.Column="0"
+                        <local:NumericInput Grid.Row="5" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="16" Value="{Binding Settings.MaxWorkers}" HorizontalAlignment="Left"/>
+                        <TextBlock Text="{DynamicResource LOCLegendaryMaxSharedMemory}" Grid.Column="0"
                             Grid.Row="6" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        <local:NumericInput Grid.Row="6" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="600" StepSize="5" Value="{Binding Settings.ConnectionTimeout}" HorizontalAlignment="Left"/>
-                        <TextBlock Text="{DynamicResource LOCLegendaryPreferredCDN}" Grid.Column="0"
+                        <local:NumericInput Grid.Row="6" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" Value="{Binding Settings.MaxSharedMemory}" HorizontalAlignment="Left"/>
+                        <TextBlock Text="{DynamicResource LOCLegendaryConnectionTimeout}" Grid.Column="0"
                             Grid.Row="7" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        <local:NumericInput Grid.Row="7" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="600" StepSize="5" Value="{Binding Settings.ConnectionTimeout}" HorizontalAlignment="Left"/>
+                        <TextBlock Text="{DynamicResource LOCLegendaryPreferredCDN}" Grid.Column="0"
+                            Grid.Row="8" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         <TextBox
                             Text="{Binding Settings.PreferredCDN, UpdateSourceTrigger=PropertyChanged}"
-                            Grid.Column="1" Grid.Row="7" Margin="0,0,0,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" />
-                        <TextBlock Grid.Column="0" Grid.Row="8"
+                            Grid.Column="1" Grid.Row="8" Margin="0,0,0,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" />
+                        <TextBlock Grid.Column="0" Grid.Row="9"
                             Text="{DynamicResource LOCLegendaryAfterDownloadComplete}" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"  />
-                        <ComboBox Grid.Column="1" Grid.Row="8" x:Name="AfterDownloadCompleteCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.DoActionAfterDownloadComplete}" SelectedValuePath="Key"  VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Margin="0,0,0,5" HorizontalAlignment="Left"/>
+                        <ComboBox Grid.Column="1" Grid.Row="9" x:Name="AfterDownloadCompleteCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.DoActionAfterDownloadComplete}" SelectedValuePath="Key"  VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Margin="0,0,0,5" HorizontalAlignment="Left"/>
                     </Grid>
                 </StackPanel>
                 <StackPanel Margin="0,20,0,0">

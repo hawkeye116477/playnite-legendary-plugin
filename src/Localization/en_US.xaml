@@ -9,8 +9,18 @@
   <sys:String x:Key="LOCLegendaryEnableOfflineMode">Enable offline mode</sys:String>
   <sys:String x:Key="LOCLegendaryOfflineMode">Offline mode</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings">Download Settings</sys:String>
+  <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Display download speed in bits per second</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAllDlcs">Download all DLCs</sys:String>
+  <sys:String x:Key="LOCLegendaryUnattendedInstall">Enable unattended installation mode</sys:String>
+  <sys:String x:Key="LOCLegendaryUnattendedInstallToolTip">You won't have to choose anything in the installer window and the installation will start automatically after downloading the required information.</sys:String>
   <sys:String x:Key="LOCLegendaryPreferredCDN">Preferred CDN</sys:String>
   <sys:String x:Key="LOCLegendaryHttpOnlyDownload">Disable HTTPS (useful for CDNs e.g. LanCache)</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReordering">Enable reordering optimization</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">This can reduce RAM requirements during download (may not work properly for some titles).</sys:String>
+  <sys:String x:Key="LOCLegendaryMaxWorkers">Maximum number of worker processes</sys:String>
+  <sys:String x:Key="LOCLegendaryMaxSharedMemory">Maximum amount of shared memory (MB)</sys:String>
+  <sys:String x:Key="LOCLegendaryConnectionTimeout">Connection timeout (sec)</sys:String>
+  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">After download is complete:</sys:String>
   <sys:String x:Key="LOCLegendaryEOSOverlay">EOS Overlay</sys:String>
   <sys:String x:Key="LOCLegendaryDisable">Disable</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Enable</sys:String>
@@ -30,7 +40,6 @@
   <sys:String x:Key="LOCLegendaryResumeDownload">Resume</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadPaused">Paused</sys:String>
   <sys:String x:Key="LOCLegendaryInstallationFinished">Installation finished. Have fun.</sys:String>
-  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">After download is complete:</sys:String>
   <sys:String x:Key="LOCLegendarySyncGameSaves">Sync game saves to the cloud</sys:String>
   <sys:String x:Key="LOCLegendarySyncing">Syncing {0} game saves to the cloud...</sys:String>
   <sys:String x:Key="LOCLegendarySyncError">An error occurred while syncing {0} game saves to the cloud.</sys:String>
@@ -38,9 +47,6 @@
   <sys:String x:Key="LOCLegendaryImportingGame">Importing {0}...</sys:String>
   <sys:String x:Key="LOCLegendaryImportFinished">Import finished. Have fun.</sys:String>
   <sys:String x:Key="LOCLegendaryGameImportFailure">Failed to import game. Reason: {0}.</sys:String>
-  <sys:String x:Key="LOCLegendaryMaxWorkers">Maximum number of worker processes</sys:String>
-  <sys:String x:Key="LOCLegendaryMaxSharedMemory">Maximum amount of shared memory (MB)</sys:String>
-  <sys:String x:Key="LOCLegendaryConnectionTimeout">Connection timeout (sec)</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">Download Manager</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadStatus">Status</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadCompletedColumn">Completed</sys:String>
@@ -67,8 +73,6 @@
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Advanced Options</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Ignore free space</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip">Do not abort if not enough free space is available.</sys:String>
-  <sys:String x:Key="LOCLegendaryEnableReordering">Enable reordering optimization</sys:String>
-  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">This can reduce RAM requirements during download (may not work properly for some titles).</sys:String>
   <sys:String x:Key="LOCLegendaryExtraContent">Extra Content</sys:String>
   <sys:String x:Key="LOCLegendaryCache">Cache</sys:String>
   <sys:String x:Key="LOCLegendaryClearCache">Clear cache</sys:String>
@@ -109,7 +113,6 @@
   <sys:String x:Key="LOCLegendaryLauncherSettings">Modify launch settings</sys:String>
   <sys:String x:Key="LOCLegendaryAlternativeExe">Alternative executable file</sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaves">Cloud saves</sys:String>
-  <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Display download speed in bits per second</sys:String>
   <sys:String x:Key="LOCLegendaryCheckAllDlcs">Check all DLCs</sys:String>
   <sys:String x:Key="LOCLegendaryCheckAllContent">Check all</sys:String>
   <sys:String x:Key="LOCLegendarySavePath">Save path</sys:String>
@@ -170,6 +173,4 @@
   <sys:String x:Key="LOCLegendaryInstallPrerequisites">Install prerequisites ({0})</sys:String>
   <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">This game requires installation of {0}. It's recommended to go to Plugin settings => Additional services => {0} => Activate games, and then install it directly via {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Installing prerequisites ({0})...</sys:String>
-  <sys:String x:Key="LOCLegendaryUnattendedInstall">Enable unattended installation mode</sys:String>
-  <sys:String x:Key="LOCLegendaryUnattendedInstallToolTip">You won't have to choose anything in the installer window and the installation will start automatically after downloading the required information.</sys:String>
 </ResourceDictionary>

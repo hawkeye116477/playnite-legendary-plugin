@@ -266,6 +266,22 @@ namespace System
         /// </summary>
         public const string LegendaryDownloadSettings = "LOCLegendaryDownloadSettings";
         /// <summary>
+        /// Display download speed in bits per second
+        /// </summary>
+        public const string LegendaryDisplayDownloadSpeedInBits = "LOCLegendaryDisplayDownloadSpeedInBits";
+        /// <summary>
+        /// Download all DLCs
+        /// </summary>
+        public const string LegendaryDownloadAllDlcs = "LOCLegendaryDownloadAllDlcs";
+        /// <summary>
+        /// Enable unattended installation mode
+        /// </summary>
+        public const string LegendaryUnattendedInstall = "LOCLegendaryUnattendedInstall";
+        /// <summary>
+        /// You won't have to choose anything in the installer window and the installation will start automatically after downloading the required information.
+        /// </summary>
+        public const string LegendaryUnattendedInstallToolTip = "LOCLegendaryUnattendedInstallToolTip";
+        /// <summary>
         /// Preferred CDN
         /// </summary>
         public const string LegendaryPreferredCDN = "LOCLegendaryPreferredCDN";
@@ -273,6 +289,30 @@ namespace System
         /// Disable HTTPS (useful for CDNs e.g. LanCache)
         /// </summary>
         public const string LegendaryHttpOnlyDownload = "LOCLegendaryHttpOnlyDownload";
+        /// <summary>
+        /// Enable reordering optimization
+        /// </summary>
+        public const string LegendaryEnableReordering = "LOCLegendaryEnableReordering";
+        /// <summary>
+        /// This can reduce RAM requirements during download (may not work properly for some titles).
+        /// </summary>
+        public const string LegendaryEnableReorderingToolTip = "LOCLegendaryEnableReorderingToolTip";
+        /// <summary>
+        /// Maximum number of worker processes
+        /// </summary>
+        public const string LegendaryMaxWorkers = "LOCLegendaryMaxWorkers";
+        /// <summary>
+        /// Maximum amount of shared memory (MB)
+        /// </summary>
+        public const string LegendaryMaxSharedMemory = "LOCLegendaryMaxSharedMemory";
+        /// <summary>
+        /// Connection timeout (sec)
+        /// </summary>
+        public const string LegendaryConnectionTimeout = "LOCLegendaryConnectionTimeout";
+        /// <summary>
+        /// After download is complete:
+        /// </summary>
+        public const string LegendaryAfterDownloadComplete = "LOCLegendaryAfterDownloadComplete";
         /// <summary>
         /// EOS Overlay
         /// </summary>
@@ -350,10 +390,6 @@ namespace System
         /// </summary>
         public const string LegendaryInstallationFinished = "LOCLegendaryInstallationFinished";
         /// <summary>
-        /// After download is complete:
-        /// </summary>
-        public const string LegendaryAfterDownloadComplete = "LOCLegendaryAfterDownloadComplete";
-        /// <summary>
         /// Sync game saves to the cloud
         /// </summary>
         public const string LegendarySyncGameSaves = "LOCLegendarySyncGameSaves";
@@ -381,18 +417,6 @@ namespace System
         /// Failed to import game. Reason: {0}.
         /// </summary>
         public const string LegendaryGameImportFailure = "LOCLegendaryGameImportFailure";
-        /// <summary>
-        /// Maximum number of worker processes
-        /// </summary>
-        public const string LegendaryMaxWorkers = "LOCLegendaryMaxWorkers";
-        /// <summary>
-        /// Maximum amount of shared memory (MB)
-        /// </summary>
-        public const string LegendaryMaxSharedMemory = "LOCLegendaryMaxSharedMemory";
-        /// <summary>
-        /// Connection timeout (sec)
-        /// </summary>
-        public const string LegendaryConnectionTimeout = "LOCLegendaryConnectionTimeout";
         /// <summary>
         /// Download Manager
         /// </summary>
@@ -497,14 +521,6 @@ namespace System
         /// Do not abort if not enough free space is available.
         /// </summary>
         public const string LegendaryIgnoreFreeSpaceToolTip = "LOCLegendaryIgnoreFreeSpaceToolTip";
-        /// <summary>
-        /// Enable reordering optimization
-        /// </summary>
-        public const string LegendaryEnableReordering = "LOCLegendaryEnableReordering";
-        /// <summary>
-        /// This can reduce RAM requirements during download (may not work properly for some titles).
-        /// </summary>
-        public const string LegendaryEnableReorderingToolTip = "LOCLegendaryEnableReorderingToolTip";
         /// <summary>
         /// Extra Content
         /// </summary>
@@ -665,10 +681,6 @@ namespace System
         /// Cloud saves
         /// </summary>
         public const string LegendaryCloudSaves = "LOCLegendaryCloudSaves";
-        /// <summary>
-        /// Display download speed in bits per second
-        /// </summary>
-        public const string LegendaryDisplayDownloadSpeedInBits = "LOCLegendaryDisplayDownloadSpeedInBits";
         /// <summary>
         /// Check all DLCs
         /// </summary>
@@ -909,13 +921,5 @@ namespace System
         /// Installing prerequisites ({0})...
         /// </summary>
         public const string LegendaryInstallingPrerequisites = "LOCLegendaryInstallingPrerequisites";
-        /// <summary>
-        /// Enable unattended installation mode
-        /// </summary>
-        public const string LegendaryUnattendedInstall = "LOCLegendaryUnattendedInstall";
-        /// <summary>
-        /// You won't have to choose anything in the installer window and the installation will start automatically after downloading the required information.
-        /// </summary>
-        public const string LegendaryUnattendedInstallToolTip = "LOCLegendaryUnattendedInstallToolTip";
     }
 }

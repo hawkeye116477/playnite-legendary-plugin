@@ -30,6 +30,7 @@ namespace LegendaryLibraryNS
         public long NextClearingTime { get; set; } = 0;
         public bool DisableGameVersionCheck { get; set; } = false;
         public bool UnattendedInstall { get; set; } = false;
+        public bool DownloadAllDlcs { get; set; } = false;
         public bool DisplayDownloadSpeedInBits { get; set; } = false;
         public bool SyncPlaytime { get; set; } = false;
         public string SyncPlaytimeMachineId { get; set; } = System.Guid.NewGuid().ToString("N");

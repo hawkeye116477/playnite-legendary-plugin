@@ -446,6 +446,10 @@ namespace LegendaryLibraryNS
             {
                 InstallerWindow.Close();
             }
+            if (AllDlcsChk.Visibility == Visibility.Visible && settings.DownloadAllDlcs)
+            {
+                AllDlcsChk.IsChecked = true;
+            }
             if (settings.UnattendedInstall && (InstallData.downloadProperties.downloadAction == DownloadAction.Install))
             {
                 Install();
