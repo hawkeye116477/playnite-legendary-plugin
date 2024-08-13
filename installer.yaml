@@ -1,5 +1,16 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.8.0
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2024-08-13
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.8.0/LegendaryLibrary_1_8_0.pext
+    Changelog:
+      - Added unattended mode for installation
+      - Added downloading all DLCs to settings (always all DLCs will be selected)
+      - DLC Manager can be displayed now even if chosen game isn't installed
+      - Removed downloading wrong developer info
+      - Fixed tooltips for toggling reordering
+      - Fixed problems with updating games
   - Version: 1.7.7
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2024-07-08
