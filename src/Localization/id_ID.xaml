@@ -9,8 +9,18 @@
   <sys:String x:Key="LOCLegendaryEnableOfflineMode"></sys:String>
   <sys:String x:Key="LOCLegendaryOfflineMode"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings"></sys:String>
+  <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAllDlcs"></sys:String>
+  <sys:String x:Key="LOCLegendaryUnattendedInstall"></sys:String>
+  <sys:String x:Key="LOCLegendaryUnattendedInstallToolTip"></sys:String>
   <sys:String x:Key="LOCLegendaryPreferredCDN"></sys:String>
   <sys:String x:Key="LOCLegendaryHttpOnlyDownload"></sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReordering"></sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip"></sys:String>
+  <sys:String x:Key="LOCLegendaryMaxWorkers"></sys:String>
+  <sys:String x:Key="LOCLegendaryMaxSharedMemory"></sys:String>
+  <sys:String x:Key="LOCLegendaryConnectionTimeout"></sys:String>
+  <sys:String x:Key="LOCLegendaryAfterDownloadComplete"></sys:String>
   <sys:String x:Key="LOCLegendaryEOSOverlay"></sys:String>
   <sys:String x:Key="LOCLegendaryDisable"></sys:String>
   <sys:String x:Key="LOCLegendaryEnable"></sys:String>
@@ -30,7 +40,6 @@
   <sys:String x:Key="LOCLegendaryResumeDownload"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadPaused"></sys:String>
   <sys:String x:Key="LOCLegendaryInstallationFinished"></sys:String>
-  <sys:String x:Key="LOCLegendaryAfterDownloadComplete"></sys:String>
   <sys:String x:Key="LOCLegendarySyncGameSaves"></sys:String>
   <sys:String x:Key="LOCLegendarySyncing"></sys:String>
   <sys:String x:Key="LOCLegendarySyncError"></sys:String>
@@ -38,9 +47,6 @@
   <sys:String x:Key="LOCLegendaryImportingGame"></sys:String>
   <sys:String x:Key="LOCLegendaryImportFinished"></sys:String>
   <sys:String x:Key="LOCLegendaryGameImportFailure"></sys:String>
-  <sys:String x:Key="LOCLegendaryMaxWorkers"></sys:String>
-  <sys:String x:Key="LOCLegendaryMaxSharedMemory"></sys:String>
-  <sys:String x:Key="LOCLegendaryConnectionTimeout"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadStatus"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadCompletedColumn"></sys:String>
@@ -67,8 +73,6 @@
   <sys:String x:Key="LOCLegendaryAdvancedOptions"></sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace"></sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip"></sys:String>
-  <sys:String x:Key="LOCLegendaryEnableReordering"></sys:String>
-  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip"></sys:String>
   <sys:String x:Key="LOCLegendaryExtraContent"></sys:String>
   <sys:String x:Key="LOCLegendaryCache"></sys:String>
   <sys:String x:Key="LOCLegendaryClearCache"></sys:String>
@@ -109,7 +113,6 @@
   <sys:String x:Key="LOCLegendaryLauncherSettings"></sys:String>
   <sys:String x:Key="LOCLegendaryAlternativeExe"></sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaves"></sys:String>
-  <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits"></sys:String>
   <sys:String x:Key="LOCLegendaryCheckAllDlcs"></sys:String>
   <sys:String x:Key="LOCLegendaryCheckAllContent"></sys:String>
   <sys:String x:Key="LOCLegendarySavePath"></sys:String>

@@ -9,8 +9,18 @@
   <sys:String x:Key="LOCLegendaryEnableOfflineMode">Çevrimdışı modu etkinleştir</sys:String>
   <sys:String x:Key="LOCLegendaryOfflineMode">Çevrimdışı kip</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings">İndirme Ayarları</sys:String>
+  <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">İndirme hızını saniyedeki bit cinsinden göster</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAllDlcs">Tüm DLC içeriğini indir</sys:String>
+  <sys:String x:Key="LOCLegendaryUnattendedInstall">Katılımsız kurulum modunu etkinleştir</sys:String>
+  <sys:String x:Key="LOCLegendaryUnattendedInstallToolTip">Kurulum penceresinde herhangi bir şey seçmeniz gerekiyor ve gerekli bilgiler indirildikten sonra kurulum otomatik olarak başlayacaktır.</sys:String>
   <sys:String x:Key="LOCLegendaryPreferredCDN">Tercih Edilen CDN</sys:String>
   <sys:String x:Key="LOCLegendaryHttpOnlyDownload">HTTPS devre dışı bırak (CDN için kullanışlıdır, örneğin LanCache)</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReordering">Yeniden sıralama düzeltmesini etkinleştir</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">Bu, indirme sırasında RAM gereksinimlerini azaltabilir (bazı başlıklar için düzgün çalışmayabilir).</sys:String>
+  <sys:String x:Key="LOCLegendaryMaxWorkers">En fazla çalışan işlem sayısı</sys:String>
+  <sys:String x:Key="LOCLegendaryMaxSharedMemory">En fazla paylaşılan bellek miktarı (MB)</sys:String>
+  <sys:String x:Key="LOCLegendaryConnectionTimeout">Bağlantı zaman aşımı (sn)</sys:String>
+  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">İndirme tamamlandıktan sonra:</sys:String>
   <sys:String x:Key="LOCLegendaryEOSOverlay">EOS Kaplaması</sys:String>
   <sys:String x:Key="LOCLegendaryDisable">Etkisizleştir</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Etkinleştir</sys:String>
@@ -30,7 +40,6 @@
   <sys:String x:Key="LOCLegendaryResumeDownload">Sürdür</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadPaused">Duraklatıldı</sys:String>
   <sys:String x:Key="LOCLegendaryInstallationFinished">Kurulum tamamlandı. İyi eğlenceler.</sys:String>
-  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">İndirme tamamlandıktan sonra:</sys:String>
   <sys:String x:Key="LOCLegendarySyncGameSaves">Oyun kayıtlarını buluta eşitle</sys:String>
   <sys:String x:Key="LOCLegendarySyncing">{0} oyun kaydı buluta eşitleniyor...</sys:String>
   <sys:String x:Key="LOCLegendarySyncError">{0} oyun kaydı buluta eşitlenirken bir hata oluştu.</sys:String>
@@ -38,9 +47,6 @@
   <sys:String x:Key="LOCLegendaryImportingGame">İçe aktarılıyor {0}...</sys:String>
   <sys:String x:Key="LOCLegendaryImportFinished">İçe aktarma tamamlandı. İyi eğlenceler.</sys:String>
   <sys:String x:Key="LOCLegendaryGameImportFailure">Oyun içe aktarılamadı. Sebep: {0}.</sys:String>
-  <sys:String x:Key="LOCLegendaryMaxWorkers">En fazla çalışan işlem sayısı</sys:String>
-  <sys:String x:Key="LOCLegendaryMaxSharedMemory">En fazla paylaşılan bellek miktarı (MB)</sys:String>
-  <sys:String x:Key="LOCLegendaryConnectionTimeout">Bağlantı zaman aşımı (sn)</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">İndirme Yöneticisi</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadStatus">Durum</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadCompletedColumn">Tamamlandı</sys:String>
@@ -67,8 +73,6 @@
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Gelişmiş Seçenekler</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Boş alanı yoksay</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip">Yeterli boş alan yoksa iptal etmeyin.</sys:String>
-  <sys:String x:Key="LOCLegendaryEnableReordering">Yeniden sıralama düzeltmesini etkinleştir</sys:String>
-  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">Bu, indirme sırasında RAM gereksinimlerini azaltabilir (bazı başlıklar için düzgün çalışmayabilir).</sys:String>
   <sys:String x:Key="LOCLegendaryExtraContent">Ekstra İçerik</sys:String>
   <sys:String x:Key="LOCLegendaryCache">Önbellek</sys:String>
   <sys:String x:Key="LOCLegendaryClearCache">Önbelleği temizle</sys:String>
@@ -109,7 +113,6 @@
   <sys:String x:Key="LOCLegendaryLauncherSettings">Başlatma ayarlarını değiştir</sys:String>
   <sys:String x:Key="LOCLegendaryAlternativeExe">Alternatif yürütülebilir dosya</sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaves">Bulut kayıtları</sys:String>
-  <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">İndirme hızını saniyedeki bit cinsinden göster</sys:String>
   <sys:String x:Key="LOCLegendaryCheckAllDlcs">Tüm DLC içerikleri denetle</sys:String>
   <sys:String x:Key="LOCLegendaryCheckAllContent">Tümünü denetle</sys:String>
   <sys:String x:Key="LOCLegendarySavePath">Kayıt yolu</sys:String>

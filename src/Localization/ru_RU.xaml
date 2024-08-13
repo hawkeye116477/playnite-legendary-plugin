@@ -9,8 +9,18 @@
   <sys:String x:Key="LOCLegendaryEnableOfflineMode">Включить автономный режим</sys:String>
   <sys:String x:Key="LOCLegendaryOfflineMode">Автономный режим</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings">Настройки загрузки</sys:String>
+  <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Отображать скорость загрузки в битах в секунду</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAllDlcs">Скачать все DLC</sys:String>
+  <sys:String x:Key="LOCLegendaryUnattendedInstall">Включить режим автоматической установки</sys:String>
+  <sys:String x:Key="LOCLegendaryUnattendedInstallToolTip">Вам не нужно ничего выбирать в окне установщика. Установка начнется автоматически после загрузки информации.</sys:String>
   <sys:String x:Key="LOCLegendaryPreferredCDN">Предпочтительный CDN</sys:String>
   <sys:String x:Key="LOCLegendaryHttpOnlyDownload">Отключить HTTPS (полезно для CDN, например, LanCache)</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReordering">Включить оптимизацию перестановки</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">Это может уменьшить требования к ОЗУ во время загрузки (может работать неправильно для некоторых заголовков).</sys:String>
+  <sys:String x:Key="LOCLegendaryMaxWorkers">Максимальное количество рабочих процессов</sys:String>
+  <sys:String x:Key="LOCLegendaryMaxSharedMemory">Максимальное количество общей памяти (МБ)</sys:String>
+  <sys:String x:Key="LOCLegendaryConnectionTimeout">Тайм-аут подключения (сек)</sys:String>
+  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">После завершения загрузки:</sys:String>
   <sys:String x:Key="LOCLegendaryEOSOverlay">Оверлей EOS</sys:String>
   <sys:String x:Key="LOCLegendaryDisable">Отключить</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Включить</sys:String>
@@ -30,7 +40,6 @@
   <sys:String x:Key="LOCLegendaryResumeDownload">Возобновить</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadPaused">Загрузка приостановлена</sys:String>
   <sys:String x:Key="LOCLegendaryInstallationFinished">Установка завершена. Приятного время препровождения.</sys:String>
-  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">После завершения загрузки:</sys:String>
   <sys:String x:Key="LOCLegendarySyncGameSaves">Синхронизировать сохранения игры в облако</sys:String>
   <sys:String x:Key="LOCLegendarySyncing">Синхронизация {0} сохранений игр с облаком...</sys:String>
   <sys:String x:Key="LOCLegendarySyncError">Произошла ошибка при синхронизации {0} сохранений игр с облаком.</sys:String>
@@ -38,9 +47,6 @@
   <sys:String x:Key="LOCLegendaryImportingGame">Импорт {0}...</sys:String>
   <sys:String x:Key="LOCLegendaryImportFinished">Импорт завершен. Приятного время препровождения.</sys:String>
   <sys:String x:Key="LOCLegendaryGameImportFailure">Не удалось импортировать игру. Причина: {0}.</sys:String>
-  <sys:String x:Key="LOCLegendaryMaxWorkers">Максимальное количество рабочих процессов</sys:String>
-  <sys:String x:Key="LOCLegendaryMaxSharedMemory">Максимальное количество общей памяти (МБ)</sys:String>
-  <sys:String x:Key="LOCLegendaryConnectionTimeout">Тайм-аут подключения (сек)</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">Менеджер загрузки</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadStatus">Статус</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadCompletedColumn">Завершено</sys:String>
@@ -67,8 +73,6 @@
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Дополнительные параметры</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Игнорировать свободное место</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip">Не закрывайте, если не хватает свободного места.</sys:String>
-  <sys:String x:Key="LOCLegendaryEnableReordering">Включить оптимизацию перестановки</sys:String>
-  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">Это может уменьшить требования к ОЗУ во время загрузки (может работать неправильно для некоторых заголовков).</sys:String>
   <sys:String x:Key="LOCLegendaryExtraContent">Доп. контент</sys:String>
   <sys:String x:Key="LOCLegendaryCache">Кэш</sys:String>
   <sys:String x:Key="LOCLegendaryClearCache">Очистить кэш</sys:String>
@@ -109,7 +113,6 @@
   <sys:String x:Key="LOCLegendaryLauncherSettings">Изменить настройки запуска</sys:String>
   <sys:String x:Key="LOCLegendaryAlternativeExe">Альтернативный исполняемый файл</sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaves">Облачные сохранения</sys:String>
-  <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Отображать скорость загрузки в битах в секунду</sys:String>
   <sys:String x:Key="LOCLegendaryCheckAllDlcs">Проверить все DLC</sys:String>
   <sys:String x:Key="LOCLegendaryCheckAllContent">Выбрать все</sys:String>
   <sys:String x:Key="LOCLegendarySavePath">Сохранить путь</sys:String>
