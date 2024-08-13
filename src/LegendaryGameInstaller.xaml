@@ -107,7 +107,7 @@
                         <CheckBox Grid.Column="0" Grid.Row="1" Content="{DynamicResource LOCLegendaryIgnoreFreeSpace}" 
                                   Margin="0,0,0,5" Name="IgnoreFreeSpaceChk" ToolTip="{DynamicResource LOCLegendaryIgnoreFreeSpaceToolTip}"/>
                         <CheckBox Grid.Column="0" Grid.Row="2" Content="{DynamicResource LOCLegendaryEnableReordering}" 
-                                  ToolTip="LOCLegendaryEnableReorderingToolTip" Margin="0,0,0,5" Name="ReorderingChk"/>
+                                  ToolTip="{DynamicResource LOCLegendaryEnableReorderingToolTip}" Margin="0,0,0,5" Name="ReorderingChk"/>
                         <TextBlock Text="{DynamicResource LOCLegendaryMaxWorkers}" Grid.Row="3" Grid.Column="0" 
                                    Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         <local:NumericInput Grid.Row="3" Grid.Column="1" Margin="15,0,0,5" MinValue="0" MaxValue="16" x:Name="MaxWorkersNI"/>
