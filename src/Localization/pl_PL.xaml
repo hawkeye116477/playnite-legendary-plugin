@@ -9,8 +9,18 @@
   <sys:String x:Key="LOCLegendaryEnableOfflineMode">Włącz tryb offline</sys:String>
   <sys:String x:Key="LOCLegendaryOfflineMode">Tryb offline</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings">Ustawienia pobierania</sys:String>
+  <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Wyświetlaj prędkość pobierania w bitach na sekundę</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAllDlcs">Pobieraj wszystkie DLC</sys:String>
+  <sys:String x:Key="LOCLegendaryUnattendedInstall">Włącz tryb instalacji nienadzorowanej</sys:String>
+  <sys:String x:Key="LOCLegendaryUnattendedInstallToolTip">Nie będziesz niczego musiał wybierać w oknie instalatora, a instalacja rozpocznie się automatycznie po pobraniu wymaganych informacji.</sys:String>
   <sys:String x:Key="LOCLegendaryPreferredCDN">Preferowany CDN</sys:String>
   <sys:String x:Key="LOCLegendaryHttpOnlyDownload">Wyłącz HTTPS (przydatne przy CDN'ach, np. LanCache)</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReordering">Włącz optymalizację zmiany kolejności</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">To może zmniejszyć wymagania pamięci RAM podczas pobierania (może nie działać poprawnie w przypadku niektórych tytułów).</sys:String>
+  <sys:String x:Key="LOCLegendaryMaxWorkers">Maksymalna liczba procesów roboczych</sys:String>
+  <sys:String x:Key="LOCLegendaryMaxSharedMemory">Maksymalna ilość pamięci współdzielonej (MB)</sys:String>
+  <sys:String x:Key="LOCLegendaryConnectionTimeout">Limit czasu połączenia (sek)</sys:String>
+  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Po zakończeniu pobierania:</sys:String>
   <sys:String x:Key="LOCLegendaryEOSOverlay">Nakładka EOS</sys:String>
   <sys:String x:Key="LOCLegendaryDisable">Wyłącz</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Włącz</sys:String>
@@ -30,7 +40,6 @@
   <sys:String x:Key="LOCLegendaryResumeDownload">Wznów</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadPaused">Wstrzymane</sys:String>
   <sys:String x:Key="LOCLegendaryInstallationFinished">Instalacja została zakończona. Dobrej zabawy.</sys:String>
-  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Po zakończeniu pobierania:</sys:String>
   <sys:String x:Key="LOCLegendarySyncGameSaves">Synchronizuj zapisy gier z chmurą</sys:String>
   <sys:String x:Key="LOCLegendarySyncing">Synchronizowanie zapisów gry {0} z chmurą...</sys:String>
   <sys:String x:Key="LOCLegendarySyncError">Wystąpił błąd podczas synchronizacji zapisów gry {0} z chmurą.</sys:String>
@@ -38,9 +47,6 @@
   <sys:String x:Key="LOCLegendaryImportingGame">Importowanie gry {0}...</sys:String>
   <sys:String x:Key="LOCLegendaryImportFinished">Importowanie zakończone. Dobrej zabawy.</sys:String>
   <sys:String x:Key="LOCLegendaryGameImportFailure">Nie udało się zaimportować gry. Powód: {0}.</sys:String>
-  <sys:String x:Key="LOCLegendaryMaxWorkers">Maksymalna liczba procesów roboczych</sys:String>
-  <sys:String x:Key="LOCLegendaryMaxSharedMemory">Maksymalna ilość pamięci współdzielonej (MB)</sys:String>
-  <sys:String x:Key="LOCLegendaryConnectionTimeout">Limit czasu połączenia (sek)</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">Menedżer pobierania</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadStatus">Stan</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadCompletedColumn">Ukończono</sys:String>
@@ -67,8 +73,6 @@
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Opcje zaawansowane</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Ignoruj wolne miejsce</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip">Nie przerywaj, jeśli nie ma wystarczającej ilości wolnego miejsca.</sys:String>
-  <sys:String x:Key="LOCLegendaryEnableReordering">Włącz optymalizację zmiany kolejności</sys:String>
-  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">To może zmniejszyć wymagania pamięci RAM podczas pobierania (może nie działać poprawnie w przypadku niektórych tytułów).</sys:String>
   <sys:String x:Key="LOCLegendaryExtraContent">Dodatkowa zawartość</sys:String>
   <sys:String x:Key="LOCLegendaryCache">Pamięć podręczna</sys:String>
   <sys:String x:Key="LOCLegendaryClearCache">Wyczyść pamięć podręczną</sys:String>
@@ -109,7 +113,6 @@
   <sys:String x:Key="LOCLegendaryLauncherSettings">Modyfikuj ustawienia uruchamiania</sys:String>
   <sys:String x:Key="LOCLegendaryAlternativeExe">Alternatywny plik wykonywalny</sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaves">Zapisy w chmurze</sys:String>
-  <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Wyświetlaj prędkość pobierania w bitach na sekundę</sys:String>
   <sys:String x:Key="LOCLegendaryCheckAllDlcs">Zaznacz wszystkie dodatki (DLC)</sys:String>
   <sys:String x:Key="LOCLegendaryCheckAllContent">Zaznacz wszystko</sys:String>
   <sys:String x:Key="LOCLegendarySavePath">Ścieżka zapisu</sys:String>

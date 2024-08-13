@@ -9,8 +9,18 @@
   <sys:String x:Key="LOCLegendaryEnableOfflineMode"></sys:String>
   <sys:String x:Key="LOCLegendaryOfflineMode"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings">Siuntimosi Nustatymai</sys:String>
+  <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAllDlcs"></sys:String>
+  <sys:String x:Key="LOCLegendaryUnattendedInstall"></sys:String>
+  <sys:String x:Key="LOCLegendaryUnattendedInstallToolTip"></sys:String>
   <sys:String x:Key="LOCLegendaryPreferredCDN">Pageidaujamas CDN</sys:String>
   <sys:String x:Key="LOCLegendaryHttpOnlyDownload">Išjungti HTTPS (naudinga CDN'ams, pvz. LanCache)</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReordering">Įjungti perrūšiavimo optimizaciją</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip"></sys:String>
+  <sys:String x:Key="LOCLegendaryMaxWorkers"></sys:String>
+  <sys:String x:Key="LOCLegendaryMaxSharedMemory">Maksimalus bendros atminties kiekis (MB)</sys:String>
+  <sys:String x:Key="LOCLegendaryConnectionTimeout"></sys:String>
+  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Atsiuntus:</sys:String>
   <sys:String x:Key="LOCLegendaryEOSOverlay">EOS Užklojimas</sys:String>
   <sys:String x:Key="LOCLegendaryDisable">Išjungti</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Įjungti</sys:String>
@@ -30,7 +40,6 @@
   <sys:String x:Key="LOCLegendaryResumeDownload">Pratęsti</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadPaused">Pristabdyta</sys:String>
   <sys:String x:Key="LOCLegendaryInstallationFinished">Diegimas baigtas. Smagaus.</sys:String>
-  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Atsiuntus:</sys:String>
   <sys:String x:Key="LOCLegendarySyncGameSaves"></sys:String>
   <sys:String x:Key="LOCLegendarySyncing"></sys:String>
   <sys:String x:Key="LOCLegendarySyncError"></sys:String>
@@ -38,9 +47,6 @@
   <sys:String x:Key="LOCLegendaryImportingGame">Importuojama {0}...</sys:String>
   <sys:String x:Key="LOCLegendaryImportFinished">Importas baigtas. Smagaus.</sys:String>
   <sys:String x:Key="LOCLegendaryGameImportFailure"></sys:String>
-  <sys:String x:Key="LOCLegendaryMaxWorkers"></sys:String>
-  <sys:String x:Key="LOCLegendaryMaxSharedMemory">Maksimalus bendros atminties kiekis (MB)</sys:String>
-  <sys:String x:Key="LOCLegendaryConnectionTimeout"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">Atsisiuntimų Tvarkyklė</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadStatus">Būsena</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadCompletedColumn">Baigta</sys:String>
@@ -67,8 +73,6 @@
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Išplėstinės Parinktys</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace"></sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip"></sys:String>
-  <sys:String x:Key="LOCLegendaryEnableReordering">Įjungti perrūšiavimo optimizaciją</sys:String>
-  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip"></sys:String>
   <sys:String x:Key="LOCLegendaryExtraContent">Papildomas turinys</sys:String>
   <sys:String x:Key="LOCLegendaryCache">Podėlis</sys:String>
   <sys:String x:Key="LOCLegendaryClearCache">Išvalyti podėlį</sys:String>
@@ -109,7 +113,6 @@
   <sys:String x:Key="LOCLegendaryLauncherSettings"></sys:String>
   <sys:String x:Key="LOCLegendaryAlternativeExe"></sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaves"></sys:String>
-  <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits"></sys:String>
   <sys:String x:Key="LOCLegendaryCheckAllDlcs"></sys:String>
   <sys:String x:Key="LOCLegendaryCheckAllContent"></sys:String>
   <sys:String x:Key="LOCLegendarySavePath"></sys:String>

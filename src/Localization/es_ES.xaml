@@ -9,8 +9,18 @@
   <sys:String x:Key="LOCLegendaryEnableOfflineMode">Activar modo sin conexión</sys:String>
   <sys:String x:Key="LOCLegendaryOfflineMode">Modo sin conexión</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings">Ajustes de descarga</sys:String>
+  <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Mostrar velocidad de descarga en bits por segundo</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAllDlcs"></sys:String>
+  <sys:String x:Key="LOCLegendaryUnattendedInstall"></sys:String>
+  <sys:String x:Key="LOCLegendaryUnattendedInstallToolTip"></sys:String>
   <sys:String x:Key="LOCLegendaryPreferredCDN">CDN preferido</sys:String>
   <sys:String x:Key="LOCLegendaryHttpOnlyDownload">Desactivar HTTPS (útil para CDNs por ejemplo LanCache)</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReordering">Habilitar optimización de reordenación</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">Esto puede reducir los requisitos de RAM durante la descarga (es posible que no funcione correctamente en algunos títulos).</sys:String>
+  <sys:String x:Key="LOCLegendaryMaxWorkers">Número máximo de procesos de trabajo</sys:String>
+  <sys:String x:Key="LOCLegendaryMaxSharedMemory">Cantidad máxima de memoria compartida (MB)</sys:String>
+  <sys:String x:Key="LOCLegendaryConnectionTimeout">Tiempo de espera de conexión (segundos)</sys:String>
+  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Una vez finalizada la descarga:</sys:String>
   <sys:String x:Key="LOCLegendaryEOSOverlay">Interfaz de superposición de EOS</sys:String>
   <sys:String x:Key="LOCLegendaryDisable">Deshabilitar</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Habilitar</sys:String>
@@ -30,7 +40,6 @@
   <sys:String x:Key="LOCLegendaryResumeDownload">Reanudar</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadPaused">Pausado</sys:String>
   <sys:String x:Key="LOCLegendaryInstallationFinished">Instalación terminada. Diviértete.</sys:String>
-  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Una vez finalizada la descarga:</sys:String>
   <sys:String x:Key="LOCLegendarySyncGameSaves">Sincronizar partidas guardadas en la nube</sys:String>
   <sys:String x:Key="LOCLegendarySyncing">Sincronizando {0} partidas guardadas en la nube...</sys:String>
   <sys:String x:Key="LOCLegendarySyncError">Se ha producido un error al sincronizar {0} juegos guardados en la nube.</sys:String>
@@ -38,9 +47,6 @@
   <sys:String x:Key="LOCLegendaryImportingGame">Importando {0}...</sys:String>
   <sys:String x:Key="LOCLegendaryImportFinished">Importación terminada. Diviértete.</sys:String>
   <sys:String x:Key="LOCLegendaryGameImportFailure">No se pudo importar el juego. Razón: {0}.</sys:String>
-  <sys:String x:Key="LOCLegendaryMaxWorkers">Número máximo de procesos de trabajo</sys:String>
-  <sys:String x:Key="LOCLegendaryMaxSharedMemory">Cantidad máxima de memoria compartida (MB)</sys:String>
-  <sys:String x:Key="LOCLegendaryConnectionTimeout">Tiempo de espera de conexión (segundos)</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">Gestor de descargas</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadStatus">Estado</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadCompletedColumn">Completado</sys:String>
@@ -67,8 +73,6 @@
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Opciones Avanzadas</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Ignorar espacio libre</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip">No abortar si no hay suficiente espacio libre disponible.</sys:String>
-  <sys:String x:Key="LOCLegendaryEnableReordering">Habilitar optimización de reordenación</sys:String>
-  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">Esto puede reducir los requisitos de RAM durante la descarga (es posible que no funcione correctamente en algunos títulos).</sys:String>
   <sys:String x:Key="LOCLegendaryExtraContent">Contenido extra</sys:String>
   <sys:String x:Key="LOCLegendaryCache">Caché</sys:String>
   <sys:String x:Key="LOCLegendaryClearCache">Borrar caché</sys:String>
@@ -109,7 +113,6 @@
   <sys:String x:Key="LOCLegendaryLauncherSettings">Modificar ajustes de inicio</sys:String>
   <sys:String x:Key="LOCLegendaryAlternativeExe">Archivo ejecutable alternativo</sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaves">Guardados en la nube</sys:String>
-  <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Mostrar velocidad de descarga en bits por segundo</sys:String>
   <sys:String x:Key="LOCLegendaryCheckAllDlcs">Marcar todos los contenidos descargables</sys:String>
   <sys:String x:Key="LOCLegendaryCheckAllContent">Marcar todo</sys:String>
   <sys:String x:Key="LOCLegendarySavePath">Ruta de partidas guardadas</sys:String>
