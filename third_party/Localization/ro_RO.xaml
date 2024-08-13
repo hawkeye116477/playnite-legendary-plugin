@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!--
-  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/4371c9d9561ab3e9da13886965025c4ee53c3e29 and https://github.com/JosefNemec/Playnite/tree/5dfb0b1dd9b407fded564a258c42232bd19f70cf.
+  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/d59a97d5bce1c35a55c7dc01000684169b76fd96 and https://github.com/JosefNemec/Playnite/tree/2afc8359d8c45e80c66404add4221037ce600d43.
   DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
@@ -10,7 +10,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">Nu se poate instala jocul: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError">Nu se poate dezinstala jocul: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteImportLabel">Importaţi</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">Dimensiunea instalării</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">Adăugat</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">OK</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSaveLabel">Salvează</sys:String>
@@ -27,7 +27,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsGeneralLabel">General</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsAdvancedLabel">Avansat</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Curățați Cache-ul?</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">Niciodată</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Autentificare necesară</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">Executabil</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Nume</sys:String>
@@ -51,4 +51,13 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay" />
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek" />
   <sys:String x:Key="LOCLegendary3P_PlayniteOpen" />
+  <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">Importați jocurile instalate</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Importanți jocurile neinstalate</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Conectare cont</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicLoginChecking">Se verifică starea de autentificare...</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicNotLoggedIn">Necesită autentificare</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicNotLoggedInError">Autentificare eșuată.</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicAuthenticateLabel">Autentificați-vă</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicTroubleShootingIssues">Probleme de depanare</sys:String>
+  <sys:String x:Key="LOCLegendary3P_EpicStartUsingClient">Începeți să folosiți clientul {0}</sys:String>
 </ResourceDictionary>
