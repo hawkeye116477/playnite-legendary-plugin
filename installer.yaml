@@ -1,5 +1,12 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.8.1
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2024-08-16
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.8.1/LegendaryLibrary_1_8_1.pext
+    Changelog:
+      - Fixed path for Heroic's Legendary binary to make it compatible with latest
+        version
   - Version: 1.8.0
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2024-08-13
