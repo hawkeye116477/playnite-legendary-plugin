@@ -59,8 +59,20 @@ namespace LegendaryLibraryNS
             }
         }
 
-        public static string HeroicLegendaryPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                                    @"Programs\heroic\resources\app.asar.unpacked\build\bin\win32\");
+        public static string HeroicLegendaryPath
+        {
+            get
+            {
+                var heroicResourcesBasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                                                           @"Programs\heroic\resources\app.asar.unpacked\build\bin");
+                var path = Path.Combine(heroicResourcesBasePath, @"win32\");
+                if (!Directory.Exists(path))
+                {
+                    path = Path.Combine(heroicResourcesBasePath, @"x64\win32\");
+                }
+                return path;
+            }
+        }
 
         public static string LauncherPath
         {
