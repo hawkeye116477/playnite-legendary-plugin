@@ -16,6 +16,7 @@
         <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
         <localcon:LongToDateConverter x:Key="LongToDateConverter"/>
         <localcon:DownloadStatusEnumToStringConverter x:Key="DownloadStatusEnumToStringConverter"/>
+        <localcon:NumericalSizeToStringConverter x:Key="NumericalSizeToStringConverter"/>
     </UserControl.Resources>
     <DockPanel Margin="10">
         <Grid DockPanel.Dock="Bottom">
@@ -105,12 +106,12 @@
                     Margin="5,0,0,0" Checked="FilterDownloadBtn_Checked" Unchecked="FilterDownloadBtn_Unchecked" />
             </StackPanel>
             <Separator Margin="0,5,0,5"></Separator>
-            <DataGrid x:Name="DownloadsDG" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,10" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" ColumnWidth="*" CanUserSortColumns="True" CanUserResizeColumns="True" SelectionChanged="DownloadsDG_SelectionChanged">
+            <DataGrid x:Name="DownloadsDG" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,10" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" ColumnWidth="*" CanUserSortColumns="True" CanUserResizeColumns="True" SelectionChanged="DownloadsDG_SelectionChanged" EnableColumnVirtualization="True" EnableRowVirtualization="True" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Standard">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{DynamicResource LOCLegendary3P_PlayniteGameNameTitle}" Binding="{Binding name}"></DataGridTextColumn>
                     <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloadStatus}" Binding="{Binding status, Converter={StaticResource DownloadStatusEnumToStringConverter}}"/>
-                    <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloadSizeColumn}" Binding="{Binding downloadSize}"/>
-                    <DataGridTextColumn Header="{DynamicResource LOCLegendary3P_PlayniteInstallSizeLabel}" Binding="{Binding installSize}"/>
+                    <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloadSizeColumn}" Binding="{Binding downloadSizeNumber, Converter={StaticResource NumericalSizeToStringConverter}}"/>
+                    <DataGridTextColumn Header="{DynamicResource LOCLegendary3P_PlayniteInstallSizeLabel}" Binding="{Binding installSizeNumber, Converter={StaticResource NumericalSizeToStringConverter}}"/>
                     <DataGridTextColumn Header="{DynamicResource LOCLegendary3P_PlayniteAddedLabel}" Binding="{Binding addedTime, Converter={StaticResource LongToDateConverter}, StringFormat='dd.MM.yyyy HH:mm:ss'}"/>
                     <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloadCompletedColumn}" Binding="{Binding completedTime, Converter={StaticResource LongToDateConverter}, StringFormat='dd.MM.yyyy HH:mm:ss'}"/>
                 </DataGrid.Columns>

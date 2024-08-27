@@ -934,10 +934,6 @@ namespace System
         /// </summary>
         public const string LegendaryInstallingPrerequisites = "LOCLegendaryInstallingPrerequisites";
         /// <summary>
-        /// Legendary Installer
-        /// </summary>
-        public const string LegendaryInstaller = "LOCLegendaryInstaller";
-        /// <summary>
         /// Games
         /// </summary>
         public const string LegendaryGames = "LOCLegendaryGames";

@@ -153,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\DownloadStatusEnumToStringConverter.cs" />
+    <Compile Include="Converters\NumericalSizeToStringConverter.cs" />
     <Compile Include="Enums\ClearCacheTime.cs" />
     <Compile Include="Enums\CloudSyncAction.cs" />
     <Compile Include="Enums\DownloadAction.cs" />

@@ -17,17 +17,28 @@ namespace LegendaryLibraryNS.Models
             public string name { get; set; }
             public string fullInstallPath { get; set; }
 
-            private string _downloadSize;
+            private double _downloadSizeNumber;
+            public double downloadSizeNumber
+            {
+                get => _downloadSizeNumber;
+                set => SetValue(ref _downloadSizeNumber, value);
+            }
+
+            private double _installSizeNumber;
+            public double installSizeNumber
+            {
+                get => _installSizeNumber;
+                set => SetValue(ref _installSizeNumber, value);
+            }
+
             public string downloadSize
             {
-                get => _downloadSize;
-                set => SetValue(ref _downloadSize, value);
+                get; set;
             }
-            private string _installSize;
+
             public string installSize
             {
-                get => _installSize;
-                set => SetValue(ref _installSize, value);
+                get; set;
             }
 
             public long addedTime { get; set; }

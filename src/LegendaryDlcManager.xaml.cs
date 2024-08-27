@@ -206,19 +206,19 @@ namespace LegendaryLibraryNS
                             ignoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked
                         };
                         var dlcInfo = selectedOption.Value;
-                        var downloadSize = "0 B";
-                        var installSize = "0 B";
+                        double downloadSizeNumber = 0;
+                        double installSizeNumber = 0;
                         if (dlcInfo.Manifest != null)
                         {
-                            downloadSize = Helpers.FormatSize(dlcInfo.Manifest.Download_size);
-                            installSize = Helpers.FormatSize(dlcInfo.Manifest.Disk_size);
+                            downloadSizeNumber = dlcInfo.Manifest.Download_size;
+                            installSizeNumber = dlcInfo.Manifest.Disk_size;
                         }
                         var downloadTask = new DownloadManagerData.Download
                         {
                             gameID = selectedOption.Key,
                             name = selectedOption.Value.Game.Title,
-                            downloadSize = downloadSize,
-                            installSize = installSize,
+                            downloadSizeNumber = downloadSizeNumber,
+                            installSizeNumber = installSizeNumber,
                             downloadProperties = downloadProperties
                         };
                         tasks.Add(downloadTask);

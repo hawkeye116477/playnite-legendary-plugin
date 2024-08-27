@@ -132,11 +132,6 @@ namespace LegendaryLibraryNS
                 }
             }
         }
-
-        public Game GetGame()
-        {
-            return Game;
-        }
     }
 
     public class LegendaryPlayController : PlayController
@@ -831,8 +826,8 @@ namespace LegendaryLibraryNS
                             {
                                 gameID = gameToUpdate.Key,
                                 name = gameToUpdate.Value.Title,
-                                downloadSize = Helpers.FormatSize(gameToUpdate.Value.Download_size),
-                                installSize = Helpers.FormatSize(gameToUpdate.Value.Disk_size),
+                                downloadSizeNumber = gameToUpdate.Value.Download_size,
+                                installSizeNumber = gameToUpdate.Value.Disk_size,
                                 downloadProperties = downloadProperties
                             };
                             updateTasks.Add(updateTask);

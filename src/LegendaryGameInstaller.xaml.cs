@@ -7,7 +7,6 @@ using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -93,14 +92,6 @@ namespace LegendaryLibraryNS
                 {
                     var downloadProperties = GetDownloadProperties(DownloadAction.Install, installPath);
                     installData.downloadProperties = downloadProperties;
-                    if (!downloadSizeWithoutDlcs.IsNullOrEmpty())
-                    {
-                        installData.downloadSize = downloadSizeWithoutDlcs;
-                    }
-                    if (!installSizeWithoutDlcs.IsNullOrEmpty())
-                    {
-                        installData.installSize = installSizeWithoutDlcs;
-                    }
                     downloadTasks.Add(installData);
                     if (ExtraContentLB.Items.Count > 0)
                     {
@@ -117,8 +108,8 @@ namespace LegendaryLibraryNS
                                 {
                                     var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("infocache");
                                     var cacheDlcInfoFile = Path.Combine(cacheInfoPath, selectedOption.Key + ".json");
-                                    var dlcDownloadSize = "0";
-                                    var dlcInstallSize = "0";
+                                    double dlcDownloadSizeNumber = 0;
+                                    double dlcInstallSizeNumber = 0;
                                     if (File.Exists(cacheDlcInfoFile))
                                     {
                                         LegendaryGameInfo.Rootobject dlcManifest = new LegendaryGameInfo.Rootobject();
@@ -127,8 +118,8 @@ namespace LegendaryLibraryNS
                                         {
                                             if (dlcManifest != null && dlcManifest.Manifest != null)
                                             {
-                                                dlcDownloadSize = Helpers.FormatSize(dlcManifest.Manifest.Download_size);
-                                                dlcInstallSize = Helpers.FormatSize(dlcManifest.Manifest.Disk_size);
+                                                dlcDownloadSizeNumber = dlcManifest.Manifest.Download_size;
+                                                dlcInstallSizeNumber = dlcManifest.Manifest.Disk_size;
                                             }
                                         }
                                     }
@@ -136,8 +127,8 @@ namespace LegendaryLibraryNS
                                     {
                                         gameID = selectedOption.Key,
                                         name = selectedOption.Value.Name,
-                                        downloadSize = dlcDownloadSize,
-                                        installSize = dlcInstallSize,
+                                        downloadSizeNumber = dlcDownloadSizeNumber,
+                                        installSizeNumber = dlcInstallSizeNumber,
                                         downloadProperties = downloadProperties
                                     });
                                 }
@@ -327,10 +318,10 @@ namespace LegendaryLibraryNS
                 manifest = await LegendaryLauncher.GetGameInfo(installData.gameID);
                 if (manifest != null && manifest.Manifest != null && manifest.Game != null)
                 {
-                    if (installData.downloadSize.IsNullOrEmpty() || installData.installSize.IsNullOrEmpty())
+                    if (installData.downloadSizeNumber == 0 || installData.installSizeNumber == 0)
                     {
-                        installData.downloadSize = Helpers.FormatSize(manifest.Manifest.Download_size);
-                        installData.installSize = Helpers.FormatSize(manifest.Manifest.Disk_size);
+                        installData.downloadSizeNumber = manifest.Manifest.Download_size;
+                        installData.installSizeNumber = manifest.Manifest.Disk_size;
                     }
                     if (manifest.Manifest.Install_tags.Count > 1 || manifest.Game.Owned_dlc.Count > 0)
                     {
@@ -416,8 +407,8 @@ namespace LegendaryLibraryNS
                                         break;
                                     }
                                 }
-                                installData.downloadSize = Helpers.FormatSize(singleDownloadSizeNumber);
-                                installData.installSize = Helpers.FormatSize(singleInstallSizeNumber);
+                                installData.downloadSizeNumber = singleDownloadSizeNumber;
+                                installData.installSizeNumber = singleInstallSizeNumber;
                             }
                             else
                             {
@@ -476,12 +467,8 @@ namespace LegendaryLibraryNS
                             }
                         }
                     }
-                    var downloadSizeSplittedString = installData.downloadSize.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    var downloadSizeUnit = downloadSizeSplittedString[1].Insert(1, "i");
-                    downloadSizeNumber += Helpers.ToBytes(double.Parse(downloadSizeSplittedString[0]), downloadSizeUnit);
-                    var installSizeSplittedString = installData.installSize.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    var installSizeUnit = installSizeSplittedString[1].Insert(1, "i");
-                    installSizeNumber += Helpers.ToBytes(double.Parse(installSizeSplittedString[0]), installSizeUnit);
+                    downloadSizeNumber += installData.downloadSizeNumber;
+                    installSizeNumber += installData.installSizeNumber;
                 }
             }
 

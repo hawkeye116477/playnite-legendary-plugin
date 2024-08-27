@@ -59,6 +59,27 @@ namespace LegendaryLibraryNS
                 }
                 SaveData();
             }
+            // TODO: Remove migration of old entries in next big version
+            var itemsWithSizeForMigration = downloadManagerData.downloads.Where(i => !string.IsNullOrEmpty(i.downloadSize) && !string.IsNullOrEmpty(i.installSize)).ToList();
+            if (itemsWithSizeForMigration.Count > 0)
+            {
+                foreach (var downloadItem in itemsWithSizeForMigration)
+                {
+                    if (downloadItem.downloadSizeNumber == 0)
+                    {
+                        var downloadSizeSplittedString = downloadItem.downloadSize.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                        downloadItem.downloadSizeNumber = Helpers.ToBytes(double.Parse(downloadSizeSplittedString[0]), downloadSizeSplittedString[1].Insert(1, "i"));
+                    }
+                    if (downloadItem.installSizeNumber == 0)
+                    {
+                        var installSizeSplittedString = downloadItem.installSize.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                        downloadItem.installSizeNumber = Helpers.ToBytes(double.Parse(installSizeSplittedString[0]), installSizeSplittedString[1].Insert(1, "i"));
+                    }
+                    downloadItem.downloadSize = "";
+                    downloadItem.installSize = "";
+                }
+                SaveData();
+            }
         }
 
         public RelayCommand<object> NavigateBackCommand
@@ -194,7 +215,7 @@ namespace LegendaryLibraryNS
             {
                 DateTimeOffset now = DateTime.UtcNow;
                 downloadManagerData.downloads.Add(new DownloadManagerData.Download
-                { gameID = taskData.gameID, downloadSize = taskData.downloadSize, installSize = taskData.installSize, name = taskData.name, status = DownloadStatus.Queued, addedTime = now.ToUnixTimeSeconds(), downloadProperties = taskData.downloadProperties });
+                { gameID = taskData.gameID, downloadSizeNumber = taskData.downloadSizeNumber, installSizeNumber = taskData.installSizeNumber, name = taskData.name, status = DownloadStatus.Queued, addedTime = now.ToUnixTimeSeconds(), downloadProperties = taskData.downloadProperties });
             }
             else
             {
@@ -221,7 +242,7 @@ namespace LegendaryLibraryNS
             var gameID = taskData.gameID;
             var downloadProperties = taskData.downloadProperties;
             var gameTitle = taskData.name;
-            var downloadSize = taskData.downloadSize;
+            var downloadSizeNumber = taskData.downloadSizeNumber;
             if (gameID == "eos-overlay")
             {
                 var fullInstallPath = Path.Combine(downloadProperties.installPath, ".overlay");
@@ -350,14 +371,14 @@ namespace LegendaryLibraryNS
                             var downloadSizeMatch = Regex.Match(stdErr.Text, @"Download size: (\S+) (\wiB)");
                             if (downloadSizeMatch.Length >= 2)
                             {
-                                downloadSize = Helpers.FormatSize(double.Parse(downloadSizeMatch.Groups[1].Value, CultureInfo.InvariantCulture), downloadSizeMatch.Groups[2].Value);
-                                wantedItem.downloadSize = downloadSize;
+                                downloadSizeNumber = Helpers.ToBytes(double.Parse(downloadSizeMatch.Groups[1].Value, CultureInfo.InvariantCulture), downloadSizeMatch.Groups[2].Value);
+                                wantedItem.downloadSizeNumber = downloadSizeNumber;
                             }
                             var installSizeMatch = Regex.Match(stdErr.Text, @"Install size: (\S+) (\wiB)");
                             if (installSizeMatch.Length >= 2)
                             {
-                                string installSize = Helpers.FormatSize(double.Parse(installSizeMatch.Groups[1].Value, CultureInfo.InvariantCulture), installSizeMatch.Groups[2].Value);
-                                wantedItem.installSize = installSize;
+                                double installSizeNumber = Helpers.ToBytes(double.Parse(installSizeMatch.Groups[1].Value, CultureInfo.InvariantCulture), installSizeMatch.Groups[2].Value);
+                                wantedItem.installSizeNumber = installSizeNumber;
                             }
                             var fullInstallPathMatch = Regex.Match(stdErr.Text, @"Install path: (\S+)");
                             if (fullInstallPathMatch.Length >= 2)
@@ -391,6 +412,7 @@ namespace LegendaryLibraryNS
                             var downloadedMatch = Regex.Match(stdErr.Text, @"Downloaded: (\S+) (\wiB)");
                             if (downloadedMatch.Length >= 2)
                             {
+                                string downloadSize = Helpers.FormatSize(downloadSizeNumber);
                                 string downloaded = Helpers.FormatSize(double.Parse(downloadedMatch.Groups[1].Value, CultureInfo.InvariantCulture), downloadedMatch.Groups[2].Value);
                                 DownloadedTB.Text = downloaded + " / " + downloadSize;
                                 if (downloaded == downloadSize)

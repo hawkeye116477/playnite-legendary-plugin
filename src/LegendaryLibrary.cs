@@ -890,7 +890,7 @@ namespace LegendaryLibraryNS
                                 window.SizeToContent = SizeToContent.WidthAndHeight;
                                 window.MinWidth = 600;
                                 window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                                var title = ResourceProvider.GetString(LOC.LegendaryInstaller);
+                                var title = ResourceProvider.GetString(LOC.Legendary3P_PlayniteInstallGame);
                                 if (notInstalledLegendaryGames.Count == 1)
                                 {
                                     title = notInstalledLegendaryGames[0].Name;

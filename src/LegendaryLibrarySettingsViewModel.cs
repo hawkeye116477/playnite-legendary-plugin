@@ -17,7 +17,6 @@ namespace LegendaryLibraryNS
         public string SelectedLauncherPath { get; set; } = "";
         public string GamesInstallationPath { get; set; } = "";
         public bool LaunchOffline { get; set; } = false;
-        public List<string> OnlineList { get; set; } = new List<string>();
         public string PreferredCDN { get; set; } = "";
         public bool NoHttps { get; set; } = false;
         public DownloadCompleteAction DoActionAfterDownloadComplete { get; set; } = DownloadCompleteAction.Nothing;
@@ -28,7 +27,6 @@ namespace LegendaryLibraryNS
         public bool EnableReordering { get; set; } = false;
         public ClearCacheTime AutoClearCache { get; set; } = ClearCacheTime.Never;
         public long NextClearingTime { get; set; } = 0;
-        public bool DisableGameVersionCheck { get; set; } = false;
         public bool UnattendedInstall { get; set; } = false;
         public bool DownloadAllDlcs { get; set; } = false;
         public bool DisplayDownloadSpeedInBits { get; set; } = false;
@@ -39,63 +37,13 @@ namespace LegendaryLibraryNS
         public bool AutoUpdateGames { get; set; } = false;
         public UpdatePolicy LauncherUpdatePolicy { get; set; } = UpdatePolicy.Never;
         public long NextLauncherUpdateTime { get; set; } = 0;
-        public bool NotifyNewLauncherVersion { get; set; } = false;
     }
 
     public class LegendaryLibrarySettingsViewModel : PluginSettingsViewModel<LegendaryLibrarySettings, LegendaryLibrary>
     {
         public LegendaryLibrarySettingsViewModel(LegendaryLibrary library, IPlayniteAPI api) : base(library, api)
         {
-            var savedSettings = LoadSavedSettings();
-            // TODO: Remove migration of old settings in next big version
-            if (savedSettings != null)
-            {
-                var gamesSettingsFile = Path.Combine(LegendaryLibrary.Instance.GetPluginUserDataPath(), "gamesSettings.json");
-                if (File.Exists(gamesSettingsFile))
-                {
-                    if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(gamesSettingsFile), out Dictionary<string, GameSettings> savedGamesSettings))
-                    {
-                        if (savedGamesSettings != null)
-                        {
-                            foreach (var game in savedGamesSettings.Keys)
-                            {
-                                Helpers.SaveJsonSettingsToFile(savedGamesSettings[game], game, "GamesSettings");
-                            }
-                        }
-                    }
-                    File.Move(gamesSettingsFile, Path.Combine(LegendaryLibrary.Instance.GetPluginUserDataPath(), "gamesSettings.json.migrated"));
-                }
-                if (savedSettings.OnlineList.Count > 0)
-                {
-                    foreach (var onlineGame in savedSettings.OnlineList)
-                    {
-                        var gameSettings = LegendaryGameSettingsView.LoadGameSettings(onlineGame);
-                        gameSettings.LaunchOffline = false;
-                        Helpers.SaveJsonSettingsToFile(gameSettings, onlineGame, "GamesSettings");
-                    }
-                    savedSettings.OnlineList.Clear();
-                }
-                if (savedSettings.DisableGameVersionCheck)
-                {
-                    savedSettings.GamesUpdatePolicy = UpdatePolicy.Never;
-                    savedSettings.DisableGameVersionCheck = false;
-                }
-                if (savedSettings.NotifyNewLauncherVersion)
-                {
-                    savedSettings.LauncherUpdatePolicy = UpdatePolicy.Month;
-                    savedSettings.NextLauncherUpdateTime = LegendaryLibrary.GetNextUpdateCheckTime(UpdatePolicy.Month);
-                }
-                if (savedSettings.GamesUpdatePolicy == UpdatePolicy.Auto)
-                {
-                    savedSettings.GamesUpdatePolicy = UpdatePolicy.Month;
-                    savedSettings.NextGamesUpdateTime = LegendaryLibrary.GetNextUpdateCheckTime(UpdatePolicy.Month);
-                }
-            }
-            else
-            {
-                savedSettings = new LegendaryLibrarySettings();
-            }
-            Settings = savedSettings;
+            Settings = LoadSavedSettings() ?? new LegendaryLibrarySettings();
         }
 
         public override void EndEdit()
