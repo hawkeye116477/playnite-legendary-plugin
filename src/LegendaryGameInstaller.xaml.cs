@@ -43,8 +43,11 @@ namespace LegendaryLibraryNS
 
         public Window InstallerWindow => Window.GetWindow(this);
 
-        public DownloadManagerData.Download InstallData => (DownloadManagerData.Download)DataContext;
-        public string GameID => InstallData.gameID;
+        public List<DownloadManagerData.Download> MultiInstallData
+        {
+            get => (List<DownloadManagerData.Download>)DataContext;
+            set { }
+        }
 
         private void ChooseGamePathBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -80,74 +83,84 @@ namespace LegendaryLibraryNS
             }
             InstallerWindow.Close();
             LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
-            var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == GameID);
-            if (wantedItem != null)
+            var downloadTasks = new List<DownloadManagerData.Download>();
+            var downloadItemsAlreadyAdded = new List<string>();
+            foreach (var installData in MultiInstallData)
             {
-                playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), wantedItem.name), "", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else
-            {
-                var downloadProperties = GetDownloadProperties(DownloadAction.Install, installPath);
-                InstallData.downloadProperties = downloadProperties;
-                if (!downloadSizeWithoutDlcs.IsNullOrEmpty())
+                var gameId = installData.gameID;
+                var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameId);
+                if (wantedItem == null)
                 {
-                    InstallData.downloadSize = downloadSizeWithoutDlcs;
-                }
-                if (!installSizeWithoutDlcs.IsNullOrEmpty())
-                {
-                    InstallData.installSize = installSizeWithoutDlcs;
-                }
-                var downloadTasks = new List<DownloadManagerData.Download>
-                {
-                    InstallData
-                };
-
-                if (ExtraContentLB.Items.Count > 0)
-                {
-                    foreach (var selectedOption in ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().ToList())
+                    var downloadProperties = GetDownloadProperties(DownloadAction.Install, installPath);
+                    installData.downloadProperties = downloadProperties;
+                    if (!downloadSizeWithoutDlcs.IsNullOrEmpty())
                     {
-                        if (selectedOption.Value.Is_dlc)
+                        installData.downloadSize = downloadSizeWithoutDlcs;
+                    }
+                    if (!installSizeWithoutDlcs.IsNullOrEmpty())
+                    {
+                        installData.installSize = installSizeWithoutDlcs;
+                    }
+                    downloadTasks.Add(installData);
+                    if (ExtraContentLB.Items.Count > 0)
+                    {
+                        foreach (var selectedOption in ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().ToList())
                         {
-                            var wantedDlcItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == selectedOption.Key);
-                            if (wantedDlcItem != null)
+                            if (selectedOption.Value.Is_dlc)
                             {
-                                playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), wantedDlcItem.name), "", MessageBoxButton.OK, MessageBoxImage.Error);
-                            }
-                            else
-                            {
-                                var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("infocache");
-                                var cacheDlcInfoFile = Path.Combine(cacheInfoPath, selectedOption.Key + ".json");
-                                var dlcDownloadSize = "0";
-                                var dlcInstallSize = "0";
-                                if (File.Exists(cacheDlcInfoFile))
+                                var wantedDlcItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == selectedOption.Key);
+                                if (wantedDlcItem != null)
                                 {
-                                    LegendaryGameInfo.Rootobject dlcManifest = new LegendaryGameInfo.Rootobject();
-                                    var cacheDlcContent = FileSystem.ReadFileAsStringSafe(cacheDlcInfoFile);
-                                    if (!cacheDlcContent.IsNullOrWhiteSpace() && Serialization.TryFromJson(cacheDlcContent, out dlcManifest))
+                                    downloadItemsAlreadyAdded.Add(wantedDlcItem.name);
+                                }
+                                else
+                                {
+                                    var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("infocache");
+                                    var cacheDlcInfoFile = Path.Combine(cacheInfoPath, selectedOption.Key + ".json");
+                                    var dlcDownloadSize = "0";
+                                    var dlcInstallSize = "0";
+                                    if (File.Exists(cacheDlcInfoFile))
                                     {
-                                        if (dlcManifest != null && dlcManifest.Manifest != null)
+                                        LegendaryGameInfo.Rootobject dlcManifest = new LegendaryGameInfo.Rootobject();
+                                        var cacheDlcContent = FileSystem.ReadFileAsStringSafe(cacheDlcInfoFile);
+                                        if (!cacheDlcContent.IsNullOrWhiteSpace() && Serialization.TryFromJson(cacheDlcContent, out dlcManifest))
                                         {
-                                            dlcDownloadSize = Helpers.FormatSize(dlcManifest.Manifest.Download_size);
-                                            dlcInstallSize = Helpers.FormatSize(dlcManifest.Manifest.Disk_size);
+                                            if (dlcManifest != null && dlcManifest.Manifest != null)
+                                            {
+                                                dlcDownloadSize = Helpers.FormatSize(dlcManifest.Manifest.Download_size);
+                                                dlcInstallSize = Helpers.FormatSize(dlcManifest.Manifest.Disk_size);
+                                            }
                                         }
                                     }
+                                    downloadTasks.Add(new DownloadManagerData.Download
+                                    {
+                                        gameID = selectedOption.Key,
+                                        name = selectedOption.Value.Name,
+                                        downloadSize = dlcDownloadSize,
+                                        installSize = dlcInstallSize,
+                                        downloadProperties = downloadProperties
+                                    });
                                 }
-                                downloadTasks.Add(new DownloadManagerData.Download
-                                {
-                                    gameID = selectedOption.Key,
-                                    name = selectedOption.Value.Name,
-                                    downloadSize = dlcDownloadSize,
-                                    installSize = dlcInstallSize,
-                                    downloadProperties = downloadProperties
-                                });
                             }
                         }
                     }
                 }
-                if (downloadTasks.Count > 0)
+            }
+            if (downloadItemsAlreadyAdded.Count > 0)
+            {
+                if (downloadItemsAlreadyAdded.Count == 1)
                 {
-                    downloadManager.EnqueueMultipleJobs(downloadTasks);
+                    playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), downloadItemsAlreadyAdded[0]), "", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+                else
+                {
+                    string downloadItemsAlreadyAddedComnined = string.Join(", ", downloadItemsAlreadyAdded.Select(item => item.ToString()));
+                    playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExistsOther), downloadItemsAlreadyAddedComnined), "", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            if (downloadTasks.Count > 0)
+            {
+                downloadManager.EnqueueMultipleJobs(downloadTasks);
             }
         }
 
@@ -213,7 +226,7 @@ namespace LegendaryLibraryNS
 
         private async void LegendaryGameInstallerUC_Loaded(object sender, RoutedEventArgs e)
         {
-            if (InstallData.downloadProperties.downloadAction == DownloadAction.Repair)
+            if (MultiInstallData.First().downloadProperties.downloadAction == DownloadAction.Repair)
             {
                 FolderDP.Visibility = Visibility.Collapsed;
                 InstallBtn.Visibility = Visibility.Collapsed;
@@ -234,215 +247,338 @@ namespace LegendaryLibraryNS
             UpdateSpaceInfo(installPath);
             requiredThings = new List<string>();
             var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("infocache");
-            var cacheInfoFile = Path.Combine(cacheInfoPath, GameID + ".json");
             if (!Directory.Exists(cacheInfoPath))
             {
                 Directory.CreateDirectory(cacheInfoPath);
             }
-            manifest = await LegendaryLauncher.GetGameInfo(GameID);
-            if (manifest != null && manifest.Manifest != null && manifest.Game != null)
+
+            var ubisoftOnlyGames = new List<string>();
+            var ubisoftRecommendedGames = new List<string>();
+            var downloadItemsAlreadyAdded = new List<string>();
+            var prerequisites = new Dictionary<string, string>();
+            LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
+
+            foreach (var installData in MultiInstallData.ToList())
             {
-                if (manifest.Manifest.Prerequisites != null)
+                var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == installData.gameID);
+                if (wantedItem != null)
                 {
-                    if (manifest.Manifest.Prerequisites.ids != null && manifest.Manifest.Prerequisites.ids.Length > 0 && !manifest.Manifest.Prerequisites.path.IsNullOrEmpty())
-                    {
-                        PrerequisitesChk.IsChecked = true;
-                        PrerequisitesChk.Visibility = Visibility.Visible;
-                        if (!manifest.Manifest.Prerequisites.name.IsNullOrEmpty())
-                        {
-                            prereqName = manifest.Manifest.Prerequisites.name;
-                        }
-                        else
-                        {
-                            prereqName = Path.GetFileName(manifest.Manifest.Prerequisites.path);
-                        }
-                        PrerequisitesChk.Content = string.Format(PrerequisitesChk.Content.ToString(), prereqName);
-                        if (manifest.Manifest.Prerequisites.ids.Contains("uplay"))
-                        {
-                            var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                                  .WithArguments(new[] { "install", GameID })
-                                                  .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
-                                                  .WithStandardInputPipe(PipeSource.FromString("n"))
-                                                  .AddCommandToLog()
-                                                  .WithValidation(CommandResultValidation.None)
-                                                  .ExecuteBufferedAsync();
-                            if (result.StandardOutput.Contains("Failure") && result.StandardOutput.Contains("Uplay"))
-                            {
-                                playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryRequiredInstallViaThirdPartyLauncherError).Format("Ubisoft Connect")));
-                                Window.GetWindow(this).Close();
-                                return;
-                            }
-                            else if (result.StandardOutput.Contains("Uplay"))
-                            {
-                                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryRequiredInstallOfThirdPartyLauncher).Format("Ubisoft Connect"), "", MessageBoxButton.OK, MessageBoxImage.Information);
-                            }
-                        }
-                    }
+                    MultiInstallData.Remove(installData);
+                    downloadItemsAlreadyAdded.Add(installData.name);
+                    continue;
                 }
-                if (manifest.Manifest.Install_tags.Count > 1 || manifest.Game.Owned_dlc.Count > 0)
+                manifest = await LegendaryLauncher.GetGameInfo(installData.gameID);
+                if (manifest != null && manifest.Manifest != null && manifest.Game != null)
                 {
-                    Dictionary<string, LegendarySDLInfo> extraContentInfo = new Dictionary<string, LegendarySDLInfo>();
-                    if (manifest.Manifest.Install_tags.Count > 1)
+                    if (manifest.Manifest.Prerequisites != null)
                     {
-                        downloadSizeNumber = 0;
-                        installSizeNumber = 0;
-                        var cacheSDLPath = LegendaryLibrary.Instance.GetCachePath("sdlcache");
-                        var cacheSDLFile = Path.Combine(cacheSDLPath, GameID + ".json");
-                        string content = null;
-                        if (File.Exists(cacheSDLFile))
+                        if (manifest.Manifest.Prerequisites.ids != null && manifest.Manifest.Prerequisites.ids.Length > 0 && !manifest.Manifest.Prerequisites.path.IsNullOrEmpty())
                         {
-                            if (File.GetLastWriteTime(cacheSDLFile) < DateTime.Now.AddDays(-7))
+                            if (!manifest.Manifest.Prerequisites.name.IsNullOrEmpty())
                             {
-                                File.Delete(cacheSDLFile);
+                                prereqName = manifest.Manifest.Prerequisites.name;
                             }
-                        }
-                        if (!File.Exists(cacheSDLFile))
-                        {
-                            var httpClient = new HttpClient();
-                            var response = await httpClient.GetAsync("https://api.legendary.gl/v1/sdl/" + GameID + ".json");
-                            if (response.IsSuccessStatusCode)
+                            else
                             {
-                                content = await response.Content.ReadAsStringAsync();
-                                if (!Directory.Exists(cacheSDLPath))
+                                prereqName = Path.GetFileName(manifest.Manifest.Prerequisites.path);
+                            }
+                            prerequisites.Add(prereqName, "");
+                            if (manifest.Manifest.Prerequisites.ids.Contains("uplay"))
+                            {
+                                var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                                          .WithArguments(new[] { "install", installData.gameID })
+                                                          .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                                          .WithStandardInputPipe(PipeSource.FromString("n"))
+                                                          .AddCommandToLog()
+                                                          .WithValidation(CommandResultValidation.None)
+                                                          .ExecuteBufferedAsync();
+                                if (result.StandardOutput.Contains("Failure") && result.StandardOutput.Contains("Uplay"))
                                 {
-                                    Directory.CreateDirectory(cacheSDLPath);
+                                    ubisoftOnlyGames.Add(installData.name);
+                                    MultiInstallData.Remove(installData);
                                 }
-                                File.WriteAllText(cacheSDLFile, content);
-                            }
-                            httpClient.Dispose();
-                        }
-                        else
-                        {
-                            content = FileSystem.ReadFileAsStringSafe(cacheSDLFile);
-                        }
-                        bool correctSdlJson = false;
-                        if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out extraContentInfo))
-                        {
-                            correctSdlJson = true;
-                            if (extraContentInfo.ContainsKey("__required"))
-                            {
-                                foreach (var tag in extraContentInfo["__required"].Tags)
+                                else if (result.StandardOutput.Contains("Uplay"))
                                 {
-                                    foreach (var tagDo in manifest.Manifest.Tag_download_size)
-                                    {
-                                        if (tagDo.Tag == tag)
-                                        {
-                                            downloadSizeNumber += tagDo.Size;
-                                            break;
-                                        }
-                                    }
-                                    foreach (var tagDi in manifest.Manifest.Tag_disk_size)
-                                    {
-                                        if (tagDi.Tag == tag)
-                                        {
-                                            installSizeNumber += tagDi.Size;
-                                            break;
-                                        }
-                                    }
-                                    requiredThings.Add(tag);
-                                }
-                                extraContentInfo.Remove("__required");
-                            }
-                            foreach (var tagDo in manifest.Manifest.Tag_download_size)
-                            {
-                                if (tagDo.Tag == "")
-                                {
-                                    downloadSizeNumber += tagDo.Size;
-                                    break;
-                                }
-                            }
-                            foreach (var tagDi in manifest.Manifest.Tag_disk_size)
-                            {
-                                if (tagDi.Tag == "")
-                                {
-                                    installSizeNumber += tagDi.Size;
-                                    break;
-                                }
-                            }
-                            InstallData.downloadSize = Helpers.FormatSize(downloadSizeNumber);
-                            InstallData.installSize = Helpers.FormatSize(installSizeNumber);
-                        }
-                        else
-                        {
-                            logger.Error("An error occurred while reading SDL data.");
-                        }
-                        if (!correctSdlJson)
-                        {
-                            extraContentInfo = new Dictionary<string, LegendarySDLInfo>();
-                        }
-                        else
-                        {
-                            AllOrNothingChk.Visibility = Visibility.Visible;
-                        }
-                    }
-                    if (manifest.Game.Owned_dlc.Count > 0)
-                    {
-                        foreach (var dlc in manifest.Game.Owned_dlc.OrderBy(obj => obj.Title))
-                        {
-                            if (!dlc.App_name.IsNullOrEmpty())
-                            {
-                                var dlcInfo = new LegendarySDLInfo
-                                {
-                                    Name = dlc.Title.RemoveTrademarks(),
-                                    Is_dlc = true
-                                };
-                                extraContentInfo.Add(dlc.App_name, dlcInfo);
-                                var dlcManifest = await LegendaryLauncher.GetGameInfo(dlc.App_name);
-                            }
-                        }
-                        AllDlcsChk.Visibility = Visibility.Visible;
-                    }
-                    if (extraContentInfo.Keys.Count > 0)
-                    {
-                        ExtraContentLB.ItemsSource = extraContentInfo;
-                        ExtraContentBrd.Visibility = Visibility.Visible;
-                        if (InstallData.downloadProperties.downloadAction == DownloadAction.Repair)
-                        {
-                            string[] installedTags = default;
-                            var installedAppList = LegendaryLauncher.GetInstalledAppList();
-                            if (installedAppList != null)
-                            {
-                                if (installedAppList.ContainsKey(GameID))
-                                {
-                                    var installedGameData = installedAppList[GameID];
-                                    if (installedGameData.Install_tags != null && installedGameData.Install_tags.Length > 1)
-                                    {
-                                        installedTags = installedGameData.Install_tags;
-                                    }
-                                }
-                            }
-                            foreach (KeyValuePair<string, LegendarySDLInfo> extraCheckbox in ExtraContentLB.Items)
-                            {
-                                if (extraCheckbox.Value.Tags.Count > 0)
-                                {
-                                    if (installedTags != null && installedTags.Length > 0 && installedTags.Contains(extraCheckbox.Value.Tags[0]))
-                                    {
-                                        ExtraContentLB.SelectedItems.Add(extraCheckbox);
-                                    }
+                                    ubisoftRecommendedGames.Add(installData.name);
                                 }
                             }
                         }
                     }
                 }
-                if (InstallData.downloadSize.IsNullOrEmpty() || InstallData.installSize.IsNullOrEmpty())
+                else
                 {
-                    if (manifest.Manifest != null)
-                    {
-                        downloadSizeNumber = manifest.Manifest.Download_size;
-                        installSizeNumber = manifest.Manifest.Disk_size;
-                        InstallData.downloadSize = Helpers.FormatSize(downloadSizeNumber);
-                        InstallData.installSize = Helpers.FormatSize(installSizeNumber);
-                    }
+                    MultiInstallData.Remove(installData);
                 }
-                UpdateAfterInstallingSize();
-                DownloadSizeTB.Text = InstallData.downloadSize;
-                InstallSizeTB.Text = InstallData.installSize;
             }
-            if (!InstallData.downloadSize.IsNullOrEmpty() && !InstallData.installSize.IsNullOrEmpty())
+
+            if (prerequisites.Count > 0)
+            {
+                PrerequisitesChk.IsChecked = true;
+                string prerequisitesCombined = string.Join(", ", prerequisites.Select(item => item.Key.ToString()));
+                PrerequisitesChk.Content = string.Format(PrerequisitesChk.Content.ToString(), prerequisitesCombined);
+                PrerequisitesChk.Visibility = Visibility.Visible;
+            }
+
+            Dictionary<string, LegendarySDLInfo> multipleExtraContentInfo = new Dictionary<string, LegendarySDLInfo>();
+            downloadSizeNumber = 0;
+            installSizeNumber = 0;
+            foreach (var installData in MultiInstallData)
+            {
+                manifest = await LegendaryLauncher.GetGameInfo(installData.gameID);
+                if (manifest != null && manifest.Manifest != null && manifest.Game != null)
+                {
+                    if (installData.downloadSize.IsNullOrEmpty() || installData.installSize.IsNullOrEmpty())
+                    {
+                        installData.downloadSize = Helpers.FormatSize(manifest.Manifest.Download_size);
+                        installData.installSize = Helpers.FormatSize(manifest.Manifest.Disk_size);
+                    }
+                    if (manifest.Manifest.Install_tags.Count > 1 || manifest.Game.Owned_dlc.Count > 0)
+                    {
+                        Dictionary<string, LegendarySDLInfo> extraContentInfo = new Dictionary<string, LegendarySDLInfo>();
+                        if (manifest.Manifest.Install_tags.Count > 1)
+                        {
+                            double singleDownloadSizeNumber = 0;
+                            double singleInstallSizeNumber = 0;
+                            var cacheSDLPath = LegendaryLibrary.Instance.GetCachePath("sdlcache");
+                            var cacheSDLFile = Path.Combine(cacheSDLPath, installData.gameID + ".json");
+                            string content = null;
+                            if (File.Exists(cacheSDLFile))
+                            {
+                                if (File.GetLastWriteTime(cacheSDLFile) < DateTime.Now.AddDays(-7))
+                                {
+                                    File.Delete(cacheSDLFile);
+                                }
+                            }
+                            if (!File.Exists(cacheSDLFile))
+                            {
+                                var httpClient = new HttpClient();
+                                var response = await httpClient.GetAsync("https://api.legendary.gl/v1/sdl/" + installData.gameID + ".json");
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    content = await response.Content.ReadAsStringAsync();
+                                    if (!Directory.Exists(cacheSDLPath))
+                                    {
+                                        Directory.CreateDirectory(cacheSDLPath);
+                                    }
+                                    File.WriteAllText(cacheSDLFile, content);
+                                }
+                                httpClient.Dispose();
+                            }
+                            else
+                            {
+                                content = FileSystem.ReadFileAsStringSafe(cacheSDLFile);
+                            }
+                            bool correctSdlJson = false;
+                            if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out extraContentInfo))
+                            {
+                                correctSdlJson = true;
+                                foreach (var sdl in extraContentInfo)
+                                {
+                                    sdl.Value.BaseGameID = installData.gameID;
+                                }
+                                if (extraContentInfo.ContainsKey("__required"))
+                                {
+                                    foreach (var tag in extraContentInfo["__required"].Tags)
+                                    {
+                                        foreach (var tagDo in manifest.Manifest.Tag_download_size)
+                                        {
+                                            if (tagDo.Tag == tag)
+                                            {
+                                                singleDownloadSizeNumber += tagDo.Size;
+                                                break;
+                                            }
+                                        }
+                                        foreach (var tagDi in manifest.Manifest.Tag_disk_size)
+                                        {
+                                            if (tagDi.Tag == tag)
+                                            {
+                                                singleInstallSizeNumber += tagDi.Size;
+                                                break;
+                                            }
+                                        }
+                                        requiredThings.Add(tag);
+                                    }
+                                    extraContentInfo.Remove("__required");
+                                }
+                                foreach (var tagDo in manifest.Manifest.Tag_download_size)
+                                {
+                                    if (tagDo.Tag == "")
+                                    {
+                                        singleDownloadSizeNumber += tagDo.Size;
+                                        break;
+                                    }
+                                }
+                                foreach (var tagDi in manifest.Manifest.Tag_disk_size)
+                                {
+                                    if (tagDi.Tag == "")
+                                    {
+                                        singleInstallSizeNumber += tagDi.Size;
+                                        break;
+                                    }
+                                }
+                                installData.downloadSize = Helpers.FormatSize(singleDownloadSizeNumber);
+                                installData.installSize = Helpers.FormatSize(singleInstallSizeNumber);
+                            }
+                            else
+                            {
+                                logger.Error("An error occurred while reading SDL data.");
+                            }
+                            if (!correctSdlJson)
+                            {
+                                extraContentInfo = new Dictionary<string, LegendarySDLInfo>();
+                            }
+                            else
+                            {
+                                if (AllOrNothingChk.Visibility != Visibility.Visible)
+                                {
+                                    AllOrNothingChk.Visibility = Visibility.Visible;
+                                }
+                            }
+                        }
+                        if (manifest.Game.Owned_dlc.Count > 0)
+                        {
+                            foreach (var dlc in manifest.Game.Owned_dlc.OrderBy(obj => obj.Title))
+                            {
+                                if (!dlc.App_name.IsNullOrEmpty())
+                                {
+                                    var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == dlc.Id);
+                                    if (wantedItem != null)
+                                    {
+                                        downloadItemsAlreadyAdded.Add(installData.name);
+                                    }
+                                    else
+                                    {
+                                        var dlcInfo = new LegendarySDLInfo
+                                        {
+                                            Name = dlc.Title.RemoveTrademarks(),
+                                            Is_dlc = true,
+                                            BaseGameID = installData.gameID
+                                        };
+                                        extraContentInfo.Add(dlc.App_name, dlcInfo);
+                                        var dlcManifest = await LegendaryLauncher.GetGameInfo(dlc.App_name);
+                                    }
+
+                                }
+                            }
+                            if (AllDlcsChk.Visibility != Visibility.Visible)
+                            {
+                                AllDlcsChk.Visibility = Visibility.Visible;
+                            }
+                        }
+                        if (extraContentInfo.Keys.Count > 0)
+                        {
+                            foreach (var extraContent in extraContentInfo)
+                            {
+                                if (!multipleExtraContentInfo.ContainsKey(extraContent.Key))
+                                {
+                                    multipleExtraContentInfo.Add(extraContent.Key, extraContent.Value);
+                                }
+                            }
+                        }
+                    }
+                    var downloadSizeSplittedString = installData.downloadSize.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    var downloadSizeUnit = downloadSizeSplittedString[1].Insert(1, "i");
+                    downloadSizeNumber += Helpers.ToBytes(double.Parse(downloadSizeSplittedString[0]), downloadSizeUnit);
+                    var installSizeSplittedString = installData.installSize.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    var installSizeUnit = installSizeSplittedString[1].Insert(1, "i");
+                    installSizeNumber += Helpers.ToBytes(double.Parse(installSizeSplittedString[0]), installSizeUnit);
+                }
+            }
+
+            GamesLB.ItemsSource = MultiInstallData;
+            if (MultiInstallData.Count > 1)
+            {
+                GamesBrd.Visibility = Visibility.Visible;
+            }
+
+            UpdateAfterInstallingSize();
+            DownloadSizeTB.Text = Helpers.FormatSize(downloadSizeNumber);
+            InstallSizeTB.Text = Helpers.FormatSize(installSizeNumber);
+
+            if (multipleExtraContentInfo.Keys.Count > 0)
+            {
+                ExtraContentLB.ItemsSource = multipleExtraContentInfo;
+                ExtraContentBrd.Visibility = Visibility.Visible;
+                foreach (var installData in MultiInstallData)
+                {
+                    if (installData.downloadProperties.downloadAction == DownloadAction.Repair)
+                    {
+                        string[] installedTags = default;
+                        var installedAppList = LegendaryLauncher.GetInstalledAppList();
+                        if (installedAppList != null)
+                        {
+                            if (installedAppList.ContainsKey(installData.gameID))
+                            {
+                                var installedGameData = installedAppList[installData.gameID];
+                                if (installedGameData.Install_tags != null && installedGameData.Install_tags.Length > 1)
+                                {
+                                    installedTags = installedGameData.Install_tags;
+                                }
+                            }
+                        }
+                        foreach (KeyValuePair<string, LegendarySDLInfo> extraCheckbox in ExtraContentLB.Items)
+                        {
+                            if (extraCheckbox.Value.Tags.Count > 0)
+                            {
+                                if (installedTags != null && installedTags.Length > 0 && installedTags.Contains(extraCheckbox.Value.Tags[0]))
+                                {
+                                    ExtraContentLB.SelectedItems.Add(extraCheckbox);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (ubisoftOnlyGames.Count > 0)
+            {
+                if (ubisoftOnlyGames.Count == 1)
+                {
+                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryRequiredInstallViaThirdPartyLauncherError).Format("Ubisoft Connect", ubisoftOnlyGames[0])));
+                }
+                else
+                {
+                    string ubisoftOnlyGamesCombined = string.Join(", ", ubisoftOnlyGames.Select(item => item.ToString()));
+                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryRequiredInstallViaThirdPartyLauncherErrorOther).Format("Ubisoft Connect", ubisoftOnlyGamesCombined));
+                }
+
+            }
+            if (ubisoftRecommendedGames.Count > 0)
+            {
+                if (ubisoftRecommendedGames.Count == 1)
+                {
+                    playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryRequiredInstallOfThirdPartyLauncher).Format("Ubisoft Connect", ubisoftRecommendedGames[0]), "", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    string ubisoftRecommendedGamesCombined = string.Join(", ", ubisoftRecommendedGames.Select(item => item.ToString()));
+                    playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryRequiredInstallOfThirdPartyLauncherOther).Format("Ubisoft Connect", ubisoftRecommendedGamesCombined), "", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+
+            if (downloadItemsAlreadyAdded.Count > 0)
+            {
+                if (downloadItemsAlreadyAdded.Count == 1)
+                {
+                    playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), downloadItemsAlreadyAdded[0]), "", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    string downloadItemsAlreadyAddedComnined = string.Join(", ", downloadItemsAlreadyAdded.Select(item => item.ToString()));
+                    playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExistsOther), downloadItemsAlreadyAddedComnined), "", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+
+            if (MultiInstallData.Count <= 0)
+            {
+                InstallerWindow.Close();
+                return;
+            }
+            if (downloadSizeNumber != 0 && installSizeNumber != 0)
             {
                 InstallBtn.IsEnabled = true;
             }
-            else if (InstallData.downloadProperties.downloadAction != DownloadAction.Repair)
+            else if (MultiInstallData.First().downloadProperties.downloadAction != DownloadAction.Repair)
             {
                 InstallerWindow.Close();
             }
@@ -450,7 +586,7 @@ namespace LegendaryLibraryNS
             {
                 AllDlcsChk.IsChecked = true;
             }
-            if (settings.UnattendedInstall && (InstallData.downloadProperties.downloadAction == DownloadAction.Install))
+            if (settings.UnattendedInstall && (MultiInstallData.First().downloadProperties.downloadAction == DownloadAction.Install))
             {
                 Install();
             }
@@ -537,16 +673,11 @@ namespace LegendaryLibraryNS
                     }
                 }
             }
-            InstallData.downloadSize = Helpers.FormatSize(initialDownloadSizeNumber);
-            DownloadSizeTB.Text = InstallData.downloadSize;
-            InstallData.installSize = Helpers.FormatSize(initialInstallSizeNumber);
-            InstallSizeTB.Text = InstallData.installSize;
+
+            DownloadSizeTB.Text = Helpers.FormatSize(initialDownloadSizeNumber);
+            InstallSizeTB.Text = Helpers.FormatSize(initialInstallSizeNumber);
             installSizeNumberAfterMod = initialInstallSizeNumber;
             UpdateAfterInstallingSize();
-            double downloadSizeWithoutDlcsNumber = initialDownloadSizeNumber - allDlcsDownloadSizeNumber;
-            downloadSizeWithoutDlcs = Helpers.FormatSize(downloadSizeWithoutDlcsNumber);
-            double installSizeWithoutDlcsNumber = initialInstallSizeNumber - allDlcsInstallSizeNumber;
-            installSizeWithoutDlcs = Helpers.FormatSize(installSizeWithoutDlcsNumber);
         }
 
         private void SetControlStyles()
@@ -569,23 +700,15 @@ namespace LegendaryLibraryNS
         {
             InstallerWindow.Close();
             LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
-            var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == GameID);
-            if (wantedItem != null)
+            var downloadTasks = new List<DownloadManagerData.Download>();
+            foreach (var installData in MultiInstallData)
             {
-                playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), wantedItem.name), "", MessageBoxButton.OK, MessageBoxImage.Error);
+                installData.downloadProperties = GetDownloadProperties(DownloadAction.Repair);
+                downloadTasks.Add(installData);
             }
-            else
+            if (downloadTasks.Count > 0)
             {
-                InstallData.downloadProperties = GetDownloadProperties(DownloadAction.Repair);
-                if (!downloadSizeWithoutDlcs.IsNullOrEmpty())
-                {
-                    InstallData.downloadSize = downloadSizeWithoutDlcs;
-                }
-                if (!installSizeWithoutDlcs.IsNullOrEmpty())
-                {
-                    InstallData.installSize = installSizeWithoutDlcs;
-                }
-                downloadManager.EnqueueJob(InstallData);
+                downloadManager.EnqueueMultipleJobs(downloadTasks);
             }
         }
 

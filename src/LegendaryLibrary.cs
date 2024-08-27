@@ -855,6 +855,53 @@ namespace LegendaryLibraryNS
                     };
                 }
             }
+            else
+            {
+                var legendaryGames = args.Games.Where(i => i.PluginId == Id).ToList();
+                if (legendaryGames.Count > 0)
+                {
+                    var notInstalledLegendaryGames = legendaryGames.Where(i => i.IsInstalled == false).ToList();
+                    if (notInstalledLegendaryGames.Count > 0)
+                    {
+                        yield return new GameMenuItem
+                        {
+                            Description = ResourceProvider.GetString(LOC.Legendary3P_PlayniteInstallGame),
+                            Icon = "InstallIcon",
+                            Action = (args) =>
+                            {
+                                if (!LegendaryLauncher.IsInstalled)
+                                {
+                                    throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                                }
+
+                                Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                                {
+                                    ShowMaximizeButton = false,
+                                });
+                                var installProperties = new DownloadProperties { downloadAction = DownloadAction.Install };
+                                var installData = new List<DownloadManagerData.Download>();
+                                foreach (var notInstalledLegendaryGame in notInstalledLegendaryGames)
+                                {
+                                    installData.Add(new DownloadManagerData.Download { gameID = notInstalledLegendaryGame.GameId, name = notInstalledLegendaryGame.Name, downloadProperties = installProperties });
+                                }
+                                window.DataContext = installData;
+                                window.Content = new LegendaryGameInstaller();
+                                window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+                                window.SizeToContent = SizeToContent.WidthAndHeight;
+                                window.MinWidth = 600;
+                                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                                var title = ResourceProvider.GetString(LOC.LegendaryInstaller);
+                                if (notInstalledLegendaryGames.Count == 1)
+                                {
+                                    title = notInstalledLegendaryGames[0].Name;
+                                }
+                                window.Title = title;
+                                window.ShowDialog();
+                            }
+                        };
+                    }
+                }
+            }
         }
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)

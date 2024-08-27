@@ -4,4 +4,5 @@
     <TextBlock x:Key="RepairIcon" Text="&#xefd2;" FontFamily="{DynamicResource FontIcoFont}" FontWeight="Light" Foreground="{DynamicResource TextBrush}" />
     <TextBlock x:Key="MoveIcon" Text="&#xea5d;" FontFamily="{DynamicResource FontIcoFont}" FontWeight="Light" Foreground="{DynamicResource TextBrush}" />
     <TextBlock x:Key="ModifyLaunchSettingsIcon" Text="&#xefe2;" FontFamily="{DynamicResource FontIcoFont}" FontWeight="Light" Foreground="{DynamicResource TextBrush}" />
+    <TextBlock x:Key="InstallIcon" Text="&#xef08;" FontFamily="{DynamicResource FontIcoFont}" FontWeight="Light" Foreground="{DynamicResource TextBrush}" />
 </ResourceDictionary>

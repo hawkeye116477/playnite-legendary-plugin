@@ -63,9 +63,22 @@
             <DockPanel Margin="0,0,0,5" Name="FolderDP">
                 <TextBlock Text="{DynamicResource LOCLegendary3P_PlayniteGameInstallDirTitle}" VerticalAlignment="Center" Margin="0,0,10,0"></TextBlock>
                 <Button DockPanel.Dock="Right" Padding="5" Margin="5 0 0 0" Content="&#xec5b;"
-                    Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteSelectDirectoryTooltip}" />
+                    Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteSelectDirectoryTooltip}" IsCancel="True" />
                 <TextBox Name="SelectedGamePathTxt" Text="" VerticalAlignment="Center" Margin="0" />
             </DockPanel>
+            <Border BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Name="GamesBrd" Visibility="Collapsed" Margin="0,0,0,5">
+                <Expander Header="{DynamicResource LOCLegendaryGames}" Margin="2,2,5,2" HorizontalAlignment="Left" IsExpanded="True">
+                    <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                        <ItemsControl BorderThickness="0" Name="GamesLB" Margin="5,0,5,5">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding name}" IsReadOnly="True" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Expander>
+            </Border>
             <Border BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Name="ExtraContentBrd" Visibility="Collapsed" Margin="0,0,0,5">
                 <Expander Header="{DynamicResource LOCLegendaryExtraContent}" Margin="2,2,5,2" HorizontalAlignment="Left">
                     <StackPanel Orientation="Vertical" Margin="0,10,0,0">

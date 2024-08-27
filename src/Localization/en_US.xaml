@@ -69,6 +69,7 @@
   <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">The download will start soon. You can see its status by accessing Legendary Panel via Menu => View or sidebar.</sys:String>
   <sys:String x:Key="LOCLegendaryPanel">Legendary Panel</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} is already in the download list. You can see status of the download by accessing Legendary Panel via Menu => View or sidebar.</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther">Following applications are already in the download list: {0}. You can see status of the download by accessing Legendary Panel via Menu => View or sidebar.</sys:String>
   <sys:String x:Key="LOCLegendaryRepair">Repair</sys:String>
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Advanced Options</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Ignore free space</sys:String>
@@ -169,8 +170,12 @@
   <sys:String x:Key="LOCLegendaryUninstallSuccess">{0} has been successfully uninstalled.</sys:String>
   <sys:String x:Key="LOCLegendaryImportThirdPartyLauncherGames">Import games requiring {0}</sys:String>
   <sys:String x:Key="LOCLegendaryThirdPartyLauncherImportWarn">These types of games doesn't require Legendary and not all of them can be installed via it. It's recommended to go to Additional services => {0} => Activate games, and then install them directly via {0}.</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">This game requires direct installation via {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">{1} requires direct installation via {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherErrorOther">Following games require direct installation via {0}: {1}.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallPrerequisites">Install prerequisites ({0})</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">This game requires installation of {0}. It's recommended to go to Plugin settings => Additional services => {0} => Activate games, and then install it directly via {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">{1} requires installation of {0}. It's recommended to go to Plugin settings => Additional services => {0} => Activate games, and then install it directly via {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther">Following games require installation of {0}: {1}. It's recommended to go to Plugin settings => Additional services => {0} => Activate games, and then install it directly via {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Installing prerequisites ({0})...</sys:String>
+  <sys:String x:Key="LOCLegendaryInstaller">Legendary Installer</sys:String>
+  <sys:String x:Key="LOCLegendaryGames">Games</sys:String>
 </ResourceDictionary>

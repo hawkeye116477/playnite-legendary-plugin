@@ -506,6 +506,10 @@ namespace System
         /// </summary>
         public const string LegendaryDownloadAlreadyExists = "LOCLegendaryDownloadAlreadyExists";
         /// <summary>
+        /// Following applications are already in the download list: {0}. You can see status of the download by accessing Legendary Panel via Menu => View or sidebar.
+        /// </summary>
+        public const string LegendaryDownloadAlreadyExistsOther = "LOCLegendaryDownloadAlreadyExistsOther";
+        /// <summary>
         /// Repair
         /// </summary>
         public const string LegendaryRepair = "LOCLegendaryRepair";
@@ -906,20 +910,36 @@ namespace System
         /// </summary>
         public const string LegendaryThirdPartyLauncherImportWarn = "LOCLegendaryThirdPartyLauncherImportWarn";
         /// <summary>
-        /// This game requires direct installation via {0}.
+        /// {1} requires direct installation via {0}.
         /// </summary>
         public const string LegendaryRequiredInstallViaThirdPartyLauncherError = "LOCLegendaryRequiredInstallViaThirdPartyLauncherError";
+        /// <summary>
+        /// Following games require direct installation via {0}: {1}.
+        /// </summary>
+        public const string LegendaryRequiredInstallViaThirdPartyLauncherErrorOther = "LOCLegendaryRequiredInstallViaThirdPartyLauncherErrorOther";
         /// <summary>
         /// Install prerequisites ({0})
         /// </summary>
         public const string LegendaryInstallPrerequisites = "LOCLegendaryInstallPrerequisites";
         /// <summary>
-        /// This game requires installation of {0}. It's recommended to go to Plugin settings => Additional services => {0} => Activate games, and then install it directly via {0}.
+        /// {1} requires installation of {0}. It's recommended to go to Plugin settings => Additional services => {0} => Activate games, and then install it directly via {0}.
         /// </summary>
         public const string LegendaryRequiredInstallOfThirdPartyLauncher = "LOCLegendaryRequiredInstallOfThirdPartyLauncher";
+        /// <summary>
+        /// Following games require installation of {0}: {1}. It's recommended to go to Plugin settings => Additional services => {0} => Activate games, and then install it directly via {0}.
+        /// </summary>
+        public const string LegendaryRequiredInstallOfThirdPartyLauncherOther = "LOCLegendaryRequiredInstallOfThirdPartyLauncherOther";
         /// <summary>
         /// Installing prerequisites ({0})...
         /// </summary>
         public const string LegendaryInstallingPrerequisites = "LOCLegendaryInstallingPrerequisites";
+        /// <summary>
+        /// Legendary Installer
+        /// </summary>
+        public const string LegendaryInstaller = "LOCLegendaryInstaller";
+        /// <summary>
+        /// Games
+        /// </summary>
+        public const string LegendaryGames = "LOCLegendaryGames";
     }
 }
