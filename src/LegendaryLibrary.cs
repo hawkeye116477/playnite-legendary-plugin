@@ -655,44 +655,6 @@ namespace LegendaryLibraryNS
                         };
                         yield return new GameMenuItem
                         {
-                            Description = ResourceProvider.GetString(LOC.LegendaryRepair),
-                            Icon = "RepairIcon",
-                            Action = (args) =>
-                            {
-                                if (!LegendaryLauncher.IsInstalled)
-                                {
-                                    throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
-                                }
-
-                                Window window = null;
-                                if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
-                                {
-                                    window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
-                                    {
-                                        ShowMaximizeButton = false,
-                                    });
-                                }
-                                else
-                                {
-                                    window = new Window
-                                    {
-                                        Background = System.Windows.Media.Brushes.DodgerBlue
-                                    };
-                                }
-                                window.Title = game.Name;
-                                var installProperties = new DownloadProperties { downloadAction = DownloadAction.Repair };
-                                var installData = new DownloadManagerData.Download { gameID = game.GameId, name = game.Name, downloadProperties = installProperties };
-                                window.DataContext = installData;
-                                window.Content = new LegendaryGameInstaller();
-                                window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
-                                window.SizeToContent = SizeToContent.WidthAndHeight;
-                                window.MinWidth = 600;
-                                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                                window.ShowDialog();
-                            }
-                        };
-                        yield return new GameMenuItem
-                        {
                             Description = ResourceProvider.GetString(LOC.Legendary3P_PlayniteCheckForUpdates),
                             Icon = "UpdateDbIcon",
                             Action = (args) =>
@@ -901,6 +863,47 @@ namespace LegendaryLibraryNS
                         };
                     }
                 }
+            }
+            var installedLegendaryGames = args.Games.Where(i => i.PluginId == Id && i.IsInstalled).ToList();
+            if (installedLegendaryGames.Count > 0)
+            {
+                yield return new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString(LOC.LegendaryRepair),
+                    Icon = "RepairIcon",
+                    Action = (args) =>
+                    {
+                        if (!LegendaryLauncher.IsInstalled)
+                        {
+                            throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                        }
+
+                        Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                        {
+                            ShowMaximizeButton = false,
+                        });
+
+                        var installProperties = new DownloadProperties { downloadAction = DownloadAction.Repair };
+                        var installData = new List<DownloadManagerData.Download>();
+                        foreach (var game in args.Games)
+                        {
+                            installData.Add(new DownloadManagerData.Download { gameID = game.GameId, name = game.Name, downloadProperties = installProperties });
+                        }
+                        window.DataContext = installData;
+                        window.Content = new LegendaryGameInstaller();
+                        window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+                        window.SizeToContent = SizeToContent.WidthAndHeight;
+                        window.MinWidth = 600;
+                        window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                        var title = ResourceProvider.GetString(LOC.LegendaryRepair);
+                        if (installedLegendaryGames.Count == 1)
+                        {
+                            title = installedLegendaryGames[0].Name;
+                        }
+                        window.Title = title;
+                        window.ShowDialog();
+                    }
+                };
             }
         }
 
