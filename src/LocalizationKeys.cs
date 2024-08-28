@@ -506,7 +506,7 @@ namespace System
         /// </summary>
         public const string LegendaryDownloadAlreadyExists = "LOCLegendaryDownloadAlreadyExists";
         /// <summary>
-        /// Following applications are already in the download list: {0}. You can see status of the download by accessing Legendary Panel via Menu => View or sidebar.
+        /// Following games are already in the download list: {0}. You can see status of the download by accessing Legendary Panel via Menu => View or sidebar.
         /// </summary>
         public const string LegendaryDownloadAlreadyExistsOther = "LOCLegendaryDownloadAlreadyExistsOther";
         /// <summary>

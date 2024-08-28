@@ -571,11 +571,12 @@ namespace LegendaryLibraryNS
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            if (args.Games.Count == 1)
+            var legendaryGames = args.Games.Where(i => i.PluginId == Id).ToList();
+            if (legendaryGames.Count > 0)
             {
-                Game game = args.Games.FirstOrDefault();
-                if (game.PluginId == Id)
+                if (legendaryGames.Count == 1)
                 {
+                    Game game = legendaryGames.FirstOrDefault();
                     if (game.IsInstalled)
                     {
                         yield return new GameMenuItem
@@ -816,19 +817,33 @@ namespace LegendaryLibraryNS
                         }
                     };
                 }
-            }
-            else
-            {
-                var legendaryGames = args.Games.Where(i => i.PluginId == Id).ToList();
-                if (legendaryGames.Count > 0)
+                else
                 {
                     var notInstalledLegendaryGames = legendaryGames.Where(i => i.IsInstalled == false).ToList();
                     if (notInstalledLegendaryGames.Count > 0)
                     {
+                        var installData = new List<DownloadManagerData.Download>();
+                        var installProperties = new DownloadProperties { downloadAction = DownloadAction.Install };
+                        foreach (var notInstalledLegendaryGame in notInstalledLegendaryGames)
+                        {
+                            installData.Add(new DownloadManagerData.Download { gameID = notInstalledLegendaryGame.GameId, name = notInstalledLegendaryGame.Name, downloadProperties = installProperties });
+                        }
                         yield return new GameMenuItem
                         {
                             Description = ResourceProvider.GetString(LOC.Legendary3P_PlayniteInstallGame),
                             Icon = "InstallIcon",
+                            Action = (args) =>
+                            {
+                                LegendaryInstallController.LaunchInstaller(installData);
+                            }
+                        };
+                    }
+                    else
+                    {
+                        yield return new GameMenuItem
+                        {
+                            Description = ResourceProvider.GetString(LOC.LegendaryRepair),
+                            Icon = "RepairIcon",
                             Action = (args) =>
                             {
                                 if (!LegendaryLauncher.IsInstalled)
@@ -840,11 +855,12 @@ namespace LegendaryLibraryNS
                                 {
                                     ShowMaximizeButton = false,
                                 });
-                                var installProperties = new DownloadProperties { downloadAction = DownloadAction.Install };
+
+                                var installProperties = new DownloadProperties { downloadAction = DownloadAction.Repair };
                                 var installData = new List<DownloadManagerData.Download>();
-                                foreach (var notInstalledLegendaryGame in notInstalledLegendaryGames)
+                                foreach (var game in args.Games)
                                 {
-                                    installData.Add(new DownloadManagerData.Download { gameID = notInstalledLegendaryGame.GameId, name = notInstalledLegendaryGame.Name, downloadProperties = installProperties });
+                                    installData.Add(new DownloadManagerData.Download { gameID = game.GameId, name = game.Name, downloadProperties = installProperties });
                                 }
                                 window.DataContext = installData;
                                 window.Content = new LegendaryGameInstaller();
@@ -852,10 +868,11 @@ namespace LegendaryLibraryNS
                                 window.SizeToContent = SizeToContent.WidthAndHeight;
                                 window.MinWidth = 600;
                                 window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                                var title = ResourceProvider.GetString(LOC.Legendary3P_PlayniteInstallGame);
-                                if (notInstalledLegendaryGames.Count == 1)
+                                var title = ResourceProvider.GetString(LOC.LegendaryRepair);
+                                var installedLegendaryGames = legendaryGames.Where(i => i.PluginId == Id && i.IsInstalled).ToList();
+                                if (installedLegendaryGames.Count == 1)
                                 {
-                                    title = notInstalledLegendaryGames[0].Name;
+                                    title = installedLegendaryGames[0].Name;
                                 }
                                 window.Title = title;
                                 window.ShowDialog();
@@ -863,47 +880,6 @@ namespace LegendaryLibraryNS
                         };
                     }
                 }
-            }
-            var installedLegendaryGames = args.Games.Where(i => i.PluginId == Id && i.IsInstalled).ToList();
-            if (installedLegendaryGames.Count > 0)
-            {
-                yield return new GameMenuItem
-                {
-                    Description = ResourceProvider.GetString(LOC.LegendaryRepair),
-                    Icon = "RepairIcon",
-                    Action = (args) =>
-                    {
-                        if (!LegendaryLauncher.IsInstalled)
-                        {
-                            throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
-                        }
-
-                        Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
-                        {
-                            ShowMaximizeButton = false,
-                        });
-
-                        var installProperties = new DownloadProperties { downloadAction = DownloadAction.Repair };
-                        var installData = new List<DownloadManagerData.Download>();
-                        foreach (var game in args.Games)
-                        {
-                            installData.Add(new DownloadManagerData.Download { gameID = game.GameId, name = game.Name, downloadProperties = installProperties });
-                        }
-                        window.DataContext = installData;
-                        window.Content = new LegendaryGameInstaller();
-                        window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
-                        window.SizeToContent = SizeToContent.WidthAndHeight;
-                        window.MinWidth = 600;
-                        window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                        var title = ResourceProvider.GetString(LOC.LegendaryRepair);
-                        if (installedLegendaryGames.Count == 1)
-                        {
-                            title = installedLegendaryGames[0].Name;
-                        }
-                        window.Title = title;
-                        window.ShowDialog();
-                    }
-                };
             }
         }
 

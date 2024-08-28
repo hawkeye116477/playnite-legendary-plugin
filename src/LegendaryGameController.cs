@@ -11,7 +11,6 @@ using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -24,8 +23,6 @@ namespace LegendaryLibraryNS
 {
     public class LegendaryInstallController : InstallController
     {
-        private IPlayniteAPI playniteAPI = API.Instance;
-
         public LegendaryInstallController(Game game) : base(game)
         {
             Name = "Install using Legendary client";
@@ -33,6 +30,18 @@ namespace LegendaryLibraryNS
 
         public override void Install(InstallActionArgs args)
         {
+            var installProperties = new DownloadProperties { downloadAction = DownloadAction.Install };
+            var installData = new List<DownloadManagerData.Download>
+            {
+                new DownloadManagerData.Download { gameID = Game.GameId, name = Game.Name, downloadProperties = installProperties }
+            };
+            LaunchInstaller(installData);
+            Game.IsInstalling = false;
+        }
+
+        public static void LaunchInstaller(List<DownloadManagerData.Download> installData)
+        {
+            var playniteAPI = API.Instance;
             if (!LegendaryLauncher.IsInstalled)
             {
                 throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
@@ -53,23 +62,19 @@ namespace LegendaryLibraryNS
                     Background = System.Windows.Media.Brushes.DodgerBlue
                 };
             }
-            window.Title = Game.Name;
-            var installProperties = new DownloadProperties { downloadAction = DownloadAction.Install };
-            var installData = new List<DownloadManagerData.Download>
-            {
-                new DownloadManagerData.Download { gameID = Game.GameId, name = Game.Name, downloadProperties = installProperties }
-            };
             window.DataContext = installData;
             window.Content = new LegendaryGameInstaller();
             window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
             window.SizeToContent = SizeToContent.WidthAndHeight;
             window.MinWidth = 600;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            var result = window.ShowDialog();
-            if (result == false)
+            var title = ResourceProvider.GetString(LOC.Legendary3P_PlayniteInstallGame);
+            if (installData.Count == 1)
             {
-                Game.IsInstalling = false;
+                title = installData[0].name;
             }
+            window.Title = title;
+            window.ShowDialog();
         }
     }
 
@@ -222,19 +227,19 @@ namespace LegendaryLibraryNS
                                 var result = await httpClient.PutAsync(uri, content);
                                 if (!result.IsSuccessStatusCode)
                                 {
-                                    playniteAPI.Dialogs.ShowErrorMessage(playniteAPI.Resources.GetString(LOC.LegendarySyncError).Format(Game.Name));
+                                    playniteAPI.Dialogs.ShowErrorMessage(playniteAPI.Resources.GetString(LOC.LegendaryUploadPlaytimeError).Format(Game.Name));
                                     logger.Error($"An error occured during uploading playtime to the cloud. Status code: {result.StatusCode}.");
                                 }
                             }
                             else
                             {
                                 logger.Error("An error occured during reading tokens file.");
-                                playniteAPI.Dialogs.ShowErrorMessage(playniteAPI.Resources.GetString(LOC.LegendarySyncError).Format(Game.Name));
+                                playniteAPI.Dialogs.ShowErrorMessage(playniteAPI.Resources.GetString(LOC.LegendaryUploadPlaytimeError).Format(Game.Name));
                             }
                         }
                         else
                         {
-                            playniteAPI.Dialogs.ShowErrorMessage(playniteAPI.Resources.GetString(LOC.LegendarySyncError).Format(Game.Name));
+                            playniteAPI.Dialogs.ShowErrorMessage(playniteAPI.Resources.GetString(LOC.LegendaryUploadPlaytimeError).Format(Game.Name));
                         }
                         a.CurrentProgressValue = 100;
                     }, globalProgressOptions);
