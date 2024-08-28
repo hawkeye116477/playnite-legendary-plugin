@@ -840,6 +840,7 @@ namespace LegendaryLibraryNS
                     }
                     else
                     {
+                        var installedLegendaryGames = legendaryGames.Where(i => i.IsInstalled).ToList();
                         yield return new GameMenuItem
                         {
                             Description = ResourceProvider.GetString(LOC.LegendaryRepair),
@@ -858,7 +859,7 @@ namespace LegendaryLibraryNS
 
                                 var installProperties = new DownloadProperties { downloadAction = DownloadAction.Repair };
                                 var installData = new List<DownloadManagerData.Download>();
-                                foreach (var game in args.Games)
+                                foreach (var game in installedLegendaryGames)
                                 {
                                     installData.Add(new DownloadManagerData.Download { gameID = game.GameId, name = game.Name, downloadProperties = installProperties });
                                 }
@@ -869,13 +870,21 @@ namespace LegendaryLibraryNS
                                 window.MinWidth = 600;
                                 window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                                 var title = ResourceProvider.GetString(LOC.LegendaryRepair);
-                                var installedLegendaryGames = legendaryGames.Where(i => i.PluginId == Id && i.IsInstalled).ToList();
                                 if (installedLegendaryGames.Count == 1)
                                 {
                                     title = installedLegendaryGames[0].Name;
                                 }
                                 window.Title = title;
                                 window.ShowDialog();
+                            }
+                        };
+                        yield return new GameMenuItem
+                        {
+                            Description = ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstallGame),
+                            Icon = "UninstallIcon",
+                            Action = (args) =>
+                            {
+                                LegendaryUninstallController.LaunchUninstaller(installedLegendaryGames);
                             }
                         };
                     }

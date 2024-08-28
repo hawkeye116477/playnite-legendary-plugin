@@ -34,6 +34,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Installation Folder</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Failed to import games from {0}.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Failed to download metadata: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">Uninstalling</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Do nothing</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Update Available</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Download and Install Update</sys:String>

@@ -34,6 +34,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Lokacija instalacije</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Neuspjeli uvod igara iz {0}.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Neuspjelo preuzimanje metapodataka: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">Deinstaliranje</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Ne čini ništa</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Dostupna su ažuriranja</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Preuzmi i instaliraj ažuriranje</sys:String>

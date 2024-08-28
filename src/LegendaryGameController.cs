@@ -80,7 +80,6 @@ namespace LegendaryLibraryNS
 
     public class LegendaryUninstallController : UninstallController
     {
-        private IPlayniteAPI playniteAPI = API.Instance;
         private static readonly ILogger logger = LogManager.GetLogger();
 
         public LegendaryUninstallController(Game game) : base(game)
@@ -88,52 +87,104 @@ namespace LegendaryLibraryNS
             Name = "Uninstall";
         }
 
-        public override async void Uninstall(UninstallActionArgs args)
+        public override void Uninstall(UninstallActionArgs args)
         {
             Dispose();
+            var games = new List<Game>
+            {
+                Game
+            };
+            LaunchUninstaller(games);
+            Game.IsUninstalling = false;
+        }
+
+        public static void LaunchUninstaller(List<Game> games)
+        {
             if (!LegendaryLauncher.IsInstalled)
             {
                 throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
             }
-            var result = MessageCheckBoxDialog.ShowMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstallGame), ResourceProvider.GetString(LOC.LegendaryUninstallGameConfirm).Format(Game.Name), LOC.LegendaryRemoveGameLaunchSettings, MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result.Result == false)
-            {
-                Game.IsUninstalling = false;
-            }
-            else
+            var playniteAPI = API.Instance;
+            string gamesCombined = string.Join(", ", games.Select(item => item.Name));
+            var result = MessageCheckBoxDialog.ShowMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstallGame), ResourceProvider.GetString(LOC.LegendaryUninstallGameConfirm).Format(gamesCombined), LOC.LegendaryRemoveGameLaunchSettings, MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result.Result)
             {
                 var canContinue = LegendaryLibrary.Instance.StopDownloadManager(true);
                 if (!canContinue)
                 {
-                    Game.IsUninstalling = false;
                     return;
                 }
-                await LegendaryDownloadManager.WaitUntilLegendaryCloses();
-                var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                   .WithArguments(new[] { "-y", "uninstall", Game.GameId })
-                                   .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
-                                   .AddCommandToLog()
-                                   .WithValidation(CommandResultValidation.None)
-                                   .ExecuteBufferedAsync();
-                if (cmd.StandardError.Contains("has been uninstalled"))
+                var uninstalledGames = new List<Game>();
+                var notUninstalledGames = new List<Game>();
+                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions($"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstalling)}... ", false);
+                playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
                 {
-                    if (result.CheckboxChecked)
+                    a.IsIndeterminate = false;
+                    a.ProgressMaxValue = games.Count;
+                    using (playniteAPI.Database.BufferedUpdate())
                     {
-                        var gameSettingsFile = Path.Combine(Path.Combine(LegendaryLibrary.Instance.GetPluginUserDataPath(), "GamesSettings", $"{Game.GameId}.json"));
-                        if (File.Exists(gameSettingsFile))
+                        var counter = 0;
+                        foreach (var game in games)
                         {
-                            File.Delete(gameSettingsFile);
+                            a.Text = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstalling)} {game.Name}... ";
+                            await LegendaryDownloadManager.WaitUntilLegendaryCloses();
+                            var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                               .WithArguments(new[] { "-y", "uninstall", game.GameId })
+                                               .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                               .AddCommandToLog()
+                                               .WithValidation(CommandResultValidation.None)
+                                               .ExecuteBufferedAsync();
+                            if (cmd.StandardError.Contains("has been uninstalled"))
+                            {
+                                if (result.CheckboxChecked)
+                                {
+                                    var gameSettingsFile = Path.Combine(Path.Combine(LegendaryLibrary.Instance.GetPluginUserDataPath(), "GamesSettings", $"{game.GameId}.json"));
+                                    if (File.Exists(gameSettingsFile))
+                                    {
+                                        File.Delete(gameSettingsFile);
+                                    }
+                                }
+                                game.IsInstalled = false;
+                                game.InstallDirectory = "";
+                                game.Version = "";
+                                playniteAPI.Database.Games.Update(game);
+                                uninstalledGames.Add(game);
+                            }
+                            else
+                            {
+                                notUninstalledGames.Add(game);
+                                logger.Debug("[Legendary] " + cmd.StandardError);
+                                logger.Error("[Legendary] exit code: " + cmd.ExitCode);
+                            }
+                            counter += 1;
+                            a.CurrentProgressValue = counter;
                         }
                     }
-                    playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryUninstallSuccess).Format(Game.Name));
-                    InvokeOnUninstalled(new GameUninstalledEventArgs());
-                }
-                else
+                }, globalProgressOptions);
+                if (uninstalledGames.Count > 0)
                 {
-                    logger.Debug("[Legendary] " + cmd.StandardError);
-                    logger.Error("[Legendary] exit code: " + cmd.ExitCode);
-                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameUninstallError).Format(ResourceProvider.GetString(LOC.LegendaryCheckLog)));
-                    Game.IsUninstalling = false;
+                    if (uninstalledGames.Count == 1)
+                    {
+                        playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryUninstallSuccess).Format(uninstalledGames[0].Name));
+                    }
+                    else
+                    {
+                        string uninstalledGamesCombined = string.Join(", ", uninstalledGames.Select(item => item.Name));
+                        playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryUninstallSuccessOther).Format(uninstalledGamesCombined));
+                    }
+
+                }
+                if (notUninstalledGames.Count > 0)
+                {
+                    if (notUninstalledGames.Count == 1)
+                    {
+                        playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameUninstallError).Format(ResourceProvider.GetString(LOC.LegendaryCheckLog)), notUninstalledGames[0].Name);
+                    }
+                    else
+                    {
+                        string notUninstalledGamesCombined = string.Join(", ", notUninstalledGames.Select(item => item.Name));
+                        playniteAPI.Dialogs.ShowMessage($"{ResourceProvider.GetString(LOC.LegendaryUninstallErrorOther).Format(notUninstalledGamesCombined)} {ResourceProvider.GetString(LOC.LegendaryCheckLog)}");
+                    }
                 }
             }
         }

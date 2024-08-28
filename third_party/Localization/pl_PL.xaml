@@ -34,6 +34,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Ścieżka instalacji</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Nie udało się zaimportować gier {0}.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Nie udało się pobrać metedanych: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">Odinstalowywanie</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Nic nie rób</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Dostępna aktualizacja</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Pobierz i zainstaluj aktualizację</sys:String>

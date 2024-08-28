@@ -34,6 +34,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Installatie Map</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Kan geen spellen importeren van {0}.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Downloaden van metadata mislukt: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">Aan het deinstalleren</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Doe niets</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Update Beschikbaar</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Installeer Update</sys:String>

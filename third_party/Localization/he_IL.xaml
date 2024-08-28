@@ -34,6 +34,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">תיקיית התקנה</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">נכשל ביבוא משחקים מ {0}.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">נכשלה הורדת נתונים: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">מסיר התקנה</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">אל תעשה דבר</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">עדכון זמין</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">הורד והתקן עדכון</sys:String>

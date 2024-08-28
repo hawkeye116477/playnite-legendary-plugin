@@ -34,6 +34,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Инсталационна папка</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Неуспешно импортиране на игри от {0}.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Неуспешно изтегляне на метаданни: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">Деинсталиране</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Не правете нищо</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Налична актуализация</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Изтеглете и инсталирайте актуализация</sys:String>

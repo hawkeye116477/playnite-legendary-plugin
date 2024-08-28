@@ -34,6 +34,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Paigalduse asukoht</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">Ei saanud importida mänge kohast {0}.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Metaandmete allalaadimine ebaõnnestus: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">Desinstallimine</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Ära tee midagi</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Värskendus on saadaval</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Laadi alla ja paigalda värskendus</sys:String>

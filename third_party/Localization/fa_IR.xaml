@@ -34,6 +34,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">محل نصب</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">واردات بازی از {0} انجام نشد.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">بارگیری ابرداده انجام نشد: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">در حال حذف نصب</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">کاری نکن</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">به روزرسانی موجود است</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">دانلود و نصب بروزرسانی</sys:String>

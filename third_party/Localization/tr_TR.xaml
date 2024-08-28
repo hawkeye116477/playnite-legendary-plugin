@@ -34,6 +34,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">Kurulum Klasörü</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">{0} konumundan oyun içe aktarılamadı.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Üst veriler indirilemedi: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">Kaldırılıyor</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Hiçbir şey yapma</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Güncelleme Mevcut</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Güncellemeyi İndir ve Kur</sys:String>

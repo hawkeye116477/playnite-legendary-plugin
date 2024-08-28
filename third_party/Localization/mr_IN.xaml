@@ -34,6 +34,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">स्थापना फोल्डर</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">{0} पासून गेम आयात करण्यात अपयशी.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">मेटाडेटा डाउनलोड करण्यात अयशस्वी: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">विस्थापित करत आहे</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">काहीही करू नका</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">अपडेट उपलब्ध</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">अपडेट डाउनलोड करून स्थापित करा</sys:String>

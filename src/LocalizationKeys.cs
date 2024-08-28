@@ -126,6 +126,10 @@ namespace System
         /// </summary>
         public const string Legendary3P_PlayniteMetadataDownloadError = "LOCLegendary3P_PlayniteMetadataDownloadError";
         /// <summary>
+        /// Uninstalling
+        /// </summary>
+        public const string Legendary3P_PlayniteUninstalling = "LOCLegendary3P_PlayniteUninstalling";
+        /// <summary>
         /// Do nothing
         /// </summary>
         public const string Legendary3P_PlayniteDoNothing = "LOCLegendary3P_PlayniteDoNothing";
@@ -822,7 +826,7 @@ namespace System
         /// </summary>
         public const string LegendaryGamesUpdatesUnderway = "LOCLegendaryGamesUpdatesUnderway";
         /// <summary>
-        /// Remove game launch settings
+        /// Remove launch settings
         /// </summary>
         public const string LegendaryRemoveGameLaunchSettings = "LOCLegendaryRemoveGameLaunchSettings";
         /// <summary>
@@ -901,6 +905,14 @@ namespace System
         /// {0} has been successfully uninstalled.
         /// </summary>
         public const string LegendaryUninstallSuccess = "LOCLegendaryUninstallSuccess";
+        /// <summary>
+        /// Following games have been successfully uninstalled: {0}.
+        /// </summary>
+        public const string LegendaryUninstallSuccessOther = "LOCLegendaryUninstallSuccessOther";
+        /// <summary>
+        /// Cannot uninstall following games: {0}.
+        /// </summary>
+        public const string LegendaryUninstallErrorOther = "LOCLegendaryUninstallErrorOther";
         /// <summary>
         /// Import games requiring {0}
         /// </summary>
