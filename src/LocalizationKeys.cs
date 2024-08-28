@@ -926,7 +926,7 @@ namespace System
         /// </summary>
         public const string LegendaryRequiredInstallOfThirdPartyLauncher = "LOCLegendaryRequiredInstallOfThirdPartyLauncher";
         /// <summary>
-        /// Following games require installation of {0}: {1}. It's recommended to go to Plugin settings => Additional services => {0} => Activate games, and then install it directly via {0}.
+        /// Following games require installation of {0}: {1}. It's recommended to go to Plugin settings => Additional services => {0} => Activate games, and then install them directly via {0}.
         /// </summary>
         public const string LegendaryRequiredInstallOfThirdPartyLauncherOther = "LOCLegendaryRequiredInstallOfThirdPartyLauncherOther";
         /// <summary>
