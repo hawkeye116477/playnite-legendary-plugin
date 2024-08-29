@@ -338,7 +338,7 @@ namespace System
         /// </summary>
         public const string LegendaryAfterInstalling = "LOCLegendaryAfterInstalling";
         /// <summary>
-        /// Downloaded:
+        /// Downloaded
         /// </summary>
         public const string LegendaryDownloaded = "LOCLegendaryDownloaded";
         /// <summary>
@@ -349,6 +349,10 @@ namespace System
         /// Download Speed:
         /// </summary>
         public const string LegendaryDownloadSpeed = "LOCLegendaryDownloadSpeed";
+        /// <summary>
+        /// Disk Usage:
+        /// </summary>
+        public const string LegendaryDiskSpeed = "LOCLegendaryDiskSpeed";
         /// <summary>
         /// Elapsed:
         /// </summary>
@@ -429,6 +433,10 @@ namespace System
         /// Status
         /// </summary>
         public const string LegendaryDownloadStatus = "LOCLegendaryDownloadStatus";
+        /// <summary>
+        /// Progress
+        /// </summary>
+        public const string LegendaryProgress = "LOCLegendaryProgress";
         /// <summary>
         /// Completed
         /// </summary>

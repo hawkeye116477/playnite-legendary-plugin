@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Management;
 using ByteSizeLib;
@@ -116,6 +117,23 @@ namespace LegendaryLibraryNS
                 logger.Error($"An error occured during checking if directory {folderPath} is writable: {ex.Message}");
                 return true;
             }
+        }
+
+        public static double GetDouble(string value)
+        {
+            double result;
+
+            // Try parsing in the current culture
+            if (!double.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result) &&
+                // Then try in US english
+                !double.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result) &&
+                // Then in neutral language
+                !double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result))
+            {
+                result = 0;
+            }
+
+            return result;
         }
     }
 }

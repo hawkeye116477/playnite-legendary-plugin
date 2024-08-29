@@ -21,6 +21,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using LegendaryLibraryNS.Services;
 using System.Windows.Input;
+using Playnite.SDK.Plugins;
 
 namespace LegendaryLibraryNS
 {
@@ -34,6 +35,7 @@ namespace LegendaryLibraryNS
         private ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI playniteAPI = API.Instance;
         public DownloadManagerData.Rootobject downloadManagerData;
+        public SidebarItem legendaryPanel = LegendaryLibrary.GetPanel();
 
         public LegendaryDownloadManager()
         {
@@ -74,6 +76,11 @@ namespace LegendaryLibraryNS
                     {
                         var installSizeSplittedString = downloadItem.installSize.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                         downloadItem.installSizeNumber = Helpers.ToBytes(double.Parse(installSizeSplittedString[0]), installSizeSplittedString[1].Insert(1, "i"));
+                    }
+                    if (downloadItem.status == DownloadStatus.Completed && downloadItem.downloadedNumber == 0)
+                    {
+                        downloadItem.downloadedNumber = downloadItem.downloadSizeNumber;
+                        downloadItem.progress = 100;
                     }
                     downloadItem.downloadSize = "";
                     downloadItem.installSize = "";
@@ -133,11 +140,11 @@ namespace LegendaryLibraryNS
             var queuedList = downloadManagerData.downloads.Where(i => i.status == DownloadStatus.Queued).ToList();
             if (!running)
             {
+                DiskSpeedTB.Text = "";
                 DownloadSpeedTB.Text = "";
-                DownloadedTB.Text = "";
                 ElapsedTB.Text = "";
                 EtaTB.Text = "";
-                DownloadPB.Value = 0;
+                legendaryPanel.ProgressValue = 0;
                 DescriptionTB.Text = "";
                 GameTitleTB.Text = "";
             }
@@ -242,7 +249,14 @@ namespace LegendaryLibraryNS
             var gameID = taskData.gameID;
             var downloadProperties = taskData.downloadProperties;
             var gameTitle = taskData.name;
-            var downloadSizeNumber = taskData.downloadSizeNumber;
+            double cachedDownloadSizeNumber = taskData.downloadSizeNumber;
+            double newDownloadSizeNumber = 0;
+            double downloadCache = 0;
+            bool downloadSpeedInBits = false;
+            if (settings.DisplayDownloadSpeedInBits)
+            {
+                downloadSpeedInBits = true;
+            }
             if (gameID == "eos-overlay")
             {
                 var fullInstallPath = Path.Combine(downloadProperties.installPath, ".overlay");
@@ -341,7 +355,7 @@ namespace LegendaryLibraryNS
                         case StartedCommandEvent started:
                             wantedItem.status = DownloadStatus.Running;
                             GameTitleTB.Text = gameTitle;
-                            DownloadPB.Value = 0;
+                            legendaryPanel.ProgressValue = 0;
                             break;
                         case StandardOutputCommandEvent stdOut:
                             if (downloadProperties.downloadAction == DownloadAction.Repair)
@@ -350,7 +364,8 @@ namespace LegendaryLibraryNS
                                 if (verificationProgressMatch.Length >= 2)
                                 {
                                     double progress = double.Parse(verificationProgressMatch.Groups[1].Value.Replace("%", ""), CultureInfo.InvariantCulture);
-                                    DownloadPB.Value = progress;
+                                    wantedItem.progress = progress;
+                                    legendaryPanel.ProgressValue = progress;
                                 }
                                 var verificationFileProgressMatch = Regex.Match(stdOut.Text, @"Verifying large file \""(.*)""\: (\d.*%) \((\d+\.\d+)\/(\d+\.\d+) (\wiB)");
                                 if (verificationFileProgressMatch.Length >= 2)
@@ -371,8 +386,13 @@ namespace LegendaryLibraryNS
                             var downloadSizeMatch = Regex.Match(stdErr.Text, @"Download size: (\S+) (\wiB)");
                             if (downloadSizeMatch.Length >= 2)
                             {
-                                downloadSizeNumber = Helpers.ToBytes(double.Parse(downloadSizeMatch.Groups[1].Value, CultureInfo.InvariantCulture), downloadSizeMatch.Groups[2].Value);
-                                wantedItem.downloadSizeNumber = downloadSizeNumber;
+                                newDownloadSizeNumber = Helpers.ToBytes(Helpers.GetDouble(downloadSizeMatch.Groups[1].Value), downloadSizeMatch.Groups[2].Value);
+                                if (newDownloadSizeNumber > cachedDownloadSizeNumber)
+                                {
+                                    wantedItem.downloadSizeNumber = newDownloadSizeNumber;
+                                    cachedDownloadSizeNumber = newDownloadSizeNumber;
+                                }
+                                downloadCache = cachedDownloadSizeNumber - newDownloadSizeNumber;
                             }
                             var installSizeMatch = Regex.Match(stdErr.Text, @"Install size: (\S+) (\wiB)");
                             if (installSizeMatch.Length >= 2)
@@ -388,7 +408,6 @@ namespace LegendaryLibraryNS
                             var progressMatch = Regex.Match(stdErr.Text, @"Progress: (\d.*%)");
                             if (progressMatch.Length >= 2)
                             {
-                                double progress = double.Parse(progressMatch.Groups[1].Value.Replace("%", ""), CultureInfo.InvariantCulture);
                                 if (downloadProperties.downloadAction != DownloadAction.Update)
                                 {
                                     DescriptionTB.Text = ResourceProvider.GetString(LOC.Legendary3P_PlayniteDownloadingLabel);
@@ -397,7 +416,6 @@ namespace LegendaryLibraryNS
                                 {
                                     DescriptionTB.Text = ResourceProvider.GetString(LOC.LegendaryDownloadingUpdate);
                                 }
-                                DownloadPB.Value = progress;
                             }
                             var elapsedMatch = Regex.Match(stdErr.Text, @"Running for (\d\d:\d\d:\d\d)");
                             if (elapsedMatch.Length >= 2)
@@ -412,10 +430,14 @@ namespace LegendaryLibraryNS
                             var downloadedMatch = Regex.Match(stdErr.Text, @"Downloaded: (\S+) (\wiB)");
                             if (downloadedMatch.Length >= 2)
                             {
-                                string downloadSize = Helpers.FormatSize(downloadSizeNumber);
-                                string downloaded = Helpers.FormatSize(double.Parse(downloadedMatch.Groups[1].Value, CultureInfo.InvariantCulture), downloadedMatch.Groups[2].Value);
-                                DownloadedTB.Text = downloaded + " / " + downloadSize;
-                                if (downloaded == downloadSize)
+                                double downloadedNumber = Helpers.ToBytes(Helpers.GetDouble(downloadedMatch.Groups[1].Value), downloadedMatch.Groups[2].Value);
+                                double totalDownloadedNumber = downloadedNumber + downloadCache;
+                                wantedItem.downloadedNumber = totalDownloadedNumber;
+                                double newProgress = totalDownloadedNumber / wantedItem.downloadSizeNumber * 100;
+                                wantedItem.progress = newProgress;
+                                legendaryPanel.ProgressValue = newProgress;
+
+                                if (totalDownloadedNumber == wantedItem.downloadSizeNumber)
                                 {
                                     switch (downloadProperties.downloadAction)
                                     {
@@ -436,13 +458,14 @@ namespace LegendaryLibraryNS
                             var downloadSpeedMatch = Regex.Match(stdErr.Text, @"Download\t- (\S+) (\wiB)");
                             if (downloadSpeedMatch.Length >= 2)
                             {
-                                bool inBits = false;
-                                if (settings.DisplayDownloadSpeedInBits)
-                                {
-                                    inBits = true;
-                                }
-                                string downloadSpeed = Helpers.FormatSize(double.Parse(downloadSpeedMatch.Groups[1].Value, CultureInfo.InvariantCulture), downloadSpeedMatch.Groups[2].Value, inBits);
+                                string downloadSpeed = Helpers.FormatSize(Helpers.GetDouble(downloadSpeedMatch.Groups[1].Value), downloadSpeedMatch.Groups[2].Value, downloadSpeedInBits);
                                 DownloadSpeedTB.Text = downloadSpeed + "/s";
+                            }
+                            var diskSpeedMatch = Regex.Match(stdErr.Text, @"Disk\t- (\S+) (\wiB)");
+                            if (diskSpeedMatch.Length >= 2)
+                            {
+                                string diskSpeed = Helpers.FormatSize(Helpers.GetDouble(diskSpeedMatch.Groups[1].Value), diskSpeedMatch.Groups[2].Value, downloadSpeedInBits);
+                                DiskSpeedTB.Text = diskSpeed + "/s";
                             }
                             var errorMessage = stdErr.Text;
                             if (errorMessage.Contains("finished successfully") || errorMessage.Contains("already up to date"))
@@ -595,10 +618,10 @@ namespace LegendaryLibraryNS
         {
             if (DownloadsDG.SelectedIndex != -1)
             {
-                foreach (var selectedRow in DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
+                var runningOrQueuedDownloads = DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().Where(i => i.status == DownloadStatus.Running || i.status == DownloadStatus.Queued).ToList();
+                if (runningOrQueuedDownloads.Count > 0)
                 {
-                    if (selectedRow.status == DownloadStatus.Running ||
-                               selectedRow.status == DownloadStatus.Queued)
+                    foreach (var selectedRow in runningOrQueuedDownloads)
                     {
                         if (selectedRow.status == DownloadStatus.Running)
                         {
@@ -608,8 +631,9 @@ namespace LegendaryLibraryNS
                         }
                         selectedRow.status = DownloadStatus.Paused;
                     }
+                    legendaryPanel.ProgressValue = 0;
+                    SaveData();
                 }
-                SaveData();
             }
         }
 
@@ -632,11 +656,12 @@ namespace LegendaryLibraryNS
         {
             if (DownloadsDG.SelectedIndex != -1)
             {
-                foreach (var selectedRow in DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
+                var cancelableDownloads = DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>()
+                                                                   .Where(i => i.status == DownloadStatus.Running || i.status == DownloadStatus.Queued || i.status == DownloadStatus.Paused)
+                                                                   .ToList();
+                if (cancelableDownloads.Count > 0)
                 {
-                    if (selectedRow.status == DownloadStatus.Running ||
-                        selectedRow.status == DownloadStatus.Queued ||
-                        selectedRow.status == DownloadStatus.Paused)
+                    foreach (var selectedRow in cancelableDownloads)
                     {
                         if (selectedRow.status == DownloadStatus.Running)
                         {
@@ -662,16 +687,18 @@ namespace LegendaryLibraryNS
                             }
                         }
                         selectedRow.status = DownloadStatus.Canceled;
-                        DownloadSpeedTB.Text = "";
-                        DownloadedTB.Text = "";
-                        ElapsedTB.Text = "";
-                        EtaTB.Text = "";
-                        DownloadPB.Value = 0;
-                        DescriptionTB.Text = "";
-                        GameTitleTB.Text = "";
+                        selectedRow.downloadedNumber = 0;
+                        selectedRow.progress = 0;
                     }
+                    DownloadSpeedTB.Text = "";
+                    legendaryPanel.ProgressValue = 0;
+                    ElapsedTB.Text = "";
+                    EtaTB.Text = "";
+                    DescriptionTB.Text = "";
+                    GameTitleTB.Text = "";
+                    DiskSpeedTB.Text = "";
+                    SaveData();
                 }
-                SaveData();
             }
         }
 

@@ -26,9 +26,10 @@
   <sys:String x:Key="LOCLegendaryEnable">Enable</sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable">Space Available:</sys:String>
   <sys:String x:Key="LOCLegendaryAfterInstalling">After Installing:</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloaded">Downloaded:</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloaded">Downloaded</sys:String>
   <sys:String x:Key="LOCLegendaryETA">ETA:</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSpeed">Download Speed:</sys:String>
+  <sys:String x:Key="LOCLegendaryDiskSpeed">Disk Usage:</sys:String>
   <sys:String x:Key="LOCLegendaryElapsed">Elapsed:</sys:String>
   <sys:String x:Key="LOCLegendaryVerifying">Verifying...</sys:String>
   <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Verifying large file "{0}": {1}</sys:String>
@@ -49,6 +50,7 @@
   <sys:String x:Key="LOCLegendaryGameImportFailure">Failed to import game. Reason: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">Download Manager</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadStatus">Status</sys:String>
+  <sys:String x:Key="LOCLegendaryProgress">Progress</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadCompletedColumn">Completed</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadQueued">Queued</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadRunning">Running</sys:String>

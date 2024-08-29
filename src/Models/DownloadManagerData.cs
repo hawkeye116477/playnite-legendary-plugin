@@ -57,6 +57,19 @@ namespace LegendaryLibraryNS.Models
                 set => SetValue(ref _status, value);
             }
 
+            private double _progress;
+            public double progress
+            {
+                get => _progress;
+                set => SetValue(ref _progress, value);
+            }
+
+            private double _downloadedNumber;
+            public double downloadedNumber
+            {
+                get => _downloadedNumber;
+                set => SetValue(ref _downloadedNumber, value);
+            }
             public DownloadProperties downloadProperties { get; set; }
         }
     }

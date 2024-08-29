@@ -26,6 +26,7 @@ namespace LegendaryLibraryNS
         public static LegendaryLibrary Instance { get; set; }
         public static bool LegendaryGameInstaller { get; internal set; }
         public LegendaryDownloadManager LegendaryDownloadManager { get; set; }
+        private readonly SidebarItem downloadManagerSidebarItem;
 
         public LegendaryLibrary(IPlayniteAPI api) : base(
             "Legendary (Epic)",
@@ -40,11 +41,25 @@ namespace LegendaryLibraryNS
             SettingsViewModel = new LegendaryLibrarySettingsViewModel(this, api);
             Load3pLocalization();
             LoadMenuIcons();
+            downloadManagerSidebarItem = new SidebarItem
+            {
+                Title = ResourceProvider.GetString(LOC.LegendaryPanel),
+                Icon = LegendaryLauncher.Icon,
+                Type = SiderbarItemType.View,
+                Opened = () => GetLegendaryDownloadManager(),
+                ProgressValue = 0,
+                ProgressMaximum = 100,
+            };
         }
 
         public static LegendaryLibrarySettings GetSettings()
         {
             return Instance.SettingsViewModel?.Settings ?? null;
+        }
+
+        public static SidebarItem GetPanel()
+        {
+            return Instance.downloadManagerSidebarItem;
         }
 
         public static LegendaryDownloadManager GetLegendaryDownloadManager()
@@ -356,13 +371,7 @@ namespace LegendaryLibraryNS
 
         public override IEnumerable<SidebarItem> GetSidebarItems()
         {
-            yield return new SidebarItem
-            {
-                Title = ResourceProvider.GetString(LOC.LegendaryPanel),
-                Icon = LegendaryLauncher.Icon,
-                Type = SiderbarItemType.View,
-                Opened = () => GetLegendaryDownloadManager()
-            };
+            yield return downloadManagerSidebarItem;
         }
 
         public bool StopDownloadManager(bool displayConfirm = false)

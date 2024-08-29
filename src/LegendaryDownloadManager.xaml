@@ -6,7 +6,6 @@
              xmlns:local="clr-namespace:LegendaryLibraryNS"
              xmlns:localcon="clr-namespace:LegendaryLibraryNS.Converters"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:pcmd="clr-namespace:Playnite.Commands"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="800" DataContext="{Binding RelativeSource={RelativeSource Self}}" Name="LegendaryDownloadManagerUC" PreviewKeyDown="LegendaryDownloadManagerUC_PreviewKeyDown">
 
@@ -18,7 +17,7 @@
         <localcon:DownloadStatusEnumToStringConverter x:Key="DownloadStatusEnumToStringConverter"/>
         <localcon:NumericalSizeToStringConverter x:Key="NumericalSizeToStringConverter"/>
     </UserControl.Resources>
-    <DockPanel Margin="10">
+    <DockPanel Margin="10,10,10,5">
         <Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -37,25 +36,20 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Separator Grid.Row="0" Grid.ColumnSpan="2" Margin="0,15,0,5"></Separator>
-            <TextBlock x:Name="DescriptionTB" HorizontalAlignment="Left" Margin="0,0,0,5" Grid.Row="1" VerticalAlignment="Bottom"></TextBlock>
-            <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="0,0,0,5">
-                <ProgressBar Value="0" Name="DownloadPB"/>
-                <TextBlock Text="{Binding ElementName=DownloadPB, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5">
-                </TextBlock>
-            </Grid>
-            <TextBlock Name="GameTitleTB" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="0" Margin="0,0,0,5"></TextBlock>
+            <Separator Grid.Row="0" Grid.ColumnSpan="2" Margin="0,15,0,10"></Separator>
+            <TextBlock Name="GameTitleTB" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Margin="0,0,0,5"></TextBlock>
+            <TextBlock x:Name="DescriptionTB" HorizontalAlignment="Left" Margin="0,0,0,5" Grid.Row="2" VerticalAlignment="Bottom"></TextBlock>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="0" Margin="0,0,0,5" VerticalAlignment="Top">
                 <TextBlock Text="{DynamicResource LOCLegendaryDownloadSpeed}"></TextBlock>
                 <TextBlock Name="DownloadSpeedTB" HorizontalAlignment="Left" Margin="5,0,30,0"></TextBlock>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="0" Margin="0,0,0,5" VerticalAlignment="Top">
-                <TextBlock Text="{DynamicResource LOCLegendaryDownloaded}"></TextBlock>
-                <TextBlock Name="DownloadedTB" HorizontalAlignment="Left" Margin="5,0,30,0"></TextBlock>
-            </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Top">
                 <TextBlock Text="{DynamicResource LOCLegendaryElapsed}"></TextBlock>
                 <TextBlock Name="ElapsedTB" HorizontalAlignment="Left" Margin="5,0,0,0"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="0" Margin="0,0,0,5" VerticalAlignment="Top">
+                <TextBlock Text="{DynamicResource LOCLegendaryDiskSpeed}"></TextBlock>
+                <TextBlock Name="DiskSpeedTB" HorizontalAlignment="Left" Margin="5,0,30,0"></TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Top">
                 <TextBlock Text="{DynamicResource LOCLegendaryETA}"></TextBlock>
@@ -110,6 +104,18 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{DynamicResource LOCLegendary3P_PlayniteGameNameTitle}" Binding="{Binding name}"></DataGridTextColumn>
                     <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloadStatus}" Binding="{Binding status, Converter={StaticResource DownloadStatusEnumToStringConverter}}"/>
+                    <DataGridTemplateColumn Header="{DynamicResource LOCLegendaryProgress}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <ProgressBar Value="{Binding progress}" Name="DownloadPB"/>
+                                    <TextBlock Text="{Binding progress, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5" Style="{DynamicResource BaseTextBlockStyle}">
+                                    </TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloaded}" Binding="{Binding downloadedNumber, Converter={StaticResource NumericalSizeToStringConverter}}"/>
                     <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloadSizeColumn}" Binding="{Binding downloadSizeNumber, Converter={StaticResource NumericalSizeToStringConverter}}"/>
                     <DataGridTextColumn Header="{DynamicResource LOCLegendary3P_PlayniteInstallSizeLabel}" Binding="{Binding installSizeNumber, Converter={StaticResource NumericalSizeToStringConverter}}"/>
                     <DataGridTextColumn Header="{DynamicResource LOCLegendary3P_PlayniteAddedLabel}" Binding="{Binding addedTime, Converter={StaticResource LongToDateConverter}, StringFormat='dd.MM.yyyy HH:mm:ss'}"/>
