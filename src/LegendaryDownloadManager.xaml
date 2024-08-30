@@ -124,8 +124,8 @@
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="{DynamicResource LOCLegendary3P_PlayniteInstallSizeLabel}" Binding="{Binding installSizeNumber, Converter={StaticResource NumericalSizeToStringConverter}}"/>
-                    <DataGridTextColumn Header="{DynamicResource LOCLegendary3P_PlayniteAddedLabel}" Binding="{Binding addedTime, Converter={StaticResource LongToDateConverter}, StringFormat='dd.MM.yyyy HH:mm:ss'}"/>
-                    <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloadCompletedColumn}" Binding="{Binding completedTime, Converter={StaticResource LongToDateConverter}, StringFormat='dd.MM.yyyy HH:mm:ss'}"/>
+                    <DataGridTextColumn Header="{DynamicResource LOCLegendary3P_PlayniteAddedLabel}" Binding="{Binding addedTime, Converter={StaticResource LongToDateConverter}}"/>
+                    <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloadCompletedColumn}" Binding="{Binding completedTime, Converter={StaticResource LongToDateConverter}}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <Popup Name="FilterPop" HorizontalAlignment="Left" VerticalAlignment="Top" IsOpen="False" Placement="MousePoint" AllowsTransparency="False" AllowDrop="False" Margin="0" HorizontalOffset="20">

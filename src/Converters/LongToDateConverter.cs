@@ -15,7 +15,8 @@ namespace LegendaryLibraryNS.Converters
             {
                 return "";
             }
-            return dateTime.AddSeconds(seconds).ToLocalTime();
+            DateTimeFormatInfo formatInfo = CultureInfo.CurrentCulture.DateTimeFormat;
+            return dateTime.AddSeconds(seconds).ToLocalTime().ToString(formatInfo);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
