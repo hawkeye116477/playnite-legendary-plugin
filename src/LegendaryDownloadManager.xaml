@@ -115,8 +115,14 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloaded}" Binding="{Binding downloadedNumber, Converter={StaticResource NumericalSizeToStringConverter}}"/>
-                    <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloadSizeColumn}" Binding="{Binding downloadSizeNumber, Converter={StaticResource NumericalSizeToStringConverter}}"/>
+                    <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloaded}">
+                        <DataGridTextColumn.Binding>
+                            <MultiBinding StringFormat="{}{0} / {1}">
+                                <Binding Path="downloadedNumber" Converter="{StaticResource NumericalSizeToStringConverter}"></Binding>
+                                <Binding Path="downloadSizeNumber" Converter="{StaticResource NumericalSizeToStringConverter}"></Binding>
+                            </MultiBinding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
                     <DataGridTextColumn Header="{DynamicResource LOCLegendary3P_PlayniteInstallSizeLabel}" Binding="{Binding installSizeNumber, Converter={StaticResource NumericalSizeToStringConverter}}"/>
                     <DataGridTextColumn Header="{DynamicResource LOCLegendary3P_PlayniteAddedLabel}" Binding="{Binding addedTime, Converter={StaticResource LongToDateConverter}, StringFormat='dd.MM.yyyy HH:mm:ss'}"/>
                     <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloadCompletedColumn}" Binding="{Binding completedTime, Converter={StaticResource LongToDateConverter}, StringFormat='dd.MM.yyyy HH:mm:ss'}"/>
