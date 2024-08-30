@@ -214,24 +214,6 @@ namespace LegendaryLibraryNS
             DoNextJobInQueue();
         }
 
-        public void EnqueueJob(DownloadManagerData.Download taskData)
-        {
-            DisplayGreeting();
-            var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == taskData.gameID);
-            if (wantedItem == null)
-            {
-                DateTimeOffset now = DateTime.UtcNow;
-                downloadManagerData.downloads.Add(new DownloadManagerData.Download
-                { gameID = taskData.gameID, downloadSizeNumber = taskData.downloadSizeNumber, installSizeNumber = taskData.installSizeNumber, name = taskData.name, status = DownloadStatus.Queued, addedTime = now.ToUnixTimeSeconds(), downloadProperties = taskData.downloadProperties });
-            }
-            else
-            {
-                wantedItem.status = DownloadStatus.Queued;
-            }
-            SaveData();
-            DoNextJobInQueue();
-        }
-
         public static async Task WaitUntilLegendaryCloses()
         {
             if (File.Exists(Path.Combine(LegendaryLauncher.ConfigPath, "installed.json.lock")))
@@ -641,14 +623,10 @@ namespace LegendaryLibraryNS
         {
             if (DownloadsDG.SelectedIndex != -1)
             {
-                foreach (var selectedRow in DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
-                {
-                    if (selectedRow.status == DownloadStatus.Canceled ||
-                        selectedRow.status == DownloadStatus.Paused)
-                    {
-                        EnqueueJob(selectedRow);
-                    }
-                }
+                var downloadsToResume = DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>()
+                                                                 .Where(i => i.status == DownloadStatus.Canceled || i.status == DownloadStatus.Paused)
+                                                                 .ToList();
+                EnqueueMultipleJobs(downloadsToResume, true);
             }
         }
 
