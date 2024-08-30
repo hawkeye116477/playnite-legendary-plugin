@@ -539,23 +539,20 @@ namespace LegendaryLibraryNS
                                                     game.Playtime = playtimeItem.totalTime;
                                                 }
                                             }
-                                            // Dishonored: Death of the Outsider and Fallout: New Vegas need specific key in registry
-                                            if (gameID == "2fb8273dcf6f41e4899c0c881e047053" || gameID == "5daeb974a22a435988892319b3a4f476")
+                                            // Some games need specific key in registry, otherwise they can't launch
+                                            try
                                             {
-                                                try
+                                                using (var regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey("com.epicgames.launcher", false))
                                                 {
-                                                    using (var regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey("com.epicgames.launcher", false))
+                                                    if (regKey == null)
                                                     {
-                                                        if (regKey == null)
-                                                        {
-                                                            Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\com.epicgames.launcher");
-                                                        }
+                                                        Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\com.epicgames.launcher");
                                                     }
                                                 }
-                                                catch (Exception ex)
-                                                {
-                                                    logger.Error($"Failed to create registry key for {gameTitle}. Error: {ex.Message}");
-                                                }
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                logger.Error($"Failed to create registry key for {gameTitle}. Error: {ex.Message}");
                                             }
                                             if (downloadProperties.installPrerequisites)
                                             {
