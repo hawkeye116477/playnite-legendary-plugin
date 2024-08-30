@@ -345,7 +345,7 @@ namespace LegendaryLibraryNS
                                 var verificationProgressMatch = Regex.Match(stdOut.Text, @"Verification progress:.*\((\d.*%)");
                                 if (verificationProgressMatch.Length >= 2)
                                 {
-                                    double progress = double.Parse(verificationProgressMatch.Groups[1].Value.Replace("%", ""), CultureInfo.InvariantCulture);
+                                    double progress = Helpers.GetDouble(verificationProgressMatch.Groups[1].Value.Replace("%", ""));
                                     wantedItem.progress = progress;
                                     legendaryPanel.ProgressValue = progress;
                                 }
@@ -354,8 +354,8 @@ namespace LegendaryLibraryNS
                                 {
                                     string fileName = verificationFileProgressMatch.Groups[1].Value;
                                     string largeProgressPercent = verificationFileProgressMatch.Groups[2].Value;
-                                    string readSize = Helpers.FormatSize(double.Parse(verificationFileProgressMatch.Groups[3].Value, CultureInfo.InvariantCulture), verificationFileProgressMatch.Groups[5].Value);
-                                    string fullSize = Helpers.FormatSize(double.Parse(verificationFileProgressMatch.Groups[4].Value, CultureInfo.InvariantCulture), verificationFileProgressMatch.Groups[5].Value);
+                                    string readSize = Helpers.FormatSize(Helpers.GetDouble(verificationFileProgressMatch.Groups[3].Value), verificationFileProgressMatch.Groups[5].Value);
+                                    string fullSize = Helpers.FormatSize(Helpers.GetDouble(verificationFileProgressMatch.Groups[4].Value), verificationFileProgressMatch.Groups[5].Value);
                                     DescriptionTB.Text = ResourceProvider.GetString(LOC.LegendaryVerifyingLargeFile).Format(fileName, $"{largeProgressPercent} ({readSize}/{fullSize})");
                                 }
                                 else if (stdOut.Text.Contains("Verification"))
@@ -379,7 +379,7 @@ namespace LegendaryLibraryNS
                             var installSizeMatch = Regex.Match(stdErr.Text, @"Install size: (\S+) (\wiB)");
                             if (installSizeMatch.Length >= 2)
                             {
-                                double installSizeNumber = Helpers.ToBytes(double.Parse(installSizeMatch.Groups[1].Value, CultureInfo.InvariantCulture), installSizeMatch.Groups[2].Value);
+                                double installSizeNumber = Helpers.ToBytes(Helpers.GetDouble(installSizeMatch.Groups[1].Value), installSizeMatch.Groups[2].Value);
                                 wantedItem.installSizeNumber = installSizeNumber;
                             }
                             var fullInstallPathMatch = Regex.Match(stdErr.Text, @"Install path: (\S+)");
