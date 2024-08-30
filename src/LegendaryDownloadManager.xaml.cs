@@ -652,7 +652,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private void CancelDownloadBtn_Click(object sender, RoutedEventArgs e)
+        private async void CancelDownloadBtn_Click(object sender, RoutedEventArgs e)
         {
             if (DownloadsDG.SelectedIndex != -1)
             {
@@ -668,6 +668,7 @@ namespace LegendaryLibraryNS
                             gracefulInstallerCTS?.Cancel();
                             gracefulInstallerCTS?.Dispose();
                             forcefulInstallerCTS?.Dispose();
+                            await WaitUntilLegendaryCloses();
                         }
                         var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", selectedRow.gameID + ".resume");
                         if (File.Exists(resumeFile))
@@ -702,7 +703,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private void RemoveDownloadEntry(DownloadManagerData.Download selectedEntry)
+        private async void RemoveDownloadEntry(DownloadManagerData.Download selectedEntry)
         {
             if (selectedEntry.status != DownloadStatus.Completed && selectedEntry.status != DownloadStatus.Canceled)
             {
@@ -711,6 +712,7 @@ namespace LegendaryLibraryNS
                     gracefulInstallerCTS?.Cancel();
                     gracefulInstallerCTS?.Dispose();
                     forcefulInstallerCTS?.Dispose();
+                    await WaitUntilLegendaryCloses();
                 }
                 selectedEntry.status = DownloadStatus.Canceled;
             }
