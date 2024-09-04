@@ -23,8 +23,6 @@ namespace LegendaryLibraryNS
         private ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI playniteAPI = API.Instance;
         public string installCommand;
-        public string downloadSizeWithoutDlcs;
-        public string installSizeWithoutDlcs;
         public List<string> requiredThings;
         public double downloadSizeNumber;
         public double installSizeNumber;

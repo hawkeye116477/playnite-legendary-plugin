@@ -63,7 +63,7 @@
             <DockPanel Margin="0,0,0,5" Name="FolderDP">
                 <TextBlock Text="{DynamicResource LOCLegendary3P_PlayniteGameInstallDirTitle}" VerticalAlignment="Center" Margin="0,0,10,0"></TextBlock>
                 <Button DockPanel.Dock="Right" Padding="5" Margin="5 0 0 0" Content="&#xec5b;"
-                    Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteSelectDirectoryTooltip}" IsCancel="True" />
+                    Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteSelectDirectoryTooltip}" />
                 <TextBox Name="SelectedGamePathTxt" Text="" VerticalAlignment="Center" Margin="0" />
             </DockPanel>
             <Border BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Name="GamesBrd" Visibility="Collapsed" Margin="0,0,0,5">
