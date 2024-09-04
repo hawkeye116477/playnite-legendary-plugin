@@ -1,5 +1,23 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.9.0
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2024-09-04
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.9.0/LegendaryLibrary_1_9_0.pext
+    Changelog:
+      - Added possibility to install, repair and uninstall multiple games at once
+        (select games from list using Ctrl key)
+      - Added displaying disk write speed at Download Manager
+      - Added saving download percent progress and downloaded size for each download
+        item
+      - Added displaying percent progress at panel icon
+      - DateTime in Download Manager will be displayed now in local Format
+      - Special Epic registry key will be added now for all games installations due
+        to demand of it from more games
+      - Changed order of game menu items
+      - Fixed displaying download progress when resuming
+      - Fixed potential crash when canceling and removing download
+      - Removed migration for old settings as promised
   - Version: 1.8.1
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2024-08-16
