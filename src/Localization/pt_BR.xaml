@@ -26,9 +26,10 @@
   <sys:String x:Key="LOCLegendaryEnable">Habilitar</sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable">Espaço Disponível:</sys:String>
   <sys:String x:Key="LOCLegendaryAfterInstalling">Após a instalação:</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloaded">Baixado:</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloaded">Baixado</sys:String>
   <sys:String x:Key="LOCLegendaryETA">Tempo Restante:</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSpeed">Veloc. de Download:</sys:String>
+  <sys:String x:Key="LOCLegendaryDiskSpeed">Uso do Disco:</sys:String>
   <sys:String x:Key="LOCLegendaryElapsed">Decorrido:</sys:String>
   <sys:String x:Key="LOCLegendaryVerifying">Verificando...</sys:String>
   <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Verificando o arquivo grande &quot;{0}&quot;: {1}</sys:String>
@@ -49,6 +50,7 @@
   <sys:String x:Key="LOCLegendaryGameImportFailure">Falha ao importar o jogo. Motivo: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">Gerenciador de Downloads</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadStatus">Progresso</sys:String>
+  <sys:String x:Key="LOCLegendaryProgress">Progresso</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadCompletedColumn">Concluído</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadQueued">Na fila</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadRunning">Baixando</sys:String>
@@ -65,10 +67,10 @@
   <sys:String x:Key="LOCLegendaryRemoveCompletedDownloadsConfirm">Tem certeza que deseja remover todos os downloads concluídos da lista?</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveSelectedEntriesConfirm">Tem certeza que deseja remover os itens selecionados da lista?</sys:String>
   <sys:String x:Key="LOCLegendarySelectAllEntries">Selecionar todos os itens</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadSizeColumn">Tamanho do Download</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">O download começará em breve. Você pode conferir o progresso pelo Painel Legendary através do Menu =&gt; Visualização ou pela Barra Lateral.</sys:String>
   <sys:String x:Key="LOCLegendaryPanel">Painel Legendary</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} já está na lista de downloads. Você pode conferir o progresso pelo Painel Legendary através do Menu =&gt; Visualização ou pela Barra Lateral.</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther">Os seguintes jogos já estão na lista de downloads: {0}. Você pode ver o progresso do download acessando o Painel Legendary via Menu =&gt; Visualização ou pela barra lateral.</sys:String>
   <sys:String x:Key="LOCLegendaryRepair">Reparar</sys:String>
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Opções Avançadas</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Ignorar espaço livre</sys:String>
@@ -167,10 +169,15 @@
   <sys:String x:Key="LOCLegendaryNotEnoughSpace">Espaço em disco insuficiente.</sys:String>
   <sys:String x:Key="LOCLegendaryCheckingForUpdates">Procurando atualizações...</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallSuccess">{0} foi desinstalado com sucesso.</sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallSuccessOther">Os seguintes jogos foram desinstalados com êxito: {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallErrorOther">Não é possível desinstalar seguintes jogos: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryImportThirdPartyLauncherGames">Importar jogos que utilizam {0}</sys:String>
   <sys:String x:Key="LOCLegendaryThirdPartyLauncherImportWarn">Jogos desse tipo não precisam do Legendary e nem todos podem ser instalados pelo mesmo. Sugerimos clicar em Serviços adicionais =&gt; {0} =&gt; Ativar Jogos, e então instalá-los diretamente via {0}.</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">Este jogo requer instalação direta via {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">{1} requer instalação direta via {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherErrorOther">Os seguintes jogos requerem instalação direta via {0}: {1}.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallPrerequisites">Instalar Pré-requisitos ({0})</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">Este jogo requer a instalação de {0}. É recomendado ir nas Configurações da Extensão =&gt; Serviços adicionais =&gt; {0} =&gt; Ativar jogos, e então instalá-lo diretamente via {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">{1} requer a instalação de {0}. É recomendado ir em Configurações do Plugin =&gt; Serviços adicionais =&gt; {0} =&gt; Ativar jogos, e instalá-lo diretamente por {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther">Os seguintes jogos requerem a instalação de {0}: {1}. É recomendado ir em Configurações do Plugin =&gt; Serviços adicionais =&gt; {0} =&gt; Ativar jogos, e instalar diretamente através de {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Instalando pré-requisitos ({0})...</sys:String>
+  <sys:String x:Key="LOCLegendaryGames">Jogos</sys:String>
 </ResourceDictionary>

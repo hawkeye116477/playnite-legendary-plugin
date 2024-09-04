@@ -26,9 +26,10 @@
   <sys:String x:Key="LOCLegendaryEnable">Włącz</sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable">Dostępne miejsce:</sys:String>
   <sys:String x:Key="LOCLegendaryAfterInstalling">Po zainstalowaniu:</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloaded">Pobrano:</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloaded">Pobrano</sys:String>
   <sys:String x:Key="LOCLegendaryETA">Pozostało:</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSpeed">Prędkość pobierania:</sys:String>
+  <sys:String x:Key="LOCLegendaryDiskSpeed">Użycie dysku:</sys:String>
   <sys:String x:Key="LOCLegendaryElapsed">Upłynęło:</sys:String>
   <sys:String x:Key="LOCLegendaryVerifying">Weryfikowanie...</sys:String>
   <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Weryfikowanie dużego pliku &quot;{0}&quot;: {1}</sys:String>
@@ -49,6 +50,7 @@
   <sys:String x:Key="LOCLegendaryGameImportFailure">Nie udało się zaimportować gry. Powód: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">Menedżer pobierania</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadStatus">Stan</sys:String>
+  <sys:String x:Key="LOCLegendaryProgress">Postęp</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadCompletedColumn">Ukończono</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadQueued">W kolejce</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadRunning">Uruchomione</sys:String>
@@ -65,10 +67,10 @@
   <sys:String x:Key="LOCLegendaryRemoveCompletedDownloadsConfirm">Czy na pewno chcesz usunąć wszystkie ukończone pobrania z listy?</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveSelectedEntriesConfirm">Czy na pewno chcesz usunąć wybrane wpisy z listy?</sys:String>
   <sys:String x:Key="LOCLegendarySelectAllEntries">Zaznacz wszystkie wpisy</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadSizeColumn">Rozmiar pobierania</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">Pobieranie rozpocznie się już wkrótce. Możesz zobaczyć jego stan, uzyskując dostęp do panelu Legendary za pośrednictwem Menu =&gt; Widok lub paska bocznego.</sys:String>
   <sys:String x:Key="LOCLegendaryPanel">Panel Legendary</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} jest już na liście pobierania. Możesz zobaczyć stan pobierania, uzyskując dostęp do panelu Legendary za pośrednictwem Menu =&gt; Widok lub paska bocznego.</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther">Następujące gry są już na liście pobierania: {0}. Możesz zobaczyć stan pobierania, uzyskując dostęp do panelu Legendary za pośrednictwem Menu =&gt; Widok lub paska bocznego.</sys:String>
   <sys:String x:Key="LOCLegendaryRepair">Napraw</sys:String>
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Opcje zaawansowane</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Ignoruj wolne miejsce</sys:String>
@@ -147,7 +149,7 @@
   <sys:String x:Key="LOCLegendaryCheckUpdatesEveryPlayniteStartup">Przy każdym uruchomieniu Playnite</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy">Sprawdzaj aktualizacje launchera Legendary</sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Trwa pobieranie aktualizacji dla gier z Epic Games.</sys:String>
-  <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings">Usuń ustawienia uruchamiania gry</sys:String>
+  <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings">Usuń ustawienia uruchamiania</sys:String>
   <sys:String x:Key="LOCLegendaryAdditionalServices">Dodatkowe usługi</sys:String>
   <sys:String x:Key="LOCLegendaryNoLinkedAccount">Nie znaleziono powiązanego konta {0}! Połącz swoje konto za pomocą przeglądarki i spróbuj ponownie.</sys:String>
   <sys:String x:Key="LOCLegendaryAllActivatedUbisoft">Wszystkie gry zostały już aktywowane na Twoim koncie {0}.</sys:String>
@@ -167,10 +169,15 @@
   <sys:String x:Key="LOCLegendaryNotEnoughSpace">Za mało wolnego miejsca na dysku.</sys:String>
   <sys:String x:Key="LOCLegendaryCheckingForUpdates">Sprawdzanie aktualizacji...</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallSuccess">Program {0} został pomyślnie odinstalowany.</sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallSuccessOther">Następujące gry zostały pomyślnie odinstalowane: {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallErrorOther">Nie można odinstalować następujących gier: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryImportThirdPartyLauncherGames">Importuj gry wymagające {0}</sys:String>
   <sys:String x:Key="LOCLegendaryThirdPartyLauncherImportWarn">Tego typu gry nie wymagają Legendary i nie wszystkie z nich można zainstalować za jego pomocą. Zalecane jest, by przejść do Dodatkowe usługi =&gt; {0} =&gt; Aktywuj gry, a następnie zainstalować je bezpośrednio przez {0}.</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">Ta gra wymaga bezpośredniej instalacji przez {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">{1} wymaga bezpośredniej instalacji przez {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherErrorOther">Następujące gry wymagają bezpośredniej instalacji przez {0}: {1}.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallPrerequisites">Zainstaluj składniki wstępnie wymagane ({0})</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">Ta gra wymaga instalacji {0}. Zalecane jest, by przejść do Ustawienia wtyczki =&gt; Dodatkowe usługi =&gt; {0} =&gt; Aktywuj gry, a następnie zainstalować ją bezpośrednio przez {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">{1} wymaga instalacji {0}. Zalecane jest, by przejść do ustawień wtyczki =&gt; Dodatkowe usługi =&gt; {0} =&gt; Aktywuj gry, a następnie zainstalować to bezpośrednio przez {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther">Następujące gry wymagają instalacji {0}: {1}. Zalecane jest, by przejść do ustawień wtyczki =&gt; Dodatkowe usługi =&gt; {0} =&gt; Aktywuj gry, a następnie zainstalować je bezpośrednio przez {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Instalowanie składników wstępnie wymaganych ({0})...</sys:String>
+  <sys:String x:Key="LOCLegendaryGames">Gry</sys:String>
 </ResourceDictionary>

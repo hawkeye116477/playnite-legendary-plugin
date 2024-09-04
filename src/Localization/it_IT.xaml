@@ -26,9 +26,10 @@
   <sys:String x:Key="LOCLegendaryEnable">Attiva</sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable">Spazio disponibile:</sys:String>
   <sys:String x:Key="LOCLegendaryAfterInstalling">Dopo l'installazione:</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloaded">Scaricato:</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloaded"></sys:String>
   <sys:String x:Key="LOCLegendaryETA">Tempo rimanente:</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSpeed">Velocità di download:</sys:String>
+  <sys:String x:Key="LOCLegendaryDiskSpeed"></sys:String>
   <sys:String x:Key="LOCLegendaryElapsed">Trascorso:</sys:String>
   <sys:String x:Key="LOCLegendaryVerifying">Verifica...</sys:String>
   <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Verifica file di grandi dimensioni &quot;{0}&quot;: {1}</sys:String>
@@ -49,6 +50,7 @@
   <sys:String x:Key="LOCLegendaryGameImportFailure">Impossibile importare il gioco. Motivo: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">Gestore download</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadStatus">Stato</sys:String>
+  <sys:String x:Key="LOCLegendaryProgress"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadCompletedColumn">Completato</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadQueued">In coda</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadRunning">In esecuzione</sys:String>
@@ -65,10 +67,10 @@
   <sys:String x:Key="LOCLegendaryRemoveCompletedDownloadsConfirm">Sei sicuro di voler rimuovere tutti i download completati dalla lista?</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveSelectedEntriesConfirm">Sei sicuro di voler rimuovere le voci selezionate dalla lista?</sys:String>
   <sys:String x:Key="LOCLegendarySelectAllEntries">Seleziona tutto</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadSizeColumn">Dimensioni download</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">Il download inizierà presto. Puoi vederne lo stato accedendo al pannello Legendary tramite Menù =&gt; Visualizza o dalla barra laterale.</sys:String>
   <sys:String x:Key="LOCLegendaryPanel">Pannello Legendary</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} è già nella lista dei download. È possibile visualizzare lo stato del download accedendo al pannello Legendary tramite Menu =&gt; Visualizza o dalla barra laterale.</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther"></sys:String>
   <sys:String x:Key="LOCLegendaryRepair">Ripara</sys:String>
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Opzioni avanzate</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Ignora spazio libero</sys:String>
@@ -147,7 +149,7 @@
   <sys:String x:Key="LOCLegendaryCheckUpdatesEveryPlayniteStartup">Ad ogni avvio di Playnite</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy">Controlla aggiornamenti del Legendary launcher</sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Gli aggiornamenti dei giochi di Epic Games sono in download.</sys:String>
-  <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings">Rimuovi le impostazioni di avvio del gioco</sys:String>
+  <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings"></sys:String>
   <sys:String x:Key="LOCLegendaryAdditionalServices">Servizi aggiuntivi</sys:String>
   <sys:String x:Key="LOCLegendaryNoLinkedAccount">Nessun account {0} collegato trovato! Collega il tuo account tramite il tuo browser e riprova.</sys:String>
   <sys:String x:Key="LOCLegendaryAllActivatedUbisoft">Tutti i giochi sono già stati attivati sul tuo account {0}.</sys:String>
@@ -167,10 +169,15 @@
   <sys:String x:Key="LOCLegendaryNotEnoughSpace">Non c'è abbastanza spazio libero su disco.</sys:String>
   <sys:String x:Key="LOCLegendaryCheckingForUpdates">Controllo aggiornamenti...</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallSuccess">{0} è stato disinstallato con successo.</sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallSuccessOther"></sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallErrorOther"></sys:String>
   <sys:String x:Key="LOCLegendaryImportThirdPartyLauncherGames">Importa giochi che richiedono {0}</sys:String>
   <sys:String x:Key="LOCLegendaryThirdPartyLauncherImportWarn">Questi tipi di giochi non richiedono Legendary e non tutti possono essere installati tramite esso. Si consiglia di andare a Servizi aggiuntivi =&gt; {0} =&gt; Attivare i giochi, quindi installarli direttamente via {0}.</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">Questo gioco richiede l'installazione diretta tramite {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError"></sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherErrorOther"></sys:String>
   <sys:String x:Key="LOCLegendaryInstallPrerequisites">Installa i prerequisiti ({0})</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">Questo gioco richiede l'installazione di {0}. Si consiglia di andare alle impostazioni del plugin =&gt; Servizi aggiuntivi =&gt; {0} =&gt; Attivare i giochi, e quindi installarlo direttamente tramite {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher"></sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther"></sys:String>
   <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Installazione dei prerequisiti ({0})...</sys:String>
+  <sys:String x:Key="LOCLegendaryGames"></sys:String>
 </ResourceDictionary>
