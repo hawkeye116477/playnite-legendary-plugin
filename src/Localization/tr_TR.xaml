@@ -26,9 +26,10 @@
   <sys:String x:Key="LOCLegendaryEnable">Etkinleştir</sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable">Mevcut Alan:</sys:String>
   <sys:String x:Key="LOCLegendaryAfterInstalling">Kurulumdan Sonra:</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloaded">İndirilen:</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloaded">İndirilen</sys:String>
   <sys:String x:Key="LOCLegendaryETA">TTS:</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSpeed">İndirme Hızı:</sys:String>
+  <sys:String x:Key="LOCLegendaryDiskSpeed">Disk Kullanımı:</sys:String>
   <sys:String x:Key="LOCLegendaryElapsed">Geçen:</sys:String>
   <sys:String x:Key="LOCLegendaryVerifying">Verifying...</sys:String>
   <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Büyük dosya doğrulanıyor &quot;{0}&quot;: {1}</sys:String>
@@ -49,6 +50,7 @@
   <sys:String x:Key="LOCLegendaryGameImportFailure">Oyun içe aktarılamadı. Sebep: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">İndirme Yöneticisi</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadStatus">Durum</sys:String>
+  <sys:String x:Key="LOCLegendaryProgress">İlerleyiş</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadCompletedColumn">Tamamlandı</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadQueued">Kuyrukta</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadRunning">Çalışıyor</sys:String>
@@ -65,10 +67,10 @@
   <sys:String x:Key="LOCLegendaryRemoveCompletedDownloadsConfirm">Tamamlanan tüm indirmeleri listeden kaldırmak istiyor musunuz?</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveSelectedEntriesConfirm">Seçilen girişleri listeden kaldırmak istiyor musunuz?</sys:String>
   <sys:String x:Key="LOCLegendarySelectAllEntries">Tüm girişleri seç</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadSizeColumn">İndirme Boyutu</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">İndirme yakında başlayacak. Menü =&gt; Görünüm veya kenar çubuğundan Legendary Panel üstünden durumunu görebilirsiniz.</sys:String>
   <sys:String x:Key="LOCLegendaryPanel">Legendary Panel</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} zaten indirme listesinde. Menü =&gt; Görünüm veya kenar çubuğundan Legendary Panel üstünden indirmenin durumunu görebilirsiniz.</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther">Şu oyunlar zaten indirme listesinde bulunuyor: {0}. Menü =&gt; Görünüm veya kenar çubuğundan Legendary Panele erişerek indirme durumunu görebilirsiniz.</sys:String>
   <sys:String x:Key="LOCLegendaryRepair">Onar</sys:String>
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Gelişmiş Seçenekler</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Boş alanı yoksay</sys:String>
@@ -147,7 +149,7 @@
   <sys:String x:Key="LOCLegendaryCheckUpdatesEveryPlayniteStartup">Playnite her başlangıcında</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy">Legendary başlatıcı güncellemelerini denetle</sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Epic Games oyunlarına yönelik güncellemeler indiriliyor.</sys:String>
-  <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings">Oyun başlatma ayarlarını kaldır</sys:String>
+  <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings">Başlatma ayarlarını kaldır</sys:String>
   <sys:String x:Key="LOCLegendaryAdditionalServices">Ek servisler</sys:String>
   <sys:String x:Key="LOCLegendaryNoLinkedAccount">Bağlı bir {0} hesabı bulunamadı! Hesabınızı tarayıcınız aracılığıyla bağlayın ve tekrar deneyin.</sys:String>
   <sys:String x:Key="LOCLegendaryAllActivatedUbisoft">{0} hesabınızda tüm oyunlar zaten etkinleştirildi.</sys:String>
@@ -167,10 +169,15 @@
   <sys:String x:Key="LOCLegendaryNotEnoughSpace">Yeterli boş disk alanı yok.</sys:String>
   <sys:String x:Key="LOCLegendaryCheckingForUpdates">Güncellemeler kontrol ediliyor...</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallSuccess">{0} başarıyla kaldırıldı.</sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallSuccessOther">Aşağıdaki oyunlar başarıyla kaldırıldı: {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallErrorOther">Aşağıdaki oyunlar kaldırılamıyor: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryImportThirdPartyLauncherGames">{0} gerektiren oyunları içe aktar</sys:String>
   <sys:String x:Key="LOCLegendaryThirdPartyLauncherImportWarn">Bu tür oyunlar Legendary gerektirmez ve tümü bu oyun aracılığıyla kurulamaz. Ek hizmetler =&gt; {0} =&gt; Oyunları etkinleştir'e gitmeniz ve ardından bunları doğrudan {0} aracılığıyla yüklemeniz önerilir.</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">Bu oyun, {0} aracılığıyla doğrudan kurulum gerektirir.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">{1}, {0} aracılığıyla doğrudan kurulum gerektirir.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherErrorOther">Aşağıdaki oyunlar aracılığıyla doğrudan kurulum gerektirir: {0}:{1}.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallPrerequisites">Gerekenleri kur ({0})</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">Bu oyun, {0} kurulumu gerektiriyor. Eklenti ayarları =&gt; Ek hizmetler =&gt; {0} =&gt; Oyunları etkinleştir seçeneğine gitmeniz ve ardından doğrudan {0} aracılığıyla kurmanız önerilir.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">{1} kurulumu gerekli {0}. Eklenti ayarları =&gt; Ek hizmetler =&gt; {0} =&gt; Oyunları etkinleştir seçeneğine gitmeniz ve ardından doğrudan {0} aracılığıyla kurmanız önerilir.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther">Aşağıdaki oyunlar {0} kurulumunu gerektirir: {1}. Eklenti ayarları =&gt; Ek hizmetler =&gt; {0} =&gt; Oyunları etkinleştir seçeneğine gitmeniz ve ardından bunları doğrudan {0} aracılığıyla kurmanız önerilir.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Ön koşullar kuruluyor ({0})...</sys:String>
+  <sys:String x:Key="LOCLegendaryGames">Oyunlar</sys:String>
 </ResourceDictionary>
