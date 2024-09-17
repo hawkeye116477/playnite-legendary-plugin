@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-  <sys:String x:Key="LOCLegendaryLauncherCustomPath">Путь к Лаунчеру</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherCustomPath">Путь в Launcher</sys:String>
   <sys:String x:Key="LOCLegendaryGamesInstallationPath">Путь установки игр</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSize">Размер загрузки:</sys:String>
   <sys:String x:Key="LOCLegendaryInstallSize">Размер установки:</sys:String>
@@ -26,10 +26,10 @@
   <sys:String x:Key="LOCLegendaryEnable">Включить</sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable">Доступное место:</sys:String>
   <sys:String x:Key="LOCLegendaryAfterInstalling">После установки:</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloaded"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloaded">Загружено</sys:String>
   <sys:String x:Key="LOCLegendaryETA">Время до завершения:</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSpeed">Скорость загрузки:</sys:String>
-  <sys:String x:Key="LOCLegendaryDiskSpeed"></sys:String>
+  <sys:String x:Key="LOCLegendaryDiskSpeed">Запись на диск:</sys:String>
   <sys:String x:Key="LOCLegendaryElapsed">Прошло:</sys:String>
   <sys:String x:Key="LOCLegendaryVerifying">Проверка...</sys:String>
   <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Проверка большого файла &quot;{0}&quot;: {1}</sys:String>
@@ -50,7 +50,7 @@
   <sys:String x:Key="LOCLegendaryGameImportFailure">Не удалось импортировать игру. Причина: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">Менеджер загрузки</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadStatus">Статус</sys:String>
-  <sys:String x:Key="LOCLegendaryProgress"></sys:String>
+  <sys:String x:Key="LOCLegendaryProgress">Прогресс</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadCompletedColumn">Завершено</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadQueued">В очереди</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadRunning">Запущено</sys:String>
@@ -70,7 +70,7 @@
   <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">Загрузка скоро начнется. Вы можете отслеживать ее статус, получив доступ к Legendary Panel через Меню =&gt; Вид или боковую панель.</sys:String>
   <sys:String x:Key="LOCLegendaryPanel">Панель Legendary</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} уже есть в списке загрузок. Вы можете отслеживать статус загрузки, получив доступ к Панель Legendary через Меню =&gt; Вид или боковую панель.</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther">Следующие игры уже находятся в списке загрузок: {0}. Вы можете посмотреть статус загрузки, зайдя в Legendary Panel через Меню =&gt; Вид или боковую панель.</sys:String>
   <sys:String x:Key="LOCLegendaryRepair">Восстановить</sys:String>
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Дополнительные параметры</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Игнорировать свободное место</sys:String>
@@ -149,7 +149,7 @@
   <sys:String x:Key="LOCLegendaryCheckUpdatesEveryPlayniteStartup">При каждом запуске Playnite</sys:String>
   <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy">Проверить наличие обновлений Legendary launcher</sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Загружаются обновления для игр от Epic Games.</sys:String>
-  <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings"></sys:String>
+  <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings">Удаление настроек запуска</sys:String>
   <sys:String x:Key="LOCLegendaryAdditionalServices">+ Доп.услуги</sys:String>
   <sys:String x:Key="LOCLegendaryNoLinkedAccount">Аккаунт {0} не найден! Свяжите свой аккаунт через браузер и повторите попытку.</sys:String>
   <sys:String x:Key="LOCLegendaryAllActivatedUbisoft">Все игры уже активированы на вашем аккаунте {0}.</sys:String>
@@ -169,15 +169,15 @@
   <sys:String x:Key="LOCLegendaryNotEnoughSpace">Недостаточно свободного места на диске.</sys:String>
   <sys:String x:Key="LOCLegendaryCheckingForUpdates">Проверка обновлений...</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallSuccess">{0} была успешно удалена.</sys:String>
-  <sys:String x:Key="LOCLegendaryUninstallSuccessOther"></sys:String>
-  <sys:String x:Key="LOCLegendaryUninstallErrorOther"></sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallSuccessOther">Следующие игры были успешно удалены: {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallErrorOther">Не удается удалить следующие игры: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryImportThirdPartyLauncherGames">Импорт игр, требующих {0}</sys:String>
   <sys:String x:Key="LOCLegendaryThirdPartyLauncherImportWarn">Эти игры не требуют Legendary и не все они могут быть установлены через него. Рекомендуется перейти к Дополнительные сервисы =&gt; {0} =&gt; Активировать игры, а затем установить их непосредственно через {0}.</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError"></sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherErrorOther"></sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">{1} требует прямой установки через {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherErrorOther">Следующие игры требуют прямой установки через {0}: {1}.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallPrerequisites">Установите предварительные требования ({0})</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher"></sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther"></sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">{1} Требует установки {0}. Рекомендуется перейти в настройки плагина =&gt; Дополнительные сервисы =&gt; {0} =&gt; Активировать игры, а затем установить его напрямую через {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther">Следующие игры требуют установки {0}: {1}. Рекомендуется зайти в настройки плагина =&gt; Дополнительные сервисы =&gt; {0} =&gt; Активировать игры, а затем установить их напрямую через {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Установка предварительных требований ({0})...</sys:String>
-  <sys:String x:Key="LOCLegendaryGames"></sys:String>
+  <sys:String x:Key="LOCLegendaryGames">Игры</sys:String>
 </ResourceDictionary>
