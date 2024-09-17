@@ -216,7 +216,8 @@ namespace LegendaryLibraryNS
 
         public static async Task WaitUntilLegendaryCloses()
         {
-            if (File.Exists(Path.Combine(LegendaryLauncher.ConfigPath, "installed.json.lock")))
+            var installedLockPath = Path.Combine(LegendaryLauncher.ConfigPath, "installed.json.lock");
+            if (File.Exists(installedLockPath) && Helpers.IsFileLocked(installedLockPath))
             {
                 await Task.Delay(1000);
                 await WaitUntilLegendaryCloses();

@@ -135,5 +135,19 @@ namespace LegendaryLibraryNS
 
             return result;
         }
+
+        public static bool IsFileLocked(string filePath)
+        {
+            try
+            {
+                using FileStream inputStream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.None);
+                inputStream.Close();
+            }
+            catch (Exception)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
