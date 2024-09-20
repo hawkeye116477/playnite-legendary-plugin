@@ -124,7 +124,8 @@
             </StackPanel>
         </TabItem>
         <TabItem Header="{DynamicResource LOCLegendary3P_PlayniteSettingsAdvancedLabel}">
-            <StackPanel Margin="20">
+            <ScrollViewer>
+                <StackPanel Margin="20">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -232,6 +233,7 @@
                     </Grid>
                 </StackPanel>
             </StackPanel>
+            </ScrollViewer>
         </TabItem>
         <TabItem Header="{DynamicResource LOCLegendaryTroubleshootingInformation}">
             <StackPanel Margin="20">
