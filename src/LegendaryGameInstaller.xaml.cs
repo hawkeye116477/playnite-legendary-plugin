@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -61,7 +62,7 @@ namespace LegendaryLibraryNS
             Window.GetWindow(this).Close();
         }
 
-        public void Install()
+        public async Task Install()
         {
             var settings = LegendaryLibrary.GetSettings();
             var installPath = SelectedGamePathTxt.Text;
@@ -149,13 +150,13 @@ namespace LegendaryLibraryNS
             }
             if (downloadTasks.Count > 0)
             {
-                downloadManager.EnqueueMultipleJobs(downloadTasks);
+                await downloadManager.EnqueueMultipleJobs(downloadTasks);
             }
         }
 
-        private void InstallBtn_Click(object sender, RoutedEventArgs e)
+        private async void InstallBtn_Click(object sender, RoutedEventArgs e)
         {
-            Install();
+            await Install();
         }
 
         public DownloadProperties GetDownloadProperties(DownloadAction downloadAction, string installPath = "")
@@ -573,7 +574,7 @@ namespace LegendaryLibraryNS
             }
             if (settings.UnattendedInstall && (MultiInstallData.First().downloadProperties.downloadAction == DownloadAction.Install))
             {
-                Install();
+                await Install();
             }
         }
 
@@ -681,7 +682,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private void RepairBtn_Click(object sender, RoutedEventArgs e)
+        private async void RepairBtn_Click(object sender, RoutedEventArgs e)
         {
             InstallerWindow.Close();
             LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
@@ -693,7 +694,7 @@ namespace LegendaryLibraryNS
             }
             if (downloadTasks.Count > 0)
             {
-                downloadManager.EnqueueMultipleJobs(downloadTasks);
+                await downloadManager.EnqueueMultipleJobs(downloadTasks);
             }
         }
 

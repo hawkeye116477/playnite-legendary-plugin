@@ -428,7 +428,7 @@ namespace LegendaryLibraryNS
                                 {
                                     if (globalSettings.AutoUpdateGames)
                                     {
-                                        legendaryUpdateController.UpdateGame(successUpdates, "", true);
+                                        await legendaryUpdateController.UpdateGame(successUpdates, "", true);
                                     }
                                     else
                                     {

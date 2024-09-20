@@ -831,7 +831,7 @@ namespace LegendaryLibraryNS
             return gamesToUpdate;
         }
 
-        public void UpdateGame(Dictionary<string, UpdateInfo> gamesToUpdate, string gameTitle = "", bool silently = false, DownloadProperties downloadProperties = null)
+        public async Task UpdateGame(Dictionary<string, UpdateInfo> gamesToUpdate, string gameTitle = "", bool silently = false, DownloadProperties downloadProperties = null)
         {
             var updateTasks = new List<DownloadManagerData.Download>();
             if (gamesToUpdate.Count > 0)
@@ -891,7 +891,7 @@ namespace LegendaryLibraryNS
                     }
                     if (updateTasks.Count > 0)
                     {
-                        downloadManager.EnqueueMultipleJobs(updateTasks, silently);
+                        await downloadManager.EnqueueMultipleJobs(updateTasks, silently);
                     }
                 }
             }

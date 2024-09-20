@@ -134,7 +134,7 @@ namespace LegendaryLibraryNS
             Helpers.SaveJsonSettingsToFile(downloadManagerData, "downloadManager");
         }
 
-        public async void DoNextJobInQueue()
+        public async Task DoNextJobInQueue()
         {
             var running = downloadManagerData.downloads.Any(item => item.status == DownloadStatus.Running);
             var queuedList = downloadManagerData.downloads.Where(i => i.status == DownloadStatus.Queued).ToList();
@@ -189,7 +189,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        public void EnqueueMultipleJobs(List<DownloadManagerData.Download> downloadManagerDataList, bool silently = false)
+        public async Task EnqueueMultipleJobs(List<DownloadManagerData.Download> downloadManagerDataList, bool silently = false)
         {
             if (!silently)
             {
@@ -211,7 +211,7 @@ namespace LegendaryLibraryNS
                 }
             }
             SaveData();
-            DoNextJobInQueue();
+            await DoNextJobInQueue();
         }
 
         public static async Task WaitUntilLegendaryCloses()
@@ -590,7 +590,7 @@ namespace LegendaryLibraryNS
             }
             finally
             {
-                DoNextJobInQueue();
+                await DoNextJobInQueue();
             }
         }
 
@@ -617,14 +617,14 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private void ResumeDownloadBtn_Click(object sender, RoutedEventArgs e)
+        private async void ResumeDownloadBtn_Click(object sender, RoutedEventArgs e)
         {
             if (DownloadsDG.SelectedIndex != -1)
             {
                 var downloadsToResume = DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>()
                                                                  .Where(i => i.status == DownloadStatus.Canceled || i.status == DownloadStatus.Paused)
                                                                  .ToList();
-                EnqueueMultipleJobs(downloadsToResume, true);
+                await EnqueueMultipleJobs(downloadsToResume, true);
             }
         }
 
