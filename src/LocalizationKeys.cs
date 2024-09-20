@@ -398,6 +398,14 @@ namespace System
         /// </summary>
         public const string LegendaryInstallationFinished = "LOCLegendaryInstallationFinished";
         /// <summary>
+        /// Update finished. Have fun.
+        /// </summary>
+        public const string LegendaryUpdateFinished = "LOCLegendaryUpdateFinished";
+        /// <summary>
+        /// Repair finished. Have fun.
+        /// </summary>
+        public const string LegendaryRepairFinished = "LOCLegendaryRepairFinished";
+        /// <summary>
         /// Sync game saves to the cloud
         /// </summary>
         public const string LegendarySyncGameSaves = "LOCLegendarySyncGameSaves";

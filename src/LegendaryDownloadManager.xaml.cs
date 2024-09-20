@@ -573,7 +573,19 @@ namespace LegendaryLibraryNS
                                 wantedItem.status = DownloadStatus.Completed;
                                 DateTimeOffset now = DateTime.UtcNow;
                                 wantedItem.completedTime = now.ToUnixTimeSeconds();
-                                Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), gameTitle, ResourceProvider.GetString(LOC.LegendaryInstallationFinished), null);
+                                var notificationMessage = LOC.LegendaryInstallationFinished;
+                                switch (downloadProperties.downloadAction)
+                                {
+                                    case DownloadAction.Repair:
+                                        notificationMessage = LOC.LegendaryRepairFinished;
+                                        break;
+                                    case DownloadAction.Update:
+                                        notificationMessage = LOC.LegendaryUpdateFinished;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), gameTitle, ResourceProvider.GetString(notificationMessage), null);
                             }
                             SaveData();
                             gracefulInstallerCTS?.Dispose();
