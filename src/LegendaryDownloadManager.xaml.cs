@@ -451,7 +451,7 @@ namespace LegendaryLibraryNS
                                 DiskSpeedTB.Text = diskSpeed + "/s";
                             }
                             var errorMessage = stdErr.Text;
-                            if (errorMessage.Contains("finished successfully") || errorMessage.Contains("already up to date"))
+                            if (errorMessage.Contains("finished") || errorMessage.Contains("Finished") || errorMessage.Contains("already up to date"))
                             {
                                 successDisplayed = true;
                             }
