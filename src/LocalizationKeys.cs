@@ -270,6 +270,10 @@ namespace System
         /// </summary>
         public const string LegendaryDownloadSettings = "LOCLegendaryDownloadSettings";
         /// <summary>
+        /// Display desktop notifications about finished tasks
+        /// </summary>
+        public const string LegendaryDisplayDownloadTaskFinishedNotifications = "LOCLegendaryDisplayDownloadTaskFinishedNotifications";
+        /// <summary>
         /// Display download speed in bits per second
         /// </summary>
         public const string LegendaryDisplayDownloadSpeedInBits = "LOCLegendaryDisplayDownloadSpeedInBits";

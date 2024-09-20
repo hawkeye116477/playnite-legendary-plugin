@@ -573,19 +573,22 @@ namespace LegendaryLibraryNS
                                 wantedItem.status = DownloadStatus.Completed;
                                 DateTimeOffset now = DateTime.UtcNow;
                                 wantedItem.completedTime = now.ToUnixTimeSeconds();
-                                var notificationMessage = LOC.LegendaryInstallationFinished;
-                                switch (downloadProperties.downloadAction)
+                                if (settings.DisplayDownloadTaskFinishedNotifications)
                                 {
-                                    case DownloadAction.Repair:
-                                        notificationMessage = LOC.LegendaryRepairFinished;
-                                        break;
-                                    case DownloadAction.Update:
-                                        notificationMessage = LOC.LegendaryUpdateFinished;
-                                        break;
-                                    default:
-                                        break;
+                                    var notificationMessage = LOC.LegendaryInstallationFinished;
+                                    switch (downloadProperties.downloadAction)
+                                    {
+                                        case DownloadAction.Repair:
+                                            notificationMessage = LOC.LegendaryRepairFinished;
+                                            break;
+                                        case DownloadAction.Update:
+                                            notificationMessage = LOC.LegendaryUpdateFinished;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), gameTitle, ResourceProvider.GetString(notificationMessage), null);
                                 }
-                                Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), gameTitle, ResourceProvider.GetString(notificationMessage), null);
                             }
                             SaveData();
                             gracefulInstallerCTS?.Dispose();

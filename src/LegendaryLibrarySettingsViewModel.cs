@@ -30,6 +30,7 @@ namespace LegendaryLibraryNS
         public bool UnattendedInstall { get; set; } = false;
         public bool DownloadAllDlcs { get; set; } = false;
         public bool DisplayDownloadSpeedInBits { get; set; } = false;
+        public bool DisplayDownloadTaskFinishedNotifications { get; set; } = true;
         public bool SyncPlaytime { get; set; } = false;
         public string SyncPlaytimeMachineId { get; set; } = System.Guid.NewGuid().ToString("N");
         public UpdatePolicy GamesUpdatePolicy { get; set; } = UpdatePolicy.GameLaunch;

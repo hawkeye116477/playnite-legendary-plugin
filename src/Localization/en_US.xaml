@@ -9,6 +9,7 @@
   <sys:String x:Key="LOCLegendaryEnableOfflineMode">Enable offline mode</sys:String>
   <sys:String x:Key="LOCLegendaryOfflineMode">Offline mode</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings">Download Settings</sys:String>
+  <sys:String x:Key="LOCLegendaryDisplayDownloadTaskFinishedNotifications">Display desktop notifications about finished tasks</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Display download speed in bits per second</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAllDlcs">Download all DLCs</sys:String>
   <sys:String x:Key="LOCLegendaryUnattendedInstall">Enable unattended installation mode</sys:String>
