@@ -1,0 +1,9 @@
+LOCEpicSettingsImportInstalledLabel
+LOCEpicSettingsConnectAccount
+LOCEpicSettingsImportUninstalledLabel
+LOCEpicAuthenticateLabel
+LOCEpicNotLoggedIn
+LOCEpicLoginChecking
+LOCEpicTroubleShootingIssues
+LOCEpicStartUsingClient
+LOCEpicNotLoggedInError

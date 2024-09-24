@@ -48,7 +48,7 @@ else:
 
 # Remove inactive (not enough translated) languages
 active_languages = {}
-with open(pj(scriptPath, "activeLanguages.txt"), "r", encoding="utf-8") as active_languages_content:
+with open(pj(scriptPath, "config", "activeLanguages.txt"), "r", encoding="utf-8") as active_languages_content:
     for line in active_languages_content:
         if line := line.strip():
             active_languages[line] = ""

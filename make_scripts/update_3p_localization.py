@@ -15,26 +15,19 @@ third_party_path = pj(main_path, "third_party")
 localization_path = pj(third_party_path, "Localization")
 src_path = pj(main_path, "src")
 
-EPIC_LOC_KEYS = ["LOCEpicSettingsImportInstalledLabel", "LOCEpicSettingsConnectAccount",
-                 "LOCEpicSettingsImportUninstalledLabel", "LOCEpicAuthenticateLabel",
-                 "LOCEpicNotLoggedIn", "LOCEpicLoginChecking",  
-                 "LOCEpicTroubleShootingIssues", "LOCEpicStartUsingClient",
-                 "LOCEpicNotLoggedInError"]
+epic_loc_keys = {}
+with open(pj(script_path, "config", "epicLocKeys.txt"),
+          "r", encoding="utf-8") as epic_loc_keys_content:
+    for line in epic_loc_keys_content:
+        if line := line.strip():
+            epic_loc_keys[line] = ""
 
-PLAYNITE_LOC_KEYS = ["LOCUninstallGame", "LOCGameStartError", "LOCLoginRequired",
-                     "LOCDoNothing", "LOCMenuShutdownSystem",
-                     "LOCMenuRestartSystem", "LOCMenuHibernateSystem",
-                     "LOCMenuSuspendSystem", "LOCOptionOnceADay", "LOCOptionOnceAWeek",
-                     "LOCSettingsPlaytimeImportModeNever", "LOCSettingsClearCacheTitle",
-                     "LOCOKLabel", "LOCYesLabel", "LOCNoLabel","LOCDontShowAgainTitle", "LOCGameInstallError",
-                     "LOCGameUninstallError",
-                     "LOCLibraryImportError", "LOCProgressMetadata", "LOCMetadataDownloadError",
-                     "LOCCommonLinksStorePage", "LOCInstallGame", "LOCFilterActiveLabel",
-                     "LOCSettingsGeneralLabel", "LOCSelectDirectoryTooltip", "LOCSelectFileTooltip", "LOCCancelLabel",
-                     "LOCSettingsAdvancedLabel", "LOCGameInstallDirTitle", "LOCLoadingLabel",
-                     "LOCSaveLabel", "LOCFilters", "LOCGameNameTitle", "LOCInstallSizeLabel",
-                     "LOCAddedLabel", "LOCOpen", "LOCCheckForUpdates", "LOCUpdaterWindowTitle", "LOCUpdateCheckFailMessage", "LOCUpdaterInstallUpdate", "LOCExecutableTitle", "LOCExtensionsUpdates", "LOCOptionOnlyManually",
-                     "LOCImportLabel", "LOCClientNotInstalledError", "LOCDownloadingLabel", "LOCUninstalling"]
+playnite_loc_keys = {}
+with open(pj(script_path, "config", "playniteLocKeys.txt"),
+          "r", encoding="utf-8") as playnite_loc_keys_content:
+    for line in playnite_loc_keys_content:
+        if line := line.strip():
+            playnite_loc_keys[line] = ""
 
 if os.path.exists(localization_path):
     shutil.rmtree(localization_path)
@@ -45,9 +38,11 @@ for filename in os.listdir(pj(main_path, "..", "PlayniteExtensions", "PlayniteRe
         pj(main_path, "..", "PlayniteExtensions"), search_parent_directories=True)
     commit = git_repo.head.object.hexsha
     source = git_repo.remotes.origin.url.replace(".git", f"/tree/{commit}")
-    Playnite_git_repo = git.Repo(pj(main_path, "..", "PlayniteExtensions", "PlayniteRepo"), search_parent_directories=True)
+    Playnite_git_repo = git.Repo(
+        pj(main_path, "..", "PlayniteExtensions", "PlayniteRepo"), search_parent_directories=True)
     commit2 = Playnite_git_repo.head.object.hexsha
-    source2 = Playnite_git_repo.remotes.origin.url.replace(".git", f"/tree/{commit2}")
+    source2 = Playnite_git_repo.remotes.origin.url.replace(
+        ".git", f"/tree/{commit2}")
 
     i18n_content = ['<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">']
     new_filename = filename
@@ -59,7 +54,7 @@ for filename in os.listdir(pj(main_path, "..", "PlayniteExtensions", "PlayniteRe
         for child in playnite_loc.getroot():
             key = child.get(
                 "{http://schemas.microsoft.com/winfx/2006/xaml}" + 'Key')
-            if key in PLAYNITE_LOC_KEYS:
+            if key in playnite_loc_keys:
                 key_text = child.text
                 if not key_text:
                     key_text = ""
@@ -72,7 +67,7 @@ for filename in os.listdir(pj(main_path, "..", "PlayniteExtensions", "PlayniteRe
         for child in epic_loc.getroot():
             key = child.get(
                 "{http://schemas.microsoft.com/winfx/2006/xaml}" + 'Key')
-            if key in EPIC_LOC_KEYS:
+            if key in epic_loc_keys:
                 key_text = child.text
                 if not key_text:
                     key_text = ""
