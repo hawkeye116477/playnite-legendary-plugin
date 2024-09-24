@@ -9,6 +9,7 @@
   <sys:String x:Key="LOCLegendaryEnableOfflineMode">Çevrimdışı modu etkinleştir</sys:String>
   <sys:String x:Key="LOCLegendaryOfflineMode">Çevrimdışı kip</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings">İndirme Ayarları</sys:String>
+  <sys:String x:Key="LOCLegendaryDisplayDownloadTaskFinishedNotifications">Tamamlanan görevlerle ilgili masaüstü bildirimlerini görüntüle</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">İndirme hızını saniyedeki bit cinsinden göster</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAllDlcs">Tüm DLC içeriğini indir</sys:String>
   <sys:String x:Key="LOCLegendaryUnattendedInstall">Katılımsız kurulum modunu etkinleştir</sys:String>
@@ -41,6 +42,8 @@
   <sys:String x:Key="LOCLegendaryResumeDownload">Sürdür</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadPaused">Duraklatıldı</sys:String>
   <sys:String x:Key="LOCLegendaryInstallationFinished">Kurulum tamamlandı. İyi eğlenceler.</sys:String>
+  <sys:String x:Key="LOCLegendaryUpdateFinished">Güncelleme tamamlandı. İyi eğlenceler.</sys:String>
+  <sys:String x:Key="LOCLegendaryRepairFinished">Onarım tamamlandı. İyi eğlenceler.</sys:String>
   <sys:String x:Key="LOCLegendarySyncGameSaves">Oyun kayıtlarını buluta eşitle</sys:String>
   <sys:String x:Key="LOCLegendarySyncing">{0} oyun kaydı buluta eşitleniyor...</sys:String>
   <sys:String x:Key="LOCLegendarySyncError">{0} oyun kaydı buluta eşitlenirken bir hata oluştu.</sys:String>

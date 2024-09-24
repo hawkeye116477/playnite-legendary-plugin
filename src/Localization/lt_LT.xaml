@@ -9,6 +9,7 @@
   <sys:String x:Key="LOCLegendaryEnableOfflineMode"></sys:String>
   <sys:String x:Key="LOCLegendaryOfflineMode"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings">Siuntimosi Nustatymai</sys:String>
+  <sys:String x:Key="LOCLegendaryDisplayDownloadTaskFinishedNotifications"></sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAllDlcs"></sys:String>
   <sys:String x:Key="LOCLegendaryUnattendedInstall"></sys:String>
@@ -41,6 +42,8 @@
   <sys:String x:Key="LOCLegendaryResumeDownload">Pratęsti</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadPaused">Pristabdyta</sys:String>
   <sys:String x:Key="LOCLegendaryInstallationFinished">Diegimas baigtas. Smagaus.</sys:String>
+  <sys:String x:Key="LOCLegendaryUpdateFinished"></sys:String>
+  <sys:String x:Key="LOCLegendaryRepairFinished"></sys:String>
   <sys:String x:Key="LOCLegendarySyncGameSaves"></sys:String>
   <sys:String x:Key="LOCLegendarySyncing"></sys:String>
   <sys:String x:Key="LOCLegendarySyncError"></sys:String>

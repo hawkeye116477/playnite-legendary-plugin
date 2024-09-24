@@ -9,6 +9,7 @@
   <sys:String x:Key="LOCLegendaryEnableOfflineMode">Включить автономный режим</sys:String>
   <sys:String x:Key="LOCLegendaryOfflineMode">Автономный режим</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings">Настройки загрузки</sys:String>
+  <sys:String x:Key="LOCLegendaryDisplayDownloadTaskFinishedNotifications">Отображать уведомления на рабочем столе о завершенных задачах</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Отображать скорость загрузки в битах в секунду</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAllDlcs">Скачать все DLC</sys:String>
   <sys:String x:Key="LOCLegendaryUnattendedInstall">Включить режим автоматической установки</sys:String>
@@ -41,6 +42,8 @@
   <sys:String x:Key="LOCLegendaryResumeDownload">Возобновить</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadPaused">Загрузка приостановлена</sys:String>
   <sys:String x:Key="LOCLegendaryInstallationFinished">Установка завершена. Приятного время препровождения.</sys:String>
+  <sys:String x:Key="LOCLegendaryUpdateFinished">Обновление завершено. Развлекайтесь.</sys:String>
+  <sys:String x:Key="LOCLegendaryRepairFinished">Ремонт закончен. Развлекайтесь.</sys:String>
   <sys:String x:Key="LOCLegendarySyncGameSaves">Синхронизировать сохранения игры в облако</sys:String>
   <sys:String x:Key="LOCLegendarySyncing">Синхронизация {0} сохранений игр с облаком...</sys:String>
   <sys:String x:Key="LOCLegendarySyncError">Произошла ошибка при синхронизации {0} сохранений игр с облаком.</sys:String>

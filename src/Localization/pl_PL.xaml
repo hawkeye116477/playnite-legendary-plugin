@@ -9,6 +9,7 @@
   <sys:String x:Key="LOCLegendaryEnableOfflineMode">Włącz tryb offline</sys:String>
   <sys:String x:Key="LOCLegendaryOfflineMode">Tryb offline</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings">Ustawienia pobierania</sys:String>
+  <sys:String x:Key="LOCLegendaryDisplayDownloadTaskFinishedNotifications">Wyświetlaj powiadomienia na pulpicie o zakończonych zadaniach</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Wyświetlaj prędkość pobierania w bitach na sekundę</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAllDlcs">Pobieraj wszystkie DLC</sys:String>
   <sys:String x:Key="LOCLegendaryUnattendedInstall">Włącz tryb instalacji nienadzorowanej</sys:String>
@@ -41,6 +42,8 @@
   <sys:String x:Key="LOCLegendaryResumeDownload">Wznów</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadPaused">Wstrzymane</sys:String>
   <sys:String x:Key="LOCLegendaryInstallationFinished">Instalacja została zakończona. Dobrej zabawy.</sys:String>
+  <sys:String x:Key="LOCLegendaryUpdateFinished">Aktualizacja zakończona. Dobrej zabawy.</sys:String>
+  <sys:String x:Key="LOCLegendaryRepairFinished">Naprawa zakończona. Dobrej zabawy.</sys:String>
   <sys:String x:Key="LOCLegendarySyncGameSaves">Synchronizuj zapisy gier z chmurą</sys:String>
   <sys:String x:Key="LOCLegendarySyncing">Synchronizowanie zapisów gry {0} z chmurą...</sys:String>
   <sys:String x:Key="LOCLegendarySyncError">Wystąpił błąd podczas synchronizacji zapisów gry {0} z chmurą.</sys:String>

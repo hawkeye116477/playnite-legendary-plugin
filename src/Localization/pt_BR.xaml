@@ -9,6 +9,7 @@
   <sys:String x:Key="LOCLegendaryEnableOfflineMode">Habilitar modo offline</sys:String>
   <sys:String x:Key="LOCLegendaryOfflineMode">Modo offline</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings">Configurações de Download</sys:String>
+  <sys:String x:Key="LOCLegendaryDisplayDownloadTaskFinishedNotifications">Notificar na área de trabalho sobre tarefas finalizadas</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Exibir a velocidade de download em bits por segundo</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAllDlcs">Baixar todos os DLCs</sys:String>
   <sys:String x:Key="LOCLegendaryUnattendedInstall">Ativar modo de instalação não assistido</sys:String>
@@ -41,6 +42,8 @@
   <sys:String x:Key="LOCLegendaryResumeDownload">Continuar</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadPaused">Pausado</sys:String>
   <sys:String x:Key="LOCLegendaryInstallationFinished">Instalação concluída. Divirta-se.</sys:String>
+  <sys:String x:Key="LOCLegendaryUpdateFinished">Atualização concluída. Divirta-se.</sys:String>
+  <sys:String x:Key="LOCLegendaryRepairFinished">Reparo concluído. Divirta-se.</sys:String>
   <sys:String x:Key="LOCLegendarySyncGameSaves">Sincronizar jogos salvos na nuvem</sys:String>
   <sys:String x:Key="LOCLegendarySyncing">Sincronizando {0} jogo(s) salvo(s) na nuvem...</sys:String>
   <sys:String x:Key="LOCLegendarySyncError">Ocorreu um erro ao sincronizar {0} jogo(s) salvo(s) na nuvem.</sys:String>
