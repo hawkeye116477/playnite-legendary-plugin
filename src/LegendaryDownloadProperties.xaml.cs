@@ -38,6 +38,7 @@ namespace LegendaryLibraryNS
 
         private void LegendaryDownloadPropertiesUC_Loaded(object sender, RoutedEventArgs e)
         {
+            MaxWorkersNI.MaxValue = Helpers.CpuThreadsNumber;
             var wantedItem = SelectedDownload;
             if (wantedItem.downloadProperties != null)
             {

@@ -232,6 +232,7 @@ namespace LegendaryLibraryNS
             }
             SelectedGamePathTxt.Text = installPath;
             ReorderingChk.IsChecked = settings.EnableReordering;
+            MaxWorkersNI.MaxValue = Helpers.CpuThreadsNumber;
             MaxWorkersNI.Value = settings.MaxWorkers.ToString();
             MaxSharedMemoryNI.Value = settings.MaxSharedMemory.ToString();
             UpdateSpaceInfo(installPath);

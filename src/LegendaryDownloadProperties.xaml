@@ -84,7 +84,7 @@
                               Margin="0,0,0,5" Name="ReorderingChk"/>
                     <TextBlock Text="{DynamicResource LOCLegendaryMaxWorkers}" Grid.Column="0"
                                Grid.Row="3" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                    <local:NumericInput Grid.Row="3" Grid.Column="1" Margin="10,0,0,5" MinValue="0" MaxValue="16" x:Name="MaxWorkersNI"/>
+                    <local:NumericInput Grid.Row="3" Grid.Column="1" Margin="10,0,0,5" MinValue="0" x:Name="MaxWorkersNI"/>
                     <TextBlock Text="{DynamicResource LOCLegendaryMaxSharedMemory}" Grid.Column="0"
                                Grid.Row="4" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
                     <local:NumericInput Grid.Row="4" Grid.Column="1" Margin="10,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" x:Name="MaxSharedMemoryNI"/>

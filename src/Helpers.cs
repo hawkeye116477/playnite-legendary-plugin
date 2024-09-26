@@ -149,5 +149,13 @@ namespace LegendaryLibraryNS
             }
             return false;
         }
+
+        public static int CpuThreadsNumber
+        {
+            get
+            {
+                return Environment.ProcessorCount;
+            }
+        }
     }
 }

@@ -133,6 +133,7 @@ namespace LegendaryLibraryNS
 
         private async void LegendarySettingsUC_Loaded(object sender, RoutedEventArgs e)
         {
+            MaxWorkersNI.MaxValue = Helpers.CpuThreadsNumber;
             var installedAddons = playniteAPI.Addons.Addons;
             if (installedAddons.Contains("EpicGamesLibrary_Builtin"))
             {
