@@ -90,7 +90,9 @@ namespace LegendaryLibraryNS
             window.Title = ResourceProvider.GetString(LOC.LegendaryEOSOverlay);
             var installProperties = new DownloadProperties { downloadAction = DownloadAction.Install };
             var installData = new DownloadManagerData.Download { name = ResourceProvider.GetString(LOC.LegendaryEOSOverlay), gameID = "eos-overlay", downloadProperties = installProperties };
-            window.DataContext = installData;
+            var installDataList = new List<DownloadManagerData.Download>();
+            installDataList.Add(installData);
+            window.DataContext = installDataList;
             window.Content = new LegendaryGameInstaller();
             window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
             window.SizeToContent = SizeToContent.Height;
