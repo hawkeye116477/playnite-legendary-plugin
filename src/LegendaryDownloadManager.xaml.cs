@@ -242,7 +242,7 @@ namespace LegendaryLibraryNS
             }
             if (gameID == "eos-overlay")
             {
-                var fullInstallPath = Path.Combine(downloadProperties.installPath, ".overlay");
+                var fullInstallPath = Path.Combine(downloadProperties.installPath, ".eos-overlay");
                 taskData.fullInstallPath = fullInstallPath;
                 installCommand = new List<string>() { "-y", "eos-overlay" };
                 if (downloadProperties.downloadAction == DownloadAction.Update)
