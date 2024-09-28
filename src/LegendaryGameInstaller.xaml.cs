@@ -254,8 +254,8 @@ namespace LegendaryLibraryNS
                 var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == installData.gameID);
                 if (wantedItem != null)
                 {
-                    MultiInstallData.Remove(installData);
                     downloadItemsAlreadyAdded.Add(installData.name);
+                    MultiInstallData.Remove(installData);
                     continue;
                 }
                 manifest = await LegendaryLauncher.GetGameInfo(installData.gameID);
