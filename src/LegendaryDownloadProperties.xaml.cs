@@ -163,6 +163,7 @@ namespace LegendaryLibraryNS
                 }
             }
             downloadManager.DownloadsDG.SelectedIndex = previouslySelected;
+            downloadManager.downloadsChanged = true;
             Window.GetWindow(this).Close();
         }
 

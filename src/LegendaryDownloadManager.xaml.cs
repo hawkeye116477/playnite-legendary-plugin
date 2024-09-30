@@ -22,6 +22,7 @@ using System.ComponentModel;
 using LegendaryLibraryNS.Services;
 using System.Windows.Input;
 using Playnite.SDK.Plugins;
+using System.Collections.Specialized;
 
 namespace LegendaryLibraryNS
 {
@@ -36,6 +37,7 @@ namespace LegendaryLibraryNS
         private IPlayniteAPI playniteAPI = API.Instance;
         public DownloadManagerData.Rootobject downloadManagerData;
         public SidebarItem legendaryPanel = LegendaryLibrary.GetPanel();
+        public bool downloadsChanged = false;
 
         public LegendaryDownloadManager()
         {
@@ -51,6 +53,12 @@ namespace LegendaryLibraryNS
             DownloadPropertiesBtn.ToolTip = GetToolTipWithKey(LOC.LegendaryEditSelectedDownloadProperties, "Ctrl+P");
             OpenDownloadDirectoryBtn.ToolTip = GetToolTipWithKey(LOC.LegendaryOpenDownloadDirectory, "Ctrl+O");
             LoadSavedData();
+            foreach (DownloadManagerData.Download download in downloadManagerData.downloads)
+            {
+                download.PropertyChanged += OnPropertyChanged;
+            }
+            downloadManagerData.downloads.CollectionChanged += OnCollectionChanged;
+
             var runningAndQueuedDownloads = downloadManagerData.downloads.Where(i => i.status == DownloadStatus.Running
                                                                                      || i.status == DownloadStatus.Queued).ToList();
             if (runningAndQueuedDownloads.Count > 0)
@@ -59,7 +67,6 @@ namespace LegendaryLibraryNS
                 {
                     download.status = DownloadStatus.Paused;
                 }
-                SaveData();
             }
             // TODO: Remove migration of old entries in next big version
             var itemsWithSizeForMigration = downloadManagerData.downloads.Where(i => !string.IsNullOrEmpty(i.downloadSize) && !string.IsNullOrEmpty(i.installSize)).ToList();
@@ -85,8 +92,17 @@ namespace LegendaryLibraryNS
                     downloadItem.downloadSize = "";
                     downloadItem.installSize = "";
                 }
-                SaveData();
             }
+        }
+
+        public void OnPropertyChanged(object _, PropertyChangedEventArgs arg)
+        {
+            downloadsChanged = true;
+        }
+
+        public void OnCollectionChanged(object _, NotifyCollectionChangedEventArgs arg)
+        {
+            downloadsChanged = true;
         }
 
         public RelayCommand<object> NavigateBackCommand
@@ -131,7 +147,10 @@ namespace LegendaryLibraryNS
 
         public void SaveData()
         {
-            Helpers.SaveJsonSettingsToFile(downloadManagerData, "downloadManager");
+            if (downloadsChanged)
+            {
+                Helpers.SaveJsonSettingsToFile(downloadManagerData, "downloadManager");
+            }
         }
 
         public async Task DoNextJobInQueue()
@@ -155,6 +174,7 @@ namespace LegendaryLibraryNS
             else if (!running)
             {
                 SaveData();
+                downloadsChanged = false;
                 var downloadCompleteSettings = LegendaryLibrary.GetSettings().DoActionAfterDownloadComplete;
                 switch (downloadCompleteSettings)
                 {
