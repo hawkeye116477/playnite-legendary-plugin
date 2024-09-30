@@ -154,6 +154,7 @@ namespace LegendaryLibraryNS
             }
             else if (!running)
             {
+                SaveData();
                 var downloadCompleteSettings = LegendaryLibrary.GetSettings().DoActionAfterDownloadComplete;
                 switch (downloadCompleteSettings)
                 {
@@ -210,7 +211,6 @@ namespace LegendaryLibraryNS
                     wantedItem.status = DownloadStatus.Queued;
                 }
             }
-            SaveData();
             await DoNextJobInQueue();
         }
 
@@ -590,7 +590,6 @@ namespace LegendaryLibraryNS
                                     Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), gameTitle, ResourceProvider.GetString(notificationMessage), null);
                                 }
                             }
-                            SaveData();
                             gracefulInstallerCTS?.Dispose();
                             forcefulInstallerCTS?.Dispose();
                             break;
@@ -626,7 +625,6 @@ namespace LegendaryLibraryNS
                         }
                         selectedRow.status = DownloadStatus.Paused;
                     }
-                    SaveData();
                 }
             }
         }
@@ -687,7 +685,6 @@ namespace LegendaryLibraryNS
                     DescriptionTB.Text = "";
                     GameTitleTB.Text = "";
                     DiskSpeedTB.Text = "";
-                    SaveData();
                 }
             }
         }
@@ -748,7 +745,6 @@ namespace LegendaryLibraryNS
                         RemoveDownloadEntry(selectedRow);
                     }
                 }
-                SaveData();
             }
         }
 
@@ -766,7 +762,6 @@ namespace LegendaryLibraryNS
                             RemoveDownloadEntry(row);
                         }
                     }
-                    SaveData();
                 }
             }
         }
@@ -971,7 +966,6 @@ namespace LegendaryLibraryNS
                 {
                     DownloadsDG.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
                 }
-                SaveData();
             }
         }
 

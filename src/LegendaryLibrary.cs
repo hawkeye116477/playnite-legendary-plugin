@@ -496,6 +496,8 @@ namespace LegendaryLibraryNS
         public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
         {
             StopDownloadManager();
+            LegendaryDownloadManager downloadManager = GetLegendaryDownloadManager();
+            downloadManager.SaveData();
             var settings = GetSettings();
             if (settings != null)
             {
