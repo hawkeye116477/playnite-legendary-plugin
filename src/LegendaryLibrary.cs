@@ -835,9 +835,9 @@ namespace LegendaryLibraryNS
                     if (legendaryGames.Count > 1)
                     {
                         var installData = new List<DownloadManagerData.Download>();
-                        var installProperties = new DownloadProperties { downloadAction = DownloadAction.Install };
                         foreach (var notInstalledLegendaryGame in notInstalledLegendaryGames)
                         {
+                            var installProperties = new DownloadProperties { downloadAction = DownloadAction.Install };
                             installData.Add(new DownloadManagerData.Download { gameID = notInstalledLegendaryGame.GameId, name = notInstalledLegendaryGame.Name, downloadProperties = installProperties });
                         }
                         yield return new GameMenuItem
@@ -870,10 +870,10 @@ namespace LegendaryLibraryNS
                                 ShowMaximizeButton = false,
                             });
 
-                            var installProperties = new DownloadProperties { downloadAction = DownloadAction.Repair };
                             var installData = new List<DownloadManagerData.Download>();
                             foreach (var game in installedLegendaryGames)
                             {
+                                var installProperties = new DownloadProperties { downloadAction = DownloadAction.Repair };
                                 installData.Add(new DownloadManagerData.Download { gameID = game.GameId, name = game.Name, downloadProperties = installProperties });
                             }
                             window.DataContext = installData;
