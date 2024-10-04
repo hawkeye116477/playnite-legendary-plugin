@@ -151,7 +151,6 @@ namespace LegendaryLibraryNS
                 }
             }
             wantedItem.downloadProperties.extraContent = selectedExtraContent;
-            Helpers.SaveJsonSettingsToFile(downloadManagerData, "downloadManager");
             var downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
             var previouslySelected = downloadManager.DownloadsDG.SelectedIndex;
             for (int i = 0; i < downloadManager.downloadManagerData.downloads.Count; i++)
@@ -163,7 +162,6 @@ namespace LegendaryLibraryNS
                 }
             }
             downloadManager.DownloadsDG.SelectedIndex = previouslySelected;
-            downloadManager.downloadsChanged = true;
             Window.GetWindow(this).Close();
         }
 
