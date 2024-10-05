@@ -719,6 +719,15 @@ namespace LegendaryLibraryNS
                     gracefulInstallerCTS?.Dispose();
                     forcefulInstallerCTS?.Dispose();
                     await WaitUntilLegendaryCloses();
+                    selectedEntry.downloadedNumber = 0;
+                    selectedEntry.progress = 0;
+                    DownloadSpeedTB.Text = "";
+                    legendaryPanel.ProgressValue = 0;
+                    ElapsedTB.Text = "";
+                    EtaTB.Text = "";
+                    DescriptionTB.Text = "";
+                    GameTitleTB.Text = "";
+                    DiskSpeedTB.Text = "";
                 }
                 selectedEntry.status = DownloadStatus.Canceled;
             }
