@@ -30,7 +30,8 @@ namespace LegendaryLibraryNS
         public double? installSizeNumberAfterMod;
         public long availableFreeSpace;
         private LegendaryGameInfo.Rootobject manifest;
-        public bool uncheckedByUser = true;
+        private bool uncheckedByUser = true;
+        private bool checkedByUser = true;
         public string prereqName = "";
 
         public LegendaryGameInstaller()
@@ -665,6 +666,35 @@ namespace LegendaryLibraryNS
             InstallSizeTB.Text = Helpers.FormatSize(initialInstallSizeNumber);
             installSizeNumberAfterMod = initialInstallSizeNumber;
             UpdateAfterInstallingSize();
+
+            var selectedExtraContent = ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>();
+            var selectDLCs = selectedExtraContent.Where(i => i.Value.Is_dlc).ToList();
+            if (AllOrNothingChk.IsChecked == true && selectedExtraContent.Count() != ExtraContentLB.Items.Count)
+            {
+                uncheckedByUser = false;
+                AllOrNothingChk.IsChecked = false;
+                uncheckedByUser = true;
+            }
+            if (AllOrNothingChk.IsChecked == false && selectedExtraContent.Count() == ExtraContentLB.Items.Count)
+            {
+                checkedByUser = false;
+                AllOrNothingChk.IsChecked = true;
+                checkedByUser = true;
+            }
+            var allDLCs = ExtraContentLB.Items.Cast<KeyValuePair<string, LegendarySDLInfo>>().Where(i => i.Value.Is_dlc).ToList();
+            if (AllDlcsChk.IsChecked == true && selectDLCs.Count() != allDLCs.Count)
+            {
+                uncheckedByUser = false;
+                AllDlcsChk.IsChecked = false;
+                uncheckedByUser = true;
+            }
+            if (AllDlcsChk.IsChecked == false && selectDLCs.Count() == allDLCs.Count)
+            {
+                checkedByUser = false;
+                AllDlcsChk.IsChecked = true;
+                checkedByUser = true;
+            }
+
         }
 
         private void SetControlStyles()
@@ -701,10 +731,13 @@ namespace LegendaryLibraryNS
 
         private void AllDlcsChk_Checked(object sender, RoutedEventArgs e)
         {
-            var dlcs = ExtraContentLB.Items.Cast<KeyValuePair<string, LegendarySDLInfo>>().Where(x => x.Value.Is_dlc).ToList();
-            foreach (var dlc in dlcs)
+            if (checkedByUser)
             {
-                ExtraContentLB.SelectedItems.Add(dlc);
+                var dlcs = ExtraContentLB.Items.Cast<KeyValuePair<string, LegendarySDLInfo>>().Where(x => x.Value.Is_dlc).ToList();
+                foreach (var dlc in dlcs)
+                {
+                    ExtraContentLB.SelectedItems.Add(dlc);
+                }
             }
         }
 
@@ -720,24 +753,12 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private void ExtraContentLBChk_Unchecked(object sender, RoutedEventArgs e)
-        {
-            uncheckedByUser = false;
-            if (AllOrNothingChk.IsChecked == true)
-            {
-                AllOrNothingChk.IsChecked = false;
-            }
-            var extraCheckbox = sender as CheckBox;
-            if (AllDlcsChk.IsChecked == true && (bool)extraCheckbox.Tag)
-            {
-                AllDlcsChk.IsChecked = false;
-            }
-            uncheckedByUser = true;
-        }
-
         private void AllOrNothingChk_Checked(object sender, RoutedEventArgs e)
         {
-            ExtraContentLB.SelectAll();
+            if (checkedByUser)
+            {
+                ExtraContentLB.SelectAll();
+            }
         }
 
         private void AllOrNothingChk_Unchecked(object sender, RoutedEventArgs e)
