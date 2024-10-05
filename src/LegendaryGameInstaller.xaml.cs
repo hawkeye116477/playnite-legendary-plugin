@@ -250,6 +250,8 @@ namespace LegendaryLibraryNS
             var prerequisites = new Dictionary<string, string>();
             LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
 
+            bool gamesListShouldBeDisplayed = false;
+
             foreach (var installData in MultiInstallData.ToList())
             {
                 var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == installData.gameID);
@@ -300,6 +302,7 @@ namespace LegendaryLibraryNS
                 else
                 {
                     MultiInstallData.Remove(installData);
+                    gamesListShouldBeDisplayed = true;
                 }
             }
 
@@ -474,7 +477,7 @@ namespace LegendaryLibraryNS
             }
 
             GamesLB.ItemsSource = MultiInstallData;
-            if (MultiInstallData.Count > 1)
+            if (MultiInstallData.Count > 1 || gamesListShouldBeDisplayed)
             {
                 GamesBrd.Visibility = Visibility.Visible;
             }
