@@ -591,6 +591,7 @@ namespace LegendaryLibraryNS
                                     }
                                 }
                                 wantedItem.status = DownloadStatus.Completed;
+                                wantedItem.progress = 100;
                                 DateTimeOffset now = DateTime.UtcNow;
                                 wantedItem.completedTime = now.ToUnixTimeSeconds();
                                 if (settings.DisplayDownloadTaskFinishedNotifications)
