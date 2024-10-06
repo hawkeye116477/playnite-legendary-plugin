@@ -880,14 +880,6 @@ namespace LegendaryLibraryNS
                             foreach (var game in installedLegendaryGames)
                             {
                                 var installProperties = new DownloadProperties { downloadAction = DownloadAction.Repair };
-                                if (installedAppList.ContainsKey(game.GameId))
-                                {
-                                    var installedSdls = installedAppList[game.GameId].Install_tags;
-                                    if (installedSdls.Count > 0)
-                                    {
-                                        installProperties.extraContent = installedSdls;
-                                    }
-                                }
                                 installData.Add(new DownloadManagerData.Download { gameID = game.GameId, name = game.Name, downloadProperties = installProperties });
                             }
                             window.DataContext = installData;

@@ -199,6 +199,8 @@ namespace LegendaryLibraryNS
 
             bool gamesListShouldBeDisplayed = false;
 
+            var installedAppList = LegendaryLauncher.GetInstalledAppList();
+
             foreach (var installData in MultiInstallData.ToList())
             {
                 var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == installData.gameID);
@@ -207,6 +209,14 @@ namespace LegendaryLibraryNS
                     downloadItemsAlreadyAdded.Add(installData.name);
                     MultiInstallData.Remove(installData);
                     continue;
+                }
+                if (installData.downloadProperties.downloadAction == DownloadAction.Repair && installedAppList.ContainsKey(installData.gameID))
+                {
+                    var installedSdls = installedAppList[installData.gameID].Install_tags;
+                    if (installedSdls.Count > 0)
+                    {
+                        installData.downloadProperties.extraContent = installedSdls;
+                    }
                 }
                 var requiredTags = await LegendaryLauncher.GetRequiredSdlsTags(installData);
                 if (requiredTags.Count > 0)
@@ -229,6 +239,30 @@ namespace LegendaryLibraryNS
                     {
                         installData.extraContentAvailable = true;
                     }
+                    if (installData.downloadProperties.downloadAction == DownloadAction.Repair)
+                    {
+                        var dlcs = extraContentInfo.Where(i => i.Value.Is_dlc).ToList();
+                        if (dlcs.Count > 0)
+                        {
+                            installData.downloadProperties.selectedDlcs = new Dictionary<string, DownloadManagerData.Download>();
+                            foreach (var dlc in dlcs)
+                            {
+                                if (installedAppList.ContainsKey(dlc.Key))
+                                {
+                                    var dlcInstallData = new DownloadManagerData.Download
+                                    {
+                                        gameID = dlc.Key,
+                                        name = dlc.Value.Name
+                                    };
+                                    var dlcSize = await CalculateGameSize(dlcInstallData);
+                                    dlcInstallData.downloadSizeNumber = dlcSize.Download_size;
+                                    dlcInstallData.installSizeNumber = dlcSize.Disk_size;
+                                    installData.downloadProperties.selectedDlcs.Add(dlc.Key, dlcInstallData);
+                                }
+                            }
+                        }
+                    }
+
                     if (settings.DownloadAllDlcs && installData.downloadProperties.downloadAction == DownloadAction.Install)
                     {
                         var dlcs = extraContentInfo.Where(i => i.Value.Is_dlc).ToList();
@@ -333,14 +367,42 @@ namespace LegendaryLibraryNS
                     {
                         ExtraContentLB.ItemsSource = extraContentInfo;
                         ExtraContentBrd.Visibility = Visibility.Visible;
+                        var selectedExtraContent = new Dictionary<string, LegendarySDLInfo>();
+                        if (MultiInstallData[0].downloadProperties.selectedDlcs != null && MultiInstallData[0].downloadProperties.selectedDlcs.Count > 0)
+                        {
+                            var allExtraContent = ExtraContentLB.Items.Cast<KeyValuePair<string, LegendarySDLInfo>>();
+                            foreach (var selectedDlc in MultiInstallData[0].downloadProperties.selectedDlcs)
+                            {
+                                var dlcItem = allExtraContent.FirstOrDefault(i => i.Key == selectedDlc.Key);
+                                if (dlcItem.Key != null)
+                                {
+                                    var sdlInfo = new LegendarySDLInfo
+                                    {
+                                        Is_dlc = true,
+                                    };
+                                    selectedExtraContent.Add(selectedDlc.Key, sdlInfo);
+                                }
+                            }
+                        }
                         if (MultiInstallData[0].downloadProperties.extraContent.Count > 0)
                         {
                             foreach (var item in MultiInstallData[0].downloadProperties.extraContent)
                             {
-                                var sdl = sdls.FirstOrDefault(i => i.Key == item);
-                                if (sdl.Key != null)
+                                var sdlInfo = new LegendarySDLInfo
                                 {
-                                    ExtraContentLB.SelectedItems.Add(sdl);
+                                    Is_dlc = false,
+                                };
+                                selectedExtraContent.Add(item, sdlInfo);
+                            }
+                        }
+                        if (selectedExtraContent.Count > 0)
+                        {
+                            foreach (var singleSelectedExtraContent in selectedExtraContent)
+                            {
+                                var selectedItem = extraContentInfo.FirstOrDefault(i => i.Key == singleSelectedExtraContent.Key);
+                                if (selectedItem.Key != null)
+                                {
+                                    ExtraContentLB.SelectedItems.Add(selectedItem);
                                 }
                             }
                         }
