@@ -422,6 +422,8 @@ namespace LegendaryLibraryNS
             size.Download_size = gameManifest.Manifest.Download_size;
             if (installData.downloadProperties.extraContent.Count > 0)
             {
+                size.Disk_size = 0;
+                size.Download_size = 0;
                 foreach (var tag in installData.downloadProperties.extraContent)
                 {
                     var tagDo = gameManifest.Manifest.Tag_download_size.FirstOrDefault(t => t.Tag == tag);
