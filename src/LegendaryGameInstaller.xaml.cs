@@ -94,7 +94,7 @@ namespace LegendaryLibraryNS
                     downloadTasks.Add(installData);
                 }
                 var selectedDlcs = installData.downloadProperties.selectedDlcs;
-                if (selectedDlcs.Count > 0)
+                if (selectedDlcs != null && selectedDlcs.Count > 0)
                 {
                     foreach (var selectedDlc in selectedDlcs)
                     {
