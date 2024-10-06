@@ -339,6 +339,42 @@ namespace LegendaryLibraryNS
             return updateInfo;
         }
 
+        public static async Task<LegendaryGameInfo.Manifest> CalculateGameSize(DownloadManagerData.Download installData)
+        {
+            var gameData = new LegendaryGameInfo.Game
+            {
+                App_name = installData.gameID,
+                Title = installData.name
+            };
+            var gameManifest = await GetGameInfo(gameData);
+            var size = new LegendaryGameInfo.Manifest
+            {
+                Disk_size = 0,
+                Download_size = 0
+            };
+            size.Disk_size = gameManifest.Manifest.Disk_size;
+            size.Download_size = gameManifest.Manifest.Download_size;
+            if (installData.downloadProperties.extraContent.Count > 0)
+            {
+                size.Disk_size = 0;
+                size.Download_size = 0;
+                foreach (var tag in installData.downloadProperties.extraContent)
+                {
+                    var tagDo = gameManifest.Manifest.Tag_download_size.FirstOrDefault(t => t.Tag == tag);
+                    if (tagDo != null)
+                    {
+                        size.Download_size += tagDo.Size;
+                    }
+                    var tagDi = gameManifest.Manifest.Tag_disk_size.FirstOrDefault(t => t.Tag == tag);
+                    if (tagDi != null)
+                    {
+                        size.Disk_size += tagDi.Size;
+                    }
+                }
+            }
+            return size;
+        }
+
         public static async Task<LegendaryGameInfo.Rootobject> GetGameInfo(LegendaryGameInfo.Game installData, bool skipRefreshing = false, bool silently = false, bool forceRefreshCache = false)
         {
             var gameID = installData.App_name;
