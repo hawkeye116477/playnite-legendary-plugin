@@ -36,6 +36,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Не вдалося завантажити метадані: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">Видалення</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Нічого не робити</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteClose">Закрити</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Доступне оновлення</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Завантажити та встановити оновлення</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Перевірити наявність оновлень</sys:String>

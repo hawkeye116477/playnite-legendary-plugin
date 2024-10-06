@@ -36,6 +36,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">No s'ha pogut descarregar les metadades: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">Desinstal·lant</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">No fer res</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteClose">Tancar</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Actualització disponible</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Descarregar i instal·lar l'actualització</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Buscar actualitzacions</sys:String>

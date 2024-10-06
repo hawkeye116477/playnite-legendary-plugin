@@ -36,6 +36,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError" />
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">Afinstallerer</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Gør ingenting</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteClose">Luk</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle" />
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate" />
   <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates" />

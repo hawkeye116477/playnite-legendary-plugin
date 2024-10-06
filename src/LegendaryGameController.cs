@@ -720,7 +720,12 @@ namespace LegendaryLibraryNS
                 }
                 return gamesToUpdate;
             }
-            var newGameInfo = await LegendaryLauncher.GetGameInfo(gameId, false, true, forceRefreshCache);
+            var newGameData = new LegendaryGameInfo.Game
+            {
+                Title = gameTitle,
+                App_name = gameId
+            };
+            var newGameInfo = await LegendaryLauncher.GetGameInfo(newGameData, false, true, forceRefreshCache);
             if (newGameInfo.Game != null)
             {
                 var installedAppList = LegendaryLauncher.GetInstalledAppList();
@@ -752,7 +757,12 @@ namespace LegendaryLibraryNS
                                 if (installedAppList.ContainsKey(dlc.App_name))
                                 {
                                     var oldDlcInfo = installedAppList[dlc.App_name];
-                                    var newDlcInfo = await LegendaryLauncher.GetGameInfo(dlc.App_name, false, true, forceRefreshCache);
+                                    var dlcData = new LegendaryGameInfo.Game
+                                    {
+                                        Title = dlc.Title.RemoveTrademarks(),
+                                        App_name = dlc.App_name
+                                    };
+                                    var newDlcInfo = await LegendaryLauncher.GetGameInfo(dlcData, false, true, forceRefreshCache);
                                     if (newDlcInfo.Game != null)
                                     {
                                         if (oldDlcInfo.Version != newDlcInfo.Game.Version)

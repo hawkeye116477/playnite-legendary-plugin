@@ -36,6 +36,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Nu s-a putut descărca metadata: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">Se dezinstalează</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Repaus</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteClose">Închideţi</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Versiune nouă disponibilă</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Descarcă şi actualizează programul</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Verificați dacă sunt disponibile Actualizări</sys:String>

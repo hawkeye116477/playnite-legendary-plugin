@@ -21,9 +21,14 @@ namespace LegendaryLibraryNS
             GlobalProgressOptions metadataProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.Legendary3P_PlayniteProgressMetadata), false);
 
             var manifest = new LegendaryGameInfo.Rootobject();
+            var gameData = new LegendaryGameInfo.Game
+            {
+                Title = gameName,
+                App_name = gameID
+            };
             playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
             {
-                manifest = await LegendaryLauncher.GetGameInfo(gameID, skipRefreshingMetadata);
+                manifest = await LegendaryLauncher.GetGameInfo(gameData, skipRefreshingMetadata);
             }, metadataProgressOptions);
 
             if (manifest.Game != null)

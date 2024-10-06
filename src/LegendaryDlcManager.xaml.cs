@@ -42,7 +42,12 @@ namespace LegendaryLibraryNS
             InstalledDlcsSP.Visibility = Visibility.Collapsed;
             LoadingATB.Visibility = Visibility.Visible;
             LoadingITB.Visibility = Visibility.Visible;
-            manifest = await LegendaryLauncher.GetGameInfo(GameId);
+            var gameData = new LegendaryGameInfo.Game
+            {
+                Title = Game.Name,
+                App_name = Game.GameId
+            };
+            manifest = await LegendaryLauncher.GetGameInfo(gameData);
             if (manifest != null && manifest.Manifest != null)
             {
                 if (manifest.Game.Owned_dlc.Count > 0)
@@ -54,7 +59,12 @@ namespace LegendaryLibraryNS
                     {
                         if (!dlc.App_name.IsNullOrEmpty())
                         {
-                            var dlcInfo = await LegendaryLauncher.GetGameInfo(dlc.App_name);
+                            var dlcData = new LegendaryGameInfo.Game
+                            {
+                                Title = dlc.Title.RemoveTrademarks(),
+                                App_name = dlc.App_name
+                            };
+                            var dlcInfo = await LegendaryLauncher.GetGameInfo(dlcData);
                             dlcInfo.Game.Title = dlcInfo.Game.Title.RemoveTrademarks();
                             if (installedAppList.ContainsKey(dlc.App_name))
                             {

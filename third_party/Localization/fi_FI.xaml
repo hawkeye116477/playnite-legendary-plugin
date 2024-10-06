@@ -36,6 +36,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Tietojen lataaminen epäonnistui: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">Poistetaan</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Älä tee mitään</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteClose">Sulje</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Päivitys saatavilla</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Lataa ja asenna päivitys</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Tarkista päivitykset</sys:String>

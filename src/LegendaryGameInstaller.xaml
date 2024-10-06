@@ -13,6 +13,7 @@
         <sys:Boolean x:Key="True">True</sys:Boolean>
         <sys:Boolean x:Key="False">False</sys:Boolean>
         <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
     <DockPanel Margin="10">
         <Grid DockPanel.Dock="Bottom" Margin="0,5,0,0">
@@ -51,7 +52,7 @@
                 VerticalAlignment="Top">
                 <Button x:Name="RepairBtn" Content="{DynamicResource LOCLegendaryRepair}" ContentStringFormat="&#xefd2; {0}" 
                     FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
-                    Margin="0,0,5,0" Visibility="Collapsed" Click="RepairBtn_Click" />
+                    Margin="0,0,5,0" Visibility="Collapsed" Click="RepairBtn_Click" IsEnabled="False"/>
                 <Button x:Name="InstallBtn" Content="{DynamicResource LOCLegendary3P_PlayniteInstallGame}" ContentStringFormat="&#xef07; {0}"
                     FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
                     Click="InstallBtn_Click" IsEnabled="False" />
@@ -72,7 +73,10 @@
                         <ItemsControl BorderThickness="0" Name="GamesLB" Margin="5,0,5,5">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBox Text="{Binding name}" IsReadOnly="True" />
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                        <TextBox Text="{Binding name}" IsReadOnly="True" Margin="0,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                        <Button Content="{DynamicResource LOCLegendaryExtraContent}" Name="GameExtraContentBtn" VerticalAlignment="Center" HorizontalAlignment="Left" Click="GameExtraContentBtn_Click" Visibility="{Binding extraContentAvailable, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

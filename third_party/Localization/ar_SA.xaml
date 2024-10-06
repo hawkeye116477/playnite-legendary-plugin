@@ -36,6 +36,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">فشل تحميل بيانات التعريف:{0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">جاري إلغاء التثبيت</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">‮لا تفعل شيئا</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteClose">إغلاق</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">التحديث متوفر</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">تحميل و تثبيت التحديثات</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">تحقق من التحديثات</sys:String>

@@ -36,6 +36,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Không tải xuống được siêu dữ liệu: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">Gỡ cài đặt</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Không làm gì cả</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteClose">Đóng cửa sổ</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Bản cập nhật có sẵn</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Tải xuống và cài đặt bản cập nhật</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Kiểm Tra Cập Nhật</sys:String>

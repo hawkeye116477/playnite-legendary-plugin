@@ -35,6 +35,7 @@ LOCGameNameTitle
 LOCInstallSizeLabel
 LOCAddedLabel
 LOCOpen
+LOCClose
 LOCCheckForUpdates
 LOCUpdaterWindowTitle
 LOCUpdateCheckFailMessage

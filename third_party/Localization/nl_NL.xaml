@@ -36,6 +36,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Downloaden van metadata mislukt: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">Aan het deinstalleren</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Doe niets</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteClose">Sluiten</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Update Beschikbaar</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Installeer Update</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Controleer op updates</sys:String>

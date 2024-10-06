@@ -36,6 +36,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">Nepavyko atsisiųsti metadata: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">Išdiegti</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Nieko nedaryti</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteClose">Uždaryti</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">Galimas atnaujinimas</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">Įrašyti atnaujinimą</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">Tikrinti, ar yra atnaujinimų</sys:String>

@@ -70,7 +70,8 @@ namespace LegendaryLibraryNS.Models
                 get => _downloadedNumber;
                 set => SetValue(ref _downloadedNumber, value);
             }
-            public DownloadProperties downloadProperties { get; set; }
+            public DownloadProperties downloadProperties { get; set; } = new DownloadProperties();
+            public bool? extraContentAvailable { get; set; }
         }
     }
 
@@ -84,6 +85,7 @@ namespace LegendaryLibraryNS.Models
         public bool enableReordering { get; set; }
         public int maxWorkers { get; set; }
         public int maxSharedMemory { get; set; }
-        public List<string> extraContent { get; set; } = default;
+        public List<string> extraContent { get; set; } = new List<string>();
+        public Dictionary<string, DownloadManagerData.Download> selectedDlcs { get; set; }
     }
 }
