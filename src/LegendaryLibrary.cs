@@ -161,6 +161,11 @@ namespace LegendaryLibraryNS
                     continue;
                 }
 
+                if ((catalogItem?.customAttributes?.ThirdPartyManagedApp != null) && (catalogItem?.customAttributes?.ThirdPartyManagedApp.value.ToLower() == "the ea app"))
+                {
+                    continue;
+                }
+
                 if (!GetSettings().ImportUbisoftLauncherGames)
                 {
                     if ((catalogItem?.customAttributes?.PartnerLinkType != null) && (catalogItem?.customAttributes.PartnerLinkType.value == "ubisoft"))
