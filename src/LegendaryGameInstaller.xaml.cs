@@ -242,6 +242,21 @@ namespace LegendaryLibraryNS
                                     gameID = dlc.Key,
                                     name = dlc.Value.Name
                                 };
+                                if (installData.downloadProperties.extraContent.Count > 0)
+                                {
+                                    Dictionary<string, LegendarySDLInfo> extraContentDlcInfo = await LegendaryLauncher.GetExtraContentInfo(dlcInstallData);
+                                    if (extraContentDlcInfo.Count > 0)
+                                    {
+                                        dlcInstallData.downloadProperties.extraContent = new List<string>();
+                                        foreach (var singleSdl in installData.downloadProperties.extraContent)
+                                        {
+                                            if (extraContentDlcInfo.ContainsKey(singleSdl))
+                                            {
+                                                dlcInstallData.downloadProperties.extraContent.Add(singleSdl);
+                                            }   
+                                        }
+                                    }
+                                }
                                 var dlcSize = await CalculateGameSize(dlcInstallData);
                                 dlcInstallData.downloadSizeNumber = dlcSize.Download_size;
                                 dlcInstallData.installSizeNumber = dlcSize.Disk_size;
@@ -507,22 +522,6 @@ namespace LegendaryLibraryNS
                     selectedSdls.AddMissing(sdl.Key);
                 }
             }
-            MultiInstallData[0].downloadProperties.selectedDlcs = new Dictionary<string, DownloadManagerData.Download>();
-            if (selectedDLCs.Count > 0)
-            {
-                foreach (var dlc in selectedDLCs)
-                {
-                    var dlcInstallData = new DownloadManagerData.Download
-                    {
-                        gameID = dlc.Key,
-                        name = dlc.Value.Name,
-                    };
-                    var dlcSize = await CalculateGameSize(dlcInstallData);
-                    dlcInstallData.downloadSizeNumber = dlcSize.Download_size;
-                    dlcInstallData.installSizeNumber = dlcSize.Disk_size;
-                    MultiInstallData[0].downloadProperties.selectedDlcs.Add(dlcInstallData.gameID, dlcInstallData);
-                }
-            }
 
             var requiredTags = await LegendaryLauncher.GetRequiredSdlsTags(MultiInstallData[0]);
             if (requiredTags.Count > 0)
@@ -541,6 +540,39 @@ namespace LegendaryLibraryNS
             var gameSize = await CalculateGameSize(MultiInstallData[0]);
             MultiInstallData[0].downloadSizeNumber = gameSize.Download_size;
             MultiInstallData[0].installSizeNumber = gameSize.Disk_size;
+
+
+            MultiInstallData[0].downloadProperties.selectedDlcs = new Dictionary<string, DownloadManagerData.Download>();
+            if (selectedDLCs.Count > 0)
+            {
+                foreach (var dlc in selectedDLCs)
+                {
+                    var dlcInstallData = new DownloadManagerData.Download
+                    {
+                        gameID = dlc.Key,
+                        name = dlc.Value.Name,
+                    };
+                    if (MultiInstallData[0].downloadProperties.extraContent.Count > 0)
+                    {
+                        Dictionary<string, LegendarySDLInfo> extraContentDlcInfo = await LegendaryLauncher.GetExtraContentInfo(dlcInstallData);
+                        if (extraContentDlcInfo.Count > 0)
+                        {
+                            dlcInstallData.downloadProperties.extraContent = new List<string>();
+                            foreach (var singleSdl in MultiInstallData[0].downloadProperties.extraContent)
+                            {
+                                if (extraContentDlcInfo.ContainsKey(singleSdl))
+                                {
+                                    dlcInstallData.downloadProperties.extraContent.Add(singleSdl);
+                                }
+                            }
+                        }
+                    }
+                    var dlcSize = await CalculateGameSize(dlcInstallData);
+                    dlcInstallData.downloadSizeNumber = dlcSize.Download_size;
+                    dlcInstallData.installSizeNumber = dlcSize.Disk_size;
+                    MultiInstallData[0].downloadProperties.selectedDlcs.Add(dlcInstallData.gameID, dlcInstallData);
+                }
+            }
 
             if (AllOrNothingChk.IsChecked == true && selectedExtraContent.Count() != ExtraContentLB.Items.Count)
             {
@@ -679,7 +711,22 @@ namespace LegendaryLibraryNS
                         foreach (var selectedDlc in selectedDlcs)
                         {
                             var dlcInstallData = selectedDlc.Value;
-                            var dlcSize = await CalculateGameSize (dlcInstallData);
+                            if (installData.downloadProperties.extraContent.Count > 0)
+                            {
+                                Dictionary<string, LegendarySDLInfo> extraContentDlcInfo = await LegendaryLauncher.GetExtraContentInfo(dlcInstallData);
+                                if (extraContentDlcInfo.Count > 0)
+                                {
+                                    dlcInstallData.downloadProperties.extraContent = new List<string>();
+                                    foreach (var singleSdl in installData.downloadProperties.extraContent)
+                                    {
+                                        if (extraContentDlcInfo.ContainsKey(singleSdl))
+                                        {
+                                            dlcInstallData.downloadProperties.extraContent.Add(singleSdl);
+                                        }
+                                    }
+                                }
+                            }
+                            var dlcSize = await CalculateGameSize(dlcInstallData);
                             selectedDlc.Value.downloadSizeNumber = dlcSize.Download_size;
                             selectedDlc.Value.installSizeNumber = dlcSize.Disk_size;
                         }
