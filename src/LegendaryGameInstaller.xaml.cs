@@ -663,6 +663,21 @@ namespace LegendaryLibraryNS
 
         private async void RepairBtn_Click(object sender, RoutedEventArgs e)
         {
+            foreach (var installData in MultiInstallData)
+            {
+                installData.downloadSizeNumber = 0;
+                installData.installSizeNumber = 0;
+                var selectedDlcs = installData.downloadProperties.selectedDlcs;
+                if (selectedDlcs != null && selectedDlcs.Count > 0)
+                {
+                    foreach (var selectedDlc in selectedDlcs)
+                    {
+                        var dlcInstallData = selectedDlc.Value;
+                        dlcInstallData.downloadSizeNumber = 0;
+                        dlcInstallData.installSizeNumber = 0;
+                    }
+                }
+            }
             await StartTask(DownloadAction.Repair);
         }
 
