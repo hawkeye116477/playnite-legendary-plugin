@@ -519,6 +519,21 @@ namespace LegendaryLibraryNS
                 }
                 else
                 {
+                    if (extraContentInfo.ContainsKey("__required"))
+                    {
+                        extraContentInfo["__required"].Tags.Add("");
+                    }
+                    else if (extraContentInfo.Count > 0)
+                    {
+                        var requiredSdl = new LegendarySDLInfo
+                        {
+                            Tags = new List<string>
+                            {
+                                ""
+                            }
+                        };
+                        extraContentInfo.Add("__required", requiredSdl);
+                    }
                     if (!includeRequiredSdl && extraContentInfo.ContainsKey("__required"))
                     {
                         extraContentInfo.Remove("__required");
@@ -561,10 +576,6 @@ namespace LegendaryLibraryNS
                 {
                     requiredSdls.AddMissing(tag);
                 }
-            }
-            if (sdls != null && sdls.Count > 0)
-            {
-                requiredSdls.Add("");
             }
             return requiredSdls;
         }

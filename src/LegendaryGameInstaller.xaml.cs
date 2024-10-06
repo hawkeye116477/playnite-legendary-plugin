@@ -244,10 +244,13 @@ namespace LegendaryLibraryNS
                                 };
                                 if (installData.downloadProperties.extraContent.Count > 0)
                                 {
-                                    Dictionary<string, LegendarySDLInfo> extraContentDlcInfo = await LegendaryLauncher.GetExtraContentInfo(dlcInstallData);
+                                    Dictionary<string, LegendarySDLInfo> extraContentDlcInfo = await LegendaryLauncher.GetExtraContentInfo(dlcInstallData, true);
                                     if (extraContentDlcInfo.Count > 0)
                                     {
-                                        dlcInstallData.downloadProperties.extraContent = new List<string>();
+                                        dlcInstallData.downloadProperties.extraContent = new List<string>
+                                        {
+                                            ""
+                                        };
                                         foreach (var singleSdl in installData.downloadProperties.extraContent)
                                         {
                                             if (extraContentDlcInfo.ContainsKey(singleSdl))
@@ -554,10 +557,13 @@ namespace LegendaryLibraryNS
                     };
                     if (MultiInstallData[0].downloadProperties.extraContent.Count > 0)
                     {
-                        Dictionary<string, LegendarySDLInfo> extraContentDlcInfo = await LegendaryLauncher.GetExtraContentInfo(dlcInstallData);
+                        Dictionary<string, LegendarySDLInfo> extraContentDlcInfo = await LegendaryLauncher.GetExtraContentInfo(dlcInstallData, true);
                         if (extraContentDlcInfo.Count > 0)
                         {
-                            dlcInstallData.downloadProperties.extraContent = new List<string>();
+                            dlcInstallData.downloadProperties.extraContent = new List<string>
+                            {
+                                ""
+                            };
                             foreach (var singleSdl in MultiInstallData[0].downloadProperties.extraContent)
                             {
                                 if (extraContentDlcInfo.ContainsKey(singleSdl))
@@ -713,10 +719,13 @@ namespace LegendaryLibraryNS
                             var dlcInstallData = selectedDlc.Value;
                             if (installData.downloadProperties.extraContent.Count > 0)
                             {
-                                Dictionary<string, LegendarySDLInfo> extraContentDlcInfo = await LegendaryLauncher.GetExtraContentInfo(dlcInstallData);
+                                Dictionary<string, LegendarySDLInfo> extraContentDlcInfo = await LegendaryLauncher.GetExtraContentInfo(dlcInstallData, true);
                                 if (extraContentDlcInfo.Count > 0)
                                 {
-                                    dlcInstallData.downloadProperties.extraContent = new List<string>();
+                                    dlcInstallData.downloadProperties.extraContent = new List<string>
+                                    {
+                                        ""
+                                    };
                                     foreach (var singleSdl in installData.downloadProperties.extraContent)
                                     {
                                         if (extraContentDlcInfo.ContainsKey(singleSdl))
