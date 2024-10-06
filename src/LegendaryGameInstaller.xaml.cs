@@ -229,7 +229,7 @@ namespace LegendaryLibraryNS
                     {
                         installData.extraContentAvailable = true;
                     }
-                    if (settings.DownloadAllDlcs)
+                    if (settings.DownloadAllDlcs && installData.downloadProperties.downloadAction == DownloadAction.Install)
                     {
                         var dlcs = extraContentInfo.Where(i => i.Value.Is_dlc).ToList();
                         if (dlcs.Count > 0)
