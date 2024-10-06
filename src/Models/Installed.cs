@@ -1,4 +1,6 @@
-﻿namespace LegendaryLibraryNS.Models
+﻿using System.Collections.Generic;
+
+namespace LegendaryLibraryNS.Models
 {
     public class Installed
     {
@@ -13,6 +15,6 @@
         public string Save_path { get; set; }
         public string Title_for_updater { get; set; } = "";
         public Prerequisite Prereq_info { get; set; }
-        public string[] Install_tags { get; set; }
+        public List<string> Install_tags { get; set; } = new List<string>();
     }
 }

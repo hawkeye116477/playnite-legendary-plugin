@@ -61,7 +61,7 @@ namespace LegendaryLibraryNS
             Window.GetWindow(this).Close();
         }
 
-        public async Task Install()
+        public async Task StartTask(DownloadAction downloadAction)
         {
             var settings = LegendaryLibrary.GetSettings();
             var installPath = SelectedGamePathTxt.Text;
@@ -89,7 +89,7 @@ namespace LegendaryLibraryNS
                 var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameId);
                 if (wantedItem == null)
                 {
-                    var downloadProperties = GetDownloadProperties(installData, DownloadAction.Install, installPath);
+                    var downloadProperties = GetDownloadProperties(installData, downloadAction, installPath);
                     installData.downloadProperties = downloadProperties;
                     downloadTasks.Add(installData);
                 }
@@ -102,7 +102,7 @@ namespace LegendaryLibraryNS
                         if (wantedDlc == null)
                         {
                             var dlcInstallData = selectedDlc.Value;
-                            var downloadProperties = GetDownloadProperties(dlcInstallData, DownloadAction.Install, installPath);
+                            var downloadProperties = GetDownloadProperties(dlcInstallData, downloadAction, installPath);
                             dlcInstallData.downloadProperties = downloadProperties;
                             downloadTasks.Add(dlcInstallData);
                         }
@@ -135,7 +135,7 @@ namespace LegendaryLibraryNS
 
         private async void InstallBtn_Click(object sender, RoutedEventArgs e)
         {
-            await Install();
+            await StartTask(DownloadAction.Install);
         }
 
         public DownloadProperties GetDownloadProperties(DownloadManagerData.Download installData, DownloadAction downloadAction, string installPath = "")
@@ -256,7 +256,7 @@ namespace LegendaryLibraryNS
                                             if (extraContentDlcInfo.ContainsKey(singleSdl))
                                             {
                                                 dlcInstallData.downloadProperties.extraContent.Add(singleSdl);
-                                            }   
+                                            }
                                         }
                                     }
                                 }
@@ -333,7 +333,18 @@ namespace LegendaryLibraryNS
                     {
                         ExtraContentLB.ItemsSource = extraContentInfo;
                         ExtraContentBrd.Visibility = Visibility.Visible;
-                        if (settings.DownloadAllDlcs)
+                        if (MultiInstallData[0].downloadProperties.extraContent.Count > 0)
+                        {
+                            foreach (var item in MultiInstallData[0].downloadProperties.extraContent)
+                            {
+                                var sdl = sdls.FirstOrDefault(i => i.Key == item);
+                                if (sdl.Key != null)
+                                {
+                                    ExtraContentLB.SelectedItems.Add(sdl);
+                                }
+                            }
+                        }
+                        if (settings.DownloadAllDlcs && MultiInstallData[0].downloadProperties.downloadAction == DownloadAction.Install)
                         {
                             foreach (var item in ExtraContentLB.Items.Cast<KeyValuePair<string, LegendarySDLInfo>>())
                             {
@@ -419,7 +430,7 @@ namespace LegendaryLibraryNS
             }
             if (settings.UnattendedInstall && (MultiInstallData.First().downloadProperties.downloadAction == DownloadAction.Install))
             {
-                await Install();
+                await StartTask(DownloadAction.Install);
             }
         }
 
@@ -626,18 +637,7 @@ namespace LegendaryLibraryNS
 
         private async void RepairBtn_Click(object sender, RoutedEventArgs e)
         {
-            InstallerWindow.Close();
-            LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
-            var downloadTasks = new List<DownloadManagerData.Download>();
-            foreach (var installData in MultiInstallData)
-            {
-                installData.downloadProperties = GetDownloadProperties(installData, DownloadAction.Repair);
-                downloadTasks.Add(installData);
-            }
-            if (downloadTasks.Count > 0)
-            {
-                await downloadManager.EnqueueMultipleJobs(downloadTasks);
-            }
+            await StartTask(DownloadAction.Repair);
         }
 
         private void AllDlcsChk_Checked(object sender, RoutedEventArgs e)
