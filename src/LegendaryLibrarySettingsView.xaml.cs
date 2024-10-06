@@ -353,9 +353,9 @@ namespace LegendaryLibraryNS
         private async void CheckForUpdatesBtn_Click(object sender, RoutedEventArgs e)
         {
             var versionInfoContent = await LegendaryLauncher.GetVersionInfoContent();
-            if (versionInfoContent.release_info != null)
+            if (versionInfoContent.Tag_name != null)
             {
-                var newVersion = versionInfoContent.release_info.version;
+                var newVersion = versionInfoContent.Tag_name;
                 if (troubleshootingInformation.LauncherVersion != newVersion)
                 {
                     var options = new List<MessageBoxOption>
@@ -366,7 +366,7 @@ namespace LegendaryLibraryNS
                     var result = playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryNewVersionAvailable), "Legendary Launcher", newVersion), ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
                     if (result == options[0])
                     {
-                        var changelogURL = versionInfoContent.release_info.gh_url;
+                        var changelogURL = versionInfoContent.Html_url;
                         Playnite.Commands.GlobalCommands.NavigateUrl(changelogURL);
                     }
                 }

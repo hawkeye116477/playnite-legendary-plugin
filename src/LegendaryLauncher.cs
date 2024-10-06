@@ -636,15 +636,19 @@ namespace LegendaryLibraryNS
             return version;
         }
 
-        public static async Task<LauncherVersion.Rootobject> GetVersionInfoContent()
+        public static async Task<LauncherVersion> GetVersionInfoContent()
         {
-            var newVersionInfoContent = new LauncherVersion.Rootobject();
+            var newVersionInfoContent = new LauncherVersion();
             var logger = LogManager.GetLogger();
             if (!IsInstalled)
             {
                 throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
             }
             var cacheVersionPath = LegendaryLibrary.Instance.GetCachePath("infocache");
+            if (!Directory.Exists(cacheVersionPath))
+            {
+                Directory.CreateDirectory(cacheVersionPath);
+            }
             var cacheVersionFile = Path.Combine(cacheVersionPath, "legendaryVersion.json");
             string content = null;
             if (File.Exists(cacheVersionFile))
@@ -654,10 +658,29 @@ namespace LegendaryLibraryNS
                     File.Delete(cacheVersionFile);
                 }
             }
-            if (!File.Exists(cacheVersionFile))
+            bool correctJson = false;
+            if (File.Exists(cacheVersionFile))
+            {
+                content = FileSystem.ReadFileAsStringSafe(cacheVersionFile);
+                if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out LauncherVersion versionInfoContent))
+                {
+                    if (versionInfoContent != null && versionInfoContent.Html_url != null && versionInfoContent.Tag_name != null)
+                    {
+                        correctJson = true;
+                        newVersionInfoContent = versionInfoContent;
+                    }
+                }
+            }
+            if (!File.Exists(cacheVersionFile) || !correctJson)
             {
                 var httpClient = new HttpClient();
-                var response = await httpClient.GetAsync("https://api.legendary.gl/v1/version.json");
+                httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Vivaldi/5.5.2805.50");
+                var repoOwner = "derrod";
+                if (LauncherPath == HeroicLegendaryPath)
+                {
+                    repoOwner = "Heroic-Games-Launcher";
+                }
+                var response = await httpClient.GetAsync($"https://api.github.com/repos/{repoOwner}/legendary/releases/latest");
                 if (response.IsSuccessStatusCode)
                 {
                     content = await response.Content.ReadAsStringAsync();
@@ -666,20 +689,13 @@ namespace LegendaryLibraryNS
                         Directory.CreateDirectory(cacheVersionPath);
                     }
                     File.WriteAllText(cacheVersionFile, content);
+                    newVersionInfoContent = Serialization.FromJson<LauncherVersion>(content);
+                }
+                else
+                {
+                    logger.Error("An error occurred while downloading Legendary's version info.");
                 }
                 httpClient.Dispose();
-            }
-            else
-            {
-                content = FileSystem.ReadFileAsStringSafe(cacheVersionFile);
-            }
-            if (content.IsNullOrWhiteSpace())
-            {
-                logger.Error("An error occurred while downloading Legendary's version info.");
-            }
-            else if (Serialization.TryFromJson(content, out LauncherVersion.Rootobject versionInfoContent))
-            {
-                newVersionInfoContent = versionInfoContent;
             }
             return newVersionInfoContent;
         }

@@ -2,17 +2,7 @@
 {
     public class LauncherVersion
     {
-        public class Rootobject
-        {
-            public Release_Info release_info { get; set; }
-        }
-
-        public class Release_Info
-        {
-            public string gh_url { get; set; }
-            public string name { get; set; }
-            public string summary { get; set; }
-            public string version { get; set; }
-        }
+        public string Tag_name { get; set; }
+        public string Html_url { get; set; }
     }
 }
