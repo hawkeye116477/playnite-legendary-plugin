@@ -134,6 +134,10 @@ namespace System
         /// </summary>
         public const string Legendary3P_PlayniteDoNothing = "LOCLegendary3P_PlayniteDoNothing";
         /// <summary>
+        /// Close
+        /// </summary>
+        public const string Legendary3P_PlayniteClose = "LOCLegendary3P_PlayniteClose";
+        /// <summary>
         /// Update Available
         /// </summary>
         public const string Legendary3P_PlayniteUpdaterWindowTitle = "LOCLegendary3P_PlayniteUpdaterWindowTitle";
