@@ -238,7 +238,8 @@ namespace LegendaryLibraryNS
             get
             {
                 var envDict = new Dictionary<string, string>();
-                if (ConfigPath.Contains("heroic"))
+                var heroicLegendaryConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "heroic", "legendaryConfig", "legendary");
+                if (ConfigPath == heroicLegendaryConfigPath)
                 {
                     envDict.Add("LEGENDARY_CONFIG_PATH", ConfigPath);
                 }
