@@ -555,14 +555,6 @@ namespace LegendaryLibraryNS
 
             var selectedSdls = new List<string>();
 
-            if (sdls.Count > 0)
-            {
-                foreach (var sdl in sdls)
-                {
-                    selectedSdls.AddMissing(sdl.Key);
-                }
-            }
-
             var requiredTags = await LegendaryLauncher.GetRequiredSdlsTags(MultiInstallData[0]);
             if (requiredTags.Count > 0)
             {
@@ -571,6 +563,15 @@ namespace LegendaryLibraryNS
                     selectedSdls.AddMissing(requiredTag);
                 }
             }
+
+            if (sdls.Count > 0)
+            {
+                foreach (var sdl in sdls)
+                {
+                    selectedSdls.AddMissing(sdl.Key);
+                }
+            }
+
             MultiInstallData[0].downloadProperties.extraContent = selectedSdls;
             var gameData = new LegendaryGameInfo.Game
             {
