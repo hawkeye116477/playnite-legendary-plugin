@@ -12,12 +12,44 @@
         <sys:Boolean x:Key="True">True</sys:Boolean>
         <sys:Boolean x:Key="False">False</sys:Boolean>
         <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
     </UserControl.Resources>
-    <DockPanel Margin="0,0,10,10">
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+    <DockPanel Margin="0,0,0,10">
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,10,0">
             <Button x:Name="SaveBtn" Content="{DynamicResource LOCLegendary3P_PlayniteSaveLabel}" Click="SaveBtn_Click" Margin="0,0,5,0" />
             <Button x:Name="CancelBtn" Content="{DynamicResource LOCLegendary3P_PlayniteCancelLabel}" IsCancel="True" />
         </StackPanel>
+        <Grid DockPanel.Dock="Bottom" Margin="10,5" x:Name="SizeGrd" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="0,5,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5" Grid.Row="1" Grid.Column="0">
+                <TextBlock Text="{DynamicResource LOCLegendaryDownloadSize}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                <TextBlock x:Name="DownloadSizeTB" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
+                    VerticalAlignment="Top" Margin="5,0,5,0" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" Grid.Row="2" Grid.Column="0">
+                <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendaryInstallSize}" Margin="0,0,0,0" />
+                <TextBlock x:Name="InstallSizeTB" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}" VerticalAlignment="Top" Margin="5,0,5,0" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,5,0,5" Grid.Row="1" Grid.Column="1">
+                <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendarySpaceAvailable}" Margin="0,0,0,0" />
+                <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
+                    Margin="5,0,5,0" Name="SpaceTB" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" Name="AfterInstallingSP" Margin="10,0,0,0">
+                <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendaryAfterInstalling}" Margin="0,0,0,0" />
+                <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
+                    Margin="5,0,5,0" Name="AfterInstallingTB" />
+            </StackPanel>
+        </Grid>
         <TabControl>
             <TabItem Header="{DynamicResource LOCLegendary3P_PlayniteSettingsGeneralLabel}">
                 <Grid Margin="10">
@@ -33,7 +65,7 @@
                         <TextBlock Text="{DynamicResource LOCLegendary3P_PlayniteGameInstallDirTitle}" VerticalAlignment="Center" Margin="0,0,10,0" />
                         <Button DockPanel.Dock="Right" Padding="5" Margin="5 0 0 0" Content="&#xec5b;"
                                 Name="ChooseGamePathBtn" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteSelectDirectoryTooltip}" Click="ChooseGamePathBtn_Click" />
-                        <TextBox Name="SelectedGamePathTxt" VerticalAlignment="Center" Margin="0,5" />
+                        <TextBox Name="SelectedGamePathTxt" VerticalAlignment="Center" Margin="0" />
                     </DockPanel>
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource LOCLegendaryTask}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,10,0"></TextBlock>
                     <ComboBox Grid.Row="1" Grid.Column="1" x:Name="TaskCBo" DisplayMemberPath="Value" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Width="Auto" />
@@ -41,16 +73,15 @@
             </TabItem>
             <TabItem Header="{DynamicResource LOCLegendaryExtraContent}" Visibility="Collapsed" Name="ExtraContentTbI">
                 <StackPanel Margin="10">
-                    <CheckBox Margin="2,0,0,5" Content="{DynamicResource LOCLegendaryCheckAllContent}" x:Name="AllOrNothingChk" Checked="AllOrNothingChk_Checked" Unchecked="AllOrNothingChk_Unchecked" />
+                    <CheckBox Margin="2,0,0,5" Content="{DynamicResource LOCLegendaryCheckAllContent}" x:Name="AllOrNothingChk" Checked="AllOrNothingChk_Checked" Unchecked="AllOrNothingChk_Unchecked" Visibility="Collapsed" IsEnabled="False" />
                     <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="2,0,0,5" />
-                    <ListBox BorderThickness="0" Name="ExtraContentLB" SelectionMode="Multiple" Margin="0,0,0,5">
+                    <ListBox BorderThickness="0" Name="ExtraContentLB" SelectionMode="Multiple" Margin="0,0,0,5" SelectionChanged="ExtraContentLB_SelectionChanged" IsEnabled="False">
                         <ListBox.Resources>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="ListBoxItem">
-                                            <CheckBox Content="{Binding Value.Name}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" 
-                                                      ToolTip="{Binding Value.Description}" Margin="0,5,0,0" Name="ExtraContentChk" Unchecked="ExtraContentChk_Unchecked"/>
+                                            <CheckBox Content="{Binding Value.Name}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" ToolTip="{Binding Value.Description}" Margin="0,5,0,0" Name="ExtraContentChk"/>
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>

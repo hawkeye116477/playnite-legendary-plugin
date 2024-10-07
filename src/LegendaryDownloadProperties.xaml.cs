@@ -22,6 +22,14 @@ namespace LegendaryLibraryNS
         private IPlayniteAPI playniteAPI = API.Instance;
         public List<string> requiredThings;
         public bool uncheckedByUser = true;
+        private bool checkedByUser = true;
+        public List<string> selectedSdls = new List<string>();
+
+        public LegendaryGameInfo.Game GameData => new LegendaryGameInfo.Game
+        {
+            App_name = SelectedDownload.gameID,
+            Title = SelectedDownload.name
+        };
 
         public LegendaryDownloadProperties()
         {
@@ -36,7 +44,7 @@ namespace LegendaryLibraryNS
             return downloadManagerData;
         }
 
-        private void LegendaryDownloadPropertiesUC_Loaded(object sender, RoutedEventArgs e)
+        private async void LegendaryDownloadPropertiesUC_Loaded(object sender, RoutedEventArgs e)
         {
             MaxWorkersNI.MaxValue = Helpers.CpuThreadsNumber;
             var wantedItem = SelectedDownload;
@@ -56,43 +64,50 @@ namespace LegendaryLibraryNS
             };
             TaskCBo.ItemsSource = downloadActionOptions;
 
-            var cacheSDLPath = LegendaryLibrary.Instance.GetCachePath("sdlcache");
-            var cacheSDLFile = Path.Combine(cacheSDLPath, SelectedDownload.gameID + ".json");
-            requiredThings = new List<string>();
-            if (File.Exists(cacheSDLFile))
+            Dictionary<string, LegendarySDLInfo> extraContentInfo = await LegendaryLauncher.GetExtraContentInfo(SelectedDownload);
+            if (extraContentInfo.Count > 0)
             {
-                var content = FileSystem.ReadFileAsStringSafe(cacheSDLFile);
-                if (Serialization.TryFromJson<Dictionary<string, LegendarySDLInfo>>(content, out var sdlInfo))
+                var sdls = extraContentInfo.Where(i => i.Value.Is_dlc == false);
+                if (sdls.Count() > 0)
                 {
-                    if (sdlInfo.ContainsKey("__required"))
-                    {
-                        foreach (var tag in sdlInfo["__required"].Tags)
-                        {
-                            requiredThings.Add(tag);
-                        }
-                        sdlInfo.Remove("__required");
-                    }
-                    if (wantedItem.downloadProperties != null)
-                    {
-                        foreach (var selectedExtraContent in wantedItem.downloadProperties.extraContent)
-                        {
-                            var wantedExtraItem = sdlInfo.SingleOrDefault(i => i.Value.Tags.Contains(selectedExtraContent));
-                            if (wantedExtraItem.Key != null)
-                            {
-                                ExtraContentLB.SelectedItems.Add(wantedExtraItem);
-                            }
-                        }
-                    }
-                    ExtraContentLB.ItemsSource = sdlInfo;
-                    ExtraContentTbI.Visibility = Visibility.Visible;
+                    SizeGrd.Visibility = Visibility.Visible;
                 }
+                if (sdls.Count() > 1)
+                {
+                    AllOrNothingChk.Visibility = Visibility.Visible;
+                }
+                ExtraContentLB.ItemsSource = sdls;
+                if (wantedItem.downloadProperties.extraContent.Count > 0)
+                {
+                    foreach (var sdl in wantedItem.downloadProperties.extraContent)
+                    {
+                        var selectedItem = extraContentInfo.FirstOrDefault(i => i.Key == sdl);
+                        if (selectedItem.Key != null)
+                        {
+                            ExtraContentLB.SelectedItems.Add(selectedItem);
+                        }
+                    }
+                }
+                ExtraContentTbI.Visibility = Visibility.Visible;
             }
+
+            if (wantedItem.status == DownloadStatus.Canceled)
+            {
+                AllOrNothingChk.IsEnabled = true;
+                ExtraContentLB.IsEnabled = true;
+            }
+
             if (!wantedItem.downloadProperties.prerequisitesName.IsNullOrEmpty())
             {
                 PrerequisitesChk.IsChecked = wantedItem.downloadProperties.installPrerequisites;
                 PrerequisitesChk.Visibility = Visibility.Visible;
                 PrerequisitesChk.Content = string.Format(PrerequisitesChk.Content.ToString(), wantedItem.downloadProperties.prerequisitesName);
             }
+
+            var gameSize = await LegendaryLauncher.CalculateGameSize(GameData, selectedSdls);
+            DownloadSizeTB.Text = Helpers.FormatSize(gameSize.Download_size);
+            InstallSizeTB.Text = Helpers.FormatSize(gameSize.Disk_size);
+            UpdateSpaceInfo(SelectedDownload.downloadProperties.installPath, gameSize.Disk_size);
         }
 
         private void ChooseGamePathBtn_Click(object sender, RoutedEventArgs e)
@@ -104,7 +119,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private void SaveBtn_Click(object sender, RoutedEventArgs e)
+        private async void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == SelectedDownload.gameID);
             var installPath = SelectedGamePathTxt.Text;
@@ -127,30 +142,13 @@ namespace LegendaryLibraryNS
                 wantedItem.downloadProperties.installPrerequisites = (bool)PrerequisitesChk.IsChecked;
             }
             wantedItem.downloadProperties.ignoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked;
-            var selectedExtraContent = new List<string>();
-            if (requiredThings.Count > 0)
+            wantedItem.downloadProperties.extraContent = selectedSdls;
+            if (wantedItem.status == DownloadStatus.Canceled)
             {
-                selectedExtraContent.Add("");
-                foreach (var requiredThing in requiredThings)
-                {
-                    selectedExtraContent.Add(requiredThing);
-                }
+                var gameSize = await LegendaryLauncher.CalculateGameSize(GameData, selectedSdls);
+                wantedItem.downloadSizeNumber = gameSize.Download_size;
+                wantedItem.installSizeNumber = gameSize.Disk_size;
             }
-            if (ExtraContentLB.Items.Count > 0)
-            {
-                selectedExtraContent.AddMissing("");
-                foreach (var selectedOption in ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().ToList())
-                {
-                    foreach (var tag in selectedOption.Value.Tags)
-                    {
-                        if (!selectedExtraContent.Contains(tag))
-                        {
-                            selectedExtraContent.Add(tag);
-                        }
-                    }
-                }
-            }
-            wantedItem.downloadProperties.extraContent = selectedExtraContent;
             var downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
             var previouslySelected = downloadManager.DownloadsDG.SelectedIndex;
             for (int i = 0; i < downloadManager.downloadManagerData.downloads.Count; i++)
@@ -167,7 +165,10 @@ namespace LegendaryLibraryNS
 
         private void AllOrNothingChk_Checked(object sender, RoutedEventArgs e)
         {
-            ExtraContentLB.SelectAll();
+            if (checkedByUser)
+            {
+                ExtraContentLB.SelectAll();
+            }
         }
 
         private void AllOrNothingChk_Unchecked(object sender, RoutedEventArgs e)
@@ -178,14 +179,59 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private void ExtraContentChk_Unchecked(object sender, RoutedEventArgs e)
+        private void UpdateSpaceInfo(string path, double installSizeNumber)
         {
-            uncheckedByUser = false;
-            if (AllOrNothingChk.IsChecked == true)
+            DriveInfo dDrive = new DriveInfo(path);
+            if (dDrive.IsReady)
             {
-                AllOrNothingChk.IsChecked = false;
+                long availableFreeSpace = dDrive.AvailableFreeSpace;
+                SpaceTB.Text = Helpers.FormatSize(availableFreeSpace);
+                UpdateAfterInstallingSize(availableFreeSpace, installSizeNumber);
             }
-            uncheckedByUser = true;
+        }
+
+        private void UpdateAfterInstallingSize(long availableFreeSpace, double installSizeNumber)
+        {
+            double afterInstallSizeNumber = (double)(availableFreeSpace - installSizeNumber);
+            if (afterInstallSizeNumber < 0)
+            {
+                afterInstallSizeNumber = 0;
+            }
+            AfterInstallingTB.Text = Helpers.FormatSize(afterInstallSizeNumber);
+        }
+
+        private async void ExtraContentLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedSdls = new List<string>();
+            var requiredTags = await LegendaryLauncher.GetRequiredSdlsTags(SelectedDownload);
+            if (requiredTags.Count > 0)
+            {
+                foreach (var requiredTag in requiredTags)
+                {
+                    selectedSdls.AddMissing(requiredTag);
+                }
+            }
+            var selectedExtraContent = ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().ToList();
+            foreach (var selectedSdl in selectedExtraContent)
+            {
+                selectedSdls.Add(selectedSdl.Key);
+            }
+            var gameSize = await LegendaryLauncher.CalculateGameSize(GameData, selectedSdls);
+            DownloadSizeTB.Text = Helpers.FormatSize(gameSize.Download_size);
+            InstallSizeTB.Text = Helpers.FormatSize(gameSize.Disk_size);
+            UpdateSpaceInfo(SelectedDownload.downloadProperties.installPath, gameSize.Disk_size);
+            if (AllOrNothingChk.IsChecked == true && selectedExtraContent.Count() != ExtraContentLB.Items.Count)
+            {
+                uncheckedByUser = false;
+                AllOrNothingChk.IsChecked = false;
+                uncheckedByUser = true;
+            }
+            if (AllOrNothingChk.IsChecked == false && selectedExtraContent.Count() == ExtraContentLB.Items.Count)
+            {
+                checkedByUser = false;
+                AllOrNothingChk.IsChecked = true;
+                checkedByUser = true;
+            }
         }
     }
 }

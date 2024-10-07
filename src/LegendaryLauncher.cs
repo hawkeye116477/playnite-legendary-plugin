@@ -340,13 +340,8 @@ namespace LegendaryLibraryNS
             return updateInfo;
         }
 
-        public static async Task<LegendaryGameInfo.Manifest> CalculateGameSize(DownloadManagerData.Download installData)
+        public static async Task<LegendaryGameInfo.Manifest> CalculateGameSize(LegendaryGameInfo.Game gameData, List<string> extraContent)
         {
-            var gameData = new LegendaryGameInfo.Game
-            {
-                App_name = installData.gameID,
-                Title = installData.name
-            };
             var gameManifest = await GetGameInfo(gameData);
             var size = new LegendaryGameInfo.Manifest
             {
@@ -355,11 +350,11 @@ namespace LegendaryLibraryNS
             };
             size.Disk_size = gameManifest.Manifest.Disk_size;
             size.Download_size = gameManifest.Manifest.Download_size;
-            if (installData.downloadProperties.extraContent.Count > 0)
+            if (extraContent.Count > 0)
             {
                 size.Disk_size = 0;
                 size.Download_size = 0;
-                foreach (var tag in installData.downloadProperties.extraContent)
+                foreach (var tag in extraContent)
                 {
                     var tagDo = gameManifest.Manifest.Tag_download_size.FirstOrDefault(t => t.Tag == tag);
                     if (tagDo != null)
@@ -374,6 +369,17 @@ namespace LegendaryLibraryNS
                 }
             }
             return size;
+        }
+
+        public static async Task<LegendaryGameInfo.Manifest> CalculateGameSize(DownloadManagerData.Download installData)
+        {
+            var gameData = new LegendaryGameInfo.Game
+            {
+                App_name = installData.gameID,
+                Title = installData.name
+            };
+            var extraContent = installData.downloadProperties.extraContent;
+            return await CalculateGameSize(gameData, extraContent);
         }
 
         public static async Task<LegendaryGameInfo.Rootobject> GetGameInfo(LegendaryGameInfo.Game installData, bool skipRefreshing = false, bool silently = false, bool forceRefreshCache = false)
