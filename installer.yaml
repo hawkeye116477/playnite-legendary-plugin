@@ -1,5 +1,25 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.9.3
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2024-10-07
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.9.3/LegendaryLibrary_1_9_3.pext
+    Changelog:
+      - Improved games installation in multitasking mode
+      - Reduced number of disk writes
+      - Improved calculation of game sizes
+      - Changed install folder for EOS Overlay (.overlay => .eos-overlay)
+      - Stats will be cleared now after removing running download item
+      - Fixed possible crashes
+      - Fixed changing max workers value
+      - Games requiring EA App will no longer be imported now
+      - Installed DLCs and SDLs will be now selected in repair mode
+      - Added support for checking version of Heroic's Legendary fork
+      - Added possibility to change SDLs at Download Properties view only when download
+        is canceled
+      - If SDL is available, then now sizes will be displayed at Download Properties
+        view
+      - Added German translations by @oscilloscopa
   - Version: 1.9.2
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2024-09-26
