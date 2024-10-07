@@ -355,8 +355,9 @@ namespace LegendaryLibraryNS
             var versionInfoContent = await LegendaryLauncher.GetVersionInfoContent();
             if (versionInfoContent.Tag_name != null)
             {
-                var newVersion = versionInfoContent.Tag_name;
-                if (troubleshootingInformation.LauncherVersion != newVersion)
+                var newVersion = new Version(versionInfoContent.Tag_name);
+                var oldVersion = new Version(troubleshootingInformation.LauncherVersion);
+                if (oldVersion.CompareTo(newVersion) < 0)
                 {
                     var options = new List<MessageBoxOption>
                     {
