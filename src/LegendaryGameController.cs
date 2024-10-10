@@ -875,7 +875,7 @@ namespace LegendaryLibraryNS
                             if (wantedItem.status == DownloadStatus.Completed)
                             {
                                 downloadManager.downloadManagerData.downloads.Remove(wantedItem);
-                                downloadManager.SaveData();
+                                downloadManager.downloadsChanged = true;
                                 wantedItem = null;
                             }
                         }
