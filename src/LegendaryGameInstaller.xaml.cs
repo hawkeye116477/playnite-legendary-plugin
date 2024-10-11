@@ -114,7 +114,7 @@ namespace LegendaryLibraryNS
                             if (downloadAction == DownloadAction.Repair)
                             {
                                 var installedAppList = LegendaryLauncher.GetInstalledAppList();
-                                var installedInfo = installedAppList[gameId];
+                                var installedInfo = installedAppList[selectedDlc.Key];
                                 installPath = installedInfo.Install_path;
                             }
                             var dlcInstallData = selectedDlc.Value;
