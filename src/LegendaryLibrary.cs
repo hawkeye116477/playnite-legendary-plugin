@@ -879,7 +879,6 @@ namespace LegendaryLibraryNS
                             });
 
                             var installData = new List<DownloadManagerData.Download>();
-                            var installedAppList = LegendaryLauncher.GetInstalledAppList();
                             foreach (var game in installedLegendaryGames)
                             {
                                 var installProperties = new DownloadProperties { downloadAction = DownloadAction.Repair };
