@@ -70,10 +70,10 @@
   <sys:String x:Key="LOCLegendaryRemoveCompletedDownloadsConfirm">Sind Sie sicher, dass Sie alle abgeschlossenen Downloads aus der Liste entfernen möchten?</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveSelectedEntriesConfirm">Sind Sie sicher, dass Sie die ausgewählten Einträge aus der Liste entfernen möchten?</sys:String>
   <sys:String x:Key="LOCLegendarySelectAllEntries">Alle Einträge auswählen</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp"></sys:String>
-  <sys:String x:Key="LOCLegendaryPanel"></sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExists"></sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">Der Download wird bald gestartet. Sie können den Status sehen, indem Sie auf das Legendary-Bedienfeld über das Menü =&gt; Ansicht oder Seitenleiste klicken.</sys:String>
+  <sys:String x:Key="LOCLegendaryPanel">Legendary-Bedienfeld</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} ist bereits in der Download-Liste. Sie können den Status des Downloads sehen, indem Sie über das Menü =&gt; Ansicht oder Seitenleiste auf das Legendary-Bedienfeld zugreifen.</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther">Folgende Spiele sind bereits in der Download-Liste: {0}. Den Status des Downloads können Sie über das Menü =&gt; Ansicht oder Seitenleiste sehen.</sys:String>
   <sys:String x:Key="LOCLegendaryRepair">Reparieren</sys:String>
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Erweiterte Einstellungen</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Freier Speicherplatz ignorieren</sys:String>
@@ -88,7 +88,7 @@
   <sys:String x:Key="LOCLegendaryClearCacheConfirm">Sind Sie sicher, dass Sie den Zwischenspeicher leeren möchten?</sys:String>
   <sys:String x:Key="LOCLegendaryCheckLog">Überprüfen Sie die Logdateien für weitere Informationen.</sys:String>
   <sys:String x:Key="LOCLegendarySyncGameSavesWarn">Die Cloud-Speicherstands-Funktion ist experimentell. Es wird empfohlen, Spielstände zu sichern, falls etwas schief geht.</sys:String>
-  <sys:String x:Key="LOCLegendaryMemoryError"></sys:String>
+  <sys:String x:Key="LOCLegendaryMemoryError">Der aktuelle geteilte Zwischenspeicher ist kleiner als erforderlich: {0} &lt; {1}. Versuchen Sie, die Optimierung der Neuanordnung zu aktivieren, um die Speicherauslastung zu reduzieren oder den maximalen geteilten Arbeitsspeicher zu erhöhen.</sys:String>
   <sys:String x:Key="LOCLegendaryEditSelectedDownloadProperties">Eintragseigenschaften bearbeiten</sys:String>
   <sys:String x:Key="LOCLegendaryOpenDownloadDirectory">Download-Verzeichnis öffnen</sys:String>
   <sys:String x:Key="LOCLegendaryPathNotExistsError">Der angegebene Pfad existiert nicht.</sys:String>
@@ -162,7 +162,7 @@
   <sys:String x:Key="LOCLegendaryGamesActivateFailure">Spiele auf Ihrem {0} Konto konnten nicht aktiviert werden. Grund: {1}.</sys:String>
   <sys:String x:Key="LOCLegendaryNoAvailableEaGames">Keine EA Spiele verfügbar.</sys:String>
   <sys:String x:Key="LOCLegendaryActivateNextConfirm">Möchten Sie das nächste Spiel aktivieren?</sys:String>
-  <sys:String x:Key="LOCLegendaryEANotice"></sys:String>
+  <sys:String x:Key="LOCLegendaryEANotice">Es ist derzeit unbekannt, welche Spiele aktiviert werden müssen,  daher wird versucht alles zu aktivieren. Wenn EA App Sie auffordert, ein Spiel zu installieren, anstatt es zu aktivieren, dann wurde es bereits aktiviert und der Dialog kann geschlossen werden.</sys:String>
   <sys:String x:Key="LOCLegendaryStarWarsMessage">Möge die Macht mit dir sein, Padawan.</sys:String>
   <sys:String x:Key="LOCLegendarySignedInAs">Angemeldet als {0}</sys:String>
   <sys:String x:Key="LOCLegendarySignOutConfirm">Sind Sie sicher, dass Sie sich abmelden möchten?</sys:String>
@@ -174,13 +174,13 @@
   <sys:String x:Key="LOCLegendaryUninstallSuccess">{0} wurde erfolgreich deinstalliert.</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallSuccessOther">Folgende Spiele wurden erfolgreich deinstalliert: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallErrorOther">Folgende Spiele können nicht deinstalliert werden: {0}.</sys:String>
-  <sys:String x:Key="LOCLegendaryImportThirdPartyLauncherGames"></sys:String>
-  <sys:String x:Key="LOCLegendaryThirdPartyLauncherImportWarn"></sys:String>
+  <sys:String x:Key="LOCLegendaryImportThirdPartyLauncherGames">Spiele importieren, die {0} benötigen</sys:String>
+  <sys:String x:Key="LOCLegendaryThirdPartyLauncherImportWarn">Diese Art von Spielen erfordert Legendary nicht und nicht alle können darüber installiert werden. Es wird empfohlen auf Zusätzlichen Diensten =&gt; {0} =&gt; Spiele aktivieren zu gehen und diese dann direkt über {0} zu installieren.</sys:String>
   <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">{1} benötigt eine direkte Installation über {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherErrorOther">Folgende Spiele benötigen eine direkte Installation über {0}: {1}.</sys:String>
-  <sys:String x:Key="LOCLegendaryInstallPrerequisites"></sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher"></sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther"></sys:String>
-  <sys:String x:Key="LOCLegendaryInstallingPrerequisites"></sys:String>
+  <sys:String x:Key="LOCLegendaryInstallPrerequisites">Voraussetzungen installieren ({0})</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">{1} erfordert die Installation von {0}. Es wird empfohlen, zu den Plugin-Einstellungen =&gt; Zusätzliche Dienste =&gt; {0} =&gt; Spiele aktivieren zu gehen und es dort direkt über {0} zu installieren.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther">Folgende Spiele benötigen die Installation von {0}: {1}. Es wird empfohlen, zu den Plugin-Einstellungen =&gt; Zusätzliche Dienste =&gt; {0} =&gt; Spiele aktivieren zu gehen und  sie dort direkt über {0} zu installieren.</sys:String>
+  <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Installiere Voraussetzungen ({0})...</sys:String>
   <sys:String x:Key="LOCLegendaryGames">Spiele</sys:String>
 </ResourceDictionary>
