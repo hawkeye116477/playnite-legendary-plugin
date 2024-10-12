@@ -854,17 +854,6 @@ namespace LegendaryLibraryNS
                         var playniteApi = API.Instance;
                         playniteApi.Notifications.Add(new NotificationMessage("LegendaryGamesUpdates", ResourceProvider.GetString(LOC.LegendaryGamesUpdatesUnderway), NotificationType.Info));
                     }
-                    if (downloadProperties == null)
-                    {
-                        var settings = LegendaryLibrary.GetSettings();
-                        downloadProperties = new DownloadProperties()
-                        {
-                            downloadAction = DownloadAction.Update,
-                            enableReordering = settings.EnableReordering,
-                            maxWorkers = settings.MaxWorkers,
-                            maxSharedMemory = settings.MaxSharedMemory,
-                        };
-                    }
                     LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
                     foreach (var gameToUpdate in gamesToUpdate)
                     {
@@ -888,6 +877,17 @@ namespace LegendaryLibraryNS
                         }
                         else
                         {
+                            if (downloadProperties == null)
+                            {
+                                var settings = LegendaryLibrary.GetSettings();
+                                downloadProperties = new DownloadProperties()
+                                {
+                                    downloadAction = DownloadAction.Update,
+                                    enableReordering = settings.EnableReordering,
+                                    maxWorkers = settings.MaxWorkers,
+                                    maxSharedMemory = settings.MaxSharedMemory,
+                                };
+                            }
                             var updateTask = new DownloadManagerData.Download
                             {
                                 gameID = gameToUpdate.Key,
