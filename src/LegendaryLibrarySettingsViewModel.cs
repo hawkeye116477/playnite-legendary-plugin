@@ -33,7 +33,7 @@ namespace LegendaryLibraryNS
         public bool DisplayDownloadTaskFinishedNotifications { get; set; } = true;
         public bool SyncPlaytime { get; set; } = false;
         public string SyncPlaytimeMachineId { get; set; } = System.Guid.NewGuid().ToString("N");
-        public UpdatePolicy GamesUpdatePolicy { get; set; } = UpdatePolicy.GameLaunch;
+        public UpdatePolicy GamesUpdatePolicy { get; set; } = UpdatePolicy.Month;
         public long NextGamesUpdateTime { get; set; } = 0;
         public bool AutoUpdateGames { get; set; } = false;
         public UpdatePolicy LauncherUpdatePolicy { get; set; } = UpdatePolicy.Never;
@@ -62,7 +62,7 @@ namespace LegendaryLibraryNS
             }
             if (EditingClone.GamesUpdatePolicy != Settings.GamesUpdatePolicy)
             {
-                if (Settings.GamesUpdatePolicy != UpdatePolicy.Never && Settings.GamesUpdatePolicy != UpdatePolicy.GameLaunch)
+                if (Settings.GamesUpdatePolicy != UpdatePolicy.Never)
                 {
                     Settings.NextGamesUpdateTime = LegendaryLibrary.GetNextUpdateCheckTime(Settings.GamesUpdatePolicy);
                 }

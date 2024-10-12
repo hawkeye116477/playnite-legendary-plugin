@@ -414,7 +414,7 @@ namespace LegendaryLibraryNS
             var globalSettings = GetSettings();
             if (globalSettings != null)
             {
-                if (globalSettings.GamesUpdatePolicy != UpdatePolicy.GameLaunch && globalSettings.GamesUpdatePolicy != UpdatePolicy.Never)
+                if (globalSettings.GamesUpdatePolicy != UpdatePolicy.Never)
                 {
                     var nextGamesUpdateTime = globalSettings.NextGamesUpdateTime;
                     if (nextGamesUpdateTime != 0)

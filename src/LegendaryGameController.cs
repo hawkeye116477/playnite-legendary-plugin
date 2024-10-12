@@ -303,6 +303,7 @@ namespace LegendaryLibraryNS
             Dispose();
             var playArgs = new List<string>();
             playArgs.AddRange(new[] { "launch", Game.GameId });
+            playArgs.Add("--skip-version-check");
             var globalSettings = LegendaryLibrary.GetSettings();
             var offlineModeEnabled = globalSettings.LaunchOffline;
             var gameSettings = LegendaryGameSettingsView.LoadGameSettings(Game.GameId);
@@ -375,22 +376,6 @@ namespace LegendaryLibraryNS
             if (canRunOffline || offline)
             {
                 playArgs.Add("--offline");
-            }
-            else
-            {
-                bool updateCheckDisabled = false;
-                if (globalSettings.GamesUpdatePolicy == UpdatePolicy.Never)
-                {
-                    updateCheckDisabled = true;
-                }
-                if (gameSettings?.DisableGameVersionCheck != null)
-                {
-                    updateCheckDisabled = (bool)gameSettings.DisableGameVersionCheck;
-                }
-                if (updateCheckDisabled)
-                {
-                    playArgs.Add("--skip-version-check");
-                }
             }
             if (gameSettings.StartupArguments?.Any() == true)
             {
@@ -487,24 +472,6 @@ namespace LegendaryLibraryNS
                                         playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
                                     }
                                 }
-                            }
-                            else if (errorMessage.Contains("Game is out of date"))
-                            {
-                                InvokeOnStopped(new GameStoppedEventArgs());
-                                LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
-                                var gamesToUpdate = await legendaryUpdateController.CheckGameUpdates(Game.Name, Game.GameId, true);
-                                Window window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
-                                {
-                                    ShowMaximizeButton = false,
-                                });
-                                window.DataContext = gamesToUpdate;
-                                window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
-                                window.Content = new LegendaryUpdater();
-                                window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
-                                window.SizeToContent = SizeToContent.WidthAndHeight;
-                                window.MinWidth = 600;
-                                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                                window.ShowDialog();
                             }
                             else
                             {

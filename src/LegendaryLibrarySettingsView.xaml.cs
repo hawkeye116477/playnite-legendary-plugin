@@ -175,7 +175,6 @@ namespace LegendaryLibraryNS
                 { UpdatePolicy.Month, ResourceProvider.GetString(LOC.LegendaryOnceAMonth) },
                 { UpdatePolicy.ThreeMonths, ResourceProvider.GetString(LOC.LegendaryOnceEvery3Months) },
                 { UpdatePolicy.SixMonths, ResourceProvider.GetString(LOC.LegendaryOnceEvery6Months) },
-                { UpdatePolicy.GameLaunch, ResourceProvider.GetString(LOC.LegendaryCheckUpdatesGameLaunch) },
                 { UpdatePolicy.Never, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnlyManually) }
             };
             GamesUpdatesCBo.ItemsSource = updatePolicyOptions;
@@ -570,7 +569,7 @@ namespace LegendaryLibraryNS
         private void GamesUpdatesCBo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedValue = (KeyValuePair<UpdatePolicy, string>)GamesUpdatesCBo.SelectedItem;
-            if (selectedValue.Key == UpdatePolicy.Never || selectedValue.Key == UpdatePolicy.GameLaunch)
+            if (selectedValue.Key == UpdatePolicy.Never)
             {
                 AutoUpdateGamesChk.IsEnabled = false;
             }
