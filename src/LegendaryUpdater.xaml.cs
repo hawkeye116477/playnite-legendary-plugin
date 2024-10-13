@@ -66,6 +66,7 @@ namespace LegendaryLibraryNS
             if (UpdatesLB.SelectedItems.Count > 0)
             {
                 var settings = LegendaryLibrary.GetSettings();
+                MaxWorkersNI.MaxValue = Helpers.CpuThreadsNumber;
                 int maxWorkers = settings.MaxWorkers;
                 if (MaxWorkersNI.Value != "")
                 {
