@@ -270,7 +270,6 @@ namespace LegendaryLibraryNS
                                 DateTime now = DateTime.UtcNow;
                                 playtimePayload.endTime = now;
                                 var totalSeconds = sessionLength;
-                                var startTime = now.AddSeconds(-(double)totalSeconds);
                                 playtimePayload.startTime = now.AddSeconds(-(double)totalSeconds);
                                 var playtimeJson = Serialization.ToJson(playtimePayload);
                                 var content = new StringContent(playtimeJson, Encoding.UTF8, "application/json");

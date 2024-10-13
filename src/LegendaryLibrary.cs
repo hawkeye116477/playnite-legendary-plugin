@@ -709,17 +709,6 @@ namespace LegendaryLibraryNS
                                                 game.Version = installedGameInfo.Version;
                                                 game.InstallSize = (ulong?)installedGameInfo.Install_size;
                                                 game.IsInstalled = true;
-                                                var playtimeSyncEnabled = GetSettings().SyncPlaytime;
-                                                if (playtimeSyncEnabled)
-                                                {
-                                                    var accountApi = new EpicAccountClient(PlayniteApi, LegendaryLauncher.TokensPath);
-                                                    var playtimeItems = await accountApi.GetPlaytimeItems();
-                                                    var playtimeItem = playtimeItems?.FirstOrDefault(x => x.artifactId == game.GameId);
-                                                    if (playtimeItem != null)
-                                                    {
-                                                        game.Playtime = playtimeItem.totalTime;
-                                                    }
-                                                }
                                             }
                                             PlayniteApi.Dialogs.ShowMessage(LOC.LegendaryImportFinished);
                                         }
