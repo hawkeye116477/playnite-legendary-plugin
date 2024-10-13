@@ -3,6 +3,7 @@ using CliWrap.Buffered;
 using CliWrap.EventStream;
 using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
+using LegendaryLibraryNS.Services;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
@@ -13,7 +14,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -247,53 +247,11 @@ namespace LegendaryLibraryNS
             }
             if (playtimeSyncEnabled)
             {
-                using (var httpClient = new HttpClient())
-                {
-                    GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryUploadingPlaytime).Format(Game.Name), false);
-                    playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
-                    {
-                        a.ProgressMaxValue = 100;
-                        a.CurrentProgressValue = 0;
-                        httpClient.DefaultRequestHeaders.Clear();
-                        if (File.Exists(LegendaryLauncher.TokensPath))
-                        {
-                            var tokensContent = FileSystem.ReadFileAsStringSafe(LegendaryLauncher.TokensPath);
-                            if (!tokensContent.IsNullOrWhiteSpace() && Serialization.TryFromJson(tokensContent, out OauthResponse userData))
-                            {
-                                httpClient.DefaultRequestHeaders.Add("Authorization", userData.token_type + " " + userData.access_token);
-                                var uri = $"https://library-service.live.use1a.on.epicgames.com/library/api/public/playtime/account/{userData.account_id}";
-                                PlaytimePayload playtimePayload = new PlaytimePayload
-                                {
-                                    artifactId = Game.GameId,
-                                    machineId = LegendaryLibrary.GetSettings().SyncPlaytimeMachineId
-                                };
-                                DateTime now = DateTime.UtcNow;
-                                playtimePayload.endTime = now;
-                                var totalSeconds = sessionLength;
-                                playtimePayload.startTime = now.AddSeconds(-(double)totalSeconds);
-                                var playtimeJson = Serialization.ToJson(playtimePayload);
-                                var content = new StringContent(playtimeJson, Encoding.UTF8, "application/json");
-                                a.CurrentProgressValue = 1;
-                                var result = await httpClient.PutAsync(uri, content);
-                                if (!result.IsSuccessStatusCode)
-                                {
-                                    playniteAPI.Dialogs.ShowErrorMessage(playniteAPI.Resources.GetString(LOC.LegendaryUploadPlaytimeError).Format(Game.Name));
-                                    logger.Error($"An error occured during uploading playtime to the cloud. Status code: {result.StatusCode}.");
-                                }
-                            }
-                            else
-                            {
-                                logger.Error("An error occured during reading tokens file.");
-                                playniteAPI.Dialogs.ShowErrorMessage(playniteAPI.Resources.GetString(LOC.LegendaryUploadPlaytimeError).Format(Game.Name));
-                            }
-                        }
-                        else
-                        {
-                            playniteAPI.Dialogs.ShowErrorMessage(playniteAPI.Resources.GetString(LOC.LegendaryUploadPlaytimeError).Format(Game.Name));
-                        }
-                        a.CurrentProgressValue = 100;
-                    }, globalProgressOptions);
-                }
+                DateTime now = DateTime.UtcNow;
+                var totalSeconds = sessionLength;
+                var startTime = now.AddSeconds(-(double)totalSeconds);
+                var clientApi = new EpicAccountClient(playniteAPI, LegendaryLauncher.TokensPath);
+                clientApi.UploadPlaytime(startTime, now, Game);
             }
         }
 

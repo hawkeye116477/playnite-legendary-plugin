@@ -2,10 +2,12 @@
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
+using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace LegendaryLibraryNS.Services
@@ -306,6 +308,50 @@ namespace LegendaryLibraryNS.Services
             }
 
             return null;
+        }
+
+        public void UploadPlaytime(DateTime startTime, DateTime endTime, Game game)
+        {
+            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryUploadingPlaytime).Format(game.Name), false);
+            api.Dialogs.ActivateGlobalProgress(async (a) =>
+            {
+                a.IsIndeterminate = true;
+                using (var httpClient = new HttpClient())
+                {
+                    httpClient.DefaultRequestHeaders.Clear();
+                    var userLoggedIn = await GetIsUserLoggedIn();
+                    if (userLoggedIn)
+                    {
+                        var userData = LoadTokens();
+                        if (userData != null)
+                        {
+                            httpClient.DefaultRequestHeaders.Add("Authorization", userData.token_type + " " + userData.access_token);
+                            var uri = $"https://library-service.live.use1a.on.epicgames.com/library/api/public/playtime/account/{userData.account_id}";
+                            PlaytimePayload playtimePayload = new PlaytimePayload
+                            {
+                                artifactId = game.GameId,
+                                machineId = LegendaryLibrary.GetSettings().SyncPlaytimeMachineId
+                            };
+                            DateTime now = DateTime.UtcNow;
+                            playtimePayload.endTime = endTime;
+                            playtimePayload.startTime = startTime;
+                            var playtimeJson = Serialization.ToJson(playtimePayload);
+                            var content = new StringContent(playtimeJson, Encoding.UTF8, "application/json");
+                            var result = await httpClient.PutAsync(uri, content);
+                            if (!result.IsSuccessStatusCode)
+                            {
+                                api.Dialogs.ShowErrorMessage(api.Resources.GetString(LOC.LegendaryUploadPlaytimeError).Format(game.Name));
+                                logger.Error($"An error occured during uploading playtime to the cloud. Status code: {result.StatusCode}.");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        logger.Error($"Can't upload playtime, because user is not authenticated.");
+                        api.Dialogs.ShowErrorMessage(api.Resources.GetString(LOC.LegendaryUploadPlaytimeError).Format(game.Name));
+                    }
+                }
+            }, globalProgressOptions);
         }
     }
 }
