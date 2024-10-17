@@ -614,6 +614,7 @@ namespace LegendaryLibraryNS
             }
             finally
             {
+                downloadsChanged = true;
                 await DoNextJobInQueue();
             }
         }
