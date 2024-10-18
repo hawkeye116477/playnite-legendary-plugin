@@ -13,7 +13,7 @@ jobs:
       uses: crowdin/github-action@v2
       with:
         upload_sources: true
-        upload_translations: false
+        upload_translations: true
         download_translations: false
         config: 'crowdin.yml'
         dryrun_action: false
