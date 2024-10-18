@@ -63,10 +63,10 @@ namespace LegendaryLibraryNS
         }
 
 
-        internal static void SyncGameSaves(string gameName, string gameID, string gameInstallDir, CloudSyncAction cloudSyncAction, bool manualSync = false, bool skipRefreshingMetadata = true, string cloudSaveFolder = "")
+        internal static void SyncGameSaves(Playnite.SDK.Models.Game game, CloudSyncAction cloudSyncAction, bool force = false, bool manualSync = false, bool skipRefreshingMetadata = true, string cloudSaveFolder = "")
         {
             var cloudSyncEnabled = LegendaryLibrary.GetSettings().SyncGameSaves;
-            var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameID);
+            var gameSettings = LegendaryGameSettingsView.LoadGameSettings(game.GameId);
             bool errorDisplayed = false;
             bool loginErrorDisplayed = false;
             if (gameSettings?.AutoSyncSaves != null)
@@ -88,9 +88,9 @@ namespace LegendaryLibraryNS
                     else
                     {
                         var installedList = LegendaryLauncher.GetInstalledAppList();
-                        if (installedList.ContainsKey(gameID))
+                        if (installedList.ContainsKey(game.GameId))
                         {
-                            var installedGame = installedList[gameID];
+                            var installedGame = installedList[game.GameId];
                             if (!installedGame.Save_path.IsNullOrEmpty())
                             {
                                 cloudSaveFolder = installedGame.Save_path;
@@ -99,7 +99,7 @@ namespace LegendaryLibraryNS
                     }
                     if (cloudSaveFolder == "" || !Directory.Exists(cloudSaveFolder))
                     {
-                        cloudSaveFolder = CalculateGameSavesPath(gameName, gameID, gameInstallDir, skipRefreshingMetadata);
+                        cloudSaveFolder = CalculateGameSavesPath(game.Name, game.GameId, game.InstallDirectory, skipRefreshingMetadata);
                     }
                 }
                 if (cloudSaveFolder != null)
@@ -108,24 +108,24 @@ namespace LegendaryLibraryNS
                     {
                         var playniteAPI = API.Instance;
                         var logger = LogManager.GetLogger();
-                        GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendarySyncing).Format(gameName), false);
+                        GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendarySyncing).Format(game.Name), false);
                         playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
                         {
                             a.ProgressMaxValue = 100;
                             a.CurrentProgressValue = 0;
                             var cloudArgs = new List<string>();
-                            cloudArgs.AddRange(new[] { "-y", "sync-saves", gameID });
+                            cloudArgs.AddRange(new[] { "-y", "sync-saves", game.GameId });
                             var skippedActivity = "--skip-upload";
-                            if (cloudSyncAction == CloudSyncAction.Upload || cloudSyncAction == CloudSyncAction.ForceUpload)
+                            if (cloudSyncAction == CloudSyncAction.Upload)
                             {
                                 skippedActivity = "--skip-download";
                             }
                             cloudArgs.Add(skippedActivity);
-                            if (cloudSyncAction == CloudSyncAction.ForceDownload)
+                            if (cloudSyncAction == CloudSyncAction.Download && force)
                             {
                                 cloudArgs.Add("--force-download");
                             }
-                            else if (cloudSyncAction == CloudSyncAction.ForceUpload)
+                            else if (cloudSyncAction == CloudSyncAction.Upload && force)
                             {
                                 cloudArgs.Add("--force-upload");
                             }
@@ -170,11 +170,11 @@ namespace LegendaryLibraryNS
                                         {
                                             if (loginErrorDisplayed)
                                             {
-                                                playniteAPI.Dialogs.ShowErrorMessage($"{playniteAPI.Resources.GetString(LOC.LegendarySyncError).Format(gameName)} {ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)}.");
+                                                playniteAPI.Dialogs.ShowErrorMessage($"{playniteAPI.Resources.GetString(LOC.LegendarySyncError).Format(game.Name)} {ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)}.");
                                             }
                                             else
                                             {
-                                                playniteAPI.Dialogs.ShowErrorMessage($"{playniteAPI.Resources.GetString(LOC.LegendarySyncError).Format(gameName)} {ResourceProvider.GetString(LOC.LegendaryCheckLog)}");
+                                                playniteAPI.Dialogs.ShowErrorMessage($"{playniteAPI.Resources.GetString(LOC.LegendarySyncError).Format(game.Name)} {ResourceProvider.GetString(LOC.LegendaryCheckLog)}");
                                             }
                                         }
                                         break;

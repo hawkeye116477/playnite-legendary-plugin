@@ -4,7 +4,5 @@
     {
         Download,
         Upload,
-        ForceDownload,
-        ForceUpload
     }
 }

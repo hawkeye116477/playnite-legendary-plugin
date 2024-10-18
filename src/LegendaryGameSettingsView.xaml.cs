@@ -163,8 +163,6 @@ namespace LegendaryLibraryNS
             {
                 { CloudSyncAction.Download, ResourceProvider.GetString(LOC.LegendaryDownload) },
                 { CloudSyncAction.Upload, ResourceProvider.GetString(LOC.LegendaryUpload) },
-                { CloudSyncAction.ForceDownload, ResourceProvider.GetString(LOC.LegendaryForceDownload) },
-                { CloudSyncAction.ForceUpload, ResourceProvider.GetString(LOC.LegendaryForceUpload) }
             };
             ManualSyncSavesCBo.ItemsSource = cloudSyncActions;
             ManualSyncSavesCBo.SelectedIndex = 0;
@@ -226,15 +224,16 @@ namespace LegendaryLibraryNS
             var result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryCloudSaveConfirm), ResourceProvider.GetString(LOC.LegendaryCloudSaves), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
+                bool forceCloudSync = (bool)ForceCloudActionChk.IsChecked;
                 CloudSyncAction selectedCloudSyncAction = (CloudSyncAction)ManualSyncSavesCBo.SelectedValue;
                 var selectedSavePath = SelectedSavePathTxt.Text;
                 if (selectedSavePath != "")
                 {
-                    LegendaryCloud.SyncGameSaves(Game.Name, GameID, Game.InstallDirectory, selectedCloudSyncAction, true, true, selectedSavePath);
+                    LegendaryCloud.SyncGameSaves(Game, selectedCloudSyncAction, forceCloudSync, true, true, selectedSavePath);
                 }
                 else
                 {
-                    LegendaryCloud.SyncGameSaves(Game.Name, GameID, Game.InstallDirectory, selectedCloudSyncAction, true);
+                    LegendaryCloud.SyncGameSaves(Game, selectedCloudSyncAction, forceCloudSync, true);
                 }
             }
         }

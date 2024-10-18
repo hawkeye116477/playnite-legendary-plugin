@@ -110,8 +110,7 @@
   <sys:String x:Key="LOCLegendarySync">Sync</sys:String>
   <sys:String x:Key="LOCLegendaryDownload">Download</sys:String>
   <sys:String x:Key="LOCLegendaryUpload">Upload</sys:String>
-  <sys:String x:Key="LOCLegendaryForceDownload">Force download</sys:String>
-  <sys:String x:Key="LOCLegendaryForceUpload">Force upload</sys:String>
+  <sys:String x:Key="LOCLegendaryForceAction">Force action</sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaveConfirm">Cloud saves feature is experimental. It's recommended to backup game saves in case something goes wrong. Are you sure you want to continue?</sys:String>
   <sys:String x:Key="LOCLegendarySyncPlaytime">Sync playtime to the cloud</sys:String>
   <sys:String x:Key="LOCLegendaryUploadingPlaytime">Uploading {0} game playtime to the cloud...</sys:String>

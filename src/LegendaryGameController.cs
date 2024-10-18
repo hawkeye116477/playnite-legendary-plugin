@@ -229,12 +229,12 @@ namespace LegendaryLibraryNS
 
         public void OnGameStarting()
         {
-            LegendaryCloud.SyncGameSaves(Game.Name, Game.GameId, Game.InstallDirectory, CloudSyncAction.Download);
+            LegendaryCloud.SyncGameSaves(Game, CloudSyncAction.Download);
         }
 
         public void OnGameClosed(double sessionLength)
         {
-            LegendaryCloud.SyncGameSaves(Game.Name, Game.GameId, Game.InstallDirectory, CloudSyncAction.Upload);
+            LegendaryCloud.SyncGameSaves(Game, CloudSyncAction.Upload);
             var playtimeSyncEnabled = false;
             if (playniteAPI.ApplicationSettings.PlaytimeImportMode != PlaytimeImportMode.Never)
             {
