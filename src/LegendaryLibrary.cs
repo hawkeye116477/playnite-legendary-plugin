@@ -362,6 +362,19 @@ namespace LegendaryLibraryNS
                     loadString(langXaml);
                 }
             }
+
+            // Load Legendary specific strings
+            extraLocDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Localization");
+            enXaml = Path.Combine(extraLocDir, "en_US-legendary.xaml");
+            loadString(enXaml);
+            if (currentLanguage != "en_US")
+            {
+                var langXaml = Path.Combine(extraLocDir, $"{currentLanguage}-legendary.xaml");
+                if (File.Exists(langXaml))
+                {
+                    loadString(langXaml);
+                }
+            }
         }
 
         public void LoadMenuIcons()

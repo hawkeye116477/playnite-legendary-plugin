@@ -1,28 +1,20 @@
-﻿<?xml version="1.0"?>
+<?xml version='1.0' encoding='utf-8'?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
   <sys:String x:Key="LOCLegendaryLauncherCustomPath">Launcher Pfad</sys:String>
   <sys:String x:Key="LOCLegendaryGamesInstallationPath">Spiele-Installationspfad</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSize">Downloadgröße:</sys:String>
   <sys:String x:Key="LOCLegendaryInstallSize">Installationsgröße:</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallGameConfirm">Sind Sie sicher, dass Sie {0} deinstallieren möchten?</sys:String>
-  <sys:String x:Key="LOCLegendaryLaunchOffline">Spiele, wenn möglich im Offline-Modus starten</sys:String>
-  <sys:String x:Key="LOCLegendaryEnableOfflineMode">Offline-Modus aktivieren</sys:String>
-  <sys:String x:Key="LOCLegendaryOfflineMode">Offline-Modus</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSettings">Download-Einstellungen</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadTaskFinishedNotifications">Desktop-Benachrichtigungen über abgeschlossene Aufgaben anzeigen</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Downloadgeschwindigkeit in Bits pro Sekunde anzeigen</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAllDlcs">Alle DLCs herunterladen</sys:String>
   <sys:String x:Key="LOCLegendaryUnattendedInstall">Aktiviere unbeaufsichtigten Installationsmodus</sys:String>
   <sys:String x:Key="LOCLegendaryUnattendedInstallToolTip">Sie müssen im Installationsfenster nichts auswählen und die Installation wird automatisch nach dem Herunterladen der benötigten Informationen gestartet.</sys:String>
-  <sys:String x:Key="LOCLegendaryPreferredCDN">Bevorzugte CDN</sys:String>
-  <sys:String x:Key="LOCLegendaryHttpOnlyDownload">HTTPS deaktivieren (nützlich für CDNs, z.B. LanCache)</sys:String>
-  <sys:String x:Key="LOCLegendaryEnableReordering">Umsortierungs-Optimierung aktivieren</sys:String>
-  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">Dies kann den die RAM-Nutzung während des Downloads verringern (funktioniert bei einigen Titeln möglicherweise nicht ordnungsgemäß).</sys:String>
   <sys:String x:Key="LOCLegendaryMaxWorkers">Maximale Anzahl von Arbeits-Prozessen</sys:String>
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">Maximale Anzahl an geteiltem Speicher (MB)</sys:String>
   <sys:String x:Key="LOCLegendaryConnectionTimeout">Verbindungsunterbrechung (Sek)</sys:String>
   <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Nachdem der Download ist abgeschlossen:</sys:String>
-  <sys:String x:Key="LOCLegendaryEOSOverlay">EOS Overlay</sys:String>
   <sys:String x:Key="LOCLegendaryDisable">Deaktivieren</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Aktivieren</sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable">Verfügbarer Speicherplatz:</sys:String>
@@ -33,7 +25,7 @@
   <sys:String x:Key="LOCLegendaryDiskSpeed">Festplattennutzung:</sys:String>
   <sys:String x:Key="LOCLegendaryElapsed">Vergangene Zeit:</sys:String>
   <sys:String x:Key="LOCLegendaryVerifying">Überprüfe...</sys:String>
-  <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Überprüfe große Datei &quot;{0}&quot;: {1}</sys:String>
+  <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Überprüfe große Datei "{0}": {1}</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadingUpdate">Aktualisierung wird heruntergeladen…</sys:String>
   <sys:String x:Key="LOCLegendaryFinishingInstallation">Installation wird abgeschlossen...</sys:String>
   <sys:String x:Key="LOCLegendaryFinishingUpdate">Update wird abgeschlossen...</sys:String>
@@ -70,14 +62,8 @@
   <sys:String x:Key="LOCLegendaryRemoveCompletedDownloadsConfirm">Sind Sie sicher, dass Sie alle abgeschlossenen Downloads aus der Liste entfernen möchten?</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveSelectedEntriesConfirm">Sind Sie sicher, dass Sie die ausgewählten Einträge aus der Liste entfernen möchten?</sys:String>
   <sys:String x:Key="LOCLegendarySelectAllEntries">Alle Einträge auswählen</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">Der Download wird bald gestartet. Sie können den Status sehen, indem Sie auf das Legendary-Bedienfeld über das Menü =&gt; Ansicht oder Seitenleiste klicken.</sys:String>
-  <sys:String x:Key="LOCLegendaryPanel">Legendary-Bedienfeld</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} ist bereits in der Download-Liste. Sie können den Status des Downloads sehen, indem Sie über das Menü =&gt; Ansicht oder Seitenleiste auf das Legendary-Bedienfeld zugreifen.</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther">Folgende Spiele sind bereits in der Download-Liste: {0}. Den Status des Downloads können Sie über das Menü =&gt; Ansicht oder Seitenleiste sehen.</sys:String>
   <sys:String x:Key="LOCLegendaryRepair">Reparieren</sys:String>
   <sys:String x:Key="LOCLegendaryAdvancedOptions">Erweiterte Einstellungen</sys:String>
-  <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Freier Speicherplatz ignorieren</sys:String>
-  <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip">Nicht abbrechen, wenn nicht genügend freier Speicherplatz verfügbar ist.</sys:String>
   <sys:String x:Key="LOCLegendaryExtraContent">Extra Content</sys:String>
   <sys:String x:Key="LOCLegendaryCache">Zwischenspeicher</sys:String>
   <sys:String x:Key="LOCLegendaryClearCache">Zwischenspeicher leeren</sys:String>
@@ -88,17 +74,13 @@
   <sys:String x:Key="LOCLegendaryClearCacheConfirm">Sind Sie sicher, dass Sie den Zwischenspeicher leeren möchten?</sys:String>
   <sys:String x:Key="LOCLegendaryCheckLog">Überprüfen Sie die Logdateien für weitere Informationen.</sys:String>
   <sys:String x:Key="LOCLegendarySyncGameSavesWarn">Die Cloud-Speicherstands-Funktion ist experimentell. Es wird empfohlen, Spielstände zu sichern, falls etwas schief geht.</sys:String>
-  <sys:String x:Key="LOCLegendaryMemoryError">Der aktuelle geteilte Zwischenspeicher ist kleiner als erforderlich: {0} &lt; {1}. Versuchen Sie, die Optimierung der Neuanordnung zu aktivieren, um die Speicherauslastung zu reduzieren oder den maximalen geteilten Arbeitsspeicher zu erhöhen.</sys:String>
   <sys:String x:Key="LOCLegendaryEditSelectedDownloadProperties">Eintragseigenschaften bearbeiten</sys:String>
   <sys:String x:Key="LOCLegendaryOpenDownloadDirectory">Download-Verzeichnis öffnen</sys:String>
   <sys:String x:Key="LOCLegendaryPathNotExistsError">Der angegebene Pfad existiert nicht.</sys:String>
   <sys:String x:Key="LOCLegendaryTask">Aufgabe</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadProperties">Download-Eigenschaften</sys:String>
-  <sys:String x:Key="LOCLegendaryMigrateGamesEpic">Alle Spiele vom Epic-Plugin migrieren</sys:String>
-  <sys:String x:Key="LOCLegendaryMigratingGamesEpic">Migriere alle Spiele vom Epic-Plugin...</sys:String>
   <sys:String x:Key="LOCLegendaryMigrationCompleted">Migration erfolgreich abgeschlossen.</sys:String>
   <sys:String x:Key="LOCLegendaryMigrationNoGames">Keine Spiele für die Migration gefunden.</sys:String>
-  <sys:String x:Key="LOCLegendaryMigrationConfirm">Alle Spiele werden aus dem Epic-Plugin entfernt und zu Legendary verschoben. Bist du sicher, dass du dies tun möchtest?</sys:String>
   <sys:String x:Key="LOCLegendarySignOut">Abmelden</sys:String>
   <sys:String x:Key="LOCLegendaryTroubleshootingInformation">Informationen zur Fehlerbehebung</sys:String>
   <sys:String x:Key="LOCLegendaryPlayniteVersion">Playnite Version</sys:String>
@@ -108,7 +90,6 @@
   <sys:String x:Key="LOCLegendaryCopyRawDataToClipboard">Rohdaten in die Zwischenablage kopieren</sys:String>
   <sys:String x:Key="LOCLegendaryLogFilesPath">Log-Dateipfad</sys:String>
   <sys:String x:Key="LOCLegendaryReportBug">Einen Fehler melden</sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherNotInstalled">Legendary Launcher ist nicht installiert.</sys:String>
   <sys:String x:Key="LOCLegendaryNewVersionAvailable">Eine neue Version ist verfügbar: {0} {1}.</sys:String>
   <sys:String x:Key="LOCLegendaryNoUpdatesAvailable">Keine Aktualisierungen verfügbar</sys:String>
   <sys:String x:Key="LOCLegendaryViewChangelog">Änderungsprotokoll anzeigen</sys:String>
@@ -136,10 +117,10 @@
   <sys:String x:Key="LOCLegendaryUploadingPlaytime">Lade {0} Spielzeit in die Cloud hoch...</sys:String>
   <sys:String x:Key="LOCLegendaryUploadPlaytimeError">Beim Hochladen von {0} Spielzeit in die Cloud ist ein Fehler aufgetreten.</sys:String>
   <sys:String x:Key="LOCLegendaryMove">Verschieben</sys:String>
-  <sys:String x:Key="LOCLegendaryMoveConfirm">Sind Sie sicher, dass Sie {0} nach &quot;{1}&quot; verschieben möchten? Dies kann eine lange Zeit dauern.</sys:String>
-  <sys:String x:Key="LOCLegendaryMovingGame">Verschiebe {0} nach &quot;{1}&quot;...</sys:String>
-  <sys:String x:Key="LOCLegendaryMoveGameSuccess">{0} wurde erfolgreich nach &quot;{1} &quot; verschoben.</sys:String>
-  <sys:String x:Key="LOCLegendaryMoveGameError">Beim Verschieben von {0} nach &quot;{1} &quot; ist ein Fehler aufgetreten.</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveConfirm">Sind Sie sicher, dass Sie {0} nach "{1}" verschieben möchten? Dies kann eine lange Zeit dauern.</sys:String>
+  <sys:String x:Key="LOCLegendaryMovingGame">Verschiebe {0} nach "{1}"...</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveGameSuccess">{0} wurde erfolgreich nach "{1} " verschoben.</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveGameError">Beim Verschieben von {0} nach "{1} " ist ein Fehler aufgetreten.</sys:String>
   <sys:String x:Key="LOCLegendaryInstalledDlcs">Installierte DLCs</sys:String>
   <sys:String x:Key="LOCLegendaryAvailableDlcs">Verfügbare DLCs</sys:String>
   <sys:String x:Key="LOCLegendaryManageDlcs">DLCs verwalten</sys:String>
@@ -150,37 +131,16 @@
   <sys:String x:Key="LOCLegendaryAutoUpdate">Spiele automatisch aktualisieren</sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatePolicy">Nach Spiel-Aktualisierungen suchen</sys:String>
   <sys:String x:Key="LOCLegendaryCheckUpdatesEveryPlayniteStartup">Bei jedem Start von Playnite</sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy">Suche nach Legendary-Launcher Aktualisierungen</sys:String>
-  <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Updates für Spiele von Epic Games werden heruntergeladen.</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings">Starteinstellungen entfernen</sys:String>
   <sys:String x:Key="LOCLegendaryAdditionalServices">Zusätzliche Dienste</sys:String>
-  <sys:String x:Key="LOCLegendaryNoLinkedAccount">Kein verknüpftes {0} Konto gefunden! Verknüpfen Sie Ihr Konto über Ihren Browser und versuchen Sie es erneut.</sys:String>
-  <sys:String x:Key="LOCLegendaryAllActivatedUbisoft">Alle Spiele wurden bereits auf Ihrem {0} Konto aktiviert.</sys:String>
-  <sys:String x:Key="LOCLegendaryContinueActivation">Sind Sie sicher, dass Sie Spiele auf Ihrem {0} Konto aktivieren möchten?</sys:String>
-  <sys:String x:Key="LOCLegendaryGamesActivateSuccess">Alle Spiele wurden erfolgreich auf Ihrem {0} Konto aktiviert.</sys:String>
-  <sys:String x:Key="LOCLegendaryActivateGames">Spiele aktivieren</sys:String>
-  <sys:String x:Key="LOCLegendaryGamesActivateFailure">Spiele auf Ihrem {0} Konto konnten nicht aktiviert werden. Grund: {1}.</sys:String>
-  <sys:String x:Key="LOCLegendaryNoAvailableEaGames">Keine EA Spiele verfügbar.</sys:String>
-  <sys:String x:Key="LOCLegendaryActivateNextConfirm">Möchten Sie das nächste Spiel aktivieren?</sys:String>
-  <sys:String x:Key="LOCLegendaryEANotice">Es ist derzeit unbekannt, welche Spiele aktiviert werden müssen,  daher wird versucht alles zu aktivieren. Wenn EA App Sie auffordert, ein Spiel zu installieren, anstatt es zu aktivieren, dann wurde es bereits aktiviert und der Dialog kann geschlossen werden.</sys:String>
-  <sys:String x:Key="LOCLegendaryStarWarsMessage">Möge die Macht mit dir sein, Padawan.</sys:String>
   <sys:String x:Key="LOCLegendarySignedInAs">Angemeldet als {0}</sys:String>
   <sys:String x:Key="LOCLegendarySignOutConfirm">Sind Sie sicher, dass Sie sich abmelden möchten?</sys:String>
   <sys:String x:Key="LOCLegendaryPermissionError">Benutzer hat keinen Schreibzugriff auf den angegebenen Pfad. Ändern Sie die Berechtigungen oder starten Sie Playnite als Administrator.</sys:String>
-  <sys:String x:Key="LOCLegendaryInstanceNotice">Nur eine Instanz von Legendary kann Anwendungen gleichzeitig installieren/importieren/verschieben. Möchten Sie die Download-Manager-Aufgaben pausieren um fortzufahren?</sys:String>
   <sys:String x:Key="LOCLegendaryCheckForGamesUpdatesButton">Nach Spiel-Aktualisierungen suchen</sys:String>
   <sys:String x:Key="LOCLegendaryNotEnoughSpace">Nicht genügend freier Speicherplatz.</sys:String>
   <sys:String x:Key="LOCLegendaryCheckingForUpdates">Suche nach Aktualisierungen...</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallSuccess">{0} wurde erfolgreich deinstalliert.</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallSuccessOther">Folgende Spiele wurden erfolgreich deinstalliert: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallErrorOther">Folgende Spiele können nicht deinstalliert werden: {0}.</sys:String>
-  <sys:String x:Key="LOCLegendaryImportThirdPartyLauncherGames">Spiele importieren, die {0} benötigen</sys:String>
-  <sys:String x:Key="LOCLegendaryThirdPartyLauncherImportWarn">Diese Art von Spielen erfordert Legendary nicht und nicht alle können darüber installiert werden. Es wird empfohlen auf Zusätzlichen Diensten =&gt; {0} =&gt; Spiele aktivieren zu gehen und diese dann direkt über {0} zu installieren.</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">{1} benötigt eine direkte Installation über {0}.</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherErrorOther">Folgende Spiele benötigen eine direkte Installation über {0}: {1}.</sys:String>
-  <sys:String x:Key="LOCLegendaryInstallPrerequisites">Voraussetzungen installieren ({0})</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">{1} erfordert die Installation von {0}. Es wird empfohlen, zu den Plugin-Einstellungen =&gt; Zusätzliche Dienste =&gt; {0} =&gt; Spiele aktivieren zu gehen und es dort direkt über {0} zu installieren.</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther">Folgende Spiele benötigen die Installation von {0}: {1}. Es wird empfohlen, zu den Plugin-Einstellungen =&gt; Zusätzliche Dienste =&gt; {0} =&gt; Spiele aktivieren zu gehen und  sie dort direkt über {0} zu installieren.</sys:String>
-  <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Installiere Voraussetzungen ({0})...</sys:String>
   <sys:String x:Key="LOCLegendaryGames">Spiele</sys:String>
 </ResourceDictionary>

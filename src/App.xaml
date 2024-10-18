@@ -8,6 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Localization/third_party/en_US.xaml"/>
                 <ResourceDictionary Source="Localization/en_US.xaml"/>
+                <ResourceDictionary Source="Localization/en_US-legendary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
