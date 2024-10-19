@@ -238,6 +238,166 @@ namespace System
         /// </summary>
         public const string Legendary3P_EpicStartUsingClient = "LOCLegendary3P_EpicStartUsingClient";
         /// <summary>
+        /// Launch games in offline mode if possible
+        /// </summary>
+        public const string LegendaryLaunchOffline = "LOCLegendaryLaunchOffline";
+        /// <summary>
+        /// Enable offline mode
+        /// </summary>
+        public const string LegendaryEnableOfflineMode = "LOCLegendaryEnableOfflineMode";
+        /// <summary>
+        /// Offline mode
+        /// </summary>
+        public const string LegendaryOfflineMode = "LOCLegendaryOfflineMode";
+        /// <summary>
+        /// Preferred CDN
+        /// </summary>
+        public const string LegendaryPreferredCDN = "LOCLegendaryPreferredCDN";
+        /// <summary>
+        /// Disable HTTPS (useful for CDNs e.g. LanCache)
+        /// </summary>
+        public const string LegendaryHttpOnlyDownload = "LOCLegendaryHttpOnlyDownload";
+        /// <summary>
+        /// Enable reordering optimization
+        /// </summary>
+        public const string LegendaryEnableReordering = "LOCLegendaryEnableReordering";
+        /// <summary>
+        /// This can reduce RAM requirements during download (may not work properly for some titles).
+        /// </summary>
+        public const string LegendaryEnableReorderingToolTip = "LOCLegendaryEnableReorderingToolTip";
+        /// <summary>
+        /// EOS Overlay
+        /// </summary>
+        public const string LegendaryEOSOverlay = "LOCLegendaryEOSOverlay";
+        /// <summary>
+        /// The download will start soon. You can see its status by accessing Legendary Panel via Menu => View or sidebar.
+        /// </summary>
+        public const string LegendaryDownloadManagerWhatsUp = "LOCLegendaryDownloadManagerWhatsUp";
+        /// <summary>
+        /// Legendary Panel
+        /// </summary>
+        public const string LegendaryPanel = "LOCLegendaryPanel";
+        /// <summary>
+        /// {0} is already in the download list. You can see status of the download by accessing Legendary Panel via Menu => View or sidebar.
+        /// </summary>
+        public const string LegendaryDownloadAlreadyExists = "LOCLegendaryDownloadAlreadyExists";
+        /// <summary>
+        /// Following games are already in the download list: {0}. You can see status of the download by accessing Legendary Panel via Menu => View or sidebar.
+        /// </summary>
+        public const string LegendaryDownloadAlreadyExistsOther = "LOCLegendaryDownloadAlreadyExistsOther";
+        /// <summary>
+        /// Ignore free space
+        /// </summary>
+        public const string LegendaryIgnoreFreeSpace = "LOCLegendaryIgnoreFreeSpace";
+        /// <summary>
+        /// Do not abort if not enough free space is available.
+        /// </summary>
+        public const string LegendaryIgnoreFreeSpaceToolTip = "LOCLegendaryIgnoreFreeSpaceToolTip";
+        /// <summary>
+        /// Current shared memory cache is smaller than required: {0} < {1}. Try to enable reordering optimization to reduce memory usage or increase maximum amount of shared memory.
+        /// </summary>
+        public const string LegendaryMemoryError = "LOCLegendaryMemoryError";
+        /// <summary>
+        /// Migrate all games from Epic plugin
+        /// </summary>
+        public const string LegendaryMigrateGamesEpic = "LOCLegendaryMigrateGamesEpic";
+        /// <summary>
+        /// Migrating all games from Epic plugin...
+        /// </summary>
+        public const string LegendaryMigratingGamesEpic = "LOCLegendaryMigratingGamesEpic";
+        /// <summary>
+        /// All games will be removed from Epic plugin and moved to Legendary. Are you sure you want to do this?
+        /// </summary>
+        public const string LegendaryMigrationConfirm = "LOCLegendaryMigrationConfirm";
+        /// <summary>
+        /// Legendary Launcher is not installed.
+        /// </summary>
+        public const string LegendaryLauncherNotInstalled = "LOCLegendaryLauncherNotInstalled";
+        /// <summary>
+        /// Check for Legendary launcher updates
+        /// </summary>
+        public const string LegendaryLauncherUpdatePolicy = "LOCLegendaryLauncherUpdatePolicy";
+        /// <summary>
+        /// Updates for games from Epic Games are being downloaded.
+        /// </summary>
+        public const string LegendaryGamesUpdatesUnderway = "LOCLegendaryGamesUpdatesUnderway";
+        /// <summary>
+        /// No linked {0} account found! Link your account via your browser and try again.
+        /// </summary>
+        public const string LegendaryNoLinkedAccount = "LOCLegendaryNoLinkedAccount";
+        /// <summary>
+        /// All games have already been activated on your {0} account.
+        /// </summary>
+        public const string LegendaryAllActivatedUbisoft = "LOCLegendaryAllActivatedUbisoft";
+        /// <summary>
+        /// Are you sure you want to activate games on your {0} account?
+        /// </summary>
+        public const string LegendaryContinueActivation = "LOCLegendaryContinueActivation";
+        /// <summary>
+        /// All games have been successfully activated on your {0} account.
+        /// </summary>
+        public const string LegendaryGamesActivateSuccess = "LOCLegendaryGamesActivateSuccess";
+        /// <summary>
+        /// Activate games
+        /// </summary>
+        public const string LegendaryActivateGames = "LOCLegendaryActivateGames";
+        /// <summary>
+        /// Failed to activate games on your {0} account. Reason: {1}.
+        /// </summary>
+        public const string LegendaryGamesActivateFailure = "LOCLegendaryGamesActivateFailure";
+        /// <summary>
+        /// No available EA Games.
+        /// </summary>
+        public const string LegendaryNoAvailableEaGames = "LOCLegendaryNoAvailableEaGames";
+        /// <summary>
+        /// Do you want to activate next game?
+        /// </summary>
+        public const string LegendaryActivateNextConfirm = "LOCLegendaryActivateNextConfirm";
+        /// <summary>
+        /// It is currently unknown which game requires activation, so an attempt will be made to activate everything. If EA App asks you to install game rather than to activate, then it has already been activated and the dialog can be dismissed.
+        /// </summary>
+        public const string LegendaryEANotice = "LOCLegendaryEANotice";
+        /// <summary>
+        /// May the Force be with you, Padawan.
+        /// </summary>
+        public const string LegendaryStarWarsMessage = "LOCLegendaryStarWarsMessage";
+        /// <summary>
+        /// Only one instance of Legendary may install/import/move applications at a time. Do you want to pause download manager tasks to continue?
+        /// </summary>
+        public const string LegendaryInstanceNotice = "LOCLegendaryInstanceNotice";
+        /// <summary>
+        /// Import games requiring {0}
+        /// </summary>
+        public const string LegendaryImportThirdPartyLauncherGames = "LOCLegendaryImportThirdPartyLauncherGames";
+        /// <summary>
+        /// These types of games doesn't require Legendary and not all of them can be installed via it. It's recommended to go to Additional services => {0} => Activate games, and then install them directly via {0}.
+        /// </summary>
+        public const string LegendaryThirdPartyLauncherImportWarn = "LOCLegendaryThirdPartyLauncherImportWarn";
+        /// <summary>
+        /// {1} requires direct installation via {0}.
+        /// </summary>
+        public const string LegendaryRequiredInstallViaThirdPartyLauncherError = "LOCLegendaryRequiredInstallViaThirdPartyLauncherError";
+        /// <summary>
+        /// Following games require direct installation via {0}: {1}.
+        /// </summary>
+        public const string LegendaryRequiredInstallViaThirdPartyLauncherErrorOther = "LOCLegendaryRequiredInstallViaThirdPartyLauncherErrorOther";
+        /// <summary>
+        /// Install prerequisites ({0})
+        /// </summary>
+        public const string LegendaryInstallPrerequisites = "LOCLegendaryInstallPrerequisites";
+        /// <summary>
+        /// {1} requires installation of {0}. It's recommended to go to Plugin settings => Additional services => {0} => Activate games, and then install it directly via {0}.
+        /// </summary>
+        public const string LegendaryRequiredInstallOfThirdPartyLauncher = "LOCLegendaryRequiredInstallOfThirdPartyLauncher";
+        /// <summary>
+        /// Following games require installation of {0}: {1}. It's recommended to go to Plugin settings => Additional services => {0} => Activate games, and then install them directly via {0}.
+        /// </summary>
+        public const string LegendaryRequiredInstallOfThirdPartyLauncherOther = "LOCLegendaryRequiredInstallOfThirdPartyLauncherOther";
+        /// <summary>
+        /// Installing prerequisites ({0})...
+        /// </summary>
+        public const string LegendaryInstallingPrerequisites = "LOCLegendaryInstallingPrerequisites";
+        /// <summary>
         /// Launcher Path
         /// </summary>
         public const string LegendaryLauncherCustomPath = "LOCLegendaryLauncherCustomPath";
@@ -257,18 +417,6 @@ namespace System
         /// Are you sure you want to uninstall {0}?
         /// </summary>
         public const string LegendaryUninstallGameConfirm = "LOCLegendaryUninstallGameConfirm";
-        /// <summary>
-        /// Launch games in offline mode if possible
-        /// </summary>
-        public const string LegendaryLaunchOffline = "LOCLegendaryLaunchOffline";
-        /// <summary>
-        /// Enable offline mode
-        /// </summary>
-        public const string LegendaryEnableOfflineMode = "LOCLegendaryEnableOfflineMode";
-        /// <summary>
-        /// Offline mode
-        /// </summary>
-        public const string LegendaryOfflineMode = "LOCLegendaryOfflineMode";
         /// <summary>
         /// Download Settings
         /// </summary>
@@ -294,22 +442,6 @@ namespace System
         /// </summary>
         public const string LegendaryUnattendedInstallToolTip = "LOCLegendaryUnattendedInstallToolTip";
         /// <summary>
-        /// Preferred CDN
-        /// </summary>
-        public const string LegendaryPreferredCDN = "LOCLegendaryPreferredCDN";
-        /// <summary>
-        /// Disable HTTPS (useful for CDNs e.g. LanCache)
-        /// </summary>
-        public const string LegendaryHttpOnlyDownload = "LOCLegendaryHttpOnlyDownload";
-        /// <summary>
-        /// Enable reordering optimization
-        /// </summary>
-        public const string LegendaryEnableReordering = "LOCLegendaryEnableReordering";
-        /// <summary>
-        /// This can reduce RAM requirements during download (may not work properly for some titles).
-        /// </summary>
-        public const string LegendaryEnableReorderingToolTip = "LOCLegendaryEnableReorderingToolTip";
-        /// <summary>
         /// Maximum number of worker processes
         /// </summary>
         public const string LegendaryMaxWorkers = "LOCLegendaryMaxWorkers";
@@ -326,9 +458,37 @@ namespace System
         /// </summary>
         public const string LegendaryAfterDownloadComplete = "LOCLegendaryAfterDownloadComplete";
         /// <summary>
-        /// EOS Overlay
+        /// System will be turned off in 1 second...
         /// </summary>
-        public const string LegendaryEOSOverlay = "LOCLegendaryEOSOverlay";
+        public const string LegendarySystemShutdownCountdown = "LOCLegendarySystemShutdownCountdown";
+        /// <summary>
+        /// System will be restarted in 1 second...
+        /// </summary>
+        public const string LegendarySystemRestartCountdown = "LOCLegendarySystemRestartCountdown";
+        /// <summary>
+        /// System will be hibernated in 1 second...
+        /// </summary>
+        public const string LegendarySystemHibernateCountdown = "LOCLegendarySystemHibernateCountdown";
+        /// <summary>
+        /// System will be suspended in 1 second...
+        /// </summary>
+        public const string LegendarySystemSuspendCountdown = "LOCLegendarySystemSuspendCountdown";
+        /// <summary>
+        /// System will be turned off in {0} seconds...
+        /// </summary>
+        public const string LegendarySystemShutdownCountdownOther = "LOCLegendarySystemShutdownCountdownOther";
+        /// <summary>
+        /// System will be restarted in {0} seconds...
+        /// </summary>
+        public const string LegendarySystemRestartCountdownOther = "LOCLegendarySystemRestartCountdownOther";
+        /// <summary>
+        /// System will be hibernated in {0} seconds...
+        /// </summary>
+        public const string LegendarySystemHibernateCountdownOther = "LOCLegendarySystemHibernateCountdownOther";
+        /// <summary>
+        /// System will be suspended in {0} seconds...
+        /// </summary>
+        public const string LegendarySystemSuspendCountdownOther = "LOCLegendarySystemSuspendCountdownOther";
         /// <summary>
         /// Disable
         /// </summary>
@@ -518,22 +678,6 @@ namespace System
         /// </summary>
         public const string LegendarySelectAllEntries = "LOCLegendarySelectAllEntries";
         /// <summary>
-        /// The download will start soon. You can see its status by accessing Legendary Panel via Menu => View or sidebar.
-        /// </summary>
-        public const string LegendaryDownloadManagerWhatsUp = "LOCLegendaryDownloadManagerWhatsUp";
-        /// <summary>
-        /// Legendary Panel
-        /// </summary>
-        public const string LegendaryPanel = "LOCLegendaryPanel";
-        /// <summary>
-        /// {0} is already in the download list. You can see status of the download by accessing Legendary Panel via Menu => View or sidebar.
-        /// </summary>
-        public const string LegendaryDownloadAlreadyExists = "LOCLegendaryDownloadAlreadyExists";
-        /// <summary>
-        /// Following games are already in the download list: {0}. You can see status of the download by accessing Legendary Panel via Menu => View or sidebar.
-        /// </summary>
-        public const string LegendaryDownloadAlreadyExistsOther = "LOCLegendaryDownloadAlreadyExistsOther";
-        /// <summary>
         /// Repair
         /// </summary>
         public const string LegendaryRepair = "LOCLegendaryRepair";
@@ -541,14 +685,6 @@ namespace System
         /// Advanced Options
         /// </summary>
         public const string LegendaryAdvancedOptions = "LOCLegendaryAdvancedOptions";
-        /// <summary>
-        /// Ignore free space
-        /// </summary>
-        public const string LegendaryIgnoreFreeSpace = "LOCLegendaryIgnoreFreeSpace";
-        /// <summary>
-        /// Do not abort if not enough free space is available.
-        /// </summary>
-        public const string LegendaryIgnoreFreeSpaceToolTip = "LOCLegendaryIgnoreFreeSpaceToolTip";
         /// <summary>
         /// Extra Content
         /// </summary>
@@ -590,10 +726,6 @@ namespace System
         /// </summary>
         public const string LegendarySyncGameSavesWarn = "LOCLegendarySyncGameSavesWarn";
         /// <summary>
-        /// Current shared memory cache is smaller than required: {0} < {1}. Try to enable reordering optimization to reduce memory usage or increase maximum amount of shared memory.
-        /// </summary>
-        public const string LegendaryMemoryError = "LOCLegendaryMemoryError";
-        /// <summary>
         /// Edit entry properties
         /// </summary>
         public const string LegendaryEditSelectedDownloadProperties = "LOCLegendaryEditSelectedDownloadProperties";
@@ -614,14 +746,6 @@ namespace System
         /// </summary>
         public const string LegendaryDownloadProperties = "LOCLegendaryDownloadProperties";
         /// <summary>
-        /// Migrate all games from Epic plugin
-        /// </summary>
-        public const string LegendaryMigrateGamesEpic = "LOCLegendaryMigrateGamesEpic";
-        /// <summary>
-        /// Migrating all games from Epic plugin...
-        /// </summary>
-        public const string LegendaryMigratingGamesEpic = "LOCLegendaryMigratingGamesEpic";
-        /// <summary>
         /// Migration completed successfully.
         /// </summary>
         public const string LegendaryMigrationCompleted = "LOCLegendaryMigrationCompleted";
@@ -629,10 +753,6 @@ namespace System
         /// No games found for migration.
         /// </summary>
         public const string LegendaryMigrationNoGames = "LOCLegendaryMigrationNoGames";
-        /// <summary>
-        /// All games will be removed from Epic plugin and moved to Legendary. Are you sure you want to do this?
-        /// </summary>
-        public const string LegendaryMigrationConfirm = "LOCLegendaryMigrationConfirm";
         /// <summary>
         /// Sign out
         /// </summary>
@@ -669,10 +789,6 @@ namespace System
         /// Report a bug
         /// </summary>
         public const string LegendaryReportBug = "LOCLegendaryReportBug";
-        /// <summary>
-        /// Legendary Launcher is not installed.
-        /// </summary>
-        public const string LegendaryLauncherNotInstalled = "LOCLegendaryLauncherNotInstalled";
         /// <summary>
         /// A new version is available: {0} {1}.
         /// </summary>
@@ -754,13 +870,9 @@ namespace System
         /// </summary>
         public const string LegendaryUpload = "LOCLegendaryUpload";
         /// <summary>
-        /// Force download
+        /// Force action
         /// </summary>
-        public const string LegendaryForceDownload = "LOCLegendaryForceDownload";
-        /// <summary>
-        /// Force upload
-        /// </summary>
-        public const string LegendaryForceUpload = "LOCLegendaryForceUpload";
+        public const string LegendaryForceAction = "LOCLegendaryForceAction";
         /// <summary>
         /// Cloud saves feature is experimental. It's recommended to backup game saves in case something goes wrong. Are you sure you want to continue?
         /// </summary>
@@ -822,10 +934,6 @@ namespace System
         /// </summary>
         public const string LegendaryNoAvailableDlcs = "LOCLegendaryNoAvailableDlcs";
         /// <summary>
-        /// Only when launching games
-        /// </summary>
-        public const string LegendaryCheckUpdatesGameLaunch = "LOCLegendaryCheckUpdatesGameLaunch";
-        /// <summary>
         /// Automatically update games
         /// </summary>
         public const string LegendaryAutoUpdate = "LOCLegendaryAutoUpdate";
@@ -838,14 +946,6 @@ namespace System
         /// </summary>
         public const string LegendaryCheckUpdatesEveryPlayniteStartup = "LOCLegendaryCheckUpdatesEveryPlayniteStartup";
         /// <summary>
-        /// Check for Legendary launcher updates
-        /// </summary>
-        public const string LegendaryLauncherUpdatePolicy = "LOCLegendaryLauncherUpdatePolicy";
-        /// <summary>
-        /// Updates for games from Epic Games are being downloaded.
-        /// </summary>
-        public const string LegendaryGamesUpdatesUnderway = "LOCLegendaryGamesUpdatesUnderway";
-        /// <summary>
         /// Remove launch settings
         /// </summary>
         public const string LegendaryRemoveGameLaunchSettings = "LOCLegendaryRemoveGameLaunchSettings";
@@ -853,46 +953,6 @@ namespace System
         /// Additional services
         /// </summary>
         public const string LegendaryAdditionalServices = "LOCLegendaryAdditionalServices";
-        /// <summary>
-        /// No linked {0} account found! Link your account via your browser and try again.
-        /// </summary>
-        public const string LegendaryNoLinkedAccount = "LOCLegendaryNoLinkedAccount";
-        /// <summary>
-        /// All games have already been activated on your {0} account.
-        /// </summary>
-        public const string LegendaryAllActivatedUbisoft = "LOCLegendaryAllActivatedUbisoft";
-        /// <summary>
-        /// Are you sure you want to activate games on your {0} account?
-        /// </summary>
-        public const string LegendaryContinueActivation = "LOCLegendaryContinueActivation";
-        /// <summary>
-        /// All games have been successfully activated on your {0} account.
-        /// </summary>
-        public const string LegendaryGamesActivateSuccess = "LOCLegendaryGamesActivateSuccess";
-        /// <summary>
-        /// Activate games
-        /// </summary>
-        public const string LegendaryActivateGames = "LOCLegendaryActivateGames";
-        /// <summary>
-        /// Failed to activate games on your {0} account. Reason: {1}.
-        /// </summary>
-        public const string LegendaryGamesActivateFailure = "LOCLegendaryGamesActivateFailure";
-        /// <summary>
-        /// No available EA Games.
-        /// </summary>
-        public const string LegendaryNoAvailableEaGames = "LOCLegendaryNoAvailableEaGames";
-        /// <summary>
-        /// Do you want to activate next game?
-        /// </summary>
-        public const string LegendaryActivateNextConfirm = "LOCLegendaryActivateNextConfirm";
-        /// <summary>
-        /// It is currently unknown which game requires activation, so an attempt will be made to activate everything. If EA App asks you to install game rather than to activate, then it has already been activated and the dialog can be dismissed.
-        /// </summary>
-        public const string LegendaryEANotice = "LOCLegendaryEANotice";
-        /// <summary>
-        /// May the Force be with you, Padawan.
-        /// </summary>
-        public const string LegendaryStarWarsMessage = "LOCLegendaryStarWarsMessage";
         /// <summary>
         /// Signed in as {0}
         /// </summary>
@@ -905,10 +965,6 @@ namespace System
         /// User doesn't have write access to the specified path. Change permissions or launch Playnite as administrator.
         /// </summary>
         public const string LegendaryPermissionError = "LOCLegendaryPermissionError";
-        /// <summary>
-        /// Only one instance of Legendary may install/import/move applications at a time. Do you want to pause download manager tasks to continue?
-        /// </summary>
-        public const string LegendaryInstanceNotice = "LOCLegendaryInstanceNotice";
         /// <summary>
         /// Check for games updates
         /// </summary>
@@ -933,38 +989,6 @@ namespace System
         /// Cannot uninstall following games: {0}.
         /// </summary>
         public const string LegendaryUninstallErrorOther = "LOCLegendaryUninstallErrorOther";
-        /// <summary>
-        /// Import games requiring {0}
-        /// </summary>
-        public const string LegendaryImportThirdPartyLauncherGames = "LOCLegendaryImportThirdPartyLauncherGames";
-        /// <summary>
-        /// These types of games doesn't require Legendary and not all of them can be installed via it. It's recommended to go to Additional services => {0} => Activate games, and then install them directly via {0}.
-        /// </summary>
-        public const string LegendaryThirdPartyLauncherImportWarn = "LOCLegendaryThirdPartyLauncherImportWarn";
-        /// <summary>
-        /// {1} requires direct installation via {0}.
-        /// </summary>
-        public const string LegendaryRequiredInstallViaThirdPartyLauncherError = "LOCLegendaryRequiredInstallViaThirdPartyLauncherError";
-        /// <summary>
-        /// Following games require direct installation via {0}: {1}.
-        /// </summary>
-        public const string LegendaryRequiredInstallViaThirdPartyLauncherErrorOther = "LOCLegendaryRequiredInstallViaThirdPartyLauncherErrorOther";
-        /// <summary>
-        /// Install prerequisites ({0})
-        /// </summary>
-        public const string LegendaryInstallPrerequisites = "LOCLegendaryInstallPrerequisites";
-        /// <summary>
-        /// {1} requires installation of {0}. It's recommended to go to Plugin settings => Additional services => {0} => Activate games, and then install it directly via {0}.
-        /// </summary>
-        public const string LegendaryRequiredInstallOfThirdPartyLauncher = "LOCLegendaryRequiredInstallOfThirdPartyLauncher";
-        /// <summary>
-        /// Following games require installation of {0}: {1}. It's recommended to go to Plugin settings => Additional services => {0} => Activate games, and then install them directly via {0}.
-        /// </summary>
-        public const string LegendaryRequiredInstallOfThirdPartyLauncherOther = "LOCLegendaryRequiredInstallOfThirdPartyLauncherOther";
-        /// <summary>
-        /// Installing prerequisites ({0})...
-        /// </summary>
-        public const string LegendaryInstallingPrerequisites = "LOCLegendaryInstallingPrerequisites";
         /// <summary>
         /// Games
         /// </summary>

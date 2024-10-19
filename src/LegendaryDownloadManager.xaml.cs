@@ -3,8 +3,6 @@ using CliWrap.EventStream;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -19,7 +17,6 @@ using Playnite.SDK.Data;
 using Playnite.Common;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using LegendaryLibraryNS.Services;
 using System.Windows.Input;
 using Playnite.SDK.Plugins;
 using System.Collections.Specialized;
@@ -175,23 +172,20 @@ namespace LegendaryLibraryNS
             {
                 SaveData();
                 downloadsChanged = false;
+
                 var downloadCompleteSettings = LegendaryLibrary.GetSettings().DoActionAfterDownloadComplete;
-                switch (downloadCompleteSettings)
+                if (downloadCompleteSettings != DownloadCompleteAction.Nothing)
                 {
-                    case DownloadCompleteAction.ShutDown:
-                        Process.Start("shutdown", "/s /t 0");
-                        break;
-                    case DownloadCompleteAction.Reboot:
-                        Process.Start("shutdown", "/r /t 0");
-                        break;
-                    case DownloadCompleteAction.Hibernate:
-                        Playnite.Native.Powrprof.SetSuspendState(true, true, false);
-                        break;
-                    case DownloadCompleteAction.Sleep:
-                        Playnite.Native.Powrprof.SetSuspendState(false, true, false);
-                        break;
-                    default:
-                        break;
+                    Window window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
+                    {
+                        ShowMaximizeButton = false,
+                    });
+                    window.Title = "Legendary (Epic Games) library integration";
+                    window.Content = new LegendaryDownloadCompleteActionView();
+                    window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
+                    window.SizeToContent = SizeToContent.WidthAndHeight;
+                    window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    window.ShowDialog();
                 }
             }
         }

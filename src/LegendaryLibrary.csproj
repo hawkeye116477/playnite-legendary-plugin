@@ -162,6 +162,9 @@
     <Compile Include="Enums\UpdatePolicy.cs" />
     <Compile Include="CliWrapCommandExtensions.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="LegendaryDownloadCompleteActionView.xaml.cs">
+      <DependentUpon>LegendaryDownloadCompleteActionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LegendaryExtraInstallationContentView.xaml.cs">
       <DependentUpon>LegendaryExtraInstallationContentView.xaml</DependentUpon>
     </Compile>
@@ -261,6 +264,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="LegendaryDlcManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LegendaryDownloadCompleteActionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
