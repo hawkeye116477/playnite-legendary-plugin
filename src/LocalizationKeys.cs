@@ -454,41 +454,25 @@ namespace System
         /// </summary>
         public const string LegendaryConnectionTimeout = "LOCLegendaryConnectionTimeout";
         /// <summary>
-        /// After download is complete:
+        /// Action after download is complete
         /// </summary>
         public const string LegendaryAfterDownloadComplete = "LOCLegendaryAfterDownloadComplete";
         /// <summary>
-        /// System will be turned off in 1 second...
+        /// System will be turned off soon...
         /// </summary>
         public const string LegendarySystemShutdownCountdown = "LOCLegendarySystemShutdownCountdown";
         /// <summary>
-        /// System will be restarted in 1 second...
+        /// System will be restarted soon...
         /// </summary>
         public const string LegendarySystemRestartCountdown = "LOCLegendarySystemRestartCountdown";
         /// <summary>
-        /// System will be hibernated in 1 second...
+        /// System will be hibernated soon...
         /// </summary>
         public const string LegendarySystemHibernateCountdown = "LOCLegendarySystemHibernateCountdown";
         /// <summary>
-        /// System will be suspended in 1 second...
+        /// System will be suspended soon...
         /// </summary>
         public const string LegendarySystemSuspendCountdown = "LOCLegendarySystemSuspendCountdown";
-        /// <summary>
-        /// System will be turned off in {0} seconds...
-        /// </summary>
-        public const string LegendarySystemShutdownCountdownOther = "LOCLegendarySystemShutdownCountdownOther";
-        /// <summary>
-        /// System will be restarted in {0} seconds...
-        /// </summary>
-        public const string LegendarySystemRestartCountdownOther = "LOCLegendarySystemRestartCountdownOther";
-        /// <summary>
-        /// System will be hibernated in {0} seconds...
-        /// </summary>
-        public const string LegendarySystemHibernateCountdownOther = "LOCLegendarySystemHibernateCountdownOther";
-        /// <summary>
-        /// System will be suspended in {0} seconds...
-        /// </summary>
-        public const string LegendarySystemSuspendCountdownOther = "LOCLegendarySystemSuspendCountdownOther";
         /// <summary>
         /// Disable
         /// </summary>
