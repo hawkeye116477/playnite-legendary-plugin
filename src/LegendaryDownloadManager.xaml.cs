@@ -645,7 +645,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private void CancelDownloadBtn_Click(object sender, RoutedEventArgs e)
+        private async void CancelDownloadBtn_Click(object sender, RoutedEventArgs e)
         {
             if (DownloadsDG.SelectedIndex != -1)
             {
@@ -662,6 +662,7 @@ namespace LegendaryLibraryNS
                             gracefulInstallerCTS?.Dispose();
                             forcefulInstallerCTS?.Dispose();
                         }
+                        await WaitUntilLegendaryCloses();
                         var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", selectedRow.gameID + ".resume");
                         if (File.Exists(resumeFile))
                         {
@@ -703,7 +704,6 @@ namespace LegendaryLibraryNS
                     gracefulInstallerCTS?.Cancel();
                     gracefulInstallerCTS?.Dispose();
                     forcefulInstallerCTS?.Dispose();
-                    await WaitUntilLegendaryCloses();
                     selectedEntry.downloadedNumber = 0;
                     selectedEntry.progress = 0;
                     DownloadSpeedTB.Text = "";
@@ -714,6 +714,7 @@ namespace LegendaryLibraryNS
                     GameTitleTB.Text = "";
                     DiskSpeedTB.Text = "";
                 }
+                await WaitUntilLegendaryCloses();
                 selectedEntry.status = DownloadStatus.Canceled;
             }
             var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", selectedEntry.gameID + ".resume");
