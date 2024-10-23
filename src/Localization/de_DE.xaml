@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
   <sys:String x:Key="LOCLegendaryLauncherCustomPath">Launcher Pfad</sys:String>
   <sys:String x:Key="LOCLegendaryGamesInstallationPath">Spiele-Installationspfad</sys:String>
@@ -14,7 +14,11 @@
   <sys:String x:Key="LOCLegendaryMaxWorkers">Maximale Anzahl von Arbeits-Prozessen</sys:String>
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">Maximale Anzahl an geteiltem Speicher (MB)</sys:String>
   <sys:String x:Key="LOCLegendaryConnectionTimeout">Verbindungsunterbrechung (Sek)</sys:String>
-  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Nachdem der Download ist abgeschlossen:</sys:String>
+  <sys:String x:Key="LOCLegendaryAfterDownloadComplete"></sys:String>
+  <sys:String x:Key="LOCLegendarySystemShutdownCountdown"></sys:String>
+  <sys:String x:Key="LOCLegendarySystemRestartCountdown"></sys:String>
+  <sys:String x:Key="LOCLegendarySystemHibernateCountdown"></sys:String>
+  <sys:String x:Key="LOCLegendarySystemSuspendCountdown"></sys:String>
   <sys:String x:Key="LOCLegendaryDisable">Deaktivieren</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Aktivieren</sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable">Verfügbarer Speicherplatz:</sys:String>
@@ -25,7 +29,7 @@
   <sys:String x:Key="LOCLegendaryDiskSpeed">Festplattennutzung:</sys:String>
   <sys:String x:Key="LOCLegendaryElapsed">Vergangene Zeit:</sys:String>
   <sys:String x:Key="LOCLegendaryVerifying">Überprüfe...</sys:String>
-  <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Überprüfe große Datei "{0}": {1}</sys:String>
+  <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Überprüfe große Datei &quot;{0}&quot;: {1}</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadingUpdate">Aktualisierung wird heruntergeladen…</sys:String>
   <sys:String x:Key="LOCLegendaryFinishingInstallation">Installation wird abgeschlossen...</sys:String>
   <sys:String x:Key="LOCLegendaryFinishingUpdate">Update wird abgeschlossen...</sys:String>
@@ -110,24 +114,22 @@
   <sys:String x:Key="LOCLegendarySync">Synchronisieren</sys:String>
   <sys:String x:Key="LOCLegendaryDownload">Herunterladen</sys:String>
   <sys:String x:Key="LOCLegendaryUpload">Hochladen</sys:String>
-  <sys:String x:Key="LOCLegendaryForceDownload">Download erzwingen</sys:String>
-  <sys:String x:Key="LOCLegendaryForceUpload">Upload erzwingen</sys:String>
+  <sys:String x:Key="LOCLegendaryForceAction"></sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaveConfirm">Die Cloud-Speicherstände-Funktion ist experimentell. Es wird empfohlen, Spielstände zu sichern, falls etwas schief geht. Sind Sie sicher, dass Sie fortfahren möchten?</sys:String>
   <sys:String x:Key="LOCLegendarySyncPlaytime">Synchronisiere Spielzeit mit der Cloud</sys:String>
   <sys:String x:Key="LOCLegendaryUploadingPlaytime">Lade {0} Spielzeit in die Cloud hoch...</sys:String>
   <sys:String x:Key="LOCLegendaryUploadPlaytimeError">Beim Hochladen von {0} Spielzeit in die Cloud ist ein Fehler aufgetreten.</sys:String>
   <sys:String x:Key="LOCLegendaryMove">Verschieben</sys:String>
-  <sys:String x:Key="LOCLegendaryMoveConfirm">Sind Sie sicher, dass Sie {0} nach "{1}" verschieben möchten? Dies kann eine lange Zeit dauern.</sys:String>
-  <sys:String x:Key="LOCLegendaryMovingGame">Verschiebe {0} nach "{1}"...</sys:String>
-  <sys:String x:Key="LOCLegendaryMoveGameSuccess">{0} wurde erfolgreich nach "{1} " verschoben.</sys:String>
-  <sys:String x:Key="LOCLegendaryMoveGameError">Beim Verschieben von {0} nach "{1} " ist ein Fehler aufgetreten.</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveConfirm">Sind Sie sicher, dass Sie {0} nach &quot;{1}&quot; verschieben möchten? Dies kann eine lange Zeit dauern.</sys:String>
+  <sys:String x:Key="LOCLegendaryMovingGame">Verschiebe {0} nach &quot;{1}&quot;...</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveGameSuccess">{0} wurde erfolgreich nach &quot;{1} &quot; verschoben.</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveGameError">Beim Verschieben von {0} nach &quot;{1} &quot; ist ein Fehler aufgetreten.</sys:String>
   <sys:String x:Key="LOCLegendaryInstalledDlcs">Installierte DLCs</sys:String>
   <sys:String x:Key="LOCLegendaryAvailableDlcs">Verfügbare DLCs</sys:String>
   <sys:String x:Key="LOCLegendaryManageDlcs">DLCs verwalten</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallSelectedDlcs">Sind Sie sicher, dass Sie die ausgewählten DLCs deinstallieren möchten?</sys:String>
   <sys:String x:Key="LOCLegendaryNoInstalledDlcs">Keine installierten DLCs.</sys:String>
   <sys:String x:Key="LOCLegendaryNoAvailableDlcs">Keine verfügbaren DLCs.</sys:String>
-  <sys:String x:Key="LOCLegendaryCheckUpdatesGameLaunch">Nur beim Starten von Spielen</sys:String>
   <sys:String x:Key="LOCLegendaryAutoUpdate">Spiele automatisch aktualisieren</sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatePolicy">Nach Spiel-Aktualisierungen suchen</sys:String>
   <sys:String x:Key="LOCLegendaryCheckUpdatesEveryPlayniteStartup">Bei jedem Start von Playnite</sys:String>

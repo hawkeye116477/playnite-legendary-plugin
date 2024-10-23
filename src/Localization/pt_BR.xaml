@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
   <sys:String x:Key="LOCLegendaryLauncherCustomPath">Caminho do inicializador</sys:String>
   <sys:String x:Key="LOCLegendaryGamesInstallationPath">Caminho de Instalação dos Jogos</sys:String>
@@ -14,7 +14,11 @@
   <sys:String x:Key="LOCLegendaryMaxWorkers">Número máximo de processos</sys:String>
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">Quantidade máxima de memória compartilhada (MB)</sys:String>
   <sys:String x:Key="LOCLegendaryConnectionTimeout">Tempo limite da conexão (seg)</sys:String>
-  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Quando o download terminar:</sys:String>
+  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Quando o download terminar</sys:String>
+  <sys:String x:Key="LOCLegendarySystemShutdownCountdown">O sistema será desligado em breve...</sys:String>
+  <sys:String x:Key="LOCLegendarySystemRestartCountdown">O sistema será reiniciado em breve...</sys:String>
+  <sys:String x:Key="LOCLegendarySystemHibernateCountdown">O sistema hibernará em breve...</sys:String>
+  <sys:String x:Key="LOCLegendarySystemSuspendCountdown">O sistema será suspenso em breve...</sys:String>
   <sys:String x:Key="LOCLegendaryDisable">Desabilitar</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Habilitar</sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable">Espaço Disponível:</sys:String>
@@ -25,7 +29,7 @@
   <sys:String x:Key="LOCLegendaryDiskSpeed">Uso do Disco:</sys:String>
   <sys:String x:Key="LOCLegendaryElapsed">Decorrido:</sys:String>
   <sys:String x:Key="LOCLegendaryVerifying">Verificando...</sys:String>
-  <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Verificando o arquivo grande "{0}": {1}</sys:String>
+  <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Verificando o arquivo grande &quot;{0}&quot;: {1}</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadingUpdate">Baixando atualização...</sys:String>
   <sys:String x:Key="LOCLegendaryFinishingInstallation">Concluindo instalação...</sys:String>
   <sys:String x:Key="LOCLegendaryFinishingUpdate">Concluindo atualização...</sys:String>
@@ -110,24 +114,22 @@
   <sys:String x:Key="LOCLegendarySync">Sincronizar</sys:String>
   <sys:String x:Key="LOCLegendaryDownload">Baixar</sys:String>
   <sys:String x:Key="LOCLegendaryUpload">Enviar</sys:String>
-  <sys:String x:Key="LOCLegendaryForceDownload">Baixar forçadamente</sys:String>
-  <sys:String x:Key="LOCLegendaryForceUpload">Enviar forçadamente</sys:String>
+  <sys:String x:Key="LOCLegendaryForceAction">Forçar ação</sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaveConfirm">A função de salvamento na nuvem é experimental. É recomendável fazer backup dos arquivos caso algo dê errado. Tem certeza que deseja continuar?</sys:String>
   <sys:String x:Key="LOCLegendarySyncPlaytime">Sincronizar tempo de jogo com a nuvem</sys:String>
   <sys:String x:Key="LOCLegendaryUploadingPlaytime">Enviando {0} tempo(s) de jogo para a nuvem...</sys:String>
   <sys:String x:Key="LOCLegendaryUploadPlaytimeError">Ocorreu um erro ao enviar {0} tempo(s) de jogo para a nuvem.</sys:String>
   <sys:String x:Key="LOCLegendaryMove">Mover</sys:String>
-  <sys:String x:Key="LOCLegendaryMoveConfirm">Tem certeza que deseja mover {0} para "{1}"? Isso pode demorar.</sys:String>
-  <sys:String x:Key="LOCLegendaryMovingGame">Movendo {0} para "{1}"...</sys:String>
-  <sys:String x:Key="LOCLegendaryMoveGameSuccess">{0} foi movido para"{1}" com sucesso.</sys:String>
-  <sys:String x:Key="LOCLegendaryMoveGameError">Ocorreu um erro ao mover {0} para "{1}".</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveConfirm">Tem certeza que deseja mover {0} para &quot;{1}&quot;? Isso pode demorar.</sys:String>
+  <sys:String x:Key="LOCLegendaryMovingGame">Movendo {0} para &quot;{1}&quot;...</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveGameSuccess">{0} foi movido para&quot;{1}&quot; com sucesso.</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveGameError">Ocorreu um erro ao mover {0} para &quot;{1}&quot;.</sys:String>
   <sys:String x:Key="LOCLegendaryInstalledDlcs">DLCs instalados</sys:String>
   <sys:String x:Key="LOCLegendaryAvailableDlcs">DLCs disponíveis</sys:String>
   <sys:String x:Key="LOCLegendaryManageDlcs">Gerenciar DLCs</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallSelectedDlcs">Tem certeza que deseja desinstalar os DLC selecionados?</sys:String>
   <sys:String x:Key="LOCLegendaryNoInstalledDlcs">Nenhum DLC instalado.</sys:String>
   <sys:String x:Key="LOCLegendaryNoAvailableDlcs">Nenhum DLC disponível.</sys:String>
-  <sys:String x:Key="LOCLegendaryCheckUpdatesGameLaunch">Ao iniciá-los</sys:String>
   <sys:String x:Key="LOCLegendaryAutoUpdate">Atualizar jogos automaticamente</sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatePolicy">Verificar atualizações de jogos</sys:String>
   <sys:String x:Key="LOCLegendaryCheckUpdatesEveryPlayniteStartup">Em toda inicialização do Playnite</sys:String>
