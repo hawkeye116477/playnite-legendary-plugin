@@ -310,7 +310,7 @@ namespace LegendaryLibraryNS.Services
             return null;
         }
 
-        public void UploadPlaytime(DateTime startTime, DateTime endTime, Game game)
+        public void UploadPlaytime(DateTime startTime, DateTime endTime, Game game, int attempts = 3)
         {
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryUploadingPlaytime).Format(game.Name), false);
             api.Dialogs.ActivateGlobalProgress(async (a) =>
@@ -337,11 +337,25 @@ namespace LegendaryLibraryNS.Services
                             playtimePayload.startTime = startTime;
                             var playtimeJson = Serialization.ToJson(playtimePayload);
                             var content = new StringContent(playtimeJson, Encoding.UTF8, "application/json");
-                            var result = await httpClient.PutAsync(uri, content);
-                            if (!result.IsSuccessStatusCode)
+                            try
                             {
-                                api.Dialogs.ShowErrorMessage(api.Resources.GetString(LOC.LegendaryUploadPlaytimeError).Format(game.Name));
-                                logger.Error($"An error occured during uploading playtime to the cloud. Status code: {result.StatusCode}.");
+                                var response = await httpClient.PutAsync(uri, content);
+                                response.EnsureSuccessStatusCode();
+                            }
+                            catch (HttpRequestException exception)
+                            {
+                                if (attempts > 1)
+                                {
+                                    attempts -= 1;
+                                    logger.Debug($"Retrying playtime upload for {game.Name}. Attempts left: {attempts}");
+                                    await Task.Delay(2000);
+                                    UploadPlaytime(startTime, endTime, game, attempts);
+                                }
+                                else
+                                {
+                                    api.Dialogs.ShowErrorMessage(api.Resources.GetString(LOC.LegendaryUploadPlaytimeError).Format(game.Name));
+                                    logger.Error($"An error occured during uploading playtime to the cloud: {exception}.");
+                                }
                             }
                         }
                     }
