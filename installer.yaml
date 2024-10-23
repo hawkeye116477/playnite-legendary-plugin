@@ -1,5 +1,18 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.9.4
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2024-10-24
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.9.4/LegendaryLibrary_1_9_4.pext
+    Changelog:
+      - Feature allowing moving games will be displayed now only when needed
+      - Fixed possible issues which might occur during repairing, updating and uploading
+        playtime
+      - Removed checking for game updates after launching games (now it will check
+        only after launching Playnite if user wants that)
+      - Checking for games updates once per month is new default setting
+      - Improved layout of manual cloud sync
+      - Added countdown for download complete action (60 seconds for a decision)
   - Version: 1.9.3
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2024-10-07
