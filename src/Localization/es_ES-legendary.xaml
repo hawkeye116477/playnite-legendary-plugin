@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <sys:String x:Key="LOCLegendaryLaunchOffline">Lanzar juegos en modo sin conexión si es posible</sys:String>
   <sys:String x:Key="LOCLegendaryEnableOfflineMode">Activar modo sin conexión</sys:String>
@@ -11,7 +11,7 @@
   <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">La descarga comenzará pronto. Puedes ver su estado accediendo al panel de Legendart a través del Menú =&gt; Vista o barra lateral.</sys:String>
   <sys:String x:Key="LOCLegendaryPanel">Panel de Legendary</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} ya está en la lista de descarga. Puede ver el estado de la descarga accediendo al Panel Legendario desde Menú =&gt; Vista o barra lateral.</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther"/>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther"></sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Ignorar espacio libre</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip">No abortar si no hay suficiente espacio libre disponible.</sys:String>
   <sys:String x:Key="LOCLegendaryMemoryError">La caché de memoria compartida actual es menor de lo requerido: {0} &lt; {1}. Trata de habilitar la optimización de reordenación para reducir el uso de memoria o aumentar la cantidad máxima de memoria compartida.</sys:String>
@@ -34,10 +34,10 @@
   <sys:String x:Key="LOCLegendaryInstanceNotice">Sólo una instancia de Legendary puede instalar/importar/mover aplicaciones a la vez. ¿Quieres pausar las tareas del administrador de descargas para continuar?</sys:String>
   <sys:String x:Key="LOCLegendaryImportThirdPartyLauncherGames">Importar juegos que requieren {0}</sys:String>
   <sys:String x:Key="LOCLegendaryThirdPartyLauncherImportWarn">Este tipo de juegos no requiere Legendary y no todos pueden ser instalados a través de él. Se recomienda ir a Servicios adicionales =&gt; {0} =&gt; Activar juegos y luego instalarlos directamente a través de {0}.</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError"/>
-  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherErrorOther"/>
+  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError"></sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherErrorOther"></sys:String>
   <sys:String x:Key="LOCLegendaryInstallPrerequisites">Instalar requisitos previos ({0})</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher"/>
-  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther"/>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher"></sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther"></sys:String>
   <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Instalando requisitos previos ({0})...</sys:String>
 </ResourceDictionary>

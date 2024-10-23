@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
   <sys:String x:Key="LOCLegendaryLauncherCustomPath">Ścieżka launchera</sys:String>
   <sys:String x:Key="LOCLegendaryGamesInstallationPath">Ścieżka instalacji gier</sys:String>
@@ -14,7 +14,11 @@
   <sys:String x:Key="LOCLegendaryMaxWorkers">Maksymalna liczba procesów roboczych</sys:String>
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">Maksymalna ilość pamięci współdzielonej (MB)</sys:String>
   <sys:String x:Key="LOCLegendaryConnectionTimeout">Limit czasu połączenia (sek)</sys:String>
-  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Po zakończeniu pobierania:</sys:String>
+  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Akcja po zakończeniu pobierania</sys:String>
+  <sys:String x:Key="LOCLegendarySystemShutdownCountdown">System niedługo zostanie wyłączony...</sys:String>
+  <sys:String x:Key="LOCLegendarySystemRestartCountdown">System niedługo zostanie zrestartowany...</sys:String>
+  <sys:String x:Key="LOCLegendarySystemHibernateCountdown">System niedługo zostanie przełączony w stan hibernacji...</sys:String>
+  <sys:String x:Key="LOCLegendarySystemSuspendCountdown">System niedługo zostanie zawieszony...</sys:String>
   <sys:String x:Key="LOCLegendaryDisable">Wyłącz</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Włącz</sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable">Dostępne miejsce:</sys:String>
@@ -25,7 +29,7 @@
   <sys:String x:Key="LOCLegendaryDiskSpeed">Użycie dysku:</sys:String>
   <sys:String x:Key="LOCLegendaryElapsed">Upłynęło:</sys:String>
   <sys:String x:Key="LOCLegendaryVerifying">Weryfikowanie...</sys:String>
-  <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Weryfikowanie dużego pliku "{0}": {1}</sys:String>
+  <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Weryfikowanie dużego pliku &quot;{0}&quot;: {1}</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadingUpdate">Pobieranie aktualizacji...</sys:String>
   <sys:String x:Key="LOCLegendaryFinishingInstallation">Kończenie instalacji...</sys:String>
   <sys:String x:Key="LOCLegendaryFinishingUpdate">Kończenie aktualizacji...</sys:String>
@@ -110,8 +114,7 @@
   <sys:String x:Key="LOCLegendarySync">Synchronizuj</sys:String>
   <sys:String x:Key="LOCLegendaryDownload">Pobierz</sys:String>
   <sys:String x:Key="LOCLegendaryUpload">Wyślij</sys:String>
-  <sys:String x:Key="LOCLegendaryForceDownload">Wymuś pobieranie</sys:String>
-  <sys:String x:Key="LOCLegendaryForceUpload">Wymuś wysyłanie</sys:String>
+  <sys:String x:Key="LOCLegendaryForceAction">Wymuś akcję</sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaveConfirm">Funkcja zapisywania w chmurze jest eksperymentalna. Zalecane jest utworzenie kopii zapasowej zapisów gry na wypadek, gdyby coś poszło nie tak. Czy na pewno chcesz kontynuować?</sys:String>
   <sys:String x:Key="LOCLegendarySyncPlaytime">Synchronizuj czas grania z chmurą</sys:String>
   <sys:String x:Key="LOCLegendaryUploadingPlaytime">Przesyłanie czasu grania w grę {0} do chmury...</sys:String>
@@ -127,7 +130,6 @@
   <sys:String x:Key="LOCLegendaryUninstallSelectedDlcs">Czy na pewno chcesz odinstalować wybrane dodatki?</sys:String>
   <sys:String x:Key="LOCLegendaryNoInstalledDlcs">Brak zainstalowanych DLC.</sys:String>
   <sys:String x:Key="LOCLegendaryNoAvailableDlcs">Brak dostępnych DLC.</sys:String>
-  <sys:String x:Key="LOCLegendaryCheckUpdatesGameLaunch">Tylko podczas uruchamiania gier</sys:String>
   <sys:String x:Key="LOCLegendaryAutoUpdate">Automatycznie aktualizuj gry</sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatePolicy">Sprawdzaj aktualizacje gier</sys:String>
   <sys:String x:Key="LOCLegendaryCheckUpdatesEveryPlayniteStartup">Przy każdym uruchomieniu Playnite</sys:String>

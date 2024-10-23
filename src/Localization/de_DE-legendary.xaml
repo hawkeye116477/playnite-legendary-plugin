@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <sys:String x:Key="LOCLegendaryLaunchOffline">Spiele, wenn möglich im Offline-Modus starten</sys:String>
   <sys:String x:Key="LOCLegendaryEnableOfflineMode">Offline-Modus aktivieren</sys:String>
@@ -7,7 +7,7 @@
   <sys:String x:Key="LOCLegendaryHttpOnlyDownload">HTTPS deaktivieren (nützlich für CDNs, z.B. LanCache)</sys:String>
   <sys:String x:Key="LOCLegendaryEnableReordering">Umsortierungs-Optimierung aktivieren</sys:String>
   <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">Dies kann den die RAM-Nutzung während des Downloads verringern (funktioniert bei einigen Titeln möglicherweise nicht ordnungsgemäß).</sys:String>
-  <sys:String x:Key="LOCLegendaryEOSOverlay">EOS Overlay</sys:String>
+  <sys:String x:Key="LOCLegendaryEOSOverlay"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">Der Download wird bald gestartet. Sie können den Status sehen, indem Sie auf das Legendary-Bedienfeld über das Menü =&gt; Ansicht oder Seitenleiste klicken.</sys:String>
   <sys:String x:Key="LOCLegendaryPanel">Legendary-Bedienfeld</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} ist bereits in der Download-Liste. Sie können den Status des Downloads sehen, indem Sie über das Menü =&gt; Ansicht oder Seitenleiste auf das Legendary-Bedienfeld zugreifen.</sys:String>
