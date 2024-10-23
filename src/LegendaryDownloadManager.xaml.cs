@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using Playnite.SDK.Plugins;
 using System.Collections.Specialized;
+using LegendaryLibraryNS.Services;
 
 namespace LegendaryLibraryNS
 {
@@ -543,6 +544,29 @@ namespace LegendaryLibraryNS
                                             game.Version = installedGameInfo.Version;
                                             game.InstallSize = (ulong?)installedGameInfo.Install_size;
                                             game.IsInstalled = true;
+                                            var playtimeSyncEnabled = false;
+                                            if (downloadProperties.downloadAction == DownloadAction.Repair)
+                                            {
+                                                if (playniteAPI.ApplicationSettings.PlaytimeImportMode != PlaytimeImportMode.Never)
+                                                {
+                                                    playtimeSyncEnabled = LegendaryLibrary.GetSettings().SyncPlaytime;
+                                                    var gameSettings = LegendaryGameSettingsView.LoadGameSettings(game.GameId);
+                                                    if (gameSettings?.AutoSyncPlaytime != null)
+                                                    {
+                                                        playtimeSyncEnabled = (bool)gameSettings.AutoSyncPlaytime;
+                                                    }
+                                                }
+                                                if (playtimeSyncEnabled)
+                                                {
+                                                    var accountApi = new EpicAccountClient(playniteAPI, LegendaryLauncher.TokensPath);
+                                                    var playtimeItems = await accountApi.GetPlaytimeItems();
+                                                    var playtimeItem = playtimeItems?.FirstOrDefault(x => x.artifactId == gameID);
+                                                    if (playtimeItem != null)
+                                                    {
+                                                        game.Playtime = playtimeItem.totalTime;
+                                                    }
+                                                }
+                                            }
                                             // Some games need specific key in registry, otherwise they can't launch
                                             try
                                             {
