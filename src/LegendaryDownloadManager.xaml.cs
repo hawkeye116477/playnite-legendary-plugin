@@ -558,7 +558,7 @@ namespace LegendaryLibraryNS
                                                 }
                                                 if (playtimeSyncEnabled)
                                                 {
-                                                    var accountApi = new EpicAccountClient(playniteAPI, LegendaryLauncher.TokensPath);
+                                                    var accountApi = new EpicAccountClient(playniteAPI);
                                                     var playtimeItems = await accountApi.GetPlaytimeItems();
                                                     var playtimeItem = playtimeItems?.FirstOrDefault(x => x.artifactId == gameID);
                                                     if (playtimeItem != null)

@@ -383,7 +383,7 @@ namespace LegendaryLibraryNS
 
         private async void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            var clientApi = new EpicAccountClient(playniteAPI, LegendaryLauncher.TokensPath);
+            var clientApi = new EpicAccountClient(playniteAPI);
             var userLoggedIn = LoginBtn.IsChecked;
             if (!userLoggedIn == false)
             {
@@ -442,7 +442,7 @@ namespace LegendaryLibraryNS
         {
             LoginBtn.IsEnabled = false;
             AuthStatusTB.Text = ResourceProvider.GetString(LOC.Legendary3P_EpicLoginChecking);
-            var clientApi = new EpicAccountClient(playniteAPI, LegendaryLauncher.TokensPath);
+            var clientApi = new EpicAccountClient(playniteAPI);
             var userLoggedIn = await clientApi.GetIsUserLoggedIn();
             if (userLoggedIn)
             {

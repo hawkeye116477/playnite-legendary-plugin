@@ -250,7 +250,7 @@ namespace LegendaryLibraryNS
                 DateTime now = DateTime.UtcNow;
                 var totalSeconds = sessionLength;
                 var startTime = now.AddSeconds(-(double)totalSeconds);
-                var clientApi = new EpicAccountClient(playniteAPI, LegendaryLauncher.TokensPath);
+                var clientApi = new EpicAccountClient(playniteAPI);
                 clientApi.UploadPlaytime(startTime, now, Game);
             }
         }

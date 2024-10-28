@@ -128,7 +128,7 @@ namespace LegendaryLibraryNS
         {
             var cacheDir = GetCachePath("catalogcache");
             var games = new List<GameMetadata>();
-            var accountApi = new EpicAccountClient(PlayniteApi, LegendaryLauncher.TokensPath);
+            var accountApi = new EpicAccountClient(PlayniteApi);
             var assets = await accountApi.GetAssets();
             if (!assets?.Any() == true)
             {
