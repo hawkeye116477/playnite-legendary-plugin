@@ -33,7 +33,7 @@ namespace LegendaryLibraryNS
         public CancellationTokenSource gracefulInstallerCTS;
         private ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI playniteAPI = API.Instance;
-        public DownloadManagerData.Rootobject downloadManagerData;
+        public DownloadManagerData downloadManagerData;
         public SidebarItem legendaryPanel = LegendaryLibrary.GetPanel();
         public bool downloadsChanged = false;
 
@@ -116,7 +116,7 @@ namespace LegendaryLibraryNS
             return $"{ResourceProvider.GetString(description)} [{shortcut}]";
         }
 
-        public DownloadManagerData.Rootobject LoadSavedData()
+        public DownloadManagerData LoadSavedData()
         {
             var dataDir = LegendaryLibrary.Instance.GetPluginUserDataPath();
             var dataFile = Path.Combine(dataDir, "downloadManager.json");
@@ -134,7 +134,7 @@ namespace LegendaryLibraryNS
             }
             if (!correctJson)
             {
-                downloadManagerData = new DownloadManagerData.Rootobject
+                downloadManagerData = new DownloadManagerData
                 {
                     downloads = new ObservableCollection<DownloadManagerData.Download>()
                 };

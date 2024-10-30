@@ -28,7 +28,7 @@ namespace LegendaryLibraryNS
             var metadatafile = Path.Combine(LegendaryLauncher.ConfigPath, "metadata", game.GameId + ".json");
             if (File.Exists(metadatafile))
             {
-                LegendaryMetadata.Rootobject legendaryMetadata = null;
+                LegendaryMetadata legendaryMetadata = null;
                 if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(metadatafile), out legendaryMetadata))
                 {
                     if (legendaryMetadata != null)

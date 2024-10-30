@@ -18,7 +18,7 @@ namespace LegendaryLibraryNS
     public partial class LegendaryDownloadProperties : UserControl
     {
         private DownloadManagerData.Download SelectedDownload => (DownloadManagerData.Download)DataContext;
-        public DownloadManagerData.Rootobject downloadManagerData;
+        public DownloadManagerData downloadManagerData;
         private IPlayniteAPI playniteAPI = API.Instance;
         public List<string> requiredThings;
         public bool uncheckedByUser = true;
@@ -37,7 +37,7 @@ namespace LegendaryLibraryNS
             LoadSavedData();
         }
 
-        private DownloadManagerData.Rootobject LoadSavedData()
+        private DownloadManagerData LoadSavedData()
         {
             var downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
             downloadManagerData = downloadManager.downloadManagerData;

@@ -37,7 +37,7 @@ namespace LegendaryLibraryNS
             }
             var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("infocache");
             var cacheInfoFile = Path.Combine(cacheInfoPath, "_allEaGames.json");
-            var eaGamesOnly = new List<LegendaryMetadata.Rootobject>();
+            var eaGamesOnly = new List<LegendaryMetadata>();
             bool correctJson = false;
             if (File.Exists(cacheInfoFile))
             {
@@ -47,7 +47,7 @@ namespace LegendaryLibraryNS
                 }
             }
 
-            var eaGamesOutput = new List<LegendaryMetadata.Rootobject>();
+            var eaGamesOutput = new List<LegendaryMetadata>();
             string content;
             if (File.Exists(cacheInfoFile))
             {
@@ -56,7 +56,7 @@ namespace LegendaryLibraryNS
                 {
                     if (Serialization.TryFromJson(content, out eaGamesOutput))
                     {
-                        foreach (LegendaryMetadata.Rootobject eaGame in eaGamesOutput)
+                        foreach (LegendaryMetadata eaGame in eaGamesOutput)
                         {
                             eaGamesOnly.Add(eaGame);
                         }
@@ -93,7 +93,7 @@ namespace LegendaryLibraryNS
                     bool jediFound = false;
                     if (Serialization.TryFromJson(result.StandardOutput, out eaGamesOutput))
                     {
-                        foreach (LegendaryMetadata.Rootobject eaGame in eaGamesOutput)
+                        foreach (LegendaryMetadata eaGame in eaGamesOutput)
                         {
                             var thirdPartyManagedApp = eaGame.metadata?.customAttributes?.ThirdPartyManagedApp?.value.ToLower();
                             if (thirdPartyManagedApp == "origin" || thirdPartyManagedApp == "the ea app")
@@ -107,7 +107,7 @@ namespace LegendaryLibraryNS
                                         content = FileSystem.ReadFileAsStringSafe(metadataFile);
                                         if (!content.IsNullOrEmpty())
                                         {
-                                            var contentObject = Serialization.FromJson<LegendaryMetadata.Rootobject>(content);
+                                            var contentObject = Serialization.FromJson<LegendaryMetadata>(content);
                                             contentObject.metadata.customAttributes.ThirdPartyManagedApp.value = "Origin";
                                             var strConf = Serialization.ToJson(contentObject, true);
                                             File.WriteAllText(metadataFile, strConf);
@@ -179,7 +179,7 @@ namespace LegendaryLibraryNS
             playniteAPI.Dialogs.ShowMessage(LOC.LegendaryEANotice, "", MessageBoxButton.OK, MessageBoxImage.Information);
             bool errorDisplayed = false;
             int i = 0;
-            foreach (var selectedGame in EaGamesLB.SelectedItems.Cast<LegendaryMetadata.Rootobject>())
+            foreach (var selectedGame in EaGamesLB.SelectedItems.Cast<LegendaryMetadata>())
             {
                 bool canActivate = true;
                 i++;

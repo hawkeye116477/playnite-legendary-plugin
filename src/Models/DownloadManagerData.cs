@@ -6,10 +6,7 @@ namespace LegendaryLibraryNS.Models
 {
     public class DownloadManagerData
     {
-        public class Rootobject
-        {
-            public ObservableCollection<Download> downloads { get; set; }
-        }
+        public ObservableCollection<Download> downloads { get; set; }
 
         public class Download : ObservableObject
         {

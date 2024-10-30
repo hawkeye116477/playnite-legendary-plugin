@@ -5,14 +5,11 @@ namespace LegendaryLibraryNS.Models
 {
     public class LegendaryMetadata
     {
-        public class Rootobject
-        {
-            public string app_name {get; set;}
-            public string app_title { get; set; }
-            public Dictionary<string, AssetInfo> asset_infos;
-            public string[] base_urls;
-            public Metadata metadata;
-        }
+        public string app_name { get; set; }
+        public string app_title { get; set; }
+        public Dictionary<string, AssetInfo> asset_infos;
+        public string[] base_urls;
+        public Metadata metadata;
 
         public class CustomAttribute
         {
