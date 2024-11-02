@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LegendaryLibraryNS"
              xmlns:localcon="clr-namespace:LegendaryLibraryNS.Converters"
+             xmlns:commoncon="clr-namespace:CommonPlugin.Converters"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="800" DataContext="{Binding RelativeSource={RelativeSource Self}}" Name="LegendaryDownloadManagerUC" PreviewKeyDown="LegendaryDownloadManagerUC_PreviewKeyDown">
@@ -13,9 +14,9 @@
         <sys:Boolean x:Key="True">True</sys:Boolean>
         <sys:Boolean x:Key="False">False</sys:Boolean>
         <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
-        <localcon:LongToDateConverter x:Key="LongToDateConverter"/>
+        <commoncon:LongToDateConverter x:Key="LongToDateConverter"/>
         <localcon:DownloadStatusEnumToStringConverter x:Key="DownloadStatusEnumToStringConverter"/>
-        <localcon:NumericalSizeToStringConverter x:Key="NumericalSizeToStringConverter"/>
+        <commoncon:NumericalSizeToStringConverter x:Key="NumericalSizeToStringConverter"/>
     </UserControl.Resources>
     <DockPanel Margin="10,10,10,5">
         <Grid DockPanel.Dock="Bottom">

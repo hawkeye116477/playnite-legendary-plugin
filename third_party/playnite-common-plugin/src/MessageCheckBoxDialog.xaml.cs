@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 
 
-namespace LegendaryLibraryNS
+namespace CommonPlugin
 {
     public class MessageDialogSettings
     {
@@ -38,11 +38,14 @@ namespace LegendaryLibraryNS
             switch (button)
             {
                 case MessageBoxButton.OK:
+                    OkBtn.Content = ResourceProvider.GetString("LOCOKLabel");
                     ShowOkBtn = true;
                     OkBtn.IsDefault = true;
                     OkBtn.Focus();
                     break;
                 case MessageBoxButton.YesNo:
+                    YesBtn.Content = ResourceProvider.GetString("LOCYesLabel");
+                    NoBtn.Content = ResourceProvider.GetString("LOCNoLabel");
                     ShowYesBtn = true;
                     YesBtn.Focus();
                     YesBtn.IsDefault = true;
@@ -50,6 +53,7 @@ namespace LegendaryLibraryNS
                     NoBtn.IsCancel = true;
                     break;
                 default:
+                    OkBtn.Content = ResourceProvider.GetString("LOCOKLabel");
                     ShowOkBtn = true;
                     OkBtn.Focus();
                     OkBtn.IsDefault = true;

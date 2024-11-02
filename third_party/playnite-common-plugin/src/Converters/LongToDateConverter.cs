@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace LegendaryLibraryNS.Converters
+namespace CommonPlugin.Converters
 {
     public class LongToDateConverter : IValueConverter
     {

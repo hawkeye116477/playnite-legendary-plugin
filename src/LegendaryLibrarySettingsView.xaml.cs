@@ -1,6 +1,8 @@
 ﻿using CliWrap;
 using CliWrap.Buffered;
 using CliWrap.EventStream;
+using CommonPlugin;
+using CommonPlugin.Enums;
 using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
@@ -32,7 +34,7 @@ namespace LegendaryLibraryNS
         {
             InitializeComponent();
             UpdateAuthStatus();
-            MaxWorkersNI.MaxValue = Helpers.CpuThreadsNumber;
+            MaxWorkersNI.MaxValue = CommonHelpers.CpuThreadsNumber;
         }
 
         private void ChooseLauncherBtn_Click(object sender, RoutedEventArgs e)

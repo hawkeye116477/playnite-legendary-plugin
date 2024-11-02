@@ -7,6 +7,7 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:pcmd="clr-namespace:Playnite.Commands"
     xmlns:pcon="clr-namespace:Playnite.Converters"
+    xmlns:common="clr-namespace:CommonPlugin"
     mc:Ignorable="d" Name="LegendarySettingsUC"
     d:DesignHeight="578" d:DesignWidth="600"
     Loaded="LegendarySettingsUC_Loaded">
@@ -197,13 +198,13 @@
                             IsChecked="{Binding Settings.UnattendedInstall}" Margin="0,0,0,10" />
                         <TextBlock Text="{DynamicResource LOCLegendaryMaxWorkers}" Grid.Column="0"
                             Grid.Row="6" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        <local:NumericInput Grid.Row="6" Grid.Column="1" Margin="0,0,0,5" MinValue="0" x:Name="MaxWorkersNI" Value="{Binding Settings.MaxWorkers}" HorizontalAlignment="Left"/>
+                        <common:NumericInput Grid.Row="6" Grid.Column="1" Margin="0,0,0,5" MinValue="0" x:Name="MaxWorkersNI" Value="{Binding Settings.MaxWorkers}" HorizontalAlignment="Left"/>
                         <TextBlock Text="{DynamicResource LOCLegendaryMaxSharedMemory}" Grid.Column="0"
                             Grid.Row="7" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        <local:NumericInput Grid.Row="7" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" Value="{Binding Settings.MaxSharedMemory}" HorizontalAlignment="Left"/>
+                        <common:NumericInput Grid.Row="7" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" Value="{Binding Settings.MaxSharedMemory}" HorizontalAlignment="Left"/>
                         <TextBlock Text="{DynamicResource LOCLegendaryConnectionTimeout}" Grid.Column="0"
                             Grid.Row="8" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        <local:NumericInput Grid.Row="8" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="600" StepSize="5" Value="{Binding Settings.ConnectionTimeout}" HorizontalAlignment="Left"/>
+                        <common:NumericInput Grid.Row="8" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="600" StepSize="5" Value="{Binding Settings.ConnectionTimeout}" HorizontalAlignment="Left"/>
                         <TextBlock Text="{DynamicResource LOCLegendaryPreferredCDN}" Grid.Column="0"
                             Grid.Row="9" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         <TextBox

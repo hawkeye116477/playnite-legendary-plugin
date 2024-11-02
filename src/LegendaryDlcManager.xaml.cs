@@ -1,6 +1,7 @@
 ﻿using CliWrap;
 using CliWrap.Buffered;
-using LegendaryLibraryNS.Enums;
+using CommonPlugin;
+using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -87,8 +88,8 @@ namespace LegendaryLibraryNS
                         if (dDrive.IsReady)
                         {
                             availableFreeSpace = dDrive.AvailableFreeSpace;
-                            SpaceTB.Text = Helpers.FormatSize(availableFreeSpace);
-                            AfterInstallingTB.Text = Helpers.FormatSize(availableFreeSpace);
+                            SpaceTB.Text = CommonHelpers.FormatSize(availableFreeSpace);
+                            AfterInstallingTB.Text = CommonHelpers.FormatSize(availableFreeSpace);
                         }
                     }
                     var settings = LegendaryLibrary.GetSettings();
@@ -286,12 +287,12 @@ namespace LegendaryLibraryNS
                 initialDownloadSizeNumber += dlcSize.Download_size;
                 initialInstallSizeNumber += dlcSize.Disk_size;
             }
-            var downloadSize = Helpers.FormatSize(initialDownloadSizeNumber);
+            var downloadSize = CommonHelpers.FormatSize(initialDownloadSizeNumber);
             DownloadSizeTB.Text = downloadSize;
-            var installSize = Helpers.FormatSize(initialInstallSizeNumber);
+            var installSize = CommonHelpers.FormatSize(initialInstallSizeNumber);
             InstallSizeTB.Text = installSize;
             double afterInstallSizeNumber = (double)(availableFreeSpace - initialInstallSizeNumber);
-            AfterInstallingTB.Text = Helpers.FormatSize(afterInstallSizeNumber);
+            AfterInstallingTB.Text = CommonHelpers.FormatSize(afterInstallSizeNumber);
         }
 
         private void InstalledDlcsLB_SelectionChanged(object sender, SelectionChangedEventArgs e)

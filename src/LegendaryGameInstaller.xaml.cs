@@ -1,10 +1,9 @@
 ﻿using CliWrap;
 using CliWrap.Buffered;
-using LegendaryLibraryNS.Enums;
+using CommonPlugin;
+using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
-using Playnite.Common;
 using Playnite.SDK;
-using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -76,10 +75,11 @@ namespace LegendaryLibraryNS
             }
             if (MultiInstallData.First().downloadProperties.downloadAction == DownloadAction.Install)
             {
-                if (!Helpers.IsDirectoryWritable(installPath))
-                {
-                    return;
-                }
+                //var commonHelpers = LegendaryLibrary.Instance.commonHelpers;
+                //if (commonHelpers.IsDirectoryWritable(installPath))
+                //{
+                //    return;
+                //}
             }
             InstallerWindow.Close();
             LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
@@ -198,7 +198,7 @@ namespace LegendaryLibraryNS
             }
             SelectedGamePathTxt.Text = installPath;
             ReorderingChk.IsChecked = settings.EnableReordering;
-            MaxWorkersNI.MaxValue = Helpers.CpuThreadsNumber;
+            MaxWorkersNI.MaxValue = CommonHelpers.CpuThreadsNumber;
             MaxWorkersNI.Value = settings.MaxWorkers.ToString();
             MaxSharedMemoryNI.Value = settings.MaxSharedMemory.ToString();
             UpdateSpaceInfo(installPath);
@@ -537,8 +537,8 @@ namespace LegendaryLibraryNS
                 RepairBtn.IsEnabled = true;
             }
             UpdateAfterInstallingSize();
-            DownloadSizeTB.Text = Helpers.FormatSize(downloadSizeNumber);
-            InstallSizeTB.Text = Helpers.FormatSize(installSizeNumber);
+            DownloadSizeTB.Text = CommonHelpers.FormatSize(downloadSizeNumber);
+            InstallSizeTB.Text = CommonHelpers.FormatSize(installSizeNumber);
         }
 
         private void UpdateSpaceInfo(string path)
@@ -547,7 +547,7 @@ namespace LegendaryLibraryNS
             if (dDrive.IsReady)
             {
                 availableFreeSpace = dDrive.AvailableFreeSpace;
-                SpaceTB.Text = Helpers.FormatSize(availableFreeSpace);
+                SpaceTB.Text = CommonHelpers.FormatSize(availableFreeSpace);
             }
             UpdateAfterInstallingSize();
         }
@@ -559,7 +559,7 @@ namespace LegendaryLibraryNS
             {
                 afterInstallSizeNumber = 0;
             }
-            AfterInstallingTB.Text = Helpers.FormatSize(afterInstallSizeNumber);
+            AfterInstallingTB.Text = CommonHelpers.FormatSize(afterInstallSizeNumber);
         }
 
         private async void ExtraContentLB_SelectionChanged(object sender, SelectionChangedEventArgs e)

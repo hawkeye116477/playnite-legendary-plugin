@@ -1,7 +1,6 @@
-﻿using CliWrap;
-using Playnite.SDK;
+﻿using Playnite.SDK;
 
-namespace LegendaryLibraryNS
+namespace CliWrap
 {
     internal static class CliWrapCommandExtensions
     {

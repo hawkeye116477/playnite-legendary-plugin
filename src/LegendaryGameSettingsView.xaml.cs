@@ -10,6 +10,8 @@ using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using LegendaryLibraryNS.Enums;
+using CommonPlugin;
+using CommonPlugin.Enums;
 
 namespace LegendaryLibraryNS
 {
@@ -99,7 +101,8 @@ namespace LegendaryLibraryNS
                         newGameSettings.InstallPrerequisites = true;
                     }
                 }
-                Helpers.SaveJsonSettingsToFile(newGameSettings, GameID, "GamesSettings");
+                var commonHelpers = LegendaryLibrary.Instance.commonHelpers;
+                commonHelpers.SaveJsonSettingsToFile(newGameSettings, "GamesSettings", GameID, true);
             }
             Window.GetWindow(this).Close();
         }
@@ -185,7 +188,7 @@ namespace LegendaryLibraryNS
             {
                 if (!Game.InstallDirectory.IsNullOrEmpty())
                 {
-                    SelectedAlternativeExeTxt.Text = Helpers.GetRelativePath(Game.InstallDirectory, file);
+                    SelectedAlternativeExeTxt.Text = RelativePath.Get(Game.InstallDirectory, file);
                 }
             }
         }

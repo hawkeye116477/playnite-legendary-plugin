@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace LegendaryLibraryNS.Converters
+namespace CommonPlugin.Converters
 {
     public class NumericalSizeToStringConverter : IValueConverter
     {
@@ -10,7 +10,7 @@ namespace LegendaryLibraryNS.Converters
         {
             if (!(value is double bytes))
                 return value;
-            return Helpers.FormatSize(bytes);
+            return CommonHelpers.FormatSize(bytes);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

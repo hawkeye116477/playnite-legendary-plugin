@@ -1,10 +1,6 @@
-﻿using LegendaryLibraryNS.Enums;
-using LegendaryLibraryNS.Models;
-using Playnite.Common;
+﻿using CommonPlugin.Enums;
+using LegendaryLibraryNS.Enums;
 using Playnite.SDK;
-using Playnite.SDK.Data;
-using System.Collections.Generic;
-using System.IO;
 
 namespace LegendaryLibraryNS
 {

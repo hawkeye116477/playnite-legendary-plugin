@@ -35,7 +35,8 @@ namespace LegendaryLibraryNS
 
         public static void SaveSettings(LegendaryMessagesSettingsModel messagesSettings)
         {
-            Helpers.SaveJsonSettingsToFile(messagesSettings, "messages");
+            var commonHelpers = LegendaryLibrary.Instance.commonHelpers;
+            commonHelpers.SaveJsonSettingsToFile(messagesSettings, "", "messages", true);
         }
     }
 }

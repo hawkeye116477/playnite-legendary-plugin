@@ -12,7 +12,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.IO;
 using LegendaryLibraryNS.Models;
-using LegendaryLibraryNS.Enums;
 using Playnite.SDK.Data;
 using Playnite.Common;
 using System.Collections.ObjectModel;
@@ -21,6 +20,8 @@ using System.Windows.Input;
 using Playnite.SDK.Plugins;
 using System.Collections.Specialized;
 using LegendaryLibraryNS.Services;
+using CommonPlugin;
+using CommonPlugin.Enums;
 
 namespace LegendaryLibraryNS
 {
@@ -75,12 +76,12 @@ namespace LegendaryLibraryNS
                     if (downloadItem.downloadSizeNumber == 0)
                     {
                         var downloadSizeSplittedString = downloadItem.downloadSize.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                        downloadItem.downloadSizeNumber = Helpers.ToBytes(double.Parse(downloadSizeSplittedString[0]), downloadSizeSplittedString[1].Insert(1, "i"));
+                        downloadItem.downloadSizeNumber = CommonHelpers.ToBytes(double.Parse(downloadSizeSplittedString[0]), downloadSizeSplittedString[1].Insert(1, "i"));
                     }
                     if (downloadItem.installSizeNumber == 0)
                     {
                         var installSizeSplittedString = downloadItem.installSize.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                        downloadItem.installSizeNumber = Helpers.ToBytes(double.Parse(installSizeSplittedString[0]), installSizeSplittedString[1].Insert(1, "i"));
+                        downloadItem.installSizeNumber = CommonHelpers.ToBytes(double.Parse(installSizeSplittedString[0]), installSizeSplittedString[1].Insert(1, "i"));
                     }
                     if (downloadItem.status == DownloadStatus.Completed && downloadItem.downloadedNumber == 0)
                     {
@@ -147,7 +148,8 @@ namespace LegendaryLibraryNS
         {
             if (downloadsChanged)
             {
-                Helpers.SaveJsonSettingsToFile(downloadManagerData, "downloadManager");
+                var commonHelpers = LegendaryLibrary.Instance.commonHelpers;
+                commonHelpers.SaveJsonSettingsToFile(downloadManagerData, "", "downloadManager", true);
             }
         }
 
@@ -361,7 +363,7 @@ namespace LegendaryLibraryNS
                                 var verificationProgressMatch = Regex.Match(stdOut.Text, @"Verification progress:.*\((\d.*%)");
                                 if (verificationProgressMatch.Length >= 2)
                                 {
-                                    double progress = Helpers.GetDouble(verificationProgressMatch.Groups[1].Value.Replace("%", ""));
+                                    double progress = CommonHelpers.ToDouble(verificationProgressMatch.Groups[1].Value.Replace("%", ""));
                                     wantedItem.progress = progress;
                                     legendaryPanel.ProgressValue = progress;
                                 }
@@ -370,8 +372,8 @@ namespace LegendaryLibraryNS
                                 {
                                     string fileName = verificationFileProgressMatch.Groups[1].Value;
                                     string largeProgressPercent = verificationFileProgressMatch.Groups[2].Value;
-                                    string readSize = Helpers.FormatSize(Helpers.GetDouble(verificationFileProgressMatch.Groups[3].Value), verificationFileProgressMatch.Groups[5].Value);
-                                    string fullSize = Helpers.FormatSize(Helpers.GetDouble(verificationFileProgressMatch.Groups[4].Value), verificationFileProgressMatch.Groups[5].Value);
+                                    string readSize = CommonHelpers.FormatSize(CommonHelpers.ToDouble(verificationFileProgressMatch.Groups[3].Value), verificationFileProgressMatch.Groups[5].Value);
+                                    string fullSize = CommonHelpers.FormatSize(CommonHelpers.ToDouble(verificationFileProgressMatch.Groups[4].Value), verificationFileProgressMatch.Groups[5].Value);
                                     DescriptionTB.Text = ResourceProvider.GetString(LOC.LegendaryVerifyingLargeFile).Format(fileName, $"{largeProgressPercent} ({readSize}/{fullSize})");
                                 }
                                 else if (stdOut.Text.Contains("Verification"))
@@ -384,7 +386,7 @@ namespace LegendaryLibraryNS
                             var downloadSizeMatch = Regex.Match(stdErr.Text, @"Download size: (\S+) (\wiB)");
                             if (downloadSizeMatch.Length >= 2)
                             {
-                                newDownloadSizeNumber = Helpers.ToBytes(Helpers.GetDouble(downloadSizeMatch.Groups[1].Value), downloadSizeMatch.Groups[2].Value);
+                                newDownloadSizeNumber = CommonHelpers.ToBytes(CommonHelpers.ToDouble(downloadSizeMatch.Groups[1].Value), downloadSizeMatch.Groups[2].Value);
                                 if (newDownloadSizeNumber > cachedDownloadSizeNumber)
                                 {
                                     wantedItem.downloadSizeNumber = newDownloadSizeNumber;
@@ -395,7 +397,7 @@ namespace LegendaryLibraryNS
                             var installSizeMatch = Regex.Match(stdErr.Text, @"Install size: (\S+) (\wiB)");
                             if (installSizeMatch.Length >= 2)
                             {
-                                double installSizeNumber = Helpers.ToBytes(Helpers.GetDouble(installSizeMatch.Groups[1].Value), installSizeMatch.Groups[2].Value);
+                                double installSizeNumber = CommonHelpers.ToBytes(CommonHelpers.ToDouble(installSizeMatch.Groups[1].Value), installSizeMatch.Groups[2].Value);
                                 wantedItem.installSizeNumber = installSizeNumber;
                             }
                             var fullInstallPathMatch = Regex.Match(stdErr.Text, @"Install path: (\S+)");
@@ -428,7 +430,7 @@ namespace LegendaryLibraryNS
                             var downloadedMatch = Regex.Match(stdErr.Text, @"Downloaded: (\S+) (\wiB)");
                             if (downloadedMatch.Length >= 2)
                             {
-                                double downloadedNumber = Helpers.ToBytes(Helpers.GetDouble(downloadedMatch.Groups[1].Value), downloadedMatch.Groups[2].Value);
+                                double downloadedNumber = CommonHelpers.ToBytes(CommonHelpers.ToDouble(downloadedMatch.Groups[1].Value), downloadedMatch.Groups[2].Value);
                                 double totalDownloadedNumber = downloadedNumber + downloadCache;
                                 wantedItem.downloadedNumber = totalDownloadedNumber;
                                 double newProgress = totalDownloadedNumber / wantedItem.downloadSizeNumber * 100;
@@ -456,13 +458,13 @@ namespace LegendaryLibraryNS
                             var downloadSpeedMatch = Regex.Match(stdErr.Text, @"Download\t- (\S+) (\wiB)");
                             if (downloadSpeedMatch.Length >= 2)
                             {
-                                string downloadSpeed = Helpers.FormatSize(Helpers.GetDouble(downloadSpeedMatch.Groups[1].Value), downloadSpeedMatch.Groups[2].Value, downloadSpeedInBits);
+                                string downloadSpeed = CommonHelpers.FormatSize(CommonHelpers.ToDouble(downloadSpeedMatch.Groups[1].Value), downloadSpeedMatch.Groups[2].Value, downloadSpeedInBits);
                                 DownloadSpeedTB.Text = downloadSpeed + "/s";
                             }
                             var diskSpeedMatch = Regex.Match(stdErr.Text, @"Disk\t- (\S+) (\wiB)");
                             if (diskSpeedMatch.Length >= 2)
                             {
-                                string diskSpeed = Helpers.FormatSize(Helpers.GetDouble(diskSpeedMatch.Groups[1].Value), diskSpeedMatch.Groups[2].Value, downloadSpeedInBits);
+                                string diskSpeed = CommonHelpers.FormatSize(CommonHelpers.ToDouble(diskSpeedMatch.Groups[1].Value), diskSpeedMatch.Groups[2].Value, downloadSpeedInBits);
                                 DiskSpeedTB.Text = diskSpeed + "/s";
                             }
                             var errorMessage = stdErr.Text;
@@ -590,7 +592,8 @@ namespace LegendaryLibraryNS
                                                     {
                                                         InstallPrerequisites = true
                                                     };
-                                                    Helpers.SaveJsonSettingsToFile(gameSettings, gameID, "GamesSettings");
+                                                    var commonHelpers = LegendaryLibrary.Instance.commonHelpers;
+                                                    commonHelpers.SaveJsonSettingsToFile(gameSettings, "GamesSettings", gameID, true);
                                                 }
                                             }
                                             playniteAPI.Database.Games.Update(game);

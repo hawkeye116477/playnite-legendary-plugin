@@ -150,26 +150,64 @@
     <Compile Include="..\third_party\PlayniteExtensions\source\Generic\PlayniteExtensions.Common\PluginSettingsViewModel.cs">
       <Link>Shared\Playnite\PluginSettingsViewModel.cs</Link>
     </Compile>
+    <Compile Include="..\third_party\playnite-common-plugin\src\CliWrapCommandExtensions.cs">
+      <Link>Shared\CliWrapCommandExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\third_party\playnite-common-plugin\src\CommonHelpers.cs">
+      <Link>Shared\CommonHelpers.cs</Link>
+    </Compile>
+    <Page Include="..\third_party\playnite-common-plugin\src\MessageCheckBoxDialog.xaml">
+      <Link>Shared\MessageCheckBoxDialog.xaml</Link>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="..\third_party\playnite-common-plugin\src\MessageCheckBoxDialog.xaml.cs">
+      <Link>Shared\MessageCheckBoxDialog.xaml.cs</Link>
+      <DependentUpon>MessageCheckBoxDialog.xaml</DependentUpon>
+    </Compile>
+    <Page Include="..\third_party\playnite-common-plugin\src\NumericInput.xaml">
+      <Link>Shared\NumericInput.xaml</Link>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="..\third_party\playnite-common-plugin\src\NumericInput.xaml.cs">
+      <Link>Shared\NumericInput.xaml.cs</Link>
+      <DependentUpon>NumericInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\third_party\playnite-common-plugin\src\RelativePath.cs">
+      <Link>Shared\RelativePath.cs</Link>
+    </Compile>
+    <Compile Include="..\third_party\playnite-common-plugin\src\Converters\LongToDateConverter.cs">
+      <Link>Shared\Converters\LongToDateConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\third_party\playnite-common-plugin\src\Converters\NumericalSizeToStringConverter.cs">
+      <Link>Shared\Converters\NumericalSizeToStringConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\third_party\playnite-common-plugin\src\Enums\ClearCacheTime.cs">
+      <Link>Shared\Enums\ClearCacheTime.cs</Link>
+    </Compile>
+    <Compile Include="..\third_party\playnite-common-plugin\src\Enums\CloudSyncAction.cs">
+      <Link>Shared\Enums\CloudSyncAction.cs</Link>
+    </Compile>
+    <Compile Include="..\third_party\playnite-common-plugin\src\Enums\DownloadAction.cs">
+      <Link>Shared\Enums\DownloadAction.cs</Link>
+    </Compile>
+    <Compile Include="..\third_party\playnite-common-plugin\src\Enums\DownloadCompleteAction.cs">
+      <Link>Shared\Enums\DownloadCompleteAction.cs</Link>
+    </Compile>
+    <Compile Include="..\third_party\playnite-common-plugin\src\Enums\DownloadStatus.cs">
+      <Link>Shared\Enums\DownloadStatus.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\DownloadStatusEnumToStringConverter.cs" />
-    <Compile Include="Converters\NumericalSizeToStringConverter.cs" />
-    <Compile Include="Enums\ClearCacheTime.cs" />
-    <Compile Include="Enums\CloudSyncAction.cs" />
-    <Compile Include="Enums\DownloadAction.cs" />
-    <Compile Include="Enums\DownloadCompleteAction.cs" />
-    <Compile Include="Enums\DownloadStatus.cs" />
     <Compile Include="Enums\UpdatePolicy.cs" />
-    <Compile Include="CliWrapCommandExtensions.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="LegendaryDownloadCompleteActionView.xaml.cs">
       <DependentUpon>LegendaryDownloadCompleteActionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="LegendaryExtraInstallationContentView.xaml.cs">
       <DependentUpon>LegendaryExtraInstallationContentView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MessageCheckBoxDialog.xaml.cs">
-      <DependentUpon>MessageCheckBoxDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="LegendaryClient.cs" />
     <Compile Include="LegendaryCloud.cs" />
@@ -203,7 +241,6 @@
       <DependentUpon>LegendaryUpdater.xaml</DependentUpon>
     </Compile>
     <Compile Include="LocalizationKeys.cs" />
-    <Compile Include="Converters\LongToDateConverter.cs" />
     <Compile Include="Models\AccountResponse.cs" />
     <Compile Include="Models\AssetsResponse.cs" />
     <Compile Include="Models\CatalogResponse.cs" />
@@ -223,9 +260,6 @@
     <Compile Include="Models\PlaytimePayload.cs" />
     <Compile Include="Models\PlaytimesResponse.cs" />
     <Compile Include="LegendaryTroubleshootingInformation.cs" />
-    <Compile Include="NumericInput.xaml.cs">
-      <DependentUpon>NumericInput.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\EpicAccountClient.cs" />
   </ItemGroup>
@@ -300,14 +334,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LegendaryUpdater.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="NumericInput.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MessageCheckBoxDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

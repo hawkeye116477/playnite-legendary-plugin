@@ -1,8 +1,7 @@
-﻿using LegendaryLibraryNS.Enums;
+﻿using CommonPlugin;
+using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
-using Playnite.Common;
 using Playnite.SDK;
-using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -46,7 +45,7 @@ namespace LegendaryLibraryNS
 
         private async void LegendaryDownloadPropertiesUC_Loaded(object sender, RoutedEventArgs e)
         {
-            MaxWorkersNI.MaxValue = Helpers.CpuThreadsNumber;
+            MaxWorkersNI.MaxValue = CommonHelpers.CpuThreadsNumber;
             var wantedItem = SelectedDownload;
             if (wantedItem.downloadProperties != null)
             {
@@ -105,8 +104,8 @@ namespace LegendaryLibraryNS
             }
 
             var gameSize = await LegendaryLauncher.CalculateGameSize(GameData, selectedSdls);
-            DownloadSizeTB.Text = Helpers.FormatSize(gameSize.Download_size);
-            InstallSizeTB.Text = Helpers.FormatSize(gameSize.Disk_size);
+            DownloadSizeTB.Text = CommonHelpers.FormatSize(gameSize.Download_size);
+            InstallSizeTB.Text = CommonHelpers.FormatSize(gameSize.Disk_size);
             UpdateSpaceInfo(SelectedDownload.downloadProperties.installPath, gameSize.Disk_size);
         }
 
@@ -128,7 +127,7 @@ namespace LegendaryLibraryNS
             {
                 installPath = installPath.Replace(playniteDirectoryVariable, playniteAPI.Paths.ApplicationPath);
             }
-            if (!Helpers.IsDirectoryWritable(installPath))
+            if (CommonHelpers.IsDirectoryWritable(installPath, LOC.LegendaryPermissionError))
             {
                 return;
             }
@@ -185,7 +184,7 @@ namespace LegendaryLibraryNS
             if (dDrive.IsReady)
             {
                 long availableFreeSpace = dDrive.AvailableFreeSpace;
-                SpaceTB.Text = Helpers.FormatSize(availableFreeSpace);
+                SpaceTB.Text = CommonHelpers.FormatSize(availableFreeSpace);
                 UpdateAfterInstallingSize(availableFreeSpace, installSizeNumber);
             }
         }
@@ -197,7 +196,7 @@ namespace LegendaryLibraryNS
             {
                 afterInstallSizeNumber = 0;
             }
-            AfterInstallingTB.Text = Helpers.FormatSize(afterInstallSizeNumber);
+            AfterInstallingTB.Text = CommonHelpers.FormatSize(afterInstallSizeNumber);
         }
 
         private async void ExtraContentLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -217,8 +216,8 @@ namespace LegendaryLibraryNS
                 selectedSdls.Add(selectedSdl.Key);
             }
             var gameSize = await LegendaryLauncher.CalculateGameSize(GameData, selectedSdls);
-            DownloadSizeTB.Text = Helpers.FormatSize(gameSize.Download_size);
-            InstallSizeTB.Text = Helpers.FormatSize(gameSize.Disk_size);
+            DownloadSizeTB.Text = CommonHelpers.FormatSize(gameSize.Download_size);
+            InstallSizeTB.Text = CommonHelpers.FormatSize(gameSize.Disk_size);
             UpdateSpaceInfo(SelectedDownload.downloadProperties.installPath, gameSize.Disk_size);
             if (AllOrNothingChk.IsChecked == true && selectedExtraContent.Count() != ExtraContentLB.Items.Count)
             {

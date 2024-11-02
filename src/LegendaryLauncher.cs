@@ -1,5 +1,6 @@
 ﻿using CliWrap;
 using CliWrap.Buffered;
+using CommonPlugin;
 using LegendaryLibraryNS.Models;
 using Microsoft.Win32;
 using Playnite.Common;
@@ -316,7 +317,7 @@ namespace LegendaryLibraryNS
                             var downloadSizeSplittedString = line.Substring(line.IndexOf(downloadSizeText) + downloadSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                             downloadSizeNumber = double.Parse(downloadSizeSplittedString[0], CultureInfo.InvariantCulture);
                             downloadSizeUnit = downloadSizeSplittedString[1];
-                            updateInfo.Download_size = Helpers.ToBytes(downloadSizeNumber, downloadSizeUnit);
+                            updateInfo.Download_size = CommonHelpers.ToBytes(downloadSizeNumber, downloadSizeUnit);
                         }
                         var installSizeText = "Install size:";
                         if (line.Contains(installSizeText))
@@ -324,7 +325,7 @@ namespace LegendaryLibraryNS
                             var installSizeSplittedString = line.Substring(line.IndexOf(installSizeText) + installSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                             installSizeNumber = double.Parse(installSizeSplittedString[0], CultureInfo.InvariantCulture);
                             installSizeUnit = installSizeSplittedString[1];
-                            updateInfo.Disk_size = Helpers.ToBytes(installSizeNumber, installSizeUnit);
+                            updateInfo.Disk_size = CommonHelpers.ToBytes(installSizeNumber, installSizeUnit);
                         }
                     }
                     if (updateInfo.Download_size != 0 && updateInfo.Disk_size != 0)
@@ -478,13 +479,13 @@ namespace LegendaryLibraryNS
                         if (line.Contains(downloadSizeText))
                         {
                             var downloadSizeSplittedString = line.Substring(line.IndexOf(downloadSizeText) + downloadSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                            manifest.Manifest.Download_size = Helpers.ToBytes(double.Parse(downloadSizeSplittedString[0], CultureInfo.InvariantCulture), downloadSizeSplittedString[1]);
+                            manifest.Manifest.Download_size = CommonHelpers.ToBytes(double.Parse(downloadSizeSplittedString[0], CultureInfo.InvariantCulture), downloadSizeSplittedString[1]);
                         }
                         var installSizeText = "Install size:";
                         if (line.Contains(installSizeText))
                         {
                             var installSizeSplittedString = line.Substring(line.IndexOf(installSizeText) + installSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                            manifest.Manifest.Disk_size = Helpers.ToBytes(double.Parse(installSizeSplittedString[0], CultureInfo.InvariantCulture), installSizeSplittedString[1]);
+                            manifest.Manifest.Disk_size = CommonHelpers.ToBytes(double.Parse(installSizeSplittedString[0], CultureInfo.InvariantCulture), installSizeSplittedString[1]);
                         }
                     }
                     File.WriteAllText(cacheInfoFile, Serialization.ToJson(manifest));

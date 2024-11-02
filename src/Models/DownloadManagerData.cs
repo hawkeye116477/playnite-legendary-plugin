@@ -1,4 +1,4 @@
-﻿using LegendaryLibraryNS.Enums;
+﻿using CommonPlugin.Enums;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 

@@ -1,6 +1,6 @@
 ﻿using CliWrap;
 using CliWrap.EventStream;
-using LegendaryLibraryNS.Enums;
+using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
 using Playnite.Common;
 using Playnite.SDK;

@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:LegendaryLibraryNS"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:pcmd="clr-namespace:Playnite.Commands"
+    xmlns:common="clr-namespace:CommonPlugin"
     mc:Ignorable="d" Name="LegendaryGameInstallerUC" Loaded="LegendaryGameInstallerUC_Loaded"
     d:DesignHeight="330" d:DesignWidth="600">
 
@@ -127,10 +128,10 @@
                                   ToolTip="{DynamicResource LOCLegendaryEnableReorderingToolTip}" Margin="0,0,0,5" Name="ReorderingChk"/>
                         <TextBlock Text="{DynamicResource LOCLegendaryMaxWorkers}" Grid.Row="3" Grid.Column="0" 
                                    Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        <local:NumericInput Grid.Row="3" Grid.Column="1" Margin="15,0,0,5" MinValue="0" x:Name="MaxWorkersNI"/>
+                        <common:NumericInput Grid.Row="3" Grid.Column="1" Margin="15,0,0,5" MinValue="0" x:Name="MaxWorkersNI"/>
                         <TextBlock Text="{DynamicResource LOCLegendaryMaxSharedMemory}" Grid.Row="4" Grid.Column="0" 
                                    Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        <local:NumericInput Grid.Row="4" Grid.Column="1" Margin="15,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" x:Name="MaxSharedMemoryNI"/>
+                        <common:NumericInput Grid.Row="4" Grid.Column="1" Margin="15,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" x:Name="MaxSharedMemoryNI"/>
                     </Grid>
                 </Expander>
             </Border>

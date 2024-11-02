@@ -1,5 +1,7 @@
 ﻿using CliWrap;
 using CliWrap.Buffered;
+using CommonPlugin;
+using CommonPlugin.Enums;
 using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
@@ -27,6 +29,8 @@ namespace LegendaryLibraryNS
         public static bool LegendaryGameInstaller { get; internal set; }
         public LegendaryDownloadManager LegendaryDownloadManager { get; set; }
         private readonly SidebarItem downloadManagerSidebarItem;
+        public CommonHelpers commonHelpers { get; set; }
+        public Dictionary<string, string> locDict { get; set; }
 
         public LegendaryLibrary(IPlayniteAPI api) : base(
             "Legendary (Epic)",
@@ -38,6 +42,7 @@ namespace LegendaryLibraryNS
             api)
         {
             Instance = this;
+            commonHelpers = new CommonHelpers(Instance);
             SettingsViewModel = new LegendaryLibrarySettingsViewModel(this, api);
             Load3pLocalization();
             LoadMenuIcons();

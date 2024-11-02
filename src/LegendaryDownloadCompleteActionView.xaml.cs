@@ -1,4 +1,4 @@
-﻿using LegendaryLibraryNS.Enums;
+﻿using CommonPlugin.Enums;
 using Playnite.SDK;
 using System;
 using System.Diagnostics;

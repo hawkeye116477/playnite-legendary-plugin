@@ -1,7 +1,8 @@
 ﻿using CliWrap;
 using CliWrap.Buffered;
 using CliWrap.EventStream;
-using LegendaryLibraryNS.Enums;
+using CommonPlugin;
+using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
 using Playnite.Common;
@@ -106,6 +107,7 @@ namespace LegendaryLibraryNS
             }
             var playniteAPI = API.Instance;
             string gamesCombined = string.Join(", ", games.Select(item => item.Name));
+
             var result = MessageCheckBoxDialog.ShowMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstallGame), ResourceProvider.GetString(LOC.LegendaryUninstallGameConfirm).Format(gamesCombined), LOC.LegendaryRemoveGameLaunchSettings, MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result.Result)
             {
@@ -268,7 +270,8 @@ namespace LegendaryLibraryNS
             if (gameSettings.InstallPrerequisites)
             {
                 gameSettings.InstallPrerequisites = false;
-                Helpers.SaveJsonSettingsToFile(gameSettings, Game.GameId, "GamesSettings");
+                var commonHelpers = LegendaryLibrary.Instance.commonHelpers;
+                commonHelpers.SaveJsonSettingsToFile(gameSettings,  "GamesSettings", Game.GameId, true);
                 var appList = LegendaryLauncher.GetInstalledAppList();
                 if (appList.ContainsKey(Game.GameId))
                 {

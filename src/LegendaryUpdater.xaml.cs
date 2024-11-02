@@ -1,4 +1,5 @@
-﻿using LegendaryLibraryNS.Enums;
+﻿using CommonPlugin;
+using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
 using System;
 using System.Collections.Generic;
@@ -43,9 +44,9 @@ namespace LegendaryLibraryNS
                 initialDownloadSizeNumber += selectedOption.Value.Download_size;
                 initialInstallSizeNumber += selectedOption.Value.Disk_size;
             }
-            var downloadSize = Helpers.FormatSize(initialDownloadSizeNumber);
+            var downloadSize = CommonHelpers.FormatSize(initialDownloadSizeNumber);
             DownloadSizeTB.Text = downloadSize;
-            var installSize = Helpers.FormatSize(initialInstallSizeNumber);
+            var installSize = CommonHelpers.FormatSize(initialInstallSizeNumber);
             InstallSizeTB.Text = installSize;
         }
 
@@ -66,7 +67,7 @@ namespace LegendaryLibraryNS
             if (UpdatesLB.SelectedItems.Count > 0)
             {
                 var settings = LegendaryLibrary.GetSettings();
-                MaxWorkersNI.MaxValue = Helpers.CpuThreadsNumber;
+                MaxWorkersNI.MaxValue = CommonHelpers.CpuThreadsNumber;
                 int maxWorkers = settings.MaxWorkers;
                 if (MaxWorkersNI.Value != "")
                 {

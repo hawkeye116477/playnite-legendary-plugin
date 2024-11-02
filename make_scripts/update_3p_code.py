@@ -50,3 +50,10 @@ with open(pj(third_party_path, "PlayniteExtensions", "PlayniteRepo", "SOURCE_INF
     source_info.write(f"Source: {source}\n")
     commit = git_repo.head.object.hexsha
     source_info.write(f"Commit: {commit}\n")
+
+with open(pj(third_party_path, "playnite-common-plugin", "SOURCE_INFO.txt"), "w", encoding="utf-8") as source_info:
+    git_repo = git.Repo(pj(main_path, "..", "playnite-common-plugin"), search_parent_directories=True)
+    source = git_repo.remotes.origin.url
+    source_info.write(f"Source: {source}\n")
+    commit = git_repo.head.object.hexsha
+    source_info.write(f"Commit: {commit}\n")

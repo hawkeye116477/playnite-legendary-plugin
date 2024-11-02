@@ -129,7 +129,8 @@ namespace LegendaryLibraryNS
                         {
                             playniteAPI.Dialogs.ShowMessage(LOC.LegendaryStarWarsMessage, "", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
-                        Helpers.SaveJsonSettingsToFile(eaGamesOnly, "_allEaGames", cacheInfoPath);
+                        var commonHelpers = LegendaryLibrary.Instance.commonHelpers;
+                        commonHelpers.SaveJsonSettingsToFile(eaGamesOnly, cacheInfoPath, "_allEaGames");
                     }
                 }
             }
