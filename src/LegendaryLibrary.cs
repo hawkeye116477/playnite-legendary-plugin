@@ -387,7 +387,7 @@ namespace LegendaryLibraryNS
             var dictionaries = Application.Current.Resources.MergedDictionaries;
             ResourceDictionary iconsDict = new ResourceDictionary
             {
-                Source = new Uri("/LegendaryLibrary;component/Resources/Icons.xaml", UriKind.RelativeOrAbsolute)
+                Source = new Uri("/LegendaryLibrary;component/Shared/Resources/Icons.xaml", UriKind.RelativeOrAbsolute)
             };
             dictionaries.Add(iconsDict);
         }

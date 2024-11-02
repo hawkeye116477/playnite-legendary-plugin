@@ -198,6 +198,11 @@
     <Compile Include="..\third_party\playnite-common-plugin\src\Enums\DownloadStatus.cs">
       <Link>Shared\Enums\DownloadStatus.cs</Link>
     </Compile>
+    <Resource Include="..\third_party\playnite-common-plugin\src\Resources\Icons.xaml">
+      <Link>Shared\Resources\Icons.xaml</Link>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\DownloadStatusEnumToStringConverter.cs" />
@@ -337,10 +342,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Resource Include="Resources\Icons.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\ThirdPartyLicenses.txt">
