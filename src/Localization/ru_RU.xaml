@@ -14,11 +14,11 @@
   <sys:String x:Key="LOCLegendaryMaxWorkers">Максимальное количество рабочих процессов</sys:String>
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">Максимальное количество общей памяти (МБ)</sys:String>
   <sys:String x:Key="LOCLegendaryConnectionTimeout">Тайм-аут подключения (сек)</sys:String>
-  <sys:String x:Key="LOCLegendaryAfterDownloadComplete"></sys:String>
-  <sys:String x:Key="LOCLegendarySystemShutdownCountdown"></sys:String>
-  <sys:String x:Key="LOCLegendarySystemRestartCountdown"></sys:String>
-  <sys:String x:Key="LOCLegendarySystemHibernateCountdown"></sys:String>
-  <sys:String x:Key="LOCLegendarySystemSuspendCountdown"></sys:String>
+  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Действие после завершения загрузки</sys:String>
+  <sys:String x:Key="LOCLegendarySystemShutdownCountdown">Система скоро выключится...</sys:String>
+  <sys:String x:Key="LOCLegendarySystemRestartCountdown">Система скоро перезагрузится...</sys:String>
+  <sys:String x:Key="LOCLegendarySystemHibernateCountdown">Система скоро перейдет в режим гибернации...</sys:String>
+  <sys:String x:Key="LOCLegendarySystemSuspendCountdown">Система скоро выключится...</sys:String>
   <sys:String x:Key="LOCLegendaryDisable">Отключить</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Включить</sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable">Доступное место:</sys:String>
@@ -114,7 +114,7 @@
   <sys:String x:Key="LOCLegendarySync">Синх</sys:String>
   <sys:String x:Key="LOCLegendaryDownload">Скачать</sys:String>
   <sys:String x:Key="LOCLegendaryUpload">Загрузить</sys:String>
-  <sys:String x:Key="LOCLegendaryForceAction"></sys:String>
+  <sys:String x:Key="LOCLegendaryForceAction">Принудительное действие</sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaveConfirm">Функция облачных сохранений является экспериментальной. Рекомендуется создавать резервные копии сохранений игры на случай, если что-то пойдет не так. Вы уверены, что хотите продолжить?</sys:String>
   <sys:String x:Key="LOCLegendarySyncPlaytime">Синхронизируйте время игры с облаком</sys:String>
   <sys:String x:Key="LOCLegendaryUploadingPlaytime">Загрузка {0} игрового времени в облако...</sys:String>
