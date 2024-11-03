@@ -30,7 +30,6 @@ namespace LegendaryLibraryNS
         public LegendaryDownloadManager LegendaryDownloadManager { get; set; }
         private readonly SidebarItem downloadManagerSidebarItem;
         public CommonHelpers commonHelpers { get; set; }
-        public Dictionary<string, string> locDict { get; set; }
 
         public LegendaryLibrary(IPlayniteAPI api) : base(
             "Legendary (Epic)",
