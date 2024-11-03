@@ -316,6 +316,10 @@ namespace LegendaryLibraryNS
                         {
                             logger.Info(notImportedGames.Count + " game(s) probably needs to be imported or installed again.");
                         }
+                        if (migratedGames.Count == 0 && notImportedGames.Count == 0)
+                        {
+                            playniteAPI.Dialogs.ShowErrorMessage(LOC.LegendaryMigrationNoGames);
+                        }
                     }
                     else
                     {
