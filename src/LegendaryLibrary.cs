@@ -27,8 +27,8 @@ namespace LegendaryLibraryNS
         private static readonly ILogger logger = LogManager.GetLogger();
         public static LegendaryLibrary Instance { get; set; }
         public static bool LegendaryGameInstaller { get; internal set; }
-        public LegendaryDownloadManager LegendaryDownloadManager { get; set; }
-        private readonly SidebarItem downloadManagerSidebarItem;
+        private LegendaryDownloadManager LegendaryDownloadManager;
+        private SidebarItem downloadManagerSidebarItem;
         public CommonHelpers commonHelpers { get; set; }
 
         public LegendaryLibrary(IPlayniteAPI api) : base(
@@ -45,15 +45,7 @@ namespace LegendaryLibraryNS
             SettingsViewModel = new LegendaryLibrarySettingsViewModel(this, api);
             Load3pLocalization();
             LoadMenuIcons();
-            downloadManagerSidebarItem = new SidebarItem
-            {
-                Title = ResourceProvider.GetString(LOC.LegendaryPanel),
-                Icon = LegendaryLauncher.Icon,
-                Type = SiderbarItemType.View,
-                Opened = () => GetLegendaryDownloadManager(),
-                ProgressValue = 0,
-                ProgressMaximum = 100,
-            };
+            LegendaryDownloadManager = new LegendaryDownloadManager();
         }
 
         public static LegendaryLibrarySettings GetSettings()
@@ -63,15 +55,23 @@ namespace LegendaryLibraryNS
 
         public static SidebarItem GetPanel()
         {
+            if (Instance.downloadManagerSidebarItem == null)
+            {
+                Instance.downloadManagerSidebarItem = new SidebarItem
+                {
+                    Title = ResourceProvider.GetString(LOC.LegendaryPanel),
+                    Icon = LegendaryLauncher.Icon,
+                    Type = SiderbarItemType.View,
+                    Opened = () => GetLegendaryDownloadManager(),
+                    ProgressValue = 0,
+                    ProgressMaximum = 100,
+                };
+            }
             return Instance.downloadManagerSidebarItem;
         }
 
         public static LegendaryDownloadManager GetLegendaryDownloadManager()
         {
-            if (Instance.LegendaryDownloadManager == null)
-            {
-                Instance.LegendaryDownloadManager = new LegendaryDownloadManager();
-            }
             return Instance.LegendaryDownloadManager;
         }
 
