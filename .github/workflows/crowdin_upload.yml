@@ -17,5 +17,5 @@ jobs:
         download_translations: false
         config: 'crowdin.yml'
         dryrun_action: false
-        project_id: ${{ secrets.CROWDIN_PROJECT_ID }}
+        project_id: ${{ vars.CROWDIN_PROJECT_ID }}
         token: ${{ secrets.CROWDIN_TOKEN }}
