@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+<?xml version='1.0' encoding='utf-8'?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <sys:String x:Key="LOCLegendaryLauncherCustomPath">Başlatıcı Yolu</sys:String>
   <sys:String x:Key="LOCLegendaryGamesInstallationPath">Oyunların Kurulum Yolu</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSize">İndirme Boyutu:</sys:String>
@@ -29,7 +29,7 @@
   <sys:String x:Key="LOCLegendaryDiskSpeed">Disk Kullanımı:</sys:String>
   <sys:String x:Key="LOCLegendaryElapsed">Geçen:</sys:String>
   <sys:String x:Key="LOCLegendaryVerifying">Verifying...</sys:String>
-  <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Büyük dosya doğrulanıyor &quot;{0}&quot;: {1}</sys:String>
+  <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Büyük dosya doğrulanıyor "{0}": {1}</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadingUpdate">Güncelleştirme indiriliyor...</sys:String>
   <sys:String x:Key="LOCLegendaryFinishingInstallation">Kurulum tamamlanıyor...</sys:String>
   <sys:String x:Key="LOCLegendaryFinishingUpdate">Güncelleme tamamlanıyor...</sys:String>
@@ -120,10 +120,10 @@
   <sys:String x:Key="LOCLegendaryUploadingPlaytime">{0} oyun oynama süresi buluta yükleniyor...</sys:String>
   <sys:String x:Key="LOCLegendaryUploadPlaytimeError">{0} oyun oynama süresi buluta yüklenirken bir hata oluştu.</sys:String>
   <sys:String x:Key="LOCLegendaryMove">Taşı</sys:String>
-  <sys:String x:Key="LOCLegendaryMoveConfirm">{0} öğesini &quot;{1}&quot; konumuna taşımak istediğinizden emin misiniz? Bu uzun zaman alabilir.</sys:String>
-  <sys:String x:Key="LOCLegendaryMovingGame">{0}, &quot;{1}&quot; öğesine taşınıyor...</sys:String>
-  <sys:String x:Key="LOCLegendaryMoveGameSuccess">{0} başarıyla &quot;{1}&quot; konumuna taşındı.</sys:String>
-  <sys:String x:Key="LOCLegendaryMoveGameError">{0}, &quot;{1}&quot; konumuna taşınırken bir hata oluştu.</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveConfirm">{0} öğesini "{1}" konumuna taşımak istediğinizden emin misiniz? Bu uzun zaman alabilir.</sys:String>
+  <sys:String x:Key="LOCLegendaryMovingGame">{0}, "{1}" öğesine taşınıyor...</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveGameSuccess">{0} başarıyla "{1}" konumuna taşındı.</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveGameError">{0}, "{1}" konumuna taşınırken bir hata oluştu.</sys:String>
   <sys:String x:Key="LOCLegendaryInstalledDlcs">Kurulu DLC</sys:String>
   <sys:String x:Key="LOCLegendaryAvailableDlcs">Mevcut DLC</sys:String>
   <sys:String x:Key="LOCLegendaryManageDlcs">DLC Yönetimi</sys:String>
@@ -145,4 +145,15 @@
   <sys:String x:Key="LOCLegendaryUninstallSuccessOther">Aşağıdaki oyunlar başarıyla kaldırıldı: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallErrorOther">Aşağıdaki oyunlar kaldırılamıyor: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryGames">Oyunlar</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy"></sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherNotInstalled"></sys:String>
+  <sys:String x:Key="LOCLegendaryPanel"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExists"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther"></sys:String>
+  <sys:String x:Key="LOCLegendaryMigrateGamesEpic"></sys:String>
+  <sys:String x:Key="LOCLegendaryMigratingGamesEpic"></sys:String>
+  <sys:String x:Key="LOCLegendaryMigrationConfirm"></sys:String>
+  <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway"></sys:String>
+  <sys:String x:Key="LOCLegendaryInstanceNotice"></sys:String>
 </ResourceDictionary>

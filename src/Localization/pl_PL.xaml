@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+<?xml version='1.0' encoding='utf-8'?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <sys:String x:Key="LOCLegendaryLauncherCustomPath">Ścieżka launchera</sys:String>
   <sys:String x:Key="LOCLegendaryGamesInstallationPath">Ścieżka instalacji gier</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSize">Rozmiar pobierania:</sys:String>
@@ -29,7 +29,7 @@
   <sys:String x:Key="LOCLegendaryDiskSpeed">Użycie dysku:</sys:String>
   <sys:String x:Key="LOCLegendaryElapsed">Upłynęło:</sys:String>
   <sys:String x:Key="LOCLegendaryVerifying">Weryfikowanie...</sys:String>
-  <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Weryfikowanie dużego pliku &quot;{0}&quot;: {1}</sys:String>
+  <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Weryfikowanie dużego pliku "{0}": {1}</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadingUpdate">Pobieranie aktualizacji...</sys:String>
   <sys:String x:Key="LOCLegendaryFinishingInstallation">Kończenie instalacji...</sys:String>
   <sys:String x:Key="LOCLegendaryFinishingUpdate">Kończenie aktualizacji...</sys:String>
@@ -145,4 +145,15 @@
   <sys:String x:Key="LOCLegendaryUninstallSuccessOther">Następujące gry zostały pomyślnie odinstalowane: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallErrorOther">Nie można odinstalować następujących gier: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryGames">Gry</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy"></sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherNotInstalled"></sys:String>
+  <sys:String x:Key="LOCLegendaryPanel"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExists"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther"></sys:String>
+  <sys:String x:Key="LOCLegendaryMigrateGamesEpic"></sys:String>
+  <sys:String x:Key="LOCLegendaryMigratingGamesEpic"></sys:String>
+  <sys:String x:Key="LOCLegendaryMigrationConfirm"></sys:String>
+  <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway"></sys:String>
+  <sys:String x:Key="LOCLegendaryInstanceNotice"></sys:String>
 </ResourceDictionary>

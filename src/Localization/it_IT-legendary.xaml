@@ -7,7 +7,7 @@
   <sys:String x:Key="LOCLegendaryHttpOnlyDownload">Disabilita HTTPS (utile per i CDN es. LanCache)</sys:String>
   <sys:String x:Key="LOCLegendaryEnableReordering">Abilita ottimizzazione riordinamento</sys:String>
   <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">Questo può ridurre l'utilizzo della RAM durante il download (potrebbe non funzionare correttamente per alcuni titoli).</sys:String>
-  <sys:String x:Key="LOCLegendaryEOSOverlay"></sys:String>
+  <sys:String x:Key="LOCLegendaryEOSOverlay">Overlay EOS</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">Il download inizierà presto. Puoi vederne lo stato accedendo al pannello Legendary tramite Menù =&gt; Visualizza o dalla barra laterale.</sys:String>
   <sys:String x:Key="LOCLegendaryPanel">Pannello Legendary</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} è già nella lista dei download. È possibile visualizzare lo stato del download accedendo al pannello Legendary tramite Menu =&gt; Visualizza o dalla barra laterale.</sys:String>
