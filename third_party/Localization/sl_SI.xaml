@@ -1,50 +1,50 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!--
-  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/d59a97d5bce1c35a55c7dc01000684169b76fd96 and https://github.com/JosefNemec/Playnite/tree/2afc8359d8c45e80c66404add4221037ce600d43.
+  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/7c471edfeea4ed1384f97c14ad76c48988453248 and https://github.com/JosefNemec/Playnite/tree/2afc8359d8c45e80c66404add4221037ce600d43.
   DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <sys:String x:Key="LOCLegendary3P_PlayniteFilterActiveLabel" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteFilters" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteImportLabel" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteSaveLabel" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteYesLabel" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteNoLabel" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteDownloadingLabel" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteMenuShutdownSystem" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteMenuSuspendSystem" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteMenuHibernateSystem" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsGeneralLabel" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsAdvancedLabel" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteClose" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteClientNotInstalledError" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteFilterActiveLabel"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteFilters"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteImportLabel"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSaveLabel"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteYesLabel"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteNoLabel"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDownloadingLabel"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuShutdownSystem"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuSuspendSystem"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuHibernateSystem"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsGeneralLabel"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsAdvancedLabel"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteClose"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteClientNotInstalledError"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip"></sys:String>
 </ResourceDictionary>

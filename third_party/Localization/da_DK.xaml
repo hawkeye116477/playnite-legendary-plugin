@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!--
-  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/d59a97d5bce1c35a55c7dc01000684169b76fd96 and https://github.com/JosefNemec/Playnite/tree/2afc8359d8c45e80c66404add4221037ce600d43.
+  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/7c471edfeea4ed1384f97c14ad76c48988453248 and https://github.com/JosefNemec/Playnite/tree/2afc8359d8c45e80c66404add4221037ce600d43.
   DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
@@ -27,32 +27,32 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsGeneralLabel">Generelt</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsAdvancedLabel">Avanceret</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">Ryd cache?</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever"></sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">Godkendelse krævet</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">Eksekverings-fil</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">Navn</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError"></sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">Afinstallerer</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">Gør ingenting</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteClose">Luk</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage"></sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">Installér</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">Afinstaller</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteClientNotInstalledError" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnlyManually" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek" />
-  <sys:String x:Key="LOCLegendary3P_PlayniteOpen" />
+  <sys:String x:Key="LOCLegendary3P_PlayniteClientNotInstalledError"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnlyManually"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek"></sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOpen"></sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportInstalledLabel">Importer installerede spil</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsImportUninstalledLabel">Importer ikke installerede spil</sys:String>
   <sys:String x:Key="LOCLegendary3P_EpicSettingsConnectAccount">Forbind konto</sys:String>

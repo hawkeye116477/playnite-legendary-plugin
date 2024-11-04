@@ -270,22 +270,6 @@ namespace System
         /// </summary>
         public const string LegendaryEOSOverlay = "LOCLegendaryEOSOverlay";
         /// <summary>
-        /// The download will start soon. You can see its status by accessing Legendary Panel via Menu => View or sidebar.
-        /// </summary>
-        public const string LegendaryDownloadManagerWhatsUp = "LOCLegendaryDownloadManagerWhatsUp";
-        /// <summary>
-        /// Legendary Panel
-        /// </summary>
-        public const string LegendaryPanel = "LOCLegendaryPanel";
-        /// <summary>
-        /// {0} is already in the download list. You can see status of the download by accessing Legendary Panel via Menu => View or sidebar.
-        /// </summary>
-        public const string LegendaryDownloadAlreadyExists = "LOCLegendaryDownloadAlreadyExists";
-        /// <summary>
-        /// Following games are already in the download list: {0}. You can see status of the download by accessing Legendary Panel via Menu => View or sidebar.
-        /// </summary>
-        public const string LegendaryDownloadAlreadyExistsOther = "LOCLegendaryDownloadAlreadyExistsOther";
-        /// <summary>
         /// Ignore free space
         /// </summary>
         public const string LegendaryIgnoreFreeSpace = "LOCLegendaryIgnoreFreeSpace";
@@ -297,30 +281,6 @@ namespace System
         /// Current shared memory cache is smaller than required: {0} < {1}. Try to enable reordering optimization to reduce memory usage or increase maximum amount of shared memory.
         /// </summary>
         public const string LegendaryMemoryError = "LOCLegendaryMemoryError";
-        /// <summary>
-        /// Migrate all games from Epic plugin
-        /// </summary>
-        public const string LegendaryMigrateGamesEpic = "LOCLegendaryMigrateGamesEpic";
-        /// <summary>
-        /// Migrating all games from Epic plugin...
-        /// </summary>
-        public const string LegendaryMigratingGamesEpic = "LOCLegendaryMigratingGamesEpic";
-        /// <summary>
-        /// All games will be removed from Epic plugin and moved to Legendary. Are you sure you want to do this?
-        /// </summary>
-        public const string LegendaryMigrationConfirm = "LOCLegendaryMigrationConfirm";
-        /// <summary>
-        /// Legendary Launcher is not installed.
-        /// </summary>
-        public const string LegendaryLauncherNotInstalled = "LOCLegendaryLauncherNotInstalled";
-        /// <summary>
-        /// Check for Legendary launcher updates
-        /// </summary>
-        public const string LegendaryLauncherUpdatePolicy = "LOCLegendaryLauncherUpdatePolicy";
-        /// <summary>
-        /// Updates for games from Epic Games are being downloaded.
-        /// </summary>
-        public const string LegendaryGamesUpdatesUnderway = "LOCLegendaryGamesUpdatesUnderway";
         /// <summary>
         /// No linked {0} account found! Link your account via your browser and try again.
         /// </summary>
@@ -361,10 +321,6 @@ namespace System
         /// May the Force be with you, Padawan.
         /// </summary>
         public const string LegendaryStarWarsMessage = "LOCLegendaryStarWarsMessage";
-        /// <summary>
-        /// Only one instance of Legendary may install/import/move applications at a time. Do you want to pause download manager tasks to continue?
-        /// </summary>
-        public const string LegendaryInstanceNotice = "LOCLegendaryInstanceNotice";
         /// <summary>
         /// Import games requiring {0}
         /// </summary>
@@ -977,5 +933,49 @@ namespace System
         /// Games
         /// </summary>
         public const string LegendaryGames = "LOCLegendaryGames";
+        /// <summary>
+        /// Check for launcher updates
+        /// </summary>
+        public const string LegendaryLauncherUpdatePolicy = "LOCLegendaryLauncherUpdatePolicy";
+        /// <summary>
+        /// Legendary is not installed.
+        /// </summary>
+        public const string LegendaryLauncherNotInstalled = "LOCLegendaryLauncherNotInstalled";
+        /// <summary>
+        /// Legendary Panel
+        /// </summary>
+        public const string LegendaryPanel = "LOCLegendaryPanel";
+        /// <summary>
+        /// The download will start soon. You can see its status by accessing Legendary Panel via Menu => View or sidebar.
+        /// </summary>
+        public const string LegendaryDownloadManagerWhatsUp = "LOCLegendaryDownloadManagerWhatsUp";
+        /// <summary>
+        /// {0} is already in the download list. You can see status of the download by accessing Legendary Panel via Menu => View or sidebar.
+        /// </summary>
+        public const string LegendaryDownloadAlreadyExists = "LOCLegendaryDownloadAlreadyExists";
+        /// <summary>
+        /// Following games are already in the download list: {0}. You can see status of the download by accessing Legendary Panel via Menu => View or sidebar.
+        /// </summary>
+        public const string LegendaryDownloadAlreadyExistsOther = "LOCLegendaryDownloadAlreadyExistsOther";
+        /// <summary>
+        /// Migrate all games from Epic plugin
+        /// </summary>
+        public const string LegendaryMigrateGamesEpic = "LOCLegendaryMigrateGamesEpic";
+        /// <summary>
+        /// Migrating all games from Epic plugin...
+        /// </summary>
+        public const string LegendaryMigratingGamesEpic = "LOCLegendaryMigratingGamesEpic";
+        /// <summary>
+        /// All games will be removed from Epic plugin and moved to Legendary. Are you sure you want to do this?
+        /// </summary>
+        public const string LegendaryMigrationConfirm = "LOCLegendaryMigrationConfirm";
+        /// <summary>
+        /// Updates for games from {SourceName} are being downloaded.
+        /// </summary>
+        public const string LegendaryGamesUpdatesUnderway = "LOCLegendaryGamesUpdatesUnderway";
+        /// <summary>
+        /// Only one instance of Legendary may install/import/move applications at a time. Do you want to pause download manager tasks to continue?
+        /// </summary>
+        public const string LegendaryInstanceNotice = "LOCLegendaryInstanceNotice";
     }
 }

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <sys:String x:Key="LOCLegendaryLauncherCustomPath">Launcher Path</sys:String>
   <sys:String x:Key="LOCLegendaryGamesInstallationPath">Games Installation Path</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSize">Download Size:</sys:String>
@@ -145,15 +145,15 @@
   <sys:String x:Key="LOCLegendaryUninstallSuccessOther">Following games have been successfully uninstalled: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallErrorOther">Cannot uninstall following games: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryGames">Games</sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherNotInstalled">{AppName} is not installed.</sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy">Check for {PluginShortName} launcher updates</sys:String>
-  <sys:String x:Key="LOCLegendaryPanel">{PluginShortName} Panel</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">The download will start soon. You can see its status by accessing {PluginShortName} Panel via Menu =&gt; View or sidebar.</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} is already in the download list. You can see status of the download by accessing {PluginShortName} Panel via Menu =&gt; View or sidebar.</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther">Following games are already in the download list: {0}. You can see status of the download by accessing {PluginShortName} Panel via Menu =&gt; View or sidebar.</sys:String>
-  <sys:String x:Key="LOCLegendaryMigrateGamesEpic">Migrate all games from {OriginalPluginShortName} plugin</sys:String>
-  <sys:String x:Key="LOCLegendaryMigratingGamesEpic">Migrating all games from {OriginalPluginShortName} plugin...</sys:String>
-  <sys:String x:Key="LOCLegendaryMigrationConfirm">All games will be removed from {OriginalPluginShortName} plugin and moved to {PluginShortName}. Are you sure you want to do this?</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy">Check for launcher updates</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherNotInstalled">Legendary is not installed.</sys:String>
+  <sys:String x:Key="LOCLegendaryPanel">Legendary Panel</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">The download will start soon. You can see its status by accessing Legendary Panel via Menu =&gt; View or sidebar.</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} is already in the download list. You can see status of the download by accessing Legendary Panel via Menu =&gt; View or sidebar.</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther">Following games are already in the download list: {0}. You can see status of the download by accessing Legendary Panel via Menu =&gt; View or sidebar.</sys:String>
+  <sys:String x:Key="LOCLegendaryMigrateGamesEpic">Migrate all games from Epic plugin</sys:String>
+  <sys:String x:Key="LOCLegendaryMigratingGamesEpic">Migrating all games from Epic plugin...</sys:String>
+  <sys:String x:Key="LOCLegendaryMigrationConfirm">All games will be removed from Epic plugin and moved to Legendary. Are you sure you want to do this?</sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Updates for games from {SourceName} are being downloaded.</sys:String>
-  <sys:String x:Key="LOCLegendaryInstanceNotice">Only one instance of {PluginShortName} may install/import/move applications at a time. Do you want to pause download manager tasks to continue?</sys:String>
+  <sys:String x:Key="LOCLegendaryInstanceNotice">Only one instance of Legendary may install/import/move applications at a time. Do you want to pause download manager tasks to continue?</sys:String>
 </ResourceDictionary>
