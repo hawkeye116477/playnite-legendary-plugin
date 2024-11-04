@@ -59,7 +59,7 @@ for filename in os.listdir(common_loc_path):
             key_text = ""
         new_key = ET.Element(ET.QName(xmlns_sys, "String"))
         new_key.set(ET.QName(xmlns_x, "Key"), key)
-        new_key.text = key_text.replace("{PluginShortName}", "Legendary").replace("{AppName}", "Legendary").replace("{OriginalPluginShortName}", "Epic")
+        new_key.text = key_text.replace("{PluginShortName}", "Legendary").replace("{AppName}", "Legendary").replace("{OriginalPluginShortName}", "Epic").replace("{SourceName}", "Epic Games")
         xml_root.append(new_key)
 
     ET.indent(xml_doc, level=0)

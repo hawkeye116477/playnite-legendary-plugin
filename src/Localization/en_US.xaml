@@ -154,6 +154,6 @@
   <sys:String x:Key="LOCLegendaryMigrateGamesEpic">Migrate all games from Epic plugin</sys:String>
   <sys:String x:Key="LOCLegendaryMigratingGamesEpic">Migrating all games from Epic plugin...</sys:String>
   <sys:String x:Key="LOCLegendaryMigrationConfirm">All games will be removed from Epic plugin and moved to Legendary. Are you sure you want to do this?</sys:String>
-  <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Updates for games from {SourceName} are being downloaded.</sys:String>
+  <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Updates for games from Epic Games are being downloaded.</sys:String>
   <sys:String x:Key="LOCLegendaryInstanceNotice">Only one instance of Legendary may install/import/move applications at a time. Do you want to pause download manager tasks to continue?</sys:String>
 </ResourceDictionary>
