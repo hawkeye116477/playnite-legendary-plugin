@@ -22,6 +22,7 @@ using System.Collections.Specialized;
 using LegendaryLibraryNS.Services;
 using CommonPlugin;
 using CommonPlugin.Enums;
+using System.Text;
 
 namespace LegendaryLibraryNS
 {
@@ -348,7 +349,7 @@ namespace LegendaryLibraryNS
                              .AddCommandToLog()
                              .WithValidation(CommandResultValidation.None);
                 var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameID);
-                await foreach (CommandEvent cmdEvent in cmd.ListenAsync(Console.OutputEncoding, Console.OutputEncoding, forcefulInstallerCTS.Token, gracefulInstallerCTS.Token))
+                await foreach (CommandEvent cmdEvent in cmd.ListenAsync(Encoding.Default, Encoding.Default, forcefulInstallerCTS.Token, gracefulInstallerCTS.Token))
                 {
                     switch (cmdEvent)
                     {
