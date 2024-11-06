@@ -620,7 +620,8 @@ namespace LegendaryLibraryNS
                             {
                                 if (!LegendaryLauncher.IsInstalled)
                                 {
-                                    throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                                    LegendaryLauncher.ShowNotInstalledError();
+                                    return;
                                 }
                                 Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
                                 {
@@ -644,7 +645,8 @@ namespace LegendaryLibraryNS
                             {
                                 if (!LegendaryLauncher.IsInstalled)
                                 {
-                                    throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                                    LegendaryLauncher.ShowNotInstalledError();
+                                    return;
                                 }
 
                                 LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
@@ -694,7 +696,8 @@ namespace LegendaryLibraryNS
                             {
                                 if (!LegendaryLauncher.IsInstalled)
                                 {
-                                    throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                                    LegendaryLauncher.ShowNotInstalledError();
+                                    return;
                                 }
 
                                 var path = PlayniteApi.Dialogs.SelectFolder();
@@ -746,7 +749,8 @@ namespace LegendaryLibraryNS
                         {
                             if (!LegendaryLauncher.IsInstalled)
                             {
-                                throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                                LegendaryLauncher.ShowNotInstalledError();
+                                return;
                             }
 
                             Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
@@ -773,7 +777,8 @@ namespace LegendaryLibraryNS
                             {
                                 if (!LegendaryLauncher.IsInstalled)
                                 {
-                                    throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                                    LegendaryLauncher.ShowNotInstalledError();
+                                    return;
                                 }
 
                                 var newPath = PlayniteApi.Dialogs.SelectFolder();
@@ -876,7 +881,8 @@ namespace LegendaryLibraryNS
                         {
                             if (!LegendaryLauncher.IsInstalled)
                             {
-                                throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                                LegendaryLauncher.ShowNotInstalledError();
+                                return;
                             }
 
                             Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
@@ -932,7 +938,7 @@ namespace LegendaryLibraryNS
                 {
                     if (!LegendaryLauncher.IsInstalled)
                     {
-                        PlayniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                        LegendaryLauncher.ShowNotInstalledError();
                         return;
                     }
 

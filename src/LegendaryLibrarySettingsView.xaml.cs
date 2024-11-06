@@ -83,7 +83,7 @@ namespace LegendaryLibraryNS
         {
             if (!LegendaryLauncher.IsInstalled)
             {
-                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                LegendaryLauncher.ShowNotInstalledError();
                 return;
             }
             var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
@@ -257,7 +257,7 @@ namespace LegendaryLibraryNS
         {
             if (!LegendaryLauncher.IsInstalled)
             {
-                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                LegendaryLauncher.ShowNotInstalledError();
                 return;
             }
             var result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryMigrationConfirm), ResourceProvider.GetString(LOC.LegendaryMigrateGamesEpic), MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -469,7 +469,7 @@ namespace LegendaryLibraryNS
         {
             if (!LegendaryLauncher.IsInstalled)
             {
-                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                LegendaryLauncher.ShowNotInstalledError();
                 return;
             }
             var result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryContinueActivation).Format("Ubisoft"), "", MessageBoxButton.YesNo);

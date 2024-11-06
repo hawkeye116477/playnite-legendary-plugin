@@ -15,6 +15,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace LegendaryLibraryNS
 {
@@ -654,7 +655,8 @@ namespace LegendaryLibraryNS
             var logger = LogManager.GetLogger();
             if (!IsInstalled)
             {
-                throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                ShowNotInstalledError();
+                return newVersionInfoContent;
             }
             var cacheVersionPath = LegendaryLibrary.Instance.GetCachePath("infocache");
             if (!Directory.Exists(cacheVersionPath))
@@ -759,5 +761,19 @@ namespace LegendaryLibraryNS
             }
         }
 
+        public static void ShowNotInstalledError()
+        {
+            var playniteAPI = API.Instance;
+            var options = new List<MessageBoxOption>
+            {
+                new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteInstallGame)),
+                new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteOKLabel)),
+            };
+            var result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled), "Legendary (Epic Games) library integration", MessageBoxImage.Information, options);
+            if (result == options[0])
+            {
+                Playnite.Commands.GlobalCommands.NavigateUrl("https://github.com/hawkeye116477/playnite-legendary-plugin/wiki/Troubleshooting#legendary-launcher-is-not-installed");
+            }
+        }
     }
 }

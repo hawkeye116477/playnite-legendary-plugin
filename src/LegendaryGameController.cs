@@ -45,7 +45,8 @@ namespace LegendaryLibraryNS
             var playniteAPI = API.Instance;
             if (!LegendaryLauncher.IsInstalled)
             {
-                throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                LegendaryLauncher.ShowNotInstalledError();
+                return;
             }
 
             Window window = null;
@@ -103,7 +104,8 @@ namespace LegendaryLibraryNS
         {
             if (!LegendaryLauncher.IsInstalled)
             {
-                throw new Exception(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                LegendaryLauncher.ShowNotInstalledError();
+                return;
             }
             var playniteAPI = API.Instance;
             string gamesCombined = string.Join(", ", games.Select(item => item.Name));
@@ -224,7 +226,8 @@ namespace LegendaryLibraryNS
                 InvokeOnStopped(new GameStoppedEventArgs());
                 if (!LegendaryLauncher.IsInstalled)
                 {
-                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled));
+                    LegendaryLauncher.ShowNotInstalledError();
+                    return;
                 }
             }
         }
