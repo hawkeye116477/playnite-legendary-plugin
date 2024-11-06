@@ -8,19 +8,9 @@
   <sys:String x:Key="LOCLegendaryEnableReordering"></sys:String>
   <sys:String x:Key="LOCLegendaryEnableReorderingToolTip"></sys:String>
   <sys:String x:Key="LOCLegendaryEOSOverlay"></sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp"></sys:String>
-  <sys:String x:Key="LOCLegendaryPanel"></sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExists"></sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther"></sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace"></sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip"></sys:String>
   <sys:String x:Key="LOCLegendaryMemoryError"></sys:String>
-  <sys:String x:Key="LOCLegendaryMigrateGamesEpic"></sys:String>
-  <sys:String x:Key="LOCLegendaryMigratingGamesEpic"></sys:String>
-  <sys:String x:Key="LOCLegendaryMigrationConfirm"></sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherNotInstalled"></sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy"></sys:String>
-  <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway"></sys:String>
   <sys:String x:Key="LOCLegendaryNoLinkedAccount"></sys:String>
   <sys:String x:Key="LOCLegendaryAllActivatedUbisoft"></sys:String>
   <sys:String x:Key="LOCLegendaryContinueActivation"></sys:String>
@@ -31,7 +21,6 @@
   <sys:String x:Key="LOCLegendaryActivateNextConfirm"></sys:String>
   <sys:String x:Key="LOCLegendaryEANotice"></sys:String>
   <sys:String x:Key="LOCLegendaryStarWarsMessage"></sys:String>
-  <sys:String x:Key="LOCLegendaryInstanceNotice"></sys:String>
   <sys:String x:Key="LOCLegendaryImportThirdPartyLauncherGames"></sys:String>
   <sys:String x:Key="LOCLegendaryThirdPartyLauncherImportWarn"></sys:String>
   <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError"></sys:String>

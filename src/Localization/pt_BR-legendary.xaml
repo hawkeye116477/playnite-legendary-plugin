@@ -8,19 +8,9 @@
   <sys:String x:Key="LOCLegendaryEnableReordering">Habilitar otimização de reordenação</sys:String>
   <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">Isso pode reduzir os requisitos de RAM durante o download (pode não funcionar corretamente com alguns títulos).</sys:String>
   <sys:String x:Key="LOCLegendaryEOSOverlay">Sobreposição EOS</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">O download começará em breve. Você pode conferir o progresso pelo Painel Legendary através do Menu =&gt; Visualização ou pela Barra Lateral.</sys:String>
-  <sys:String x:Key="LOCLegendaryPanel">Painel Legendary</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} já está na lista de downloads. Você pode conferir o progresso pelo Painel Legendary através do Menu =&gt; Visualização ou pela Barra Lateral.</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther">Os seguintes jogos já estão na lista de downloads: {0}. Você pode ver o progresso do download acessando o Painel Legendary via Menu =&gt; Visualização ou pela barra lateral.</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Ignorar espaço livre</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip">Não aborte se não houver espaço livre suficiente disponível.</sys:String>
   <sys:String x:Key="LOCLegendaryMemoryError">O cache de memória compartilhada atual [{0}] é menor que o necessário [{1}]. Tente habilitar a otimização de reordenação para reduzir o uso de memória ou aumente a limite de memória compartilhada.</sys:String>
-  <sys:String x:Key="LOCLegendaryMigrateGamesEpic">Migrar todos os jogos do plugin Epic</sys:String>
-  <sys:String x:Key="LOCLegendaryMigratingGamesEpic">Migrando todos os jogos do plugin Epic...</sys:String>
-  <sys:String x:Key="LOCLegendaryMigrationConfirm">Todos os jogos serão removidos do plugin Epic e movidos para o Legendary. Tem certeza disso?</sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherNotInstalled">Inicializador Legendary não está instalado.</sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy">Procurar por atualizações do inicializador Legendary</sys:String>
-  <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Atualizações de jogos da Epic Games estão sendo baixadas.</sys:String>
   <sys:String x:Key="LOCLegendaryNoLinkedAccount">Nenhuma conta {0} vinculada! Conecte sua conta através do seu navegador e tente novamente.</sys:String>
   <sys:String x:Key="LOCLegendaryAllActivatedUbisoft">Todos os jogos já foram ativados na sua conta {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryContinueActivation">Tem certeza que deseja ativar jogos na sua conta {0}?</sys:String>
@@ -31,7 +21,6 @@
   <sys:String x:Key="LOCLegendaryActivateNextConfirm">Deseja ativar o próximo jogo?</sys:String>
   <sys:String x:Key="LOCLegendaryEANotice">Não se sabe qual jogo requer ativação, então será feita uma tentativa para ativar tudo. Se o aplicativo EA solicitar que você instale o jogo ao invés de ativá-lo, então ele já foi ativado e a caixa de diálogo pode ser descartada.</sys:String>
   <sys:String x:Key="LOCLegendaryStarWarsMessage">Que a Força esteja com você, Padawan.</sys:String>
-  <sys:String x:Key="LOCLegendaryInstanceNotice">Apenas uma instância do Legendary pode instalar/importar/mover aplicativos por vez. Você deseja pausar as tarefas do gerenciador de downloads para continuar?</sys:String>
   <sys:String x:Key="LOCLegendaryImportThirdPartyLauncherGames">Importar jogos que utilizam {0}</sys:String>
   <sys:String x:Key="LOCLegendaryThirdPartyLauncherImportWarn">Jogos desse tipo não precisam do Legendary e nem todos podem ser instalados pelo mesmo. Sugerimos clicar em Serviços adicionais =&gt; {0} =&gt; Ativar Jogos, e então instalá-los diretamente via {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">{1} requer instalação direta via {0}.</sys:String>
