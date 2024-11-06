@@ -970,7 +970,7 @@ namespace System
         /// </summary>
         public const string LegendaryMigrationConfirm = "LOCLegendaryMigrationConfirm";
         /// <summary>
-        /// Updates for games from {SourceName} are being downloaded.
+        /// Updates for games from Epic Games are being downloaded.
         /// </summary>
         public const string LegendaryGamesUpdatesUnderway = "LOCLegendaryGamesUpdatesUnderway";
         /// <summary>
