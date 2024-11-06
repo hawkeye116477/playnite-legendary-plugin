@@ -8,19 +8,9 @@
   <sys:String x:Key="LOCLegendaryEnableReordering">Umsortierungs-Optimierung aktivieren</sys:String>
   <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">Dies kann den die RAM-Nutzung während des Downloads verringern (funktioniert bei einigen Titeln möglicherweise nicht ordnungsgemäß).</sys:String>
   <sys:String x:Key="LOCLegendaryEOSOverlay"></sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">Der Download wird bald gestartet. Sie können den Status sehen, indem Sie auf das Legendary-Bedienfeld über das Menü =&gt; Ansicht oder Seitenleiste klicken.</sys:String>
-  <sys:String x:Key="LOCLegendaryPanel">Legendary-Bedienfeld</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} ist bereits in der Download-Liste. Sie können den Status des Downloads sehen, indem Sie über das Menü =&gt; Ansicht oder Seitenleiste auf das Legendary-Bedienfeld zugreifen.</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther">Folgende Spiele sind bereits in der Download-Liste: {0}. Den Status des Downloads können Sie über das Menü =&gt; Ansicht oder Seitenleiste sehen.</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Freier Speicherplatz ignorieren</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip">Nicht abbrechen, wenn nicht genügend freier Speicherplatz verfügbar ist.</sys:String>
   <sys:String x:Key="LOCLegendaryMemoryError">Der aktuelle geteilte Zwischenspeicher ist kleiner als erforderlich: {0} &lt; {1}. Versuchen Sie, die Optimierung der Neuanordnung zu aktivieren, um die Speicherauslastung zu reduzieren oder den maximalen geteilten Arbeitsspeicher zu erhöhen.</sys:String>
-  <sys:String x:Key="LOCLegendaryMigrateGamesEpic">Alle Spiele vom Epic-Plugin migrieren</sys:String>
-  <sys:String x:Key="LOCLegendaryMigratingGamesEpic">Migriere alle Spiele vom Epic-Plugin...</sys:String>
-  <sys:String x:Key="LOCLegendaryMigrationConfirm">Alle Spiele werden aus dem Epic-Plugin entfernt und zu Legendary verschoben. Bist du sicher, dass du dies tun möchtest?</sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherNotInstalled">Legendary Launcher ist nicht installiert.</sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy">Suche nach Legendary-Launcher Aktualisierungen</sys:String>
-  <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Updates für Spiele von Epic Games werden heruntergeladen.</sys:String>
   <sys:String x:Key="LOCLegendaryNoLinkedAccount">Kein verknüpftes {0} Konto gefunden! Verknüpfen Sie Ihr Konto über Ihren Browser und versuchen Sie es erneut.</sys:String>
   <sys:String x:Key="LOCLegendaryAllActivatedUbisoft">Alle Spiele wurden bereits auf Ihrem {0} Konto aktiviert.</sys:String>
   <sys:String x:Key="LOCLegendaryContinueActivation">Sind Sie sicher, dass Sie Spiele auf Ihrem {0} Konto aktivieren möchten?</sys:String>
@@ -31,7 +21,6 @@
   <sys:String x:Key="LOCLegendaryActivateNextConfirm">Möchten Sie das nächste Spiel aktivieren?</sys:String>
   <sys:String x:Key="LOCLegendaryEANotice">Es ist derzeit unbekannt, welche Spiele aktiviert werden müssen,  daher wird versucht alles zu aktivieren. Wenn EA App Sie auffordert, ein Spiel zu installieren, anstatt es zu aktivieren, dann wurde es bereits aktiviert und der Dialog kann geschlossen werden.</sys:String>
   <sys:String x:Key="LOCLegendaryStarWarsMessage">Möge die Macht mit dir sein, Padawan.</sys:String>
-  <sys:String x:Key="LOCLegendaryInstanceNotice">Nur eine Instanz von Legendary kann Anwendungen gleichzeitig installieren/importieren/verschieben. Möchten Sie die Download-Manager-Aufgaben pausieren um fortzufahren?</sys:String>
   <sys:String x:Key="LOCLegendaryImportThirdPartyLauncherGames">Spiele importieren, die {0} benötigen</sys:String>
   <sys:String x:Key="LOCLegendaryThirdPartyLauncherImportWarn">Diese Art von Spielen erfordert Legendary nicht und nicht alle können darüber installiert werden. Es wird empfohlen auf Zusätzlichen Diensten =&gt; {0} =&gt; Spiele aktivieren zu gehen und diese dann direkt über {0} zu installieren.</sys:String>
   <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">{1} benötigt eine direkte Installation über {0}.</sys:String>

@@ -8,19 +8,9 @@
   <sys:String x:Key="LOCLegendaryEnableReordering">Włącz optymalizację zmiany kolejności</sys:String>
   <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">To może zmniejszyć wymagania pamięci RAM podczas pobierania (może nie działać poprawnie w przypadku niektórych tytułów).</sys:String>
   <sys:String x:Key="LOCLegendaryEOSOverlay">Nakładka EOS</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">Pobieranie rozpocznie się już wkrótce. Możesz zobaczyć jego stan, uzyskując dostęp do panelu Legendary za pośrednictwem Menu =&gt; Widok lub paska bocznego.</sys:String>
-  <sys:String x:Key="LOCLegendaryPanel">Panel Legendary</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} jest już na liście pobierania. Możesz zobaczyć stan pobierania, uzyskując dostęp do panelu Legendary za pośrednictwem Menu =&gt; Widok lub paska bocznego.</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther">Następujące gry są już na liście pobierania: {0}. Możesz zobaczyć stan pobierania, uzyskując dostęp do panelu Legendary za pośrednictwem Menu =&gt; Widok lub paska bocznego.</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Ignoruj wolne miejsce</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip">Nie przerywaj, jeśli nie ma wystarczającej ilości wolnego miejsca.</sys:String>
   <sys:String x:Key="LOCLegendaryMemoryError">Współdzielona pamięć podręczna jest mniejsza niż wymagana: {0} &lt; {1}. Spróbuj włączyć optymalizację zmiany kolejności, aby zmniejszyć zużycie pamięci lub zwiększ maksymalną ilość pamięci współdzielonej.</sys:String>
-  <sys:String x:Key="LOCLegendaryMigrateGamesEpic">Migruj wszystkie gry z wtyczki Epic</sys:String>
-  <sys:String x:Key="LOCLegendaryMigratingGamesEpic">Migrowanie wszystkich gier z wtyczki Epic...</sys:String>
-  <sys:String x:Key="LOCLegendaryMigrationConfirm">Wszystkie gry zostaną usunięte z wtyczki Epic i przeniesione do Legendary. Czy na pewno chcesz to zrobić?</sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherNotInstalled">Program uruchamiający Legendary nie jest zainstalowany.</sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy">Sprawdzaj aktualizacje launchera Legendary</sys:String>
-  <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Trwa pobieranie aktualizacji dla gier z Epic Games.</sys:String>
   <sys:String x:Key="LOCLegendaryNoLinkedAccount">Nie znaleziono powiązanego konta {0}! Połącz swoje konto za pomocą przeglądarki i spróbuj ponownie.</sys:String>
   <sys:String x:Key="LOCLegendaryAllActivatedUbisoft">Wszystkie gry zostały już aktywowane na Twoim koncie {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryContinueActivation">Czy na pewno chcesz aktywować gry na swoim koncie {0}?</sys:String>
@@ -31,7 +21,6 @@
   <sys:String x:Key="LOCLegendaryActivateNextConfirm">Czy chcesz aktywować kolejną grę?</sys:String>
   <sys:String x:Key="LOCLegendaryEANotice">Obecnie nie wiadomo, która gra wymaga aktywacji, więc zostanie podjęta próba aktywacji wszystkiego. Jeśli EA App zapyta cię o zainstalowanie gry zamiast jej aktywację, to oznacza, że została już aktywowana, a okno dialogowe może zostać odrzucone.</sys:String>
   <sys:String x:Key="LOCLegendaryStarWarsMessage">Niech Moc będzie z tobą, Padawanie.</sys:String>
-  <sys:String x:Key="LOCLegendaryInstanceNotice">Tylko jedna instancja Legendary może instalować/importować/przenosić aplikacje jednocześnie. Czy chcesz wstrzymać zadania menedżera pobierania, aby kontynuować?</sys:String>
   <sys:String x:Key="LOCLegendaryImportThirdPartyLauncherGames">Importuj gry wymagające {0}</sys:String>
   <sys:String x:Key="LOCLegendaryThirdPartyLauncherImportWarn">Tego typu gry nie wymagają Legendary i nie wszystkie z nich można zainstalować za jego pomocą. Zalecane jest, by przejść do Dodatkowe usługi =&gt; {0} =&gt; Aktywuj gry, a następnie zainstalować je bezpośrednio przez {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">{1} wymaga bezpośredniej instalacji przez {0}.</sys:String>

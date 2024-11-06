@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+<?xml version='1.0' encoding='utf-8'?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <sys:String x:Key="LOCLegendaryLauncherCustomPath"></sys:String>
   <sys:String x:Key="LOCLegendaryGamesInstallationPath"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSize"></sys:String>
@@ -145,4 +145,15 @@
   <sys:String x:Key="LOCLegendaryUninstallSuccessOther"></sys:String>
   <sys:String x:Key="LOCLegendaryUninstallErrorOther"></sys:String>
   <sys:String x:Key="LOCLegendaryGames"></sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy"></sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherNotInstalled"></sys:String>
+  <sys:String x:Key="LOCLegendaryPanel"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExists"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther"></sys:String>
+  <sys:String x:Key="LOCLegendaryMigrateGamesEpic"></sys:String>
+  <sys:String x:Key="LOCLegendaryMigratingGamesEpic"></sys:String>
+  <sys:String x:Key="LOCLegendaryMigrationConfirm"></sys:String>
+  <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway"></sys:String>
+  <sys:String x:Key="LOCLegendaryInstanceNotice"></sys:String>
 </ResourceDictionary>

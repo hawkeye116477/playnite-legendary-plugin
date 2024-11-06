@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+<?xml version='1.0' encoding='utf-8'?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <sys:String x:Key="LOCLegendaryLauncherCustomPath">Percorso del launcher</sys:String>
   <sys:String x:Key="LOCLegendaryGamesInstallationPath">Percorso giochi</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSize">Dimensioni download:</sys:String>
@@ -14,11 +14,11 @@
   <sys:String x:Key="LOCLegendaryMaxWorkers">Numero massimo di processi di lavoro</sys:String>
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">Quantità massima di memoria condivisa (MB)</sys:String>
   <sys:String x:Key="LOCLegendaryConnectionTimeout">Timeout connessione (sec)</sys:String>
-  <sys:String x:Key="LOCLegendaryAfterDownloadComplete"></sys:String>
-  <sys:String x:Key="LOCLegendarySystemShutdownCountdown"></sys:String>
-  <sys:String x:Key="LOCLegendarySystemRestartCountdown"></sys:String>
-  <sys:String x:Key="LOCLegendarySystemHibernateCountdown"></sys:String>
-  <sys:String x:Key="LOCLegendarySystemSuspendCountdown"></sys:String>
+  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Dopo il completamento del download</sys:String>
+  <sys:String x:Key="LOCLegendarySystemShutdownCountdown">Il sistema verrà spento a breve...</sys:String>
+  <sys:String x:Key="LOCLegendarySystemRestartCountdown">Il sistema verrà riavviato a breve...</sys:String>
+  <sys:String x:Key="LOCLegendarySystemHibernateCountdown">Il sistema verrà ibernato presto...</sys:String>
+  <sys:String x:Key="LOCLegendarySystemSuspendCountdown">Il sistema verrà sospeso a breve...</sys:String>
   <sys:String x:Key="LOCLegendaryDisable">Disattiva</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Attiva</sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable">Spazio disponibile:</sys:String>
@@ -29,7 +29,7 @@
   <sys:String x:Key="LOCLegendaryDiskSpeed">Utilizzo del disco:</sys:String>
   <sys:String x:Key="LOCLegendaryElapsed">Trascorso:</sys:String>
   <sys:String x:Key="LOCLegendaryVerifying">Verifica...</sys:String>
-  <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Verifica file di grandi dimensioni &quot;{0}&quot;: {1}</sys:String>
+  <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Verifica file di grandi dimensioni "{0}": {1}</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadingUpdate">Download aggiornamento...</sys:String>
   <sys:String x:Key="LOCLegendaryFinishingInstallation">Installazione quasi finita...</sys:String>
   <sys:String x:Key="LOCLegendaryFinishingUpdate">Aggiornamento quasi finito...</sys:String>
@@ -114,16 +114,16 @@
   <sys:String x:Key="LOCLegendarySync">Sincronizza</sys:String>
   <sys:String x:Key="LOCLegendaryDownload">Download</sys:String>
   <sys:String x:Key="LOCLegendaryUpload">Upload</sys:String>
-  <sys:String x:Key="LOCLegendaryForceAction"></sys:String>
+  <sys:String x:Key="LOCLegendaryForceAction">Forza azione</sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaveConfirm">La funzionalità di salvataggio cloud è sperimentale. Si consiglia di eseguire il backup del gioco nel caso in cui qualcosa vada storto. Sei sicuro di voler continuare?</sys:String>
   <sys:String x:Key="LOCLegendarySyncPlaytime">Sincronizza il tempo di gioco nel cloud</sys:String>
   <sys:String x:Key="LOCLegendaryUploadingPlaytime">Upload del tempo di gioco di {0} nel cloud...</sys:String>
   <sys:String x:Key="LOCLegendaryUploadPlaytimeError">Si è verificato un errore durante il caricamento del tempo di gioco di {0} sul cloud.</sys:String>
   <sys:String x:Key="LOCLegendaryMove">Sposta</sys:String>
-  <sys:String x:Key="LOCLegendaryMoveConfirm">Sei sicuro di voler spostare {0} in &quot;{1}&quot;? Potrebbe richiedere molto tempo.</sys:String>
-  <sys:String x:Key="LOCLegendaryMovingGame">Spostamento {0} in &quot;{1}&quot;...</sys:String>
-  <sys:String x:Key="LOCLegendaryMoveGameSuccess">{0} è stato spostato con successo in &quot;{1}&quot;.</sys:String>
-  <sys:String x:Key="LOCLegendaryMoveGameError">Si è verificato un errore durante lo spostamento di {0} in &quot;{1}&quot;.</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveConfirm">Sei sicuro di voler spostare {0} in "{1}"? Potrebbe richiedere molto tempo.</sys:String>
+  <sys:String x:Key="LOCLegendaryMovingGame">Spostamento {0} in "{1}"...</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveGameSuccess">{0} è stato spostato con successo in "{1}".</sys:String>
+  <sys:String x:Key="LOCLegendaryMoveGameError">Si è verificato un errore durante lo spostamento di {0} in "{1}".</sys:String>
   <sys:String x:Key="LOCLegendaryInstalledDlcs">DLC Installati</sys:String>
   <sys:String x:Key="LOCLegendaryAvailableDlcs">DLC disponibili</sys:String>
   <sys:String x:Key="LOCLegendaryManageDlcs">Gestione DLC</sys:String>
@@ -145,4 +145,15 @@
   <sys:String x:Key="LOCLegendaryUninstallSuccessOther">I seguenti giochi sono stati disinstallati con successo: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallErrorOther">Impossibile disinstallare i seguenti giochi: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryGames">Giochi</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy">Controlla aggiornamenti del launcher</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherNotInstalled">Legendary non è installato.</sys:String>
+  <sys:String x:Key="LOCLegendaryPanel">Pannello Legendary</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">Il download inizierà a breve. Puoi vederne lo stato accedendo al pannello Legendary tramite Menu =&gt; Visualizza o dalla barra laterale.</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} è già nella lista dei download. È possibile visualizzare lo stato del download accedendo al pannello Legendary tramite Menu =&gt; Visualizza o dalla barra laterale.</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther">I seguenti giochi sono già nella lista dei download: {0}. Puoi vedere lo stato del download accedendo al pannello Legendary tramite Menu =&gt; Visualizza o dalla barra laterale.</sys:String>
+  <sys:String x:Key="LOCLegendaryMigrateGamesEpic">Migra tutti i giochi dal plugin Epic</sys:String>
+  <sys:String x:Key="LOCLegendaryMigratingGamesEpic">Migrazione di tutti i giochi dal plugin Epic...</sys:String>
+  <sys:String x:Key="LOCLegendaryMigrationConfirm">Tutti i giochi saranno rimossi dal plugin Epic e spostati in Legendary. Sei sicuro di volerlo fare?</sys:String>
+  <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Gli aggiornamenti dei giochi di Epic Games sono in download.</sys:String>
+  <sys:String x:Key="LOCLegendaryInstanceNotice">Solo un'istanza di Legendary può installare/importare/spostare applicazioni alla volta. Si desidera mettere in pausa le attività del gestore download per continuare?</sys:String>
 </ResourceDictionary>
