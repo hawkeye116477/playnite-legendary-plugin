@@ -249,7 +249,7 @@ namespace LegendaryLibraryNS
                     App_name = installData.gameID,
                 };
                 manifest = await LegendaryLauncher.GetGameInfo(gameData);
-                if (manifest != null && manifest.Manifest != null && manifest.Game != null)
+                if (manifest != null && manifest.Manifest != null && manifest.Game != null && !manifest.errorDisplayed)
                 {
                     Dictionary<string, LegendarySDLInfo> extraContentInfo = await LegendaryLauncher.GetExtraContentInfo(installData);
                     if (extraContentInfo.Count > 0)

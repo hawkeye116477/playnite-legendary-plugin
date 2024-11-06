@@ -8,6 +8,7 @@ namespace LegendaryLibraryNS.Models
         {
             public Game Game { get; set; }
             public Manifest Manifest { get; set; }
+            public bool errorDisplayed = false;
         }
 
         public class Game

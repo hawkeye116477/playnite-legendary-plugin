@@ -446,15 +446,14 @@ namespace LegendaryLibraryNS
                                       .ExecuteBufferedAsync();
                 }
                 var errorMessage = result.StandardError;
-                if (result.ExitCode != 0 || errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") || errorMessage.Contains("Error"))
+                if (result.ExitCode != 0)
                 {
                     logger.Error("[Legendary]" + result.StandardError);
                     if (!silently)
                     {
-                        if (result.StandardError.Contains("Failed to establish a new connection")
-                            || result.StandardError.Contains("Log in failed")
-                            || result.StandardError.Contains("Login failed")
-                            || result.StandardError.Contains("No saved credentials"))
+                        if (errorMessage.Contains("Log in failed")
+                            || errorMessage.Contains("Login failed")
+                            || errorMessage.Contains("No saved credentials"))
                         {
                             playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)), installData.Title);
                         }
@@ -463,6 +462,7 @@ namespace LegendaryLibraryNS
                             playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(ResourceProvider.GetString(LOC.LegendaryCheckLog)), installData.Title);
                         }
                     }
+                    manifest.errorDisplayed = true;
                 }
                 else if (gameID == "eos-overlay")
                 {
@@ -509,6 +509,10 @@ namespace LegendaryLibraryNS
             };
             var manifest = await GetGameInfo(gameData);
             Dictionary<string, LegendarySDLInfo> extraContentInfo = new Dictionary<string, LegendarySDLInfo>();
+            if (manifest.errorDisplayed)
+            {
+                return extraContentInfo;
+            }
             if (manifest.Manifest.Install_tags.Count > 1)
             {
                 var cacheSDLPath = LegendaryLibrary.Instance.GetCachePath("sdlcache");
