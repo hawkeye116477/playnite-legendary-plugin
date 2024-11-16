@@ -1,5 +1,13 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.9.7
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2024-11-16
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.9.7/LegendaryLibrary_1_9_7.pext
+    Changelog:
+      - Fixed potential problems which might occur during repairing and installation
+        of games
+      - Enabled playtime sync by default if it's also enabled in Playnite's settings
   - Version: 1.9.6
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2024-11-06
