@@ -73,14 +73,6 @@ namespace LegendaryLibraryNS
             {
                 installPath = installPath.Replace(playniteDirectoryVariable, playniteAPI.Paths.ApplicationPath);
             }
-            if (MultiInstallData.First().downloadProperties.downloadAction == DownloadAction.Install)
-            {
-                //var commonHelpers = LegendaryLibrary.Instance.commonHelpers;
-                //if (commonHelpers.IsDirectoryWritable(installPath))
-                //{
-                //    return;
-                //}
-            }
             InstallerWindow.Close();
             LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
             var downloadTasks = new List<DownloadManagerData.Download>();
@@ -92,13 +84,17 @@ namespace LegendaryLibraryNS
                 var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameId);
                 if (wantedItem == null)
                 {
-                    if (downloadAction == DownloadAction.Repair)
+                    if (downloadAction != DownloadAction.Install)
                     {
                         var installedAppList = LegendaryLauncher.GetInstalledAppList();
                         var installedInfo = installedAppList[gameId];
                         installPath = installedInfo.Install_path;
+                        installData.fullInstallPath = installPath;
                     }
-                    installData.fullInstallPath = installPath;
+                    if (!CommonHelpers.IsDirectoryWritable(installPath, LOC.LegendaryPermissionError))
+                    {
+                        continue;
+                    }
                     var downloadProperties = GetDownloadProperties(installData, downloadAction, installPath);
                     installData.downloadProperties = downloadProperties;
                     downloadTasks.Add(installData);
@@ -111,14 +107,14 @@ namespace LegendaryLibraryNS
                         var wantedDlc = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == selectedDlc.Key);
                         if (wantedDlc == null)
                         {
+                            var dlcInstallData = selectedDlc.Value;
                             if (downloadAction == DownloadAction.Repair)
                             {
                                 var installedAppList = LegendaryLauncher.GetInstalledAppList();
                                 var installedInfo = installedAppList[selectedDlc.Key];
                                 installPath = installedInfo.Install_path;
+                                dlcInstallData.fullInstallPath = installPath;
                             }
-                            var dlcInstallData = selectedDlc.Value;
-                            dlcInstallData.fullInstallPath = installPath;
                             var downloadProperties = GetDownloadProperties(dlcInstallData, downloadAction, installPath);
                             dlcInstallData.downloadProperties = downloadProperties;
                             downloadTasks.Add(dlcInstallData);
