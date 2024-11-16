@@ -775,5 +775,19 @@ namespace LegendaryLibraryNS
                 Playnite.Commands.GlobalCommands.NavigateUrl("https://github.com/hawkeye116477/playnite-legendary-plugin/wiki/Troubleshooting#legendary-launcher-is-not-installed");
             }
         }
+
+        public static bool DefaultPlaytimeSyncEnabled
+        {
+            get
+            {
+                var playniteAPI = API.Instance;
+                var playTimeSyncEnabled = false;
+                if (playniteAPI.ApplicationSettings.PlaytimeImportMode != PlaytimeImportMode.Never)
+                {
+                    playTimeSyncEnabled = true;
+                }
+                return playTimeSyncEnabled;
+            }
+        }
     }
 }

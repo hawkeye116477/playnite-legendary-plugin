@@ -27,7 +27,7 @@ namespace LegendaryLibraryNS
         public bool DownloadAllDlcs { get; set; } = false;
         public bool DisplayDownloadSpeedInBits { get; set; } = false;
         public bool DisplayDownloadTaskFinishedNotifications { get; set; } = true;
-        public bool SyncPlaytime { get; set; } = false;
+        public bool SyncPlaytime { get; set; } = LegendaryLauncher.DefaultPlaytimeSyncEnabled;
         public string SyncPlaytimeMachineId { get; set; } = System.Guid.NewGuid().ToString("N");
         public UpdatePolicy GamesUpdatePolicy { get; set; } = UpdatePolicy.Month;
         public long NextGamesUpdateTime { get; set; } = 0;
