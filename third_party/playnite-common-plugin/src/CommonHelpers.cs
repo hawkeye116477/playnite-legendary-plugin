@@ -103,5 +103,7 @@ namespace CommonPlugin
                 return Environment.ProcessorCount;
             }
         }
+
+        public static string NormalizePath(string path) => Path.GetFullPath(new Uri(path).LocalPath).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
     }
 }

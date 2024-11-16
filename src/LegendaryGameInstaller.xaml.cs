@@ -112,7 +112,7 @@ namespace LegendaryLibraryNS
                             {
                                 var installedAppList = LegendaryLauncher.GetInstalledAppList();
                                 var installedInfo = installedAppList[selectedDlc.Key];
-                                installPath = installedInfo.Install_path;
+                                installPath = CommonHelpers.NormalizePath(installedInfo.Install_path);
                                 dlcInstallData.fullInstallPath = installPath;
                             }
                             var downloadProperties = GetDownloadProperties(dlcInstallData, downloadAction, installPath);
