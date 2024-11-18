@@ -78,6 +78,7 @@ namespace LegendaryLibraryNS
             var downloadTasks = new List<DownloadManagerData.Download>();
             var downloadItemsAlreadyAdded = new List<string>();
 
+            var installedAppList = LegendaryLauncher.GetInstalledAppList();
             foreach (var installData in MultiInstallData)
             {
                 var gameId = installData.gameID;
@@ -86,7 +87,6 @@ namespace LegendaryLibraryNS
                 {
                     if (downloadAction != DownloadAction.Install)
                     {
-                        var installedAppList = LegendaryLauncher.GetInstalledAppList();
                         var installedInfo = installedAppList[gameId];
                         installPath = installedInfo.Install_path;
                         installData.fullInstallPath = installPath;
@@ -110,7 +110,6 @@ namespace LegendaryLibraryNS
                             var dlcInstallData = selectedDlc.Value;
                             if (downloadAction == DownloadAction.Repair)
                             {
-                                var installedAppList = LegendaryLauncher.GetInstalledAppList();
                                 var installedInfo = installedAppList[selectedDlc.Key];
                                 installPath = CommonHelpers.NormalizePath(installedInfo.Install_path);
                                 dlcInstallData.fullInstallPath = installPath;

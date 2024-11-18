@@ -147,6 +147,13 @@ namespace LegendaryLibraryNS
                                     {
                                         File.Delete(gameSettingsFile);
                                     }
+                                    var downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
+                                    var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == game.GameId);
+                                    if (wantedItem != null)
+                                    {
+                                        downloadManager.downloadManagerData.downloads.Remove(wantedItem);
+                                        downloadManager.downloadsChanged = true;
+                                    }
                                 }
                                 game.IsInstalled = false;
                                 game.InstallDirectory = "";
