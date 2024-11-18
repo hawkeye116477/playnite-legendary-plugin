@@ -5,7 +5,7 @@
   <sys:String x:Key="LOCLegendaryDownloadSize">Download Size:</sys:String>
   <sys:String x:Key="LOCLegendaryInstallSize">Install Size:</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallGameConfirm">Are you sure you want to uninstall {0}?</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadSettings">Download Settings</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadSettings">Downloads</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadTaskFinishedNotifications">Display desktop notifications about finished tasks</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Display download speed in bits per second</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAllDlcs">Download all DLCs</sys:String>
