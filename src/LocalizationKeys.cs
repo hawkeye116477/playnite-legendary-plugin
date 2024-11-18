@@ -414,6 +414,10 @@ namespace System
         /// </summary>
         public const string LegendaryAfterDownloadComplete = "LOCLegendaryAfterDownloadComplete";
         /// <summary>
+        /// Automatically remove completed downloads from list
+        /// </summary>
+        public const string LegendaryAutoRemoveCompletedDownloads = "LOCLegendaryAutoRemoveCompletedDownloads";
+        /// <summary>
         /// System will be turned off soon...
         /// </summary>
         public const string LegendarySystemShutdownCountdown = "LOCLegendarySystemShutdownCountdown";

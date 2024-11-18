@@ -21,8 +21,10 @@ namespace LegendaryLibraryNS
         public int MaxSharedMemory { get; set; } = 0;
         public int ConnectionTimeout { get; set; } = 0;
         public bool EnableReordering { get; set; } = false;
+        public ClearCacheTime AutoRemoveCompletedDownloads { get; set; } = ClearCacheTime.Never;
         public ClearCacheTime AutoClearCache { get; set; } = ClearCacheTime.Never;
         public long NextClearingTime { get; set; } = 0;
+        public long NextRemovingCompletedDownloadsTime { get; set; } = 0;
         public bool UnattendedInstall { get; set; } = false;
         public bool DownloadAllDlcs { get; set; } = false;
         public bool DisplayDownloadSpeedInBits { get; set; } = false;
@@ -68,6 +70,17 @@ namespace LegendaryLibraryNS
                 else
                 {
                     Settings.NextClearingTime = 0;
+                }
+            }
+            if (EditingClone.AutoRemoveCompletedDownloads != Settings.AutoRemoveCompletedDownloads)
+            {
+                if (Settings.AutoRemoveCompletedDownloads != ClearCacheTime.Never)
+                {
+                    Settings.NextRemovingCompletedDownloadsTime = LegendaryLibrary.GetNextClearingTime(Settings.AutoRemoveCompletedDownloads);
+                }
+                else
+                {
+                    Settings.NextRemovingCompletedDownloadsTime = 0;
                 }
             }
             if (EditingClone.GamesUpdatePolicy != Settings.GamesUpdatePolicy)

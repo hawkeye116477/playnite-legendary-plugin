@@ -15,6 +15,7 @@
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">Maximum amount of shared memory (MB)</sys:String>
   <sys:String x:Key="LOCLegendaryConnectionTimeout">Connection timeout (sec)</sys:String>
   <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Action after download is complete</sys:String>
+  <sys:String x:Key="LOCLegendaryAutoRemoveCompletedDownloads">Automatically remove completed downloads from list</sys:String>
   <sys:String x:Key="LOCLegendarySystemShutdownCountdown">System will be turned off soon...</sys:String>
   <sys:String x:Key="LOCLegendarySystemRestartCountdown">System will be restarted soon...</sys:String>
   <sys:String x:Key="LOCLegendarySystemHibernateCountdown">System will be hibernated soon...</sys:String>

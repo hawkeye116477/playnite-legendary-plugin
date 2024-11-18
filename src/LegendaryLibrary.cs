@@ -519,10 +519,36 @@ namespace LegendaryLibraryNS
         {
             StopDownloadManager();
             LegendaryDownloadManager downloadManager = GetLegendaryDownloadManager();
-            downloadManager.SaveData();
             var settings = GetSettings();
             if (settings != null)
             {
+                if (settings.AutoRemoveCompletedDownloads != ClearCacheTime.Never)
+                {
+                    var nextRemovingCompletedDownloadsTime = settings.NextRemovingCompletedDownloadsTime;
+                    if (nextRemovingCompletedDownloadsTime != 0)
+                    {
+                        DateTimeOffset now = DateTime.UtcNow;
+                        if (now.ToUnixTimeSeconds() >= nextRemovingCompletedDownloadsTime)
+                        {
+                            foreach (var downloadItem in downloadManager.downloadManagerData.downloads.ToList())
+                            {
+                                if (downloadItem.status == DownloadStatus.Completed)
+                                {
+                                    downloadManager.downloadManagerData.downloads.Remove(downloadItem);
+                                    downloadManager.downloadsChanged = true;
+                                }
+                            }
+                            settings.NextRemovingCompletedDownloadsTime = GetNextClearingTime(settings.AutoRemoveCompletedDownloads);
+                            SavePluginSettings(settings);
+                        }
+                    }
+                    else
+                    {
+                        settings.NextRemovingCompletedDownloadsTime = GetNextClearingTime(settings.AutoRemoveCompletedDownloads);
+                        SavePluginSettings(settings);
+                    }
+                }
+
                 if (settings.AutoClearCache != ClearCacheTime.Never)
                 {
                     var nextClearingTime = settings.NextClearingTime;
@@ -543,6 +569,7 @@ namespace LegendaryLibraryNS
                     }
                 }
             }
+            downloadManager.SaveData();
         }
 
         public static long GetNextUpdateCheckTime(UpdatePolicy frequency)

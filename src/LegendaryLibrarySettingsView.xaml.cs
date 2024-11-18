@@ -211,6 +211,8 @@ namespace LegendaryLibraryNS
             };
             AutoClearCacheCBo.ItemsSource = autoClearOptions;
 
+            AutoRemoveCompletedDownloadsCBo.ItemsSource = autoClearOptions;
+
             troubleshootingInformation = new LegendaryTroubleshootingInformation();
             if (LegendaryLauncher.IsInstalled)
             {
