@@ -5,7 +5,7 @@
   <sys:String x:Key="LOCLegendaryDownloadSize">İndirme Boyutu:</sys:String>
   <sys:String x:Key="LOCLegendaryInstallSize">Kurulum Boyutu:</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallGameConfirm">{0} kaldırılacak, bundan emin misiniz?</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadSettings">İndirme Ayarları</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadSettings">İndirilenler</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadTaskFinishedNotifications">Tamamlanan görevlerle ilgili masaüstü bildirimlerini görüntüle</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">İndirme hızını saniyedeki bit cinsinden göster</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAllDlcs">Tüm DLC içeriğini indir</sys:String>
@@ -15,6 +15,7 @@
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">En fazla paylaşılan bellek miktarı (MB)</sys:String>
   <sys:String x:Key="LOCLegendaryConnectionTimeout">Bağlantı zaman aşımı (sn)</sys:String>
   <sys:String x:Key="LOCLegendaryAfterDownloadComplete">İndirme tamamlandıktan sonraki eylem</sys:String>
+  <sys:String x:Key="LOCLegendaryAutoRemoveCompletedDownloads">Tamamlanan indirmeleri otomatik olarak listeden kaldır</sys:String>
   <sys:String x:Key="LOCLegendarySystemShutdownCountdown">Sistem yakında kapatılacak...</sys:String>
   <sys:String x:Key="LOCLegendarySystemRestartCountdown">Sistem yakında yeniden başlatılacak...</sys:String>
   <sys:String x:Key="LOCLegendarySystemHibernateCountdown">Sistem yakında hazırda bekletme moduna geçecek...</sys:String>

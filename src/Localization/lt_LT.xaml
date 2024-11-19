@@ -5,7 +5,7 @@
   <sys:String x:Key="LOCLegendaryDownloadSize">Atsisiuntimo dydis:</sys:String>
   <sys:String x:Key="LOCLegendaryInstallSize">Įdiegties dydis:</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallGameConfirm">Ar tikrai norite išdiegti {0}?</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadSettings">Siuntimosi Nustatymai</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadSettings"></sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadTaskFinishedNotifications"></sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits"></sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAllDlcs"></sys:String>
@@ -15,6 +15,7 @@
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">Maksimalus bendros atminties kiekis (MB)</sys:String>
   <sys:String x:Key="LOCLegendaryConnectionTimeout"></sys:String>
   <sys:String x:Key="LOCLegendaryAfterDownloadComplete"></sys:String>
+  <sys:String x:Key="LOCLegendaryAutoRemoveCompletedDownloads"></sys:String>
   <sys:String x:Key="LOCLegendarySystemShutdownCountdown"></sys:String>
   <sys:String x:Key="LOCLegendarySystemRestartCountdown"></sys:String>
   <sys:String x:Key="LOCLegendarySystemHibernateCountdown"></sys:String>

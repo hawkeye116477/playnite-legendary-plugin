@@ -5,7 +5,7 @@
   <sys:String x:Key="LOCLegendaryDownloadSize">Размер загрузки:</sys:String>
   <sys:String x:Key="LOCLegendaryInstallSize">Размер установки:</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallGameConfirm">Вы уверены, что хотите удалить {0}?</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadSettings">Настройки загрузки</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadSettings"></sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadTaskFinishedNotifications">Отображать уведомления на рабочем столе о завершенных задачах</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Отображать скорость загрузки в битах в секунду</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAllDlcs">Скачать все DLC</sys:String>
@@ -15,6 +15,7 @@
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">Максимальное количество общей памяти (МБ)</sys:String>
   <sys:String x:Key="LOCLegendaryConnectionTimeout">Тайм-аут подключения (сек)</sys:String>
   <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Действие после завершения загрузки</sys:String>
+  <sys:String x:Key="LOCLegendaryAutoRemoveCompletedDownloads"></sys:String>
   <sys:String x:Key="LOCLegendarySystemShutdownCountdown">Система скоро выключится...</sys:String>
   <sys:String x:Key="LOCLegendarySystemRestartCountdown">Система скоро перезагрузится...</sys:String>
   <sys:String x:Key="LOCLegendarySystemHibernateCountdown">Система скоро перейдет в режим гибернации...</sys:String>

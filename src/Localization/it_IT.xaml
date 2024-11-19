@@ -5,7 +5,7 @@
   <sys:String x:Key="LOCLegendaryDownloadSize">Dimensioni download:</sys:String>
   <sys:String x:Key="LOCLegendaryInstallSize">Dimensione installazione:</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallGameConfirm">Confermi di voler disinstallare {0}?</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadSettings">Impostazioni download</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadSettings">Download</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadTaskFinishedNotifications">Visualizza le notifiche sul desktop per le attività terminate</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Visualizza la velocità di download in bit al secondo</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAllDlcs">Scarica tutti i DLC</sys:String>
@@ -15,6 +15,7 @@
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">Quantità massima di memoria condivisa (MB)</sys:String>
   <sys:String x:Key="LOCLegendaryConnectionTimeout">Timeout connessione (sec)</sys:String>
   <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Dopo il completamento del download</sys:String>
+  <sys:String x:Key="LOCLegendaryAutoRemoveCompletedDownloads">Rimuovi automaticamente i download completati dalla lista</sys:String>
   <sys:String x:Key="LOCLegendarySystemShutdownCountdown">Il sistema verrà spento a breve...</sys:String>
   <sys:String x:Key="LOCLegendarySystemRestartCountdown">Il sistema verrà riavviato a breve...</sys:String>
   <sys:String x:Key="LOCLegendarySystemHibernateCountdown">Il sistema verrà ibernato presto...</sys:String>
