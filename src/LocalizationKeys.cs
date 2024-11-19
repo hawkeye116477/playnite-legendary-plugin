@@ -374,7 +374,7 @@ namespace System
         /// </summary>
         public const string LegendaryUninstallGameConfirm = "LOCLegendaryUninstallGameConfirm";
         /// <summary>
-        /// Download Settings
+        /// Downloads
         /// </summary>
         public const string LegendaryDownloadSettings = "LOCLegendaryDownloadSettings";
         /// <summary>
