@@ -15,6 +15,7 @@
   <sys:String x:Key="LOCLegendaryMaxSharedMemory"></sys:String>
   <sys:String x:Key="LOCLegendaryConnectionTimeout"></sys:String>
   <sys:String x:Key="LOCLegendaryAfterDownloadComplete"></sys:String>
+  <sys:String x:Key="LOCLegendaryAutoRemoveCompletedDownloads"></sys:String>
   <sys:String x:Key="LOCLegendarySystemShutdownCountdown"></sys:String>
   <sys:String x:Key="LOCLegendarySystemRestartCountdown"></sys:String>
   <sys:String x:Key="LOCLegendarySystemHibernateCountdown"></sys:String>

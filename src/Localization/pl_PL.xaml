@@ -5,7 +5,7 @@
   <sys:String x:Key="LOCLegendaryDownloadSize">Rozmiar pobierania:</sys:String>
   <sys:String x:Key="LOCLegendaryInstallSize">Rozmiar instalacji:</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallGameConfirm">Czy na pewno chcesz odinstalować program {0}?</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadSettings">Ustawienia pobierania</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadSettings">Pobieranie</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadTaskFinishedNotifications">Wyświetlaj powiadomienia na pulpicie o zakończonych zadaniach</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Wyświetlaj prędkość pobierania w bitach na sekundę</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAllDlcs">Pobieraj wszystkie DLC</sys:String>
@@ -15,6 +15,7 @@
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">Maksymalna ilość pamięci współdzielonej (MB)</sys:String>
   <sys:String x:Key="LOCLegendaryConnectionTimeout">Limit czasu połączenia (sek)</sys:String>
   <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Akcja po zakończeniu pobierania</sys:String>
+  <sys:String x:Key="LOCLegendaryAutoRemoveCompletedDownloads">Automatycznie usuwaj ukończone pobrania z listy</sys:String>
   <sys:String x:Key="LOCLegendarySystemShutdownCountdown">System niedługo zostanie wyłączony...</sys:String>
   <sys:String x:Key="LOCLegendarySystemRestartCountdown">System niedługo zostanie zrestartowany...</sys:String>
   <sys:String x:Key="LOCLegendarySystemHibernateCountdown">System niedługo zostanie przełączony w stan hibernacji...</sys:String>
