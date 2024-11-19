@@ -20,6 +20,7 @@ namespace LegendaryLibraryNS.Models
             public string Cloud_save_folder { get; set; }
             public bool Is_dlc { get; set; }
             public List<Owned_Dlc> Owned_dlc { get; set; } = new List<Owned_Dlc>();
+            public string External_activation { get; set; } = "";
         }
 
         public class Owned_Dlc

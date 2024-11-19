@@ -514,7 +514,7 @@ namespace LegendaryLibraryNS
             {
                 return extraContentInfo;
             }
-            if (manifest.Manifest.Install_tags.Count > 1)
+            if (manifest.Manifest != null && manifest.Manifest.Install_tags.Count > 1)
             {
                 var cacheSDLPath = LegendaryLibrary.Instance.GetCachePath("sdlcache");
                 if (!Directory.Exists(cacheSDLPath))
@@ -589,7 +589,7 @@ namespace LegendaryLibraryNS
                     }
                 }
             }
-            if (manifest.Game.Owned_dlc.Count > 0)
+            if (manifest.Game != null && manifest.Game.Owned_dlc.Count > 0)
             {
                 foreach (var dlc in manifest.Game.Owned_dlc.OrderBy(obj => obj.Title))
                 {

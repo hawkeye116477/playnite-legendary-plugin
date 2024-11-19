@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LegendaryLibraryNS.Models
+﻿namespace LegendaryLibraryNS.Models
 {
     public class Asset
     {
@@ -14,5 +8,6 @@ namespace LegendaryLibraryNS.Models
         public string catalogItemId;
         public string @namespace;
         public string assetId;
+        public string sandboxType;
     }
 }

@@ -6,6 +6,7 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,6 +38,7 @@ namespace LegendaryLibraryNS.Services
         private readonly string assetsUrl = @"";
         private readonly string catalogUrl = @"";
         private readonly string playtimeUrl = @"";
+        private readonly string libraryItemsUrl = @"";
         private const string authEncodedString = "MzRhMDJjZjhmNDQxNGUyOWIxNTkyMTg3NmRhMzZmOWE6ZGFhZmJjY2M3Mzc3NDUwMzlkZmZlNTNkOTRmYzc2Y2Y=";
         private const string userAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Vivaldi/5.5.2805.50";
 
@@ -46,6 +48,7 @@ namespace LegendaryLibraryNS.Services
             tokensPath = LegendaryLauncher.TokensPath;
             var oauthUrlMask = @"https://{0}/account/api/oauth/token";
             var accountUrlMask = @"https://{0}/account/api/public/account/";
+            var libraryItemsUrlMask = @"https://{0}/library/api/public/items?includeMetadata=true";
             var assetsUrlMask = @"https://{0}/launcher/api/public/assets/Windows?label=Live";
             var catalogUrlMask = @"https://{0}/catalog/api/shared/namespace/";
             var playtimeUrlMask = @"https://{0}/library/api/public/playtime/account/{1}/all";
@@ -59,6 +62,7 @@ namespace LegendaryLibraryNS.Services
                 assetsUrl = string.Format(assetsUrlMask, "launcher-public-service-prod06.ol.epicgames.com");
                 catalogUrl = string.Format(catalogUrlMask, "catalog-public-service-prod06.ol.epicgames.com");
                 playtimeUrl = string.Format(playtimeUrlMask, "library-service.live.use1a.on.epicgames.com", "{0}");
+                libraryItemsUrl = string.Format(libraryItemsUrlMask, "library-service.live.use1a.on.epicgames.com");
             }
         }
 
@@ -193,6 +197,31 @@ namespace LegendaryLibraryNS.Services
 
             var response = await InvokeRequest<List<Asset>>(assetsUrl, LoadTokens());
             return response.Item2;
+        }
+
+        public async Task<List<Asset>> GetLibraryItems(List<string> ignoreList)
+        {
+            if (!await GetIsUserLoggedIn())
+            {
+                throw new Exception("User is not authenticated.");
+            }
+
+            var response = await InvokeRequest<LibraryItemsResponse>(libraryItemsUrl, LoadTokens());
+            var assets = new List<Asset>();
+            assets.AddRange(response.Item2.records);
+            while (response.Item2.responseMetadata.nextCursor != null)
+            {
+                response = await InvokeRequest<LibraryItemsResponse>($"{libraryItemsUrl}?includeMetadata=true&cursor={response.Item2.responseMetadata.nextCursor}", LoadTokens());
+                assets.AddRange(response.Item2.records);
+            }
+            foreach (var asset in assets.ToList())
+            {
+                if (asset.appName.IsNullOrEmpty() || ignoreList.Contains(asset.appName) || asset.sandboxType == "PRIVATE")
+                {
+                    assets.Remove(asset);
+                }
+            }
+            return assets;
         }
 
         public async Task<List<PlaytimeItem>> GetPlaytimeItems()

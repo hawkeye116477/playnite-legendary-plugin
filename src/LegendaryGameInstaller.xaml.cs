@@ -203,6 +203,7 @@ namespace LegendaryLibraryNS
                 Directory.CreateDirectory(cacheInfoPath);
             }
 
+            var eaAppGames = new List<string>();
             var ubisoftOnlyGames = new List<string>();
             var ubisoftRecommendedGames = new List<string>();
             var downloadItemsAlreadyAdded = new List<string>();
@@ -244,6 +245,15 @@ namespace LegendaryLibraryNS
                     App_name = installData.gameID,
                 };
                 manifest = await LegendaryLauncher.GetGameInfo(gameData);
+                if (manifest.Game != null)
+                {
+                    if (!manifest.Game.External_activation.IsNullOrEmpty() && (manifest.Game.External_activation.ToLower() == "origin" || manifest.Game.External_activation.ToLower() == "the ea app"))
+                    {
+                        eaAppGames.Add(installData.name);
+                        MultiInstallData.Remove(installData);
+                        continue;
+                    }
+                }
                 if (manifest != null && manifest.Manifest != null && manifest.Game != null && !manifest.errorDisplayed)
                 {
                     Dictionary<string, LegendarySDLInfo> extraContentInfo = await LegendaryLauncher.GetExtraContentInfo(installData);
@@ -447,6 +457,18 @@ namespace LegendaryLibraryNS
                 GamesBrd.Visibility = Visibility.Visible;
             }
 
+            if (eaAppGames.Count > 0)
+            {
+                if (eaAppGames.Count == 1)
+                {
+                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryRequiredInstallViaThirdPartyLauncherError).Format("EA App", eaAppGames[0])));
+                }
+                else
+                {
+                    string eaAppGamesCombined = string.Join(", ", eaAppGames.Select(item => item.ToString()));
+                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryRequiredInstallViaThirdPartyLauncherErrorOther).Format("EA App", eaAppGamesCombined));
+                }
+            }
             if (ubisoftOnlyGames.Count > 0)
             {
                 if (ubisoftOnlyGames.Count == 1)
@@ -458,7 +480,6 @@ namespace LegendaryLibraryNS
                     string ubisoftOnlyGamesCombined = string.Join(", ", ubisoftOnlyGames.Select(item => item.ToString()));
                     playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryRequiredInstallViaThirdPartyLauncherErrorOther).Format("Ubisoft Connect", ubisoftOnlyGamesCombined));
                 }
-
             }
             if (ubisoftRecommendedGames.Count > 0)
             {

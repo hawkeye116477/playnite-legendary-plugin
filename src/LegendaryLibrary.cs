@@ -139,6 +139,17 @@ namespace LegendaryLibraryNS
                 Logger.Warn("Found no assets on Epic accounts.");
             }
 
+            if (GetSettings().ImportEALauncherGames)
+            {
+                var ignoreList = new List<string>();
+                foreach (var gameAsset in assets.Where(a => a.@namespace != "ue"))
+                {
+                    ignoreList.Add(gameAsset.appName);
+                }
+                var nonAssets = await accountApi.GetLibraryItems(ignoreList);
+                assets.AddRange(nonAssets);
+            }
+
             var playtimeItems = await accountApi.GetPlaytimeItems();
             foreach (var gameAsset in assets.Where(a => a.@namespace != "ue"))
             {
@@ -165,9 +176,12 @@ namespace LegendaryLibraryNS
                     continue;
                 }
 
-                if ((catalogItem?.customAttributes?.ThirdPartyManagedApp != null) && (catalogItem?.customAttributes?.ThirdPartyManagedApp.value.ToLower() == "the ea app"))
+                if (!GetSettings().ImportEALauncherGames)
                 {
-                    continue;
+                    if ((catalogItem?.customAttributes?.ThirdPartyManagedApp != null) && (catalogItem?.customAttributes?.ThirdPartyManagedApp.value.ToLower() == "the ea app" || catalogItem?.customAttributes?.ThirdPartyManagedApp.value.ToLower() == "origin"))
+                    {
+                        continue;
+                    }
                 }
 
                 if (!GetSettings().ImportUbisoftLauncherGames)
