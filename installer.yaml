@@ -1,5 +1,11 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.10.1
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2024-11-20
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.10.1/LegendaryLibrary_1_10_1.pext
+    Changelog:
+      - Solved problems during uninstalling games
   - Version: 1.10.0
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2024-11-19
@@ -8,7 +14,6 @@ Packages:
       - Added possibility to automatically remove completed downloads from list
       - Moved download settings to separate tab (games installation path is here now
         too)
-      - Games will be removed from download manager's list after uninstalling now
       - Added missing scrollbars in few places
       - Added possibility to import non-installable EA games (it's experimental, so
         everything can happen)
