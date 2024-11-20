@@ -107,7 +107,7 @@ namespace LegendaryLibraryNS
                         var wantedDlc = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == selectedDlc.Key);
                         if (wantedDlc != null)
                         {
-                            if (wantedDlc.status != DownloadStatus.Running && !installedAppList.ContainsKey(wantedDlc.gameID))
+                            if (wantedDlc.status == DownloadStatus.Completed && !installedAppList.ContainsKey(wantedDlc.gameID))
                             {
                                 downloadManager.downloadManagerData.downloads.Remove(wantedDlc);
                             }
@@ -226,7 +226,7 @@ namespace LegendaryLibraryNS
                 var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == installData.gameID);
                 if (wantedItem != null)
                 {
-                    if (wantedItem.status != DownloadStatus.Running && !installedAppList.ContainsKey(installData.gameID))
+                    if (wantedItem.status == DownloadStatus.Completed && !installedAppList.ContainsKey(installData.gameID))
                     {
                         downloadManager.downloadManagerData.downloads.Remove(wantedItem);
                     }
