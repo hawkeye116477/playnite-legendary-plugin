@@ -148,6 +148,10 @@ namespace LegendaryLibraryNS
                                         File.Delete(gameSettingsFile);
                                     }
                                 }
+                                if (Directory.Exists(game.InstallDirectory))
+                                {
+                                    Directory.Delete(game.InstallDirectory, true);
+                                }
                                 game.IsInstalled = false;
                                 game.InstallDirectory = "";
                                 game.Version = "";
