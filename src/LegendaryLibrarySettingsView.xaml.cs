@@ -74,13 +74,6 @@ namespace LegendaryLibraryNS
                     EOSOUninstallBtn.Visibility = Visibility.Collapsed;
                     EOSOToggleBtn.Visibility = Visibility.Collapsed;
                     EOSOCheckForUpdatesBtn.Visibility = Visibility.Collapsed;
-                    var downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
-                    var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == "eos-overlay");
-                    if (wantedItem != null)
-                    {
-                        downloadManager.downloadManagerData.downloads.Remove(wantedItem);
-                        downloadManager.downloadsChanged = true;
-                    }
                     playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryUninstallSuccess).Format(ResourceProvider.GetString(LOC.LegendaryEOSOverlay)));
                 }
             }

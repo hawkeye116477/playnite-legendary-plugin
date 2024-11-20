@@ -105,6 +105,17 @@ namespace LegendaryLibraryNS
                     foreach (var selectedDlc in selectedDlcs)
                     {
                         var wantedDlc = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == selectedDlc.Key);
+                        if (wantedDlc != null)
+                        {
+                            if (wantedDlc.status != DownloadStatus.Running && !installedAppList.ContainsKey(wantedDlc.gameID))
+                            {
+                                downloadManager.downloadManagerData.downloads.Remove(wantedDlc);
+                            }
+                            else
+                            {
+                                downloadItemsAlreadyAdded.Add(selectedDlc.Value.name);
+                            }
+                        }
                         if (wantedDlc == null)
                         {
                             var dlcInstallData = selectedDlc.Value;
@@ -117,10 +128,6 @@ namespace LegendaryLibraryNS
                             var downloadProperties = GetDownloadProperties(dlcInstallData, downloadAction, installPath);
                             dlcInstallData.downloadProperties = downloadProperties;
                             downloadTasks.Add(dlcInstallData);
-                        }
-                        else
-                        {
-                            downloadItemsAlreadyAdded.Add(selectedDlc.Value.name);
                         }
                     }
                 }
@@ -219,9 +226,16 @@ namespace LegendaryLibraryNS
                 var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == installData.gameID);
                 if (wantedItem != null)
                 {
-                    downloadItemsAlreadyAdded.Add(installData.name);
-                    MultiInstallData.Remove(installData);
-                    continue;
+                    if (wantedItem.status != DownloadStatus.Running && !installedAppList.ContainsKey(installData.gameID))
+                    {
+                        downloadManager.downloadManagerData.downloads.Remove(wantedItem);
+                    }
+                    else
+                    {
+                        downloadItemsAlreadyAdded.Add(installData.name);
+                        MultiInstallData.Remove(installData);
+                        continue;
+                    }
                 }
                 if (installData.downloadProperties.downloadAction == DownloadAction.Repair && installedAppList.ContainsKey(installData.gameID))
                 {
