@@ -68,7 +68,7 @@ namespace LegendaryLibraryNS
             }
             if (StartupArgumentsTxt.Text != "")
             {
-                newGameSettings.StartupArguments = StartupArgumentsTxt.Text.Split().ToList();
+                newGameSettings.StartupArguments = StartupArgumentsTxt.Text.SplitOutsideQuotes(' ').ToList();
             }
             if (LanguageCodeTxt.Text != "")
             {
