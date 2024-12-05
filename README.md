@@ -13,5 +13,8 @@ If you want some new feature, then you can say about that at [https://github.com
 ## **Questions**
 If you read [wiki](https://github.com/hawkeye116477/playnite-legendary-plugin/wiki) and still don't know something, then you can ask a question on [forum](https://github.com/hawkeye116477/playnite-legendary-plugin/discussions).
 
+## **Building**
+To build this extension, for first you need to clone that repo and [CliWrap](https://github.com/hawkeye116477/CliWrap) in same directory. Then you can use Visual Studio 2022 Community to buid CliWrap and then plugin (for plugin you can use VS 2019 to see preview of GUI, but CliWrap requires 2022). You may also need to replace version number in extension.yaml file or download latest Python, so version number will follow AssemblyInfo.cs file. After you compile both, you can open Playnite => Settings => For developers and choose path where is dll located to load it or alternatively go to make_scripts dir and execute make_extension.py script with Python to make single .pext file which can be dropped to Playnite's window to install it.
+
 ## **License**
 This project is distributed under the terms of the [MIT license](/LICENSE) and uses third-party libraries that are distributed under their own terms (see [ThirdPartyLicenses.txt](/ThirdPartyLicenses.txt)).
