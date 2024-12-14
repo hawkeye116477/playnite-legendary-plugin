@@ -981,5 +981,13 @@ namespace System
         /// Only one instance of Legendary may install/import/move applications at a time. Do you want to pause download manager tasks to continue?
         /// </summary>
         public const string LegendaryInstanceNotice = "LOCLegendaryInstanceNotice";
+        /// <summary>
+        /// Please return to Desktop Mode to update games.
+        /// </summary>
+        public const string LegendaryFullscreenUpdateDialogTitle = "LOCLegendaryFullscreenUpdateDialogTitle";
+        /// <summary>
+        /// Updates available for Legendary games
+        /// </summary>
+        public const string LegendaryFullscreenUpdateDialogCaption = "LOCLegendaryFullscreenUpdateDialogCaption";
     }
 }

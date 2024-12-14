@@ -157,4 +157,6 @@
   <sys:String x:Key="LOCLegendaryMigrationConfirm"></sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway"></sys:String>
   <sys:String x:Key="LOCLegendaryInstanceNotice"></sys:String>
+  <sys:String x:Key="LOCLegendaryFullscreenUpdateDialogTitle">Prosím vrátte sa do Desktop režimu pre aktualizovanie hier.</sys:String>
+  <sys:String x:Key="LOCLegendaryFullscreenUpdateDialogCaption">Našli sa aktualizácie pre Legendary hry</sys:String>
 </ResourceDictionary>

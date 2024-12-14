@@ -468,18 +468,31 @@ namespace LegendaryLibraryNS
                                     }
                                     else
                                     {
-                                        Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                                        if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
                                         {
-                                            ShowMaximizeButton = false,
-                                        });
-                                        window.DataContext = successUpdates;
-                                        window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
-                                        window.Content = new LegendaryUpdater();
-                                        window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
-                                        window.SizeToContent = SizeToContent.WidthAndHeight;
-                                        window.MinWidth = 600;
-                                        window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                                        window.ShowDialog();
+                                            Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                                            {
+                                                ShowMaximizeButton = false,
+                                            });
+                                            window.DataContext = successUpdates;
+                                            window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
+                                            window.Content = new LegendaryUpdater();
+                                            window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+                                            window.SizeToContent = SizeToContent.WidthAndHeight;
+                                            window.MinWidth = 600;
+                                            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                                            window.ShowDialog();
+                                        }
+                                        else
+                                        {
+                                            List<MessageBoxOption> options = new List<MessageBoxOption>();
+                                            PlayniteApi.Dialogs.ShowMessage(
+                                                $"{ResourceProvider.GetString(LOC.LegendaryFullscreenUpdateDialogTitle)}",
+                                                $"{ResourceProvider.GetString(LOC.LegendaryFullscreenUpdateDialogCaption)}",
+                                                MessageBoxButton.OK,
+                                                MessageBoxImage.Asterisk
+                                                );
+                                        }
                                     }
                                 }
                                 else
