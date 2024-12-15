@@ -577,6 +577,8 @@ namespace LegendaryLibraryNS
         public async Task<Dictionary<string, UpdateInfo>> CheckGameUpdates(string gameTitle, string gameId, bool forceRefreshCache = false)
         {
             var gamesToUpdate = new Dictionary<string, UpdateInfo>();
+            var installedInfo = LegendaryLauncher.GetInstalledInfo(gameId);
+
             if (gameId == "eos-overlay")
             {
                 var cacheVersionFile = Path.Combine(LegendaryLauncher.ConfigPath, "overlay_version.json");
@@ -651,6 +653,7 @@ namespace LegendaryLibraryNS
                             Title = gameTitle,
                             Download_size = result.Download_size,
                             Disk_size = result.Disk_size,
+                            Install_path = installedInfo.Install_path,
                         };
                         gamesToUpdate.Add(gameId, updateInfo);
                     }
@@ -684,6 +687,7 @@ namespace LegendaryLibraryNS
                                 Title = newGameInfo.Game.Title,
                                 Download_size = resultUpdateSizes.Download_size,
                                 Disk_size = resultUpdateSizes.Disk_size,
+                                Install_path = installedInfo.Install_path,
                             };
                             gamesToUpdate.Add(oldGameInfo.App_name, updateInfo);
                         }
@@ -828,6 +832,7 @@ namespace LegendaryLibraryNS
                                     maxSharedMemory = settings.MaxSharedMemory,
                                 };
                             }
+                            downloadProperties.installPath = gameToUpdate.Value.Install_path;
                             var updateTask = new DownloadManagerData.Download
                             {
                                 gameID = gameToUpdate.Key,

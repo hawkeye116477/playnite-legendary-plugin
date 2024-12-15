@@ -789,5 +789,16 @@ namespace LegendaryLibraryNS
                 return playtimeSyncEnabled;
             }
         }
+
+        public static Installed GetInstalledInfo(string gameId)
+        {
+            var installedAppList = GetInstalledAppList();
+            var installedInfo = new Installed();
+            if (installedAppList.ContainsKey(gameId))
+            {
+                installedInfo = installedAppList[gameId];
+            }
+            return installedInfo;
+        }
     }
 }
