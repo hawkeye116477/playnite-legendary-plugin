@@ -47,6 +47,9 @@ namespace LegendaryLibraryNS
         {
             MaxWorkersNI.MaxValue = CommonHelpers.CpuThreadsNumber;
             var wantedItem = SelectedDownload;
+
+            wantedItem.downloadProperties.installPath = wantedItem.fullInstallPath;
+            
             if (wantedItem.downloadProperties != null)
             {
                 SelectedGamePathTxt.Text = wantedItem.downloadProperties.installPath;
