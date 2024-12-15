@@ -1,5 +1,13 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.10.4
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2024-12-15
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.10.4/LegendaryLibrary_1_10_4.pext
+    Changelog:
+      - Fixed download properties window
+      - Fixed downloading updates for some games
+      - Fixed crashing in full screen mode
   - Version: 1.10.3
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2024-12-15
