@@ -1,6 +1,7 @@
 ﻿using CommonPlugin;
 using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
+using Playnite.SDK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,12 @@ namespace LegendaryLibraryNS
     /// </summary>
     public partial class LegendaryUpdater : UserControl
     {
+        private IPlayniteAPI playniteAPI = API.Instance;
         public Dictionary<string, UpdateInfo> UpdatesList => (Dictionary<string, UpdateInfo>)DataContext;
         public LegendaryUpdater()
         {
             InitializeComponent();
+            SetControlStyles();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -32,6 +35,22 @@ namespace LegendaryLibraryNS
             MaxWorkersNI.Value = settings.MaxWorkers.ToString();
             MaxSharedMemoryNI.Value = settings.MaxSharedMemory.ToString();
             ReorderingChk.IsChecked = settings.EnableReordering;
+        }
+
+        private void SetControlStyles()
+        {
+            var baseStyleName = "BaseTextBlockStyle";
+            if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+            {
+                baseStyleName = "TextBlockBaseStyle";
+                Resources.Add(typeof(Button), new Style(typeof(Button), null));
+            }
+
+            if (ResourceProvider.GetResource(baseStyleName) is Style baseStyle && baseStyle.TargetType == typeof(TextBlock))
+            {
+                var implicitStyle = new Style(typeof(TextBlock), baseStyle);
+                Resources.Add(typeof(TextBlock), implicitStyle);
+            }
         }
 
         private void UpdatesLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
