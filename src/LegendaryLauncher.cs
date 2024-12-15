@@ -298,7 +298,7 @@ namespace LegendaryLibraryNS
                                    .ExecuteBufferedAsync();
                 }
                 var errorMessage = cmd.StandardError;
-                if (cmd.ExitCode != 0 || errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") || errorMessage.Contains("Error"))
+                if (cmd.ExitCode != 0 || (!errorMessage.Contains("old manifest") && (errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") || errorMessage.Contains("Error"))))
                 {
                     var logger = LogManager.GetLogger();
                     logger.Error("[Legendary]" + cmd.StandardError);

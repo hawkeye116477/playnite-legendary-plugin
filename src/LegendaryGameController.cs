@@ -577,7 +577,6 @@ namespace LegendaryLibraryNS
         public async Task<Dictionary<string, UpdateInfo>> CheckGameUpdates(string gameTitle, string gameId, bool forceRefreshCache = false)
         {
             var gamesToUpdate = new Dictionary<string, UpdateInfo>();
-            var installedInfo = LegendaryLauncher.GetInstalledInfo(gameId);
 
             if (gameId == "eos-overlay")
             {
@@ -638,25 +637,24 @@ namespace LegendaryLibraryNS
                     {
                         if (overlayInstallInfo != null && overlayInstallInfo.Version != null)
                         {
-                            if (overlayInstallInfo.Version == newVersion)
+                            if (overlayInstallInfo.Version != newVersion)
                             {
-                                return gamesToUpdate;
+                                var result = await LegendaryLauncher.GetUpdateSizes("eos-overlay");
+                                if (result.Download_size != 0)
+                                {
+                                    var updateInfo = new UpdateInfo
+                                    {
+                                        Version = newVersion,
+                                        Title = gameTitle,
+                                        Download_size = result.Download_size,
+                                        Disk_size = result.Disk_size,
+                                        Install_path = overlayInstallInfo.Install_path,
+                                    };
+                                    gamesToUpdate.Add(gameId, updateInfo);
+                                }
                             }
                         }
-                    }
-                    var result = await LegendaryLauncher.GetUpdateSizes("eos-overlay");
-                    if (result.Download_size != 0)
-                    {
-                        var updateInfo = new UpdateInfo
-                        {
-                            Version = newVersion,
-                            Title = gameTitle,
-                            Download_size = result.Download_size,
-                            Disk_size = result.Disk_size,
-                            Install_path = installedInfo.Install_path,
-                        };
-                        gamesToUpdate.Add(gameId, updateInfo);
-                    }
+                    } 
                 }
                 else
                 {
@@ -687,7 +685,7 @@ namespace LegendaryLibraryNS
                                 Title = newGameInfo.Game.Title,
                                 Download_size = resultUpdateSizes.Download_size,
                                 Disk_size = resultUpdateSizes.Disk_size,
-                                Install_path = installedInfo.Install_path,
+                                Install_path = oldGameInfo.Install_path,
                             };
                             gamesToUpdate.Add(oldGameInfo.App_name, updateInfo);
                         }
