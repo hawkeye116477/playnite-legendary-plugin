@@ -51,6 +51,7 @@ namespace LegendaryLibraryNS
             {
                 SelectedGamePathTxt.Text = wantedItem.downloadProperties.installPath;
                 ReorderingChk.IsChecked = wantedItem.downloadProperties.enableReordering;
+                IgnoreFreeSpaceChk.IsChecked = wantedItem.downloadProperties.ignoreFreeSpace;
                 MaxWorkersNI.Value = wantedItem.downloadProperties.maxWorkers.ToString();
                 MaxSharedMemoryNI.Value = wantedItem.downloadProperties.maxSharedMemory.ToString();
                 TaskCBo.SelectedValue = wantedItem.downloadProperties.downloadAction;
@@ -127,7 +128,7 @@ namespace LegendaryLibraryNS
             {
                 installPath = installPath.Replace(playniteDirectoryVariable, playniteAPI.Paths.ApplicationPath);
             }
-            if (CommonHelpers.IsDirectoryWritable(installPath, LOC.LegendaryPermissionError))
+            if (!CommonHelpers.IsDirectoryWritable(installPath, LOC.LegendaryPermissionError))
             {
                 return;
             }
