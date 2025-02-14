@@ -446,7 +446,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private async void UpdateAuthStatus()
+        public async void UpdateAuthStatus()
         {
             LoginBtn.IsEnabled = false;
             AuthStatusTB.Text = ResourceProvider.GetString(LOC.Legendary3P_EpicLoginChecking);
@@ -457,12 +457,14 @@ namespace LegendaryLibraryNS
                 AuthStatusTB.Text = ResourceProvider.GetString(LOC.LegendarySignedInAs).Format(clientApi.GetUsername());
                 LoginBtn.Content = ResourceProvider.GetString(LOC.LegendarySignOut);
                 LoginBtn.IsChecked = true;
+                LoginAlternativeBtn.Visibility = Visibility.Collapsed;
             }
             else
             {
                 AuthStatusTB.Text = ResourceProvider.GetString(LOC.Legendary3P_EpicNotLoggedIn);
                 LoginBtn.Content = ResourceProvider.GetString(LOC.Legendary3P_EpicAuthenticateLabel);
                 LoginBtn.IsChecked = false;
+                LoginAlternativeBtn.Visibility = Visibility.Visible;
             }
             LoginBtn.IsEnabled = true;
         }
@@ -636,6 +638,25 @@ namespace LegendaryLibraryNS
             if (ImportEALauncherGamesChk.IsChecked == true)
             {
                 playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryThirdPartyLauncherImportWarn).Format("EA App"), "", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void LoginAlternativeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
+            {
+                ShowMaximizeButton = false
+            });
+            window.Title = ResourceProvider.GetString(LOC.LegendaryAuthenticateAlternativeLabel);
+            window.Content = new LegendaryAlternativeAuthView();
+            window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
+            window.SizeToContent = SizeToContent.Height;
+            window.Width = 600;
+            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            var result = window.ShowDialog();
+            if (result == true)
+            {
+                UpdateAuthStatus();
             }
         }
     }

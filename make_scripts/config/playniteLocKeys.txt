@@ -47,3 +47,4 @@ LOCImportLabel
 LOCClientNotInstalledError
 LOCDownloadingLabel
 LOCUninstalling
+LOCCopyTitle

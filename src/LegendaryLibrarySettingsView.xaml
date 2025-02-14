@@ -52,6 +52,7 @@
                             <ToggleButton HorizontalAlignment="Left" Name="LoginBtn" Content="{DynamicResource LOCLegendary3P_EpicAuthenticateLabel}" IsEnabled="False" Click="LoginBtn_Click" IsChecked="False"/>
                             <TextBlock VerticalAlignment="Center" Margin="10,5,5,5" Name="AuthStatusTB" Text="{DynamicResource LOCLegendary3P_EpicLoginChecking}"/>
                         </StackPanel>
+                        <Button Margin="0,5,0,0" HorizontalAlignment="Left" Name="LoginAlternativeBtn" Content="{DynamicResource LOCLegendaryAuthenticateAlternativeLabel}" Visibility="Visible" Click="LoginAlternativeBtn_Click"/>
                     </StackPanel>
                     <Button Content="{DynamicResource LOCLegendaryMigrateGamesEpic}" HorizontalAlignment="Left" Margin="0,5,0,15" Name="MigrateEpicBtn" IsEnabled="False" Click="MigrateEpicBtn_Click"></Button>
                     <CheckBox DockPanel.Dock="Top" Margin="0,0,0,10"

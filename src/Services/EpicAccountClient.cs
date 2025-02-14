@@ -33,6 +33,7 @@ namespace LegendaryLibraryNS.Services
         private IPlayniteAPI api;
         private string tokensPath;
         private readonly string loginUrl = "https://www.epicgames.com/id/login?redirectUrl=https%3A//www.epicgames.com/id/api/redirect%3FclientId%3D34a02cf8f4414e29b15921876da36f9a%26responseType%3Dcode";
+        public static string authCodeUrl = "https://www.epicgames.com/id/api/redirect?clientId=34a02cf8f4414e29b15921876da36f9a&responseType=code";
         private readonly string oauthUrl = @"";
         private readonly string accountUrl = @"";
         private readonly string assetsUrl = @"";
@@ -40,7 +41,7 @@ namespace LegendaryLibraryNS.Services
         private readonly string playtimeUrl = @"";
         private readonly string libraryItemsUrl = @"";
         private const string authEncodedString = "MzRhMDJjZjhmNDQxNGUyOWIxNTkyMTg3NmRhMzZmOWE6ZGFhZmJjY2M3Mzc3NDUwMzlkZmZlNTNkOTRmYzc2Y2Y=";
-        private const string userAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Vivaldi/5.5.2805.50";
+        private const string userAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Vivaldi/7.1.3570.39";
 
         public EpicAccountClient(IPlayniteAPI api)
         {
@@ -82,11 +83,16 @@ namespace LegendaryLibraryNS.Services
                 view.LoadingChanged += async (s, e) =>
                 {
                     var address = view.GetCurrentAddress();
-                    if (address.StartsWith(@"https://www.epicgames.com/id/api/redirect"))
+                    if (address.Contains(@"id/api/redirect?clientId=") && !e.IsLoading)
                     {
                         apiRedirectContent = await view.GetPageTextAsync();
                         loggedIn = true;
                         view.Close();
+                    }
+
+                    if (address.EndsWith(@"epicgames.com/account/personal") && !e.IsLoading)
+                    {
+                        view.Navigate(authCodeUrl);
                     }
                 };
 
@@ -112,7 +118,11 @@ namespace LegendaryLibraryNS.Services
                 logger.Error("Failed to get login exchange key for Epic account.");
                 return;
             }
+            await AuthenticateUsingAuthCode(authorizationCode);
+        }
 
+        public async Task AuthenticateUsingAuthCode(string authorizationCode)
+        {
             using var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Clear();
             httpClient.DefaultRequestHeaders.Add("Authorization", "basic " + authEncodedString);

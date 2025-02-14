@@ -1,52 +1,53 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!--
-  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/7c471edfeea4ed1384f97c14ad76c48988453248 and https://github.com/JosefNemec/Playnite/tree/2afc8359d8c45e80c66404add4221037ce600d43.
+  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/f2e63d09735f90752b8a32f35512c75511a6637a and https://github.com/JosefNemec/Playnite/tree/75372a6d70abbbacabf297e6d75770f58fa25f10.
   DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <sys:String x:Key="LOCLegendary3P_PlayniteFilterActiveLabel">فیلتر فعال</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteFilters">فیلترها</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">بازی شروع نمیشود: {0}</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">بازی نصب نشد: {0}</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError">بازی حذف نصب نشد: {0}</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteImportLabel">وارد کردن</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">اندازه نصب</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">اضافه شد</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">بله</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteFilterActiveLabel">پالایه‌ی فعال</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteFilters">پالایه‌ها</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">نمی‌توان بازی را آغاز کرد: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">نمی‌توان بازی را نصب کرد: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError">نمی‌توان بازی را زدود: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCopyTitle">روگرفت</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteImportLabel">درون‌برد</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">اندازه‌ی نصب</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">افزوده شد</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteOKLabel">باشه</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSaveLabel">ذخیره</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteCancelLabel">لغو</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteYesLabel">تایید</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteNoLabel">خیر</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteDownloadingLabel">بارگيري...</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">بارگذاری…</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteYesLabel">آره</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteNoLabel">نه</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteDownloadingLabel">بارگيری...</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteLoadingLabel">بارکردن…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteProgressMetadata">در حال بارگیری ابرداده...</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">راه اندازی مجدد سیستم</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteMenuShutdownSystem">خاموش کردن سیستم</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteMenuSuspendSystem">تعلیق سیستم</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteMenuHibernateSystem">خواب زمستانی سیستم</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuRestartSystem">بازراه‌اندازی رایانه</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuShutdownSystem">خاموش کردن رایانه</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuSuspendSystem">تعلیق رایانه</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMenuHibernateSystem">فرستادن رایانه به خواب زمستانی</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsGeneralLabel">عمومی</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsAdvancedLabel">پیشرفته</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsClearCacheTitle">حافظه پنهان پاک شود؟</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever">هرگز</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteLoginRequired">نیاز به تایید هویت دارد</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">قابل اجرا</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExecutableTitle">اجراپذیر</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameNameTitle">نام</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">محل نصب</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">واردات بازی از {0} انجام نشد.</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">بارگیری ابرداده انجام نشد: {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallDirTitle">پوشه‌ی نصب</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteLibraryImportError">ناکامی در درون‌برد بازی‌ها از {0}.</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteMetadataDownloadError">ناکامی در بارگیری فراداده: {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstalling">در حال حذف نصب</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDoNothing">کاری نکن</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteClose">بستن</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">به روزرسانی موجود است</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">دانلود و نصب بروزرسانی</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">بررسی برای بروزرسانی</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">بررسی نسخه جدید انجام نشد.</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterWindowTitle">به روزرسانی در دسترس است</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdaterInstallUpdate">بارگیری و نصب به‌روزرسانی</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCheckForUpdates">بررسی برای به‌روزرسانی</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteUpdateCheckFailMessage">ناکامی در بررسی برای نسخه‌ی نو.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallGame">نصب</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteUninstallGame">حذف نصب</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteClientNotInstalledError">{0} مشتری نصب نشده است.</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteClientNotInstalledError">{0} کلاینت نصب نشده است.</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteDontShowAgainTitle">دوباره نمایش نده</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage">صفحه فروشگاه</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">به روز رسانیها</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCommonLinksStorePage">برگهٔ فروشگاه</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">به‌روزرسانی‌ها</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">انتخاب فایل…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">انتخاب پوشه…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnlyManually">تنها دستی</sys:String>

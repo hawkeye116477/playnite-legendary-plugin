@@ -26,6 +26,10 @@ namespace System
         /// </summary>
         public const string Legendary3P_PlayniteGameUninstallError = "LOCLegendary3P_PlayniteGameUninstallError";
         /// <summary>
+        /// Copy
+        /// </summary>
+        public const string Legendary3P_PlayniteCopyTitle = "LOCLegendary3P_PlayniteCopyTitle";
+        /// <summary>
         /// Import
         /// </summary>
         public const string Legendary3P_PlayniteImportLabel = "LOCLegendary3P_PlayniteImportLabel";
@@ -353,6 +357,22 @@ namespace System
         /// Installing prerequisites ({0})...
         /// </summary>
         public const string LegendaryInstallingPrerequisites = "LOCLegendaryInstallingPrerequisites";
+        /// <summary>
+        /// Authenticate using alternative method
+        /// </summary>
+        public const string LegendaryAuthenticateAlternativeLabel = "LOCLegendaryAuthenticateAlternativeLabel";
+        /// <summary>
+        /// 1. Login to Epic Games Store in your web browser.
+        /// </summary>
+        public const string LegendaryAlternativeAuthInstructionsFirst = "LOCLegendaryAlternativeAuthInstructionsFirst";
+        /// <summary>
+        /// 2. Navigate to authentication code URL, which is shown on the input box below.
+        /// </summary>
+        public const string LegendaryAlternativeAuthInstructionsSecond = "LOCLegendaryAlternativeAuthInstructionsSecond";
+        /// <summary>
+        /// 3. Paste your "authorizationCode" value in the input box below and click on the "authenticate" button.
+        /// </summary>
+        public const string LegendaryAlternativeAuthInstructionsThird = "LOCLegendaryAlternativeAuthInstructionsThird";
         /// <summary>
         /// Launcher Path
         /// </summary>

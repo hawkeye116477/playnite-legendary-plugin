@@ -212,6 +212,9 @@
     <Compile Include="Converters\DownloadStatusEnumToStringConverter.cs" />
     <Compile Include="Enums\UpdatePolicy.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="LegendaryAlternativeAuthView.xaml.cs">
+      <DependentUpon>LegendaryAlternativeAuthView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LegendaryDownloadCompleteActionView.xaml.cs">
       <DependentUpon>LegendaryDownloadCompleteActionView.xaml</DependentUpon>
     </Compile>
@@ -306,6 +309,10 @@
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LegendaryAlternativeAuthView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LegendaryDlcManager.xaml">
       <SubType>Designer</SubType>

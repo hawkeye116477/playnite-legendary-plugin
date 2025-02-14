@@ -29,4 +29,8 @@
   <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">{1} requires installation of {0}. It's recommended to go to Plugin settings =&gt; Additional services =&gt; {0} =&gt; Activate games, and then install it directly via {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther">Following games require installation of {0}: {1}. It's recommended to go to Plugin settings =&gt; Additional services =&gt; {0} =&gt; Activate games, and then install them directly via {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Installing prerequisites ({0})...</sys:String>
+  <sys:String x:Key="LOCLegendaryAuthenticateAlternativeLabel">Authenticate using alternative method</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsFirst">1. Login to Epic Games Store in your web browser.</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsSecond">2. Navigate to authentication code URL, which is shown on the input box below.</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsThird">3. Paste your "authorizationCode" value in the input box below and click on the "authenticate" button.</sys:String>
 </ResourceDictionary>

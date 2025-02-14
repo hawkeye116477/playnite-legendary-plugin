@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!--
-  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/7c471edfeea4ed1384f97c14ad76c48988453248 and https://github.com/JosefNemec/Playnite/tree/2afc8359d8c45e80c66404add4221037ce600d43.
+  Automatically generated via update_3p_localization.py script using files from https://github.com/JosefNemec/PlayniteExtensions/tree/f2e63d09735f90752b8a32f35512c75511a6637a and https://github.com/JosefNemec/Playnite/tree/75372a6d70abbbacabf297e6d75770f58fa25f10.
   DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
@@ -9,6 +9,7 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteGameStartError">Impossible de démarrer le jeu : {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameInstallError">Erreur : Impossible d'installer le jeu : {0}</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteGameUninstallError">Impossible de désinstaller le jeu : {0}</sys:String>
+  <sys:String x:Key="LOCLegendary3P_PlayniteCopyTitle">Copier</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteImportLabel">Importer</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteInstallSizeLabel">Taille de l'installation</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteAddedLabel">Ajouté le</sys:String>
