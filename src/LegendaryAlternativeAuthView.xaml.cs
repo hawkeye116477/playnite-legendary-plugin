@@ -29,6 +29,8 @@ namespace LegendaryLibraryNS
 
         private void CopyBtn_Click(object sender, RoutedEventArgs e)
         {
+            AuthLinkTxt.Focus();
+            AuthLinkTxt.SelectAll();
             Clipboard.SetText(AuthLinkTxt.Text);
         }
 
