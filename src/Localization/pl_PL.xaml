@@ -58,7 +58,7 @@
   <sys:String x:Key="LOCLegendaryDownloadCompleted">Ukończone</sys:String>
   <sys:String x:Key="LOCLegendaryCurrentDownloadSummary">Podsumowanie bieżącego pobierania</sys:String>
   <sys:String x:Key="LOCLegendaryRemoveEntry">Usuń wpis</sys:String>
-  <sys:String x:Key="LOCLegendaryRemoveEntryConfirm">Czy na pewno chcesz usunąć {0} z listy?</sys:String>
+  <sys:String x:Key="LOCLegendaryRemoveEntryConfirm">Czy na pewno chcesz usunąć {0} z listy?</sys:String>
   <sys:String x:Key="LOCLegendaryMoveEntryTop">Przenieś wpis na górę</sys:String>
   <sys:String x:Key="LOCLegendaryMoveEntryUp">Przenieś wpis w górę</sys:String>
   <sys:String x:Key="LOCLegendaryMoveEntryDown">Przenieś wpis w dół</sys:String>

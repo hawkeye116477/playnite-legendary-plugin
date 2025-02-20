@@ -29,4 +29,8 @@
   <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">{1} richiede l'installazione di {0}. Si consiglia di andare nelle impostazioni dei plugin =&gt; Servizi aggiuntivi =&gt; {0} =&gt; Attivare i giochi, e quindi installarlo direttamente tramite {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther">I seguenti giochi richiedono l'installazione di {0}: {1}. Si consiglia di andare nelle impostazioni dei plugin =&gt; Servizi aggiuntivi =&gt; {0} =&gt; Attivare i giochi, e poi installarli direttamente via {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Installazione dei prerequisiti ({0})...</sys:String>
+  <sys:String x:Key="LOCLegendaryAuthenticateAlternativeLabel"></sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsFirst"></sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsSecond"></sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsThird"></sys:String>
 </ResourceDictionary>

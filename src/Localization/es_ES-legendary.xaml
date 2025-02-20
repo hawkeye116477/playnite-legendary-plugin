@@ -29,4 +29,8 @@
   <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher"></sys:String>
   <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther"></sys:String>
   <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Instalando requisitos previos ({0})...</sys:String>
+  <sys:String x:Key="LOCLegendaryAuthenticateAlternativeLabel"></sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsFirst"></sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsSecond"></sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsThird"></sys:String>
 </ResourceDictionary>
