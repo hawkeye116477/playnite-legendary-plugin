@@ -29,4 +29,8 @@
   <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">{1} wymaga instalacji {0}. Zalecane jest, by przejść do ustawień wtyczki =&gt; Dodatkowe usługi =&gt; {0} =&gt; Aktywuj gry, a następnie zainstalować to bezpośrednio przez {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther">Następujące gry wymagają instalacji {0}: {1}. Zalecane jest, by przejść do ustawień wtyczki =&gt; Dodatkowe usługi =&gt; {0} =&gt; Aktywuj gry, a następnie zainstalować je bezpośrednio przez {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Instalowanie składników wstępnie wymaganych ({0})...</sys:String>
+  <sys:String x:Key="LOCLegendaryAuthenticateAlternativeLabel">Uwierzytelnij za pomocą alternatywnej metody</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsFirst">1. Zaloguj się do Epic Games Store w swojej przeglądarce internetowej.</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsSecond">2. Przejdź do adresu URL kodu uwierzytelniającego widocznego w poniższym polu.</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsThird">3. Wklej wartość „authorizationCode” w poniższym polu i kliknij przycisk „uwierzytelnij”.</sys:String>
 </ResourceDictionary>

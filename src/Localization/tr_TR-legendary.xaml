@@ -29,4 +29,8 @@
   <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">{1} kurulumu gerekli {0}. Eklenti ayarları =&gt; Ek hizmetler =&gt; {0} =&gt; Oyunları etkinleştir seçeneğine gitmeniz ve ardından doğrudan {0} aracılığıyla kurmanız önerilir.</sys:String>
   <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther">Aşağıdaki oyunlar {0} kurulumunu gerektirir: {1}. Eklenti ayarları =&gt; Ek hizmetler =&gt; {0} =&gt; Oyunları etkinleştir seçeneğine gitmeniz ve ardından bunları doğrudan {0} aracılığıyla kurmanız önerilir.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Ön koşullar kuruluyor ({0})...</sys:String>
+  <sys:String x:Key="LOCLegendaryAuthenticateAlternativeLabel">Alternatif yöntemi kullanarak kimlik doğrula</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsFirst">1. Web tarayıcınızdan Epic Games Store üstüne giriş yapın.</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsSecond">2. Aşağıdaki giriş kutusunda gösterilen kimlik doğrulama kodu adresine gidin.</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsThird">3. Aşağıdaki giriş kutusuna &quot;yetki kodu&quot; değerinizi yapıştırın ve &quot;doğrula&quot; düğmesine tıklayın.</sys:String>
 </ResourceDictionary>

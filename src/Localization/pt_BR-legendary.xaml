@@ -6,7 +6,7 @@
   <sys:String x:Key="LOCLegendaryPreferredCDN">CDN Preferencial</sys:String>
   <sys:String x:Key="LOCLegendaryHttpOnlyDownload">Desabilitar HTTPS (útil para CDNs como LanCache)</sys:String>
   <sys:String x:Key="LOCLegendaryEnableReordering">Habilitar otimização de reordenação</sys:String>
-  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">Isso pode reduzir os requisitos de RAM durante o download (pode não funcionar corretamente com alguns títulos).</sys:String>
+  <sys:String x:Key="LOCLegendaryEnableReorderingToolTip">Isso pode reduzir os requisitos de RAM durante a transferência (pode não funcionar corretamente com alguns títulos).</sys:String>
   <sys:String x:Key="LOCLegendaryEOSOverlay">Sobreposição EOS</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpace">Ignorar espaço livre</sys:String>
   <sys:String x:Key="LOCLegendaryIgnoreFreeSpaceToolTip">Não aborte se não houver espaço livre suficiente disponível.</sys:String>
@@ -29,4 +29,8 @@
   <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">{1} requer a instalação de {0}. É recomendado ir em Configurações do Plugin =&gt; Serviços adicionais =&gt; {0} =&gt; Ativar jogos, e instalá-lo diretamente por {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther">Os seguintes jogos requerem a instalação de {0}: {1}. É recomendado ir em Configurações do Plugin =&gt; Serviços adicionais =&gt; {0} =&gt; Ativar jogos, e instalar diretamente através de {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Instalando pré-requisitos ({0})...</sys:String>
+  <sys:String x:Key="LOCLegendaryAuthenticateAlternativeLabel">Método alternativo de autenticação</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsFirst">1. Faça Login na Epic Games Store no seu navegador.</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsSecond">2. Navegue à URL abaixo.</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsThird">3. Cole o valor de &quot;authorizationCode&quot; na caixa abaixo e clique no botão &quot;Autenticar&quot;.</sys:String>
 </ResourceDictionary>
