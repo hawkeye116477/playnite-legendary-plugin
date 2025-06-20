@@ -1010,6 +1010,10 @@ namespace LegendaryLibraryNS
                             {
                                 ShowMaximizeButton = false,
                             });
+                            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+                            {
+                                window.Background = (System.Windows.Media.Brush)ResourceProvider.GetResource("ControlBackgroundBrush");
+                            }
                             window.DataContext = successUpdates;
                             window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
                             window.Content = new LegendaryUpdater();

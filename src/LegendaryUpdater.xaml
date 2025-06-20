@@ -57,7 +57,11 @@
                 </ListBox.Resources>
             </ListBox>
             <Border BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Margin="0,5,0,0">
-                <Expander Header="{DynamicResource LOCLegendaryAdvancedOptions}" Margin="2,2,5,2" HorizontalAlignment="Left" >
+                <Expander Margin="2,2,5,2" HorizontalAlignment="Left" >
+                    <Expander.Header >
+                        <TextBlock Text="{DynamicResource LOCLegendaryAdvancedOptions}"
+                          HorizontalAlignment="Left" />
+                    </Expander.Header>
                     <Grid Margin="5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />

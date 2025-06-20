@@ -44,13 +44,14 @@ namespace LegendaryLibraryNS
             {
                 baseStyleName = "TextBlockBaseStyle";
                 Resources.Add(typeof(Button), new Style(typeof(Button), null));
+                UpdatesLB.Background = System.Windows.Media.Brushes.Transparent;
             }
-
             if (ResourceProvider.GetResource(baseStyleName) is Style baseStyle && baseStyle.TargetType == typeof(TextBlock))
             {
                 var implicitStyle = new Style(typeof(TextBlock), baseStyle);
                 Resources.Add(typeof(TextBlock), implicitStyle);
             }
+
         }
 
         private void UpdatesLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
