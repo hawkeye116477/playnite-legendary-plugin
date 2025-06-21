@@ -468,21 +468,10 @@ namespace LegendaryLibraryNS
                                     }
                                     else
                                     {
-                                        Window window = null;
-                                        if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+                                        Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
                                         {
-                                            window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
-                                            {
-                                                ShowMaximizeButton = false,
-                                            });
-                                        }
-                                        else
-                                        {
-                                            window = new Window
-                                            {
-                                                Background = System.Windows.Media.Brushes.DodgerBlue
-                                            };
-                                        }
+                                            ShowMaximizeButton = false,
+                                        });
                                         window.DataContext = successUpdates;
                                         window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
                                         window.Content = new LegendaryUpdater();
@@ -1010,10 +999,6 @@ namespace LegendaryLibraryNS
                             {
                                 ShowMaximizeButton = false,
                             });
-                            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
-                            {
-                                window.Background = (System.Windows.Media.Brush)ResourceProvider.GetResource("ControlBackgroundBrush");
-                            }
                             window.DataContext = successUpdates;
                             window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
                             window.Content = new LegendaryUpdater();

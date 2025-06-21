@@ -20,11 +20,11 @@ namespace LegendaryLibraryNS
         public LegendaryUpdater()
         {
             InitializeComponent();
-            SetControlStyles();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            SetControlStyles();
             foreach (var gameUpdate in UpdatesList)
             {
                 gameUpdate.Value.Title_for_updater = $"{gameUpdate.Value.Title.RemoveTrademarks()} {gameUpdate.Value.Version}";
@@ -32,6 +32,7 @@ namespace LegendaryLibraryNS
             UpdatesLB.ItemsSource = UpdatesList;
             UpdatesLB.SelectAll();
             var settings = LegendaryLibrary.GetSettings();
+            MaxWorkersNI.MaxValue = CommonHelpers.CpuThreadsNumber;
             MaxWorkersNI.Value = settings.MaxWorkers.ToString();
             MaxSharedMemoryNI.Value = settings.MaxSharedMemory.ToString();
             ReorderingChk.IsChecked = settings.EnableReordering;
@@ -45,6 +46,8 @@ namespace LegendaryLibraryNS
                 baseStyleName = "TextBlockBaseStyle";
                 Resources.Add(typeof(Button), new Style(typeof(Button), null));
                 UpdatesLB.Background = System.Windows.Media.Brushes.Transparent;
+                var thisWindow = Window.GetWindow(this);
+                thisWindow.Background = (System.Windows.Media.Brush)ResourceProvider.GetResource("ControlBackgroundBrush");
             }
             if (ResourceProvider.GetResource(baseStyleName) is Style baseStyle && baseStyle.TargetType == typeof(TextBlock))
             {
