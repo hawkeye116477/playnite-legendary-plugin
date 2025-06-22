@@ -203,7 +203,7 @@ namespace LegendaryLibraryNS
         {
             if (!ClientExecPath.IsNullOrEmpty())
             {
-                ProcessStarter.StartProcess(ClientExecPath);
+                ProcessStarter.StartProcess("cmd", $"/K \"{ClientExecPath}\" -h", Path.GetDirectoryName(ClientExecPath));
             }
         }
 
