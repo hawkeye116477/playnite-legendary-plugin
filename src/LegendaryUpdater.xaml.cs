@@ -40,21 +40,38 @@ namespace LegendaryLibraryNS
 
         private void SetControlStyles()
         {
+            Style separatorStyle = new Style(typeof(Separator));
+            var separatorBackground = "PanelSeparatorBrush";
             var baseStyleName = "BaseTextBlockStyle";
+            Style borderStyle = new Style(typeof(Border), null);
             if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
             {
                 baseStyleName = "TextBlockBaseStyle";
-                Resources.Add(typeof(Button), new Style(typeof(Button), null));
-                UpdatesLB.Background = System.Windows.Media.Brushes.Transparent;
+                Style btnStyle = new Style
+                {
+                    TargetType = typeof(Button)
+                };
+                Resources.Add(typeof(Button), btnStyle);
+                Style listboxStyle = new Style(typeof(ListBox));
+                listboxStyle.Setters.Add(new Setter(BackgroundProperty, System.Windows.Media.Brushes.Transparent));
+                Resources.Add(typeof(ListBox), listboxStyle);
                 var thisWindow = Window.GetWindow(this);
                 thisWindow.Background = (System.Windows.Media.Brush)ResourceProvider.GetResource("ControlBackgroundBrush");
+                separatorBackground = "TextBrushDark";
+                borderStyle.Setters.Add(new Setter(BorderBrushProperty, (System.Windows.Media.Brush)ResourceProvider.GetResource("GlyphLightBrush")));
             }
+            else
+            {
+                borderStyle = ResourceProvider.GetResource("HighlightBorder") as Style;
+            }
+            Resources.Add(typeof(Border), borderStyle);
+            separatorStyle.Setters.Add(new Setter(BackgroundProperty, (System.Windows.Media.Brush)ResourceProvider.GetResource(separatorBackground)));
+            Resources.Add(typeof(Separator), separatorStyle);
             if (ResourceProvider.GetResource(baseStyleName) is Style baseStyle && baseStyle.TargetType == typeof(TextBlock))
             {
                 var implicitStyle = new Style(typeof(TextBlock), baseStyle);
                 Resources.Add(typeof(TextBlock), implicitStyle);
             }
-
         }
 
         private void UpdatesLB_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -49,21 +49,10 @@ namespace LegendaryLibraryNS
                 return;
             }
 
-            Window window = null;
-            if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            Window window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
             {
-                window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
-                {
-                    ShowMaximizeButton = false,
-                });
-            }
-            else
-            {
-                window = new Window
-                {
-                    Background = System.Windows.Media.Brushes.DodgerBlue
-                };
-            }
+                ShowMaximizeButton = false,
+            });
             window.DataContext = installData;
             window.Content = new LegendaryGameInstaller();
             window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
@@ -285,7 +274,7 @@ namespace LegendaryLibraryNS
             {
                 gameSettings.InstallPrerequisites = false;
                 var commonHelpers = LegendaryLibrary.Instance.commonHelpers;
-                commonHelpers.SaveJsonSettingsToFile(gameSettings,  "GamesSettings", Game.GameId, true);
+                commonHelpers.SaveJsonSettingsToFile(gameSettings, "GamesSettings", Game.GameId, true);
                 var appList = LegendaryLauncher.GetInstalledAppList();
                 if (appList.ContainsKey(Game.GameId))
                 {
@@ -654,7 +643,7 @@ namespace LegendaryLibraryNS
                                 }
                             }
                         }
-                    } 
+                    }
                 }
                 else
                 {

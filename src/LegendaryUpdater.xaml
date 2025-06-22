@@ -24,7 +24,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="0,5,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <Separator Margin="0,5,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5" Grid.Row="1" Grid.Column="0">
                 <TextBlock Text="{DynamicResource LOCLegendaryDownloadSize}" HorizontalAlignment="Left" VerticalAlignment="Center" />
                 <TextBlock x:Name="DownloadSizeTB" Text="0 B"
@@ -42,7 +42,7 @@
                 <Button x:Name="CancelBtn" Content="{DynamicResource LOCLegendary3P_PlayniteCancelLabel}" ContentStringFormat="&#xec4f; {0}" FontFamily="{DynamicResource FontIcoFont}"
                     Margin="0,0,5,0" IsCancel="True" Click="CancelBtn_Click" />
             </StackPanel>
-            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}"  Margin="0,5,0,0" />
+            <Separator Margin="0,5,0,0" />
             <ListBox BorderThickness="0" Name="UpdatesLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="UpdatesLB_SelectionChanged">
                 <ListBox.Resources>
                     <Style TargetType="ListBoxItem">
@@ -56,7 +56,7 @@
                     </Style>
                 </ListBox.Resources>
             </ListBox>
-            <Border BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Margin="0,5,0,0">
+            <Border BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Margin="0,5,0,0">
                 <Expander Margin="2,2,5,2" HorizontalAlignment="Left" >
                     <Expander.Header >
                         <TextBlock Text="{DynamicResource LOCLegendaryAdvancedOptions}"

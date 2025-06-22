@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:LegendaryLibraryNS"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
-    xmlns:pcmd="clr-namespace:Playnite.Commands"
     xmlns:common="clr-namespace:CommonPlugin"
     mc:Ignorable="d" Name="LegendaryGameInstallerUC" Loaded="LegendaryGameInstallerUC_Loaded"
     d:DesignHeight="330" d:DesignWidth="600">
@@ -27,7 +26,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="0,5,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <Separator Margin="0,5,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5" Grid.Row="1" Grid.Column="0">
                 <TextBlock Text="{DynamicResource LOCLegendaryDownloadSize}" HorizontalAlignment="Left" VerticalAlignment="Center" />
                 <TextBlock x:Name="DownloadSizeTB" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
@@ -61,15 +60,19 @@
                     FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
                     Click="CancelBtn_Click" IsCancel="True" />
             </StackPanel>
-            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="0,5"/>
+            <Separator Margin="0,5"/>
             <DockPanel Margin="0,0,0,5" Name="FolderDP">
                 <TextBlock Text="{DynamicResource LOCLegendary3P_PlayniteGameInstallDirTitle}" VerticalAlignment="Center" Margin="0,0,10,0"></TextBlock>
                 <Button DockPanel.Dock="Right" Padding="5" Margin="5 0 0 0" Content="&#xec5b;"
                     Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteSelectDirectoryTooltip}" />
                 <TextBox Name="SelectedGamePathTxt" Text="" VerticalAlignment="Center" Margin="0" />
             </DockPanel>
-            <Border BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Name="GamesBrd" Visibility="Collapsed" Margin="0,0,0,5">
-                <Expander Header="{DynamicResource LOCLegendaryGames}" Margin="2,2,5,2" HorizontalAlignment="Left" IsExpanded="True">
+            <Border BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Name="GamesBrd" Visibility="Collapsed" Margin="0,0,0,5">
+                <Expander Margin="2,2,5,2" HorizontalAlignment="Left" IsExpanded="True">
+                    <Expander.Header>
+                        <TextBlock Text="{DynamicResource LOCLegendaryGames}"
+                          HorizontalAlignment="Left" />
+                    </Expander.Header>
                     <StackPanel Orientation="Vertical" Margin="0,10,0,0">
                         <ItemsControl BorderThickness="0" Name="GamesLB" Margin="5,0,5,5">
                             <ItemsControl.ItemTemplate>
@@ -84,12 +87,16 @@
                     </StackPanel>
                 </Expander>
             </Border>
-            <Border BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Name="ExtraContentBrd" Visibility="Collapsed" Margin="0,0,0,5">
-                <Expander Header="{DynamicResource LOCLegendaryExtraContent}" Margin="2,2,5,2" HorizontalAlignment="Left">
+            <Border BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Name="ExtraContentBrd" Visibility="Collapsed" Margin="0,0,0,5">
+                <Expander Margin="2,2,5,2" HorizontalAlignment="Left">
+                    <Expander.Header>
+                        <TextBlock Text="{DynamicResource LOCLegendaryExtraContent}"
+                          HorizontalAlignment="Left" />
+                    </Expander.Header>
                     <StackPanel Orientation="Vertical" Margin="0,10,0,0">
                         <CheckBox Margin="7,0,0,5" Content="{DynamicResource LOCLegendaryCheckAllContent}" x:Name="AllOrNothingChk" Checked="AllOrNothingChk_Checked" Visibility="Collapsed" Unchecked="AllOrNothingChk_Unchecked" />
                         <CheckBox Margin="7,0,0,5" Content="{DynamicResource LOCLegendaryCheckAllDlcs}" x:Name="AllDlcsChk" Checked="AllDlcsChk_Checked" Unchecked="AllDlcsChk_Unchecked" Visibility="Collapsed"/>
-                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="7,0,0,5" />
+                        <Separator Margin="7,0,0,5" />
                         <ListBox BorderThickness="0" Name="ExtraContentLB" SelectionMode="Multiple" SelectionChanged="ExtraContentLB_SelectionChanged" Margin="5,0,5,5">
                             <ListBox.Resources>
                                 <Style TargetType="ListBoxItem">
@@ -106,8 +113,12 @@
                     </StackPanel>
                 </Expander>
             </Border>
-            <Border BorderThickness="2" Style="{DynamicResource HighlightBorder}" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                <Expander Header="{DynamicResource LOCLegendaryAdvancedOptions}" Margin="2,2,5,2" HorizontalAlignment="Left" >
+            <Border BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                <Expander Margin="2,2,5,2" HorizontalAlignment="Left" >
+                    <Expander.Header>
+                        <TextBlock Text="{DynamicResource LOCLegendaryAdvancedOptions}"
+                          HorizontalAlignment="Left" />
+                    </Expander.Header>
                     <Grid Margin="5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
