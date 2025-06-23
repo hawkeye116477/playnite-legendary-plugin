@@ -1,13 +1,9 @@
 ﻿using CommonPlugin;
 using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
-using Playnite.Common;
-using Playnite.SDK;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -18,7 +14,6 @@ namespace LegendaryLibraryNS
     /// </summary>
     public partial class LegendaryUpdater : UserControl
     {
-        private IPlayniteAPI playniteAPI = API.Instance;
         public Dictionary<string, UpdateInfo> UpdatesList => (Dictionary<string, UpdateInfo>)DataContext;
         public LegendaryUpdater()
         {
