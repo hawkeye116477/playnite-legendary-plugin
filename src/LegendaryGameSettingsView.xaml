@@ -10,6 +10,12 @@
         <sys:Boolean x:Key="True">True</sys:Boolean>
         <sys:Boolean x:Key="False">False</sys:Boolean>
         <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
+        <Style TargetType="Separator" BasedOn="{StaticResource HawkeyeSeparatorStyle}" />
+        <Style TargetType="Border" BasedOn="{StaticResource HawkeyeBorderStyle}" />
+        <Style TargetType="ListBox" BasedOn="{StaticResource HawkeyeListBoxStyle}" />
+        <Style TargetType="TextBlock" BasedOn="{StaticResource HawkeyeTextBlockStyle}" />
+        <Style TargetType="Button" BasedOn="{StaticResource HawkeyeButtonStyle}" />
+        <Style TargetType="Expander" BasedOn="{StaticResource HawkeyeExpanderStyle}" />
     </UserControl.Resources>
     <DockPanel Margin="0,0,10,10">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">

@@ -16,6 +16,12 @@
         <sys:Boolean x:Key="True">True</sys:Boolean>
         <sys:Boolean x:Key="False">False</sys:Boolean>
         <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
+        <Style TargetType="Separator" BasedOn="{StaticResource HawkeyeSeparatorStyle}" />
+        <Style TargetType="Border" BasedOn="{StaticResource HawkeyeBorderStyle}" />
+        <Style TargetType="ListBox" BasedOn="{StaticResource HawkeyeListBoxStyle}" />
+        <Style TargetType="TextBlock" BasedOn="{StaticResource HawkeyeTextBlockStyle}" />
+        <Style TargetType="Button" BasedOn="{StaticResource HawkeyeButtonStyle}" />
+        <Style TargetType="Expander" BasedOn="{StaticResource HawkeyeExpanderStyle}" />
     </UserControl.Resources>
     <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled"
         HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">

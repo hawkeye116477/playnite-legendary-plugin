@@ -10,16 +10,22 @@
         <sys:Boolean x:Key="True">True</sys:Boolean>
         <sys:Boolean x:Key="False">False</sys:Boolean>
         <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
+        <Style TargetType="Separator" BasedOn="{StaticResource HawkeyeSeparatorStyle}" />
+        <Style TargetType="Border" BasedOn="{StaticResource HawkeyeBorderStyle}" />
+        <Style TargetType="ListBox" BasedOn="{StaticResource HawkeyeListBoxStyle}" />
+        <Style TargetType="TextBlock" BasedOn="{StaticResource HawkeyeTextBlockStyle}" />
+        <Style TargetType="Button" BasedOn="{StaticResource HawkeyeButtonStyle}" />
+        <Style TargetType="Expander" BasedOn="{StaticResource HawkeyeExpanderStyle}" />
     </UserControl.Resources>
     <StackPanel Margin="10">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top">
             <Button x:Name="CloseBtn" Content="{DynamicResource LOCLegendary3P_PlayniteClose}" ContentStringFormat="&#xec4f; {0}" FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="CloseBtn_Click" />
         </StackPanel>
-        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="0,5"/>
+        <Separator Margin="0,5"/>
         <StackPanel Orientation="Vertical" Margin="0,10,0,0" Name="ExtraContentSP" Visibility="Collapsed">
             <CheckBox Margin="7,0,0,5" Content="{DynamicResource LOCLegendaryCheckAllContent}" x:Name="AllOrNothingChk" Visibility="Collapsed" Checked="AllOrNothingChk_Checked" Unchecked="AllOrNothingChk_Unchecked" />
             <CheckBox Margin="7,0,0,5" Content="{DynamicResource LOCLegendaryCheckAllDlcs}" x:Name="AllDlcsChk" Visibility="Collapsed" Checked="AllDlcsChk_Checked" Unchecked="AllDlcsChk_Unchecked"/>
-            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="7,0,0,5" />
+            <Separator Margin="7,0,0,5" />
             <ListBox BorderThickness="0" Name="ExtraContentLB" SelectionMode="Multiple" Margin="5,0,5,5" SelectionChanged="ExtraContentLB_SelectionChanged">
                 <ListBox.Resources>
                     <Style TargetType="ListBoxItem">

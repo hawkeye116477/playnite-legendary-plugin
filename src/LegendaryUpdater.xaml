@@ -12,6 +12,12 @@
         <sys:Boolean x:Key="True">True</sys:Boolean>
         <sys:Boolean x:Key="False">False</sys:Boolean>
         <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
+        <Style TargetType="Separator" BasedOn="{StaticResource HawkeyeSeparatorStyle}" />
+        <Style TargetType="Border" BasedOn="{StaticResource HawkeyeBorderStyle}" />
+        <Style TargetType="ListBox" BasedOn="{StaticResource HawkeyeListBoxStyle}" />
+        <Style TargetType="TextBlock" BasedOn="{StaticResource HawkeyeTextBlockStyle}" />
+        <Style TargetType="Button" BasedOn="{StaticResource HawkeyeButtonStyle}" />
+        <Style TargetType="Expander" BasedOn="{StaticResource HawkeyeExpanderStyle}" />
     </UserControl.Resources>
     <DockPanel Margin="10">
         <Grid DockPanel.Dock="Bottom" Margin="0,5,0,0">
@@ -42,7 +48,7 @@
                 <Button x:Name="CancelBtn" Content="{DynamicResource LOCLegendary3P_PlayniteCancelLabel}" ContentStringFormat="&#xec4f; {0}" FontFamily="{DynamicResource FontIcoFont}"
                     Margin="0,0,5,0" IsCancel="True" Click="CancelBtn_Click" />
             </StackPanel>
-            <Separator Margin="0,5,0,0" />
+            <Separator Margin="0,5,0,0"/>
             <ListBox BorderThickness="0" Name="UpdatesLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="UpdatesLB_SelectionChanged">
                 <ListBox.Resources>
                     <Style TargetType="ListBoxItem">
@@ -60,7 +66,7 @@
                 <Expander Margin="2,2,5,2" HorizontalAlignment="Left" >
                     <Expander.Header >
                         <TextBlock Text="{DynamicResource LOCLegendaryAdvancedOptions}"
-                          HorizontalAlignment="Left" />
+                          HorizontalAlignment="Left"/>
                     </Expander.Header>
                     <Grid Margin="5">
                         <Grid.ColumnDefinitions>

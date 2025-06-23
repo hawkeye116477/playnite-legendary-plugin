@@ -44,7 +44,7 @@ namespace LegendaryLibraryNS
             commonHelpers = new CommonHelpers(Instance);
             SettingsViewModel = new LegendaryLibrarySettingsViewModel(this, api);
             Load3pLocalization();
-            LoadMenuIcons();
+            commonHelpers.LoadNeededResources();
             LegendaryDownloadManager = new LegendaryDownloadManager();
         }
 
@@ -393,16 +393,6 @@ namespace LegendaryLibraryNS
                     loadString(langXaml);
                 }
             }
-        }
-
-        public void LoadMenuIcons()
-        {
-            var dictionaries = Application.Current.Resources.MergedDictionaries;
-            ResourceDictionary iconsDict = new ResourceDictionary
-            {
-                Source = new Uri("/LegendaryLibrary;component/Shared/Resources/Icons.xaml", UriKind.RelativeOrAbsolute)
-            };
-            dictionaries.Add(iconsDict);
         }
 
         public override IEnumerable<SidebarItem> GetSidebarItems()

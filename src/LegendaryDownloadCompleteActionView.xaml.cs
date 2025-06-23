@@ -1,4 +1,5 @@
-﻿using CommonPlugin.Enums;
+﻿using CommonPlugin;
+using CommonPlugin.Enums;
 using Playnite.SDK;
 using System;
 using System.Diagnostics;
@@ -24,6 +25,7 @@ namespace LegendaryLibraryNS
 
         private void LegendaryDownloadCompleteActionUC_Loaded(object sender, RoutedEventArgs e)
         {
+            CommonHelpers.SetControlBackground(this);
             switch (downloadCompleteAction)
             {
                 case DownloadCompleteAction.ShutDown:

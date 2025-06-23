@@ -8,7 +8,12 @@
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
-        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+        <Style TargetType="Separator" BasedOn="{StaticResource HawkeyeSeparatorStyle}" />
+        <Style TargetType="Border" BasedOn="{StaticResource HawkeyeBorderStyle}" />
+        <Style TargetType="ListBox" BasedOn="{StaticResource HawkeyeListBoxStyle}" />
+        <Style TargetType="TextBlock" BasedOn="{StaticResource HawkeyeTextBlockStyle}" />
+        <Style TargetType="Button" BasedOn="{StaticResource HawkeyeButtonStyle}" />
+        <Style TargetType="Expander" BasedOn="{StaticResource HawkeyeExpanderStyle}" />
     </UserControl.Resources>
     <StackPanel Margin="10">
         <TextBlock Text="{DynamicResource LOCLegendaryAlternativeAuthInstructionsFirst}" Margin="0,0,0,5" TextWrapping="Wrap"></TextBlock>
@@ -39,9 +44,5 @@
             <Button x:Name="AuthBtn" Margin="10,0,0,0" Content="{DynamicResource LOCLegendary3P_EpicAuthenticateLabel}" ContentStringFormat="&#xef7b; {0}" DockPanel.Dock="Right" Click="AuthBtn_Click" FontFamily="{DynamicResource FontIcoFont}"/>
             <TextBox x:Name="AuthCodeTxt" Margin="0,0,0,0"></TextBox>
         </DockPanel>
- 
-
     </StackPanel>
-
-
 </UserControl>

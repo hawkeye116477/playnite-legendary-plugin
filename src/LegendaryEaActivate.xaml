@@ -11,7 +11,12 @@
         <sys:Boolean x:Key="True">True</sys:Boolean>
         <sys:Boolean x:Key="False">False</sys:Boolean>
         <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
-        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+        <Style TargetType="Separator" BasedOn="{StaticResource HawkeyeSeparatorStyle}" />
+        <Style TargetType="Border" BasedOn="{StaticResource HawkeyeBorderStyle}" />
+        <Style TargetType="ListBox" BasedOn="{StaticResource HawkeyeListBoxStyle}" />
+        <Style TargetType="TextBlock" BasedOn="{StaticResource HawkeyeTextBlockStyle}" />
+        <Style TargetType="Button" BasedOn="{StaticResource HawkeyeButtonStyle}" />
+        <Style TargetType="Expander" BasedOn="{StaticResource HawkeyeExpanderStyle}" />
     </UserControl.Resources>
     <StackPanel Margin="10">
         <TextBlock Text="{DynamicResource LOCLegendaryNoAvailableEaGames}" Margin="0,5,0,0"  Visibility="Collapsed" Name="NoEaGamesTB" />
@@ -21,7 +26,7 @@
                 <Button x:Name="ActivateBtn" Content="{DynamicResource LOCLegendaryActivateGames}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xecaa; {0}" Margin="0,0,5,0" IsEnabled="False" Click="ActivateBtn_Click" />
                 <Button x:Name="SelectAllBtn" Content="{DynamicResource LOCLegendaryCheckAllContent}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xeed9; {0}" Margin="0,0,5,0" Click="SelectAllBtn_Click"  />
             </StackPanel>
-            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{DynamicResource PanelSeparatorBrush}" Margin="0,5,0,0" />
+            <Separator Margin="0,5,0,0" />
             <ListBox BorderThickness="0" Name="EaGamesLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="EaGamesLB_SelectionChanged">
                 <ListBox.Resources>
                     <Style TargetType="ListBoxItem">

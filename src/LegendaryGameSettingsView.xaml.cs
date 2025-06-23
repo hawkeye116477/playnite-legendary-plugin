@@ -109,6 +109,7 @@ namespace LegendaryLibraryNS
 
         private void LegendaryGameSettingsViewUC_Loaded(object sender, RoutedEventArgs e)
         {
+            CommonHelpers.SetControlBackground(this);
             var globalSettings = LegendaryLibrary.GetSettings();
             EnableOfflineModeChk.IsChecked = globalSettings.LaunchOffline;
             if (globalSettings.GamesUpdatePolicy == UpdatePolicy.Never)

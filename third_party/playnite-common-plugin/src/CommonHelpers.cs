@@ -5,6 +5,9 @@ using Playnite.SDK.Data;
 using System.Globalization;
 using Playnite.SDK;
 using Playnite.SDK.Plugins;
+using System.Windows;
+using System.Reflection;
+using Playnite.Common;
 
 namespace CommonPlugin
 {
@@ -105,5 +108,39 @@ namespace CommonPlugin
         }
 
         public static string NormalizePath(string path) => Path.GetFullPath(new Uri(path).LocalPath).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+
+        public void LoadNeededResources(bool icons = true, bool styles = true)
+        {
+            var dictionaries = Application.Current.Resources.MergedDictionaries;
+            if (icons)
+            {
+                ResourceDictionary iconsDict = new ResourceDictionary
+                {
+                    Source = new Uri($"/{GetType().Assembly.GetName().Name};component/Shared/Resources/Icons.xaml", UriKind.RelativeOrAbsolute)
+                };
+                dictionaries.Add(iconsDict);
+            }
+            if (styles)
+            {
+                var resDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources");
+                var stylesName = "NormalStyles.xaml";
+                if (plugin.PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+                {
+                    stylesName = "FullScreenStyles.xaml";
+                }
+                ResourceDictionary res = Xaml.FromFile<ResourceDictionary>(Path.Combine(resDir, stylesName));
+                dictionaries.Add(res);
+            }
+        }
+
+        public static void SetControlBackground(DependencyObject windowDependency)
+        {
+            var playniteAPI = API.Instance;
+            if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+            {
+                var thisWindow = Window.GetWindow(windowDependency);
+                thisWindow.Background = (System.Windows.Media.Brush)ResourceProvider.GetResource("ControlBackgroundBrush");
+            }
+        }
     }
 }

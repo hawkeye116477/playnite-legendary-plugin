@@ -199,6 +199,19 @@
     <Compile Include="..\third_party\playnite-common-plugin\src\Enums\DownloadStatus.cs">
       <Link>Shared\Enums\DownloadStatus.cs</Link>
     </Compile>
+    <None Include="..\third_party\playnite-common-plugin\src\Resources\FullScreenStyles.xaml">
+      <Link>Shared\Resources\FullScreenStyles.xaml</Link>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>Resources\FullScreenStyles.xaml</TargetPath>
+    </None>
+    <None Include="..\third_party\playnite-common-plugin\src\Resources\NormalStyles.xaml">
+      <Link>Shared\Resources\NormalStyles.xaml</Link>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>Resources\NormalStyles.xaml</TargetPath>
+    </None>
     <Resource Include="..\third_party\playnite-common-plugin\src\Resources\Icons.xaml">
       <Link>Shared\Resources\Icons.xaml</Link>
       <SubType>Designer</SubType>

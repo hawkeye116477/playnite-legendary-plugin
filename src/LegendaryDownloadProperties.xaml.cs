@@ -45,6 +45,7 @@ namespace LegendaryLibraryNS
 
         private async void LegendaryDownloadPropertiesUC_Loaded(object sender, RoutedEventArgs e)
         {
+            CommonHelpers.SetControlBackground(this);
             MaxWorkersNI.MaxValue = CommonHelpers.CpuThreadsNumber;
             var wantedItem = SelectedDownload;
             if (wantedItem.downloadProperties != null)

@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="HawkeyeSeparatorStyle" TargetType="Separator">
+        <Setter Property="Background" Value="{DynamicResource PanelSeparatorBrush}"></Setter>
+    </Style>
+    <Style x:Key="HawkeyeBorderStyle" TargetType="Border" BasedOn="{StaticResource HighlightBorder}">
+    </Style>
+    <Style x:Key="HawkeyeListBoxStyle" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
+    </Style>
+    <Style x:Key="HawkeyeTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}"/>
+    <Style x:Key="HawkeyeButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}"></Style>
+    <Style x:Key="HawkeyeExpanderStyle" TargetType="{x:Type Expander}" BasedOn="{StaticResource {x:Type Expander}}">
+    </Style>
+</ResourceDictionary>

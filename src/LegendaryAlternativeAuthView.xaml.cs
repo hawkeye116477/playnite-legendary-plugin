@@ -1,4 +1,5 @@
-﻿using LegendaryLibraryNS.Services;
+﻿using CommonPlugin;
+using LegendaryLibraryNS.Services;
 using Playnite.Common;
 using Playnite.SDK;
 using System;
@@ -24,6 +25,7 @@ namespace LegendaryLibraryNS
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            CommonHelpers.SetControlBackground(this);
             AuthLinkTxt.Text = EpicAccountClient.authCodeUrl;
         }
 

@@ -2,7 +2,6 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 
 namespace CommonPlugin
@@ -80,18 +79,6 @@ namespace CommonPlugin
                 CheckBoxText = checkBoxText;
             }
             DisplayIcon = icon;
-            var baseStyleName = "BaseTextBlockStyle";
-            if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
-            {
-                baseStyleName = "TextBlockBaseStyle";
-                Resources.Add(typeof(Button), new Style(typeof(Button), null));
-            }
-
-            if (ResourceProvider.GetResource(baseStyleName) is Style baseStyle && baseStyle.TargetType == typeof(TextBlock))
-            {
-                var implicitStyle = new Style(typeof(TextBlock), baseStyle);
-                Resources.Add(typeof(TextBlock), implicitStyle);
-            }
         }
 
         private void OkBtn_Click(object sender, RoutedEventArgs e)
@@ -117,23 +104,16 @@ namespace CommonPlugin
         public static MessageDialogSettings ShowMessage(string title, string message, string checkBoxText, MessageBoxButton buttonType, MessageBoxImage icon)
         {
             MessageDialogSettings messageDialogSettings = new MessageDialogSettings();
-            Window window = null;
             var playniteAPI = API.Instance;
-            if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            Window window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
             {
-                window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
-                {
-                    ShowMaximizeButton = false,
-                    ShowCloseButton = false,
-                    ShowMinimizeButton = false,
-                });
-            }
-            else
+                ShowMaximizeButton = false,
+                ShowCloseButton = false,
+                ShowMinimizeButton = false,
+            });
+            if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
             {
-                window = new Window
-                {
-                    Background = Brushes.DodgerBlue
-                };
+                window.Background = (System.Windows.Media.Brush)ResourceProvider.GetResource("ControlBackgroundBrush");
             }
             window.Title = title;
             window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();

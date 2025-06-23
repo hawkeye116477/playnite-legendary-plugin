@@ -40,6 +40,7 @@ namespace LegendaryLibraryNS
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            CommonHelpers.SetControlBackground(this);
             BottomADGrd.Visibility = Visibility.Collapsed;
             TopADSP.Visibility = Visibility.Collapsed;
             InstalledDlcsSP.Visibility = Visibility.Collapsed;

@@ -1,5 +1,6 @@
 ﻿using CliWrap;
 using CliWrap.Buffered;
+using CommonPlugin;
 using LegendaryLibraryNS.Models;
 using Playnite.Common;
 using Playnite.SDK;
@@ -28,6 +29,7 @@ namespace LegendaryLibraryNS
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            CommonHelpers.SetControlBackground(this);
             EaGamesSP.Visibility = Visibility.Collapsed;
             LoadingEaTB.Visibility = Visibility.Visible;
             if (!LegendaryLauncher.IsInstalled)
