@@ -3,12 +3,10 @@
     <Style x:Key="HawkeyeSeparatorStyle" TargetType="Separator">
         <Setter Property="Background" Value="{DynamicResource PanelSeparatorBrush}"></Setter>
     </Style>
-    <Style x:Key="HawkeyeBorderStyle" TargetType="Border" BasedOn="{StaticResource HighlightBorder}">
-    </Style>
-    <Style x:Key="HawkeyeListBoxStyle" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
-    </Style>
+    <Style x:Key="HawkeyeBorderStyle" TargetType="Border" BasedOn="{StaticResource HighlightBorder}"/>
+    <Style x:Key="HawkeyeListBoxStyle" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}"/>
     <Style x:Key="HawkeyeTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}"/>
-    <Style x:Key="HawkeyeButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}"></Style>
-    <Style x:Key="HawkeyeExpanderStyle" TargetType="{x:Type Expander}" BasedOn="{StaticResource {x:Type Expander}}">
-    </Style>
+    <Style x:Key="HawkeyeButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}"/>
+    <Style x:Key="HawkeyeExpanderStyle" TargetType="{x:Type Expander}" BasedOn="{StaticResource {x:Type Expander}}"/>
+    <Style x:Key="HawkeyeTabControlStyle" TargetType="{x:Type TabControl}" BasedOn="{StaticResource {x:Type TabControl}}"/>
 </ResourceDictionary>

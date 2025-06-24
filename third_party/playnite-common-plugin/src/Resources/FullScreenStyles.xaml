@@ -17,8 +17,7 @@
     <Style x:Key="HawkeyeListBoxStyle" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
         <Setter Property="Background" Value="Transparent"></Setter>
     </Style>
-    <Style x:Key="HawkeyeTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
-    </Style>
+    <Style x:Key="HawkeyeTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}"/>
     <Style x:Key="HawkeyeButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="BorderThickness" Value="4" />
         <Setter Property="Template">
@@ -115,5 +114,8 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+    <Style x:Key="HawkeyeTabControlStyle" TargetType="{x:Type TabControl}" BasedOn="{StaticResource {x:Type TabControl}}">
+        <Setter Property="Background" Value="Transparent"></Setter>
     </Style>
 </ResourceDictionary>

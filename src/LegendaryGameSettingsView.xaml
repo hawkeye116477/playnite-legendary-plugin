@@ -16,6 +16,7 @@
         <Style TargetType="TextBlock" BasedOn="{StaticResource HawkeyeTextBlockStyle}" />
         <Style TargetType="Button" BasedOn="{StaticResource HawkeyeButtonStyle}" />
         <Style TargetType="Expander" BasedOn="{StaticResource HawkeyeExpanderStyle}" />
+        <Style TargetType="TabControl" BasedOn="{StaticResource HawkeyeTabControlStyle}" />
     </UserControl.Resources>
     <DockPanel Margin="0,0,10,10">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">

@@ -13,6 +13,7 @@
         <Style TargetType="TextBlock" BasedOn="{StaticResource HawkeyeTextBlockStyle}" />
         <Style TargetType="Button" BasedOn="{StaticResource HawkeyeButtonStyle}" />
         <Style TargetType="Expander" BasedOn="{StaticResource HawkeyeExpanderStyle}" />
+        <Style TargetType="TabControl" BasedOn="{StaticResource HawkeyeTabControlStyle}" />
     </UserControl.Resources>
     <StackPanel Margin="10">
         <TextBlock Margin="0,0,0,5" Name="CountdownTB"></TextBlock>
