@@ -1,5 +1,15 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.10.6
+    RequiredApiVersion: 6.12.0
+    ReleaseDate: 2025-06-24
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.10.6/LegendaryLibrary_1_10_6.pext
+    Changelog:
+      - Added experimental displaying of Download Manager at full screen mode
+      - Fixed full screen styling
+      - Fixed starting console client for some cases from Playnite's menu
+      - Fixed full screen mode anomaly during cloud operations
+      - Updated localizations
   - Version: 1.10.5
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2025-02-20
