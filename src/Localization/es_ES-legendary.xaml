@@ -23,14 +23,14 @@
   <sys:String x:Key="LOCLegendaryStarWarsMessage">Que la Fuerza esté contigo, Padawan.</sys:String>
   <sys:String x:Key="LOCLegendaryImportThirdPartyLauncherGames">Importar juegos que requieren {0}</sys:String>
   <sys:String x:Key="LOCLegendaryThirdPartyLauncherImportWarn">Este tipo de juegos no requiere Legendary y no todos pueden ser instalados a través de él. Se recomienda ir a Servicios adicionales =&gt; {0} =&gt; Activar juegos y luego instalarlos directamente a través de {0}.</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError"></sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherErrorOther"></sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherError">{1} requiere una instalación directa a través de {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallViaThirdPartyLauncherErrorOther">Los siguientes juegos requieren una instalación directa a través de {0}: {1}.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallPrerequisites">Instalar requisitos previos ({0})</sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher"></sys:String>
-  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther"></sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">{1} requiere instalar {0}. Se recomienda ir a la configuración del plugin =&gt; Servicios adicionales =&gt; {0} =&gt; Activar juegos y luego instalarlo directamente a través de {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther">Los siguientes juegos requieren la instalación de {0}: {1}. Se recomienda ir a la configuración del plugin =&gt; Servicios adicionales =&gt; {0} =&gt; Activar juegos y luego instalarlos directamente a través de {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Instalando requisitos previos ({0})...</sys:String>
-  <sys:String x:Key="LOCLegendaryAuthenticateAlternativeLabel"></sys:String>
-  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsFirst"></sys:String>
-  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsSecond"></sys:String>
-  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsThird"></sys:String>
+  <sys:String x:Key="LOCLegendaryAuthenticateAlternativeLabel">Autenticar usando método alternativo</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsFirst">1. Inicie sesión en la tienda de Epic Games en tu navegador web.</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsSecond">2. Navega a la URL del código de autenticación, que se muestra en el cuadro de entrada de abajo.</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsThird">3. Pegue su valor &quot;authorizationCode&quot; en el cuadro de abajo y haga clic en el botón &quot;Autenticar&quot;.</sys:String>
 </ResourceDictionary>
