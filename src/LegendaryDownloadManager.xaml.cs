@@ -107,7 +107,14 @@ namespace LegendaryLibraryNS
         {
             get => new RelayCommand<object>((a) =>
             {
-                playniteAPI.MainView.SwitchToLibraryView();
+                if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+                {
+                    Window.GetWindow(this).Close();
+                }
+                else
+                {
+                    playniteAPI.MainView.SwitchToLibraryView();
+                }
             });
         }
 
@@ -1048,6 +1055,11 @@ namespace LegendaryLibraryNS
             {
                 OpenDownloadDirectoryBtn_Click(sender, e);
             }
+        }
+
+        private void LegendaryDownloadManagerUC_Loaded(object sender, RoutedEventArgs e)
+        {
+            CommonHelpers.SetControlBackground(this);
         }
     }
 }

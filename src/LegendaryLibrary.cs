@@ -1009,6 +1009,28 @@ namespace LegendaryLibraryNS
                     }
                 }
             };
+
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+            {
+                yield return new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString(LOC.LegendaryDownloadManager),
+                    MenuSection = $"@{Instance.Name}",
+                    Icon = "InstallIcon",
+                    Action = (args) =>
+                    {
+                        Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                        {
+                            ShowMaximizeButton = true,
+                        });
+                        window.Title = $"{ResourceProvider.GetString(LOC.LegendaryPanel)}";
+                        window.Content = GetLegendaryDownloadManager();
+                        window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+                        window.SizeToContent = SizeToContent.WidthAndHeight;
+                        window.ShowDialog();
+                    }
+                };
+            }
         }
 
     }

@@ -211,6 +211,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>Resources\NormalStyles.xaml</TargetPath>
+      <Generator>MSBuild:Compile</Generator>
     </None>
     <Resource Include="..\third_party\playnite-common-plugin\src\Resources\Icons.xaml">
       <Link>Shared\Resources\Icons.xaml</Link>
