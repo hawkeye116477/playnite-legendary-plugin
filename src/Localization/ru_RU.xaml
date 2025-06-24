@@ -5,7 +5,7 @@
   <sys:String x:Key="LOCLegendaryDownloadSize">Размер загрузки:</sys:String>
   <sys:String x:Key="LOCLegendaryInstallSize">Размер установки:</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallGameConfirm">Вы уверены, что хотите удалить {0}?</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadSettings"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadSettings">Загрузки</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadTaskFinishedNotifications">Отображать уведомления на рабочем столе о завершенных задачах</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Отображать скорость загрузки в битах в секунду</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadAllDlcs">Скачать все DLC</sys:String>
@@ -15,7 +15,7 @@
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">Максимальное количество общей памяти (МБ)</sys:String>
   <sys:String x:Key="LOCLegendaryConnectionTimeout">Тайм-аут подключения (сек)</sys:String>
   <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Действие после завершения загрузки</sys:String>
-  <sys:String x:Key="LOCLegendaryAutoRemoveCompletedDownloads"></sys:String>
+  <sys:String x:Key="LOCLegendaryAutoRemoveCompletedDownloads">Автоматически удалять завершенные загрузки из списка</sys:String>
   <sys:String x:Key="LOCLegendarySystemShutdownCountdown">Система скоро выключится...</sys:String>
   <sys:String x:Key="LOCLegendarySystemRestartCountdown">Система скоро перезагрузится...</sys:String>
   <sys:String x:Key="LOCLegendarySystemHibernateCountdown">Система скоро перейдет в режим гибернации...</sys:String>
@@ -146,15 +146,15 @@
   <sys:String x:Key="LOCLegendaryUninstallSuccessOther">Следующие игры были успешно удалены: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallErrorOther">Не удается удалить следующие игры: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryGames">Игры</sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy"></sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherNotInstalled"></sys:String>
-  <sys:String x:Key="LOCLegendaryPanel"></sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp"></sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExists"></sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther"></sys:String>
-  <sys:String x:Key="LOCLegendaryMigrateGamesEpic"></sys:String>
-  <sys:String x:Key="LOCLegendaryMigratingGamesEpic"></sys:String>
-  <sys:String x:Key="LOCLegendaryMigrationConfirm"></sys:String>
-  <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway"></sys:String>
-  <sys:String x:Key="LOCLegendaryInstanceNotice"></sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy">Проверить наличие обновлений игр</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherNotInstalled">Legendary не установлен.</sys:String>
+  <sys:String x:Key="LOCLegendaryPanel">Панель Legendary</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">Загрузка начнется в ближайшее время. Вы можете увидеть его статус, обратившись к панели Legendary через Меню =&gt; Вид или боковую панель.</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} уже находится в списке загрузок. Вы можете увидеть состояние загрузки через меню Legendary через меню =&gt; Просмотр или боковую панель.</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther">Следующие игры уже находятся в списке загрузок: {0}. Состояние загрузки отображается в панели Legendary через меню =&gt; Просмотр или боковую панель.</sys:String>
+  <sys:String x:Key="LOCLegendaryMigrateGamesEpic">Перенести все игры из Epic плагина</sys:String>
+  <sys:String x:Key="LOCLegendaryMigratingGamesEpic">Перенос всех игр с плагина Epic...</sys:String>
+  <sys:String x:Key="LOCLegendaryMigrationConfirm">Все игры будут удалены из Epic плагина и перемещены в Legendary. Вы уверены, что хотите это сделать?</sys:String>
+  <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Обновления игр от Epic Games загружаются.</sys:String>
+  <sys:String x:Key="LOCLegendaryInstanceNotice">Только один экземпляр Legendary может одновременно устанавливать/импортировать/перемещать приложения. Хотите ли вы приостановить выполнение задач менеджера загрузки, чтобы продолжить работу?</sys:String>
 </ResourceDictionary>

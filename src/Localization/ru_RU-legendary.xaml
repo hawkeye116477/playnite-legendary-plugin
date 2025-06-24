@@ -29,8 +29,8 @@
   <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncher">{1} Требует установки {0}. Рекомендуется перейти в настройки плагина =&gt; Дополнительные сервисы =&gt; {0} =&gt; Активировать игры, а затем установить его напрямую через {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryRequiredInstallOfThirdPartyLauncherOther">Следующие игры требуют установки {0}: {1}. Рекомендуется зайти в настройки плагина =&gt; Дополнительные сервисы =&gt; {0} =&gt; Активировать игры, а затем установить их напрямую через {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryInstallingPrerequisites">Установка предварительных требований ({0})...</sys:String>
-  <sys:String x:Key="LOCLegendaryAuthenticateAlternativeLabel"></sys:String>
-  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsFirst"></sys:String>
-  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsSecond"></sys:String>
-  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsThird"></sys:String>
+  <sys:String x:Key="LOCLegendaryAuthenticateAlternativeLabel">Аутентификация с помощью альтернативного метода</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsFirst">1. Войдите в магазин Epic Games в вашем браузере.</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsSecond">2. Перейдите к коду аутентификации URL, который отображается в поле ввода ниже.</sys:String>
+  <sys:String x:Key="LOCLegendaryAlternativeAuthInstructionsThird">3. Вставьте ваше значение &quot;authorizationCode&quot; в поле ввода ниже и нажмите на кнопку &quot;authenticate&quot;.</sys:String>
 </ResourceDictionary>

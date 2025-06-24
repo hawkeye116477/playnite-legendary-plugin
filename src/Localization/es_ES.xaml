@@ -5,29 +5,31 @@
   <sys:String x:Key="LOCLegendaryDownloadSize">Tamaño de descarga:</sys:String>
   <sys:String x:Key="LOCLegendaryInstallSize">Tamaño de instalación:</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallGameConfirm">¿Estás seguro que deseas desinstalar {0}?</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadSettings"></sys:String>
-  <sys:String x:Key="LOCLegendaryDisplayDownloadTaskFinishedNotifications"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadSettings">Descargas</sys:String>
+  <sys:String x:Key="LOCLegendaryDisplayDownloadTaskFinishedNotifications">Mostrar notificaciones de escritorio sobre tareas terminadas</sys:String>
   <sys:String x:Key="LOCLegendaryDisplayDownloadSpeedInBits">Mostrar velocidad de descarga en bits por segundo</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAllDlcs"></sys:String>
-  <sys:String x:Key="LOCLegendaryUnattendedInstall"></sys:String>
-  <sys:String x:Key="LOCLegendaryUnattendedInstallToolTip"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAllDlcs">Descargar todos los DLCs</sys:String>
+  <sys:String x:Key="LOCLegendaryUnattendedInstall">Activar el modo de instalación desatendida</sys:String>
+  <sys:String x:Key="LOCLegendaryUnattendedInstallToolTip">Perfecto, aquí tienes la traducción ajustada:
+
+No tendrás que elegir nada en la ventana del instalador y la instalación empezará automáticamente después de descargar la información necesaria.</sys:String>
   <sys:String x:Key="LOCLegendaryMaxWorkers">Número máximo de procesos de trabajo</sys:String>
   <sys:String x:Key="LOCLegendaryMaxSharedMemory">Cantidad máxima de memoria compartida (MB)</sys:String>
   <sys:String x:Key="LOCLegendaryConnectionTimeout">Tiempo de espera de conexión (segundos)</sys:String>
-  <sys:String x:Key="LOCLegendaryAfterDownloadComplete"></sys:String>
-  <sys:String x:Key="LOCLegendaryAutoRemoveCompletedDownloads"></sys:String>
-  <sys:String x:Key="LOCLegendarySystemShutdownCountdown"></sys:String>
-  <sys:String x:Key="LOCLegendarySystemRestartCountdown"></sys:String>
-  <sys:String x:Key="LOCLegendarySystemHibernateCountdown"></sys:String>
-  <sys:String x:Key="LOCLegendarySystemSuspendCountdown"></sys:String>
+  <sys:String x:Key="LOCLegendaryAfterDownloadComplete">Acción después de completar la descarga</sys:String>
+  <sys:String x:Key="LOCLegendaryAutoRemoveCompletedDownloads">Eliminar automáticamente las descargas completadas de la lista</sys:String>
+  <sys:String x:Key="LOCLegendarySystemShutdownCountdown">El sistema se apagará pronto...</sys:String>
+  <sys:String x:Key="LOCLegendarySystemRestartCountdown">El sistema se reiniciará pronto...</sys:String>
+  <sys:String x:Key="LOCLegendarySystemHibernateCountdown">El sistema entrará en hibernación pronto...</sys:String>
+  <sys:String x:Key="LOCLegendarySystemSuspendCountdown">El sistema se suspenderá pronto...</sys:String>
   <sys:String x:Key="LOCLegendaryDisable">Deshabilitar</sys:String>
   <sys:String x:Key="LOCLegendaryEnable">Habilitar</sys:String>
   <sys:String x:Key="LOCLegendarySpaceAvailable">Espacio disponible:</sys:String>
   <sys:String x:Key="LOCLegendaryAfterInstalling">Después de instalar:</sys:String>
-  <sys:String x:Key="LOCLegendaryDownloaded"></sys:String>
+  <sys:String x:Key="LOCLegendaryDownloaded">Descargado</sys:String>
   <sys:String x:Key="LOCLegendaryETA">Estimado:</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadSpeed">Velocidad de descarga:</sys:String>
-  <sys:String x:Key="LOCLegendaryDiskSpeed"></sys:String>
+  <sys:String x:Key="LOCLegendaryDiskSpeed">Uso del disco:</sys:String>
   <sys:String x:Key="LOCLegendaryElapsed">Transcurrido:</sys:String>
   <sys:String x:Key="LOCLegendaryVerifying">Verificando...</sys:String>
   <sys:String x:Key="LOCLegendaryVerifyingLargeFile">Verificando archivo grande "{0}": {1}</sys:String>
@@ -39,8 +41,8 @@
   <sys:String x:Key="LOCLegendaryResumeDownload">Reanudar</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadPaused">Pausado</sys:String>
   <sys:String x:Key="LOCLegendaryInstallationFinished">Instalación terminada. Diviértete.</sys:String>
-  <sys:String x:Key="LOCLegendaryUpdateFinished"></sys:String>
-  <sys:String x:Key="LOCLegendaryRepairFinished"></sys:String>
+  <sys:String x:Key="LOCLegendaryUpdateFinished">Actualización terminada. Diviértete.</sys:String>
+  <sys:String x:Key="LOCLegendaryRepairFinished">Reparación terminada. Diviértete.</sys:String>
   <sys:String x:Key="LOCLegendarySyncGameSaves">Sincronizar partidas guardadas en la nube</sys:String>
   <sys:String x:Key="LOCLegendarySyncing">Sincronizando {0} partidas guardadas en la nube...</sys:String>
   <sys:String x:Key="LOCLegendarySyncError">Se ha producido un error al sincronizar {0} juegos guardados en la nube.</sys:String>
@@ -50,7 +52,7 @@
   <sys:String x:Key="LOCLegendaryGameImportFailure">No se pudo importar el juego. Razón: {0}.</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadManager">Gestor de descargas</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadStatus">Estado</sys:String>
-  <sys:String x:Key="LOCLegendaryProgress"></sys:String>
+  <sys:String x:Key="LOCLegendaryProgress">Progreso</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadCompletedColumn">Completado</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadQueued">En cola</sys:String>
   <sys:String x:Key="LOCLegendaryDownloadRunning">En ejecución</sys:String>
@@ -115,7 +117,7 @@
   <sys:String x:Key="LOCLegendarySync">Sincronizar</sys:String>
   <sys:String x:Key="LOCLegendaryDownload">Descargar</sys:String>
   <sys:String x:Key="LOCLegendaryUpload">Subir</sys:String>
-  <sys:String x:Key="LOCLegendaryForceAction"></sys:String>
+  <sys:String x:Key="LOCLegendaryForceAction">Forzar acción</sys:String>
   <sys:String x:Key="LOCLegendaryCloudSaveConfirm">La función de guardado en la nube es experimental. Se recomienda hacer una copia de seguridad de los juegos guardados en caso de que algo vaya mal. ¿Estás seguro de que quieres continuar?</sys:String>
   <sys:String x:Key="LOCLegendarySyncPlaytime">Sincronizar tiempo de juego a la nube</sys:String>
   <sys:String x:Key="LOCLegendaryUploadingPlaytime">Subiendo {0} tiempo de juego a la nube...</sys:String>
@@ -134,7 +136,7 @@
   <sys:String x:Key="LOCLegendaryAutoUpdate">Actualizar automáticamente los juegos</sys:String>
   <sys:String x:Key="LOCLegendaryGamesUpdatePolicy">Buscar actualizaciones de juegos</sys:String>
   <sys:String x:Key="LOCLegendaryCheckUpdatesEveryPlayniteStartup">En cada inicio de Playnite</sys:String>
-  <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings"></sys:String>
+  <sys:String x:Key="LOCLegendaryRemoveGameLaunchSettings">Eliminar la configuración de lanzamiento</sys:String>
   <sys:String x:Key="LOCLegendaryAdditionalServices">Servicios adicionales</sys:String>
   <sys:String x:Key="LOCLegendarySignedInAs">Sesión iniciada como {0}</sys:String>
   <sys:String x:Key="LOCLegendarySignOutConfirm">¿Estás seguro de que quieres cerrar sesión?</sys:String>
@@ -143,18 +145,18 @@
   <sys:String x:Key="LOCLegendaryNotEnoughSpace">No hay suficiente espacio libre en disco.</sys:String>
   <sys:String x:Key="LOCLegendaryCheckingForUpdates">Buscando actualizaciones...</sys:String>
   <sys:String x:Key="LOCLegendaryUninstallSuccess">{0} se ha desinstalado correctamente.</sys:String>
-  <sys:String x:Key="LOCLegendaryUninstallSuccessOther"></sys:String>
-  <sys:String x:Key="LOCLegendaryUninstallErrorOther"></sys:String>
-  <sys:String x:Key="LOCLegendaryGames"></sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy"></sys:String>
-  <sys:String x:Key="LOCLegendaryLauncherNotInstalled"></sys:String>
-  <sys:String x:Key="LOCLegendaryPanel"></sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp"></sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExists"></sys:String>
-  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther"></sys:String>
-  <sys:String x:Key="LOCLegendaryMigrateGamesEpic"></sys:String>
-  <sys:String x:Key="LOCLegendaryMigratingGamesEpic"></sys:String>
-  <sys:String x:Key="LOCLegendaryMigrationConfirm"></sys:String>
-  <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway"></sys:String>
-  <sys:String x:Key="LOCLegendaryInstanceNotice"></sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallSuccessOther">Los siguientes juegos se han desinstalado correctamente: {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryUninstallErrorOther">No se puede desinstalar los siguientes juegos: {0}.</sys:String>
+  <sys:String x:Key="LOCLegendaryGames">Juegos</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherUpdatePolicy">Comprobar actualizaciones del lanzador</sys:String>
+  <sys:String x:Key="LOCLegendaryLauncherNotInstalled">Legendary no está instalado.</sys:String>
+  <sys:String x:Key="LOCLegendaryPanel">Panel Legendary</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadManagerWhatsUp">La descarga comenzará pronto. Puedes ver su estado accediendo al Panel Legendary a través del Menú =&gt; Vista o barra lateral.</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExists">{0} ya está en la lista de descarga. Puede ver el estado de la descarga accediendo al Panel Legendary a través del Menú =&gt; Vista o barra lateral.</sys:String>
+  <sys:String x:Key="LOCLegendaryDownloadAlreadyExistsOther">Los siguientes juegos ya están en la lista de descargas: {0}. Puede ver el estado de la descarga accediendo al Panel Legendary a través del Menú =&gt; Vista o barra lateral.</sys:String>
+  <sys:String x:Key="LOCLegendaryMigrateGamesEpic">Migrar todos los juegos del complemento Epic</sys:String>
+  <sys:String x:Key="LOCLegendaryMigratingGamesEpic">Migrando todos los juegos desde el complemento Epic...</sys:String>
+  <sys:String x:Key="LOCLegendaryMigrationConfirm">Todos los juegos serán eliminados del complemento Epic y movidos a Legendary. ¿Estás seguro de que quieres hacer esto?</sys:String>
+  <sys:String x:Key="LOCLegendaryGamesUpdatesUnderway">Se están descargando actualizaciones para los juegos de Epic Games.</sys:String>
+  <sys:String x:Key="LOCLegendaryInstanceNotice">Sólo una instancia de Legendary puede instalar/importar/mover aplicaciones a la vez. ¿Quieres pausar las tareas del administrador de descargas para continuar?</sys:String>
 </ResourceDictionary>
