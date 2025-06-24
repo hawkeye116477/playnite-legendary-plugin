@@ -40,6 +40,10 @@ namespace LegendaryLibraryNS
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+            {
+                CloseWindowTab.Visibility = Visibility.Visible;
+            }
             CommonHelpers.SetControlBackground(this);
             BottomADGrd.Visibility = Visibility.Collapsed;
             TopADSP.Visibility = Visibility.Collapsed;
@@ -334,6 +338,17 @@ namespace LegendaryLibraryNS
                 else
                 {
                     InstalledDlcsLB.SelectAll();
+                }
+            }
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.Source is TabControl tabControl)
+            {
+                if (tabControl.SelectedItem == CloseWindowTab)
+                {
+                    Window.GetWindow(this).Close();
                 }
             }
         }

@@ -20,7 +20,7 @@
         <Style TargetType="Expander" BasedOn="{StaticResource HawkeyeExpanderStyle}" />
     </UserControl.Resources>
     <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled"
-        HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+        HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" SelectionChanged="TabControl_SelectionChanged">
         <TabItem Header="{DynamicResource LOCLegendaryAvailableDlcs}">
             <DockPanel Margin="10,5,0,5">
                 <Grid DockPanel.Dock="Bottom" Margin="0,5,0,0" x:Name="BottomADGrd">
@@ -133,5 +133,6 @@
                 <TextBlock Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}" Margin="0,5,0,0"  Visibility="Collapsed" Name="LoadingITB" />
             </StackPanel>
         </TabItem>
+        <TabItem Header="{DynamicResource LOCLegendary3P_PlayniteClose}" x:Name="CloseWindowTab" Visibility="Collapsed"/>
     </TabControl>
 </UserControl>
