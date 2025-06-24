@@ -9,6 +9,8 @@
                 <ResourceDictionary Source="Localization/third_party/en_US.xaml"/>
                 <ResourceDictionary Source="Localization/en_US.xaml"/>
                 <ResourceDictionary Source="Localization/en_US-legendary.xaml"/>
+                <ResourceDictionary Source="../third_party/playnite-common-plugin/src/Resources/FullScreenStyles.xaml"/>
+                <ResourceDictionary Source="../third_party/playnite-common-plugin/src/Resources/NormalStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
