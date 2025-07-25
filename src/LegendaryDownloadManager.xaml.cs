@@ -75,12 +75,12 @@ namespace LegendaryLibraryNS
                     if (downloadItem.downloadSizeNumber == 0)
                     {
                         var downloadSizeSplittedString = downloadItem.downloadSize.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                        downloadItem.downloadSizeNumber = CommonHelpers.ToBytes(double.Parse(downloadSizeSplittedString[0]), downloadSizeSplittedString[1].Insert(1, "i"));
+                        downloadItem.downloadSizeNumber = CommonHelpers.ToBytes(CommonHelpers.ToDouble(downloadSizeSplittedString[0]), downloadSizeSplittedString[1].Insert(1, "i"));
                     }
                     if (downloadItem.installSizeNumber == 0)
                     {
                         var installSizeSplittedString = downloadItem.installSize.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                        downloadItem.installSizeNumber = CommonHelpers.ToBytes(double.Parse(installSizeSplittedString[0]), installSizeSplittedString[1].Insert(1, "i"));
+                        downloadItem.installSizeNumber = CommonHelpers.ToBytes(CommonHelpers.ToDouble(installSizeSplittedString[0]), installSizeSplittedString[1].Insert(1, "i"));
                     }
                     if (downloadItem.status == DownloadStatus.Completed && downloadItem.downloadedNumber == 0)
                     {
