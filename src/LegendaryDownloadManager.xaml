@@ -157,7 +157,7 @@
                         <DataTemplate>
                             <Grid>
                                 <ProgressBar Value="{Binding progress}" Name="DownloadPB"/>
-                                <TextBlock Text="{Binding progress, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2">
+                                <TextBlock Text="{Binding progress, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2" Style="{DynamicResource HawkeyeTextBlockStyle}">
                                 </TextBlock>
                             </Grid>
                         </DataTemplate>
