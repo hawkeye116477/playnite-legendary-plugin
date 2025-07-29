@@ -458,18 +458,10 @@ namespace LegendaryLibraryNS
                                     }
                                     else
                                     {
-                                        Window window = null;
-                                        if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+                                        Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
                                         {
-                                            window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
-                                            {
-                                                ShowMaximizeButton = false,
-                                            });
-                                        }
-                                        else
-                                        {
-                                            window = new Window();
-                                        }
+                                            ShowMaximizeButton = false,
+                                        });
                                         window.DataContext = successUpdates;
                                         window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
                                         window.Content = new LegendaryUpdater();
