@@ -102,7 +102,7 @@ namespace LegendaryLibraryNS
             {
                 PrerequisitesChk.IsChecked = wantedItem.downloadProperties.installPrerequisites;
                 PrerequisitesChk.Visibility = Visibility.Visible;
-                PrerequisitesChk.Content = string.Format(PrerequisitesChk.Content.ToString(), wantedItem.downloadProperties.prerequisitesName);
+                PrerequisitesChk.Content = PrerequisitesChk.Content.ToString().Replace("$prerequisiteName", wantedItem.downloadProperties.prerequisitesName);
             }
 
             var gameSize = await LegendaryLauncher.CalculateGameSize(GameData, selectedSdls);

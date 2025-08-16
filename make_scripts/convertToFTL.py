@@ -21,10 +21,12 @@ os.chdir(main_path)
 xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 xmlns_x = "http://schemas.microsoft.com/winfx/2006/xaml"
 xmlns_sys = "clr-namespace:System;assembly=mscorlib"
+xmlns_common = "clr-namespace:CommonPlugin"
 
 NSMAP = {None: xmlns,
         "sys": xmlns_sys,
-        "x":  xmlns_x}
+        "x":  xmlns_x,
+        "common": xmlns_common}
 
 loc_path = pj(src_path, "Localization")
 
@@ -117,6 +119,57 @@ for filename in os.listdir(loc_path):
         with open(pj(full_ftl_dir, ftl_filename), 'w', encoding='utf-8') as ftl_file:
             ftl_file.write(serialized_output)
         print(f"File {ftl_dir}\{ftl_filename} was succesfully generated.")
+
+
+NSMAP["common"] = "clr-namespace:CommonPlugin"
+dynamic_resource_pattern = re.compile(r'\{DynamicResource (LOCLegendary[^}]+)\}')
+
+for root, _, files in os.walk(src_path):
+    if os.path.basename(root) == "Localization":
+        continue
+    for filename in files:
+        if filename.endswith(".xaml"):
+            file_path = pj(root, filename)
+            
+            try:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+
+                def get_new_key(old_key):
+                    if old_key is None:
+                        return None
+                    old_key_replaced = old_key.replace(".", "")
+                    if old_key_replaced in key_to_prefix_map:
+                        prefix = key_to_prefix_map[old_key_replaced]
+
+                        new_key = old_key
+
+                        if prefix == "Common":
+                            new_key = new_key.replace("LOC.Legendary", "LOC.Common")
+                        return new_key
+                    return old_key
+
+                def convert_xaml_string(match):
+                    full_key = match.group(1)
+                    if "3P" in full_key:
+                        return match.group(0)
+                    cleaned_key = get_new_key(full_key.replace("LOC", "LOC."))
+
+                    # Construct the new format with full x:Static syntax
+                    new_value = f"{{common:Localize Key={{x:Static system:{cleaned_key}}}}}"
+                    
+                    return new_value
+
+                new_content = re.sub(dynamic_resource_pattern, convert_xaml_string, content)
+                
+                with open(file_path, 'w', encoding='utf-8') as f:
+                    f.write(new_content)
+                
+                print(f"File {file_path} was succesfully processed for XAML localization.")
+
+            except Exception as e:
+                print(f"Error processing XAML file {file_path}: {e}")
+
 
 if not convert_csharp:
     exit(0)

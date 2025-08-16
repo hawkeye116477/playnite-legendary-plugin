@@ -7,6 +7,8 @@
              xmlns:localcon="clr-namespace:LegendaryLibraryNS.Converters"
              xmlns:commoncon="clr-namespace:CommonPlugin.Converters"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:common="clr-namespace:CommonPlugin"
+             xmlns:system="clr-namespace:System"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="800" DataContext="{Binding RelativeSource={RelativeSource Self}}" Name="LegendaryDownloadManagerUC" PreviewKeyDown="LegendaryDownloadManagerUC_PreviewKeyDown" Loaded="LegendaryDownloadManagerUC_Loaded">
 
@@ -48,19 +50,19 @@
             <TextBlock Name="GameTitleTB" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Margin="0,0,0,5"></TextBlock>
             <TextBlock x:Name="DescriptionTB" HorizontalAlignment="Left" Margin="0,0,0,5" Grid.Row="2" VerticalAlignment="Bottom"></TextBlock>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="0" Margin="0,0,0,5" VerticalAlignment="Top">
-                <TextBlock Text="{DynamicResource LOCLegendaryDownloadSpeed}"></TextBlock>
+                <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonDownloadSpeed}}"></TextBlock>
                 <TextBlock Name="DownloadSpeedTB" HorizontalAlignment="Left" Margin="5,0,30,0"></TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Top">
-                <TextBlock Text="{DynamicResource LOCLegendaryElapsed}"></TextBlock>
+                <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonElapsed}}"></TextBlock>
                 <TextBlock Name="ElapsedTB" HorizontalAlignment="Left" Margin="5,0,0,0"></TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="0" Margin="0,0,0,5" VerticalAlignment="Top">
-                <TextBlock Text="{DynamicResource LOCLegendaryDiskSpeed}"></TextBlock>
+                <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonDiskSpeed}}"></TextBlock>
                 <TextBlock Name="DiskSpeedTB" HorizontalAlignment="Left" Margin="5,0,30,0"></TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Top">
-                <TextBlock Text="{DynamicResource LOCLegendaryETA}"></TextBlock>
+                <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonEta}}"></TextBlock>
                 <TextBlock Name="EtaTB" HorizontalAlignment="Left" Margin="5,0,0,0"></TextBlock>
             </StackPanel>
         </Grid>
@@ -71,12 +73,12 @@
                     <TextBlock Text="&#xea5c;" FontFamily="{DynamicResource FontIcoFont}" FontSize="26" Style="{x:Null}" />
                 </Hyperlink>
             </TextBlock>
-                <TextBlock Text="{DynamicResource LOCLegendaryDownloadManager}" VerticalAlignment="Center"
+                <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonDownloadManager}}" VerticalAlignment="Center"
                        Margin="10,0,0,0" FontSize="18"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <Button x:Name="ResumeDownloadBtn" Content="&#xec74;" ToolTip="{DynamicResource LOCLegendaryResumeDownload}" FontFamily="{DynamicResource FontIcoFont}" Click="ResumeDownloadBtn_Click" IsEnabled="False" />
-                <Button x:Name="PauseBtn" ToolTip="{DynamicResource LOCLegendaryPauseDownload}" Content="&#xec72;" FontFamily="{DynamicResource FontIcoFont}" Click="PauseBtn_Click" Margin="5,0,0,0" IsEnabled="False" />
+                <Button x:Name="ResumeDownloadBtn" Content="&#xec74;" ToolTip="{common:Localize Key={x:Static system:LOC.CommonResumeDownload}}" FontFamily="{DynamicResource FontIcoFont}" Click="ResumeDownloadBtn_Click" IsEnabled="False" />
+                <Button x:Name="PauseBtn" ToolTip="{common:Localize Key={x:Static system:LOC.CommonPauseDownload}}" Content="&#xec72;" FontFamily="{DynamicResource FontIcoFont}" Click="PauseBtn_Click" Margin="5,0,0,0" IsEnabled="False" />
                 <Button x:Name="CancelDownloadBtn" Content="&#xec73;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteCancelLabel}"
                    Margin="5,0,0,0" IsCancel="True" Click="CancelDownloadBtn_Click" IsEnabled="False" />
                 <Separator Margin="10,0,5,0" />
@@ -97,7 +99,7 @@
                     Margin="5,0,0,0" Click="SelectAllBtn_Click" />
                 <Button x:Name="RemoveDownloadBtn" Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}"
                     Margin="5,0,0,0" Click="RemoveDownloadBtn_Click" IsEnabled="False" />
-                <Button x:Name="RemoveCompletedDownloadsBtn" Content="&#xef9f;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendaryRemoveCompletedDownloads}"
+                <Button x:Name="RemoveCompletedDownloadsBtn" Content="&#xef9f;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{common:Localize Key={x:Static system:LOC.CommonRemoveCompletedDownloads}}"
                     Margin="5,0,0,0" Click="RemoveCompletedDownloadsBtn_Click" />
                 <Separator Margin="10,0,5,0" />
                 <Button x:Name="DownloadPropertiesBtn" Content="&#xefe2;" FontFamily="{DynamicResource FontIcoFont}"
@@ -116,31 +118,31 @@
                     <StackPanel Margin="10" Name="FilterStatusSP">
                         <CheckBox DockPanel.Dock="Top"
                               Margin="0,0,0,0"
-                              Content="{DynamicResource LOCLegendaryDownloadRunning}"
+                              Content="{common:Localize Key={x:Static system:LOC.CommonDownloadRunning}}"
                               Name="RunningChk"
                               Checked="DownloadFiltersChk_IsCheckedChanged"
                               Unchecked="DownloadFiltersChk_IsCheckedChanged" />
                         <CheckBox DockPanel.Dock="Top"
                               Margin="0,5,0,0"
-                              Content="{DynamicResource LOCLegendaryDownloadQueued}"
+                              Content="{common:Localize Key={x:Static system:LOC.CommonDownloadQueued}}"
                               Name="QueuedChk"
                               Checked="DownloadFiltersChk_IsCheckedChanged"
                               Unchecked="DownloadFiltersChk_IsCheckedChanged"/>
                         <CheckBox DockPanel.Dock="Top"
                               Margin="0,5,0,0"
-                              Content="{DynamicResource LOCLegendaryDownloadPaused}"
+                              Content="{common:Localize Key={x:Static system:LOC.CommonDownloadPaused}}"
                               Name="PausedChk"
                               Checked="DownloadFiltersChk_IsCheckedChanged"
                               Unchecked="DownloadFiltersChk_IsCheckedChanged"/>
                         <CheckBox DockPanel.Dock="Top"
                               Margin="0,5,0,0"
-                              Content="{DynamicResource LOCLegendaryDownloadCanceled}"
+                              Content="{common:Localize Key={x:Static system:LOC.CommonDownloadCanceled}}"
                               Name="CanceledChk"
                               Checked="DownloadFiltersChk_IsCheckedChanged"
                               Unchecked="DownloadFiltersChk_IsCheckedChanged"/>
                         <CheckBox DockPanel.Dock="Top"
                               Margin="0,5,0,0"
-                              Content="{DynamicResource LOCLegendaryDownloadCompleted}"
+                              Content="{common:Localize Key={x:Static system:LOC.CommonDownloadCompleted}}"
                               Name="CompletedChk"
                               Checked="DownloadFiltersChk_IsCheckedChanged"
                               Unchecked="DownloadFiltersChk_IsCheckedChanged"/>
@@ -151,8 +153,8 @@
         <DataGrid x:Name="DownloadsDG" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,10" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" ColumnWidth="*" CanUserSortColumns="True" CanUserResizeColumns="True" SelectionChanged="DownloadsDG_SelectionChanged" EnableColumnVirtualization="True" EnableRowVirtualization="True" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Standard">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{DynamicResource LOCLegendary3P_PlayniteGameNameTitle}" Binding="{Binding name}"></DataGridTextColumn>
-                <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloadStatus}" Binding="{Binding status, Converter={StaticResource DownloadStatusEnumToStringConverter}}"/>
-                <DataGridTemplateColumn Header="{DynamicResource LOCLegendaryProgress}">
+                <DataGridTextColumn Header="{common:Localize Key={x:Static system:LOC.CommonDownloadStatus}}" Binding="{Binding status, Converter={StaticResource DownloadStatusEnumToStringConverter}}"/>
+                <DataGridTemplateColumn Header="{common:Localize Key={x:Static system:LOC.CommonProgress}}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid>
@@ -163,7 +165,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloaded}">
+                <DataGridTextColumn Header="{common:Localize Key={x:Static system:LOC.CommonDownloaded}}">
                     <DataGridTextColumn.Binding>
                         <MultiBinding StringFormat="{}{0} / {1}">
                             <Binding Path="downloadedNumber" Converter="{StaticResource NumericalSizeToStringConverter}"></Binding>
@@ -173,7 +175,7 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="{DynamicResource LOCLegendary3P_PlayniteInstallSizeLabel}" Binding="{Binding installSizeNumber, Converter={StaticResource NumericalSizeToStringConverter}}"/>
                 <DataGridTextColumn Header="{DynamicResource LOCLegendary3P_PlayniteAddedLabel}" Binding="{Binding addedTime, Converter={StaticResource LongToDateConverter}}"/>
-                <DataGridTextColumn Header="{DynamicResource LOCLegendaryDownloadCompletedColumn}" Binding="{Binding completedTime, Converter={StaticResource LongToDateConverter}}"/>
+                <DataGridTextColumn Header="{common:Localize Key={x:Static system:LOC.CommonDownloadCompletedColumn}}" Binding="{Binding completedTime, Converter={StaticResource LongToDateConverter}}"/>
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

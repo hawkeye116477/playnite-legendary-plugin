@@ -4,6 +4,7 @@ using Linguini.Shared.Types.Bundle;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -18,14 +19,18 @@ namespace CommonPlugin
         public static LocalizationManager Instance => _instance;
         private FluentBundle _bundle;
         private Dictionary<string, IFluentType> _commonArgs = new Dictionary<string, IFluentType>();
+        private string fallbackLanguage = "en-US";
 
         private LocalizationManager()
         {
+            if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
+            {
+                SetLanguage(fallbackLanguage);
+            }
         }
 
         private FluentBundle MakeBundle(string language)
         {
-            string fallbackLanguage = "en-US";
             var resources = new List<string>
             {
                 ReadFtl(fallbackLanguage)
@@ -40,7 +45,17 @@ namespace CommonPlugin
 
         private string ReadFtl(string language)
         {
-            var locDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Localization", language);
+            string baseDir;
+            if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
+            {
+                baseDir = Environment.CurrentDirectory;
+            }
+            else
+            {
+                baseDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            }
+
+            var locDir = Path.Combine(baseDir, "Localization", language);
             if (!Directory.Exists(locDir))
             {
                 return string.Empty;

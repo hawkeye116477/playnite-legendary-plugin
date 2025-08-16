@@ -461,7 +461,7 @@ namespace LegendaryLibraryNS
             {
                 PrerequisitesChk.IsChecked = true;
                 string prerequisitesCombined = string.Join(", ", prerequisites.Select(item => item.Key.ToString()));
-                PrerequisitesChk.Content = string.Format(PrerequisitesChk.Content.ToString(), prerequisitesCombined);
+                PrerequisitesChk.Content = PrerequisitesChk.Content.ToString().Replace("$prerequisiteName", prerequisitesCombined);
                 PrerequisitesChk.Visibility = Visibility.Visible;
             }
 

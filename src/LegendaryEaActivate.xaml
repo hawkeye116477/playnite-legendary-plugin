@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LegendaryLibraryNS"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:common="clr-namespace:CommonPlugin"
+             xmlns:system="clr-namespace:System"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <UserControl.Resources>
@@ -20,12 +22,12 @@
         <Style TargetType="TabControl" BasedOn="{StaticResource HawkeyeTabControlStyle}" />
     </UserControl.Resources>
     <StackPanel Margin="10">
-        <TextBlock Text="{DynamicResource LOCLegendaryNoAvailableEaGames}" Margin="0,5,0,0"  Visibility="Collapsed" Name="NoEaGamesTB" />
+        <TextBlock Text="{common:Localize Key={x:Static system:LOC.LegendaryNoAvailableEaGames}}" Margin="0,5,0,0"  Visibility="Collapsed" Name="NoEaGamesTB" />
         <TextBlock Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}" Margin="0,5,0,0"  Visibility="Collapsed" Name="LoadingEaTB" />
         <StackPanel x:Name="EaGamesSP">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
-                <Button x:Name="ActivateBtn" Content="{DynamicResource LOCLegendaryActivateGames}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xecaa; {0}" Margin="0,0,5,0" IsEnabled="False" Click="ActivateBtn_Click" />
-                <Button x:Name="SelectAllBtn" Content="{DynamicResource LOCLegendaryCheckAllContent}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xeed9; {0}" Margin="0,0,5,0" Click="SelectAllBtn_Click"  />
+                <Button x:Name="ActivateBtn" Content="{common:Localize Key={x:Static system:LOC.LegendaryActivateGames}}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xecaa; {0}" Margin="0,0,5,0" IsEnabled="False" Click="ActivateBtn_Click" />
+                <Button x:Name="SelectAllBtn" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xeed9; {0}" Margin="0,0,5,0" Click="SelectAllBtn_Click"  />
             </StackPanel>
             <Separator Margin="0,5,0,0" />
             <ListBox BorderThickness="0" Name="EaGamesLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="EaGamesLB_SelectionChanged">

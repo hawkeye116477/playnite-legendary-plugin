@@ -335,6 +335,51 @@ namespace LegendaryLibraryNS
         public void Load3pLocalization()
         {
             var currentLanguage = PlayniteApi.ApplicationSettings.Language;
+            var dictionaries = Application.Current.Resources.MergedDictionaries;
+
+            void loadString(string xamlPath)
+            {
+                ResourceDictionary res = null;
+                try
+                {
+                    res = Xaml.FromFile<ResourceDictionary>(xamlPath);
+                    res.Source = new Uri(xamlPath, UriKind.Absolute);
+                    foreach (var key in res.Keys)
+                    {
+                        if (res[key] is string locString && locString.IsNullOrEmpty())
+                        {
+                            res.Remove(key);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    logger.Error(e, $"Failed to parse localization file {xamlPath}");
+                    return;
+                }
+                dictionaries.Add(res);
+            }
+
+            var extraLocDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Localization\third_party");
+            if (!Directory.Exists(extraLocDir))
+            {
+                return;
+            }
+            var enXaml = Path.Combine(extraLocDir, "en_US.xaml");
+            if (!File.Exists(enXaml))
+            {
+                return;
+            }
+
+            loadString(enXaml);
+            if (currentLanguage != "en_US")
+            {
+                var langXaml = Path.Combine(extraLocDir, $"{currentLanguage}.xaml");
+                if (File.Exists(langXaml))
+                {
+                    loadString(langXaml);
+                }
+            }
             LocalizationManager.Instance.SetLanguage(currentLanguage);
             var commonFluentArgs = new Dictionary<string, IFluentType>
             {

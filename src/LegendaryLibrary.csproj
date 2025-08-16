@@ -172,6 +172,9 @@
     <Compile Include="..\third_party\playnite-common-plugin\src\LocalizationManager.cs">
       <Link>Shared\LocalizationManager.cs</Link>
     </Compile>
+      <Compile Include="..\third_party\playnite-common-plugin\src\LocalizeExtension.cs">
+      <Link>Shared\LocalizeExtension.cs</Link>
+    </Compile>
     <Page Include="..\third_party\playnite-common-plugin\src\MessageCheckBoxDialog.xaml">
       <Link>Shared\MessageCheckBoxDialog.xaml</Link>
       <SubType>Designer</SubType>
@@ -325,7 +328,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Localization\*.ftl">
+    <None Include="Localization\*\*.ftl">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

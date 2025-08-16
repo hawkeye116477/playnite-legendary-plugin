@@ -121,7 +121,7 @@ namespace LegendaryLibraryNS
 
         public string GetToolTipWithKey(string description, string shortcut)
         {
-            return $"{ResourceProvider.GetString(description)} [{shortcut}]";
+            return $"{LocalizationManager.Instance.GetString(description)} [{shortcut}]";
         }
 
         public DownloadManagerData LoadSavedData()

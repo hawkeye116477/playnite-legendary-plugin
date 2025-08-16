@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:LegendaryLibraryNS"
              xmlns:common="clr-namespace:CommonPlugin"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:system="clr-namespace:System"
              xmlns:pcmd="clr-namespace:Playnite.Commands"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400" Name="LegendaryDownloadPropertiesUC" Loaded="LegendaryDownloadPropertiesUC_Loaded">
@@ -38,21 +39,21 @@
             </Grid.RowDefinitions>
             <Separator Margin="0,5,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5" Grid.Row="1" Grid.Column="0">
-                <TextBlock Text="{DynamicResource LOCLegendaryDownloadSize}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonDownloadSize}}" HorizontalAlignment="Left" VerticalAlignment="Center" />
                 <TextBlock x:Name="DownloadSizeTB" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
                     VerticalAlignment="Top" Margin="5,0,5,0" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" Grid.Row="2" Grid.Column="0">
-                <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendaryInstallSize}" Margin="0,0,0,0" />
+                <TextBlock VerticalAlignment="Top" Text="{common:Localize Key={x:Static system:LOC.CommonInstallSize}}" Margin="0,0,0,0" />
                 <TextBlock x:Name="InstallSizeTB" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}" VerticalAlignment="Top" Margin="5,0,5,0" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,5,0,5" Grid.Row="1" Grid.Column="1">
-                <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendarySpaceAvailable}" Margin="0,0,0,0" />
+                <TextBlock VerticalAlignment="Top" Text="{common:Localize Key={x:Static system:LOC.CommonSpaceAvailable}}" Margin="0,0,0,0" />
                 <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
                     Margin="5,0,5,0" Name="SpaceTB" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" Name="AfterInstallingSP" Margin="10,0,0,0">
-                <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendaryAfterInstalling}" Margin="0,0,0,0" />
+                <TextBlock VerticalAlignment="Top" Text="{common:Localize Key={x:Static system:LOC.CommonAfterInstalling}}" Margin="0,0,0,0" />
                 <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
                     Margin="5,0,5,0" Name="AfterInstallingTB" />
             </StackPanel>
@@ -74,13 +75,13 @@
                                 Name="ChooseGamePathBtn" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteSelectDirectoryTooltip}" Click="ChooseGamePathBtn_Click" />
                         <TextBox Name="SelectedGamePathTxt" VerticalAlignment="Center" Margin="0" />
                     </DockPanel>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource LOCLegendaryTask}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,10,0"></TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{common:Localize Key={x:Static system:LOC.CommonTask}}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,10,0"></TextBlock>
                     <ComboBox Grid.Row="1" Grid.Column="1" x:Name="TaskCBo" DisplayMemberPath="Value" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Width="Auto" />
                 </Grid>
             </TabItem>
-            <TabItem Header="{DynamicResource LOCLegendaryExtraContent}" Visibility="Collapsed" Name="ExtraContentTbI">
+            <TabItem Header="{common:Localize Key={x:Static system:LOC.CommonExtraContent}}" Visibility="Collapsed" Name="ExtraContentTbI">
                 <StackPanel Margin="10">
-                    <CheckBox Margin="2,0,0,5" Content="{DynamicResource LOCLegendaryCheckAllContent}" x:Name="AllOrNothingChk" Checked="AllOrNothingChk_Checked" Unchecked="AllOrNothingChk_Unchecked" Visibility="Collapsed" IsEnabled="False" />
+                    <CheckBox Margin="2,0,0,5" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" x:Name="AllOrNothingChk" Checked="AllOrNothingChk_Checked" Unchecked="AllOrNothingChk_Unchecked" Visibility="Collapsed" IsEnabled="False" />
                     <Separator Margin="2,0,0,5" />
                     <ListBox BorderThickness="0" Name="ExtraContentLB" SelectionMode="Multiple" Margin="0,0,0,5" SelectionChanged="ExtraContentLB_SelectionChanged" IsEnabled="False">
                         <ListBox.Resources>
@@ -113,17 +114,17 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <CheckBox Grid.Column="0" Grid.Row="0" Content="{DynamicResource LOCLegendaryInstallPrerequisites}" 
+                    <CheckBox Grid.Column="0" Grid.Row="0" Content="{common:Localize Key={x:Static system:LOC.LegendaryInstallPrerequisites},Args='prerequisiteName=$prerequisiteName'}" 
                               Margin="0,0,0,5" Name="PrerequisitesChk" Visibility="Collapsed"/>
-                    <CheckBox Grid.Column="0" Grid.Row="1" Content="{DynamicResource LOCLegendaryIgnoreFreeSpace}" 
-                              Margin="0,0,0,5" Name="IgnoreFreeSpaceChk" ToolTip="{DynamicResource LOCLegendaryIgnoreFreeSpaceToolTip}"/>
-                    <CheckBox Grid.Column="0" Grid.Row="2" Content="{DynamicResource LOCLegendaryEnableReordering}"
-                              ToolTip="{DynamicResource LOCLegendaryEnableReorderingToolTip}"
+                    <CheckBox Grid.Column="0" Grid.Row="1" Content="{common:Localize Key={x:Static system:LOC.LegendaryIgnoreFreeSpace}}" 
+                              Margin="0,0,0,5" Name="IgnoreFreeSpaceChk" ToolTip="{common:Localize Key={x:Static system:LOC.LegendaryIgnoreFreeSpaceToolTip}}"/>
+                    <CheckBox Grid.Column="0" Grid.Row="2" Content="{common:Localize Key={x:Static system:LOC.LegendaryEnableReordering}}"
+                              ToolTip="{common:Localize Key={x:Static system:LOC.LegendaryEnableReorderingToolTip}}"
                               Margin="0,0,0,5" Name="ReorderingChk"/>
-                    <TextBlock Text="{DynamicResource LOCLegendaryMaxWorkers}" Grid.Column="0"
+                    <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonMaxWorkers}}" Grid.Column="0"
                                Grid.Row="3" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
                     <common:NumericInput Grid.Row="3" Grid.Column="1" Margin="10,0,0,5" MinValue="0" x:Name="MaxWorkersNI"/>
-                    <TextBlock Text="{DynamicResource LOCLegendaryMaxSharedMemory}" Grid.Column="0"
+                    <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonMaxSharedMemory}}" Grid.Column="0"
                                Grid.Row="4" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
                     <common:NumericInput Grid.Row="4" Grid.Column="1" Margin="10,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" x:Name="MaxSharedMemoryNI"/>
                 </Grid>

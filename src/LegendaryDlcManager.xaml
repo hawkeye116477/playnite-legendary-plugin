@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:LegendaryLibraryNS"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:common="clr-namespace:CommonPlugin"
+             xmlns:system="clr-namespace:System"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <UserControl.Resources>
@@ -22,7 +23,7 @@
     </UserControl.Resources>
     <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled"
         HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" SelectionChanged="TabControl_SelectionChanged">
-        <TabItem Header="{DynamicResource LOCLegendaryAvailableDlcs}">
+        <TabItem Header="{common:Localize Key={x:Static system:LOC.CommonAvailableDlcs}}">
             <DockPanel Margin="10,5,0,5">
                 <Grid DockPanel.Dock="Bottom" Margin="0,5,0,0" x:Name="BottomADGrd">
                     <Grid.ColumnDefinitions>
@@ -36,20 +37,20 @@
                     </Grid.RowDefinitions>
                     <Separator Margin="0,5,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5" Grid.Row="1" Grid.Column="0">
-                        <TextBlock Text="{DynamicResource LOCLegendaryDownloadSize}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonDownloadSize}}" HorizontalAlignment="Left" VerticalAlignment="Center" />
                         <TextBlock x:Name="DownloadSizeTB" Text="0 B" VerticalAlignment="Top" Margin="5,0,5,0" />
                      </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" Grid.Row="2" Grid.Column="0">
-                        <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendaryInstallSize}" Margin="0,0,0,0" />
+                        <TextBlock VerticalAlignment="Top" Text="{common:Localize Key={x:Static system:LOC.CommonInstallSize}}" Margin="0,0,0,0" />
                         <TextBlock x:Name="InstallSizeTB" Text="0 B" VerticalAlignment="Top" Margin="5,0,5,0" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5" Grid.Row="1" Grid.Column="1">
-                        <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendarySpaceAvailable}" Margin="0,0,0,0" />
+                        <TextBlock VerticalAlignment="Top" Text="{common:Localize Key={x:Static system:LOC.CommonSpaceAvailable}}" Margin="0,0,0,0" />
                         <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
                     Margin="5,0,5,0" Name="SpaceTB" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top"  Grid.Row="2" Grid.Column="1">
-                        <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendaryAfterInstalling}" Margin="0,0,0,0" />
+                        <TextBlock VerticalAlignment="Top" Text="{common:Localize Key={x:Static system:LOC.CommonAfterInstalling}}" Margin="0,0,0,0" />
                         <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
                     Margin="5,0,5,0" Name="AfterInstallingTB" />
                     </StackPanel>
@@ -57,7 +58,7 @@
                 <StackPanel x:Name="TopADSP" DockPanel.Dock="Top">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" DockPanel.Dock="Top" Name="AvailableDlcsActionSP">
                         <Button x:Name="InstallBtn" Content="{DynamicResource LOCLegendary3P_PlayniteInstallGame}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xef07; {0}" Click="InstallBtn_Click" Margin="0,0,5,0" IsEnabled="False" />
-                        <Button x:Name="SelectAllAvDlcsBtn" Content="{DynamicResource LOCLegendaryCheckAllContent}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xeed9; {0}" Margin="0,0,5,0" Click="SelectAllAvDlcsBtn_Click"  />
+                        <Button x:Name="SelectAllAvDlcsBtn" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xeed9; {0}" Margin="0,0,5,0" Click="SelectAllAvDlcsBtn_Click"  />
                     </StackPanel>
                     <Separator Margin="0,5,0,0" />
                     <ListBox BorderThickness="0" Name="AvailableDlcsLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="AvailableDlcsLB_SelectionChanged">
@@ -74,7 +75,7 @@
                         </ListBox.Resources>
                     </ListBox>
                     <Border BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Bottom"  Margin="0,5,0,0" x:Name="AvailableDlcsAOBrd">
-                        <Expander Header="{DynamicResource LOCLegendaryAdvancedOptions}" Margin="2,2,5,2" HorizontalAlignment="Left" >
+                        <Expander Header="{common:Localize Key={x:Static system:LOC.CommonAdvancedOptions}}" Margin="2,2,5,2" HorizontalAlignment="Left" >
                             <Grid Margin="5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -86,33 +87,33 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <CheckBox Grid.Column="0" Grid.Row="0" Content="{DynamicResource LOCLegendaryIgnoreFreeSpace}" 
+                                <CheckBox Grid.Column="0" Grid.Row="0" Content="{common:Localize Key={x:Static system:LOC.LegendaryIgnoreFreeSpace}}" 
                                           Margin="0,0,0,5" Name="IgnoreFreeSpaceChk" 
-                                          ToolTip="{DynamicResource LOCLegendaryIgnoreFreeSpaceToolTip}"/>
-                                <CheckBox Grid.Column="0" Grid.Row="1" Content="{DynamicResource LOCLegendaryEnableReordering}" 
-                                          ToolTip="{DynamicResource LOCLegendaryEnableReorderingToolTip}" Margin="0,0,0,5" 
+                                          ToolTip="{common:Localize Key={x:Static system:LOC.LegendaryIgnoreFreeSpaceToolTip}}"/>
+                                <CheckBox Grid.Column="0" Grid.Row="1" Content="{common:Localize Key={x:Static system:LOC.LegendaryEnableReordering}}" 
+                                          ToolTip="{common:Localize Key={x:Static system:LOC.LegendaryEnableReorderingToolTip}}" Margin="0,0,0,5" 
                                           Name="ReorderingChk"/>
-                                <TextBlock Text="{DynamicResource LOCLegendaryMaxWorkers}"
+                                <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonMaxWorkers}}"
                                            Grid.Row="2" Grid.Column="0" Margin="0,0,0,5" 
                                            VerticalAlignment="Center" HorizontalAlignment="Left" />
                                 <common:NumericInput Grid.Row="2" Grid.Column="1" Margin="15,0,0,5" MinValue="0" MaxValue="16" x:Name="MaxWorkersNI"/>
-                                <TextBlock Text="{DynamicResource LOCLegendaryMaxSharedMemory}" Grid.Row="3" Grid.Column="0" 
+                                <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonMaxSharedMemory}}" Grid.Row="3" Grid.Column="0" 
                                    Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
                                 <common:NumericInput Grid.Row="3" Grid.Column="1" Margin="15,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" x:Name="MaxSharedMemoryNI"/>
                             </Grid>
                         </Expander>
                     </Border>
                 </StackPanel>
-                <TextBlock Text="{DynamicResource LOCLegendaryNoAvailableDlcs}" Margin="0,5,0,0" Visibility="Collapsed" Name="NoAvailableDlcsTB"/>
+                <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonNoAvailableDlcs}}" Margin="0,5,0,0" Visibility="Collapsed" Name="NoAvailableDlcsTB"/>
                 <TextBlock Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}" Margin="0,5,0,0"  Visibility="Collapsed" Name="LoadingATB" />
             </DockPanel>
         </TabItem>
-        <TabItem Header="{DynamicResource LOCLegendaryInstalledDlcs}" Name="InstalledDlcsTbI">
+        <TabItem Header="{common:Localize Key={x:Static system:LOC.CommonInstalledDlcs}}" Name="InstalledDlcsTbI">
             <StackPanel Margin="10,5,0,5">
                 <StackPanel Name="InstalledDlcsSP">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
                         <Button x:Name="UninstallBtn" Content="{DynamicResource LOCLegendary3P_PlayniteUninstallGame}" ContentStringFormat="&#xedec; {0}" FontFamily="{DynamicResource FontIcoFont}" Click="UninstallBtn_Click" IsEnabled="False" Margin="0,0,5,0" />
-                        <Button x:Name="SelectAllInDlcsBtn" Content="{DynamicResource LOCLegendaryCheckAllContent}" FontFamily="{DynamicResource FontIcoFont}" 
+                        <Button x:Name="SelectAllInDlcsBtn" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" FontFamily="{DynamicResource FontIcoFont}" 
                                 ContentStringFormat="&#xeed9; {0}" Margin="0,0,5,0" Click="SelectAllInDlcsBtn_Click_1" />
                     </StackPanel>
                     <Separator Margin="0,5,0,0" />
@@ -130,7 +131,7 @@
                         </ListBox.Resources>
                     </ListBox>
                 </StackPanel>
-                <TextBlock Text="{DynamicResource LOCLegendaryNoInstalledDlcs}" Margin="0,5,0,0" Visibility="Collapsed" Name="NoInstalledDlcsTB"/>
+                <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonNoInstalledDlcs}}" Margin="0,5,0,0" Visibility="Collapsed" Name="NoInstalledDlcsTB"/>
                 <TextBlock Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}" Margin="0,5,0,0"  Visibility="Collapsed" Name="LoadingITB" />
             </StackPanel>
         </TabItem>
