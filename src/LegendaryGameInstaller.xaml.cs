@@ -347,7 +347,10 @@ namespace LegendaryLibraryNS
                             {
                                 prereqName = Path.GetFileName(manifest.Manifest.Prerequisites.path);
                             }
-                            prerequisites.Add(prereqName, "");
+                            if (!prerequisites.ContainsKey(prereqName))
+                            {
+                                prerequisites.Add(prereqName, "");
+                            }
                             if (manifest.Manifest.Prerequisites.ids.Contains("uplay"))
                             {
                                 var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
@@ -359,13 +362,13 @@ namespace LegendaryLibraryNS
                                                           .ExecuteBufferedAsync();
                                 if (result.StandardOutput.Contains("Failure") && result.StandardOutput.Contains("Uplay"))
                                 {
-                                    ubisoftOnlyGames.Add(installData.name);
+                                    ubisoftOnlyGames.AddMissing(installData.name);
                                     MultiInstallData.Remove(installData);
                                     continue;
                                 }
                                 else if (result.StandardOutput.Contains("Uplay"))
                                 {
-                                    ubisoftRecommendedGames.Add(installData.name);
+                                    ubisoftRecommendedGames.AddMissing(installData.name);
                                 }
                             }
                         }
