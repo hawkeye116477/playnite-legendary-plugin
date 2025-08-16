@@ -60,7 +60,7 @@ namespace LegendaryLibraryNS
             var downloadActionOptions = new Dictionary<DownloadAction, string>
             {
                 { DownloadAction.Install, ResourceProvider.GetString(LOC.Legendary3P_PlayniteInstallGame) },
-                { DownloadAction.Repair, ResourceProvider.GetString(LOC.LegendaryRepair) },
+                { DownloadAction.Repair, LocalizationManager.Instance.GetString(LOC.CommonRepair) },
                 { DownloadAction.Update, ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterInstallUpdate) }
             };
             TaskCBo.ItemsSource = downloadActionOptions;
@@ -129,7 +129,7 @@ namespace LegendaryLibraryNS
             {
                 installPath = installPath.Replace(playniteDirectoryVariable, playniteAPI.Paths.ApplicationPath);
             }
-            if (!CommonHelpers.IsDirectoryWritable(installPath, LOC.LegendaryPermissionError))
+            if (!CommonHelpers.IsDirectoryWritable(installPath, LOC.CommonPermissionError))
             {
                 return;
             }

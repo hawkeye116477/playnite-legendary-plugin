@@ -3,6 +3,7 @@ using CliWrap.Buffered;
 using CommonPlugin;
 using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
+using Linguini.Shared.Types.Bundle;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -154,14 +155,14 @@ namespace LegendaryLibraryNS
             if (InstalledDlcsLB.SelectedItems.Count == 1)
             {
                 var selectedDLC = (KeyValuePair<string, LegendaryGameInfo.Rootobject>)InstalledDlcsLB.SelectedItems[0];
-                result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryUninstallGameConfirm).Format(selectedDLC.Value.Game.Title),
+                result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonUninstallGameConfirm, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)selectedDLC.Value.Game.Title }),
                                                          ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstallGame),
                                                          MessageBoxButton.YesNo,
                                                          MessageBoxImage.Question);
             }
             else
             {
-                result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryUninstallSelectedDlcs),
+                result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonUninstallSelectedDlcs),
                                                          ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstallGame),
                                                          MessageBoxButton.YesNo,
                                                          MessageBoxImage.Question);
@@ -219,7 +220,7 @@ namespace LegendaryLibraryNS
                     var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == selectedOption.Key);
                     if (wantedItem != null)
                     {
-                        playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), wantedItem.name), "", MessageBoxButton.OK, MessageBoxImage.Error);
+                        playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonDownloadAlreadyExists, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)wantedItem.name }), "", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     else
                     {

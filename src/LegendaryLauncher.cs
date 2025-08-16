@@ -460,7 +460,7 @@ namespace LegendaryLibraryNS
                         }
                         else
                         {
-                            playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(ResourceProvider.GetString(LOC.LegendaryCheckLog)), installData.Title);
+                            playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(LocalizationManager.Instance.GetString(LOC.CommonCheckLog)), installData.Title);
                         }
                     }
                     manifest.errorDisplayed = true;
@@ -470,7 +470,7 @@ namespace LegendaryLibraryNS
                     manifest.Game = new LegendaryGameInfo.Game
                     {
                         App_name = gameID,
-                        Title = ResourceProvider.GetString(LOC.LegendaryEOSOverlay)
+                        Title = LocalizationManager.Instance.GetString(LOC.LegendaryEosOverlay)
                     };
                     manifest.Manifest = new LegendaryGameInfo.Manifest();
                     string[] lines = result.StandardError.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
@@ -769,7 +769,7 @@ namespace LegendaryLibraryNS
                 new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteInstallGame)),
                 new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteOKLabel)),
             };
-            var result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryLauncherNotInstalled), "Legendary (Epic Games) library integration", MessageBoxImage.Information, options);
+            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonLauncherNotInstalled), "Legendary (Epic Games) library integration", MessageBoxImage.Information, options);
             if (result == options[0])
             {
                 Playnite.Commands.GlobalCommands.NavigateUrl("https://github.com/hawkeye116477/playnite-legendary-plugin/wiki/Troubleshooting#legendary-launcher-is-not-installed");

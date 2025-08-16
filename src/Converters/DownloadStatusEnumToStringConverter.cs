@@ -1,4 +1,5 @@
-﻿using CommonPlugin.Enums;
+﻿using CommonPlugin;
+using CommonPlugin.Enums;
 using Playnite.SDK;
 using System;
 using System.Globalization;
@@ -13,19 +14,19 @@ namespace LegendaryLibraryNS.Converters
             switch(value)
             {
                 case DownloadStatus.Queued:
-                    value = ResourceProvider.GetString(LOC.LegendaryDownloadQueued);
+                    value = LocalizationManager.Instance.GetString(LOC.CommonDownloadQueued);
                     break;
                 case DownloadStatus.Running:
-                    value = ResourceProvider.GetString(LOC.LegendaryDownloadRunning);
+                    value = LocalizationManager.Instance.GetString(LOC.CommonDownloadRunning);
                     break;
                 case DownloadStatus.Canceled:
-                    value = ResourceProvider.GetString(LOC.LegendaryDownloadCanceled);
+                    value = LocalizationManager.Instance.GetString(LOC.CommonDownloadCanceled);
                     break;
                 case DownloadStatus.Paused:
-                    value = ResourceProvider.GetString(LOC.LegendaryDownloadPaused);
+                    value = LocalizationManager.Instance.GetString(LOC.CommonDownloadPaused);
                     break;
                 case DownloadStatus.Completed:
-                    value = ResourceProvider.GetString(LOC.LegendaryDownloadCompleted);
+                    value = LocalizationManager.Instance.GetString(LOC.CommonDownloadCompleted);
                     break;
             }
             return value;

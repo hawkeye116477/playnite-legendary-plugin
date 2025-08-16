@@ -23,6 +23,7 @@ using LegendaryLibraryNS.Services;
 using CommonPlugin;
 using CommonPlugin.Enums;
 using System.Text;
+using Linguini.Shared.Types.Bundle;
 
 namespace LegendaryLibraryNS
 {
@@ -42,14 +43,14 @@ namespace LegendaryLibraryNS
         public LegendaryDownloadManager()
         {
             InitializeComponent();
-            SelectAllBtn.ToolTip = GetToolTipWithKey(LOC.LegendarySelectAllEntries, "Ctrl+A");
-            RemoveDownloadBtn.ToolTip = GetToolTipWithKey(LOC.LegendaryRemoveEntry, "Delete");
-            MoveTopBtn.ToolTip = GetToolTipWithKey(LOC.LegendaryMoveEntryTop, "Alt+Home");
-            MoveUpBtn.ToolTip = GetToolTipWithKey(LOC.LegendaryMoveEntryUp, "Alt+Up");
-            MoveDownBtn.ToolTip = GetToolTipWithKey(LOC.LegendaryMoveEntryDown, "Alt+Down");
-            MoveBottomBtn.ToolTip = GetToolTipWithKey(LOC.LegendaryMoveEntryBottom, "Alt+End");
-            DownloadPropertiesBtn.ToolTip = GetToolTipWithKey(LOC.LegendaryEditSelectedDownloadProperties, "Ctrl+P");
-            OpenDownloadDirectoryBtn.ToolTip = GetToolTipWithKey(LOC.LegendaryOpenDownloadDirectory, "Ctrl+O");
+            SelectAllBtn.ToolTip = GetToolTipWithKey(LOC.CommonSelectAllEntries, "Ctrl+A");
+            RemoveDownloadBtn.ToolTip = GetToolTipWithKey(LOC.CommonRemoveEntry, "Delete");
+            MoveTopBtn.ToolTip = GetToolTipWithKey(LOC.CommonMoveEntryTop, "Alt+Home");
+            MoveUpBtn.ToolTip = GetToolTipWithKey(LOC.CommonMoveEntryUp, "Alt+Up");
+            MoveDownBtn.ToolTip = GetToolTipWithKey(LOC.CommonMoveEntryDown, "Alt+Down");
+            MoveBottomBtn.ToolTip = GetToolTipWithKey(LOC.CommonMoveEntryBottom, "Alt+End");
+            DownloadPropertiesBtn.ToolTip = GetToolTipWithKey(LOC.CommonEditSelectedDownloadProperties, "Ctrl+P");
+            OpenDownloadDirectoryBtn.ToolTip = GetToolTipWithKey(LOC.CommonOpenDownloadDirectory, "Ctrl+O");
             LoadSavedData();
             foreach (DownloadManagerData.Download download in downloadManagerData.downloads)
             {
@@ -204,7 +205,7 @@ namespace LegendaryLibraryNS
             var messagesSettings = LegendaryMessagesSettings.LoadSettings();
             if (!messagesSettings.DontShowDownloadManagerWhatsUpMsg)
             {
-                var result = MessageCheckBoxDialog.ShowMessage("", ResourceProvider.GetString(LOC.LegendaryDownloadManagerWhatsUp), ResourceProvider.GetString(LOC.Legendary3P_PlayniteDontShowAgainTitle), MessageBoxButton.OK, MessageBoxImage.Information);
+                var result = MessageCheckBoxDialog.ShowMessage("", LocalizationManager.Instance.GetString(LOC.CommonDownloadManagerWhatsUp), ResourceProvider.GetString(LOC.Legendary3P_PlayniteDontShowAgainTitle), MessageBoxButton.OK, MessageBoxImage.Information);
                 if (result.CheckboxChecked)
                 {
                     messagesSettings.DontShowDownloadManagerWhatsUpMsg = true;
@@ -384,11 +385,11 @@ namespace LegendaryLibraryNS
                                     string largeProgressPercent = verificationFileProgressMatch.Groups[2].Value;
                                     string readSize = CommonHelpers.FormatSize(CommonHelpers.ToDouble(verificationFileProgressMatch.Groups[3].Value), verificationFileProgressMatch.Groups[5].Value);
                                     string fullSize = CommonHelpers.FormatSize(CommonHelpers.ToDouble(verificationFileProgressMatch.Groups[4].Value), verificationFileProgressMatch.Groups[5].Value);
-                                    DescriptionTB.Text = ResourceProvider.GetString(LOC.LegendaryVerifyingLargeFile).Format(fileName, $"{largeProgressPercent} ({readSize}/{fullSize})");
+                                    DescriptionTB.Text = LocalizationManager.Instance.GetString(LOC.CommonVerifyingLargeFile, new Dictionary<string, IFluentType> { ["fileName"] = (FluentString)fileName, ["progress"] = (FluentString)$"{largeProgressPercent} ({readSize}/{fullSize})" });
                                 }
                                 else if (stdOut.Text.Contains("Verification"))
                                 {
-                                    DescriptionTB.Text = ResourceProvider.GetString(LOC.LegendaryVerifying);
+                                    DescriptionTB.Text = LocalizationManager.Instance.GetString(LOC.CommonVerifying);
                                 }
                             }
                             break;
@@ -424,7 +425,7 @@ namespace LegendaryLibraryNS
                                 }
                                 else
                                 {
-                                    DescriptionTB.Text = ResourceProvider.GetString(LOC.LegendaryDownloadingUpdate);
+                                    DescriptionTB.Text = LocalizationManager.Instance.GetString(LOC.CommonDownloadingUpdate);
                                 }
                             }
                             var elapsedMatch = Regex.Match(stdErr.Text, @"Running for (\d\d:\d\d:\d\d)");
@@ -452,13 +453,13 @@ namespace LegendaryLibraryNS
                                     switch (downloadProperties.downloadAction)
                                     {
                                         case DownloadAction.Install:
-                                            DescriptionTB.Text = ResourceProvider.GetString(LOC.LegendaryFinishingInstallation);
+                                            DescriptionTB.Text = LocalizationManager.Instance.GetString(LOC.CommonFinishingInstallation);
                                             break;
                                         case DownloadAction.Update:
-                                            DescriptionTB.Text = ResourceProvider.GetString(LOC.LegendaryFinishingUpdate);
+                                            DescriptionTB.Text = LocalizationManager.Instance.GetString(LOC.CommonFinishingUpdate);
                                             break;
                                         case DownloadAction.Repair:
-                                            DescriptionTB.Text = ResourceProvider.GetString(LOC.LegendaryFinishingRepair);
+                                            DescriptionTB.Text = LocalizationManager.Instance.GetString(LOC.CommonFinishingRepair);
                                             break;
                                         default:
                                             break;
@@ -524,19 +525,19 @@ namespace LegendaryLibraryNS
                                 else if (memoryErrorMessage != "")
                                 {
                                     var memoryErrorMatch = Regex.Match(memoryErrorMessage, @"MemoryError: Current shared memory cache is smaller than required: (\S+) MiB < (\S+) MiB");
-                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), string.Format(ResourceProvider.GetString(LOC.LegendaryMemoryError), memoryErrorMatch.Groups[1] + " MB", memoryErrorMatch.Groups[2] + " MB")));
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), LocalizationManager.Instance.GetString(LOC.LegendaryMemoryError, new Dictionary<string, IFluentType> { ["currentMemory"] = (FluentString)$"{memoryErrorMatch.Groups[1]} MB", ["requiredMemory"] = (FluentString)$"{memoryErrorMatch.Groups[2]} MB"})));
                                 }
                                 else if (permissionErrorDisplayed)
                                 {
-                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryPermissionError)));
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), LocalizationManager.Instance.GetString(LOC.CommonPermissionError)));
                                 }
                                 else if (diskSpaceErrorDisplayed)
                                 {
-                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryNotEnoughSpace)));
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), LocalizationManager.Instance.GetString(LOC.CommonNotEnoughSpace)));
                                 }
                                 else
                                 {
-                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryCheckLog)));
+                                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), LocalizationManager.Instance.GetString(LOC.CommonCheckLog)));
                                 }
                                 wantedItem.status = DownloadStatus.Paused;
                             }
@@ -616,14 +617,14 @@ namespace LegendaryLibraryNS
                                 wantedItem.completedTime = now.ToUnixTimeSeconds();
                                 if (settings.DisplayDownloadTaskFinishedNotifications)
                                 {
-                                    var notificationMessage = LOC.LegendaryInstallationFinished;
+                                    var notificationMessage = LOC.CommonInstallationFinished;
                                     switch (downloadProperties.downloadAction)
                                     {
                                         case DownloadAction.Repair:
-                                            notificationMessage = LOC.LegendaryRepairFinished;
+                                            notificationMessage = LOC.CommonRepairFinished;
                                             break;
                                         case DownloadAction.Update:
-                                            notificationMessage = LOC.LegendaryUpdateFinished;
+                                            notificationMessage = LOC.CommonUpdateFinished;
                                             break;
                                         default:
                                             break;
@@ -783,13 +784,13 @@ namespace LegendaryLibraryNS
                 if (DownloadsDG.SelectedItems.Count == 1)
                 {
                     var selectedRow = (DownloadManagerData.Download)DownloadsDG.SelectedItem;
-                    messageText = string.Format(ResourceProvider.GetString(LOC.LegendaryRemoveEntryConfirm), selectedRow.name);
+                    messageText = LocalizationManager.Instance.GetString(LOC.CommonRemoveEntryConfirm, new Dictionary<string, IFluentType> { ["entryName"] = (FluentString)selectedRow.name });
                 }
                 else
                 {
-                    messageText = ResourceProvider.GetString(LOC.LegendaryRemoveSelectedEntriesConfirm);
+                    messageText = LocalizationManager.Instance.GetString(LOC.CommonRemoveSelectedEntriesConfirm);
                 }
-                var result = playniteAPI.Dialogs.ShowMessage(messageText, ResourceProvider.GetString(LOC.LegendaryRemoveEntry), MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var result = playniteAPI.Dialogs.ShowMessage(messageText, LocalizationManager.Instance.GetString(LOC.CommonRemoveEntry), MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     foreach (var selectedRow in DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>().ToList())
@@ -804,7 +805,7 @@ namespace LegendaryLibraryNS
         {
             if (DownloadsDG.Items.Count > 0)
             {
-                var result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryRemoveCompletedDownloadsConfirm), ResourceProvider.GetString(LOC.LegendaryRemoveCompletedDownloads), MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonRemoveCompletedDownloadsConfirm), LocalizationManager.Instance.GetString(LOC.CommonRemoveCompletedDownloads), MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     foreach (var row in DownloadsDG.Items.Cast<DownloadManagerData.Download>().ToList())
@@ -865,7 +866,7 @@ namespace LegendaryLibraryNS
                     ShowMaximizeButton = false,
                 });
                 var selectedItem = DownloadsDG.SelectedItems[0] as DownloadManagerData.Download;
-                window.Title = selectedItem.name + " — " + ResourceProvider.GetString(LOC.LegendaryDownloadProperties);
+                window.Title = selectedItem.name + " — " + LocalizationManager.Instance.GetString(LOC.CommonDownloadProperties);
                 window.DataContext = selectedItem;
                 window.Content = new LegendaryDownloadProperties();
                 window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
@@ -931,7 +932,7 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                playniteAPI.Dialogs.ShowErrorMessage($"{selectedItem.fullInstallPath}\n{ResourceProvider.GetString(LOC.LegendaryPathNotExistsError)}");
+                playniteAPI.Dialogs.ShowErrorMessage($"{selectedItem.fullInstallPath}\n{LocalizationManager.Instance.GetString(LOC.CommonPathNotExistsError)}");
             }
         }
 

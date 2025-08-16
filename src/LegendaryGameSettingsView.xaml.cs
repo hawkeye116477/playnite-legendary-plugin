@@ -165,8 +165,8 @@ namespace LegendaryLibraryNS
             }
             var cloudSyncActions = new Dictionary<CloudSyncAction, string>
             {
-                { CloudSyncAction.Download, ResourceProvider.GetString(LOC.LegendaryDownload) },
-                { CloudSyncAction.Upload, ResourceProvider.GetString(LOC.LegendaryUpload) },
+                { CloudSyncAction.Download, LocalizationManager.Instance.GetString(LOC.CommonDownload) },
+                { CloudSyncAction.Upload, LocalizationManager.Instance.GetString(LOC.CommonUpload) },
             };
             ManualSyncSavesCBo.ItemsSource = cloudSyncActions;
             ManualSyncSavesCBo.SelectedIndex = 0;
@@ -219,13 +219,13 @@ namespace LegendaryLibraryNS
         {
             if (AutoSyncSavesChk.IsChecked == true)
             {
-                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendarySyncGameSavesWarn), "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonSyncGameSavesWarn), "", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
         private void SyncSavesBtn_Click(object sender, RoutedEventArgs e)
         {
-            var result = playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryCloudSaveConfirm), ResourceProvider.GetString(LOC.LegendaryCloudSaves), MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonCloudSaveConfirm), LocalizationManager.Instance.GetString(LOC.CommonCloudSaves), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 bool forceCloudSync = (bool)ForceCloudActionChk.IsChecked;

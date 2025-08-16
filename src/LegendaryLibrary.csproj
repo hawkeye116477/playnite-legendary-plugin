@@ -42,6 +42,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\CliWrap\CliWrap\bin\Release\net462\CliWrap.dll</HintPath>
     </Reference>
+    <Reference Include="IndexRange, Version=1.0.2.0, Culture=neutral, PublicKeyToken=35e6a3c4212514c6, processorArchitecture=MSIL">
+      <HintPath>packages\IndexRange.1.0.2\lib\net45\IndexRange.dll</HintPath>
+    </Reference>
+    <Reference Include="Linguini.Bundle, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Linguini.Bundle.0.3.2\lib\net461\Linguini.Bundle.dll</HintPath>
+    </Reference>
+    <Reference Include="Linguini.Shared, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Linguini.Shared.0.3.0\lib\net461\Linguini.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Linguini.Syntax, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Linguini.Syntax.0.3.0\lib\net461\Linguini.Syntax.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -156,6 +168,9 @@
     </Compile>
     <Compile Include="..\third_party\playnite-common-plugin\src\CommonHelpers.cs">
       <Link>Shared\CommonHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\third_party\playnite-common-plugin\src\LocalizationManager.cs">
+      <Link>Shared\LocalizationManager.cs</Link>
     </Compile>
     <Page Include="..\third_party\playnite-common-plugin\src\MessageCheckBoxDialog.xaml">
       <Link>Shared\MessageCheckBoxDialog.xaml</Link>
@@ -291,6 +306,7 @@
     <Compile Include="Services\EpicAccountClient.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="System.Runtime.CompilerServices.RuntimeHelpers\GetSubArray.cs" />
     <None Include="$(LocalAppData)\Playnite\Templates\Themes\Fonts\icofont.ttf">
       <Link>Fonts/icofont.ttf</Link>
     </None>
@@ -309,7 +325,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Localization\*.xaml">
+    <None Include="Localization\*.ftl">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

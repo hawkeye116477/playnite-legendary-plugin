@@ -30,19 +30,19 @@ namespace LegendaryLibraryNS
             {
                 case DownloadCompleteAction.ShutDown:
                     ActionBtn.Content = ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuShutdownSystem);
-                    CountdownTB.Text = ResourceProvider.GetString(LOC.LegendarySystemShutdownCountdown);
+                    CountdownTB.Text = LocalizationManager.Instance.GetString(LOC.CommonSystemShutdownCountdown);
                     break;
                 case DownloadCompleteAction.Reboot:
                     ActionBtn.Content = ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuRestartSystem);
-                    CountdownTB.Text = ResourceProvider.GetString(LOC.LegendarySystemRestartCountdown);
+                    CountdownTB.Text = LocalizationManager.Instance.GetString(LOC.CommonSystemRestartCountdown);
                     break;
                 case DownloadCompleteAction.Hibernate:
                     ActionBtn.Content = ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuHibernateSystem);
-                    CountdownTB.Text = ResourceProvider.GetString(LOC.LegendarySystemHibernateCountdown);
+                    CountdownTB.Text = LocalizationManager.Instance.GetString(LOC.CommonSystemHibernateCountdown);
                     break;
                 case DownloadCompleteAction.Sleep:
                     ActionBtn.Content = ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuSuspendSystem);
-                    CountdownTB.Text = ResourceProvider.GetString(LOC.LegendarySystemSuspendCountdown);
+                    CountdownTB.Text = LocalizationManager.Instance.GetString(LOC.CommonSystemSuspendCountdown);
                     break;
             }
             CountdownPB.Maximum = time;

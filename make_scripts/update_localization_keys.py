@@ -3,6 +3,45 @@
 """Update Localization Keys (LOC class)"""
 import os
 import xml.etree.ElementTree as ET
+from fluent.syntax import parse as FluentParse
+from fluent.syntax.ast import (
+    Message, Term, Pattern, TextElement, Placeable,
+    VariableReference, SelectExpression
+)
+from pathlib import Path
+
+def to_camel_case(s):
+    parts = s.split('-')
+    return ''.join(part.capitalize() for part in parts)
+
+def reconstruct_pattern_string(pattern):
+    """
+    Reconstructs a string from a Pattern AST node, handling text and placeables.
+    """
+    if not isinstance(pattern, Pattern):
+        return ""
+    
+    reconstructed_value = []
+    for element in pattern.elements:
+        if isinstance(element, TextElement):
+            reconstructed_value.append(element.value)
+        elif isinstance(element, Placeable):
+            expr = element.expression
+            if isinstance(expr, VariableReference):
+                reconstructed_value.append(f'{{${expr.id.name}}}')
+            elif isinstance(expr, SelectExpression):
+                selector_name = expr.selector.id.name
+                variants_list = [
+                    f'<br/>\n\t\t/// {v.key.name}: {reconstruct_pattern_string(v.value)}'
+                    for v in expr.variants
+                ]
+                variants_str = "".join(variants_list)
+                reconstructed_value.append(f'{{${selector_name} ->}}{variants_str}')
+            else:
+                print(f"Warning: Found unhandled expression type: {type(expr).__name__}")
+                reconstructed_value.append(f'{{UNHANDLED_EXPRESSION}}')
+    
+    return "".join(reconstructed_value)
 
 pj = os.path.join
 pn = os.path.normpath
@@ -12,8 +51,6 @@ main_path = pn(script_path + "/..")
 
 third_party_loc_file = pn(
     pj(main_path, "third_party", r"Localization\en_US.xaml"))
-shared_loc_file = pn(pj(main_path, r"src\Localization\en_US.xaml"))
-legendary_loc_file = pn(pj(main_path, r"src\Localization\en_US-legendary.xaml"))
 loc_keys_file = pj(main_path, "src", "LocalizationKeys.cs")
 
 loc_keys_file_content = '''\
@@ -28,8 +65,8 @@ namespace System
 '''
 
 x_ns = "{http://schemas.microsoft.com/winfx/2006/xaml}"
-loc_files = [third_party_loc_file, legendary_loc_file, shared_loc_file]
-for loc_file in loc_files:
+xaml_loc_files = [third_party_loc_file]
+for loc_file in xaml_loc_files:
     loc_parse = ET.parse(loc_file)
     for child in loc_parse.getroot():
         key = child.get(x_ns + 'Key')
@@ -38,6 +75,25 @@ for loc_file in loc_files:
         /// {child.text}
         /// </summary>
         public const string {key.replace("LOC", "")} = "{key}";
+\
+'''
+
+loc_path = pn(pj(main_path, "src", "Localization", "en-US"))
+ftl_files = list(Path(loc_path).rglob('*.ftl'))
+
+for file_path in ftl_files:
+    with open(file_path, 'r', encoding='utf-8') as f:
+        ftl_resource = FluentParse(f.read())
+
+    for entry in ftl_resource.body:
+        if isinstance(entry, (Message, Term)) and entry.value:
+            key = entry.id.name
+            string_value = reconstruct_pattern_string(entry.value)
+            loc_keys_file_content += f'''\
+        /// <summary>
+        /// {string_value}
+        /// </summary>
+        public const string {to_camel_case(key)} = "{key}";
 \
 '''
 

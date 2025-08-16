@@ -5,6 +5,7 @@ using CommonPlugin.Enums;
 using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
+using Linguini.Shared.Types.Bundle;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Events;
@@ -59,7 +60,7 @@ namespace LegendaryLibraryNS
             {
                 Instance.downloadManagerSidebarItem = new SidebarItem
                 {
-                    Title = ResourceProvider.GetString(LOC.LegendaryPanel),
+                    Title = LocalizationManager.Instance.GetString(LOC.CommonPanel),
                     Icon = LegendaryLauncher.Icon,
                     Type = SiderbarItemType.View,
                     Opened = () => GetLegendaryDownloadManager(),
@@ -334,65 +335,15 @@ namespace LegendaryLibraryNS
         public void Load3pLocalization()
         {
             var currentLanguage = PlayniteApi.ApplicationSettings.Language;
-            var dictionaries = Application.Current.Resources.MergedDictionaries;
-
-            void loadString(string xamlPath)
+            LocalizationManager.Instance.SetLanguage(currentLanguage);
+            var commonFluentArgs = new Dictionary<string, IFluentType>
             {
-                ResourceDictionary res = null;
-                try
-                {
-                    res = Xaml.FromFile<ResourceDictionary>(xamlPath);
-                    res.Source = new Uri(xamlPath, UriKind.Absolute);
-                    foreach (var key in res.Keys)
-                    {
-                        if (res[key] is string locString && locString.IsNullOrEmpty())
-                        {
-                            res.Remove(key);
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e, $"Failed to parse localization file {xamlPath}");
-                    return;
-                }
-                dictionaries.Add(res);
-            }
-
-            var extraLocDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Localization\third_party");
-            if (!Directory.Exists(extraLocDir))
-            {
-                return;
-            }
-
-            var enXaml = Path.Combine(extraLocDir, "en_US.xaml");
-            if (!File.Exists(enXaml))
-            {
-                return;
-            }
-
-            loadString(enXaml);
-            if (currentLanguage != "en_US")
-            {
-                var langXaml = Path.Combine(extraLocDir, $"{currentLanguage}.xaml");
-                if (File.Exists(langXaml))
-                {
-                    loadString(langXaml);
-                }
-            }
-
-            // Load Legendary specific strings
-            extraLocDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Localization");
-            enXaml = Path.Combine(extraLocDir, "en_US-legendary.xaml");
-            loadString(enXaml);
-            if (currentLanguage != "en_US")
-            {
-                var langXaml = Path.Combine(extraLocDir, $"{currentLanguage}-legendary.xaml");
-                if (File.Exists(langXaml))
-                {
-                    loadString(langXaml);
-                }
-            }
+                { "launcherName", (FluentString)"Legendary" },
+                { "pluginShortName", (FluentString)"Legendary" },
+                { "originalPluginShortName", (FluentString)"Epic" },
+                { "updatesSourceName", (FluentString)"Epic Games" }
+            };
+            LocalizationManager.Instance.SetCommonArgs(commonFluentArgs);
         }
 
         public override IEnumerable<SidebarItem> GetSidebarItems()
@@ -409,7 +360,7 @@ namespace LegendaryLibraryNS
             {
                 if (displayConfirm)
                 {
-                    var stopConfirm = PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryInstanceNotice), "", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    var stopConfirm = PlayniteApi.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonInstanceNotice), "", MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (stopConfirm == MessageBoxResult.No)
                     {
                         return false;
@@ -501,10 +452,15 @@ namespace LegendaryLibraryNS
                                 {
                                     var options = new List<MessageBoxOption>
                                     {
-                                        new MessageBoxOption(ResourceProvider.GetString(LOC.LegendaryViewChangelog), true),
+                                        new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.CommonViewChangelog), true),
                                         new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteOKLabel), false, true),
                                     };
-                                    var result = PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryNewVersionAvailable), "Legendary Launcher", newVersion), ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
+                                    var launcherFluentArgs = new Dictionary<string, IFluentType>
+                                    {
+                                        ["appName"] = (FluentString)"Legendary Launcher",
+                                        ["appVersion"] = (FluentString)newVersion.ToString()
+                                    };
+                                    var result = PlayniteApi.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNewVersionAvailable, launcherFluentArgs), ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
                                     if (result == options[0])
                                     {
                                         var changelogURL = versionInfoContent.Html_url;
@@ -645,7 +601,7 @@ namespace LegendaryLibraryNS
                     {
                         yield return new GameMenuItem
                         {
-                            Description = ResourceProvider.GetString(LOC.LegendaryLauncherSettings),
+                            Description = LocalizationManager.Instance.GetString(LOC.CommonLauncherSettings),
                             Icon = "ModifyLaunchSettingsIcon",
                             Action = (args) =>
                             {
@@ -659,7 +615,7 @@ namespace LegendaryLibraryNS
                                     ShowMaximizeButton = false
                                 });
                                 window.DataContext = game;
-                                window.Title = $"{ResourceProvider.GetString(LOC.LegendaryLauncherSettings)} - {game.Name}";
+                                window.Title = $"{LocalizationManager.Instance.GetString(LOC.CommonLauncherSettings)} - {game.Name}";
                                 window.Content = new LegendaryGameSettingsView();
                                 window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
                                 window.SizeToContent = SizeToContent.WidthAndHeight;
@@ -682,7 +638,7 @@ namespace LegendaryLibraryNS
 
                                 LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
                                 var gamesToUpdate = new Dictionary<string, UpdateInfo>();
-                                GlobalProgressOptions updateCheckProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryCheckingForUpdates), false) { IsIndeterminate = true };
+                                GlobalProgressOptions updateCheckProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonCheckingForUpdates), false) { IsIndeterminate = true };
                                 PlayniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
                                 {
                                     gamesToUpdate = await legendaryUpdateController.CheckGameUpdates(game.Name, game.GameId);
@@ -712,7 +668,7 @@ namespace LegendaryLibraryNS
                                 }
                                 else
                                 {
-                                    PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryNoUpdatesAvailable), game.Name);
+                                    PlayniteApi.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNoUpdatesAvailable), game.Name);
                                 }
                             }
                         };
@@ -721,7 +677,7 @@ namespace LegendaryLibraryNS
                     {
                         yield return new GameMenuItem
                         {
-                            Description = ResourceProvider.GetString(LOC.LegendaryImportInstalledGame),
+                            Description = LocalizationManager.Instance.GetString(LOC.CommonImportInstalledGame),
                             Icon = "AddGameIcon",
                             Action = async (args) =>
                             {
@@ -740,7 +696,7 @@ namespace LegendaryLibraryNS
                                         return;
                                     }
                                     await LegendaryDownloadManager.WaitUntilLegendaryCloses();
-                                    GlobalProgressOptions importProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryImportingGame).Format(game.Name), false) { IsIndeterminate = true };
+                                    GlobalProgressOptions importProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonImportingGame, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }), false) { IsIndeterminate = true };
                                     PlayniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
                                     {
                                         var importCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
@@ -761,11 +717,11 @@ namespace LegendaryLibraryNS
                                                 game.InstallSize = (ulong?)installedGameInfo.Install_size;
                                                 game.IsInstalled = true;
                                             }
-                                            PlayniteApi.Dialogs.ShowMessage(LOC.LegendaryImportFinished);
+                                            PlayniteApi.Dialogs.ShowMessage(LOC.CommonImportFinished);
                                         }
                                         else
                                         {
-                                            PlayniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryGameImportFailure).Format(LOC.LegendaryCheckLog));
+                                            PlayniteApi.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.CommonGameImportFailure, new Dictionary<string, IFluentType> { ["reason"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonCheckLog) }));
                                         }
                                     }, importProgressOptions);
                                 }
@@ -774,7 +730,7 @@ namespace LegendaryLibraryNS
                     }
                     yield return new GameMenuItem
                     {
-                        Description = ResourceProvider.GetString(LOC.LegendaryManageDlcs),
+                        Description = LocalizationManager.Instance.GetString(LOC.CommonManageDlcs),
                         Icon = "AddonsIcon",
                         Action = (args) =>
                         {
@@ -788,7 +744,7 @@ namespace LegendaryLibraryNS
                             {
                                 ShowMaximizeButton = false,
                             });
-                            window.Title = $"{ResourceProvider.GetString(LOC.LegendaryManageDlcs)} - {game.Name}";
+                            window.Title = $"{LocalizationManager.Instance.GetString(LOC.CommonManageDlcs)} - {game.Name}";
                             window.DataContext = game;
                             window.Content = new LegendaryDlcManager();
                             window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
@@ -802,7 +758,7 @@ namespace LegendaryLibraryNS
                     {
                         yield return new GameMenuItem
                         {
-                            Description = ResourceProvider.GetString(LOC.LegendaryMove),
+                            Description = LocalizationManager.Instance.GetString(LOC.CommonMove),
                             Icon = "MoveIcon",
                             Action = (args) =>
                             {
@@ -826,10 +782,15 @@ namespace LegendaryLibraryNS
                                         }
                                         var folderName = Path.GetFileName(Path.GetDirectoryName(oldPath));
                                         newPath = Path.Combine(newPath, folderName);
-                                        var moveConfirm = PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryMoveConfirm).Format(game.Name, newPath), ResourceProvider.GetString(LOC.LegendaryMove), MessageBoxButton.YesNo, MessageBoxImage.Question);
+                                        var moveFluentArgs = new Dictionary<string, IFluentType>
+                                        {
+                                            ["appName"] = (FluentString)game.Name,
+                                            ["path"] = (FluentString)newPath
+                                        };
+                                        var moveConfirm = PlayniteApi.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonMoveConfirm, moveFluentArgs), LocalizationManager.Instance.GetString(LOC.CommonMove), MessageBoxButton.YesNo, MessageBoxImage.Question);
                                         if (moveConfirm == MessageBoxResult.Yes)
                                         {
-                                            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryMovingGame).Format(game.Name, newPath), false);
+                                            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonMovingGame, moveFluentArgs), false);
                                             PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                                             {
                                                 a.ProgressMaxValue = 3;
@@ -861,12 +822,12 @@ namespace LegendaryLibraryNS
                                                         game.InstallDirectory = newPath;
                                                         PlayniteApi.Database.Games.Update(game);
                                                         a.CurrentProgressValue = 3;
-                                                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryMoveGameSuccess).Format(game.Name, newPath));
+                                                        PlayniteApi.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonMoveGameSuccess, moveFluentArgs));
                                                     }
                                                     catch (Exception e)
                                                     {
                                                         a.CurrentProgressValue = 3;
-                                                        PlayniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryMoveGameError).Format(game.Name, newPath));
+                                                        PlayniteApi.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.CommonMoveGameError, moveFluentArgs));
                                                         logger.Error(e.Message);
                                                     }
                                                 }));
@@ -906,7 +867,7 @@ namespace LegendaryLibraryNS
                 {
                     yield return new GameMenuItem
                     {
-                        Description = ResourceProvider.GetString(LOC.LegendaryRepair),
+                        Description = LocalizationManager.Instance.GetString(LOC.CommonRepair),
                         Icon = "RepairIcon",
                         Action = (args) =>
                         {
@@ -933,7 +894,7 @@ namespace LegendaryLibraryNS
                             window.SizeToContent = SizeToContent.WidthAndHeight;
                             window.MinWidth = 600;
                             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                            var title = ResourceProvider.GetString(LOC.LegendaryRepair);
+                            var title = LocalizationManager.Instance.GetString(LOC.CommonRepair);
                             if (installedLegendaryGames.Count == 1)
                             {
                                 title = installedLegendaryGames[0].Name;
@@ -962,7 +923,7 @@ namespace LegendaryLibraryNS
         {
             yield return new MainMenuItem
             {
-                Description = ResourceProvider.GetString(LOC.LegendaryCheckForGamesUpdatesButton),
+                Description = LocalizationManager.Instance.GetString(LOC.CommonCheckForGamesUpdatesButton),
                 MenuSection = $"@{Instance.Name}",
                 Icon = "UpdateDbIcon",
                 Action = (args) =>
@@ -975,7 +936,7 @@ namespace LegendaryLibraryNS
 
                     var gamesUpdates = new Dictionary<string, UpdateInfo>();
                     LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
-                    GlobalProgressOptions updateCheckProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryCheckingForUpdates), false) { IsIndeterminate = true };
+                    GlobalProgressOptions updateCheckProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonCheckingForUpdates), false) { IsIndeterminate = true };
                     PlayniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
                     {
                         gamesUpdates = await legendaryUpdateController.CheckAllGamesUpdates();
@@ -1005,7 +966,7 @@ namespace LegendaryLibraryNS
                     }
                     else
                     {
-                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryNoUpdatesAvailable));
+                        PlayniteApi.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNoUpdatesAvailable));
                     }
                 }
             };
@@ -1014,7 +975,7 @@ namespace LegendaryLibraryNS
             {
                 yield return new MainMenuItem
                 {
-                    Description = ResourceProvider.GetString(LOC.LegendaryDownloadManager),
+                    Description = LocalizationManager.Instance.GetString(LOC.CommonDownloadManager),
                     MenuSection = $"@{Instance.Name}",
                     Icon = "InstallIcon",
                     Action = (args) =>
@@ -1023,7 +984,7 @@ namespace LegendaryLibraryNS
                         {
                             ShowMaximizeButton = true,
                         });
-                        window.Title = $"{ResourceProvider.GetString(LOC.LegendaryPanel)}";
+                        window.Title = $"{LocalizationManager.Instance.GetString(LOC.CommonPanel)}";
                         window.Content = GetLegendaryDownloadManager();
                         window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
                         window.SizeToContent = SizeToContent.WidthAndHeight;

@@ -3,6 +3,7 @@ using CliWrap.Buffered;
 using CommonPlugin;
 using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
+using Linguini.Shared.Types.Bundle;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
@@ -90,7 +91,7 @@ namespace LegendaryLibraryNS
                         installPath = installedInfo.Install_path;
                         installData.fullInstallPath = installPath;
                     }
-                    if (!CommonHelpers.IsDirectoryWritable(installPath, LOC.LegendaryPermissionError))
+                    if (!CommonHelpers.IsDirectoryWritable(installPath, LOC.CommonPermissionError))
                     {
                         continue;
                     }
@@ -135,15 +136,12 @@ namespace LegendaryLibraryNS
             }
             if (downloadItemsAlreadyAdded.Count > 0)
             {
-                if (downloadItemsAlreadyAdded.Count == 1)
+                string downloadItemsAlreadyAddedList = downloadItemsAlreadyAdded[0];
+                if (downloadItemsAlreadyAdded.Count > 1)
                 {
-                    playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), downloadItemsAlreadyAdded[0]), "", MessageBoxButton.OK, MessageBoxImage.Error);
+                    downloadItemsAlreadyAddedList = string.Join(", ", downloadItemsAlreadyAdded.Select(item => item.ToString()));
                 }
-                else
-                {
-                    string downloadItemsAlreadyAddedComnined = string.Join(", ", downloadItemsAlreadyAdded.Select(item => item.ToString()));
-                    playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExistsOther), downloadItemsAlreadyAddedComnined), "", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonDownloadAlreadyExists, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)downloadItemsAlreadyAddedList }), "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             if (downloadTasks.Count > 0)
             {
@@ -473,52 +471,64 @@ namespace LegendaryLibraryNS
 
             if (eaAppGames.Count > 0)
             {
+                var fluentEAArgs = new Dictionary<string, IFluentType>();
+                fluentEAArgs["count"] = (FluentNumber)eaAppGames.Count;
                 if (eaAppGames.Count == 1)
                 {
-                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryRequiredInstallViaThirdPartyLauncherError).Format("EA App", eaAppGames[0])));
+                    fluentEAArgs["gameTitle"] = (FluentString)eaAppGames[0];
                 }
                 else
                 {
                     string eaAppGamesCombined = string.Join(", ", eaAppGames.Select(item => item.ToString()));
-                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryRequiredInstallViaThirdPartyLauncherErrorOther).Format("EA App", eaAppGamesCombined));
+                    fluentEAArgs["gameTitle"] = (FluentString)eaAppGamesCombined;
                 }
+                fluentEAArgs["thirdPartyLauncherName"] = (FluentString)"EA App";
+                playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.LegendaryRequiredInstallViaThirdPartyLauncherError, fluentEAArgs));
             }
             if (ubisoftOnlyGames.Count > 0)
             {
+                var fluentUbisoftArgs = new Dictionary<string, IFluentType>();
+                fluentUbisoftArgs["count"] = (FluentNumber)ubisoftOnlyGames.Count;
                 if (ubisoftOnlyGames.Count == 1)
                 {
-                    playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameInstallError), ResourceProvider.GetString(LOC.LegendaryRequiredInstallViaThirdPartyLauncherError).Format("Ubisoft Connect", ubisoftOnlyGames[0])));
+                    fluentUbisoftArgs["gameTitle"] = (FluentString)ubisoftOnlyGames[0];
                 }
                 else
                 {
                     string ubisoftOnlyGamesCombined = string.Join(", ", ubisoftOnlyGames.Select(item => item.ToString()));
-                    playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.LegendaryRequiredInstallViaThirdPartyLauncherErrorOther).Format("Ubisoft Connect", ubisoftOnlyGamesCombined));
+                    fluentUbisoftArgs["gameTitle"] = (FluentString)ubisoftOnlyGamesCombined;
                 }
+                fluentUbisoftArgs["thirdPartyLauncherName"] = (FluentString)"Ubisoft Connect";
+                playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.LegendaryRequiredInstallViaThirdPartyLauncherError, fluentUbisoftArgs));
             }
             if (ubisoftRecommendedGames.Count > 0)
             {
+                var fluentUbisoftArgs = new Dictionary<string, IFluentType>
+                {
+                    ["count"] = (FluentNumber)ubisoftRecommendedGames.Count
+                };
                 if (ubisoftRecommendedGames.Count == 1)
                 {
-                    playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryRequiredInstallOfThirdPartyLauncher).Format("Ubisoft Connect", ubisoftRecommendedGames[0]), "", MessageBoxButton.OK, MessageBoxImage.Information);
+                    fluentUbisoftArgs["gameTitle"] = (FluentString)ubisoftRecommendedGames[0];
                 }
                 else
                 {
                     string ubisoftRecommendedGamesCombined = string.Join(", ", ubisoftRecommendedGames.Select(item => item.ToString()));
-                    playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryRequiredInstallOfThirdPartyLauncherOther).Format("Ubisoft Connect", ubisoftRecommendedGamesCombined), "", MessageBoxButton.OK, MessageBoxImage.Information);
+                    fluentUbisoftArgs["gameTitle"] = (FluentString)ubisoftRecommendedGamesCombined;
                 }
+                fluentUbisoftArgs["thirdPartyLauncherName"] = (FluentString)"Ubisoft Connect";
+                playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.LegendaryRequiredInstallOfThirdPartyLauncher, fluentUbisoftArgs));
             }
 
             if (downloadItemsAlreadyAdded.Count > 0)
             {
-                if (downloadItemsAlreadyAdded.Count == 1)
+                var downloadItemsAlreadyAddedList = downloadItemsAlreadyAdded[0];
+                if (downloadItemsAlreadyAdded.Count > 1)
                 {
-                    playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), downloadItemsAlreadyAdded[0]), "", MessageBoxButton.OK, MessageBoxImage.Error);
+                    downloadItemsAlreadyAddedList = string.Join(", ", downloadItemsAlreadyAdded.Select(item => item.ToString()));
+
                 }
-                else
-                {
-                    string downloadItemsAlreadyAddedComnined = string.Join(", ", downloadItemsAlreadyAdded.Select(item => item.ToString()));
-                    playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExistsOther), downloadItemsAlreadyAddedComnined), "", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonDownloadAlreadyExists, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)downloadItemsAlreadyAddedList, ["pluginShortName"] = (FluentString)"Legendary" }), "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             CalculateTotalSize();

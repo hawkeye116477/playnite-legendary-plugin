@@ -1,4 +1,6 @@
-﻿using LegendaryLibraryNS.Models;
+﻿using CommonPlugin;
+using LegendaryLibraryNS.Models;
+using Linguini.Shared.Types.Bundle;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
@@ -351,7 +353,7 @@ namespace LegendaryLibraryNS.Services
 
         public void UploadPlaytime(DateTime startTime, DateTime endTime, Game game, int attempts = 3)
         {
-            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryUploadingPlaytime).Format(game.Name), false);
+            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonUploadingPlaytime, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }), false);
             api.Dialogs.ActivateGlobalProgress(async (a) =>
             {
                 a.IsIndeterminate = true;
@@ -392,7 +394,7 @@ namespace LegendaryLibraryNS.Services
                                 }
                                 else
                                 {
-                                    api.Dialogs.ShowErrorMessage(api.Resources.GetString(LOC.LegendaryUploadPlaytimeError).Format(game.Name));
+                                    api.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.CommonUploadPlaytimeError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }));
                                     logger.Error($"An error occured during uploading playtime to the cloud: {exception}.");
                                 }
                             }

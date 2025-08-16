@@ -1,4 +1,5 @@
-﻿using LegendaryLibraryNS.Models;
+﻿using CommonPlugin;
+using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
 using Playnite.Common;
 using Playnite.SDK;
@@ -36,15 +37,15 @@ namespace LegendaryLibraryNS
                         gameInfo.Features = new HashSet<MetadataProperty>() { };
                         if (legendaryMetadata.metadata.customAttributes?.CloudSaveFolder != null)
                         {
-                            gameInfo.Features.Add(new MetadataNameProperty(ResourceProvider.GetString(LOC.LegendaryCloudSaves)));
+                            gameInfo.Features.Add(new MetadataNameProperty(LocalizationManager.Instance.GetString(LOC.CommonCloudSaves)));
                         }
                         if (legendaryMetadata.metadata.mainGameItem != null)
                         {
-                            gameInfo.Features.Add(new MetadataNameProperty(ResourceProvider.GetString(LOC.LegendaryExtraContent)));
+                            gameInfo.Features.Add(new MetadataNameProperty(LocalizationManager.Instance.GetString(LOC.CommonExtraContent)));
                         }
                         if (legendaryMetadata.metadata.customAttributes?.CanRunOffline?.value == "true")
                         {
-                            gameInfo.Features.Add(new MetadataNameProperty(ResourceProvider.GetString(LOC.LegendaryOfflineMode)));
+                            gameInfo.Features.Add(new MetadataNameProperty(LocalizationManager.Instance.GetString(LOC.LegendaryOfflineMode)));
                         }
                     }
                 }

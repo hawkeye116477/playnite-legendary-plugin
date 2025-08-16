@@ -1,7 +1,9 @@
 ﻿using CliWrap;
 using CliWrap.EventStream;
+using CommonPlugin;
 using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
+using Linguini.Shared.Types.Bundle;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
@@ -108,7 +110,7 @@ namespace LegendaryLibraryNS
                     {
                         var playniteAPI = API.Instance;
                         var logger = LogManager.GetLogger();
-                        GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendarySyncing).Format(game.Name), false);
+                        GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonSyncing, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }), false);
                         playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
                         {
                             a.ProgressMaxValue = 100;
@@ -170,11 +172,11 @@ namespace LegendaryLibraryNS
                                         {
                                             if (loginErrorDisplayed)
                                             {
-                                                playniteAPI.Dialogs.ShowErrorMessage($"{playniteAPI.Resources.GetString(LOC.LegendarySyncError).Format(game.Name)} {ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)}.");
+                                                playniteAPI.Dialogs.ShowErrorMessage($"{LocalizationManager.Instance.GetString(LOC.CommonSyncError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name })} {ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)}.");
                                             }
                                             else
                                             {
-                                                playniteAPI.Dialogs.ShowErrorMessage($"{playniteAPI.Resources.GetString(LOC.LegendarySyncError).Format(game.Name)} {ResourceProvider.GetString(LOC.LegendaryCheckLog)}");
+                                                playniteAPI.Dialogs.ShowErrorMessage($"{LocalizationManager.Instance.GetString(LOC.CommonSyncError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name })} {LocalizationManager.Instance.GetString(LOC.CommonCheckLog)}");
                                             }
                                         }
                                         break;

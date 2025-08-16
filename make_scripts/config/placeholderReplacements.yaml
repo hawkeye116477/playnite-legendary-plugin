@@ -1,0 +1,34 @@
+LOCLegendaryMemoryError:
+  first: currentMemory
+  second: requiredMemory
+LOCLegendaryNoLinkedAccount:
+  first: companyAccount
+LOCLegendaryAllActivatedUbisoft:
+  first: companyAccount
+LOCLegendaryContinueActivation:
+  first: companyAccount
+LOCLegendaryGamesActivateSuccess:
+  first: companyAccount
+LOCLegendaryGamesActivateFailure:
+  first: companyAccount
+  second: reason
+LOCLegendaryImportThirdPartyLauncherGames:
+  first: thirdPartyLauncherName
+LOCLegendaryThirdPartyLauncherImportWarn:
+  first: thirdPartyLauncherName
+LOCLegendaryRequiredInstallViaThirdPartyLauncherError:
+  first: thirdPartyLauncherName
+  second: gameTitle
+LOCLegendaryRequiredInstallViaThirdPartyLauncherErrorOther:
+  first: thirdPartyLauncherName
+  second: gameTitle
+LOCLegendaryInstallPrerequisites:
+  first: prerequisiteName
+LOCLegendaryRequiredInstallOfThirdPartyLauncher:
+  first: thirdPartyLauncherName
+  second: gameTitle
+LOCLegendaryRequiredInstallOfThirdPartyLauncherOther:
+  first: thirdPartyLauncherName
+  second: gameTitle
+LOCLegendaryInstallingPrerequisites:
+  first: prerequisiteName

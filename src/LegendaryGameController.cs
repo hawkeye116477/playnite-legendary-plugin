@@ -5,6 +5,7 @@ using CommonPlugin;
 using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
+using Linguini.Shared.Types.Bundle;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
@@ -99,7 +100,7 @@ namespace LegendaryLibraryNS
             var playniteAPI = API.Instance;
             string gamesCombined = string.Join(", ", games.Select(item => item.Name));
 
-            var result = MessageCheckBoxDialog.ShowMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstallGame), ResourceProvider.GetString(LOC.LegendaryUninstallGameConfirm).Format(gamesCombined), LOC.LegendaryRemoveGameLaunchSettings, MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = MessageCheckBoxDialog.ShowMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstallGame), LocalizationManager.Instance.GetString(LOC.CommonUninstallGameConfirm, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)gamesCombined }), LOC.CommonRemoveGameLaunchSettings, MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result.Result)
             {
                 var canContinue = LegendaryLibrary.Instance.StopDownloadManager(true);
@@ -167,27 +168,24 @@ namespace LegendaryLibraryNS
                 }, globalProgressOptions);
                 if (uninstalledGames.Count > 0)
                 {
-                    if (uninstalledGames.Count == 1)
+                    string uninstalledGamesList = uninstalledGames[0].Name;
+                    if (uninstalledGames.Count > 1)
                     {
-                        playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryUninstallSuccess).Format(uninstalledGames[0].Name));
+                        uninstalledGamesList = string.Join(", ", uninstalledGames.Select(item => item.Name));
                     }
-                    else
-                    {
-                        string uninstalledGamesCombined = string.Join(", ", uninstalledGames.Select(item => item.Name));
-                        playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryUninstallSuccessOther).Format(uninstalledGamesCombined));
-                    }
+                    playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonUninstallSuccess, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)uninstalledGamesList }));
 
                 }
                 if (notUninstalledGames.Count > 0)
                 {
                     if (notUninstalledGames.Count == 1)
                     {
-                        playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameUninstallError).Format(ResourceProvider.GetString(LOC.LegendaryCheckLog)), notUninstalledGames[0].Name);
+                        playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameUninstallError).Format(LocalizationManager.Instance.GetString(LOC.CommonCheckLog)), notUninstalledGames[0].Name);
                     }
                     else
                     {
                         string notUninstalledGamesCombined = string.Join(", ", notUninstalledGames.Select(item => item.Name));
-                        playniteAPI.Dialogs.ShowMessage($"{ResourceProvider.GetString(LOC.LegendaryUninstallErrorOther).Format(notUninstalledGamesCombined)} {ResourceProvider.GetString(LOC.LegendaryCheckLog)}");
+                        playniteAPI.Dialogs.ShowMessage($"{LocalizationManager.Instance.GetString(LOC.CommonUninstallError, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)notUninstalledGamesCombined })} {LocalizationManager.Instance.GetString(LOC.CommonCheckLog)}");
                     }
                 }
             }
@@ -299,7 +297,7 @@ namespace LegendaryLibraryNS
                         }
                         if (prereqPath != "")
                         {
-                            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.LegendaryInstallingPrerequisites).Format(prereqName), false);
+                            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.LegendaryInstallingPrerequisites, new Dictionary<string, IFluentType> { ["prerequisiteName"] = (FluentString)prereqName }), false);
                             playniteAPI.Dialogs.ActivateGlobalProgress((a) =>
                             {
                                 try
@@ -439,7 +437,7 @@ namespace LegendaryLibraryNS
                             else
                             {
                                 InvokeOnStopped(new GameStoppedEventArgs());
-                                playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), ResourceProvider.GetString(LOC.LegendaryCheckLog)));
+                                playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), LocalizationManager.Instance.GetString(LOC.CommonCheckLog)));
                             }
                         }
                         else
@@ -764,7 +762,7 @@ namespace LegendaryLibraryNS
             if (LegendaryLauncher.IsEOSOverlayInstalled)
             {
                 LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
-                var overlayToUpdate = await legendaryUpdateController.CheckGameUpdates(ResourceProvider.GetString(LOC.LegendaryEOSOverlay), "eos-overlay");
+                var overlayToUpdate = await legendaryUpdateController.CheckGameUpdates(LocalizationManager.Instance.GetString(LOC.LegendaryEosOverlay), "eos-overlay");
                 if (overlayToUpdate.Count > 0)
                 {
                     gamesToUpdate.Add("eos-overlay", overlayToUpdate["eos-overlay"]);
@@ -784,7 +782,7 @@ namespace LegendaryLibraryNS
                     if (silently)
                     {
                         var playniteApi = API.Instance;
-                        playniteApi.Notifications.Add(new NotificationMessage("LegendaryGamesUpdates", ResourceProvider.GetString(LOC.LegendaryGamesUpdatesUnderway), NotificationType.Info));
+                        playniteApi.Notifications.Add(new NotificationMessage("LegendaryGamesUpdates", LocalizationManager.Instance.GetString(LOC.CommonGamesUpdatesUnderway), NotificationType.Info));
                     }
                     LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
                     foreach (var gameToUpdate in gamesToUpdate)
@@ -803,7 +801,7 @@ namespace LegendaryLibraryNS
                         {
                             if (!silently)
                             {
-                                playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.LegendaryDownloadAlreadyExists), wantedItem.name), "", MessageBoxButton.OK, MessageBoxImage.Error);
+                                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonDownloadAlreadyExists, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)wantedItem.name }), "", MessageBoxButton.OK, MessageBoxImage.Error);
                             }
                         }
                         else
@@ -839,7 +837,7 @@ namespace LegendaryLibraryNS
             }
             else if (!silently)
             {
-                playniteAPI.Dialogs.ShowMessage(ResourceProvider.GetString(LOC.LegendaryNoUpdatesAvailable), gameTitle);
+                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNoUpdatesAvailable), gameTitle);
             }
         }
     }
