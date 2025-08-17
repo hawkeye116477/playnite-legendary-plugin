@@ -1,5 +1,6 @@
 ﻿using CliWrap;
 using CliWrap.Buffered;
+using CliWrap.EventStream;
 using CommonPlugin;
 using LegendaryLibraryNS.Models;
 using Linguini.Shared.Types.Bundle;
@@ -10,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -180,7 +182,7 @@ namespace LegendaryLibraryNS
 
         private async void ActivateBtn_Click(object sender, RoutedEventArgs e)
         {
-            playniteAPI.Dialogs.ShowMessage(LOC.LegendaryEaNotice, "", MessageBoxButton.OK, MessageBoxImage.Information);
+            playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.LegendaryEaNotice), "", MessageBoxButton.OK, MessageBoxImage.Information);
             bool errorDisplayed = false;
             int i = 0;
             foreach (var selectedGame in EaGamesLB.SelectedItems.Cast<LegendaryMetadata>())
@@ -200,24 +202,40 @@ namespace LegendaryLibraryNS
                 }
                 if (canActivate)
                 {
-                    var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                    var stdOutBuffer = new StringBuilder();
+                    var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                           .WithArguments(new[] { "launch", selectedGame.app_name, "--origin" })
                                           .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                                           .AddCommandToLog()
-                                          .WithValidation(CommandResultValidation.None)
-                                          .ExecuteBufferedAsync();
-                    var errorMessage = result.StandardError;
-                    if (errorMessage.Contains("ERROR") || errorMessage.Contains("WARNING"))
+                                          .WithValidation(CommandResultValidation.None);
+                    await foreach (var cmdEvent in cmd.ListenAsync())
                     {
-                        errorDisplayed = true;
-                        logger.Error(errorMessage);
-                    }
-                    else if (errorMessage.Contains("Failed to establish a new connection")
-                        || errorMessage.Contains("Log in failed")
-                        || errorMessage.Contains("Login failed")
-                        || errorMessage.Contains("No saved credentials"))
-                    {
-                        playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired));
+                        switch (cmdEvent)
+                        {
+                            case StartedCommandEvent started:
+                                break;
+                            case StandardErrorCommandEvent stdErr:
+                                stdOutBuffer.AppendLine(stdErr.Text);
+                                break;
+                            case ExitedCommandEvent exited:
+                                if (exited.ExitCode != 0)
+                                {
+                                    var errorMessage = stdOutBuffer.ToString();
+                                    if (errorMessage.Contains("ERROR") || errorMessage.Contains("WARNING") || errorMessage.Contains("exceptions"))
+                                    {
+                                        errorDisplayed = true;
+                                        logger.Error(errorMessage);
+                                    }
+                                    else if (errorMessage.Contains("Failed to establish a new connection")
+                                        || errorMessage.Contains("Log in failed")
+                                        || errorMessage.Contains("Login failed")
+                                        || errorMessage.Contains("No saved credentials"))
+                                    {
+                                        playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired));
+                                    }
+                                }
+                                break;
+                        }
                     }
                 }
             }
@@ -229,7 +247,6 @@ namespace LegendaryLibraryNS
             {
                 playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.LegendaryGamesActivateSuccess, new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"EA" }));
             }
-
         }
     }
 }

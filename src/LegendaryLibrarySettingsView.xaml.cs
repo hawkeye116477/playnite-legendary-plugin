@@ -513,11 +513,11 @@ namespace LegendaryLibraryNS
                                 warningDisplayed = true;
                                 warningBuffer.AppendLine(stdErr.Text);
                             }
-                            if (stdErr.Text.Contains("ERROR"))
+                            if (stdErr.Text.Contains("ERROR") || stdErr.Text.Contains("exceptions"))
                             {
-                                errorDisplayed = true;
-                                errorBuffer.AppendLine(stdErr.Text);
+                                errorDisplayed = true; 
                             }
+                            errorBuffer.AppendLine(stdErr.Text);
                             break;
                         case ExitedCommandEvent exited:
                             if (errorDisplayed)
