@@ -30,61 +30,21 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <LangVersion>8.0</LangVersion>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ByteSize, Version=2.1.2.0, Culture=neutral, PublicKeyToken=036f71e5fc483cd1, processorArchitecture=MSIL">
-      <HintPath>packages\ByteSize.2.1.2\lib\net45\ByteSize.dll</HintPath>
-    </Reference>
     <Reference Include="CliWrap, Version=3.6.7.0, Culture=neutral, PublicKeyToken=1c4a4fc2d6886e5a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\CliWrap\CliWrap\bin\Release\net462\CliWrap.dll</HintPath>
     </Reference>
-    <Reference Include="IndexRange, Version=1.0.2.0, Culture=neutral, PublicKeyToken=35e6a3c4212514c6, processorArchitecture=MSIL">
-      <HintPath>packages\IndexRange.1.0.2\lib\net45\IndexRange.dll</HintPath>
-    </Reference>
-    <Reference Include="Linguini.Bundle, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Linguini.Bundle.0.3.2\lib\net461\Linguini.Bundle.dll</HintPath>
-    </Reference>
-    <Reference Include="Linguini.Shared, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Linguini.Shared.0.3.0\lib\net461\Linguini.Shared.dll</HintPath>
-    </Reference>
-    <Reference Include="Linguini.Syntax, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Linguini.Syntax.0.3.0\lib\net461\Linguini.Syntax.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Playnite.SDK, Version=6.12.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\PlayniteSDK.6.12.0\lib\net462\Playnite.SDK.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
     <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
@@ -172,7 +132,7 @@
     <Compile Include="..\third_party\playnite-common-plugin\src\LocalizationManager.cs">
       <Link>Shared\LocalizationManager.cs</Link>
     </Compile>
-      <Compile Include="..\third_party\playnite-common-plugin\src\LocalizeExtension.cs">
+    <Compile Include="..\third_party\playnite-common-plugin\src\LocalizeExtension.cs">
       <Link>Shared\LocalizeExtension.cs</Link>
     </Compile>
     <Page Include="..\third_party\playnite-common-plugin\src\MessageCheckBoxDialog.xaml">
@@ -309,7 +269,6 @@
     <Compile Include="Services\EpicAccountClient.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="System.Runtime.CompilerServices.RuntimeHelpers\GetSubArray.cs" />
     <None Include="$(LocalAppData)\Playnite\Templates\Themes\Fonts\icofont.ttf">
       <Link>Fonts/icofont.ttf</Link>
     </None>
@@ -322,7 +281,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="Resources\legendary_icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -394,7 +352,23 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="ByteSize">
+      <Version>2.1.2</Version>
+    </PackageReference>
+    <PackageReference Include="Linguini.Bundle">
+      <Version>0.3.2</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces">
+      <Version>8.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="PlayniteSDK">
+      <Version>6.12.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Memory">
+      <Version>4.5.4</Version>
+    </PackageReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)/..'))=Dev:/playnite-legendary-plugin</PathMap>
