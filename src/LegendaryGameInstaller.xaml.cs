@@ -141,7 +141,7 @@ namespace LegendaryLibraryNS
                 {
                     downloadItemsAlreadyAddedList = string.Join(", ", downloadItemsAlreadyAdded.Select(item => item.ToString()));
                 }
-                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonDownloadAlreadyExists, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)downloadItemsAlreadyAddedList }), "", MessageBoxButton.OK, MessageBoxImage.Error);
+                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonDownloadAlreadyExists, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)downloadItemsAlreadyAddedList, ["count"] = (FluentNumber)downloadItemsAlreadyAdded.Count }), "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             if (downloadTasks.Count > 0)
             {
@@ -474,8 +474,10 @@ namespace LegendaryLibraryNS
 
             if (eaAppGames.Count > 0)
             {
-                var fluentEAArgs = new Dictionary<string, IFluentType>();
-                fluentEAArgs["count"] = (FluentNumber)eaAppGames.Count;
+                var fluentEAArgs = new Dictionary<string, IFluentType>
+                {
+                    ["count"] = (FluentNumber)eaAppGames.Count
+                };
                 if (eaAppGames.Count == 1)
                 {
                     fluentEAArgs["gameTitle"] = (FluentString)eaAppGames[0];
@@ -490,8 +492,10 @@ namespace LegendaryLibraryNS
             }
             if (ubisoftOnlyGames.Count > 0)
             {
-                var fluentUbisoftArgs = new Dictionary<string, IFluentType>();
-                fluentUbisoftArgs["count"] = (FluentNumber)ubisoftOnlyGames.Count;
+                var fluentUbisoftArgs = new Dictionary<string, IFluentType>
+                {
+                    ["count"] = (FluentNumber)ubisoftOnlyGames.Count
+                };
                 if (ubisoftOnlyGames.Count == 1)
                 {
                     fluentUbisoftArgs["gameTitle"] = (FluentString)ubisoftOnlyGames[0];

@@ -105,6 +105,10 @@ namespace CommonPlugin
                     finalArgs[arg.Key] = arg.Value;
                 }
             }
+            if (!finalArgs.ContainsKey("count"))
+            {
+                finalArgs["count"] = (FluentNumber)1;
+            }
             var message = _bundle.GetAttrMessage(key, finalArgs);
             if (message == null)
             {
