@@ -89,6 +89,7 @@ for file_path in ftl_files:
         if isinstance(entry, (Message, Term)) and entry.value:
             key = entry.id.name
             string_value = reconstruct_pattern_string(entry.value)
+            string_value = string_value.replace("< ", '&lt; ').replace('> ', '&gt; ')
             loc_keys_file_content += f'''\
         /// <summary>
         /// {string_value}

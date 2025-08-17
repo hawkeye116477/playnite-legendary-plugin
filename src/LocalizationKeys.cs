@@ -837,13 +837,13 @@ namespace System
         /// </summary>
         public const string CommonPanel = "common-panel";
         /// <summary>
-        /// The download will start soon. You can see its status by accessing {$pluginShortName} Panel via Menu => View or sidebar.
+        /// The download will start soon. You can see its status by accessing {$pluginShortName} Panel via Menu =&gt; View or sidebar.
         /// </summary>
         public const string CommonDownloadManagerWhatsUp = "common-download-manager-whats-up";
         /// <summary>
         /// {$count ->}<br/>
-		/// one: {$appName} is already in the download list. You can see status of the download by accessing {$pluginShortName} Panel via Menu => View or sidebar.<br/>
-		/// other: Following games are already in the download list: {$appName}. You can see status of the download by accessing {$pluginShortName} Panel via Menu => View or sidebar.
+		/// one: {$appName} is already in the download list. You can see status of the download by accessing {$pluginShortName} Panel via Menu =&gt; View or sidebar.<br/>
+		/// other: Following games are already in the download list: {$appName}. You can see status of the download by accessing {$pluginShortName} Panel via Menu =&gt; View or sidebar.
         /// </summary>
         public const string CommonDownloadAlreadyExists = "common-download-already-exists";
         /// <summary>
@@ -907,7 +907,7 @@ namespace System
         /// </summary>
         public const string LegendaryIgnoreFreeSpaceToolTip = "legendary-ignore-free-space-tool-tip";
         /// <summary>
-        /// Current shared memory cache is smaller than required: {$currentMemory} < {$requiredMemory}. Try to enable reordering optimization to reduce memory usage or increase maximum amount of shared memory.
+        /// Current shared memory cache is smaller than required: {$currentMemory} &lt; {$requiredMemory}. Try to enable reordering optimization to reduce memory usage or increase maximum amount of shared memory.
         /// </summary>
         public const string LegendaryMemoryError = "legendary-memory-error";
         /// <summary>
@@ -955,7 +955,7 @@ namespace System
         /// </summary>
         public const string LegendaryImportThirdPartyLauncherGames = "legendary-import-third-party-launcher-games";
         /// <summary>
-        /// These types of games doesn't require Legendary and not all of them can be installed via it. It's recommended to go to Additional services => {$thirdPartyLauncherName} => Activate games, and then install them directly via {$thirdPartyLauncherName}.
+        /// These types of games doesn't require Legendary and not all of them can be installed via it. It's recommended to go to Additional services =&gt; {$thirdPartyLauncherName} =&gt; Activate games, and then install them directly via {$thirdPartyLauncherName}.
         /// </summary>
         public const string LegendaryThirdPartyLauncherImportWarn = "legendary-third-party-launcher-import-warn";
         /// <summary>
@@ -970,8 +970,8 @@ namespace System
         public const string LegendaryInstallPrerequisites = "legendary-install-prerequisites";
         /// <summary>
         /// {$count ->}<br/>
-		/// one: {$gameTitle} requires installation of {$thirdPartyLauncherName}. It's recommended to go to Plugin settings => Additional services => {$thirdPartyLauncherName} => Activate games, and then install it directly via {$thirdPartyLauncherName}.<br/>
-		/// other: Following games require installation of {$thirdPartyLauncherName}: {$gameTitle}. It's recommended to go to Plugin settings => Additional services => {$thirdPartyLauncherName} => Activate games, and then install them directly via {$thirdPartyLauncherName}.
+		/// one: {$gameTitle} requires installation of {$thirdPartyLauncherName}. It's recommended to go to Plugin settings =&gt; Additional services =&gt; {$thirdPartyLauncherName} =&gt; Activate games, and then install it directly via {$thirdPartyLauncherName}.<br/>
+		/// other: Following games require installation of {$thirdPartyLauncherName}: {$gameTitle}. It's recommended to go to Plugin settings =&gt; Additional services =&gt; {$thirdPartyLauncherName} =&gt; Activate games, and then install them directly via {$thirdPartyLauncherName}.
         /// </summary>
         public const string LegendaryRequiredInstallOfThirdPartyLauncher = "legendary-required-install-of-third-party-launcher";
         /// <summary>
