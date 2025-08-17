@@ -134,7 +134,7 @@ namespace LegendaryLibraryNS
             {
                 toggleTxt = LOC.CommonDisable;
             }
-            EOSOToggleBtn.Content = ResourceProvider.GetString(toggleTxt);
+            EOSOToggleBtn.Content = LocalizationManager.Instance.GetString(toggleTxt);
         }
 
         private async void LegendarySettingsUC_Loaded(object sender, RoutedEventArgs e)
@@ -312,7 +312,7 @@ namespace LegendaryLibraryNS
                         a.CurrentProgressValue = gamesToMigrate.Count() + 1;
                         if (migratedGames.Count > 0)
                         {
-                            playniteAPI.Dialogs.ShowMessage(LOC.CommonMigrationCompleted, LOC.CommonMigrateGamesEpic, MessageBoxButton.OK, MessageBoxImage.Information);
+                            playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonMigrationCompleted), LocalizationManager.Instance.GetString(LOC.CommonMigrateGamesEpic), MessageBoxButton.OK, MessageBoxImage.Information);
                             logger.Info("Successfully migrated " + migratedGames.Count + " game(s) from Epic to Legendary.");
                         }
                         if (notImportedGames.Count > 0)
@@ -321,14 +321,14 @@ namespace LegendaryLibraryNS
                         }
                         if (migratedGames.Count == 0 && notImportedGames.Count == 0)
                         {
-                            playniteAPI.Dialogs.ShowErrorMessage(LOC.CommonMigrationNoGames);
+                            playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.CommonMigrationNoGames));
                         }
                     }
                     else
                     {
                         a.ProgressMaxValue = 1;
                         a.CurrentProgressValue = 1;
-                        playniteAPI.Dialogs.ShowErrorMessage(LOC.CommonMigrationNoGames);
+                        playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.CommonMigrationNoGames));
                     }
                 }
             }, globalProgressOptions);
@@ -349,7 +349,7 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                playniteAPI.Dialogs.ShowErrorMessage(LOC.CommonPathNotExistsError);
+                playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.CommonPathNotExistsError));
             }
         }
 
@@ -409,7 +409,7 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                var answer = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonSignOutConfirm), LOC.CommonSignOut, MessageBoxButton.YesNo);
+                var answer = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonSignOutConfirm), LocalizationManager.Instance.GetString(LOC.CommonSignOut), MessageBoxButton.YesNo);
                 if (answer == MessageBoxResult.Yes)
                 {
                     if (LegendaryLauncher.IsInstalled)

@@ -132,7 +132,7 @@ namespace LegendaryLibraryNS
                     {
                         if (jediFound)
                         {
-                            playniteAPI.Dialogs.ShowMessage(LOC.LegendaryStarWarsMessage, "", MessageBoxButton.OK, MessageBoxImage.Information);
+                            playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.LegendaryStarWarsMessage), "", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                         var commonHelpers = LegendaryLibrary.Instance.commonHelpers;
                         commonHelpers.SaveJsonSettingsToFile(eaGamesOnly, cacheInfoPath, "_allEaGames");

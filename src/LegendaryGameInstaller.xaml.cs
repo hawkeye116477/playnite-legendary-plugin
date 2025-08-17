@@ -531,7 +531,7 @@ namespace LegendaryLibraryNS
                     downloadItemsAlreadyAddedList = string.Join(", ", downloadItemsAlreadyAdded.Select(item => item.ToString()));
 
                 }
-                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonDownloadAlreadyExists, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)downloadItemsAlreadyAddedList, ["pluginShortName"] = (FluentString)"Legendary" }), "", MessageBoxButton.OK, MessageBoxImage.Error);
+                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonDownloadAlreadyExists, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)downloadItemsAlreadyAddedList, ["pluginShortName"] = (FluentString)"Legendary", ["count"] = (FluentNumber)downloadItemsAlreadyAdded.Count }), "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             CalculateTotalSize();

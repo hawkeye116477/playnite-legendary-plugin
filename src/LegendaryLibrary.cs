@@ -770,7 +770,7 @@ namespace LegendaryLibraryNS
                                                 game.InstallSize = (ulong?)installedGameInfo.Install_size;
                                                 game.IsInstalled = true;
                                             }
-                                            PlayniteApi.Dialogs.ShowMessage(LOC.CommonImportFinished);
+                                            PlayniteApi.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonImportFinished));
                                         }
                                         else
                                         {
