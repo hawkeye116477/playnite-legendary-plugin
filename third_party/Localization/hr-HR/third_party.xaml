@@ -50,8 +50,4 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">Ažuriranja</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">Odaberi datoteku…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Odaberi mapu…</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnlyManually"></sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay"></sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek"></sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteOpen"></sys:String>
 </ResourceDictionary>

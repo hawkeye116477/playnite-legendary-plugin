@@ -50,7 +50,6 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">अपडेट</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">फाईल निवडा…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">फोल्डर निवडा…</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnlyManually"></sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay">दिवसातून एकदा</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek">आठवड्यातून एकदा</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOpen">उघडा</sys:String>

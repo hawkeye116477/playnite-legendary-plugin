@@ -41,32 +41,6 @@ NSMAP = {None: xmlns,
         "sys": xmlns_sys,
         "x":  xmlns_x}
 
-# Copy shared localizations from Legendary
-common_loc_path = pj(main_path, "..", "playnite-common-plugin", "src", "Localization")
-for filename in os.listdir(common_loc_path):
-    path = os.path.join(common_loc_path, filename)
-    if os.path.isdir(path):
-        continue
-    common_loc = ET.parse(pj(common_loc_path, filename))
-
-    xml_root = ET.Element("ResourceDictionary", nsmap=NSMAP)
-    xml_doc = ET.ElementTree(xml_root)
-
-    for child in common_loc.getroot():
-        key = child.get(ET.QName(xmlns_x, "Key"))
-        key_text = child.text
-        if not key_text:
-            key_text = ""
-        new_key = ET.Element(ET.QName(xmlns_sys, "String"))
-        new_key.set(ET.QName(xmlns_x, "Key"), key)
-        new_key.text = key_text.replace("{PluginShortName}", "Legendary").replace("{AppName}", "Legendary").replace("{OriginalPluginShortName}", "Epic").replace("{SourceName}", "Epic Games")
-        xml_root.append(new_key)
-
-    ET.indent(xml_doc, level=0)
-
-    with open(pj(src_path, "Localization", filename), "w", encoding="utf-8") as i18n_file:
-        i18n_file.write(ET.tostring(xml_doc, encoding="utf-8", xml_declaration=True, pretty_print=True).decode())
-
 # Copy localizations from Playnite
 for filename in os.listdir(pj(main_path, "..", "PlayniteExtensions", "PlayniteRepo", "source", "Playnite", "Localization")):
     git_repo = git.Repo(
@@ -96,9 +70,11 @@ for filename in os.listdir(pj(main_path, "..", "PlayniteExtensions", "PlayniteRe
                 new_key = ET.Element(ET.QName(xmlns_sys, "String"))
                 new_key.set(ET.QName(xmlns_x, "Key"), key.replace("LOC", "LOCLegendary3P_Playnite"))
                 new_key.text = key_text
-                xml_root.append(new_key)
+                if key_text != "":
+                    xml_root.append(new_key)
 
     if filename not in ["LocSource.xaml", "LocalizationKeys.cs", "locstatus.json"]:
+        loc_sub_dir = filename.replace("_", "-").replace(".xaml", "")
         epic_loc = ET.parse(pj(main_path, "..", "PlayniteExtensions",
                             "source", "Libraries", "EpicLibrary", "Localization", filename))
         for child in epic_loc.getroot():
@@ -110,10 +86,12 @@ for filename in os.listdir(pj(main_path, "..", "PlayniteExtensions", "PlayniteRe
                 new_key = ET.Element(ET.QName(xmlns_sys, "String"))
                 new_key.set(ET.QName(xmlns_x, "Key"), key.replace("LOCEpic", "LOCLegendary3P_Epic"))
                 new_key.text = key_text
-                xml_root.append(new_key)
+                if key_text != "":
+                    xml_root.append(new_key)
 
         ET.indent(xml_doc, level=0)
-        with open(pj(localization_path, filename), "w", encoding="utf-8") as i18n_file:
+        os.makedirs(pj(localization_path, loc_sub_dir))
+        with open(pj(localization_path, loc_sub_dir, "third_party.xaml"), "w", encoding="utf-8") as i18n_file:
             i18n_file.write("<?xml version='1.0' encoding='utf-8'?>\n")
             i18n_file.write(
                 f'<!--\n  Automatically generated via update_3p_localization.py script using files from {source} and {source2}.\n  DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!\n-->\n')

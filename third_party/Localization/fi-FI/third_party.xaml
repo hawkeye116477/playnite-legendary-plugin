@@ -50,8 +50,5 @@
   <sys:String x:Key="LOCLegendary3P_PlayniteExtensionsUpdates">Päivitykset</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectFileTooltip">Valitse tiedosto…</sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteSelectDirectoryTooltip">Valitse kansio...</sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnlyManually"></sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceADay"></sys:String>
-  <sys:String x:Key="LOCLegendary3P_PlayniteOptionOnceAWeek"></sys:String>
   <sys:String x:Key="LOCLegendary3P_PlayniteOpen">Avaa</sys:String>
 </ResourceDictionary>

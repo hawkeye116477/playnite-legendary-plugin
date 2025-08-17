@@ -360,12 +360,12 @@ namespace LegendaryLibraryNS
                 dictionaries.Add(res);
             }
 
-            var extraLocDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Localization\third_party");
+            var extraLocDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Localization");
             if (!Directory.Exists(extraLocDir))
             {
                 return;
             }
-            var enXaml = Path.Combine(extraLocDir, "en_US.xaml");
+            var enXaml = Path.Combine(extraLocDir, "en-US", "third_party.xaml");
             if (!File.Exists(enXaml))
             {
                 return;
@@ -374,7 +374,7 @@ namespace LegendaryLibraryNS
             loadString(enXaml);
             if (currentLanguage != "en_US")
             {
-                var langXaml = Path.Combine(extraLocDir, $"{currentLanguage}.xaml");
+                var langXaml = Path.Combine(extraLocDir, currentLanguage.Replace("_", "-"), "third_party.xaml");
                 if (File.Exists(langXaml))
                 {
                     loadString(langXaml);

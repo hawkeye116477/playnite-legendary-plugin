@@ -50,7 +50,7 @@ script_path = os.path.dirname(os.path.realpath(__file__))
 main_path = pn(script_path + "/..")
 
 third_party_loc_file = pn(
-    pj(main_path, "third_party", r"Localization\en_US.xaml"))
+    pj(main_path, "third_party", "Localization", "en-US", "third_party.xaml"))
 loc_keys_file = pj(main_path, "src", "LocalizationKeys.cs")
 
 loc_keys_file_content = '''\
