@@ -143,7 +143,7 @@ namespace LegendaryLibraryNS
             if (GetSettings().ImportEALauncherGames)
             {
                 var ignoreList = new List<string>();
-                foreach (var gameAsset in assets.Where(a => a.@namespace != "ue"))
+                foreach (var gameAsset in assets)
                 {
                     ignoreList.Add(gameAsset.appName);
                 }

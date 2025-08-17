@@ -221,19 +221,21 @@ namespace LegendaryLibraryNS.Services
             var response = await InvokeRequest<LibraryItemsResponse>(libraryItemsUrl, LoadTokens());
             var assets = new List<Asset>();
             assets.AddRange(response.Item2.records);
-            while (response.Item2.responseMetadata.nextCursor != null)
+
+            var nextCursor = response.Item2.responseMetadata.nextCursor;
+            while (nextCursor != null)
             {
-                response = await InvokeRequest<LibraryItemsResponse>($"{libraryItemsUrl}?includeMetadata=true&cursor={response.Item2.responseMetadata.nextCursor}", LoadTokens());
+                response = await InvokeRequest<LibraryItemsResponse>(
+                    $"{libraryItemsUrl}?includeMetadata=true&cursor={nextCursor}",
+                    LoadTokens());
                 assets.AddRange(response.Item2.records);
+                nextCursor = response.Item2.responseMetadata.nextCursor;
             }
-            foreach (var asset in assets.ToList())
-            {
-                if (asset.appName.IsNullOrEmpty() || ignoreList.Contains(asset.appName) || asset.sandboxType == "PRIVATE")
-                {
-                    assets.Remove(asset);
-                }
-            }
-            return assets;
+            var filteredAssets = assets.Where(asset => !asset.appName.IsNullOrEmpty()
+                                                       && !ignoreList.Contains(asset.appName)
+                                                       && asset.sandboxType != "PRIVATE"
+                                                       && asset.@namespace != "UE").ToList();
+            return filteredAssets;
         }
 
         public async Task<List<PlaytimeItem>> GetPlaytimeItems()
