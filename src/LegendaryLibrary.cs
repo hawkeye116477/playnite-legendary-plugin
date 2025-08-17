@@ -454,10 +454,18 @@ namespace LegendaryLibraryNS
                                     }
                                     else
                                     {
-                                        Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                                        Window window = null;
+                                        if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && PlayniteApi.ApplicationInfo.ApplicationVersion.Minor < 36)
                                         {
-                                            ShowMaximizeButton = false,
-                                        });
+                                            window = new Window();
+                                        }
+                                        else
+                                        {
+                                            window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                                            {
+                                                ShowMaximizeButton = false,
+                                            });
+                                        }
                                         window.DataContext = successUpdates;
                                         window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
                                         window.Content = new LegendaryUpdater();
