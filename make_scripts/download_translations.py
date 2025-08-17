@@ -57,26 +57,9 @@ with tempfile.TemporaryDirectory() as tmpdirname:
         path = os.path.join(shared_loc_path, filename)
         if os.path.isdir(path):
             continue
-        if any(x in filename for x in ["legendary", "gog-oss", "nile"]):
-            if "legendary" in filename:
-                shutil.copy(path, pj(src_path, "Localization"))
-            continue
-        shared_loc = ET.parse(pj(shared_loc_path, filename))
-
-        xml_root = ET.Element("ResourceDictionary", nsmap=NSMAP)
-        xml_doc = ET.ElementTree(xml_root)
-
-        for child in shared_loc.getroot():
-            key = child.get(ET.QName(xmlns_x, "Key"))
-            key_text = child.text
-            if not key_text:
-                key_text = ""
-            new_key = ET.Element(ET.QName(xmlns_sys, "String"))
-            new_key.set(ET.QName(xmlns_x, "Key"), key)
-            new_key.text = key_text.replace("{PluginShortName}", "Legendary").replace("{AppName}", "Legendary").replace("{OriginalPluginShortName}", "Epic").replace("{SourceName}", "Epic Games")
-            xml_root.append(new_key)
- 
-        ET.indent(xml_doc, level=0)
-  
-        with open(pj(src_path, "Localization", filename), "w", encoding="utf-8") as i18n_file:
-            i18n_file.write(ET.tostring(xml_doc, encoding="utf-8", xml_declaration=True, pretty_print=True).decode())
+        if "legendary" in filename:
+            shutil.copy(path, pj(src_path, "Localization", os.path.dirname(path)))
+        elif "common" in filename:
+            shutil.copy(path, pj(src_path, "Localization", os.path.dirname(path)))
+        else:
+            print("")
