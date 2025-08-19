@@ -356,6 +356,9 @@
     <PackageReference Include="ByteSize">
       <Version>2.1.2</Version>
     </PackageReference>
+    <PackageReference Include="IndexRange">
+      <Version>1.0.2</Version>
+    </PackageReference>
     <PackageReference Include="Linguini.Bundle">
       <Version>0.3.2</Version>
     </PackageReference>
