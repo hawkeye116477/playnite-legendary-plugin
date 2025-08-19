@@ -57,8 +57,9 @@ with tempfile.TemporaryDirectory() as tmpdirname:
         path = os.path.join(shared_loc_path, filename)
         if os.path.isdir(path):
             continue
-        allowed_filenames = ("legendary", "common", "cloud")
-        if any(allowed_filename in filename for allowed_filename in allowed_filenames):
+        if "legendary" in filename:
             shutil.copy(path, pj(src_path, "Localization", os.path.dirname(path)))
+        elif "common" in filename:
+            shutil.copy(path, pj(src_path, "third_party", "CommonLocalization", os.path.dirname(path)))
         else:
             print("")

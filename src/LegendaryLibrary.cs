@@ -365,7 +365,8 @@ namespace LegendaryLibraryNS
             {
                 return;
             }
-            var enXaml = Path.Combine(extraLocDir, "en-US", "third_party.xaml");
+            var thirdPartyFileName = "third-party.xaml";
+            var enXaml = Path.Combine(extraLocDir, "en-US", thirdPartyFileName);
             if (!File.Exists(enXaml))
             {
                 return;
@@ -374,7 +375,7 @@ namespace LegendaryLibraryNS
             loadString(enXaml);
             if (currentLanguage != "en_US")
             {
-                var langXaml = Path.Combine(extraLocDir, currentLanguage.Replace("_", "-"), "third_party.xaml");
+                var langXaml = Path.Combine(extraLocDir, currentLanguage.Replace("_", "-"), thirdPartyFileName);
                 if (File.Exists(langXaml))
                 {
                     loadString(langXaml);
@@ -774,7 +775,7 @@ namespace LegendaryLibraryNS
                                         }
                                         else
                                         {
-                                            PlayniteApi.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.CommonGameImportFailure, new Dictionary<string, IFluentType> { ["reason"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonCheckLog) }));
+                                            PlayniteApi.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.LegendaryGameImportFailure, new Dictionary<string, IFluentType> { ["reason"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonCheckLog) }));
                                         }
                                     }, importProgressOptions);
                                 }

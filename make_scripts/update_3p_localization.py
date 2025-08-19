@@ -91,8 +91,37 @@ for filename in os.listdir(pj(main_path, "..", "PlayniteExtensions", "PlayniteRe
 
         ET.indent(xml_doc, level=0)
         os.makedirs(pj(localization_path, loc_sub_dir))
-        with open(pj(localization_path, loc_sub_dir, "third_party.xaml"), "w", encoding="utf-8") as i18n_file:
+        with open(pj(localization_path, loc_sub_dir, "third-party.xaml"), "w", encoding="utf-8") as i18n_file:
             i18n_file.write("<?xml version='1.0' encoding='utf-8'?>\n")
             i18n_file.write(
                 f'<!--\n  Automatically generated via update_3p_localization.py script using files from {source} and {source2}.\n  DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!\n-->\n')
             i18n_file.write(ET.tostring(xml_doc, encoding="utf-8", pretty_print=True).decode())
+
+# Copy shared localizations
+def copy_specific_named_files_with_subdirs(source_dir, destination_dir, file_names=None):
+    if not os.path.exists(destination_dir):
+        os.makedirs(destination_dir)
+
+    for root, dirs, files in os.walk(source_dir):
+        relative_path = os.path.relpath(root, source_dir)
+        if relative_path == '.':
+            continue
+        
+        dest_subdir = os.path.join(destination_dir, relative_path)
+        
+        if not os.path.exists(dest_subdir):
+            os.makedirs(dest_subdir)
+
+        for file in files:
+            if file_names is None or file in file_names:
+                source_file_path = os.path.join(root, file)
+                destination_file_path = os.path.join(dest_subdir, file)
+                
+                try:
+                    shutil.copy2(source_file_path, destination_file_path)
+                    print(f"Copied: {source_file_path} -> {destination_file_path}")
+                except Exception as e:
+                    print(f"An error occured during copying file {source_file_path}: {e}")
+
+common_loc_path = pj(main_path, "..", "playnite-common-plugin", "src", "Localization")
+copy_specific_named_files_with_subdirs(common_loc_path, pj(third_party_path, "CommonLocalization"))

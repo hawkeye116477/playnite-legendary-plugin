@@ -50,7 +50,7 @@
                             Grid.Row="2" Margin="0,0,5,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         <TextBox x:Name="StartupArgumentsTxt"
                             Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" />
-                        <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonLanguageCode}}" Grid.Column="0"
+                        <TextBlock Text="{common:Localize Key={x:Static system:LOC.LegendaryLanguageCode}}" Grid.Column="0"
                             Grid.Row="3" Margin="0,0,5,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         <TextBox x:Name="LanguageCodeTxt"
                             Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" />

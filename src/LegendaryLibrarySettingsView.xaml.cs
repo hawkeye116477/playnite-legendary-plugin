@@ -109,7 +109,7 @@ namespace LegendaryLibraryNS
                 {
                     EOSOInstallBtn.Visibility = Visibility.Collapsed;
                     EOSOUninstallBtn.Visibility = Visibility.Visible;
-                    EOSOToggleBtn.Content = LocalizationManager.Instance.GetString(LOC.CommonDisable);
+                    EOSOToggleBtn.Content = LocalizationManager.Instance.GetString(LOC.LegendaryDisable);
                     EOSOToggleBtn.Visibility = Visibility.Visible;
                     EOSOCheckForUpdatesBtn.Visibility = Visibility.Visible;
                 }
@@ -129,10 +129,10 @@ namespace LegendaryLibraryNS
                      .AddCommandToLog()
                      .WithValidation(CommandResultValidation.None)
                      .ExecuteAsync();
-            var toggleTxt = LOC.CommonEnable;
+            var toggleTxt = LOC.LegendaryEnable;
             if (LegendaryLauncher.IsEOSOverlayEnabled)
             {
-                toggleTxt = LOC.CommonDisable;
+                toggleTxt = LOC.LegendaryDisable;
             }
             EOSOToggleBtn.Content = LocalizationManager.Instance.GetString(toggleTxt);
         }
@@ -156,7 +156,7 @@ namespace LegendaryLibraryNS
             {
                 if (!LegendaryLauncher.IsEOSOverlayEnabled)
                 {
-                    EOSOToggleBtn.Content = LocalizationManager.Instance.GetString(LOC.CommonEnable);
+                    EOSOToggleBtn.Content = LocalizationManager.Instance.GetString(LOC.LegendaryEnable);
                 }
             }
 

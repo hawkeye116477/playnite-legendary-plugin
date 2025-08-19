@@ -27,7 +27,7 @@
         <Separator Margin="0,5"/>
         <StackPanel Orientation="Vertical" Margin="0,10,0,0" Name="ExtraContentSP" Visibility="Collapsed">
             <CheckBox Margin="7,0,0,5" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" x:Name="AllOrNothingChk" Visibility="Collapsed" Checked="AllOrNothingChk_Checked" Unchecked="AllOrNothingChk_Unchecked" />
-            <CheckBox Margin="7,0,0,5" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllDlcs}}" x:Name="AllDlcsChk" Visibility="Collapsed" Checked="AllDlcsChk_Checked" Unchecked="AllDlcsChk_Unchecked"/>
+            <CheckBox Margin="7,0,0,5" Content="{common:Localize Key={x:Static system:LOC.LegendaryCheckAllDlcs}}" x:Name="AllDlcsChk" Visibility="Collapsed" Checked="AllDlcsChk_Checked" Unchecked="AllDlcsChk_Unchecked"/>
             <Separator Margin="7,0,0,5" />
             <ListBox BorderThickness="0" Name="ExtraContentLB" SelectionMode="Multiple" Margin="5,0,5,5" SelectionChanged="ExtraContentLB_SelectionChanged">
                 <ListBox.Resources>

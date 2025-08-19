@@ -165,7 +165,7 @@
                 </StackPanel>
             </ScrollViewer>
         </TabItem>
-        <TabItem Header="{common:Localize Key={x:Static system:LOC.CommonAdditionalServices}}">
+        <TabItem Header="{common:Localize Key={x:Static system:LOC.LegendaryAdditionalServices}}">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="20">
                     <StackPanel Margin="0,0,0,20">
@@ -188,7 +188,7 @@
                             Click="EOSOInstallBtn_Click" HorizontalAlignment="Left"></Button>
                             <Button x:Name="EOSOCheckForUpdatesBtn" Grid.Column="0" Grid.Row="0" Margin="5,0,0,0" HorizontalAlignment="Left"
                             Content="{DynamicResource LOCLegendary3P_PlayniteCheckForUpdates}" Click="EOSOCheckForUpdatesBtn_Click" />
-                            <Button Content="{common:Localize Key={x:Static system:LOC.CommonDisable}}" Grid.Row="0"
+                            <Button Content="{common:Localize Key={x:Static system:LOC.LegendaryDisable}}" Grid.Row="0"
                             Grid.Column="1" Margin="10,0,0,0" Name="EOSOToggleBtn"
                             Click="EOSOToggleBtn_Click" HorizontalAlignment="Left"/>
                             <Button Content="{DynamicResource LOCLegendary3P_PlayniteUninstallGame}" Name="EOSOUninstallBtn"

@@ -103,7 +103,7 @@
                     </Expander.Header>
                     <StackPanel Orientation="Vertical" Margin="0,10,0,0">
                         <CheckBox Margin="7,0,0,5" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" x:Name="AllOrNothingChk" Checked="AllOrNothingChk_Checked" Visibility="Collapsed" Unchecked="AllOrNothingChk_Unchecked" />
-                        <CheckBox Margin="7,0,0,5" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllDlcs}}" x:Name="AllDlcsChk" Checked="AllDlcsChk_Checked" Unchecked="AllDlcsChk_Unchecked" Visibility="Collapsed"/>
+                        <CheckBox Margin="7,0,0,5" Content="{common:Localize Key={x:Static system:LOC.LegendaryCheckAllDlcs}}" x:Name="AllDlcsChk" Checked="AllDlcsChk_Checked" Unchecked="AllDlcsChk_Unchecked" Visibility="Collapsed"/>
                         <Separator Margin="7,0,0,5" />
                         <ListBox BorderThickness="0" Name="ExtraContentLB" SelectionMode="Multiple" SelectionChanged="ExtraContentLB_SelectionChanged" Margin="5,0,5,5">
                             <ListBox.Resources>
