@@ -71,7 +71,7 @@ namespace CommonPlugin
             catch (UnauthorizedAccessException)
             {
                 var playniteAPI = API.Instance;
-                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(permissionErrorString));
+                playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(permissionErrorString));
                 return false;
             }
             catch (Exception ex)
