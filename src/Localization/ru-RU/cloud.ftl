@@ -1,0 +1,17 @@
+common-sync-game-saves = Синхронизировать сохранения игры в облако
+common-syncing = Синхронизация { $gameTitle } сохранений игр с облаком...
+common-sync-game-saves-warn = Функция облачных сохранений является экспериментальной. Рекомендуется создавать резервные копии сохранений игры на случай, если что-то пойдет не так.
+common-cloud-saves = Облачные сохранения
+common-save-path = Сохранить путь
+common-cloud = Облако
+common-auto-sync-saves = Синхронизируйте сохранения в облаке
+common-calculate-path = Рассчитать путь
+common-cloud-saves-not-supported = Эта игра не поддерживает облачные сохранения.
+common-sync = Синх
+common-download = Скачать
+common-upload = Загрузить
+common-force-action = Принудительное действие
+common-cloud-save-confirm = Функция облачных сохранений является экспериментальной. Рекомендуется создавать резервные копии сохранений игры на случай, если что-то пойдет не так. Вы уверены, что хотите продолжить?
+common-sync-playtime = Синхронизируйте время игры с облаком
+common-uploading-playtime = Загрузка { $gameTitle } игрового времени в облако...
+common-upload-playtime-error = Произошла ошибка при загрузке { $gameTitle } игрового времени в облако.

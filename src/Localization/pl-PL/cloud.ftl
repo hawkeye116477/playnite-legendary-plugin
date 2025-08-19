@@ -1,0 +1,17 @@
+common-sync-game-saves = Synchronizuj zapisy gier z chmurą
+common-syncing = Synchronizowanie zapisów gry { $gameTitle } z chmurą...
+common-sync-game-saves-warn = Funkcja zapisywania w chmurze jest eksperymentalna. Zalecane jest utworzenie kopii zapasowej zapisów gier na wypadek, gdyby coś poszło nie tak.
+common-cloud-saves = Zapisy w chmurze
+common-save-path = Ścieżka zapisu
+common-cloud = Chmura
+common-auto-sync-saves = Synchronizuj zapisy z chmurą
+common-calculate-path = Oblicz ścieżkę
+common-cloud-saves-not-supported = Ta gra nie obsługuje zapisów w chmurze.
+common-sync = Synchronizuj
+common-download = Pobierz
+common-upload = Wyślij
+common-force-action = Wymuś akcję
+common-cloud-save-confirm = Funkcja zapisywania w chmurze jest eksperymentalna. Zalecane jest utworzenie kopii zapasowej zapisów gry na wypadek, gdyby coś poszło nie tak. Czy na pewno chcesz kontynuować?
+common-sync-playtime = Synchronizuj czas grania z chmurą
+common-uploading-playtime = Przesyłanie czasu grania w grę { $gameTitle } do chmury...
+common-upload-playtime-error = Wystąpił błąd podczas przesyłania czasu grania w grę { $gameTitle } do chmury.

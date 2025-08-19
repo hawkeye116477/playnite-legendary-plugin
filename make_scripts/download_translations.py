@@ -51,15 +51,14 @@ with tempfile.TemporaryDirectory() as tmpdirname:
     NSMAP = {None: xmlns,
             "sys": xmlns_sys,
             "x":  xmlns_x}
-    # Copy localizations and rename strings
+    # Copy localizations
     shared_loc_path = pj(tmpdirname, "src", "Localization")
     for filename in os.listdir(shared_loc_path):
         path = os.path.join(shared_loc_path, filename)
         if os.path.isdir(path):
             continue
-        if "legendary" in filename:
-            shutil.copy(path, pj(src_path, "Localization", os.path.dirname(path)))
-        elif "common" in filename:
+        allowed_filenames = ("legendary", "common", "cloud")
+        if any(allowed_filename in filename for allowed_filename in allowed_filenames):
             shutil.copy(path, pj(src_path, "Localization", os.path.dirname(path)))
         else:
             print("")

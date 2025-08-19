@@ -1,0 +1,17 @@
+common-sync-game-saves = Sincronizar jogos salvos na nuvem
+common-syncing = Sincronizando { $gameTitle } jogo(s) salvo(s) na nuvem...
+common-sync-game-saves-warn = A função de salvamento na nuvem é experimental. É recomendável fazer backup dos arquivos caso algo dê errado.
+common-cloud-saves = Salvamento na nuvem
+common-save-path = Caminho dos arquivos
+common-cloud = Nuvem
+common-auto-sync-saves = Sincronizar jogos salvos na nuvem
+common-calculate-path = Calcular caminho
+common-cloud-saves-not-supported = Este jogo não suporta salvamento na nuvem.
+common-sync = Sincronizar
+common-download = Baixar
+common-upload = Enviar
+common-force-action = Forçar ação
+common-cloud-save-confirm = A função de salvamento na nuvem é experimental. É recomendável fazer backup dos arquivos caso algo dê errado. Tem certeza que deseja continuar?
+common-sync-playtime = Sincronizar tempo de jogo com a nuvem
+common-uploading-playtime = Enviando { $gameTitle } tempo(s) de jogo para a nuvem...
+common-upload-playtime-error = Ocorreu um erro ao enviar { $gameTitle } tempo(s) de jogo para a nuvem.

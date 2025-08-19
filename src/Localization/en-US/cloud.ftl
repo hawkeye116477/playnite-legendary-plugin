@@ -1,0 +1,17 @@
+common-sync-game-saves = Sync game saves to the cloud
+common-syncing = Syncing { $gameTitle } game saves to the cloud...
+common-sync-game-saves-warn = Cloud saves feature is experimental. It's recommended to backup game saves in case something goes wrong.
+common-cloud-saves = Cloud saves
+common-save-path = Save path
+common-cloud = Cloud
+common-auto-sync-saves = Sync saves to the cloud
+common-calculate-path = Calculate path
+common-cloud-saves-not-supported = This game doesn't support cloud saves.
+common-sync = Sync
+common-download = Download
+common-upload = Upload
+common-force-action = Force action
+common-cloud-save-confirm = Cloud saves feature is experimental. It's recommended to backup game saves in case something goes wrong. Are you sure you want to continue?
+common-sync-playtime = Sync playtime to the cloud
+common-uploading-playtime = Uploading { $gameTitle } game playtime to the cloud...
+common-upload-playtime-error = An error occurred while uploading { $gameTitle } game playtime to the cloud.

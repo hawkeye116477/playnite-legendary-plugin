@@ -1,0 +1,17 @@
+common-sync-game-saves = Sincronizar partidas guardadas en la nube
+common-syncing = Sincronizando { $gameTitle } partidas guardadas en la nube...
+common-sync-game-saves-warn = La función de Guardado en la nube es experimental. Se recomienda hacer una copia de seguridad de los juegos guardados en caso de que algo vaya mal.
+common-cloud-saves = Guardados en la nube
+common-save-path = Ruta de partidas guardadas
+common-cloud = Nube
+common-auto-sync-saves = Sincronizar partidas guardadas en la nube
+common-calculate-path = Calcular ruta
+common-cloud-saves-not-supported = Este juego no soporta guardado en la nube.
+common-sync = Sincronizar
+common-download = Descargar
+common-upload = Subir
+common-force-action = Forzar acción
+common-cloud-save-confirm = La función de guardado en la nube es experimental. Se recomienda hacer una copia de seguridad de los juegos guardados en caso de que algo vaya mal. ¿Estás seguro de que quieres continuar?
+common-sync-playtime = Sincronizar tiempo de juego a la nube
+common-uploading-playtime = Subiendo { $gameTitle } tiempo de juego a la nube...
+common-upload-playtime-error = Se ha producido un error al subir el tiempo de juego de { $gameTitle } a la nube.

@@ -1,0 +1,17 @@
+common-sync-game-saves = Oyun kayıtlarını buluta eşitle
+common-syncing = { $gameTitle } oyun kaydı buluta eşitleniyor...
+common-sync-game-saves-warn = Bulut kaydetme özelliği deneyseldir. Bir şeyler ters giderse diye oyun kayıtlarını yedeklemeniz önerilir.
+common-cloud-saves = Bulut kayıtları
+common-save-path = Kayıt yolu
+common-cloud = Bulut
+common-auto-sync-saves = Kayıtları buluta eşitle
+common-calculate-path = Yolu hesapla
+common-cloud-saves-not-supported = Bu oyun buluta kaydetmeyi desteklemiyor.
+common-sync = Eşitleme
+common-download = İndir
+common-upload = Yükle
+common-force-action = Eylemi zorla
+common-cloud-save-confirm = Bulut kaydetme özelliği deneyseldir. Bir şeylerin ters gitmesi durumunda oyun kayıtlarının yedeklenmesi önerilir. Devam etmek istediğine emin misin?
+common-sync-playtime = Oynatma süresini bulutla eşitle
+common-uploading-playtime = { $gameTitle } oyun oynama süresi buluta yükleniyor...
+common-upload-playtime-error = { $gameTitle } oyun oynama süresi buluta yüklenirken bir hata oluştu.
