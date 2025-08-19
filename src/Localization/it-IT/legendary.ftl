@@ -33,3 +33,9 @@ legendary-required-install-of-third-party-launcher =
        *[other] I seguenti giochi richiedono l'installazione di { $thirdPartyLauncherName }: { $gameTitle }. Si consiglia di andare nelle impostazioni dei plugin => Servizi aggiuntivi => { $thirdPartyLauncherName } => Attivare i giochi, e poi installarli direttamente via { $thirdPartyLauncherName }.
     }
 legendary-installing-prerequisites = Installazione dei prerequisiti ({ $prerequisiteName })...
+legendary-disable = Disattiva
+legendary-enable = Attiva
+legendary-game-import-failure = Impossibile importare il gioco. Motivo: { $reason }.
+legendary-language-code = Lingua (codice in formato RFC 1766)
+legendary-check-all-dlcs = Seleziona tutti i DLC
+legendary-additional-services = Servizi aggiuntivi
