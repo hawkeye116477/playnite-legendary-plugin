@@ -27,7 +27,6 @@ common-remove-entry = Pašalinti įrašą
 common-remove-entry-confirm = Ar tikrai norite pašalinti { $entryName } iš sąrašo?
 common-repair = Sutaisyti
 common-advanced-options = Išplėstinės Parinktys
-common-extra-content = Papildomas turinys
 common-cache = Podėlis
 common-clear-cache = Išvalyti podėlį
 common-auto-clear-cache = Podėlį išvalyti automatškai
