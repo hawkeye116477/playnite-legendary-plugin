@@ -159,8 +159,8 @@ common-download-already-exists =
         [one] { $appName } уже находится в списке загрузок. Вы можете увидеть состояние загрузки через меню { $pluginShortName } через меню => Просмотр или боковую панель.
        *[other] Следующие игры уже находятся в списке загрузок: { $appName }. Состояние загрузки отображается в панели { $pluginShortName } через меню => Просмотр или боковую панель.
     }
-common-migrate-games-epic = Перенести все игры из { $originalPluginShortName } плагина
-common-migrating-games-epic = Перенос всех игр с плагина { $originalPluginShortName }...
+common-migrate-games-original = Перенести все игры из { $originalPluginShortName } плагина
+common-migrating-games-original = Перенос всех игр с плагина { $originalPluginShortName }...
 common-migration-confirm = Все игры будут удалены из { $originalPluginShortName } плагина и перемещены в { $pluginShortName }. Вы уверены, что хотите это сделать?
 common-games-updates-underway = Обновления игр от { $updatesSourceName } загружаются.
 common-instance-notice = Только один экземпляр { $pluginShortName } может одновременно устанавливать/импортировать/перемещать приложения. Хотите ли вы приостановить выполнение задач менеджера загрузки, чтобы продолжить работу?

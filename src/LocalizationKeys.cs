@@ -849,11 +849,11 @@ namespace System
         /// <summary>
         /// Migrate all games from {$originalPluginShortName} plugin
         /// </summary>
-        public const string CommonMigrateGamesEpic = "common-migrate-games-epic";
+        public const string CommonMigrateGamesOriginal = "common-migrate-games-original";
         /// <summary>
         /// Migrating all games from {$originalPluginShortName} plugin...
         /// </summary>
-        public const string CommonMigratingGamesEpic = "common-migrating-games-epic";
+        public const string CommonMigratingGamesOriginal = "common-migrating-games-original";
         /// <summary>
         /// All games will be removed from {$originalPluginShortName} plugin and moved to {$pluginShortName}. Are you sure you want to do this?
         /// </summary>

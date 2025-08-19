@@ -159,8 +159,8 @@ common-download-already-exists =
         [one] { $appName } zaten indirme listesinde. Menü => Görünüm veya kenar çubuğundan { $pluginShortName } Panel üstünden indirmenin durumunu görebilirsiniz.
        *[other] Şu oyunlar zaten indirme listesinde bulunuyor: { $appName }. Menü => Görünüm veya kenar çubuğundan { $pluginShortName } Panele erişerek indirme durumunu görebilirsiniz.
     }
-common-migrate-games-epic = Tüm oyunları { $originalPluginShortName } eklentisinden taşıyın
-common-migrating-games-epic = Tüm oyunları { $originalPluginShortName } eklentisinden taşıyınıyor...
+common-migrate-games-original = Tüm oyunları { $originalPluginShortName } eklentisinden taşıyın
+common-migrating-games-original = Tüm oyunları { $originalPluginShortName } eklentisinden taşıyınıyor...
 common-migration-confirm = Tüm oyunlar { $originalPluginShortName } eklentisinden kaldırılacak ve { $pluginShortName } üstüne taşınacak. Bunu yapmak istediğinden emin misin?
 common-games-updates-underway = { $updatesSourceName } oyunlarına yönelik güncellemeler indiriliyor.
 common-instance-notice = Aynı anda yalnızca bir { $pluginShortName } örneği uygulamaları kurulabilir/içe aktarabilir/taşıyabilir. Devam etmek için indirme yöneticisi görevlerini duraklatmak istiyor musunuz?

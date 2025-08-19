@@ -159,8 +159,8 @@ common-download-already-exists =
         [one] { $appName } já está na lista de transferências. Você pode conferir o progresso pelo Painel { $pluginShortName } através do Menu ⇒ Visualização ou pela Barra Lateral.
        *[other] Os seguintes jogos já estão na lista de transferências: { $appName }. Você pode ver o progresso da transferência acessando o Painel { $pluginShortName } através do Menu ⇒ Visualização ou pela barra lateral.
     }
-common-migrate-games-epic = Migrar todos os jogos do plugin { $originalPluginShortName }
-common-migrating-games-epic = Migrando todos os jogos do plugin { $originalPluginShortName }...
+common-migrate-games-original = Migrar todos os jogos do plugin { $originalPluginShortName }
+common-migrating-games-original = Migrando todos os jogos do plugin { $originalPluginShortName }...
 common-migration-confirm = Todos os jogos serão removidos do plugin { $originalPluginShortName } e movidos para o { $pluginShortName }. Tem certeza disso?
 common-games-updates-underway = Atualizações de jogos da { $updatesSourceName } estão sendo transferidas.
 common-instance-notice = Apenas uma instância do { $pluginShortName } pode instalar/importar/mover aplicativos por vez. Você deseja pausar as tarefas do gerenciador de transferências para continuar?

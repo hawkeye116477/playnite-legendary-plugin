@@ -263,12 +263,12 @@ namespace LegendaryLibraryNS
                 LegendaryLauncher.ShowNotInstalledError();
                 return;
             }
-            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonMigrationConfirm), LocalizationManager.Instance.GetString(LOC.CommonMigrateGamesEpic), MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonMigrationConfirm), LocalizationManager.Instance.GetString(LOC.CommonMigrateGamesOriginal), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.No)
             {
                 return;
             }
-            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonMigratingGamesEpic), false) { IsIndeterminate = false };
+            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonMigratingGamesOriginal), false) { IsIndeterminate = false };
             playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
             {
                 using (playniteAPI.Database.BufferedUpdate())
@@ -312,7 +312,7 @@ namespace LegendaryLibraryNS
                         a.CurrentProgressValue = gamesToMigrate.Count() + 1;
                         if (migratedGames.Count > 0)
                         {
-                            playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonMigrationCompleted), LocalizationManager.Instance.GetString(LOC.CommonMigrateGamesEpic), MessageBoxButton.OK, MessageBoxImage.Information);
+                            playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonMigrationCompleted), LocalizationManager.Instance.GetString(LOC.CommonMigrateGamesOriginal), MessageBoxButton.OK, MessageBoxImage.Information);
                             logger.Info("Successfully migrated " + migratedGames.Count + " game(s) from Epic to Legendary.");
                         }
                         if (notImportedGames.Count > 0)

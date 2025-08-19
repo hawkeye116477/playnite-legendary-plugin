@@ -159,8 +159,8 @@ common-download-already-exists =
         [one] { $appName } jest już na liście pobierania. Możesz zobaczyć jego stan, uzyskując dostęp do panelu { $pluginShortName } za pośrednictwem Menu => Widok lub paska bocznego.
        *[other] Następujące gry są już na liście pobierania: { $appName }. Możesz zobaczyć stan pobierania, uzyskując dostęp do panelu { $pluginShortName } za pośrednictwem Menu => Widok lub paska bocznego.
     }
-common-migrate-games-epic = Migruj wszystkie gry z wtyczki { $originalPluginShortName }
-common-migrating-games-epic = Migrowanie wszystkich gier z wtyczki { $originalPluginShortName }...
+common-migrate-games-original = Migruj wszystkie gry z wtyczki { $originalPluginShortName }
+common-migrating-games-original = Migrowanie wszystkich gier z wtyczki { $originalPluginShortName }...
 common-migration-confirm = Wszystkie gry zostaną usunięte z wtyczki { $originalPluginShortName } i przeniesione do { $pluginShortName }. Czy na pewno chcesz to zrobić?
 common-games-updates-underway = Trwa pobieranie aktualizacji dla gier z { $updatesSourceName }.
 common-instance-notice = Tylko jedna instancja { $pluginShortName } może instalować/importować/przenosić aplikacje jednocześnie. Czy chcesz wstrzymać zadania menedżera pobierania, aby kontynuować?

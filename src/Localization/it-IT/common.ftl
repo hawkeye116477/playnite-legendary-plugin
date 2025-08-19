@@ -159,8 +159,8 @@ common-download-already-exists =
         [one] { $appName } è già nella lista dei download. È possibile visualizzare lo stato del download accedendo al pannello { $pluginShortName } tramite Menu => Visualizza o dalla barra laterale.
        *[other] I seguenti giochi sono già nella lista dei download: { $appName }. Puoi vedere lo stato del download accedendo al pannello { $pluginShortName } tramite Menu => Visualizza o dalla barra laterale.
     }
-common-migrate-games-epic = Migra tutti i giochi dal plugin { $originalPluginShortName }
-common-migrating-games-epic = Migrazione di tutti i giochi dal plugin { $originalPluginShortName }...
+common-migrate-games-original = Migra tutti i giochi dal plugin { $originalPluginShortName }
+common-migrating-games-original = Migrazione di tutti i giochi dal plugin { $originalPluginShortName }...
 common-migration-confirm = Tutti i giochi saranno rimossi dal plugin { $originalPluginShortName } e spostati in { $pluginShortName }. Sei sicuro di volerlo fare?
 common-games-updates-underway = Gli aggiornamenti dei giochi di { $updatesSourceName } sono in download.
 common-instance-notice = Solo un'istanza di { $pluginShortName } può installare/importare/spostare applicazioni alla volta. Si desidera mettere in pausa le attività del gestore download per continuare?

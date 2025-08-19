@@ -159,8 +159,8 @@ common-download-already-exists =
         [one] { $appName } ya está en la lista de descarga. Puede ver el estado de la descarga accediendo al Panel { $pluginShortName } a través del Menú => Vista o barra lateral.
        *[other] Los siguientes juegos ya están en la lista de descargas: { $appName }. Puede ver el estado de la descarga accediendo al Panel { $pluginShortName } a través del Menú => Vista o barra lateral.
     }
-common-migrate-games-epic = Migrar todos los juegos del complemento { $originalPluginShortName }
-common-migrating-games-epic = Migrando todos los juegos desde el complemento { $originalPluginShortName }...
+common-migrate-games-original = Migrar todos los juegos del complemento { $originalPluginShortName }
+common-migrating-games-original = Migrando todos los juegos desde el complemento { $originalPluginShortName }...
 common-migration-confirm = Todos los juegos serán eliminados del complemento { $originalPluginShortName } y movidos a { $pluginShortName }. ¿Estás seguro de que quieres hacer esto?
 common-games-updates-underway = Se están descargando actualizaciones para los juegos de { $updatesSourceName }.
 common-instance-notice = Sólo una instancia de { $pluginShortName } puede instalar/importar/mover aplicaciones a la vez. ¿Quieres pausar las tareas del administrador de descargas para continuar?

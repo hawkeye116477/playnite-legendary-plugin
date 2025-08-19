@@ -159,8 +159,8 @@ common-download-already-exists =
         [one] { $appName } is already in the download list. You can see status of the download by accessing { $pluginShortName } Panel via Menu => View or sidebar.
        *[other] Following games are already in the download list: { $appName }. You can see status of the download by accessing { $pluginShortName } Panel via Menu => View or sidebar.
     }
-common-migrate-games-epic = Migrate all games from { $originalPluginShortName } plugin
-common-migrating-games-epic = Migrating all games from { $originalPluginShortName } plugin...
+common-migrate-games-original = Migrate all games from { $originalPluginShortName } plugin
+common-migrating-games-original = Migrating all games from { $originalPluginShortName } plugin...
 common-migration-confirm = All games will be removed from { $originalPluginShortName } plugin and moved to { $pluginShortName }. Are you sure you want to do this?
 common-games-updates-underway = Updates for games from { $updatesSourceName } are being downloaded.
 common-instance-notice = Only one instance of { $pluginShortName } may install/import/move applications at a time. Do you want to pause download manager tasks to continue?
