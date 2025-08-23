@@ -15,7 +15,6 @@ import yaml
 import git
 import get_extension_version
 
-
 class MyDumper(yaml.Dumper):
     """https://stackoverflow.com/a/39681672"""
 
@@ -53,9 +52,10 @@ with open(pj(scriptPath, "config", "activeLanguages.txt"), "r", encoding="utf-8"
         if line := line.strip():
             active_languages[line] = ""
 for root, dirs, files in os.walk(pj(compiledPath, "Localization")):
-    for file in files:
-        if not any(substring in file for substring in active_languages):
-            os.remove(pj(root, file))
+    for folder in list(dirs):
+        if not any(substring in folder for substring in active_languages):
+            shutil.rmtree(pj(root, folder))
+            dirs.remove(folder)
 
 
 subprocess.run([pj(playnitePath, "Toolbox.exe"), "pack",
@@ -67,6 +67,7 @@ extFile = pj(mainPath, "Releases", "LegendaryLibrary_" +
              versionUnderline + ".pext")
 checksumFilePath = pj(mainPath, "Releases",
                       "LegendaryLibrary_" + versionUnderline + ".pext.sha256")
+
 
 if os.path.exists(extFile):
     with open(extFile, 'rb') as fileToCheck:
@@ -91,11 +92,14 @@ if os.path.exists(extFile):
     else:
         installerManifest["Packages"] = []
 
-    packagesConfig = ET.parse(pj(mainPath, "src", "packages.config"))
-    for child in packagesConfig.getroot():
-        if child.get('id') == "PlayniteSDK":
-            sdkVersion = child.get('version')
-            break
+    sdkVersion = ""
+    namespaces = {'msbuild': 'http://schemas.microsoft.com/developer/msbuild/2003'}
+    LegendaryProj = ET.parse(pj(mainPath, "src", "LegendaryLibrary.csproj"))
+    LegendaryProj_root = LegendaryProj.getroot()
+    
+    for child in LegendaryProj_root.findall(".//msbuild:PackageReference", namespaces):
+        if child.get("Include") == "PlayniteSDK":
+            sdkVersion = child.find('msbuild:Version', namespaces).text
 
     if newVersion == "true":
         installerManifest["Packages"].insert(0, {
