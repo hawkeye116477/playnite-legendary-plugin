@@ -1,4 +1,3 @@
-common-launcher-custom-path = Percorso del launcher
 common-games-installation-path = Percorso giochi
 common-download-size = Dimensioni download:
 common-install-size = Dimensione installazione:
@@ -48,7 +47,6 @@ common-download-queued = In coda
 common-download-running = In esecuzione
 common-download-canceled = Annullato
 common-download-completed = Completato
-common-current-download-summary = Riepilogo del download attuale
 common-remove-entry = Rimuovi voce
 common-remove-entry-confirm = Sei sicuro di voler rimuovere { $entryName } dalla lista?
 common-move-entry-top = Sposta all'inizio
@@ -61,7 +59,6 @@ common-remove-selected-entries-confirm = Sei sicuro di voler rimuovere le voci s
 common-select-all-entries = Seleziona tutto
 common-repair = Ripara
 common-advanced-options = Opzioni avanzate
-common-cache = Cache
 common-clear-cache = Svuota cache
 common-auto-clear-cache = Cancella cache automaticamente
 common-once-a-month = Una volta al mese
@@ -80,8 +77,6 @@ common-sign-out = Disconnettiti
 common-troubleshooting-information = Informazioni e risoluzione dei problemi
 common-playnite-version = Versione di Playnite
 common-plugin-version = Versione plugin
-common-launcher-version = Versione launcher
-common-launcher-binary = Eseguibile launcher
 common-copy-raw-data-to-clipboard = Copia dati grezzi negli appunti
 common-log-files-path = Percorso file di log
 common-report-bug = Segnala un bug
@@ -118,7 +113,6 @@ common-uninstall-error =
        *[other] Impossibile disinstallare i seguenti giochi: { $appName }.
     }
 common-games = Giochi
-common-launcher-update-policy = Controlla aggiornamenti del launcher
 common-launcher-not-installed = { $launcherName } non è installato.
 common-panel = Pannello { $pluginShortName }
 common-download-manager-whats-up = Il download inizierà a breve. Puoi vederne lo stato accedendo al pannello { $pluginShortName } tramite Menu => Visualizza o dalla barra laterale.

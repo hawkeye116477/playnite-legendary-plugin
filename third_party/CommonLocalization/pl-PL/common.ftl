@@ -1,4 +1,4 @@
-common-launcher-custom-path = Ścieżka launchera
+common-launcher-custom-path = Ścieżka do { $launcherName }
 common-games-installation-path = Ścieżka instalacji gier
 common-download-size = Rozmiar pobierania:
 common-install-size = Rozmiar instalacji:
@@ -48,7 +48,6 @@ common-download-queued = W kolejce
 common-download-running = Uruchomione
 common-download-canceled = Anulowane
 common-download-completed = Ukończone
-common-current-download-summary = Podsumowanie bieżącego pobierania
 common-remove-entry = Usuń wpis
 common-remove-entry-confirm = Czy na pewno chcesz usunąć { $entryName } z listy?
 common-move-entry-top = Przenieś wpis na górę
@@ -80,10 +79,10 @@ common-sign-out = Wyloguj się
 common-troubleshooting-information = Informacje do rozwiązywania problemów
 common-playnite-version = Wersja Playnite
 common-plugin-version = Wersja wtyczki
-common-launcher-version = Wersja launchera
-common-launcher-binary = Plik binarny launchera
+common-launcher-version = Wersja { $launcherName }
+common-launcher-binary = Plik binarny { $launcherName }
 common-copy-raw-data-to-clipboard = Skopiuj nieprzetworzone dane do schowka
-common-log-files-path = Ścieżka plików log
+common-log-files-path = Ścieżka do plików log
 common-report-bug = Zgłoś błąd
 common-new-version-available = Dostępna jest nowa wersja: { $appName } { $appVersion }.
 common-no-updates-available = Brak dostępnych aktualizacji.
@@ -118,7 +117,7 @@ common-uninstall-error =
        *[other] Nie można odinstalować następujących gier: { $appName }.
     }
 common-games = Gry
-common-launcher-update-policy = Sprawdzaj aktualizacje launchera
+common-launcher-update-policy = Sprawdzaj aktualizacje { $launcherName }
 common-launcher-not-installed = Program { $launcherName } nie jest zainstalowany.
 common-panel = Panel { $pluginShortName }
 common-download-manager-whats-up = Pobieranie rozpocznie się już wkrótce. Możesz zobaczyć jego stan, uzyskując dostęp do panelu { $pluginShortName } za pośrednictwem Menu => Widok lub paska bocznego.

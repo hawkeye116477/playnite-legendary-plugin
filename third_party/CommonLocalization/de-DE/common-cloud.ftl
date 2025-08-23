@@ -3,7 +3,6 @@ common-syncing = Synchronisiere { $gameTitle } Spielstände mit der Cloud...
 common-sync-game-saves-warn = Die Cloud-Speicherstands-Funktion ist experimentell. Es wird empfohlen, Spielstände zu sichern, falls etwas schief geht.
 common-cloud-saves = Cloud Spielstände
 common-save-path = Speicherstände Dateipfad
-common-cloud = Cloud
 common-auto-sync-saves = Speicherstände mit der Cloud Synchronisieren
 common-calculate-path = Pfad berechnen
 common-cloud-saves-not-supported = Dieses Spiel unterstützt keine Cloud-Speicherstände.
