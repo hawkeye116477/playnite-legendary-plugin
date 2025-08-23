@@ -17,7 +17,7 @@ jobs:
       shell: bash
       run: |
         sudo apt-get update
-        sudo apt-get -y install python3-lxml python3-requests
+        sudo apt-get -y install python3-requests
         pip install crowdin-api-client --no-cache-dir
 
     - name: Download translations from Crowdin
