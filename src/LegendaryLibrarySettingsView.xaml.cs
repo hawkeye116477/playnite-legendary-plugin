@@ -40,7 +40,7 @@ namespace LegendaryLibraryNS
 
         private void ChooseLauncherBtn_Click(object sender, RoutedEventArgs e)
         {
-            var file = playniteAPI.Dialogs.SelectFile($"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExecutableTitle)}|legendary.exe");
+            var file = playniteAPI.Dialogs.SelectFile($"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExecutableTitle)}|legendary.exe");
             if (file != "")
             {
                 var path = Path.GetDirectoryName(file);
@@ -60,7 +60,7 @@ namespace LegendaryLibraryNS
         private async void EOSOUninstallBtn_Click(object sender, RoutedEventArgs e)
         {
             var result = playniteAPI.Dialogs.ShowMessage(
-                LocalizationManager.Instance.GetString(LOC.CommonUninstallGameConfirm, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)LocalizationManager.Instance.GetString(LOC.LegendaryEosOverlay) }), ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstallGame), MessageBoxButton.YesNo, MessageBoxImage.Question);
+                LocalizationManager.Instance.GetString(LOC.CommonUninstallGameConfirm, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)LocalizationManager.Instance.GetString(LOC.LegendaryEosOverlay) }), LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
@@ -162,46 +162,46 @@ namespace LegendaryLibraryNS
 
             var downloadCompleteActions = new Dictionary<DownloadCompleteAction, string>
             {
-                { DownloadCompleteAction.Nothing, ResourceProvider.GetString(LOC.Legendary3P_PlayniteDoNothing) },
-                { DownloadCompleteAction.ShutDown, ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuShutdownSystem) },
-                { DownloadCompleteAction.Reboot, ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuRestartSystem) },
-                { DownloadCompleteAction.Hibernate, ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuHibernateSystem) },
-                { DownloadCompleteAction.Sleep, ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuSuspendSystem) },
+                { DownloadCompleteAction.Nothing, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteDoNothing) },
+                { DownloadCompleteAction.ShutDown, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteMenuShutdownSystem) },
+                { DownloadCompleteAction.Reboot, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteMenuRestartSystem) },
+                { DownloadCompleteAction.Hibernate, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteMenuHibernateSystem) },
+                { DownloadCompleteAction.Sleep, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteMenuSuspendSystem) },
             };
             AfterDownloadCompleteCBo.ItemsSource = downloadCompleteActions;
 
             var updatePolicyOptions = new Dictionary<UpdatePolicy, string>
             {
                 { UpdatePolicy.PlayniteLaunch, LocalizationManager.Instance.GetString(LOC.CommonCheckUpdatesEveryPlayniteStartup) },
-                { UpdatePolicy.Day, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnceADay) },
-                { UpdatePolicy.Week, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnceAWeek) },
+                { UpdatePolicy.Day, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOptionOnceADay) },
+                { UpdatePolicy.Week, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOptionOnceAWeek) },
                 { UpdatePolicy.Month, LocalizationManager.Instance.GetString(LOC.CommonOnceAMonth) },
                 { UpdatePolicy.ThreeMonths, LocalizationManager.Instance.GetString(LOC.CommonOnceEvery3Months) },
                 { UpdatePolicy.SixMonths, LocalizationManager.Instance.GetString(LOC.CommonOnceEvery6Months) },
-                { UpdatePolicy.Never, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnlyManually) }
+                { UpdatePolicy.Never, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOptionOnlyManually) }
             };
             GamesUpdatesCBo.ItemsSource = updatePolicyOptions;
 
             var launcherUpdatePolicyOptions = new Dictionary<UpdatePolicy, string>
             {
                 { UpdatePolicy.PlayniteLaunch, LocalizationManager.Instance.GetString(LOC.CommonCheckUpdatesEveryPlayniteStartup) },
-                { UpdatePolicy.Day, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnceADay) },
-                { UpdatePolicy.Week, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnceAWeek) },
+                { UpdatePolicy.Day, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOptionOnceADay) },
+                { UpdatePolicy.Week, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOptionOnceAWeek) },
                 { UpdatePolicy.Month, LocalizationManager.Instance.GetString(LOC.CommonOnceAMonth) },
                 { UpdatePolicy.ThreeMonths, LocalizationManager.Instance.GetString(LOC.CommonOnceEvery3Months) },
                 { UpdatePolicy.SixMonths, LocalizationManager.Instance.GetString(LOC.CommonOnceEvery6Months) },
-                { UpdatePolicy.Never, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnlyManually) }
+                { UpdatePolicy.Never, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOptionOnlyManually) }
             };
             LauncherUpdatesCBo.ItemsSource = launcherUpdatePolicyOptions;
 
             var autoClearOptions = new Dictionary<ClearCacheTime, string>
             {
-                { ClearCacheTime.Day, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnceADay) },
-                { ClearCacheTime.Week, ResourceProvider.GetString(LOC.Legendary3P_PlayniteOptionOnceAWeek) },
+                { ClearCacheTime.Day, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOptionOnceADay) },
+                { ClearCacheTime.Week, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOptionOnceAWeek) },
                 { ClearCacheTime.Month, LocalizationManager.Instance.GetString(LOC.CommonOnceAMonth) },
                 { ClearCacheTime.ThreeMonths, LocalizationManager.Instance.GetString(LOC.CommonOnceEvery3Months) },
                 { ClearCacheTime.SixMonths, LocalizationManager.Instance.GetString(LOC.CommonOnceEvery6Months) },
-                { ClearCacheTime.Never, ResourceProvider.GetString(LOC.Legendary3P_PlayniteSettingsPlaytimeImportModeNever) }
+                { ClearCacheTime.Never, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteSettingsPlaytimeImportModeNever) }
             };
             AutoClearCacheCBo.ItemsSource = autoClearOptions;
 
@@ -241,7 +241,7 @@ namespace LegendaryLibraryNS
 
         private void ClearCacheBtn_Click(object sender, RoutedEventArgs e)
         {
-            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonClearCacheConfirm), ResourceProvider.GetString(LOC.Legendary3P_PlayniteSettingsClearCacheTitle), MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonClearCacheConfirm), LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteSettingsClearCacheTitle), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 LegendaryLauncher.ClearCache();
@@ -370,9 +370,9 @@ namespace LegendaryLibraryNS
                     var options = new List<MessageBoxOption>
                     {
                         new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.CommonViewChangelog)),
-                        new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteOKLabel)),
+                        new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOkLabel)),
                     };
-                    var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNewVersionAvailable, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)"Legendary Launcher", ["appVersion"] = (FluentString)newVersion.ToString() }), ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
+                    var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNewVersionAvailable, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)"Legendary Launcher", ["appVersion"] = (FluentString)newVersion.ToString() }), LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
                     if (result == options[0])
                     {
                         var changelogURL = versionInfoContent.Html_url;
@@ -386,7 +386,7 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage), "Legendary Launcher");
+                playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdateCheckFailMessage), "Legendary Launcher");
             }
         }
 
@@ -402,7 +402,7 @@ namespace LegendaryLibraryNS
                 }
                 catch (Exception ex) when (!Debugger.IsAttached)
                 {
-                    playniteAPI.Dialogs.ShowErrorMessage(playniteAPI.Resources.GetString(LOC.Legendary3P_EpicNotLoggedInError), "");
+                    playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedInError), "");
                     logger.Error(ex, "Failed to authenticate user.");
                 }
                 UpdateAuthStatus();
@@ -450,7 +450,7 @@ namespace LegendaryLibraryNS
         public async void UpdateAuthStatus()
         {
             LoginBtn.IsEnabled = false;
-            AuthStatusTB.Text = ResourceProvider.GetString(LOC.Legendary3P_EpicLoginChecking);
+            AuthStatusTB.Text = LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicLoginChecking);
             var clientApi = new EpicAccountClient(playniteAPI);
             var userLoggedIn = await clientApi.GetIsUserLoggedIn();
             if (userLoggedIn)
@@ -462,8 +462,8 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                AuthStatusTB.Text = ResourceProvider.GetString(LOC.Legendary3P_EpicNotLoggedIn);
-                LoginBtn.Content = ResourceProvider.GetString(LOC.Legendary3P_EpicAuthenticateLabel);
+                AuthStatusTB.Text = LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedIn);
+                LoginBtn.Content = LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicAuthenticateLabel);
                 LoginBtn.IsChecked = false;
                 LoginAlternativeBtn.Visibility = Visibility.Visible;
             }
@@ -534,7 +534,7 @@ namespace LegendaryLibraryNS
                                     || errorMessage.Contains("Login failed")
                                     || errorMessage.Contains("No saved credentials"))
                                 {
-                                    playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.LegendaryGamesActivateFailure, new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"Ubisoft", ["reason"] = (FluentString)ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired) }));
+                                    playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.LegendaryGamesActivateFailure, new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"Ubisoft", ["reason"] = (FluentString)LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired) }));
                                 }
                                 else
                                 {
@@ -561,7 +561,7 @@ namespace LegendaryLibraryNS
         {
             if (!LegendaryLauncher.IsEaAppInstalled)
             {
-                playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteClientNotInstalledError).Format("EA App"));
+                playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteClientNotInstalledError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)"EA App" }));
                 return;
             }
             var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
@@ -611,7 +611,7 @@ namespace LegendaryLibraryNS
                     ShowMaximizeButton = false,
                 });
                 window.DataContext = gamesToUpdate;
-                window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
+                window.Title = $"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExtensionsUpdates)}";
                 window.Content = new LegendaryUpdater();
                 window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
                 window.SizeToContent = SizeToContent.WidthAndHeight;

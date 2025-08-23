@@ -184,7 +184,7 @@ namespace LegendaryLibraryNS
 
         private void ChooseAlternativeExeBtn_Click(object sender, RoutedEventArgs e)
         {
-            var file = playniteAPI.Dialogs.SelectFile($"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExecutableTitle)}|*.exe");
+            var file = playniteAPI.Dialogs.SelectFile($"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExecutableTitle)}|*.exe");
             if (file != "")
             {
                 if (!Game.InstallDirectory.IsNullOrEmpty())

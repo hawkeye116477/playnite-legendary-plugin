@@ -1,4 +1,4 @@
-common-launcher-custom-path = Launcher Path
+common-launcher-custom-path = { $launcherName } Path
 common-games-installation-path = Games Installation Path
 common-download-size = Download Size:
 common-install-size = Install Size:
@@ -79,8 +79,8 @@ common-sign-out = Sign out
 common-troubleshooting-information = Troubleshooting information
 common-playnite-version = Playnite version
 common-plugin-version = Plugin version
-common-launcher-version = Launcher version
-common-launcher-binary = Launcher binary
+common-launcher-version = { $launcherName } version
+common-launcher-binary = { $launcherName } binary
 common-copy-raw-data-to-clipboard = Copy raw data to clipboard
 common-log-files-path = Log Files Path
 common-report-bug = Report a bug
@@ -117,7 +117,7 @@ common-uninstall-error =
        *[other] Cannot uninstall following games: { $appName }.
     }
 common-games = Games
-common-launcher-update-policy = Check for launcher updates
+common-launcher-update-policy = Check for { $launcherName } updates
 common-launcher-not-installed = { $launcherName } is not installed.
 common-panel = { $pluginShortName } Panel
 common-download-manager-whats-up = The download will start soon. You can see its status by accessing { $pluginShortName } Panel via Menu => View or sidebar.

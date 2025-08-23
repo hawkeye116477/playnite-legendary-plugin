@@ -6,7 +6,6 @@
             <Style x:Key="TextBlockBaseStyle" TargetType="TextBlock" />
             <Style x:Key="BaseTextBlockStyle" TargetType="TextBlock" />
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../third_party/Localization/en-US/third-party.xaml"/>
                 <ResourceDictionary Source="../third_party/playnite-common-plugin/src/Resources/FullScreenStyles.xaml"/>
                 <ResourceDictionary Source="../third_party/playnite-common-plugin/src/Resources/NormalStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>

@@ -23,7 +23,7 @@
     </UserControl.Resources>
     <StackPanel Margin="10">
         <TextBlock Text="{common:Localize Key={x:Static system:LOC.LegendaryNoAvailableEaGames}}" Margin="0,5,0,0"  Visibility="Collapsed" Name="NoEaGamesTB" />
-        <TextBlock Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}" Margin="0,5,0,0"  Visibility="Collapsed" Name="LoadingEaTB" />
+        <TextBlock Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteLoadingLabel}}" Margin="0,5,0,0"  Visibility="Collapsed" Name="LoadingEaTB" />
         <StackPanel x:Name="EaGamesSP">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
                 <Button x:Name="ActivateBtn" Content="{common:Localize Key={x:Static system:LOC.LegendaryActivateGames}}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xecaa; {0}" Margin="0,0,5,0" IsEnabled="False" Click="ActivateBtn_Click" />

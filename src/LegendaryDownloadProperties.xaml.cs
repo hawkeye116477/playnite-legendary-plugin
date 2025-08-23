@@ -59,9 +59,9 @@ namespace LegendaryLibraryNS
             }
             var downloadActionOptions = new Dictionary<DownloadAction, string>
             {
-                { DownloadAction.Install, ResourceProvider.GetString(LOC.Legendary3P_PlayniteInstallGame) },
+                { DownloadAction.Install, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteInstallGame) },
                 { DownloadAction.Repair, LocalizationManager.Instance.GetString(LOC.CommonRepair) },
-                { DownloadAction.Update, ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterInstallUpdate) }
+                { DownloadAction.Update, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdaterInstallUpdate) }
             };
             TaskCBo.ItemsSource = downloadActionOptions;
 

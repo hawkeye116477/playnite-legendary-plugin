@@ -156,14 +156,14 @@ namespace LegendaryLibraryNS
             {
                 var selectedDLC = (KeyValuePair<string, LegendaryGameInfo.Rootobject>)InstalledDlcsLB.SelectedItems[0];
                 result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonUninstallGameConfirm, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)selectedDLC.Value.Game.Title }),
-                                                         ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstallGame),
+                                                         LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame),
                                                          MessageBoxButton.YesNo,
                                                          MessageBoxImage.Question);
             }
             else
             {
                 result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonUninstallSelectedDlcs),
-                                                         ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstallGame),
+                                                         LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame),
                                                          MessageBoxButton.YesNo,
                                                          MessageBoxImage.Question);
             }

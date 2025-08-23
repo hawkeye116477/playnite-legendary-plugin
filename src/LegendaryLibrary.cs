@@ -280,7 +280,7 @@ namespace LegendaryLibraryNS
             {
                 PlayniteApi.Notifications.Add(new NotificationMessage(
                     ImportErrorMessageId,
-                    string.Format(PlayniteApi.Resources.GetString(LOC.Legendary3P_PlayniteLibraryImportError), Name) +
+                    LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLibraryImportError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)Name }) +
                     Environment.NewLine + importError.Message,
                     NotificationType.Error,
                     () => OpenSettingsView()));
@@ -335,52 +335,6 @@ namespace LegendaryLibraryNS
         public void Load3pLocalization()
         {
             var currentLanguage = PlayniteApi.ApplicationSettings.Language;
-            var dictionaries = Application.Current.Resources.MergedDictionaries;
-
-            void loadString(string xamlPath)
-            {
-                ResourceDictionary res = null;
-                try
-                {
-                    res = Xaml.FromFile<ResourceDictionary>(xamlPath);
-                    res.Source = new Uri(xamlPath, UriKind.Absolute);
-                    foreach (var key in res.Keys)
-                    {
-                        if (res[key] is string locString && locString.IsNullOrEmpty())
-                        {
-                            res.Remove(key);
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e, $"Failed to parse localization file {xamlPath}");
-                    return;
-                }
-                dictionaries.Add(res);
-            }
-
-            var extraLocDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Localization");
-            if (!Directory.Exists(extraLocDir))
-            {
-                return;
-            }
-            var thirdPartyFileName = "third-party.xaml";
-            var enXaml = Path.Combine(extraLocDir, "en-US", thirdPartyFileName);
-            if (!File.Exists(enXaml))
-            {
-                return;
-            }
-
-            loadString(enXaml);
-            if (currentLanguage != "en_US")
-            {
-                var langXaml = Path.Combine(extraLocDir, currentLanguage.Replace("_", "-"), thirdPartyFileName);
-                if (File.Exists(langXaml))
-                {
-                    loadString(langXaml);
-                }
-            }
             LocalizationManager.Instance.SetLanguage(currentLanguage);
             var commonFluentArgs = new Dictionary<string, IFluentType>
             {
@@ -468,7 +422,7 @@ namespace LegendaryLibraryNS
                                             });
                                         }
                                         window.DataContext = successUpdates;
-                                        window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
+                                        window.Title = $"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExtensionsUpdates)}";
                                         window.Content = new LegendaryUpdater();
                                         window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
                                         window.SizeToContent = SizeToContent.WidthAndHeight;
@@ -480,7 +434,7 @@ namespace LegendaryLibraryNS
                                 else
                                 {
                                     PlayniteApi.Notifications.Add(new NotificationMessage("LegendaryGamesUpdateCheckFail",
-                                                                                          $"{Name} {Environment.NewLine}{PlayniteApi.Resources.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage)}",
+                                                                                          $"{Name} {Environment.NewLine}{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdateCheckFailMessage)}",
                                                                                           NotificationType.Error));
                                 }
                             }
@@ -507,14 +461,14 @@ namespace LegendaryLibraryNS
                                     var options = new List<MessageBoxOption>
                                     {
                                         new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.CommonViewChangelog), true),
-                                        new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteOKLabel), false, true),
+                                        new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOkLabel), false, true),
                                     };
                                     var launcherFluentArgs = new Dictionary<string, IFluentType>
                                     {
                                         ["appName"] = (FluentString)"Legendary Launcher",
                                         ["appVersion"] = (FluentString)newVersion.ToString()
                                     };
-                                    var result = PlayniteApi.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNewVersionAvailable, launcherFluentArgs), ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
+                                    var result = PlayniteApi.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNewVersionAvailable, launcherFluentArgs), LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
                                     if (result == options[0])
                                     {
                                         var changelogURL = versionInfoContent.Html_url;
@@ -680,7 +634,7 @@ namespace LegendaryLibraryNS
                         };
                         yield return new GameMenuItem
                         {
-                            Description = ResourceProvider.GetString(LOC.Legendary3P_PlayniteCheckForUpdates),
+                            Description = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteCheckForUpdates),
                             Icon = "UpdateDbIcon",
                             Action = (args) =>
                             {
@@ -707,7 +661,7 @@ namespace LegendaryLibraryNS
                                             ShowMaximizeButton = false,
                                         });
                                         window.DataContext = successUpdates;
-                                        window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
+                                        window.Title = $"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExtensionsUpdates)}";
                                         window.Content = new LegendaryUpdater();
                                         window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
                                         window.SizeToContent = SizeToContent.WidthAndHeight;
@@ -717,7 +671,7 @@ namespace LegendaryLibraryNS
                                     }
                                     else
                                     {
-                                        PlayniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage), game.Name);
+                                        PlayniteApi.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdateCheckFailMessage), game.Name);
                                     }
                                 }
                                 else
@@ -907,7 +861,7 @@ namespace LegendaryLibraryNS
                         }
                         yield return new GameMenuItem
                         {
-                            Description = ResourceProvider.GetString(LOC.Legendary3P_PlayniteInstallGame),
+                            Description = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteInstallGame),
                             Icon = "InstallIcon",
                             Action = (args) =>
                             {
@@ -961,7 +915,7 @@ namespace LegendaryLibraryNS
                     {
                         yield return new GameMenuItem
                         {
-                            Description = ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstallGame),
+                            Description = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame),
                             Icon = "UninstallIcon",
                             Action = (args) =>
                             {
@@ -1005,7 +959,7 @@ namespace LegendaryLibraryNS
                                 ShowMaximizeButton = false,
                             });
                             window.DataContext = successUpdates;
-                            window.Title = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteExtensionsUpdates)}";
+                            window.Title = $"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExtensionsUpdates)}";
                             window.Content = new LegendaryUpdater();
                             window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
                             window.SizeToContent = SizeToContent.WidthAndHeight;
@@ -1015,7 +969,7 @@ namespace LegendaryLibraryNS
                         }
                         else
                         {
-                            PlayniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUpdateCheckFailMessage));
+                            PlayniteApi.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdateCheckFailMessage));
                         }
                     }
                     else

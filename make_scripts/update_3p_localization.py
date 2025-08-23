@@ -4,7 +4,9 @@
 import os
 import shutil
 from lxml import etree as ET
+from pathlib import Path
 import git
+import importlib.util
 
 pj = os.path.join
 pn = os.path.normpath
@@ -41,17 +43,21 @@ NSMAP = {None: xmlns,
         "sys": xmlns_sys,
         "x":  xmlns_x}
 
+git_repo = git.Repo(
+    pj(main_path, "..", "PlayniteExtensions"), search_parent_directories=True)
+commit = git_repo.head.object.hexsha
+source = git_repo.remotes.origin.url.replace(".git", f"/tree/{commit}")
+Playnite_git_repo = git.Repo(pj(main_path, "..", "PlayniteExtensions", "PlayniteRepo"), search_parent_directories=True)
+commit2 = Playnite_git_repo.head.object.hexsha
+source2 = Playnite_git_repo.remotes.origin.url.replace(".git", f"/tree/{commit2}")
+
+FTL_script_path = pn(pj(main_path, '..', "playnite-common-plugin", "make_scripts", "convert_to_ftl.py"))
+spec = importlib.util.spec_from_file_location("convert_to_ftl", FTL_script_path)
+convertToFtl_script = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(convertToFtl_script)
+
 # Copy localizations from Playnite
 for filename in os.listdir(pj(main_path, "..", "PlayniteExtensions", "PlayniteRepo", "source", "Playnite", "Localization")):
-    git_repo = git.Repo(
-        pj(main_path, "..", "PlayniteExtensions"), search_parent_directories=True)
-    commit = git_repo.head.object.hexsha
-    source = git_repo.remotes.origin.url.replace(".git", f"/tree/{commit}")
-    Playnite_git_repo = git.Repo(pj(main_path, "..", "PlayniteExtensions", "PlayniteRepo"), search_parent_directories=True)
-    commit2 = Playnite_git_repo.head.object.hexsha
-    source2 = Playnite_git_repo.remotes.origin.url.replace(".git", f"/tree/{commit2}")
-
-
     xml_root = ET.Element("ResourceDictionary", nsmap=NSMAP)
     xml_doc = ET.ElementTree(xml_root)
 
@@ -91,11 +97,25 @@ for filename in os.listdir(pj(main_path, "..", "PlayniteExtensions", "PlayniteRe
 
         ET.indent(xml_doc, level=0)
         os.makedirs(pj(localization_path, loc_sub_dir))
-        with open(pj(localization_path, loc_sub_dir, "third-party.xaml"), "w", encoding="utf-8") as i18n_file:
-            i18n_file.write("<?xml version='1.0' encoding='utf-8'?>\n")
-            i18n_file.write(
-                f'<!--\n  Automatically generated via update_3p_localization.py script using files from {source} and {source2}.\n  DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!\n-->\n')
-            i18n_file.write(ET.tostring(xml_doc, encoding="utf-8", pretty_print=True).decode())
+
+        comment = f"""###
+### Automatically generated via update_3p_localization.py script using files from 
+### {source} and 
+### {source2}. 
+### DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
+###
+"""
+        with open(pj(localization_path, loc_sub_dir, "third-party.ftl"), "w", encoding="utf-8") as i18n_file:
+            i18n_file.write(f"{comment}")
+            ftl_new_content = convertToFtl_script.convertXamlStringToFtl(xml_doc, "Legendary")
+            i18n_file.write(ftl_new_content )
+
+third_party_loc_path = pj(main_path, "third_party", "Localization")
+for root, dirs, files in os.walk(third_party_loc_path):
+    for filename in files:
+        if filename.endswith(".xaml"):
+            os.remove(pj(root, filename))
+
 
 # Copy shared localizations
 def copy_specific_named_files_with_subdirs(source_dir, destination_dir, file_names=None):

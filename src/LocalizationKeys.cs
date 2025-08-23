@@ -6,242 +6,6 @@ namespace System
     public static class LOC
     {
         /// <summary>
-        /// Filter Active
-        /// </summary>
-        public const string Legendary3P_PlayniteFilterActiveLabel = "LOCLegendary3P_PlayniteFilterActiveLabel";
-        /// <summary>
-        /// Filters
-        /// </summary>
-        public const string Legendary3P_PlayniteFilters = "LOCLegendary3P_PlayniteFilters";
-        /// <summary>
-        /// Cannot start game: {0}
-        /// </summary>
-        public const string Legendary3P_PlayniteGameStartError = "LOCLegendary3P_PlayniteGameStartError";
-        /// <summary>
-        /// Cannot install game: {0}
-        /// </summary>
-        public const string Legendary3P_PlayniteGameInstallError = "LOCLegendary3P_PlayniteGameInstallError";
-        /// <summary>
-        /// Cannot un-install game: {0}
-        /// </summary>
-        public const string Legendary3P_PlayniteGameUninstallError = "LOCLegendary3P_PlayniteGameUninstallError";
-        /// <summary>
-        /// Copy
-        /// </summary>
-        public const string Legendary3P_PlayniteCopyTitle = "LOCLegendary3P_PlayniteCopyTitle";
-        /// <summary>
-        /// Import
-        /// </summary>
-        public const string Legendary3P_PlayniteImportLabel = "LOCLegendary3P_PlayniteImportLabel";
-        /// <summary>
-        /// Install Size
-        /// </summary>
-        public const string Legendary3P_PlayniteInstallSizeLabel = "LOCLegendary3P_PlayniteInstallSizeLabel";
-        /// <summary>
-        /// Added
-        /// </summary>
-        public const string Legendary3P_PlayniteAddedLabel = "LOCLegendary3P_PlayniteAddedLabel";
-        /// <summary>
-        /// OK
-        /// </summary>
-        public const string Legendary3P_PlayniteOKLabel = "LOCLegendary3P_PlayniteOKLabel";
-        /// <summary>
-        /// Save
-        /// </summary>
-        public const string Legendary3P_PlayniteSaveLabel = "LOCLegendary3P_PlayniteSaveLabel";
-        /// <summary>
-        /// Cancel
-        /// </summary>
-        public const string Legendary3P_PlayniteCancelLabel = "LOCLegendary3P_PlayniteCancelLabel";
-        /// <summary>
-        /// Yes
-        /// </summary>
-        public const string Legendary3P_PlayniteYesLabel = "LOCLegendary3P_PlayniteYesLabel";
-        /// <summary>
-        /// No
-        /// </summary>
-        public const string Legendary3P_PlayniteNoLabel = "LOCLegendary3P_PlayniteNoLabel";
-        /// <summary>
-        /// Downloading…
-        /// </summary>
-        public const string Legendary3P_PlayniteDownloadingLabel = "LOCLegendary3P_PlayniteDownloadingLabel";
-        /// <summary>
-        /// Loading…
-        /// </summary>
-        public const string Legendary3P_PlayniteLoadingLabel = "LOCLegendary3P_PlayniteLoadingLabel";
-        /// <summary>
-        /// Downloading metadata…
-        /// </summary>
-        public const string Legendary3P_PlayniteProgressMetadata = "LOCLegendary3P_PlayniteProgressMetadata";
-        /// <summary>
-        /// Restart System
-        /// </summary>
-        public const string Legendary3P_PlayniteMenuRestartSystem = "LOCLegendary3P_PlayniteMenuRestartSystem";
-        /// <summary>
-        /// Turn Off System
-        /// </summary>
-        public const string Legendary3P_PlayniteMenuShutdownSystem = "LOCLegendary3P_PlayniteMenuShutdownSystem";
-        /// <summary>
-        /// Suspend System
-        /// </summary>
-        public const string Legendary3P_PlayniteMenuSuspendSystem = "LOCLegendary3P_PlayniteMenuSuspendSystem";
-        /// <summary>
-        /// Hibernate System
-        /// </summary>
-        public const string Legendary3P_PlayniteMenuHibernateSystem = "LOCLegendary3P_PlayniteMenuHibernateSystem";
-        /// <summary>
-        /// General
-        /// </summary>
-        public const string Legendary3P_PlayniteSettingsGeneralLabel = "LOCLegendary3P_PlayniteSettingsGeneralLabel";
-        /// <summary>
-        /// Advanced
-        /// </summary>
-        public const string Legendary3P_PlayniteSettingsAdvancedLabel = "LOCLegendary3P_PlayniteSettingsAdvancedLabel";
-        /// <summary>
-        /// Clear Cache?
-        /// </summary>
-        public const string Legendary3P_PlayniteSettingsClearCacheTitle = "LOCLegendary3P_PlayniteSettingsClearCacheTitle";
-        /// <summary>
-        /// Never
-        /// </summary>
-        public const string Legendary3P_PlayniteSettingsPlaytimeImportModeNever = "LOCLegendary3P_PlayniteSettingsPlaytimeImportModeNever";
-        /// <summary>
-        /// Authentification required
-        /// </summary>
-        public const string Legendary3P_PlayniteLoginRequired = "LOCLegendary3P_PlayniteLoginRequired";
-        /// <summary>
-        /// Executable
-        /// </summary>
-        public const string Legendary3P_PlayniteExecutableTitle = "LOCLegendary3P_PlayniteExecutableTitle";
-        /// <summary>
-        /// Name
-        /// </summary>
-        public const string Legendary3P_PlayniteGameNameTitle = "LOCLegendary3P_PlayniteGameNameTitle";
-        /// <summary>
-        /// Installation Folder
-        /// </summary>
-        public const string Legendary3P_PlayniteGameInstallDirTitle = "LOCLegendary3P_PlayniteGameInstallDirTitle";
-        /// <summary>
-        /// Failed to import games from {0}.
-        /// </summary>
-        public const string Legendary3P_PlayniteLibraryImportError = "LOCLegendary3P_PlayniteLibraryImportError";
-        /// <summary>
-        /// Failed to download metadata: {0}
-        /// </summary>
-        public const string Legendary3P_PlayniteMetadataDownloadError = "LOCLegendary3P_PlayniteMetadataDownloadError";
-        /// <summary>
-        /// Uninstalling
-        /// </summary>
-        public const string Legendary3P_PlayniteUninstalling = "LOCLegendary3P_PlayniteUninstalling";
-        /// <summary>
-        /// Do nothing
-        /// </summary>
-        public const string Legendary3P_PlayniteDoNothing = "LOCLegendary3P_PlayniteDoNothing";
-        /// <summary>
-        /// Close
-        /// </summary>
-        public const string Legendary3P_PlayniteClose = "LOCLegendary3P_PlayniteClose";
-        /// <summary>
-        /// Update Available
-        /// </summary>
-        public const string Legendary3P_PlayniteUpdaterWindowTitle = "LOCLegendary3P_PlayniteUpdaterWindowTitle";
-        /// <summary>
-        /// Download and Install Update
-        /// </summary>
-        public const string Legendary3P_PlayniteUpdaterInstallUpdate = "LOCLegendary3P_PlayniteUpdaterInstallUpdate";
-        /// <summary>
-        /// Check for Updates
-        /// </summary>
-        public const string Legendary3P_PlayniteCheckForUpdates = "LOCLegendary3P_PlayniteCheckForUpdates";
-        /// <summary>
-        /// Failed to check for new version.
-        /// </summary>
-        public const string Legendary3P_PlayniteUpdateCheckFailMessage = "LOCLegendary3P_PlayniteUpdateCheckFailMessage";
-        /// <summary>
-        /// Install
-        /// </summary>
-        public const string Legendary3P_PlayniteInstallGame = "LOCLegendary3P_PlayniteInstallGame";
-        /// <summary>
-        /// Uninstall
-        /// </summary>
-        public const string Legendary3P_PlayniteUninstallGame = "LOCLegendary3P_PlayniteUninstallGame";
-        /// <summary>
-        /// {0} client is not installed.
-        /// </summary>
-        public const string Legendary3P_PlayniteClientNotInstalledError = "LOCLegendary3P_PlayniteClientNotInstalledError";
-        /// <summary>
-        /// Don't Show Again
-        /// </summary>
-        public const string Legendary3P_PlayniteDontShowAgainTitle = "LOCLegendary3P_PlayniteDontShowAgainTitle";
-        /// <summary>
-        /// Store Page
-        /// </summary>
-        public const string Legendary3P_PlayniteCommonLinksStorePage = "LOCLegendary3P_PlayniteCommonLinksStorePage";
-        /// <summary>
-        /// Updates
-        /// </summary>
-        public const string Legendary3P_PlayniteExtensionsUpdates = "LOCLegendary3P_PlayniteExtensionsUpdates";
-        /// <summary>
-        /// Select file…
-        /// </summary>
-        public const string Legendary3P_PlayniteSelectFileTooltip = "LOCLegendary3P_PlayniteSelectFileTooltip";
-        /// <summary>
-        /// Select folder…
-        /// </summary>
-        public const string Legendary3P_PlayniteSelectDirectoryTooltip = "LOCLegendary3P_PlayniteSelectDirectoryTooltip";
-        /// <summary>
-        /// Only manually
-        /// </summary>
-        public const string Legendary3P_PlayniteOptionOnlyManually = "LOCLegendary3P_PlayniteOptionOnlyManually";
-        /// <summary>
-        /// Once a day
-        /// </summary>
-        public const string Legendary3P_PlayniteOptionOnceADay = "LOCLegendary3P_PlayniteOptionOnceADay";
-        /// <summary>
-        /// Once a week
-        /// </summary>
-        public const string Legendary3P_PlayniteOptionOnceAWeek = "LOCLegendary3P_PlayniteOptionOnceAWeek";
-        /// <summary>
-        /// Open
-        /// </summary>
-        public const string Legendary3P_PlayniteOpen = "LOCLegendary3P_PlayniteOpen";
-        /// <summary>
-        /// Import installed games
-        /// </summary>
-        public const string Legendary3P_EpicSettingsImportInstalledLabel = "LOCLegendary3P_EpicSettingsImportInstalledLabel";
-        /// <summary>
-        /// Import not installed games
-        /// </summary>
-        public const string Legendary3P_EpicSettingsImportUninstalledLabel = "LOCLegendary3P_EpicSettingsImportUninstalledLabel";
-        /// <summary>
-        /// Connect account
-        /// </summary>
-        public const string Legendary3P_EpicSettingsConnectAccount = "LOCLegendary3P_EpicSettingsConnectAccount";
-        /// <summary>
-        /// Checking authentication status…
-        /// </summary>
-        public const string Legendary3P_EpicLoginChecking = "LOCLegendary3P_EpicLoginChecking";
-        /// <summary>
-        /// Requires authentication
-        /// </summary>
-        public const string Legendary3P_EpicNotLoggedIn = "LOCLegendary3P_EpicNotLoggedIn";
-        /// <summary>
-        /// Failed to authenticate user.
-        /// </summary>
-        public const string Legendary3P_EpicNotLoggedInError = "LOCLegendary3P_EpicNotLoggedInError";
-        /// <summary>
-        /// Authenticate
-        /// </summary>
-        public const string Legendary3P_EpicAuthenticateLabel = "LOCLegendary3P_EpicAuthenticateLabel";
-        /// <summary>
-        /// Troubleshooting issues
-        /// </summary>
-        public const string Legendary3P_EpicTroubleShootingIssues = "LOCLegendary3P_EpicTroubleShootingIssues";
-        /// <summary>
-        /// Start using {0} client
-        /// </summary>
-        public const string Legendary3P_EpicStartUsingClient = "LOCLegendary3P_EpicStartUsingClient";
-        /// <summary>
         /// Launch games in offline mode if possible
         /// </summary>
         public const string LegendaryLaunchOffline = "legendary-launch-offline";
@@ -498,7 +262,7 @@ namespace System
         /// </summary>
         public const string CommonUninstallSelectedDlcs = "common-uninstall-selected-dlcs";
         /// <summary>
-        /// Launcher Path
+        /// {$launcherName} Path
         /// </summary>
         public const string CommonLauncherCustomPath = "common-launcher-custom-path";
         /// <summary>
@@ -822,11 +586,11 @@ namespace System
         /// </summary>
         public const string CommonPluginVersion = "common-plugin-version";
         /// <summary>
-        /// Launcher version
+        /// {$launcherName} version
         /// </summary>
         public const string CommonLauncherVersion = "common-launcher-version";
         /// <summary>
-        /// Launcher binary
+        /// {$launcherName} binary
         /// </summary>
         public const string CommonLauncherBinary = "common-launcher-binary";
         /// <summary>
@@ -949,7 +713,7 @@ namespace System
         /// </summary>
         public const string CommonGames = "common-games";
         /// <summary>
-        /// Check for launcher updates
+        /// Check for {$launcherName} updates
         /// </summary>
         public const string CommonLauncherUpdatePolicy = "common-launcher-update-policy";
         /// <summary>
@@ -990,5 +754,241 @@ namespace System
         /// Only one instance of {$pluginShortName} may install/import/move applications at a time. Do you want to pause download manager tasks to continue?
         /// </summary>
         public const string CommonInstanceNotice = "common-instance-notice";
+        /// <summary>
+        /// Filter Active
+        /// </summary>
+        public const string ThirdPartyPlayniteFilterActiveLabel = "third-party-playnite-filter-active-label";
+        /// <summary>
+        /// Filters
+        /// </summary>
+        public const string ThirdPartyPlayniteFilters = "third-party-playnite-filters";
+        /// <summary>
+        /// Cannot start game: {$var0}
+        /// </summary>
+        public const string ThirdPartyPlayniteGameStartError = "third-party-playnite-game-start-error";
+        /// <summary>
+        /// Cannot install game: {$var0}
+        /// </summary>
+        public const string ThirdPartyPlayniteGameInstallError = "third-party-playnite-game-install-error";
+        /// <summary>
+        /// Cannot un-install game: {$var0}
+        /// </summary>
+        public const string ThirdPartyPlayniteGameUninstallError = "third-party-playnite-game-uninstall-error";
+        /// <summary>
+        /// Copy
+        /// </summary>
+        public const string ThirdPartyPlayniteCopyTitle = "third-party-playnite-copy-title";
+        /// <summary>
+        /// Import
+        /// </summary>
+        public const string ThirdPartyPlayniteImportLabel = "third-party-playnite-import-label";
+        /// <summary>
+        /// Install Size
+        /// </summary>
+        public const string ThirdPartyPlayniteInstallSizeLabel = "third-party-playnite-install-size-label";
+        /// <summary>
+        /// Added
+        /// </summary>
+        public const string ThirdPartyPlayniteAddedLabel = "third-party-playnite-added-label";
+        /// <summary>
+        /// OK
+        /// </summary>
+        public const string ThirdPartyPlayniteOkLabel = "third-party-playnite-ok-label";
+        /// <summary>
+        /// Save
+        /// </summary>
+        public const string ThirdPartyPlayniteSaveLabel = "third-party-playnite-save-label";
+        /// <summary>
+        /// Cancel
+        /// </summary>
+        public const string ThirdPartyPlayniteCancelLabel = "third-party-playnite-cancel-label";
+        /// <summary>
+        /// Yes
+        /// </summary>
+        public const string ThirdPartyPlayniteYesLabel = "third-party-playnite-yes-label";
+        /// <summary>
+        /// No
+        /// </summary>
+        public const string ThirdPartyPlayniteNoLabel = "third-party-playnite-no-label";
+        /// <summary>
+        /// Downloading…
+        /// </summary>
+        public const string ThirdPartyPlayniteDownloadingLabel = "third-party-playnite-downloading-label";
+        /// <summary>
+        /// Loading…
+        /// </summary>
+        public const string ThirdPartyPlayniteLoadingLabel = "third-party-playnite-loading-label";
+        /// <summary>
+        /// Downloading metadata…
+        /// </summary>
+        public const string ThirdPartyPlayniteProgressMetadata = "third-party-playnite-progress-metadata";
+        /// <summary>
+        /// Restart System
+        /// </summary>
+        public const string ThirdPartyPlayniteMenuRestartSystem = "third-party-playnite-menu-restart-system";
+        /// <summary>
+        /// Turn Off System
+        /// </summary>
+        public const string ThirdPartyPlayniteMenuShutdownSystem = "third-party-playnite-menu-shutdown-system";
+        /// <summary>
+        /// Suspend System
+        /// </summary>
+        public const string ThirdPartyPlayniteMenuSuspendSystem = "third-party-playnite-menu-suspend-system";
+        /// <summary>
+        /// Hibernate System
+        /// </summary>
+        public const string ThirdPartyPlayniteMenuHibernateSystem = "third-party-playnite-menu-hibernate-system";
+        /// <summary>
+        /// General
+        /// </summary>
+        public const string ThirdPartyPlayniteSettingsGeneralLabel = "third-party-playnite-settings-general-label";
+        /// <summary>
+        /// Advanced
+        /// </summary>
+        public const string ThirdPartyPlayniteSettingsAdvancedLabel = "third-party-playnite-settings-advanced-label";
+        /// <summary>
+        /// Clear Cache?
+        /// </summary>
+        public const string ThirdPartyPlayniteSettingsClearCacheTitle = "third-party-playnite-settings-clear-cache-title";
+        /// <summary>
+        /// Never
+        /// </summary>
+        public const string ThirdPartyPlayniteSettingsPlaytimeImportModeNever = "third-party-playnite-settings-playtime-import-mode-never";
+        /// <summary>
+        /// Authentification required
+        /// </summary>
+        public const string ThirdPartyPlayniteLoginRequired = "third-party-playnite-login-required";
+        /// <summary>
+        /// Executable
+        /// </summary>
+        public const string ThirdPartyPlayniteExecutableTitle = "third-party-playnite-executable-title";
+        /// <summary>
+        /// Name
+        /// </summary>
+        public const string ThirdPartyPlayniteGameNameTitle = "third-party-playnite-game-name-title";
+        /// <summary>
+        /// Installation Folder
+        /// </summary>
+        public const string ThirdPartyPlayniteGameInstallDirTitle = "third-party-playnite-game-install-dir-title";
+        /// <summary>
+        /// Failed to import games from {$var0}.
+        /// </summary>
+        public const string ThirdPartyPlayniteLibraryImportError = "third-party-playnite-library-import-error";
+        /// <summary>
+        /// Failed to download metadata: {$var0}
+        /// </summary>
+        public const string ThirdPartyPlayniteMetadataDownloadError = "third-party-playnite-metadata-download-error";
+        /// <summary>
+        /// Uninstalling
+        /// </summary>
+        public const string ThirdPartyPlayniteUninstalling = "third-party-playnite-uninstalling";
+        /// <summary>
+        /// Do nothing
+        /// </summary>
+        public const string ThirdPartyPlayniteDoNothing = "third-party-playnite-do-nothing";
+        /// <summary>
+        /// Close
+        /// </summary>
+        public const string ThirdPartyPlayniteClose = "third-party-playnite-close";
+        /// <summary>
+        /// Update Available
+        /// </summary>
+        public const string ThirdPartyPlayniteUpdaterWindowTitle = "third-party-playnite-updater-window-title";
+        /// <summary>
+        /// Download and Install Update
+        /// </summary>
+        public const string ThirdPartyPlayniteUpdaterInstallUpdate = "third-party-playnite-updater-install-update";
+        /// <summary>
+        /// Check for Updates
+        /// </summary>
+        public const string ThirdPartyPlayniteCheckForUpdates = "third-party-playnite-check-for-updates";
+        /// <summary>
+        /// Failed to check for new version.
+        /// </summary>
+        public const string ThirdPartyPlayniteUpdateCheckFailMessage = "third-party-playnite-update-check-fail-message";
+        /// <summary>
+        /// Install
+        /// </summary>
+        public const string ThirdPartyPlayniteInstallGame = "third-party-playnite-install-game";
+        /// <summary>
+        /// Uninstall
+        /// </summary>
+        public const string ThirdPartyPlayniteUninstallGame = "third-party-playnite-uninstall-game";
+        /// <summary>
+        /// {$var0} client is not installed.
+        /// </summary>
+        public const string ThirdPartyPlayniteClientNotInstalledError = "third-party-playnite-client-not-installed-error";
+        /// <summary>
+        /// Don't Show Again
+        /// </summary>
+        public const string ThirdPartyPlayniteDontShowAgainTitle = "third-party-playnite-dont-show-again-title";
+        /// <summary>
+        /// Store Page
+        /// </summary>
+        public const string ThirdPartyPlayniteCommonLinksStorePage = "third-party-playnite-common-links-store-page";
+        /// <summary>
+        /// Updates
+        /// </summary>
+        public const string ThirdPartyPlayniteExtensionsUpdates = "third-party-playnite-extensions-updates";
+        /// <summary>
+        /// Select file…
+        /// </summary>
+        public const string ThirdPartyPlayniteSelectFileTooltip = "third-party-playnite-select-file-tooltip";
+        /// <summary>
+        /// Select folder…
+        /// </summary>
+        public const string ThirdPartyPlayniteSelectDirectoryTooltip = "third-party-playnite-select-directory-tooltip";
+        /// <summary>
+        /// Only manually
+        /// </summary>
+        public const string ThirdPartyPlayniteOptionOnlyManually = "third-party-playnite-option-only-manually";
+        /// <summary>
+        /// Once a day
+        /// </summary>
+        public const string ThirdPartyPlayniteOptionOnceADay = "third-party-playnite-option-once-a-day";
+        /// <summary>
+        /// Once a week
+        /// </summary>
+        public const string ThirdPartyPlayniteOptionOnceAWeek = "third-party-playnite-option-once-a-week";
+        /// <summary>
+        /// Open
+        /// </summary>
+        public const string ThirdPartyPlayniteOpen = "third-party-playnite-open";
+        /// <summary>
+        /// Import installed games
+        /// </summary>
+        public const string ThirdPartyEpicSettingsImportInstalledLabel = "third-party-epic-settings-import-installed-label";
+        /// <summary>
+        /// Import not installed games
+        /// </summary>
+        public const string ThirdPartyEpicSettingsImportUninstalledLabel = "third-party-epic-settings-import-uninstalled-label";
+        /// <summary>
+        /// Connect account
+        /// </summary>
+        public const string ThirdPartyEpicSettingsConnectAccount = "third-party-epic-settings-connect-account";
+        /// <summary>
+        /// Checking authentication status…
+        /// </summary>
+        public const string ThirdPartyEpicLoginChecking = "third-party-epic-login-checking";
+        /// <summary>
+        /// Requires authentication
+        /// </summary>
+        public const string ThirdPartyEpicNotLoggedIn = "third-party-epic-not-logged-in";
+        /// <summary>
+        /// Failed to authenticate user.
+        /// </summary>
+        public const string ThirdPartyEpicNotLoggedInError = "third-party-epic-not-logged-in-error";
+        /// <summary>
+        /// Authenticate
+        /// </summary>
+        public const string ThirdPartyEpicAuthenticateLabel = "third-party-epic-authenticate-label";
+        /// <summary>
+        /// Troubleshooting issues
+        /// </summary>
+        public const string ThirdPartyEpicTroubleShootingIssues = "third-party-epic-trouble-shooting-issues";
+        /// <summary>
+        /// Start using {$var0} client
+        /// </summary>
+        public const string ThirdPartyEpicStartUsingClient = "third-party-epic-start-using-client";
     }
 }

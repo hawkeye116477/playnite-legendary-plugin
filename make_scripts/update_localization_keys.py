@@ -50,7 +50,7 @@ script_path = os.path.dirname(os.path.realpath(__file__))
 main_path = pn(script_path + "/..")
 
 third_party_loc_file = pn(
-    pj(main_path, "third_party", "Localization", "en-US", "third-party.xaml"))
+    pj(main_path, "third_party", "Localization", "en-US", "third-party.ftl"))
 loc_keys_file = pj(main_path, "src", "LocalizationKeys.cs")
 
 loc_keys_file_content = '''\
@@ -65,22 +65,10 @@ namespace System
 '''
 
 x_ns = "{http://schemas.microsoft.com/winfx/2006/xaml}"
-xaml_loc_files = [third_party_loc_file]
-for loc_file in xaml_loc_files:
-    loc_parse = ET.parse(loc_file)
-    for child in loc_parse.getroot():
-        key = child.get(x_ns + 'Key')
-        loc_keys_file_content += f'''\
-        /// <summary>
-        /// {child.text}
-        /// </summary>
-        public const string {key.replace("LOC", "")} = "{key}";
-\
-'''
-
 common_loc_path = pj(main_path, "third_party", "CommonLocalization", "en-US")
 loc_path = pn(pj(main_path, "src", "Localization", "en-US"))
 ftl_files = list(Path(loc_path).rglob('*.ftl')) + list(Path(common_loc_path).rglob('*.ftl'))
+ftl_files.append(third_party_loc_file)
 
 for file_path in ftl_files:
     with open(file_path, 'r', encoding='utf-8') as f:

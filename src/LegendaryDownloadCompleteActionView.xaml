@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LegendaryLibraryNS"
+             xmlns:common="clr-namespace:CommonPlugin"
+             xmlns:system="clr-namespace:System"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Name="LegendaryDownloadCompleteActionUC" Loaded="LegendaryDownloadCompleteActionUC_Loaded">
     <UserControl.Resources>
@@ -23,7 +25,7 @@
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
             <Button x:Name="ActionBtn" Click="ActionBtn_Click"></Button>
-            <Button Name="CancelBtn" Margin="10,0,0,0" Content="{DynamicResource LOCLegendary3P_PlayniteCancelLabel}" Click="CancelBtn_Click"></Button>
+            <Button Name="CancelBtn" Margin="10,0,0,0" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteCancelLabel}}" Click="CancelBtn_Click"></Button>
         </StackPanel>
     </StackPanel>
 </UserControl>

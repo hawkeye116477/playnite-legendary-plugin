@@ -20,7 +20,7 @@ namespace LegendaryLibraryNS
         {
             string cloudSaveFolder = "";
             var playniteAPI = API.Instance;
-            GlobalProgressOptions metadataProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString(LOC.Legendary3P_PlayniteProgressMetadata), false);
+            GlobalProgressOptions metadataProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteProgressMetadata), false);
 
             var manifest = new LegendaryGameInfo.Rootobject();
             var gameData = new LegendaryGameInfo.Game
@@ -172,7 +172,7 @@ namespace LegendaryLibraryNS
                                         {
                                             if (loginErrorDisplayed)
                                             {
-                                                playniteAPI.Dialogs.ShowErrorMessage($"{LocalizationManager.Instance.GetString(LOC.CommonSyncError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name })} {ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)}.");
+                                                playniteAPI.Dialogs.ShowErrorMessage($"{LocalizationManager.Instance.GetString(LOC.CommonSyncError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name })} {LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired)}.");
                                             }
                                             else
                                             {

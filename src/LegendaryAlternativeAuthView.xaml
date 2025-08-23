@@ -38,12 +38,12 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <TextBox x:Name="AuthLinkTxt" Grid.Row="0" Grid.Column="0" IsReadOnly="True"></TextBox>
-            <Button Grid.Column="1" Grid.Row="0" Name="CopyBtn" Content="{DynamicResource LOCLegendary3P_PlayniteCopyTitle}" ContentStringFormat="&#xefb5; {0}" Margin="10,0,0,0" Click="CopyBtn_Click" FontFamily="{DynamicResource FontIcoFont}"/>
-            <Button Grid.Column="2" Grid.Row="0" Name="OpenBtn" Content="{DynamicResource LOCLegendary3P_PlayniteOpen}" ContentStringFormat="&#xef1f; {0}" Margin="5,0,0,0" Click="OpenBtn_Click" FontFamily="{DynamicResource FontIcoFont}"/>
+            <Button Grid.Column="1" Grid.Row="0" Name="CopyBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteCopyTitle}}" ContentStringFormat="&#xefb5; {0}" Margin="10,0,0,0" Click="CopyBtn_Click" FontFamily="{DynamicResource FontIcoFont}"/>
+            <Button Grid.Column="2" Grid.Row="0" Name="OpenBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteOpen}}" ContentStringFormat="&#xef1f; {0}" Margin="5,0,0,0" Click="OpenBtn_Click" FontFamily="{DynamicResource FontIcoFont}"/>
         </Grid>
         <TextBlock Text="{common:Localize Key={x:Static system:LOC.LegendaryAlternativeAuthInstructionsThird}}" TextWrapping="Wrap" Margin="0,5,0,0"></TextBlock>
         <DockPanel Margin="0,5,0,0">
-            <Button x:Name="AuthBtn" Margin="10,0,0,0" Content="{DynamicResource LOCLegendary3P_EpicAuthenticateLabel}" ContentStringFormat="&#xef7b; {0}" DockPanel.Dock="Right" Click="AuthBtn_Click" FontFamily="{DynamicResource FontIcoFont}"/>
+            <Button x:Name="AuthBtn" Margin="10,0,0,0" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyEpicAuthenticateLabel}}" ContentStringFormat="&#xef7b; {0}" DockPanel.Dock="Right" Click="AuthBtn_Click" FontFamily="{DynamicResource FontIcoFont}"/>
             <TextBox x:Name="AuthCodeTxt" Margin="0,0,0,0"></TextBox>
         </DockPanel>
     </StackPanel>

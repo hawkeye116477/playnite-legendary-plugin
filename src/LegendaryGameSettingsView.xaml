@@ -22,12 +22,12 @@
     </UserControl.Resources>
     <DockPanel Margin="0,0,10,10">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
-            <Button x:Name="SaveBtn" Content="{DynamicResource LOCLegendary3P_PlayniteSaveLabel}" Margin="0,0,5,0" Click="SaveBtn_Click" />
-            <Button x:Name="CancelBtn" Content="{DynamicResource LOCLegendary3P_PlayniteCancelLabel}" IsCancel="True" />
+            <Button x:Name="SaveBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSaveLabel}}" Margin="0,0,5,0" Click="SaveBtn_Click" />
+            <Button x:Name="CancelBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteCancelLabel}}" IsCancel="True" />
         </StackPanel>
         <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled"
         HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-            <TabItem Header="{DynamicResource LOCLegendary3P_PlayniteSettingsGeneralLabel}">
+            <TabItem Header="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSettingsGeneralLabel}}">
                 <StackPanel Margin="10">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -62,7 +62,7 @@
                              Grid.Row="4" Grid.Column="1" Margin="10,0,0,5" VerticalAlignment="Center"/>
                         <Button Name="ChooseAlternativeExeBtn"
                             Margin="5,0,0,5" Content="&#xec5b;" FontFamily="{DynamicResource FontIcoFont}" Grid.Row="4" Grid.Column="2"
-                            ToolTip="{DynamicResource LOCLegendary3P_PlayniteSelectFileTooltip}" VerticalAlignment="Center" Click="ChooseAlternativeExeBtn_Click"/>
+                            ToolTip="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSelectFileTooltip}}" VerticalAlignment="Center" Click="ChooseAlternativeExeBtn_Click"/>
                     </Grid>
                 </StackPanel>
             </TabItem>
@@ -90,7 +90,7 @@
                             <TextBox x:Name="SelectedSavePathTxt" Grid.Row="1" Grid.Column="1" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
                             <Button Name="ChooseSavePathBtn"
                                 Margin="5,0,0,5" Content="&#xec5b;" FontFamily="{DynamicResource FontIcoFont}" Grid.Row="1" Grid.Column="2"
-                                ToolTip="{DynamicResource LOCLegendary3P_PlayniteSelectDirectoryTooltip}" VerticalAlignment="Center" Click="ChooseSavePathBtn_Click"/>
+                                ToolTip="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSelectDirectoryTooltip}}" VerticalAlignment="Center" Click="ChooseSavePathBtn_Click"/>
                             <Button Name="CalculatePathBtn" Margin="5,0,0,5" Grid.Row="1" Grid.Column="3" 
                                 VerticalAlignment="Center" HorizontalAlignment="Left" 
                                 Content="&#xef85;" ToolTip="{common:Localize Key={x:Static system:LOC.CommonCalculatePath}}" FontFamily="{DynamicResource FontIcoFont}" Click="CalculatePathBtn_Click"/>

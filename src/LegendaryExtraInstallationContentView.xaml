@@ -22,7 +22,7 @@
     </UserControl.Resources>
     <StackPanel Margin="10">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top">
-            <Button x:Name="CloseBtn" Content="{DynamicResource LOCLegendary3P_PlayniteClose}" ContentStringFormat="&#xec4f; {0}" FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="CloseBtn_Click" />
+            <Button x:Name="CloseBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteClose}}" ContentStringFormat="&#xec4f; {0}" FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="CloseBtn_Click" />
         </StackPanel>
         <Separator Margin="0,5"/>
         <StackPanel Orientation="Vertical" Margin="0,10,0,0" Name="ExtraContentSP" Visibility="Collapsed">

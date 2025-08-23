@@ -26,17 +26,17 @@
     </UserControl.Resources>
     <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled"
         HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-        <TabItem Header="{DynamicResource LOCLegendary3P_PlayniteSettingsGeneralLabel}">
+        <TabItem Header="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSettingsGeneralLabel}}">
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="20">
                     <CheckBox DockPanel.Dock="Top"
                     Margin="0,0,0,15"
                     IsChecked="{Binding Settings.ImportInstalledGames}"
-                    Content="{DynamicResource LOCLegendary3P_EpicSettingsImportInstalledLabel}" />
+                    Content="{common:Localize Key={x:Static system:LOC.ThirdPartyEpicSettingsImportInstalledLabel}}" />
 
                     <CheckBox DockPanel.Dock="Top" Name="EpicConnectAccountChk"
                     IsChecked="{Binding Settings.ConnectAccount}"
-                    Content="{DynamicResource LOCLegendary3P_EpicSettingsConnectAccount}" />
+                    Content="{common:Localize Key={x:Static system:LOC.ThirdPartyEpicSettingsConnectAccount}}" />
 
                     <StackPanel DockPanel.Dock="Top" Margin="40,5,5,5"
                     IsEnabled="{Binding IsChecked, ElementName=EpicConnectAccountChk}">
@@ -44,7 +44,7 @@
                         <CheckBox DockPanel.Dock="Top" Name="EpicImportUninstalledChk"
                         IsChecked="{Binding Settings.ImportUninstalledGames}"
                         Margin="0,10,0,0"
-                        Content="{DynamicResource LOCLegendary3P_EpicSettingsImportUninstalledLabel}" />
+                        Content="{common:Localize Key={x:Static system:LOC.ThirdPartyEpicSettingsImportUninstalledLabel}}" />
 
                         <CheckBox DockPanel.Dock="Top" Name="ImportUbisoftLauncherGamesChk"
                     IsChecked="{Binding Settings.ImportUbisoftLauncherGames}" Content="{common:Localize Key={x:Static system:LOC.LegendaryImportThirdPartyLauncherGames}, Args='thirdPartyLauncherName=Ubisoft Connect'}"
@@ -56,21 +56,21 @@
 
                         <StackPanel Orientation="Horizontal"
                         DockPanel.Dock="Top" Margin="0,15,5,5" HorizontalAlignment="Left">
-                            <ToggleButton HorizontalAlignment="Left" Name="LoginBtn" Content="{DynamicResource LOCLegendary3P_EpicAuthenticateLabel}" IsEnabled="False" Click="LoginBtn_Click" IsChecked="False"/>
-                            <TextBlock VerticalAlignment="Center" Margin="10,5,5,5" Name="AuthStatusTB" Text="{DynamicResource LOCLegendary3P_EpicLoginChecking}"/>
+                            <ToggleButton HorizontalAlignment="Left" Name="LoginBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyEpicAuthenticateLabel}}" IsEnabled="False" Click="LoginBtn_Click" IsChecked="False"/>
+                            <TextBlock VerticalAlignment="Center" Margin="10,5,5,5" Name="AuthStatusTB" Text="{common:Localize Key={x:Static system:LOC.ThirdPartyEpicLoginChecking}}"/>
                         </StackPanel>
                         <Button Margin="0,5,0,0" HorizontalAlignment="Left" Name="LoginAlternativeBtn" Content="{common:Localize Key={x:Static system:LOC.LegendaryAuthenticateAlternativeLabel}}" Visibility="Visible" Click="LoginAlternativeBtn_Click"/>
                     </StackPanel>
-                    <Button Content="{common:Localize Key={x:Static system:LOC.CommonMigrateGamesOriginal}}" HorizontalAlignment="Left" Margin="0,5,0,15" Name="MigrateEpicBtn" IsEnabled="False" Click="MigrateEpicBtn_Click"></Button>
+                    <Button Content="{common:Localize Key={x:Static system:LOC.CommonMigrateGamesOriginal},Args='originalPluginShortName=Epic'}" HorizontalAlignment="Left" Margin="0,5,0,15" Name="MigrateEpicBtn" IsEnabled="False" Click="MigrateEpicBtn_Click"></Button>
                     <CheckBox DockPanel.Dock="Top" Margin="0,0,0,10"
                         IsChecked="{Binding Settings.LaunchOffline}"
                         Content="{common:Localize Key={x:Static system:LOC.LegendaryLaunchOffline}}" />
                     <StackPanel Margin="0,10,0,0">
-                        <TextBlock Text="{DynamicResource LOCLegendary3P_PlayniteExtensionsUpdates}" FontSize="18"
+                        <TextBlock Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteExtensionsUpdates}}" FontSize="18"
                         Margin="0,0,0,2" />
                         <Separator Margin="0,0,0,10" />
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                            <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonLauncherUpdatePolicy}}" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                            <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonLauncherUpdatePolicy},Args='launcherName=Legendary'}" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                             <ComboBox Grid.Row="0" Grid.Column="1" x:Name="LauncherUpdatesCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.LauncherUpdatePolicy}" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Margin="10,0,0,0" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
@@ -117,7 +117,7 @@
                         </TextBlock>
                         <Button DockPanel.Dock="Right"  Margin="5,0,0,0"
                             Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" Content="&#xec5b;" 
-                            FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCLegendary3P_PlayniteSelectDirectoryTooltip}"
+                            FontFamily="{DynamicResource FontIcoFont}" ToolTip="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSelectDirectoryTooltip}}"
                             Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                         <TextBox Name="SelectedGamePathTxt"
                         Text="{Binding Settings.GamesInstallationPath, UpdateSourceTrigger=PropertyChanged}"
@@ -183,15 +183,15 @@
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Button Content="{DynamicResource LOCLegendary3P_PlayniteInstallGame}" Grid.Row="0"
+                            <Button Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteInstallGame}}" Grid.Row="0"
                             Grid.Column="0" Margin="5,0,0,0" Name="EOSOInstallBtn" Visibility="Collapsed"
                             Click="EOSOInstallBtn_Click" HorizontalAlignment="Left"></Button>
                             <Button x:Name="EOSOCheckForUpdatesBtn" Grid.Column="0" Grid.Row="0" Margin="5,0,0,0" HorizontalAlignment="Left"
-                            Content="{DynamicResource LOCLegendary3P_PlayniteCheckForUpdates}" Click="EOSOCheckForUpdatesBtn_Click" />
+                            Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteCheckForUpdates}}" Click="EOSOCheckForUpdatesBtn_Click" />
                             <Button Content="{common:Localize Key={x:Static system:LOC.LegendaryDisable}}" Grid.Row="0"
                             Grid.Column="1" Margin="10,0,0,0" Name="EOSOToggleBtn"
                             Click="EOSOToggleBtn_Click" HorizontalAlignment="Left"/>
-                            <Button Content="{DynamicResource LOCLegendary3P_PlayniteUninstallGame}" Name="EOSOUninstallBtn"
+                            <Button Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteUninstallGame}}" Name="EOSOUninstallBtn"
                             Grid.Row="0" Grid.Column="2" Margin="10,0,0,0"
                             Click="EOSOUninstallBtn_Click" HorizontalAlignment="Left"></Button>
                         </Grid>
@@ -209,7 +209,7 @@
                 </StackPanel>
             </ScrollViewer>
         </TabItem>
-        <TabItem Header="{DynamicResource LOCLegendary3P_PlayniteSettingsAdvancedLabel}">
+        <TabItem Header="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSettingsAdvancedLabel}}">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="20">
                 <Grid>
@@ -222,14 +222,14 @@
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonLauncherCustomPath}}" Grid.Column="0" Grid.Row="0"
+                    <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonLauncherCustomPath},Args='launcherName=Legendary'}" Grid.Column="0" Grid.Row="0"
                                Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left">
                     </TextBlock>
                     <TextBox Text="{Binding Settings.SelectedLauncherPath, UpdateSourceTrigger=PropertyChanged}" x:Name="SelectedLauncherPathTxt" 
                              Grid.Row="0" Grid.Column="1" Margin="10,0,0,5" VerticalAlignment="Center"/>
                         <Button Name="ChooseLauncherBtn"
                             Margin="5,0,0,5" Content="&#xec5b;" FontFamily="{DynamicResource FontIcoFont}" Click="ChooseLauncherBtn_Click" Grid.Row="0" Grid.Column="2"
-                            ToolTip="{DynamicResource LOCLegendary3P_PlayniteSelectFileTooltip}" VerticalAlignment="Center"/>
+                            ToolTip="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSelectFileTooltip}}" VerticalAlignment="Center"/>
                     </Grid>
                 <StackPanel Margin="0,10,0,0">
                     <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonCache}}" FontSize="18"
@@ -281,25 +281,25 @@
                                Margin="0,0,10,5" VerticalAlignment="Center" />
                         <TextBox x:Name="PluginVersionTxt" Grid.Column="1" Grid.Row="1" Margin="0,0,0,5" 
                              VerticalAlignment="Center" IsReadOnly="True" HorizontalAlignment="Left"/>
-                        <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonLauncherVersion}}" Grid.Column="0" Grid.Row="2"
+                        <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonLauncherVersion},Args='launcherName=Legendary'}" Grid.Column="0" Grid.Row="2"
                                Margin="0,0,10,5" VerticalAlignment="Center" />
                         <TextBox x:Name="LauncherVersionTxt" Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" VerticalAlignment="Center" 
                              IsReadOnly="True" HorizontalAlignment="Left"/>
                         <Button x:Name="CheckForUpdatesBtn" Grid.Column="2" Grid.Row="2" Margin="10,0,0,5" VerticalAlignment="Center"
-                            Content="{DynamicResource LOCLegendary3P_PlayniteCheckForUpdates}" Click="CheckForUpdatesBtn_Click" />
-                        <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonLauncherBinary}}" Grid.Column="0" Grid.Row="3"
+                            Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteCheckForUpdates}}" Click="CheckForUpdatesBtn_Click" />
+                        <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonLauncherBinary},Args='launcherName=Legendary'}" Grid.Column="0" Grid.Row="3"
                                Margin="0,0,10,5" VerticalAlignment="Center"/>
                         <TextBox x:Name="LauncherBinaryTxt" VerticalAlignment="Center" IsReadOnly="True" Grid.Column="1" Grid.Row="3" Margin="0,0,0,5"/>
-                        <Button x:Name="OpenLauncherBinaryBtn" Margin="10,0,0,5" Content="{DynamicResource LOCLegendary3P_PlayniteOpen}" 
+                        <Button x:Name="OpenLauncherBinaryBtn" Margin="10,0,0,5" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteOpen}}" 
                                 VerticalAlignment="Center" Click="OpenLauncherBinaryBtn_Click" Grid.Column="2" Grid.Row="3" />
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonGamesInstallationPath}}" Grid.Row="4" Grid.Column="0"
                                Margin="0,0,10,5" VerticalAlignment="Center"/>
                         <TextBox x:Name="GamesInstallationPathTxt" Margin="0,0,0,5" VerticalAlignment="Center" IsReadOnly="True" Grid.Column="1" Grid.Row="4" />
-                        <Button x:Name="OpenGamesInstallationPathBtn" Margin="10,0,0,5" Content="{DynamicResource LOCLegendary3P_PlayniteOpen}" 
+                        <Button x:Name="OpenGamesInstallationPathBtn" Margin="10,0,0,5" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteOpen}}" 
                                 VerticalAlignment="Center" Click="OpenGamesInstallationPathBtn_Click" Grid.Column="2" Grid.Row="4" />
                         <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="5" Margin="0,0,10,5" Text="{common:Localize Key={x:Static system:LOC.CommonLogFilesPath}}"/>
                         <TextBox x:Name="LogFilesPathTxt" Margin="0,0,0,5" VerticalAlignment="Center" IsReadOnly="True" Grid.Column="1" Grid.Row="5" />
-                        <Button x:Name="OpenLogFilesPathBtn" Margin="10,0,0,5" Content="{DynamicResource LOCLegendary3P_PlayniteOpen}" 
+                        <Button x:Name="OpenLogFilesPathBtn" Margin="10,0,0,5" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteOpen}}" 
                                 VerticalAlignment="Center" Grid.Column="2"  Grid.Row="5" Click="OpenLogFilesPathBtn_Click" />
                         <Button Margin="0,10,5,5" Grid.Column="0" Grid.Row="6" Name="CopyRawDataBtn" Click="CopyRawDataBtn_Click" 
                             Grid.ColumnSpan="2" HorizontalAlignment="Left" Content="{common:Localize Key={x:Static system:LOC.CommonCopyRawDataToClipboard}}"/>
@@ -308,7 +308,7 @@
                         NavigateUri="https://github.com/hawkeye116477/playnite-legendary-plugin/wiki/troubleshooting"
                         Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
                         CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
-                        <Run Text="{DynamicResource LOCLegendary3P_EpicTroubleShootingIssues}" />
+                        <Run Text="{common:Localize Key={x:Static system:LOC.ThirdPartyEpicTroubleShootingIssues}}" />
                     </Hyperlink>
                         </TextBlock>
                         <TextBlock VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Grid.Column="0" Grid.Row="8" Margin="0,10,0,0">

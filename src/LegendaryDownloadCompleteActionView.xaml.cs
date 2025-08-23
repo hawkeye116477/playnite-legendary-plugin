@@ -29,19 +29,19 @@ namespace LegendaryLibraryNS
             switch (downloadCompleteAction)
             {
                 case DownloadCompleteAction.ShutDown:
-                    ActionBtn.Content = ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuShutdownSystem);
+                    ActionBtn.Content = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteMenuShutdownSystem);
                     CountdownTB.Text = LocalizationManager.Instance.GetString(LOC.CommonSystemShutdownCountdown);
                     break;
                 case DownloadCompleteAction.Reboot:
-                    ActionBtn.Content = ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuRestartSystem);
+                    ActionBtn.Content = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteMenuRestartSystem);
                     CountdownTB.Text = LocalizationManager.Instance.GetString(LOC.CommonSystemRestartCountdown);
                     break;
                 case DownloadCompleteAction.Hibernate:
-                    ActionBtn.Content = ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuHibernateSystem);
+                    ActionBtn.Content = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteMenuHibernateSystem);
                     CountdownTB.Text = LocalizationManager.Instance.GetString(LOC.CommonSystemHibernateCountdown);
                     break;
                 case DownloadCompleteAction.Sleep:
-                    ActionBtn.Content = ResourceProvider.GetString(LOC.Legendary3P_PlayniteMenuSuspendSystem);
+                    ActionBtn.Content = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteMenuSuspendSystem);
                     CountdownTB.Text = LocalizationManager.Instance.GetString(LOC.CommonSystemSuspendCountdown);
                     break;
             }

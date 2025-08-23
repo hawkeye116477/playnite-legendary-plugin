@@ -46,18 +46,18 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5" Grid.Row="1" Grid.Column="1">
                         <TextBlock VerticalAlignment="Top" Text="{common:Localize Key={x:Static system:LOC.CommonSpaceAvailable}}" Margin="0,0,0,0" />
-                        <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
+                        <TextBlock VerticalAlignment="Top" Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteLoadingLabel}}"
                     Margin="5,0,5,0" Name="SpaceTB" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top"  Grid.Row="2" Grid.Column="1">
                         <TextBlock VerticalAlignment="Top" Text="{common:Localize Key={x:Static system:LOC.CommonAfterInstalling}}" Margin="0,0,0,0" />
-                        <TextBlock VerticalAlignment="Top" Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}"
+                        <TextBlock VerticalAlignment="Top" Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteLoadingLabel}}"
                     Margin="5,0,5,0" Name="AfterInstallingTB" />
                     </StackPanel>
                 </Grid>
                 <StackPanel x:Name="TopADSP" DockPanel.Dock="Top">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" DockPanel.Dock="Top" Name="AvailableDlcsActionSP">
-                        <Button x:Name="InstallBtn" Content="{DynamicResource LOCLegendary3P_PlayniteInstallGame}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xef07; {0}" Click="InstallBtn_Click" Margin="0,0,5,0" IsEnabled="False" />
+                        <Button x:Name="InstallBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteInstallGame}}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xef07; {0}" Click="InstallBtn_Click" Margin="0,0,5,0" IsEnabled="False" />
                         <Button x:Name="SelectAllAvDlcsBtn" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xeed9; {0}" Margin="0,0,5,0" Click="SelectAllAvDlcsBtn_Click"  />
                     </StackPanel>
                     <Separator Margin="0,5,0,0" />
@@ -105,14 +105,14 @@
                     </Border>
                 </StackPanel>
                 <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonNoAvailableDlcs}}" Margin="0,5,0,0" Visibility="Collapsed" Name="NoAvailableDlcsTB"/>
-                <TextBlock Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}" Margin="0,5,0,0"  Visibility="Collapsed" Name="LoadingATB" />
+                <TextBlock Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteLoadingLabel}}" Margin="0,5,0,0"  Visibility="Collapsed" Name="LoadingATB" />
             </DockPanel>
         </TabItem>
         <TabItem Header="{common:Localize Key={x:Static system:LOC.CommonInstalledDlcs}}" Name="InstalledDlcsTbI">
             <StackPanel Margin="10,5,0,5">
                 <StackPanel Name="InstalledDlcsSP">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
-                        <Button x:Name="UninstallBtn" Content="{DynamicResource LOCLegendary3P_PlayniteUninstallGame}" ContentStringFormat="&#xedec; {0}" FontFamily="{DynamicResource FontIcoFont}" Click="UninstallBtn_Click" IsEnabled="False" Margin="0,0,5,0" />
+                        <Button x:Name="UninstallBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteUninstallGame}}" ContentStringFormat="&#xedec; {0}" FontFamily="{DynamicResource FontIcoFont}" Click="UninstallBtn_Click" IsEnabled="False" Margin="0,0,5,0" />
                         <Button x:Name="SelectAllInDlcsBtn" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" FontFamily="{DynamicResource FontIcoFont}" 
                                 ContentStringFormat="&#xeed9; {0}" Margin="0,0,5,0" Click="SelectAllInDlcsBtn_Click_1" />
                     </StackPanel>
@@ -132,9 +132,9 @@
                     </ListBox>
                 </StackPanel>
                 <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonNoInstalledDlcs}}" Margin="0,5,0,0" Visibility="Collapsed" Name="NoInstalledDlcsTB"/>
-                <TextBlock Text="{DynamicResource LOCLegendary3P_PlayniteLoadingLabel}" Margin="0,5,0,0"  Visibility="Collapsed" Name="LoadingITB" />
+                <TextBlock Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteLoadingLabel}}" Margin="0,5,0,0"  Visibility="Collapsed" Name="LoadingITB" />
             </StackPanel>
         </TabItem>
-        <TabItem Header="{DynamicResource LOCLegendary3P_PlayniteClose}" x:Name="CloseWindowTab" Visibility="Collapsed"/>
+        <TabItem Header="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteClose}}" x:Name="CloseWindowTab" Visibility="Collapsed"/>
     </TabControl>
 </UserControl>

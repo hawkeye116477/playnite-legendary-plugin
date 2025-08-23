@@ -2,6 +2,7 @@
 using CliWrap.Buffered;
 using CommonPlugin;
 using LegendaryLibraryNS.Models;
+using Linguini.Shared.Types.Bundle;
 using Microsoft.Win32;
 using Playnite.Common;
 using Playnite.SDK;
@@ -456,11 +457,11 @@ namespace LegendaryLibraryNS
                             || errorMessage.Contains("Login failed")
                             || errorMessage.Contains("No saved credentials"))
                         {
-                            playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)), installData.Title);
+                            playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteMetadataDownloadError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired) }), installData.Title);
                         }
                         else
                         {
-                            playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteMetadataDownloadError).Format(LocalizationManager.Instance.GetString(LOC.CommonCheckLog)), installData.Title);
+                            playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteMetadataDownloadError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonCheckLog) }), installData.Title);
                         }
                     }
                     manifest.errorDisplayed = true;
@@ -766,8 +767,8 @@ namespace LegendaryLibraryNS
             var playniteAPI = API.Instance;
             var options = new List<MessageBoxOption>
             {
-                new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteInstallGame)),
-                new MessageBoxOption(ResourceProvider.GetString(LOC.Legendary3P_PlayniteOKLabel)),
+                new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteInstallGame)),
+                new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOkLabel)),
             };
             var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonLauncherNotInstalled), "Legendary (Epic Games) library integration", MessageBoxImage.Information, options);
             if (result == options[0])

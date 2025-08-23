@@ -405,7 +405,7 @@ namespace LegendaryLibraryNS.Services
                     else
                     {
                         logger.Error($"Can't upload playtime, because user is not authenticated.");
-                        api.Dialogs.ShowErrorMessage(api.Resources.GetString(LOC.Legendary3P_EpicNotLoggedInError));
+                        api.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedInError));
                     }
                 }
             }, globalProgressOptions);

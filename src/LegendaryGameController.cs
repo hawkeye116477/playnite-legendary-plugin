@@ -68,7 +68,7 @@ namespace LegendaryLibraryNS
             window.SizeToContent = SizeToContent.WidthAndHeight;
             window.MinWidth = 600;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            var title = ResourceProvider.GetString(LOC.Legendary3P_PlayniteInstallGame);
+            var title = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteInstallGame);
             if (installData.Count == 1)
             {
                 title = installData[0].name;
@@ -108,7 +108,7 @@ namespace LegendaryLibraryNS
             var playniteAPI = API.Instance;
             string gamesCombined = string.Join(", ", games.Select(item => item.Name));
 
-            var result = MessageCheckBoxDialog.ShowMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstallGame), LocalizationManager.Instance.GetString(LOC.CommonUninstallGameConfirm, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)gamesCombined }), LOC.CommonRemoveGameLaunchSettings, MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = MessageCheckBoxDialog.ShowMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame), LocalizationManager.Instance.GetString(LOC.CommonUninstallGameConfirm, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)gamesCombined }), LOC.CommonRemoveGameLaunchSettings, MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result.Result)
             {
                 var canContinue = LegendaryLibrary.Instance.StopDownloadManager(true);
@@ -118,7 +118,7 @@ namespace LegendaryLibraryNS
                 }
                 var uninstalledGames = new List<Game>();
                 var notUninstalledGames = new List<Game>();
-                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions($"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstalling)}... ", false);
+                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions($"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstalling)}... ", false);
                 playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
                 {
                     a.IsIndeterminate = false;
@@ -128,7 +128,7 @@ namespace LegendaryLibraryNS
                         var counter = 0;
                         foreach (var game in games)
                         {
-                            a.Text = $"{ResourceProvider.GetString(LOC.Legendary3P_PlayniteUninstalling)} {game.Name}... ";
+                            a.Text = $"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstalling)} {game.Name}... ";
                             await LegendaryDownloadManager.WaitUntilLegendaryCloses();
                             var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                                .WithArguments(new[] { "-y", "uninstall", game.GameId })
@@ -188,7 +188,7 @@ namespace LegendaryLibraryNS
                 {
                     if (notUninstalledGames.Count == 1)
                     {
-                        playniteAPI.Dialogs.ShowErrorMessage(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameUninstallError).Format(LocalizationManager.Instance.GetString(LOC.CommonCheckLog)), notUninstalledGames[0].Name);
+                        playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameUninstallError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonCheckLog) }), notUninstalledGames[0].Name);
                     }
                     else
                     {
@@ -209,7 +209,7 @@ namespace LegendaryLibraryNS
 
         public LegendaryPlayController(Game game) : base(game)
         {
-            Name = string.Format(ResourceProvider.GetString(LOC.Legendary3P_EpicStartUsingClient), "Legendary");
+            Name = LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicStartUsingClient, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)"Legendary" });
         }
 
         public override void Dispose()
@@ -421,8 +421,8 @@ namespace LegendaryLibraryNS
                                     if (appList[Game.GameId].Can_run_offline)
                                     {
                                         var tryOfflineResponse = new MessageBoxOption(LOC.LegendaryEnableOfflineMode);
-                                        var okResponse = new MessageBoxOption(LOC.Legendary3P_PlayniteOKLabel, true, true);
-                                        var offlineConfirm = playniteAPI.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)), "", MessageBoxImage.Error,
+                                        var okResponse = new MessageBoxOption(LOC.ThirdPartyPlayniteOkLabel, true, true);
+                                        var offlineConfirm = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameStartError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired) }), "", MessageBoxImage.Error,
                                             new List<MessageBoxOption> { tryOfflineResponse, okResponse });
                                         if (offlineConfirm == tryOfflineResponse)
                                         {
@@ -438,14 +438,14 @@ namespace LegendaryLibraryNS
                                     else
                                     {
                                         InvokeOnStopped(new GameStoppedEventArgs());
-                                        playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), ResourceProvider.GetString(LOC.Legendary3P_PlayniteLoginRequired)));
+                                        playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameStartError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired) }));
                                     }
                                 }
                             }
                             else
                             {
                                 InvokeOnStopped(new GameStoppedEventArgs());
-                                playniteAPI.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString(LOC.Legendary3P_PlayniteGameStartError), LocalizationManager.Instance.GetString(LOC.CommonCheckLog)));
+                                playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameStartError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonCheckLog) }));
                             }
                         }
                         else

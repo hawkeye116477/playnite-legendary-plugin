@@ -291,7 +291,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\third_party\Localization\*\*.xaml">
+    <None Include="..\third_party\Localization\*\*.ftl">
       <Link>Localization\%(RecursiveDir)\%(Filename)%(Extension)</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
