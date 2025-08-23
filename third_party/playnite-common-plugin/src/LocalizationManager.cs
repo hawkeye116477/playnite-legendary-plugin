@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -45,33 +46,47 @@ namespace CommonPlugin
 
         private string ReadFtl(string language)
         {
+            var combinedContent = new StringBuilder();
+            List<string> localizationSources;
             string baseDir;
+
             if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
             {
                 baseDir = Environment.CurrentDirectory;
+                string configPath = Path.Combine(baseDir, "LocalizationPathsForDesignMode.txt");
+                if (File.Exists(configPath))
+                {
+                    localizationSources = File.ReadAllLines(configPath).Where(line => !string.IsNullOrWhiteSpace(line)).ToList();
+                }
+                else
+                {
+                    localizationSources = new List<string> { "Localization" };
+                }
+                
             }
             else
             {
                 baseDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                localizationSources = new List<string> { "Localization" };
             }
 
-            var locDir = Path.Combine(baseDir, "Localization", language);
-            if (!Directory.Exists(locDir))
+            foreach (var relativePath in localizationSources)
             {
-                return string.Empty;
-            }
-            var combinedContent = new StringBuilder();
-            var ftlFiles = Directory.GetFiles(locDir, "*.ftl", SearchOption.AllDirectories);
-
-            foreach (var file in ftlFiles)
-            {
-                try
+                var locDir = Path.Combine(baseDir, relativePath.Trim(), language);
+                if (Directory.Exists(locDir))
                 {
-                    combinedContent.AppendLine(File.ReadAllText(file));
-                }
-                catch (Exception ex)
-                {
-                    logger.Error($"Error reading file {file}: {ex.Message}");
+                    var ftlFiles = Directory.EnumerateFiles(locDir, "*.ftl", SearchOption.AllDirectories);
+                    foreach (var file in ftlFiles)
+                    {
+                        try
+                        {
+                            combinedContent.AppendLine(File.ReadAllText(file));
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.Error($"Error reading file {file}: {ex.Message}");
+                        }
+                    }
                 }
             }
             return combinedContent.ToString();
