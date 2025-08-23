@@ -1,4 +1,3 @@
-common-launcher-custom-path = Путь в Launcher
 common-games-installation-path = Путь установки игр
 common-download-size = Размер загрузки:
 common-install-size = Размер установки:
@@ -48,7 +47,6 @@ common-download-queued = В очереди
 common-download-running = Запущено
 common-download-canceled = Отменено
 common-download-completed = Завершено
-common-current-download-summary = Сводка текущей загрузки
 common-remove-entry = Удалить запись
 common-remove-entry-confirm = Вы уверены, что хотите удалить { $entryName } из списка?
 common-move-entry-top = Переместить запись в начало
@@ -80,8 +78,6 @@ common-sign-out = Выйти
 common-troubleshooting-information = Информация о поиске неисправностей
 common-playnite-version = Версия Playnite
 common-plugin-version = Версия плагина Legendary
-common-launcher-version = Версия лаунчера
-common-launcher-binary = Двоичный файл запуска
 common-copy-raw-data-to-clipboard = Копирование исходных данных в буфер обмена
 common-log-files-path = Путь к файлам журнала
 common-report-bug = Сообщить об ошибке
@@ -118,7 +114,6 @@ common-uninstall-error =
        *[other] Не удается удалить следующие игры: { $appName }.
     }
 common-games = Игры
-common-launcher-update-policy = Проверить наличие обновлений игр
 common-launcher-not-installed = { $launcherName } не установлен.
 common-panel = Панель { $pluginShortName }
 common-download-manager-whats-up = Загрузка начнется в ближайшее время. Вы можете увидеть его статус, обратившись к панели { $pluginShortName } через Меню => Вид или боковую панель.

@@ -1,4 +1,4 @@
-common-launcher-custom-path = Başlatıcı Yolu
+common-launcher-custom-path = { $launcherName } Yol
 common-games-installation-path = Oyunların Kurulum Yolu
 common-download-size = İndirme Boyutu:
 common-install-size = Kurulum Boyutu:
@@ -24,7 +24,7 @@ common-eta = TTS:
 common-download-speed = İndirme Hızı:
 common-disk-speed = Disk Kullanımı:
 common-elapsed = Geçen:
-common-verifying = Verifying...
+common-verifying = Doğrulanıyor...
 common-verifying-large-file = Büyük dosya doğrulanıyor "{ $fileName }": { $progress }
 common-downloading-update = Güncelleştirme indiriliyor...
 common-finishing-installation = Kurulum tamamlanıyor...
@@ -48,7 +48,6 @@ common-download-queued = Kuyrukta
 common-download-running = Çalışıyor
 common-download-canceled = Vazgeçildi
 common-download-completed = Tamamlandı
-common-current-download-summary = Mevcut indirmenin özeti
 common-remove-entry = Girdiyi kaldır
 common-remove-entry-confirm = { $entryName } öğesini listeden çıkarmak istediğinizden emin misiniz?
 common-move-entry-top = Girişi en üste taşı
@@ -80,8 +79,7 @@ common-sign-out = Oturumu kapat
 common-troubleshooting-information = Sorun giderme bilgisi
 common-playnite-version = Playnite sürümü
 common-plugin-version = Eklenti sürümü
-common-launcher-version = Başlatıcı sürümü
-common-launcher-binary = Başlatıcı binary
+common-launcher-version = { $launcherName } sürüm
 common-copy-raw-data-to-clipboard = Ham verileri panoya kopyala
 common-log-files-path = Günlük Dosyaları Yolu
 common-report-bug = Bir hata bildir
@@ -118,7 +116,6 @@ common-uninstall-error =
        *[other] Aşağıdaki oyunlar kaldırılamıyor: { $appName }.
     }
 common-games = Oyunlar
-common-launcher-update-policy = Başlatıcı güncellemelerini denetle
 common-launcher-not-installed = { $launcherName } kurulu değil.
 common-panel = { $pluginShortName } Paneli
 common-download-manager-whats-up = İndirme yakında başlayacak. Menü => Görünüm veya kenar çubuğundan { $pluginShortName } Panel üstünden durumunu görebilirsiniz.

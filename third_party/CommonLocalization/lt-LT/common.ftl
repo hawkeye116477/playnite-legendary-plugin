@@ -20,7 +20,6 @@ common-download-queued = Laukia eilėje
 common-download-running = Vykdoma
 common-download-canceled = Atšaukta
 common-download-completed = Baigta
-common-current-download-summary = Dabartinio siuntimosi santrauka
 common-remove-entry = Pašalinti įrašą
 common-remove-entry-confirm = Ar tikrai norite pašalinti { $entryName } iš sąrašo?
 common-repair = Sutaisyti
