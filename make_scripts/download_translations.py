@@ -4,7 +4,6 @@ import tempfile
 from zipfile import ZipFile
 import requests
 from crowdin_api import CrowdinClient
-from lxml import etree as ET
 
 pj = os.path.join
 pn = os.path.normpath
@@ -53,13 +52,16 @@ with tempfile.TemporaryDirectory() as tmpdirname:
             "x":  xmlns_x}
     # Copy localizations
     shared_loc_path = pj(tmpdirname, "src", "Localization")
-    for filename in os.listdir(shared_loc_path):
-        path = os.path.join(shared_loc_path, filename)
-        if os.path.isdir(path):
-            continue
-        if "legendary" in filename:
-            shutil.copy(path, pj(src_path, "Localization", os.path.dirname(path)))
-        elif "common" in filename:
-            shutil.copy(path, pj(src_path, "third_party", "CommonLocalization", os.path.dirname(path)))
-        else:
-            print("")
+    for root, dirs, files in os.walk(shared_loc_path):
+        for filename in files:
+            full_file_path = pj(root, filename)
+            if os.path.getsize(full_file_path) > 0:
+                relative_path = os.path.relpath(full_file_path, shared_loc_path)
+                destination_file_path = pj(src_path, "Localization", relative_path)
+                destination_subdir = os.path.dirname(destination_file_path)
+                if not os.path.exists(destination_subdir):
+                    os.makedirs(destination_subdir)
+                if "legendary" in filename:
+                    shutil.copy(full_file_path, pj(src_path, "Localization", destination_file_path))
+                elif "common" in filename:
+                    shutil.copy(full_file_path, pj(src_path, "third_party", "CommonLocalization", destination_file_path))
