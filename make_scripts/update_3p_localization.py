@@ -105,10 +105,11 @@ for filename in os.listdir(pj(main_path, "..", "PlayniteExtensions", "PlayniteRe
 ### DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 ###
 """
-        with open(pj(localization_path, loc_sub_dir, "third-party.ftl"), "w", encoding="utf-8") as i18n_file:
-            i18n_file.write(f"{comment}")
-            ftl_new_content = convertToFtl_script.convertXamlStringToFtl(xml_doc, "Legendary")
-            i18n_file.write(ftl_new_content )
+        if len(xml_doc.getroot()) > 0:
+            with open(pj(localization_path, loc_sub_dir, "third-party.ftl"), "w", encoding="utf-8") as i18n_file:
+                i18n_file.write(f"{comment}")
+                ftl_new_content = convertToFtl_script.convertXamlStringToFtl(xml_doc, "Legendary")
+                i18n_file.write(ftl_new_content )
 
 third_party_loc_path = pj(main_path, "third_party", "Localization")
 for root, dirs, files in os.walk(third_party_loc_path):
