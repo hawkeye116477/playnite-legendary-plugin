@@ -420,8 +420,8 @@ namespace LegendaryLibraryNS
                                 {
                                     if (appList[Game.GameId].Can_run_offline)
                                     {
-                                        var tryOfflineResponse = new MessageBoxOption(LOC.LegendaryEnableOfflineMode);
-                                        var okResponse = new MessageBoxOption(LOC.ThirdPartyPlayniteOkLabel, true, true);
+                                        var tryOfflineResponse = new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.LegendaryEnableOfflineMode));
+                                        var okResponse = new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOkLabel), true, true);
                                         var offlineConfirm = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameStartError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired) }), "", MessageBoxImage.Error,
                                             new List<MessageBoxOption> { tryOfflineResponse, okResponse });
                                         if (offlineConfirm == tryOfflineResponse)

@@ -633,7 +633,7 @@ namespace LegendaryLibraryNS
                                         default:
                                             break;
                                     }
-                                    Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), gameTitle, ResourceProvider.GetString(notificationMessage), null);
+                                    Playnite.WindowsNotifyIconManager.Notify(new System.Drawing.Icon(LegendaryLauncher.Icon), gameTitle, LocalizationManager.Instance.GetString(notificationMessage), null);
                                 }
                             }
                             gracefulInstallerCTS?.Dispose();
