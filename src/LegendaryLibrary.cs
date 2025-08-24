@@ -167,7 +167,7 @@ namespace LegendaryLibraryNS
                     continue;
                 }
 
-                if (catalogItem?.categories?.Any(a => a.path == "digitalextras") == true)
+                if (catalogItem?.categories?.Any(a => a.path == "digitalextras" || a.path == "plugins" || a.path == "plugins/engine") == true)
                 {
                     continue;
                 }
