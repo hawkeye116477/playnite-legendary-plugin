@@ -211,7 +211,7 @@ namespace LegendaryLibraryNS.Services
             return response.Item2;
         }
 
-        public async Task<List<Asset>> GetLibraryItems(List<string> ignoreList)
+        public async Task<List<Asset>> GetLibraryItems()
         {
             if (!await GetIsUserLoggedIn())
             {
@@ -232,7 +232,6 @@ namespace LegendaryLibraryNS.Services
                 nextCursor = response.Item2.responseMetadata.nextCursor;
             }
             var filteredAssets = assets.Where(asset => !asset.appName.IsNullOrEmpty()
-                                                       && !ignoreList.Contains(asset.appName)
                                                        && asset.sandboxType != "PRIVATE"
                                                        && asset.@namespace != "ue").ToList();
             return filteredAssets;

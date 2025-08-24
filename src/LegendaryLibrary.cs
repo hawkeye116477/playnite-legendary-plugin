@@ -134,21 +134,10 @@ namespace LegendaryLibraryNS
             var cacheDir = GetCachePath("catalogcache");
             var games = new List<GameMetadata>();
             var accountApi = new EpicAccountClient(PlayniteApi);
-            var assets = await accountApi.GetAssets();
+            var assets = await accountApi.GetLibraryItems();
             if (!assets?.Any() == true)
             {
                 Logger.Warn("Found no assets on Epic accounts.");
-            }
-
-            if (GetSettings().ImportEALauncherGames)
-            {
-                var ignoreList = new List<string>();
-                foreach (var gameAsset in assets)
-                {
-                    ignoreList.Add(gameAsset.appName);
-                }
-                var nonAssets = await accountApi.GetLibraryItems(ignoreList);
-                assets.AddRange(nonAssets);
             }
 
             var playtimeItems = await accountApi.GetPlaytimeItems();
