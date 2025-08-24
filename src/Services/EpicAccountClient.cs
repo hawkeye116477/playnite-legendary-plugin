@@ -38,7 +38,6 @@ namespace LegendaryLibraryNS.Services
         public static string authCodeUrl = "https://www.epicgames.com/id/api/redirect?clientId=34a02cf8f4414e29b15921876da36f9a&responseType=code";
         private readonly string oauthUrl = @"";
         private readonly string accountUrl = @"";
-        private readonly string assetsUrl = @"";
         private readonly string catalogUrl = @"";
         private readonly string playtimeUrl = @"";
         private readonly string libraryItemsUrl = @"";
@@ -52,7 +51,6 @@ namespace LegendaryLibraryNS.Services
             var oauthUrlMask = @"https://{0}/account/api/oauth/token";
             var accountUrlMask = @"https://{0}/account/api/public/account/";
             var libraryItemsUrlMask = @"https://{0}/library/api/public/items?includeMetadata=true";
-            var assetsUrlMask = @"https://{0}/launcher/api/public/assets/Windows?label=Live";
             var catalogUrlMask = @"https://{0}/catalog/api/shared/namespace/";
             var playtimeUrlMask = @"https://{0}/library/api/public/playtime/account/{1}/all";
 
@@ -62,7 +60,6 @@ namespace LegendaryLibraryNS.Services
             {
                 oauthUrl = string.Format(oauthUrlMask, "account-public-service-prod03.ol.epicgames.com");
                 accountUrl = string.Format(accountUrlMask, "account-public-service-prod03.ol.epicgames.com");
-                assetsUrl = string.Format(assetsUrlMask, "launcher-public-service-prod06.ol.epicgames.com");
                 catalogUrl = string.Format(catalogUrlMask, "catalog-public-service-prod06.ol.epicgames.com");
                 playtimeUrl = string.Format(playtimeUrlMask, "library-service.live.use1a.on.epicgames.com", "{0}");
                 libraryItemsUrl = string.Format(libraryItemsUrlMask, "library-service.live.use1a.on.epicgames.com");
@@ -198,17 +195,6 @@ namespace LegendaryLibraryNS.Services
                 logger.Error(ex, "Failed to validation Epic authentication.");
                 return false;
             }
-        }
-
-        public async Task<List<Asset>> GetAssets()
-        {
-            if (!await GetIsUserLoggedIn())
-            {
-                throw new Exception("User is not authenticated.");
-            }
-
-            var response = await InvokeRequest<List<Asset>>(assetsUrl, LoadTokens());
-            return response.Item2;
         }
 
         public async Task<List<Asset>> GetLibraryItems()
