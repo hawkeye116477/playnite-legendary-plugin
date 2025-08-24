@@ -50,7 +50,7 @@ namespace LegendaryLibraryNS.Services
             tokensPath = LegendaryLauncher.TokensPath;
             var oauthUrlMask = @"https://{0}/account/api/oauth/token";
             var accountUrlMask = @"https://{0}/account/api/public/account/";
-            var libraryItemsUrlMask = @"https://{0}/library/api/public/items?includeMetadata=true";
+            var libraryItemsUrlMask = @"https://{0}/library/api/public/items?includeMetadata=true&platform=Windows";
             var catalogUrlMask = @"https://{0}/catalog/api/shared/namespace/";
             var playtimeUrlMask = @"https://{0}/library/api/public/playtime/account/{1}/all";
 
