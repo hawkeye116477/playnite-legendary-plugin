@@ -1,5 +1,17 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.10.9
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2025-08-24
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.10.9/LegendaryLibrary_1_10_9.pext
+    Changelog:
+      - Fixed Download Manager style
+      - Fixed potential problems with prerequisites
+      - Fixed fetching games which require EA App
+      - Improved error handling for third-party activations (Ubisoft needs to be fixed
+        by legendary maintainers)
+      - Fluentization for localization was carried out
+      - Added skipping importing UE plugins
   - Version: 1.10.8
     RequiredApiVersion: 6.12.0
     ReleaseDate: 2025-07-29
