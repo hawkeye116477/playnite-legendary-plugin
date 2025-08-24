@@ -222,11 +222,11 @@ namespace LegendaryLibraryNS.Services
             var assets = new List<Asset>();
             assets.AddRange(response.Item2.records);
 
-            var nextCursor = response.Item2.responseMetadata.nextCursor;
+            string nextCursor = response.Item2.responseMetadata?.nextCursor;
             while (nextCursor != null)
             {
                 response = await InvokeRequest<LibraryItemsResponse>(
-                    $"{libraryItemsUrl}?includeMetadata=true&cursor={nextCursor}",
+                    $"{libraryItemsUrl}&cursor={nextCursor}",
                     LoadTokens());
                 assets.AddRange(response.Item2.records);
                 nextCursor = response.Item2.responseMetadata.nextCursor;
@@ -234,7 +234,7 @@ namespace LegendaryLibraryNS.Services
             var filteredAssets = assets.Where(asset => !asset.appName.IsNullOrEmpty()
                                                        && !ignoreList.Contains(asset.appName)
                                                        && asset.sandboxType != "PRIVATE"
-                                                       && asset.@namespace != "UE").ToList();
+                                                       && asset.@namespace != "ue").ToList();
             return filteredAssets;
         }
 

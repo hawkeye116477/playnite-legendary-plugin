@@ -162,6 +162,12 @@ namespace LegendaryLibraryNS
                 var cacheFile = Paths.GetSafePathName($"{gameAsset.@namespace}_{gameAsset.catalogItemId}_{gameAsset.buildVersion}.json");
                 cacheFile = Path.Combine(cacheDir, cacheFile);
                 var catalogItem = accountApi.GetCatalogItem(gameAsset.@namespace, gameAsset.catalogItemId, cacheFile);
+
+                if ((bool)(catalogItem?.releaseInfo?.Any(a => a.platform?.Any(os => os == "Windows") != true)))
+                {
+                    continue;
+                }
+
                 if (catalogItem?.categories?.Any(a => a.path == "applications") != true)
                 {
                     continue;
