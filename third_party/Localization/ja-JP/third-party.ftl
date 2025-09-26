@@ -35,6 +35,7 @@ third-party-playnite-game-name-title = タイトル
 third-party-playnite-game-install-dir-title = インストールフォルダ
 third-party-playnite-library-import-error = { $var0 } からゲームをインポートできませんでした。
 third-party-playnite-metadata-download-error = メタデータをダウンロードできませんでした: { $var0 }
+third-party-playnite-download-error = ダウンロードエラー
 third-party-playnite-uninstalling = アンインストール中
 third-party-playnite-do-nothing = 何もしない
 third-party-playnite-close = 終了

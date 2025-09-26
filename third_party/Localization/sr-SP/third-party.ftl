@@ -35,6 +35,7 @@ third-party-playnite-game-name-title = Назив
 third-party-playnite-game-install-dir-title = Инсталациони директоријум
 third-party-playnite-library-import-error = Неуспешно увођење игара из { $var0 }.
 third-party-playnite-metadata-download-error = Неуспело преузимање метаподатака: { $var0 }
+third-party-playnite-download-error = Грешка приликом преузимања
 third-party-playnite-uninstalling = Деинсталирање
 third-party-playnite-do-nothing = Не ради ништа
 third-party-playnite-close = Затвори

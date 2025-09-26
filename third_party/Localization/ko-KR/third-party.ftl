@@ -35,6 +35,7 @@ third-party-playnite-game-name-title = 이름
 third-party-playnite-game-install-dir-title = 설치 경로
 third-party-playnite-library-import-error = { $var0 }(으)로부터 게임 불러오기 실패.
 third-party-playnite-metadata-download-error = 메타 데이터 다운로드 실패 : { $var0 }
+third-party-playnite-download-error = 다운로드 오류
 third-party-playnite-uninstalling = 설치 제거 중
 third-party-playnite-do-nothing = 아무것도 하지않음
 third-party-playnite-close = 닫기

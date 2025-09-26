@@ -35,6 +35,7 @@ third-party-playnite-game-name-title = Jméno
 third-party-playnite-game-install-dir-title = Instalační Adresář
 third-party-playnite-library-import-error = Nepodařilo se importovat hry z { $var0 }.
 third-party-playnite-metadata-download-error = Selhalo stahování metadat: { $var0 }
+third-party-playnite-download-error = Chyba při Stahování
 third-party-playnite-uninstalling = Probíhá odinstalace
 third-party-playnite-do-nothing = Nedělat nic
 third-party-playnite-close = Zavřít

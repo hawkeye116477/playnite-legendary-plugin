@@ -35,6 +35,7 @@ third-party-playnite-game-name-title = Название игры
 third-party-playnite-game-install-dir-title = Путь установки
 third-party-playnite-library-import-error = Не удалось импортировать игры из { $var0 }.
 third-party-playnite-metadata-download-error = Не удалось скачать метаданные: { $var0 }
+third-party-playnite-download-error = Ошибка загрузки
 third-party-playnite-uninstalling = Удаление
 third-party-playnite-do-nothing = Ничего не делать
 third-party-playnite-close = Закрыть

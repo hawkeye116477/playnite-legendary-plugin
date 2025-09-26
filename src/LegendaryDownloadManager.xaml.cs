@@ -518,7 +518,7 @@ namespace LegendaryLibraryNS
                                 {
                                     playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameInstallError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonCheckLog) }));
                                 }
-                                wantedItem.status = DownloadStatus.Paused;
+                                wantedItem.status = DownloadStatus.Error;
                             }
                             else
                             {
@@ -656,7 +656,7 @@ namespace LegendaryLibraryNS
             if (DownloadsDG.SelectedIndex != -1)
             {
                 var downloadsToResume = DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>()
-                                                                 .Where(i => i.status == DownloadStatus.Canceled || i.status == DownloadStatus.Paused)
+                                                                 .Where(i => i.status != DownloadStatus.Completed && i.status != DownloadStatus.Running && i.status != DownloadStatus.Queued)
                                                                  .ToList();
                 await EnqueueMultipleJobs(downloadsToResume, true);
             }
@@ -667,7 +667,7 @@ namespace LegendaryLibraryNS
             if (DownloadsDG.SelectedIndex != -1)
             {
                 var cancelableDownloads = DownloadsDG.SelectedItems.Cast<DownloadManagerData.Download>()
-                                                                   .Where(i => i.status == DownloadStatus.Running || i.status == DownloadStatus.Queued || i.status == DownloadStatus.Paused)
+                                                                   .Where(i => i.status != DownloadStatus.Completed && i.status != DownloadStatus.Canceled)
                                                                    .ToList();
                 if (cancelableDownloads.Count > 0)
                 {

@@ -35,6 +35,7 @@ third-party-playnite-game-name-title = Nume
 third-party-playnite-game-install-dir-title = Directorul de instalare
 third-party-playnite-library-import-error = Nu s-a putut importa jocuri de la { $var0 }.
 third-party-playnite-metadata-download-error = Nu s-a putut descărca metadata: { $var0 }
+third-party-playnite-download-error = Eroare la descărcare
 third-party-playnite-uninstalling = Se dezinstalează
 third-party-playnite-do-nothing = Repaus
 third-party-playnite-close = Închideţi

@@ -35,6 +35,7 @@ third-party-playnite-game-name-title = Nimi
 third-party-playnite-game-install-dir-title = Asennushakemisto
 third-party-playnite-library-import-error = Pelejä ei voitu tuoda sijainnista { $var0 }.
 third-party-playnite-metadata-download-error = Tietojen lataaminen epäonnistui: { $var0 }
+third-party-playnite-download-error = Latausvirhe
 third-party-playnite-uninstalling = Poistetaan
 third-party-playnite-do-nothing = Älä tee mitään
 third-party-playnite-close = Sulje

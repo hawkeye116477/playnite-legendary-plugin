@@ -879,6 +879,10 @@ namespace System
         /// </summary>
         public const string ThirdPartyPlayniteMetadataDownloadError = "third-party-playnite-metadata-download-error";
         /// <summary>
+        /// Download Error
+        /// </summary>
+        public const string ThirdPartyPlayniteDownloadError = "third-party-playnite-download-error";
+        /// <summary>
         /// Uninstalling
         /// </summary>
         public const string ThirdPartyPlayniteUninstalling = "third-party-playnite-uninstalling";

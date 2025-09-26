@@ -35,6 +35,7 @@ third-party-playnite-game-name-title = İsim
 third-party-playnite-game-install-dir-title = Kurulum Klasörü
 third-party-playnite-library-import-error = { $var0 } konumundan oyun içe aktarılamadı.
 third-party-playnite-metadata-download-error = Üst veriler indirilemedi: { $var0 }
+third-party-playnite-download-error = İndirme Hatası
 third-party-playnite-uninstalling = Kaldırılıyor
 third-party-playnite-do-nothing = Hiçbir şey yapma
 third-party-playnite-close = Kapat

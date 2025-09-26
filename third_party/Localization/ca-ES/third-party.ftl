@@ -35,6 +35,7 @@ third-party-playnite-game-name-title = Nom
 third-party-playnite-game-install-dir-title = Carpeta d'instal·lació
 third-party-playnite-library-import-error = No s’han pogut importar els jocs de { $var0 }.
 third-party-playnite-metadata-download-error = No s'ha pogut descarregar les metadades: { $var0 }
+third-party-playnite-download-error = Error de descàrrega
 third-party-playnite-uninstalling = Desinstal·lant
 third-party-playnite-do-nothing = No fer res
 third-party-playnite-close = Tancar

@@ -35,6 +35,7 @@ third-party-playnite-game-name-title = Név
 third-party-playnite-game-install-dir-title = Telepítési hely
 third-party-playnite-library-import-error = Nem sikerült a { $var0 } játékok importálása.
 third-party-playnite-metadata-download-error = Hiba a metaadatok letöltésekor: { $var0 }
+third-party-playnite-download-error = Hiba a letöltésben
 third-party-playnite-uninstalling = Eltávolítás
 third-party-playnite-do-nothing = Ne tegyen semmit
 third-party-playnite-close = Bezárás

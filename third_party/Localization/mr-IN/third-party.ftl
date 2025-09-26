@@ -35,6 +35,7 @@ third-party-playnite-game-name-title = नाव
 third-party-playnite-game-install-dir-title = स्थापना फोल्डर
 third-party-playnite-library-import-error = { $var0 } पासून गेम आयात करण्यात अपयशी.
 third-party-playnite-metadata-download-error = मेटाडेटा डाउनलोड करण्यात अयशस्वी: { $var0 }
+third-party-playnite-download-error = डाउनलोड त्रुटी
 third-party-playnite-uninstalling = विस्थापित करत आहे
 third-party-playnite-do-nothing = काहीही करू नका
 third-party-playnite-close = बंद करा

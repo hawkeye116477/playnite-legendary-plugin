@@ -35,6 +35,7 @@ third-party-playnite-game-name-title = نام
 third-party-playnite-game-install-dir-title = پوشه‌ی نصب
 third-party-playnite-library-import-error = ناکامی در درون‌برد بازی‌ها از { $var0 }.
 third-party-playnite-metadata-download-error = ناکامی در بارگیری فراداده: { $var0 }
+third-party-playnite-download-error = خطا در بارگیری
 third-party-playnite-uninstalling = در حال حذف نصب
 third-party-playnite-do-nothing = کاری نکن
 third-party-playnite-close = بستن

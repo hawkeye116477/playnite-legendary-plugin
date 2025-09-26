@@ -35,6 +35,7 @@ third-party-playnite-game-name-title = الاسم
 third-party-playnite-game-install-dir-title = دليل التثبيت
 third-party-playnite-library-import-error = فشل استيراد الألعاب من { $var0 }.
 third-party-playnite-metadata-download-error = فشل تحميل بيانات التعريف:{ $var0 }
+third-party-playnite-download-error = خطأ في التحميل
 third-party-playnite-uninstalling = جاري إلغاء التثبيت
 third-party-playnite-do-nothing = ‮لا تفعل شيئا
 third-party-playnite-close = إغلاق

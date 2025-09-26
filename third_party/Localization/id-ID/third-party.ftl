@@ -35,6 +35,7 @@ third-party-playnite-game-name-title = Nama
 third-party-playnite-game-install-dir-title = Direktori Instalasi
 third-party-playnite-library-import-error = Gagal mengimpor game dari { $var0 }
 third-party-playnite-metadata-download-error = Gagal mendownload metadata: { $var0 }
+third-party-playnite-download-error = Download Error
 third-party-playnite-uninstalling = Menguninstal
 third-party-playnite-do-nothing = Diamkan aplikasi
 third-party-playnite-close = Tutup aplikasi

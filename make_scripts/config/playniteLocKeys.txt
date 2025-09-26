@@ -48,3 +48,4 @@ LOCClientNotInstalledError
 LOCDownloadingLabel
 LOCUninstalling
 LOCCopyTitle
+LOCDownloadError

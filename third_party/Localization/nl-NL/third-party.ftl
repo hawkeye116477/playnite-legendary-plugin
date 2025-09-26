@@ -35,6 +35,7 @@ third-party-playnite-game-name-title = Naam
 third-party-playnite-game-install-dir-title = Installatie Map
 third-party-playnite-library-import-error = Kan geen spellen importeren van { $var0 }.
 third-party-playnite-metadata-download-error = Downloaden van metadata mislukt: { $var0 }
+third-party-playnite-download-error = Download Fout
 third-party-playnite-uninstalling = Aan het deinstalleren
 third-party-playnite-do-nothing = Doe niets
 third-party-playnite-close = Sluiten

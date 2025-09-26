@@ -35,6 +35,7 @@ third-party-playnite-game-name-title = Nimi
 third-party-playnite-game-install-dir-title = Paigalduse asukoht
 third-party-playnite-library-import-error = Ei saanud importida mänge kohast { $var0 }.
 third-party-playnite-metadata-download-error = Metaandmete allalaadimine ebaõnnestus: { $var0 }
+third-party-playnite-download-error = Allalaadimise viga
 third-party-playnite-uninstalling = Desinstallimine
 third-party-playnite-do-nothing = Ära tee midagi
 third-party-playnite-close = Sulge
