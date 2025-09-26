@@ -67,31 +67,6 @@ namespace LegendaryLibraryNS
                     download.status = DownloadStatus.Paused;
                 }
             }
-            // TODO: Remove migration of old entries in next big version
-            var itemsWithSizeForMigration = downloadManagerData.downloads.Where(i => !string.IsNullOrEmpty(i.downloadSize) && !string.IsNullOrEmpty(i.installSize)).ToList();
-            if (itemsWithSizeForMigration.Count > 0)
-            {
-                foreach (var downloadItem in itemsWithSizeForMigration)
-                {
-                    if (downloadItem.downloadSizeNumber == 0)
-                    {
-                        var downloadSizeSplittedString = downloadItem.downloadSize.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                        downloadItem.downloadSizeNumber = CommonHelpers.ToBytes(CommonHelpers.ToDouble(downloadSizeSplittedString[0]), downloadSizeSplittedString[1].Insert(1, "i"));
-                    }
-                    if (downloadItem.installSizeNumber == 0)
-                    {
-                        var installSizeSplittedString = downloadItem.installSize.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                        downloadItem.installSizeNumber = CommonHelpers.ToBytes(CommonHelpers.ToDouble(installSizeSplittedString[0]), installSizeSplittedString[1].Insert(1, "i"));
-                    }
-                    if (downloadItem.status == DownloadStatus.Completed && downloadItem.downloadedNumber == 0)
-                    {
-                        downloadItem.downloadedNumber = downloadItem.downloadSizeNumber;
-                        downloadItem.progress = 100;
-                    }
-                    downloadItem.downloadSize = "";
-                    downloadItem.installSize = "";
-                }
-            }
         }
 
         public void OnPropertyChanged(object _, PropertyChangedEventArgs arg)
