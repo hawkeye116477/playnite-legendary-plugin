@@ -1,5 +1,13 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.10.10
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2025-10-05
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.10.10/LegendaryLibrary_1_10_10.pext
+    Changelog:
+      - Added new special status for download errors
+      - Added instant closing installer window if user is not authenticated
+      - Fixed displaying text in uninstall dialog
   - Version: 1.10.9
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2025-08-24
