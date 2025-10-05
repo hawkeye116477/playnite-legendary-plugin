@@ -222,7 +222,6 @@ namespace LegendaryLibraryNS
             var userLoggedIn = await clientApi.GetIsUserLoggedIn();
             if (!userLoggedIn)
             {
-
                 playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameInstallError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired) }));
                 InstallerWindow.Close();
                 return;
