@@ -455,7 +455,8 @@ namespace LegendaryLibraryNS
                     {
                         if (errorMessage.Contains("Log in failed")
                             || errorMessage.Contains("Login failed")
-                            || errorMessage.Contains("No saved credentials"))
+                            || errorMessage.Contains("No saved credentials")
+                            || errorMessage.Contains("Unauthorized"))
                         {
                             playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteMetadataDownloadError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired) }), installData.Title);
                         }

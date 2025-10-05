@@ -3,6 +3,7 @@ using CliWrap.Buffered;
 using CommonPlugin;
 using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
+using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
 using Playnite.SDK;
 using System;
@@ -217,8 +218,17 @@ namespace LegendaryLibraryNS
 
             bool gamesListShouldBeDisplayed = false;
 
-            var installedAppList = LegendaryLauncher.GetInstalledAppList();
+            var clientApi = new EpicAccountClient(playniteAPI);
+            var userLoggedIn = await clientApi.GetIsUserLoggedIn();
+            if (!userLoggedIn)
+            {
 
+                playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameInstallError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired) }));
+                InstallerWindow.Close();
+                return;
+            }
+
+            var installedAppList = LegendaryLauncher.GetInstalledAppList();
             foreach (var installData in MultiInstallData.ToList())
             {
                 var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == installData.gameID);
