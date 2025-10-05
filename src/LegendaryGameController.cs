@@ -108,7 +108,7 @@ namespace LegendaryLibraryNS
             var playniteAPI = API.Instance;
             string gamesCombined = string.Join(", ", games.Select(item => item.Name));
 
-            var result = MessageCheckBoxDialog.ShowMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame), LocalizationManager.Instance.GetString(LOC.CommonUninstallGameConfirm, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)gamesCombined }), LOC.CommonRemoveGameLaunchSettings, MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = MessageCheckBoxDialog.ShowMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame), LocalizationManager.Instance.GetString(LOC.CommonUninstallGameConfirm, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)gamesCombined }), LocalizationManager.Instance.GetString(LOC.CommonRemoveGameLaunchSettings), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result.Result)
             {
                 var canContinue = LegendaryLibrary.Instance.StopDownloadManager(true);
