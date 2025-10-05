@@ -81,20 +81,22 @@ for filename in os.listdir(pj(main_path, "..", "PlayniteExtensions", "PlayniteRe
 
     if filename not in ["LocSource.xaml", "LocalizationKeys.cs", "locstatus.json"]:
         loc_sub_dir = filename.replace("_", "-").replace(".xaml", "")
-        epic_loc = ET.parse(pj(main_path, "..", "PlayniteExtensions",
-                            "source", "Libraries", "EpicLibrary", "Localization", filename))
-        for child in epic_loc.getroot():
-            key = child.get(ET.QName(xmlns_x, "Key"))
-            if key in epic_loc_keys:
-                key_text = child.text
-                if not key_text:
-                    key_text = ""
-                new_key = ET.Element(ET.QName(xmlns_sys, "String"))
-                new_key.set(ET.QName(xmlns_x, "Key"), key.replace("LOCEpic", "LOCLegendary3P_Epic"))
-                new_key.text = key_text
-                if key_text != "":
-                    xml_root.append(new_key)
-
+        epic_file_path = pj(main_path, "..", "PlayniteExtensions",
+                            "source", "Libraries", "EpicLibrary", "Localization", filename)
+        if os.path.isfile(epic_file_path):
+            epic_loc = ET.parse(epic_file_path)
+            for child in epic_loc.getroot():
+                key = child.get(ET.QName(xmlns_x, "Key"))
+                if key in epic_loc_keys:
+                    key_text = child.text
+                    if not key_text:
+                        key_text = ""
+                    new_key = ET.Element(ET.QName(xmlns_sys, "String"))
+                    new_key.set(ET.QName(xmlns_x, "Key"), key.replace("LOCEpic", "LOCLegendary3P_Epic"))
+                    new_key.text = key_text
+                    if key_text != "":
+                        xml_root.append(new_key)
+    
         ET.indent(xml_doc, level=0)
         os.makedirs(pj(localization_path, loc_sub_dir))
 
