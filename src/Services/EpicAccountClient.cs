@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace LegendaryLibraryNS.Services
@@ -34,7 +35,7 @@ namespace LegendaryLibraryNS.Services
         private ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI api;
         private string tokensPath;
-        private readonly string loginUrl = "https://www.epicgames.com/id/login?redirectUrl=https%3A//www.epicgames.com/id/api/redirect%3FclientId%3D34a02cf8f4414e29b15921876da36f9a%26responseType%3Dcode";
+        private readonly string loginUrl = "https://www.epicgames.com/id/login?responseType=code";
         public static string authCodeUrl = "https://www.epicgames.com/id/api/redirect?clientId=34a02cf8f4414e29b15921876da36f9a&responseType=code";
         private readonly string oauthUrl = @"";
         private readonly string accountUrl = @"";
@@ -42,7 +43,7 @@ namespace LegendaryLibraryNS.Services
         private readonly string playtimeUrl = @"";
         private readonly string libraryItemsUrl = @"";
         private const string authEncodedString = "MzRhMDJjZjhmNDQxNGUyOWIxNTkyMTg3NmRhMzZmOWE6ZGFhZmJjY2M3Mzc3NDUwMzlkZmZlNTNkOTRmYzc2Y2Y=";
-        private const string userAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Vivaldi/7.1.3570.39";
+        private const string userAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) EpicGamesLauncher";
 
         public EpicAccountClient(IPlayniteAPI api)
         {
@@ -70,28 +71,31 @@ namespace LegendaryLibraryNS.Services
         {
             var loggedIn = false;
             var apiRedirectContent = string.Empty;
+            var authorizationCode = "";
 
             using (var view = api.WebViews.CreateView(new WebViewSettings
             {
                 WindowWidth = 580,
                 WindowHeight = 700,
                 // This is needed otherwise captcha won't pass
-                UserAgent = userAgent
+                UserAgent = userAgent,
             }))
             {
                 view.LoadingChanged += async (s, e) =>
                 {
                     var address = view.GetCurrentAddress();
-                    if (address.Contains(@"id/api/redirect?clientId=") && !e.IsLoading)
-                    {
-                        apiRedirectContent = await view.GetPageTextAsync();
-                        loggedIn = true;
-                        view.Close();
-                    }
+                    var pageText = await view.GetPageTextAsync();
 
-                    if (address.EndsWith(@"epicgames.com/account/personal") && !e.IsLoading)
+                    if (!pageText.IsNullOrEmpty() && pageText.Contains(@"localhost") && !e.IsLoading)
                     {
-                        view.Navigate(authCodeUrl);
+                        var source = await view.GetPageSourceAsync();
+                        var matches = Regex.Matches(source, @"localhost\/launcher\/authorized\?code=([a-zA-Z0-9]+)", RegexOptions.IgnoreCase);
+                        if (matches.Count > 0)
+                        {
+                            authorizationCode = matches[0].Groups[1].Value;
+                            loggedIn = true;
+                        }
+                        view.Close();
                     }
                 };
 
@@ -105,12 +109,6 @@ namespace LegendaryLibraryNS.Services
                 return;
             }
 
-            if (apiRedirectContent.IsNullOrEmpty())
-            {
-                return;
-            }
-
-            var authorizationCode = Serialization.FromJson<ApiRedirectResponse>(apiRedirectContent).authorizationCode;
             FileSystem.DeleteFile(tokensPath);
             if (string.IsNullOrEmpty(authorizationCode))
             {
