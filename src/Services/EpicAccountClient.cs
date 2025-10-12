@@ -90,10 +90,13 @@ namespace LegendaryLibraryNS.Services
                     {
                         var source = await view.GetPageSourceAsync();
                         var matches = Regex.Matches(source, @"localhost\/launcher\/authorized\?code=([a-zA-Z0-9]+)", RegexOptions.IgnoreCase);
-                        if (matches.Count > 0)
+                        if (matches.Count > 0 && matches[0].Groups.Count > 1)
                         {
                             authorizationCode = matches[0].Groups[1].Value;
-                            loggedIn = true;
+                            if (!authorizationCode.IsNullOrWhiteSpace())
+                            {
+                                loggedIn = true;
+                            }
                         }
                         view.Close();
                     }

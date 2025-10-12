@@ -59,7 +59,7 @@
                             <ToggleButton HorizontalAlignment="Left" Name="LoginBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyEpicAuthenticateLabel}}" IsEnabled="False" Click="LoginBtn_Click" IsChecked="False"/>
                             <TextBlock VerticalAlignment="Center" Margin="10,5,5,5" Name="AuthStatusTB" Text="{common:Localize Key={x:Static system:LOC.ThirdPartyEpicLoginChecking}}"/>
                         </StackPanel>
-                        <Button Margin="0,5,0,0" HorizontalAlignment="Left" Name="LoginAlternativeBtn" Content="{common:Localize Key={x:Static system:LOC.LegendaryAuthenticateAlternativeLabel}}" Visibility="Visible" Click="LoginAlternativeBtn_Click"/>
+                        <Button Margin="0,5,0,0" HorizontalAlignment="Left" Name="LoginAlternativeBtn" Content="{common:Localize Key={x:Static system:LOC.LegendaryAuthenticateAlternativeLabel}}" Visibility="Collapsed" Click="LoginAlternativeBtn_Click"/>
                     </StackPanel>
                     <Button Content="{common:Localize Key={x:Static system:LOC.CommonMigrateGamesOriginal},Args='originalPluginShortName=Epic'}" HorizontalAlignment="Left" Margin="0,5,0,15" Name="MigrateEpicBtn" IsEnabled="False" Click="MigrateEpicBtn_Click"></Button>
                     <CheckBox DockPanel.Dock="Top" Margin="0,0,0,10"
