@@ -131,6 +131,15 @@ namespace LegendaryLibraryNS
 
         internal async Task<List<GameMetadata>> GetLibraryGames(CancellationToken cancelToken)
         {
+            if (LegendaryLauncher.IsInstalled && (GetSettings().ImportEALauncherGames || GetSettings().ImportUbisoftLauncherGames))
+            {
+                await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                         .WithArguments(new[] { "list", "-T" })
+                         .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                         .AddCommandToLog()
+                         .WithValidation(CommandResultValidation.None)
+                         .ExecuteAsync();
+            }
             var cacheDir = GetCachePath("catalogcache");
             var games = new List<GameMetadata>();
             var accountApi = new EpicAccountClient(PlayniteApi);
