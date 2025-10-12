@@ -9,7 +9,6 @@ using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -691,7 +690,7 @@ namespace LegendaryLibraryNS
             {
                 var httpClient = new HttpClient();
                 httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Vivaldi/5.5.2805.50");
-                var repoOwner = "derrod";
+                var repoOwner = GetUpdateSource();
                 if (LauncherPath == HeroicLegendaryPath)
                 {
                     repoOwner = "Heroic-Games-Launcher";
@@ -801,6 +800,19 @@ namespace LegendaryLibraryNS
                 installedInfo = installedAppList[gameId];
             }
             return installedInfo;
+        }
+
+        public static string DefaultUpdateSource = "Heroic-Games-Launcher";
+
+        public static string GetUpdateSource()
+        {
+            var launcherSource = DefaultUpdateSource;
+            var savedUpdateSource = LegendaryLibrary.GetSettings().LauncherUpdateSource;
+            if (!savedUpdateSource.IsNullOrEmpty())
+            {
+                launcherSource = savedUpdateSource;
+            }
+            return launcherSource;
         }
     }
 }

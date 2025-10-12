@@ -281,6 +281,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="LauncherUpdateSource.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\legendary_icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

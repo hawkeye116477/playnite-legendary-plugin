@@ -119,7 +119,7 @@
                             Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" Content="&#xec5b;" 
                             FontFamily="{DynamicResource FontIcoFont}" ToolTip="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSelectDirectoryTooltip}}"
                             Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                        <TextBox Name="SelectedGamePathTxt"
+                           <TextBox Name="SelectedGamePathTxt"
                         Text="{Binding Settings.GamesInstallationPath, UpdateSourceTrigger=PropertyChanged}"
                         VerticalAlignment="Center" Margin="0"/>
                     </DockPanel>
@@ -220,18 +220,22 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonLauncherCustomPath},Args='launcherName=Legendary'}" Grid.Column="0" Grid.Row="0"
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonLauncherCustomPath},Args='launcherName=Legendary'}" Grid.Column="0" Grid.Row="0"
                                Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left">
-                    </TextBlock>
-                    <TextBox Text="{Binding Settings.SelectedLauncherPath, UpdateSourceTrigger=PropertyChanged}" x:Name="SelectedLauncherPathTxt" 
+                        </TextBlock>
+                        <TextBox Text="{Binding Settings.SelectedLauncherPath, UpdateSourceTrigger=PropertyChanged}" x:Name="SelectedLauncherPathTxt" 
                              Grid.Row="0" Grid.Column="1" Margin="10,0,0,5" VerticalAlignment="Center"/>
                         <Button Name="ChooseLauncherBtn"
                             Margin="5,0,0,5" Content="&#xec5b;" FontFamily="{DynamicResource FontIcoFont}" Click="ChooseLauncherBtn_Click" Grid.Row="0" Grid.Column="2"
                             ToolTip="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSelectFileTooltip}}" VerticalAlignment="Center"/>
                     </Grid>
-                <StackPanel Margin="0,10,0,0">
+                    <StackPanel Orientation="Horizontal" Margin="0">
+                        <TextBlock Text="{common:Localize Key={x:Static system:LOC.LegendaryLauncherUpdateSource}}" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                        <ComboBox x:Name="LauncherUpdateSourceCBo" SelectedValue="{Binding Settings.LauncherUpdateSource}" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Margin="0,10,0,0">
                     <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonCache}}" FontSize="18"
                         Margin="0,0,0,2" />
                     <Separator Margin="0,0,0,10" />

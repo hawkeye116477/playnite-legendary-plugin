@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -206,6 +207,18 @@ namespace LegendaryLibraryNS
             AutoClearCacheCBo.ItemsSource = autoClearOptions;
 
             AutoRemoveCompletedDownloadsCBo.ItemsSource = autoClearOptions;
+
+            var launcherUpdateSourceFile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "LauncherUpdateSource.json");
+            List<string> repoList = new List<string>();
+            if (File.Exists(launcherUpdateSourceFile)) {
+                var content = FileSystem.ReadFileAsStringSafe(launcherUpdateSourceFile);
+                var savedRepoList = new List<string>();
+                if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out savedRepoList))
+                {
+                    repoList = savedRepoList;
+                }
+            }
+            LauncherUpdateSourceCBo.ItemsSource = repoList;
 
             troubleshootingInformation = new LegendaryTroubleshootingInformation();
             if (LegendaryLauncher.IsInstalled)

@@ -43,3 +43,4 @@ legendary-game-import-failure = Failed to import game. Reason: { $reason }.
 legendary-language-code = Language (code in RFC 1766 format)
 legendary-check-all-dlcs = Check all DLCs
 legendary-additional-services = Additional services
+legendary-launcher-update-source = Legendary update source

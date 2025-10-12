@@ -37,6 +37,7 @@ namespace LegendaryLibraryNS
         public bool AutoUpdateGames { get; set; } = false;
         public UpdatePolicy LauncherUpdatePolicy { get; set; } = UpdatePolicy.Never;
         public long NextLauncherUpdateTime { get; set; } = 0;
+        public string LauncherUpdateSource { get; set; } = LegendaryLauncher.DefaultUpdateSource;
     }
 
     public class LegendaryLibrarySettingsViewModel : PluginSettingsViewModel<LegendaryLibrarySettings, LegendaryLibrary>

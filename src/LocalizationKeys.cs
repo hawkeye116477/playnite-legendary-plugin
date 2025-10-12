@@ -158,6 +158,10 @@ namespace System
         /// </summary>
         public const string LegendaryAdditionalServices = "legendary-additional-services";
         /// <summary>
+        /// Legendary update source
+        /// </summary>
+        public const string LegendaryLauncherUpdateSource = "legendary-launcher-update-source";
+        /// <summary>
         /// Sync game saves to the cloud
         /// </summary>
         public const string CommonSyncGameSaves = "common-sync-game-saves";
