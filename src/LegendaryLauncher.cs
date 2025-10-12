@@ -691,10 +691,6 @@ namespace LegendaryLibraryNS
                 var httpClient = new HttpClient();
                 httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Vivaldi/5.5.2805.50");
                 var repoOwner = GetUpdateSource();
-                if (LauncherPath == HeroicLegendaryPath)
-                {
-                    repoOwner = "Heroic-Games-Launcher";
-                }
                 var response = await httpClient.GetAsync($"https://api.github.com/repos/{repoOwner}/legendary/releases/latest");
                 if (response.IsSuccessStatusCode)
                 {
