@@ -44,21 +44,7 @@ namespace LegendaryLibraryNS
     {
         public LegendaryLibrarySettingsViewModel(LegendaryLibrary library, IPlayniteAPI api) : base(library, api)
         {
-            // TODO: Remove migration of old settings in next big version
-            var savedSettings = LoadSavedSettings();
-            if (savedSettings != null)
-            {
-                if (savedSettings.GamesUpdatePolicy == UpdatePolicy.GameLaunch)
-                {
-                    savedSettings.GamesUpdatePolicy = UpdatePolicy.Month;
-                    savedSettings.NextGamesUpdateTime = LegendaryLibrary.GetNextUpdateCheckTime(UpdatePolicy.Month);
-                }
-            }
-            else
-            {
-                savedSettings = new LegendaryLibrarySettings();
-            }
-            Settings = savedSettings;
+            Settings = LoadSavedSettings() ?? new LegendaryLibrarySettings();
         }
 
         public override void EndEdit()
