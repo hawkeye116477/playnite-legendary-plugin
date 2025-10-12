@@ -43,3 +43,4 @@ legendary-game-import-failure = Nie udało się zaimportować gry. Powód: { $re
 legendary-language-code = Język (kod w formacie RFC 1766)
 legendary-check-all-dlcs = Zaznacz wszystkie dodatki (DLC)
 legendary-additional-services = Dodatkowe usługi
+legendary-launcher-update-source = Źródło aktualizacji Legendary
