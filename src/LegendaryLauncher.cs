@@ -708,6 +708,10 @@ namespace LegendaryLibraryNS
                 }
                 httpClient.Dispose();
             }
+            if (!Version.TryParse(newVersionInfoContent.Tag_name, out Version validVersion))
+            {
+                newVersionInfoContent.Tag_name = Regex.Replace(newVersionInfoContent.Tag_name, @"[^\d\.]", "");
+            }
             return newVersionInfoContent;
         }
 

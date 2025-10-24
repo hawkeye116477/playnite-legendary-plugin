@@ -374,7 +374,7 @@ namespace LegendaryLibraryNS
         private async void CheckForUpdatesBtn_Click(object sender, RoutedEventArgs e)
         {
             var versionInfoContent = await LegendaryLauncher.GetVersionInfoContent();
-            if (versionInfoContent.Tag_name != null)
+            if (versionInfoContent.Tag_name != null && Version.TryParse(versionInfoContent.Tag_name, out Version newValidVersion))
             {
                 var newVersion = new Version(versionInfoContent.Tag_name);
                 var oldVersion = new Version(troubleshootingInformation.LauncherVersion);
