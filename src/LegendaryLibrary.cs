@@ -134,7 +134,7 @@ namespace LegendaryLibraryNS
             if (LegendaryLauncher.IsInstalled && (GetSettings().ImportEALauncherGames || GetSettings().ImportUbisoftLauncherGames))
             {
                 await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                         .WithArguments(new[] { "list", "-T" })
+                         .WithArguments(new[] { "list", "-T", "--force-refresh" })
                          .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
                          .AddCommandToLog()
                          .WithValidation(CommandResultValidation.None)
