@@ -1,7 +1,6 @@
 legendary-launch-offline = Запуск игр в автономном режиме, если возможно
 legendary-enable-offline-mode = Включить автономный режим
 legendary-offline-mode = Автономный режим
-legendary-preferred-cdn = Предпочтительный CDN
 legendary-http-only-download = Отключить HTTPS (полезно для CDN, например, LanCache)
 legendary-enable-reordering = Включить оптимизацию перестановки
 legendary-enable-reordering-tool-tip = Это может уменьшить требования к ОЗУ во время загрузки (может работать неправильно для некоторых заголовков).

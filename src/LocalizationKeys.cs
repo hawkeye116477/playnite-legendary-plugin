@@ -18,10 +18,6 @@ namespace System
         /// </summary>
         public const string LegendaryOfflineMode = "legendary-offline-mode";
         /// <summary>
-        /// Preferred CDN
-        /// </summary>
-        public const string LegendaryPreferredCdn = "legendary-preferred-cdn";
-        /// <summary>
         /// Disable HTTPS (useful for CDNs e.g. LanCache)
         /// </summary>
         public const string LegendaryHttpOnlyDownload = "legendary-http-only-download";
@@ -265,6 +261,10 @@ namespace System
         /// Are you sure you want to uninstall selected DLCs?
         /// </summary>
         public const string CommonUninstallSelectedDlcs = "common-uninstall-selected-dlcs";
+        /// <summary>
+        /// Preferred CDN
+        /// </summary>
+        public const string CommonDownloaderPreferredCdn = "common-downloader-preferred-cdn";
         /// <summary>
         /// {$launcherName} Path
         /// </summary>

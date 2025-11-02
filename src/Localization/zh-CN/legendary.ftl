@@ -1,7 +1,6 @@
 legendary-launch-offline = 如果可能，以离线模式启动游戏
 legendary-enable-offline-mode = 启用离线模式
 legendary-offline-mode = 离线模式
-legendary-preferred-cdn = 首选 CDN
 legendary-http-only-download = 禁用 HTTPS（对于 CDN 如 LanCache 很有用）
 legendary-enable-reordering = 启用重排序优化
 legendary-enable-reordering-tool-tip = 这可以在下载过程中减少 RAM 需求（某些游戏可能无法正常工作）。
@@ -23,14 +22,14 @@ legendary-import-third-party-launcher-games = 导入需要 { $thirdPartyLauncher
 legendary-third-party-launcher-import-warn = 这些类型的游戏不需要 Legendary，并且并非所有都可以通过它安装。建议转到附加服务 => { $thirdPartyLauncherName } => 激活游戏，然后直接通过 { $thirdPartyLauncherName } 安装它们。
 legendary-required-install-via-third-party-launcher-error =
     { $count ->
-            [one] { $gameTitle } 需要通过 { $thirdPartyLauncherName } 直接安装。
-           *[other] 以下游戏需要通过 { $thirdPartyLauncherName } 直接安装：{ $gameTitle }。
+        [one] { $gameTitle } 需要通过 { $thirdPartyLauncherName } 直接安装。
+       *[other] 以下游戏需要通过 { $thirdPartyLauncherName } 直接安装：{ $gameTitle }。
     }
 legendary-install-prerequisites = 安装先决条件（{ $prerequisiteName }）
 legendary-required-install-of-third-party-launcher =
     { $count ->
-            [one] { $gameTitle } 需要安装 { $thirdPartyLauncherName }。建议转到插件设置 => 附加服务 => { $thirdPartyLauncherName } => 激活游戏，然后直接通过 { $thirdPartyLauncherName } 安装它。
-           *[other] 以下游戏需要安装 { $thirdPartyLauncherName }：{ $gameTitle }。建议转到插件设置 => 附加服务 => { $thirdPartyLauncherName } => 激活游戏，然后直接通过 { $thirdPartyLauncherName } 安装它们。
+        [one] { $gameTitle } 需要安装 { $thirdPartyLauncherName }。建议转到插件设置 => 附加服务 => { $thirdPartyLauncherName } => 激活游戏，然后直接通过 { $thirdPartyLauncherName } 安装它。
+       *[other] 以下游戏需要安装 { $thirdPartyLauncherName }：{ $gameTitle }。建议转到插件设置 => 附加服务 => { $thirdPartyLauncherName } => 激活游戏，然后直接通过 { $thirdPartyLauncherName } 安装它们。
     }
 legendary-installing-prerequisites = 正在安装先决条件（{ $prerequisiteName }）……
 legendary-authenticate-alternative-label = 使用备用方法进行身份验证

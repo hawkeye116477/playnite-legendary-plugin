@@ -1,7 +1,7 @@
 ###
 ### Automatically generated via update_3p_localization.py script using files from 
-### https://github.com/JosefNemec/PlayniteExtensions/tree/d802b2900d649e2e5e5dcf9363cea4baf494892b and 
-### https://github.com/JosefNemec/Playnite/tree/417b88901a124e0108bb9f12536ca980181b1029. 
+### https://github.com/JosefNemec/PlayniteExtensions/tree/6d8daf328aee3ca2c3a12ca32017f5a290c00489 and 
+### https://github.com/JosefNemec/Playnite/tree/77604caf71f3365238f0f4a40e580a4e5bf2e925. 
 ### DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 ###
 third-party-playnite-filter-active-label = 過濾器已啟用

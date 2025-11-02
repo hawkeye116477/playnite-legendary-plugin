@@ -1,7 +1,6 @@
 legendary-launch-offline = Spiele, wenn möglich im Offline-Modus starten
 legendary-enable-offline-mode = Offline-Modus aktivieren
 legendary-offline-mode = Offline-Modus
-legendary-preferred-cdn = Bevorzugte CDN
 legendary-http-only-download = HTTPS deaktivieren (nützlich für CDNs, z.B. LanCache)
 legendary-enable-reordering = Umsortierungs-Optimierung aktivieren
 legendary-enable-reordering-tool-tip = Dies kann den die RAM-Nutzung während des Downloads verringern (funktioniert bei einigen Titeln möglicherweise nicht ordnungsgemäß).

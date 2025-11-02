@@ -151,7 +151,7 @@
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonConnectionTimeout}}" Grid.Column="0"
                             Grid.Row="8" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         <common:NumericInput Grid.Row="8" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="600" StepSize="5" Value="{Binding Settings.ConnectionTimeout}" HorizontalAlignment="Left"/>
-                        <TextBlock Text="{common:Localize Key={x:Static system:LOC.LegendaryPreferredCdn}}" Grid.Column="0"
+                        <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonDownloaderPreferredCdn}}" Grid.Column="0"
                             Grid.Row="9" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         <TextBox
                             Text="{Binding Settings.PreferredCdn, UpdateSourceTrigger=PropertyChanged}"

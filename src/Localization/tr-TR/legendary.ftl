@@ -1,7 +1,6 @@
 legendary-launch-offline = Mümkünse oyunları çevrimdışı kipte başlat
 legendary-enable-offline-mode = Çevrimdışı kipi etkinleştir
 legendary-offline-mode = Çevrimdışı kip
-legendary-preferred-cdn = Tercih Edilen CDN
 legendary-http-only-download = HTTPS devre dışı bırak (CDN için kullanışlıdır, örneğin LanCache)
 legendary-enable-reordering = Yeniden sıralama düzeltmesini etkinleştir
 legendary-enable-reordering-tool-tip = Bu, indirme sırasında RAM gereksinimlerini azaltabilir (bazı başlıklar için düzgün çalışmayabilir).

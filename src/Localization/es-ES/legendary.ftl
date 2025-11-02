@@ -1,7 +1,6 @@
 legendary-launch-offline = Lanzar juegos en modo sin conexión si es posible
 legendary-enable-offline-mode = Activar modo sin conexión
 legendary-offline-mode = Modo sin conexión
-legendary-preferred-cdn = CDN preferido
 legendary-http-only-download = Desactivar HTTPS (útil para CDNs por ejemplo LanCache)
 legendary-enable-reordering = Habilitar optimización de reordenación
 legendary-enable-reordering-tool-tip = Esto puede reducir los requisitos de RAM durante la descarga (es posible que no funcione correctamente en algunos títulos).
