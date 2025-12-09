@@ -408,18 +408,10 @@ namespace LegendaryLibraryNS
                                     }
                                     else
                                     {
-                                        Window window = null;
-                                        if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && PlayniteApi.ApplicationInfo.ApplicationVersion.Minor < 36)
+                                        Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
                                         {
-                                            window = new Window();
-                                        }
-                                        else
-                                        {
-                                            window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
-                                            {
-                                                ShowMaximizeButton = false,
-                                            });
-                                        }
+                                            ShowMaximizeButton = false,
+                                        });
                                         window.DataContext = successUpdates;
                                         window.Title = $"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExtensionsUpdates)}";
                                         window.Content = new LegendaryUpdater();

@@ -38,7 +38,7 @@ namespace LegendaryLibraryNS
                 new DownloadManagerData.Download { gameID = Game.GameId, name = Game.Name, downloadProperties = installProperties }
             };
             LaunchInstaller(installData);
-            Game.IsInstalling = false;
+            InvokeOnInstallationCancelled(new GameInstallationCancelledEventArgs());
         }
 
         public static void LaunchInstaller(List<DownloadManagerData.Download> installData)
@@ -50,18 +50,10 @@ namespace LegendaryLibraryNS
                 return;
             }
 
-            Window window = null;
-            if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Fullscreen && playniteAPI.ApplicationInfo.ApplicationVersion.Minor < 36)
+            Window window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
             {
-                window = new Window();
-            }
-            else
-            {
-                window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
-                {
-                    ShowMaximizeButton = false,
-                });
-            }
+                ShowMaximizeButton = false,
+            });
             window.DataContext = installData;
             window.Content = new LegendaryGameInstaller();
             window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
