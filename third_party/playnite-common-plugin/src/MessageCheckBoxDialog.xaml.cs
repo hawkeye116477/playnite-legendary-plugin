@@ -105,12 +105,20 @@ namespace CommonPlugin
         {
             MessageDialogSettings messageDialogSettings = new MessageDialogSettings();
             var playniteAPI = API.Instance;
-            Window window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
+            Window window = null;
+            if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Fullscreen && playniteAPI.ApplicationInfo.ApplicationVersion.Minor < 36)
             {
-                ShowMaximizeButton = false,
-                ShowCloseButton = false,
-                ShowMinimizeButton = false,
-            });
+                window = new Window();
+            }
+            else
+            {
+                window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
+                {
+                    ShowMaximizeButton = false,
+                    ShowCloseButton = false,
+                    ShowMinimizeButton = false,
+                });
+            }
             if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
             {
                 window.Background = (System.Windows.Media.Brush)ResourceProvider.GetResource("ControlBackgroundBrush");
