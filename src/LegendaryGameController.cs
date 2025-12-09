@@ -814,25 +814,26 @@ namespace LegendaryLibraryNS
                         }
                         else
                         {
-                            if (downloadProperties == null)
+                            var settings = LegendaryLibrary.GetSettings();
+                            var newDownloadProperties = new DownloadProperties()
                             {
-                                var settings = LegendaryLibrary.GetSettings();
-                                downloadProperties = new DownloadProperties()
-                                {
-                                    downloadAction = DownloadAction.Update,
-                                    enableReordering = settings.EnableReordering,
-                                    maxWorkers = settings.MaxWorkers,
-                                    maxSharedMemory = settings.MaxSharedMemory,
-                                };
+                                downloadAction = DownloadAction.Update,
+                                enableReordering = settings.EnableReordering,
+                                maxWorkers = settings.MaxWorkers,
+                                maxSharedMemory = settings.MaxSharedMemory,
+                            };
+                            if (downloadProperties != null)
+                            {
+                                newDownloadProperties = Serialization.GetClone(downloadProperties);
                             }
-                            downloadProperties.installPath = gameToUpdate.Value.Install_path;
+                            newDownloadProperties.installPath = gameToUpdate.Value.Install_path;
                             var updateTask = new DownloadManagerData.Download
                             {
                                 gameID = gameToUpdate.Key,
                                 name = gameToUpdate.Value.Title,
                                 downloadSizeNumber = gameToUpdate.Value.Download_size,
                                 installSizeNumber = gameToUpdate.Value.Disk_size,
-                                downloadProperties = downloadProperties
+                                downloadProperties = newDownloadProperties
                             };
                             updateTasks.Add(updateTask);
                         }
