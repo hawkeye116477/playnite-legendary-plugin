@@ -7,7 +7,6 @@ common-display-download-task-finished-notifications = Mostrar notificaciones de 
 common-display-download-speed-in-bits = Mostrar velocidad de descarga en bits por segundo
 common-unattended-install = Activar el modo de instalación desatendida
 common-unattended-install-tool-tip = Perfecto, aquí tienes la traducción ajustada:
-common-max-workers = Número máximo de procesos de trabajo
 common-max-shared-memory = Cantidad máxima de memoria compartida (MB)
 common-connection-timeout = Tiempo de espera de conexión (segundos)
 common-after-download-complete = Acción después de completar la descarga
