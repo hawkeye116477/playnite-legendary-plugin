@@ -1,3 +1,4 @@
+common-launcher-custom-path = { $launcherName } Percorso
 common-games-installation-path = Percorso giochi
 common-download-size = Dimensioni download:
 common-install-size = Dimensione installazione:
@@ -7,7 +8,7 @@ common-display-download-task-finished-notifications = Visualizza le notifiche su
 common-display-download-speed-in-bits = Visualizza la velocità di download in bit al secondo
 common-unattended-install = Abilita la modalità d'installazione automatica
 common-unattended-install-tool-tip = Non sarà necessario scegliere nulla nella finestra d'installazione e l'installazione inizierà automaticamente dopo aver scaricato le informazioni richieste.
-common-max-workers = Numero massimo di processi di lavoro
+common-max-workers = Numero massimo di attività in parallelo
 common-max-shared-memory = Quantità massima di memoria condivisa (MB)
 common-connection-timeout = Timeout connessione (sec)
 common-after-download-complete = Dopo il completamento del download
@@ -59,6 +60,7 @@ common-remove-selected-entries-confirm = Sei sicuro di voler rimuovere le voci s
 common-select-all-entries = Seleziona tutto
 common-repair = Ripara
 common-advanced-options = Opzioni avanzate
+common-cache = Cache
 common-clear-cache = Svuota cache
 common-auto-clear-cache = Cancella cache automaticamente
 common-once-a-month = Una volta al mese
@@ -77,6 +79,8 @@ common-sign-out = Disconnettiti
 common-troubleshooting-information = Informazioni e risoluzione dei problemi
 common-playnite-version = Versione di Playnite
 common-plugin-version = Versione plugin
+common-launcher-version = { $launcherName } Versione
+common-launcher-binary = { $launcherName } Eseguibile
 common-copy-raw-data-to-clipboard = Copia dati grezzi negli appunti
 common-log-files-path = Percorso file di log
 common-report-bug = Segnala un bug
@@ -113,6 +117,7 @@ common-uninstall-error =
        *[other] Impossibile disinstallare i seguenti giochi: { $appName }.
     }
 common-games = Giochi
+common-launcher-update-policy = Controlla aggiornamenti di { $launcherName }
 common-launcher-not-installed = { $launcherName } non è installato.
 common-panel = Pannello { $pluginShortName }
 common-download-manager-whats-up = Il download inizierà a breve. Puoi vederne lo stato accedendo al pannello { $pluginShortName } tramite Menu => Visualizza o dalla barra laterale.
@@ -124,5 +129,8 @@ common-download-already-exists =
 common-migrate-games-original = Migra tutti i giochi dal plugin { $originalPluginShortName }
 common-migrating-games-original = Migrazione di tutti i giochi dal plugin { $originalPluginShortName }...
 common-migration-confirm = Tutti i giochi saranno rimossi dal plugin { $originalPluginShortName } e spostati in { $pluginShortName }. Sei sicuro di volerlo fare?
+common-revert-migrate-games = Migra tutti i giochi al plugin { $originalPluginShortName }
+common-revert-migrating-games = Migrazione di tutti i giochi al plugin { $originalPluginShortName }...
 common-games-updates-underway = Gli aggiornamenti dei giochi di { $updatesSourceName } sono in download.
 common-instance-notice = Solo un'istanza di { $pluginShortName } può installare/importare/spostare applicazioni alla volta. Si desidera mettere in pausa le attività del gestore download per continuare?
+common-reload = Ricarica

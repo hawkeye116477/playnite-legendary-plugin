@@ -7,7 +7,6 @@ common-display-download-task-finished-notifications = Notificar na área de trab
 common-display-download-speed-in-bits = Exibir a velocidade de transferência em bits por segundo
 common-unattended-install = Ativar modo de instalação não assistido
 common-unattended-install-tool-tip = Você não terá que escolher nada na janela do instalador e a instalação começará automaticamente após a transferência das informações necessárias.
-common-max-workers = Número máximo de processos
 common-max-shared-memory = Quantidade máxima de memória compartilhada (MB)
 common-connection-timeout = Tempo limite da conexão (seg)
 common-after-download-complete = Quando a transferência terminar

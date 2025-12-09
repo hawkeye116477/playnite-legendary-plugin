@@ -6,7 +6,6 @@ common-display-download-task-finished-notifications = Desktop-Benachrichtigungen
 common-display-download-speed-in-bits = Downloadgeschwindigkeit in Bits pro Sekunde anzeigen
 common-unattended-install = Aktiviere unbeaufsichtigten Installationsmodus
 common-unattended-install-tool-tip = Sie müssen im Installationsfenster nichts auswählen und die Installation wird automatisch nach dem Herunterladen der benötigten Informationen gestartet.
-common-max-workers = Maximale Anzahl von Arbeits-Prozessen
 common-max-shared-memory = Maximale Anzahl an geteiltem Speicher (MB)
 common-connection-timeout = Verbindungsunterbrechung (Sek)
 common-space-available = Verfügbarer Speicherplatz:
