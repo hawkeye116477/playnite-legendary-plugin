@@ -6,3 +6,4 @@ pl-PL
 pt-BR
 ru-RU
 tr-TR
+zh-CN
