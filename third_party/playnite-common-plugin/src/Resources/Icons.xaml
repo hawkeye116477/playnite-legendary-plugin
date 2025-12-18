@@ -6,4 +6,6 @@
     <TextBlock x:Key="ModifyLaunchSettingsIcon" Text="&#xefe2;" FontFamily="{DynamicResource FontIcoFont}" FontWeight="Light" Foreground="{DynamicResource TextBrush}" />
     <TextBlock x:Key="InstallIcon" Text="&#xef08;" FontFamily="{DynamicResource FontIcoFont}" FontWeight="Light" Foreground="{DynamicResource TextBrush}" />
     <TextBlock x:Key="UninstallIcon" Text="&#xedec;" FontFamily="{DynamicResource FontIcoFont}" FontWeight="Light" Foreground="{DynamicResource TextBrush}" />
+    <TextBlock x:Key="ExtrasIcon" Text="&#xef3c;" FontFamily="{DynamicResource FontIcoFont}" FontWeight="Light" Foreground="{DynamicResource TextBrush}" />
+    <TextBlock x:Key="FinishInstallationIcon" Text="&#xeed7;" FontFamily="{DynamicResource FontIcoFont}" FontWeight="Light" Foreground="{DynamicResource TextBrush}" />
 </ResourceDictionary>
