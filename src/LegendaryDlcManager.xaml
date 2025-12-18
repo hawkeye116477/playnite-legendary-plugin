@@ -57,8 +57,8 @@
                 </Grid>
                 <StackPanel x:Name="TopADSP" DockPanel.Dock="Top">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" DockPanel.Dock="Top" Name="AvailableDlcsActionSP">
-                        <Button x:Name="InstallBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteInstallGame}}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xef07; {0}" Click="InstallBtn_Click" Margin="0,0,5,0" IsEnabled="False" />
-                        <Button x:Name="SelectAllAvDlcsBtn" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xeed9; {0}" Margin="0,0,5,0" Click="SelectAllAvDlcsBtn_Click"  />
+                        <Button x:Name="InstallBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteInstallGame}}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xef07; {0}" Click="InstallBtn_Click" Margin="0,0,8,0" IsEnabled="False" />
+                        <Button x:Name="SelectAllAvDlcsBtn" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xeed9; {0}" Margin="0,0,8,0" Click="SelectAllAvDlcsBtn_Click"  />
                     </StackPanel>
                     <Separator Margin="0,5,0,0" />
                     <ListBox BorderThickness="0" Name="AvailableDlcsLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="AvailableDlcsLB_SelectionChanged">
@@ -112,9 +112,9 @@
             <StackPanel Margin="10,5,0,5">
                 <StackPanel Name="InstalledDlcsSP">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
-                        <Button x:Name="UninstallBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteUninstallGame}}" ContentStringFormat="&#xedec; {0}" FontFamily="{DynamicResource FontIcoFont}" Click="UninstallBtn_Click" IsEnabled="False" Margin="0,0,5,0" />
+                        <Button x:Name="UninstallBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteUninstallGame}}" ContentStringFormat="&#xedec; {0}" FontFamily="{DynamicResource FontIcoFont}" Click="UninstallBtn_Click" IsEnabled="False" Margin="0,0,8,0" />
                         <Button x:Name="SelectAllInDlcsBtn" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" FontFamily="{DynamicResource FontIcoFont}" 
-                                ContentStringFormat="&#xeed9; {0}" Margin="0,0,5,0" Click="SelectAllInDlcsBtn_Click_1" />
+                                ContentStringFormat="&#xeed9; {0}" Margin="0,0,8,0" Click="SelectAllInDlcsBtn_Click_1" />
                     </StackPanel>
                     <Separator Margin="0,5,0,0" />
                     <ListBox BorderThickness="0" Name="InstalledDlcsLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="InstalledDlcsLB_SelectionChanged">

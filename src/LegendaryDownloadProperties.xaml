@@ -24,8 +24,9 @@
     </UserControl.Resources>
     <DockPanel Margin="0,0,0,10">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,10,0">
-            <Button x:Name="SaveBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSaveLabel}}" Click="SaveBtn_Click" Margin="0,0,5,0" />
-            <Button x:Name="CancelBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteCancelLabel}}" IsCancel="True" />
+            <Button Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSaveLabel}}" ContentStringFormat="&#xee00; {0}" FontFamily="{DynamicResource FontIcoFont}" Click="SaveBtn_Click" Margin="0,0,8,0" Name="SaveBtn" />
+            <Button Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteCancelLabel}}" ContentStringFormat="&#xec4f; {0}"
+                    FontFamily="{DynamicResource FontIcoFont}" Name="CancelBtn" IsCancel="True" />
         </StackPanel>
         <Grid DockPanel.Dock="Bottom" Margin="10,5" x:Name="SizeGrd" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
