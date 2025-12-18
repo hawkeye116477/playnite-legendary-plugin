@@ -61,7 +61,9 @@
                         </StackPanel>
                         <Button Margin="0,5,0,0" HorizontalAlignment="Left" Name="LoginAlternativeBtn" Content="{common:Localize Key={x:Static system:LOC.LegendaryAuthenticateAlternativeLabel}}" Visibility="Collapsed" Click="LoginAlternativeBtn_Click"/>
                     </StackPanel>
-                    <Button Content="{common:Localize Key={x:Static system:LOC.CommonMigrateGamesOriginal},Args='originalPluginShortName=Epic'}" HorizontalAlignment="Left" Margin="0,5,0,15" Name="MigrateEpicBtn" IsEnabled="False" Click="MigrateEpicBtn_Click"></Button>
+                    <Button Content="{common:Localize Key={x:Static system:LOC.CommonMigrateGamesOriginal},Args='originalPluginShortName=Epic'}" HorizontalAlignment="Left" Margin="0,5,0,0" Name="MigrateEpicBtn" IsEnabled="False" Click="MigrateEpicBtn_Click" ToolTip="Epic => Legendary"></Button>
+                    <Button Content="{common:Localize Key={x:Static system:LOC.CommonRevertMigrateGames},Args='originalPluginShortName=Epic'}" HorizontalAlignment="Left" Margin="0,15,0,15" Name="MigrateRevertBtn" IsEnabled="False" Click="MigrateRevertBtn_Click" 
+                            ToolTip="Legendary => Epic"></Button>
                     <CheckBox DockPanel.Dock="Top" Margin="0,0,0,10"
                         IsChecked="{Binding Settings.LaunchOffline}"
                         Content="{common:Localize Key={x:Static system:LOC.LegendaryLaunchOffline}}" />
