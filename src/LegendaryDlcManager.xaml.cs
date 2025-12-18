@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -23,8 +24,8 @@ namespace LegendaryLibraryNS
     public partial class LegendaryDlcManager : UserControl
     {
         private LegendaryGameInfo.Rootobject manifest;
-        private Game Game => DataContext as Game;
-        public string GameId => Game.GameId;
+        private Game Game;
+        public string GameId;
         private IPlayniteAPI playniteAPI = API.Instance;
         private ILogger logger = LogManager.GetLogger();
         public Window DlcManagerWindow => Window.GetWindow(this);
@@ -41,14 +42,24 @@ namespace LegendaryLibraryNS
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            Game = DataContext as Game;
+            GameId = Game.GameId;
             if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
             {
                 CloseWindowTab.Visibility = Visibility.Visible;
             }
             CommonHelpers.SetControlBackground(this);
+            await RefreshAll();
+        }
+
+        private async Task RefreshAll()
+        {
+            NoAvailableDlcsTB.Visibility = Visibility.Collapsed;
+            NoInstalledDlcsTB.Visibility = Visibility.Collapsed;
             BottomADGrd.Visibility = Visibility.Collapsed;
             TopADSP.Visibility = Visibility.Collapsed;
             InstalledDlcsSP.Visibility = Visibility.Collapsed;
+            ReloadABtn.IsEnabled = false;
             LoadingATB.Visibility = Visibility.Visible;
             LoadingITB.Visibility = Visibility.Visible;
             var gameData = new LegendaryGameInfo.Game
@@ -147,6 +158,7 @@ namespace LegendaryLibraryNS
                 BottomADGrd.Visibility = Visibility.Collapsed;
                 AvailableDlcsAOBrd.Visibility = Visibility.Collapsed;
             }
+            ReloadABtn.IsEnabled = true;
         }
 
         private async void UninstallBtn_Click(object sender, RoutedEventArgs e)
@@ -351,6 +363,37 @@ namespace LegendaryLibraryNS
                 {
                     Window.GetWindow(this).Close();
                 }
+            }
+        }
+
+        private async void ReloadABtn_Click(object sender, RoutedEventArgs e)
+        {
+            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonReloadConfirm), LocalizationManager.Instance.GetString(LOC.CommonReload), MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                InstallBtn.IsEnabled = false;
+                DownloadSizeTB.Text = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoadingLabel);
+              
+                var cacheDirs = new List<string>()
+                {
+                    LegendaryLibrary.Instance.GetCachePath("catalogcache"),
+                    LegendaryLibrary.Instance.GetCachePath("infocache"),
+                    LegendaryLibrary.Instance.GetCachePath("sdlcache"),
+                    LegendaryLibrary.Instance.GetCachePath("updateinfocache"),
+                    Path.Combine(LegendaryLauncher.ConfigPath, "metadata")
+                };
+
+                foreach (var cacheDir in cacheDirs)
+                {
+                    foreach (var file in Directory.GetFiles(cacheDir, "*", SearchOption.AllDirectories))
+                    {
+                        if (file.Contains(GameId))
+                        {
+                            File.Delete(file);
+                        }
+                    }
+                }
+                await RefreshAll();
             }
         }
     }

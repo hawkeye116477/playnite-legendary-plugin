@@ -59,6 +59,8 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" DockPanel.Dock="Top" Name="AvailableDlcsActionSP">
                         <Button x:Name="InstallBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteInstallGame}}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xef07; {0}" Click="InstallBtn_Click" Margin="0,0,8,0" IsEnabled="False" />
                         <Button x:Name="SelectAllAvDlcsBtn" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xeed9; {0}" Margin="0,0,8,0" Click="SelectAllAvDlcsBtn_Click"  />
+                        <Button x:Name="ReloadABtn" Content="{common:Localize Key={x:Static system:LOC.CommonReload}}" ContentStringFormat="&#xefd1; {0}"
+                          FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,8,0" IsEnabled="False" Click="ReloadABtn_Click" />
                     </StackPanel>
                     <Separator Margin="0,5,0,0" />
                     <ListBox BorderThickness="0" Name="AvailableDlcsLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="AvailableDlcsLB_SelectionChanged">
