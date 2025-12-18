@@ -680,21 +680,43 @@ namespace LegendaryLibraryNS
                             forcefulInstallerCTS?.Dispose();
                         }
                         await WaitUntilLegendaryCloses();
-                        var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", selectedRow.gameID + ".resume");
-                        if (File.Exists(resumeFile))
+                        const int maxRetries = 5;
+                        int delayMs = 100;
+
+                        for (int i = 0; i < maxRetries; i++)
                         {
-                            File.Delete(resumeFile);
-                        }
-                        var repairFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", selectedRow.gameID + ".repair");
-                        if (File.Exists(repairFile))
-                        {
-                            File.Delete(repairFile);
-                        }
-                        if (selectedRow.fullInstallPath != null && selectedRow.downloadProperties.downloadAction == DownloadAction.Install)
-                        {
-                            if (Directory.Exists(selectedRow.fullInstallPath))
+                            try
                             {
-                                Directory.Delete(selectedRow.fullInstallPath, true);
+                                var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", selectedRow.gameID + ".resume");
+                                if (File.Exists(resumeFile))
+                                {
+                                    File.Delete(resumeFile);
+                                }
+                                var repairFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", selectedRow.gameID + ".repair");
+                                if (File.Exists(repairFile))
+                                {
+                                    File.Delete(repairFile);
+                                }
+                                if (selectedRow.fullInstallPath != null && selectedRow.downloadProperties.downloadAction == DownloadAction.Install)
+                                {
+                                    if (Directory.Exists(selectedRow.fullInstallPath))
+                                    {
+                                        Directory.Delete(selectedRow.fullInstallPath, true);
+                                    }
+                                }
+                            }
+                            catch (Exception rex)
+                            {
+                                if (i < maxRetries - 1)
+                                {
+                                    await Task.Delay(delayMs);
+                                    delayMs *= 2;
+                                }
+                                else
+                                {
+                                    logger.Warn(rex, $"Can't cleanup after cancellation. Please try removing files manually.");
+                                    break;
+                                }
                             }
                         }
                         selectedRow.status = DownloadStatus.Canceled;
