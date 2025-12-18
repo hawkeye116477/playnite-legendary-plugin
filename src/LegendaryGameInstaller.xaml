@@ -60,12 +60,14 @@
                 VerticalAlignment="Top">
                 <Button x:Name="RepairBtn" Content="{common:Localize Key={x:Static system:LOC.CommonRepair}}" ContentStringFormat="&#xefd2; {0}" 
                     FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
-                    Margin="0,0,5,0" Visibility="Collapsed" Click="RepairBtn_Click" IsEnabled="False"/>
+                    Margin="0,0,8,0" Visibility="Collapsed" Click="RepairBtn_Click" IsEnabled="False"/>
                 <Button x:Name="InstallBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteInstallGame}}" ContentStringFormat="&#xef07; {0}"
-                    FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
+                    FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,8,0"
                     Click="InstallBtn_Click" IsEnabled="False" />
+                <Button x:Name="ReloadBtn" Content="{common:Localize Key={x:Static system:LOC.CommonReload}}" ContentStringFormat="&#xefd1; {0}"
+                    FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="ReloadBtn_Click" Margin="0,0,8,0" IsEnabled="False"  />
                 <Button x:Name="CancelBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteCancelLabel}}" ContentStringFormat="&#xec4f; {0}"
-                    FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,0"
+                    FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,8,0"
                     Click="CancelBtn_Click" IsCancel="True" />
             </StackPanel>
             <Separator Margin="0,5"/>

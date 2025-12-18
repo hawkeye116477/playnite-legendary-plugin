@@ -68,7 +68,7 @@ namespace LegendaryLibraryNS.Models
                 set => SetValue(ref _downloadedNumber, value);
             }
             public DownloadProperties downloadProperties { get; set; } = new DownloadProperties();
-            public bool? extraContentAvailable { get; set; }
+            public bool? extraContentAvailable { get; set; } = null;
         }
     }
 

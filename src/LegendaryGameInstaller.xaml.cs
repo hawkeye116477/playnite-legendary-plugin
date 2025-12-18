@@ -6,6 +6,7 @@ using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
 using Playnite.SDK;
+using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -168,16 +169,17 @@ namespace LegendaryLibraryNS
             {
                 maxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
             }
-            installData.downloadProperties.downloadAction = downloadAction;
-            installData.downloadProperties.installPath = installPath;
-            installData.downloadProperties.installPrerequisites = (bool)PrerequisitesChk.IsChecked;
-            installData.downloadProperties.prerequisitesName = prereqName;
-            installData.downloadProperties.enableReordering = (bool)ReorderingChk.IsChecked;
-            installData.downloadProperties.ignoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked;
-            installData.downloadProperties.maxWorkers = maxWorkers;
-            installData.downloadProperties.maxSharedMemory = maxSharedMemory;
-            installData.extraContentAvailable = null;
-            return installData.downloadProperties;
+            var newDownloadProperties = new DownloadProperties();
+            newDownloadProperties = Serialization.GetClone(installData.downloadProperties);
+            newDownloadProperties.downloadAction = downloadAction;
+            newDownloadProperties.installPath = installPath;
+            newDownloadProperties.installPrerequisites = (bool)PrerequisitesChk.IsChecked;
+            newDownloadProperties.prerequisitesName = prereqName;
+            newDownloadProperties.enableReordering = (bool)ReorderingChk.IsChecked;
+            newDownloadProperties.ignoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked;
+            newDownloadProperties.maxWorkers = maxWorkers;
+            newDownloadProperties.maxSharedMemory = maxSharedMemory;
+            return newDownloadProperties;
         }
 
         private async void LegendaryGameInstallerUC_Loaded(object sender, RoutedEventArgs e)
@@ -208,6 +210,26 @@ namespace LegendaryLibraryNS
             {
                 Directory.CreateDirectory(cacheInfoPath);
             }
+            await RefreshAll();
+            if (settings.UnattendedInstall && (MultiInstallData.First().downloadProperties.downloadAction == DownloadAction.Install))
+            {
+                await StartTask(DownloadAction.Install);
+            }
+        }
+
+        public async Task RefreshAll()
+        {
+            ReloadBtn.IsEnabled = false;
+            AllDlcsChk.Visibility = Visibility.Collapsed;
+            AllOrNothingChk.Visibility = Visibility.Collapsed;
+            ExtraContentBrd.Visibility = Visibility.Collapsed;
+            PrerequisitesChk.Visibility = Visibility.Collapsed;
+            GamesBrd.Visibility = Visibility.Collapsed;
+            InstallBtn.IsEnabled = false;
+            RepairBtn.IsEnabled = false;
+            UpdateSpaceInfo(SelectedGamePathTxt.Text);
+
+            var settings = LegendaryLibrary.GetSettings();
 
             var eaAppGames = new List<string>();
             var ubisoftOnlyGames = new List<string>();
@@ -217,15 +239,6 @@ namespace LegendaryLibraryNS
             LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
 
             bool gamesListShouldBeDisplayed = false;
-
-            var clientApi = new EpicAccountClient(playniteAPI);
-            var userLoggedIn = await clientApi.GetIsUserLoggedIn();
-            if (!userLoggedIn)
-            {
-                playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameInstallError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired) }));
-                InstallerWindow.Close();
-                return;
-            }
 
             var installedAppList = LegendaryLauncher.GetInstalledAppList();
             foreach (var installData in MultiInstallData.ToList())
@@ -549,8 +562,14 @@ namespace LegendaryLibraryNS
 
             CalculateTotalSize();
 
-            if (MultiInstallData.Count <= 0)
+            var clientApi = new EpicAccountClient(playniteAPI);
+            var userLoggedIn = await clientApi.GetIsUserLoggedIn();
+            if (MultiInstallData.Count <= 0 || !userLoggedIn)
             {
+                if (!userLoggedIn)
+                {
+                    playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameInstallError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired) }));
+                }
                 InstallerWindow.Close();
                 return;
             }
@@ -559,16 +578,8 @@ namespace LegendaryLibraryNS
                 InstallBtn.IsEnabled = true;
                 RepairBtn.IsEnabled = true;
             }
-            else if (MultiInstallData.First().downloadProperties.downloadAction != DownloadAction.Repair)
-            {
-                InstallerWindow.Close();
-            }
-            if (settings.UnattendedInstall && (MultiInstallData.First().downloadProperties.downloadAction == DownloadAction.Install))
-            {
-                await StartTask(DownloadAction.Install);
-            }
+            ReloadBtn.IsEnabled = true;
         }
-
         private void CalculateTotalSize()
         {
             downloadSizeNumber = 0;
@@ -842,6 +853,42 @@ namespace LegendaryLibraryNS
 
                 }
                 CalculateTotalSize();
+            }
+        }
+
+        private async void ReloadBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonReloadConfirm), LocalizationManager.Instance.GetString(LOC.CommonReload), MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                InstallBtn.IsEnabled = false;
+                DownloadSizeTB.Text = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoadingLabel);
+                InstallSizeTB.Text = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoadingLabel);
+                AfterInstallingTB.Text = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoadingLabel);
+
+                var cacheDirs = new List<string>()
+                {
+                    LegendaryLibrary.Instance.GetCachePath("catalogcache"),
+                    LegendaryLibrary.Instance.GetCachePath("infocache"),
+                    LegendaryLibrary.Instance.GetCachePath("sdlcache"),
+                    LegendaryLibrary.Instance.GetCachePath("updateinfocache"),
+                    Path.Combine(LegendaryLauncher.ConfigPath, "metadata")
+                };
+
+                foreach (var cacheDir in cacheDirs)
+                {
+                    foreach (var file in Directory.GetFiles(cacheDir, "*", SearchOption.AllDirectories))
+                    {
+                        foreach (var installData in MultiInstallData)
+                        {
+                            if (file.Contains(installData.gameID))
+                            {
+                                File.Delete(file);
+                            }
+                        }
+                    }
+                }
+                await RefreshAll();
             }
         }
     }
