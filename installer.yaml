@@ -1,5 +1,16 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.12.0
+    RequiredApiVersion: 6.14.0
+    ReleaseDate: 2025-12-19
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.12.0/LegendaryLibrary_1_12_0.pext
+    Changelog:
+      - Added possibility to faster reload game data in Installer and DLC Manager
+      - Added possibility to finish games installation by manual (sometimes depends
+        needs to be installed)
+      - Added possibility to revert migration from Epic to Legendary
+      - Added retry logic for some things
+      - Fixed crashing
   - Version: 1.11.3
     RequiredApiVersion: 6.14.0
     ReleaseDate: 2025-12-09
