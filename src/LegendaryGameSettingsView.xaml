@@ -71,7 +71,7 @@
                     <CheckBox Name="AutoSyncPlaytimeChk" Content="{common:Localize Key={x:Static system:LOC.CommonSyncPlaytime}}" Margin="0,0,0,10"></CheckBox>
                     <StackPanel x:Name="CloudSavesSP">
                         <CheckBox Name="AutoSyncSavesChk" Content="{common:Localize Key={x:Static system:LOC.CommonAutoSyncSaves}}" Margin="0,0,0,10" Click="AutoSyncSavesChk_Click"></CheckBox>
-                        <Grid>
+                        <Grid IsEnabled="{Binding ElementName=AutoSyncSavesChk, Path=IsChecked}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
