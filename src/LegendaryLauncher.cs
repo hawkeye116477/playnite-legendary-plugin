@@ -21,6 +21,15 @@ namespace LegendaryLibraryNS
 {
     public class LegendaryLauncher
     {
+        private static readonly RetryHandler retryHandler = new RetryHandler(new HttpClientHandler());
+        public static readonly HttpClient httpClient = new HttpClient(retryHandler);
+        public static string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Vivaldi/5.5.2805.50";
+
+        static LegendaryLauncher()
+        {
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", userAgent);
+        }
+
         public static string ConfigPath
         {
             get
@@ -533,10 +542,10 @@ namespace LegendaryLibraryNS
                 }
                 if (!File.Exists(cacheSDLFile))
                 {
-                    var httpClient = new HttpClient();
-                    var response = await httpClient.GetAsync("https://api.legendary.gl/v1/sdl/" + installData.gameID + ".json");
-                    if (response.IsSuccessStatusCode)
+                    try
                     {
+                        using var response = await httpClient.GetAsync($"https://api.legendary.gl/v1/sdl/{installData.gameID}.json");
+                        response.EnsureSuccessStatusCode();
                         content = await response.Content.ReadAsStringAsync();
                         if (!Directory.Exists(cacheSDLPath))
                         {
@@ -544,7 +553,10 @@ namespace LegendaryLibraryNS
                         }
                         File.WriteAllText(cacheSDLFile, content);
                     }
-                    httpClient.Dispose();
+                    catch (Exception ex)
+                    {
+                        logger.Error(ex, $"An error occured during downloading sdl data for {installData.gameID}");
+                    }
                 }
                 else
                 {
@@ -688,12 +700,11 @@ namespace LegendaryLibraryNS
             }
             if (!File.Exists(cacheVersionFile) || !correctJson)
             {
-                var httpClient = new HttpClient();
-                httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Vivaldi/5.5.2805.50");
                 var repoOwner = GetUpdateSource();
-                var response = await httpClient.GetAsync($"https://api.github.com/repos/{repoOwner}/legendary/releases/latest");
-                if (response.IsSuccessStatusCode)
+                try
                 {
+                    using var response = await httpClient.GetAsync($"https://api.github.com/repos/{repoOwner}/legendary/releases/latest");
+                    response.EnsureSuccessStatusCode();
                     content = await response.Content.ReadAsStringAsync();
                     if (!Directory.Exists(cacheVersionPath))
                     {
@@ -702,11 +713,10 @@ namespace LegendaryLibraryNS
                     File.WriteAllText(cacheVersionFile, content);
                     newVersionInfoContent = Serialization.FromJson<LauncherVersion>(content);
                 }
-                else
+                catch (Exception ex)
                 {
-                    logger.Error("An error occurred while downloading Legendary's version info.");
+                    logger.Error(ex, "An error occurred while downloading Legendary's version info.");
                 }
-                httpClient.Dispose();
             }
             if (!Version.TryParse(newVersionInfoContent.Tag_name, out Version validVersion))
             {

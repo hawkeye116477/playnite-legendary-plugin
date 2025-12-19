@@ -44,6 +44,8 @@ namespace LegendaryLibraryNS.Services
         private readonly string libraryItemsUrl = @"";
         private const string authEncodedString = "MzRhMDJjZjhmNDQxNGUyOWIxNTkyMTg3NmRhMzZmOWE6ZGFhZmJjY2M3Mzc3NDUwMzlkZmZlNTNkOTRmYzc2Y2Y=";
         private const string userAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) EpicGamesLauncher/18.9.0-45233261+++Portal+Release-Live";
+        public static readonly RetryHandler retryHandler = new RetryHandler(new HttpClientHandler());
+        public static readonly HttpClient httpClient = new HttpClient(retryHandler);
 
         public EpicAccountClient(IPlayniteAPI api)
         {
@@ -123,22 +125,28 @@ namespace LegendaryLibraryNS.Services
 
         public async Task AuthenticateUsingAuthCode(string authorizationCode)
         {
-            using var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Clear();
-            httpClient.DefaultRequestHeaders.Add("Authorization", "basic " + authEncodedString);
             using var content = new StringContent($"grant_type=authorization_code&code={authorizationCode}&token_type=eg1");
             content.Headers.Clear();
             content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-            var response = await httpClient.PostAsync(oauthUrl, content);
-            if (response.IsSuccessStatusCode)
+
+            var request = new HttpRequestMessage(HttpMethod.Post, oauthUrl)
             {
+                Content = content
+            };
+            request.Headers.Add("User-Agent", userAgent);
+            request.Headers.Add("Authorization", "basic " + authEncodedString);
+
+            try
+            {
+                using var response = await httpClient.SendAsync(request);
+                response.EnsureSuccessStatusCode();
                 var respContent = await response.Content.ReadAsStringAsync();
                 FileSystem.CreateDirectory(Path.GetDirectoryName(tokensPath));
                 File.WriteAllText(tokensPath, respContent);
             }
-            else
+            catch (Exception ex)
             {
-                logger.Error($"Failed to authenticate with the Epic Games Store. Error: {response.ReasonPhrase}");
+                logger.Error(ex, $"Failed to authenticate with the Epic Games Store");
             }
         }
 
@@ -272,52 +280,55 @@ namespace LegendaryLibraryNS.Services
 
         private async Task<bool> RenewTokens(string refreshToken)
         {
-            using var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Clear();
-            httpClient.DefaultRequestHeaders.Add("Authorization", "basic " + authEncodedString);
             using var content = new StringContent($"grant_type=refresh_token&refresh_token={refreshToken}&token_type=eg1");
             content.Headers.Clear();
             content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-            var response = await httpClient.PostAsync(oauthUrl, content);
-            if (response.IsSuccessStatusCode)
+            var request = new HttpRequestMessage(HttpMethod.Post, oauthUrl)
             {
+                Content = content
+            };
+            request.Headers.Add("User-Agent", userAgent);
+            request.Headers.Add("Authorization", "basic " + authEncodedString);
+
+            using var response = await httpClient.SendAsync(request);
+            try
+            {
+                response.EnsureSuccessStatusCode();
                 var respContent = await response.Content.ReadAsStringAsync();
                 FileSystem.CreateDirectory(Path.GetDirectoryName(tokensPath));
                 File.WriteAllText(tokensPath, respContent);
                 return true;
             }
-            else
+            catch (Exception ex)
             {
-                logger.Error("Failed to renew tokens.");
+                logger.Error(ex, "Failed to renew tokens.");
                 return false;
             }
         }
 
         private async Task<Tuple<string, T>> InvokeRequest<T>(string url, OauthResponse tokens) where T : class
         {
-            using (var httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Clear();
-                httpClient.DefaultRequestHeaders.Add("Authorization", tokens.token_type + " " + tokens.access_token);
-                var response = await httpClient.GetAsync(url);
-                var str = await response.Content.ReadAsStringAsync();
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Add("User-Agent", userAgent);
+            request.Headers.Add("Authorization", tokens.token_type + " " + tokens.access_token);
 
-                if (Serialization.TryFromJson<ErrorResponse>(str, out var error) && !string.IsNullOrEmpty(error.errorCode))
+            using var response = await httpClient.SendAsync(request);
+            var str = await response.Content.ReadAsStringAsync();
+            if (Serialization.TryFromJson<ErrorResponse>(str, out var error) && !string.IsNullOrEmpty(error.errorCode))
+            {
+                throw new TokenException(error.errorCode);
+            }
+            else
+            {
+                try
                 {
-                    throw new TokenException(error.errorCode);
+                    return new Tuple<string, T>(str, Serialization.FromJson<T>(str));
                 }
-                else
+                catch
                 {
-                    try
-                    {
-                        return new Tuple<string, T>(str, Serialization.FromJson<T>(str));
-                    }
-                    catch
-                    {
-                        // For cases like #134, where the entire service is down and doesn't even return valid error messages.
-                        logger.Error(str);
-                        throw new Exception("Failed to get data from Epic service.");
-                    }
+                    // For cases like #134, where the entire service is down and doesn't even return valid error messages.
+                    logger.Error(str);
+                    throw new Exception("Failed to get data from Epic service.");
                 }
             }
         }
@@ -345,54 +356,45 @@ namespace LegendaryLibraryNS.Services
             api.Dialogs.ActivateGlobalProgress(async (a) =>
             {
                 a.IsIndeterminate = true;
-                using (var httpClient = new HttpClient())
+                var userLoggedIn = await GetIsUserLoggedIn();
+                if (userLoggedIn)
                 {
-                    httpClient.DefaultRequestHeaders.Clear();
-                    var userLoggedIn = await GetIsUserLoggedIn();
-                    if (userLoggedIn)
+                    var userData = LoadTokens();
+                    if (userData != null)
                     {
-                        var userData = LoadTokens();
-                        if (userData != null)
+                        var uri = $"https://library-service.live.use1a.on.epicgames.com/library/api/public/playtime/account/{userData.account_id}";
+                        PlaytimePayload playtimePayload = new PlaytimePayload
                         {
-                            httpClient.DefaultRequestHeaders.Add("Authorization", userData.token_type + " " + userData.access_token);
-                            var uri = $"https://library-service.live.use1a.on.epicgames.com/library/api/public/playtime/account/{userData.account_id}";
-                            PlaytimePayload playtimePayload = new PlaytimePayload
-                            {
-                                artifactId = game.GameId,
-                                machineId = LegendaryLibrary.GetSettings().SyncPlaytimeMachineId
-                            };
-                            DateTime now = DateTime.UtcNow;
-                            playtimePayload.endTime = endTime;
-                            playtimePayload.startTime = startTime;
-                            var playtimeJson = Serialization.ToJson(playtimePayload);
-                            var content = new StringContent(playtimeJson, Encoding.UTF8, "application/json");
-                            try
-                            {
-                                var response = await httpClient.PutAsync(uri, content);
-                                response.EnsureSuccessStatusCode();
-                            }
-                            catch (HttpRequestException exception)
-                            {
-                                if (attempts > 1)
-                                {
-                                    attempts -= 1;
-                                    logger.Debug($"Retrying playtime upload for {game.Name}. Attempts left: {attempts}");
-                                    await Task.Delay(2000);
-                                    UploadPlaytime(startTime, endTime, game, attempts);
-                                }
-                                else
-                                {
-                                    api.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.CommonUploadPlaytimeError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }));
-                                    logger.Error($"An error occured during uploading playtime to the cloud: {exception}.");
-                                }
-                            }
+                            artifactId = game.GameId,
+                            machineId = LegendaryLibrary.GetSettings().SyncPlaytimeMachineId
+                        };
+                        DateTime now = DateTime.UtcNow;
+                        playtimePayload.endTime = endTime;
+                        playtimePayload.startTime = startTime;
+                        var playtimeJson = Serialization.ToJson(playtimePayload);
+                        var content = new StringContent(playtimeJson, Encoding.UTF8, "application/json");
+                        var request = new HttpRequestMessage(HttpMethod.Put, uri)
+                        {
+                            Content = content
+                        };
+                        request.Headers.Add("User-Agent", userAgent);
+                        request.Headers.Add("Authorization", userData.token_type + " " + userData.access_token);
+                        try
+                        {
+                            using var response = await httpClient.SendAsync(request);
+                            response.EnsureSuccessStatusCode();
+                        }
+                        catch (Exception ex)
+                        {
+                            api.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.CommonUploadPlaytimeError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }));
+                            logger.Error(ex, $"An error occured during uploading playtime to the cloud.");
                         }
                     }
-                    else
-                    {
-                        logger.Error($"Can't upload playtime, because user is not authenticated.");
-                        api.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedInError));
-                    }
+                }
+                else
+                {
+                    logger.Error($"Can't upload playtime, because user is not authenticated.");
+                    api.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedInError));
                 }
             }, globalProgressOptions);
         }

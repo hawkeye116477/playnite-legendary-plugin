@@ -156,6 +156,9 @@
     <Compile Include="..\third_party\playnite-common-plugin\src\RelativePath.cs">
       <Link>Shared\RelativePath.cs</Link>
     </Compile>
+    <Compile Include="..\third_party\playnite-common-plugin\src\RetryHandler.cs">
+      <Link>Shared\RetryHandler.cs</Link>
+    </Compile>
     <Compile Include="..\third_party\playnite-common-plugin\src\Converters\LongToDateConverter.cs">
       <Link>Shared\Converters\LongToDateConverter.cs</Link>
     </Compile>
