@@ -230,6 +230,10 @@ namespace System
         /// </summary>
         public const string CommonManualSyncSaves = "common-manual-sync-saves";
         /// <summary>
+        /// {$overlayName} Overlay
+        /// </summary>
+        public const string CommonOverlay = "common-overlay";
+        /// <summary>
         /// Download all DLCs
         /// </summary>
         public const string CommonDownloadAllDlcs = "common-download-all-dlcs";
@@ -265,6 +269,14 @@ namespace System
         /// Preferred CDN
         /// </summary>
         public const string CommonDownloaderPreferredCdn = "common-downloader-preferred-cdn";
+        /// <summary>
+        /// Finish installation of games
+        /// </summary>
+        public const string CommonFinishInstallation = "common-finish-installation";
+        /// <summary>
+        /// No games requiring finishing installation.
+        /// </summary>
+        public const string CommonNoFinishNeeded = "common-no-finish-needed";
         /// <summary>
         /// {$launcherName} Path
         /// </summary>

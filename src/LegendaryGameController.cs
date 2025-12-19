@@ -270,50 +270,11 @@ namespace LegendaryLibraryNS
 
             if (gameSettings.InstallPrerequisites)
             {
-                gameSettings.InstallPrerequisites = false;
-                var commonHelpers = LegendaryLibrary.Instance.commonHelpers;
-                commonHelpers.SaveJsonSettingsToFile(gameSettings, "GamesSettings", Game.GameId, true);
-                var appList = LegendaryLauncher.GetInstalledAppList();
-                if (appList.ContainsKey(Game.GameId))
+                GlobalProgressOptions installProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonFinishingInstallation), false);
+                playniteAPI.Dialogs.ActivateGlobalProgress((a) =>
                 {
-                    var installedGameInfo = appList[Game.GameId];
-                    if (installedGameInfo.Prereq_info != null)
-                    {
-                        var prereq = installedGameInfo.Prereq_info;
-                        var prereqName = "";
-                        if (!prereq.name.IsNullOrEmpty())
-                        {
-                            prereqName = prereq.name;
-                        }
-                        var prereqPath = "";
-                        if (!prereq.path.IsNullOrEmpty())
-                        {
-                            prereqPath = prereq.path;
-                        }
-                        var prereqArgs = "";
-                        if (!prereq.args.IsNullOrEmpty())
-                        {
-                            prereqArgs = prereq.args;
-                        }
-                        if (prereqPath != "")
-                        {
-                            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.LegendaryInstallingPrerequisites, new Dictionary<string, IFluentType> { ["prerequisiteName"] = (FluentString)prereqName }), false);
-                            playniteAPI.Dialogs.ActivateGlobalProgress((a) =>
-                            {
-                                try
-                                {
-                                    ProcessStarter.StartProcessWait(Path.GetFullPath(Path.Combine(installedGameInfo.Install_path, prereqPath)),
-                                                                    prereqArgs,
-                                                                    "");
-                                }
-                                catch (Exception ex)
-                                {
-                                    logger.Error($"Failed to launch prerequisites executable. Error: {ex.Message}");
-                                }
-                            }, globalProgressOptions);
-                        }
-                    }
-                }
+                    LegendaryLauncher.CompleteGameInstallation(Game.GameId); ;
+                }, installProgressOptions);
             }
 
             if (gameSettings?.LaunchOffline != null)

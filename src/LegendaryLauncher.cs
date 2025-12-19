@@ -814,5 +814,51 @@ namespace LegendaryLibraryNS
             }
             return launcherSource;
         }
+
+        public static void CompleteGameInstallation(string gameId)
+        {
+            var logger = LogManager.GetLogger();
+            var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameId);
+            var appList = GetInstalledAppList();
+            if (appList.ContainsKey(gameId))
+            {
+                var installedGameInfo = appList[gameId];
+                if (installedGameInfo.Prereq_info != null)
+                {
+                    var prereq = installedGameInfo.Prereq_info;
+                    var prereqName = "";
+                    if (!prereq.name.IsNullOrEmpty())
+                    {
+                        prereqName = prereq.name;
+                    }
+                    var prereqPath = "";
+                    if (!prereq.path.IsNullOrEmpty())
+                    {
+                        prereqPath = prereq.path;
+                    }
+                    var prereqArgs = "";
+                    if (!prereq.args.IsNullOrEmpty())
+                    {
+                        prereqArgs = prereq.args;
+                    }
+                    if (prereqPath != "")
+                    {
+                        try
+                        {
+                            ProcessStarter.StartProcessWait(Path.GetFullPath(Path.Combine(installedGameInfo.Install_path, prereqPath)),
+                                                            prereqArgs,
+                                                            "");
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.Error($"Failed to launch prerequisites executable. Error: {ex.Message}");
+                        }
+                    }
+                }
+                gameSettings.InstallPrerequisites = false;
+                var commonHelpers = LegendaryLibrary.Instance.commonHelpers;
+                commonHelpers.SaveJsonSettingsToFile(gameSettings, "GamesSettings", gameId, true);
+            }
+        }
     }
 }

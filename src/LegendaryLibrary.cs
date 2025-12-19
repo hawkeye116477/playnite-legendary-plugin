@@ -991,6 +991,48 @@ namespace LegendaryLibraryNS
                     }
                 };
             }
+
+            yield return new MainMenuItem
+            {
+                Description = LocalizationManager.Instance.GetString(LOC.CommonFinishInstallation),
+                MenuSection = $"@{Instance.Name}",
+                Icon = "FinishInstallationIcon",
+                Action = (args) =>
+                {
+                    var installedAppList = LegendaryLauncher.GetInstalledAppList();
+                    var gamesToCompleteInstall = new Dictionary<string, Installed>();
+
+                    foreach (var game in installedAppList)
+                    {
+                        var gameSettings = LegendaryGameSettingsView.LoadGameSettings(game.Key);
+                        if (gameSettings.InstallPrerequisites)
+                        {
+                            gamesToCompleteInstall.Add(game.Key, game.Value);
+                        }
+                    }
+
+                    if (gamesToCompleteInstall.Any())
+                    {
+                        var installProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonFinishingInstallation), false) { IsIndeterminate = false };
+                        PlayniteApi.Dialogs.ActivateGlobalProgress(async (progress) =>
+                        {
+                            progress.ProgressMaxValue = gamesToCompleteInstall.Count;
+                            int current = 0;
+                            foreach (var game in gamesToCompleteInstall)
+                            {
+                                progress.Text = $"{LocalizationManager.Instance.GetString(LOC.CommonFinishingInstallation)} ({game.Value.Title})";
+                                LegendaryLauncher.CompleteGameInstallation(game.Key);
+                                current++;
+                                progress.CurrentProgressValue = current;
+                            }
+                        }, installProgressOptions);
+                    }
+                    else
+                    {
+                        PlayniteApi.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNoFinishNeeded));
+                    }
+                }
+            };
         }
 
     }
