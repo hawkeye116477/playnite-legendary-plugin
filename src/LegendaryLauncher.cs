@@ -480,7 +480,7 @@ namespace LegendaryLibraryNS
                     manifest.Game = new LegendaryGameInfo.Game
                     {
                         App_name = gameID,
-                        Title = LocalizationManager.Instance.GetString(LOC.LegendaryEosOverlay)
+                        Title = LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS"})
                     };
                     manifest.Manifest = new LegendaryGameInfo.Manifest();
                     string[] lines = result.StandardError.Split(new[] { Environment.NewLine }, StringSplitOptions.None);

@@ -4,7 +4,6 @@ legendary-offline-mode = Offline mode
 legendary-http-only-download = Disable HTTPS (useful for CDNs e.g. LanCache)
 legendary-enable-reordering = Enable reordering optimization
 legendary-enable-reordering-tool-tip = This can reduce RAM requirements during download (may not work properly for some titles).
-legendary-eos-overlay = EOS Overlay
 legendary-ignore-free-space = Ignore free space
 legendary-ignore-free-space-tool-tip = Do not abort if not enough free space is available.
 legendary-memory-error = Current shared memory cache is smaller than required: { $currentMemory } < { $requiredMemory }. Try to enable reordering optimization to reduce memory usage or increase maximum amount of shared memory.

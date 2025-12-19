@@ -171,7 +171,7 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="20">
                     <StackPanel Margin="0,0,0,20">
-                        <TextBlock Text="{common:Localize Key={x:Static system:LOC.LegendaryEosOverlay}}" FontSize="18"
+                        <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonOverlay},Args='overlayName=EOS'}" FontSize="18"
                         Margin="0,0,0,2" />
                         <Separator Margin="0,0,0,10" />
                         <Grid>

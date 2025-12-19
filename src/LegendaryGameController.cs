@@ -723,7 +723,7 @@ namespace LegendaryLibraryNS
             if (LegendaryLauncher.IsEOSOverlayInstalled)
             {
                 LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
-                var overlayToUpdate = await legendaryUpdateController.CheckGameUpdates(LocalizationManager.Instance.GetString(LOC.LegendaryEosOverlay), "eos-overlay");
+                var overlayToUpdate = await legendaryUpdateController.CheckGameUpdates(LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS"}), "eos-overlay");
                 if (overlayToUpdate.Count > 0)
                 {
                     gamesToUpdate.Add("eos-overlay", overlayToUpdate["eos-overlay"]);

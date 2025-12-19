@@ -61,7 +61,7 @@ namespace LegendaryLibraryNS
         private async void EOSOUninstallBtn_Click(object sender, RoutedEventArgs e)
         {
             var result = playniteAPI.Dialogs.ShowMessage(
-                LocalizationManager.Instance.GetString(LOC.CommonUninstallGameConfirm, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)LocalizationManager.Instance.GetString(LOC.LegendaryEosOverlay) }), LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame), MessageBoxButton.YesNo, MessageBoxImage.Question);
+                LocalizationManager.Instance.GetString(LOC.CommonUninstallGameConfirm, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS"}) }), LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
@@ -76,7 +76,7 @@ namespace LegendaryLibraryNS
                     EOSOUninstallBtn.Visibility = Visibility.Collapsed;
                     EOSOToggleBtn.Visibility = Visibility.Collapsed;
                     EOSOCheckForUpdatesBtn.Visibility = Visibility.Collapsed;
-                    playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonUninstallSuccess, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)LocalizationManager.Instance.GetString(LOC.LegendaryEosOverlay) }));
+                    playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonUninstallSuccess, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS"}) }));
                 }
             }
         }
@@ -92,9 +92,9 @@ namespace LegendaryLibraryNS
             {
                 ShowMaximizeButton = false
             });
-            window.Title = LocalizationManager.Instance.GetString(LOC.LegendaryEosOverlay);
+            window.Title = LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS"});
             var installProperties = new DownloadProperties { downloadAction = DownloadAction.Install };
-            var installData = new DownloadManagerData.Download { name = LocalizationManager.Instance.GetString(LOC.LegendaryEosOverlay), gameID = "eos-overlay", downloadProperties = installProperties };
+            var installData = new DownloadManagerData.Download { name = LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS"}), gameID = "eos-overlay", downloadProperties = installProperties };
             var installDataList = new List<DownloadManagerData.Download>
             {
                 installData
@@ -616,7 +616,7 @@ namespace LegendaryLibraryNS
             GlobalProgressOptions updateCheckProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonCheckingForUpdates), false) { IsIndeterminate = true };
             playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
             {
-                gamesToUpdate = await legendaryUpdateController.CheckGameUpdates(LocalizationManager.Instance.GetString(LOC.LegendaryEosOverlay), "eos-overlay");
+                gamesToUpdate = await legendaryUpdateController.CheckGameUpdates(LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS"}), "eos-overlay");
             }, updateCheckProgressOptions);
             if (gamesToUpdate.Count > 0)
             {
@@ -635,7 +635,7 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNoUpdatesAvailable), LocalizationManager.Instance.GetString(LOC.LegendaryEosOverlay));
+                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNoUpdatesAvailable), LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS"}));
             }
 
         }

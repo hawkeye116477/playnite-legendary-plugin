@@ -30,10 +30,6 @@ namespace System
         /// </summary>
         public const string LegendaryEnableReorderingToolTip = "legendary-enable-reordering-tool-tip";
         /// <summary>
-        /// EOS Overlay
-        /// </summary>
-        public const string LegendaryEosOverlay = "legendary-eos-overlay";
-        /// <summary>
         /// Ignore free space
         /// </summary>
         public const string LegendaryIgnoreFreeSpace = "legendary-ignore-free-space";
