@@ -428,6 +428,7 @@ namespace LegendaryLibraryNS
                 var answer = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonSignOutConfirm), LocalizationManager.Instance.GetString(LOC.CommonSignOut), MessageBoxButton.YesNo);
                 if (answer == MessageBoxResult.Yes)
                 {
+                    FileSystem.DeleteFileSafe(LegendaryLauncher.EncryptedTokensPath);
                     if (LegendaryLauncher.IsInstalled)
                     {
                         var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
@@ -444,7 +445,7 @@ namespace LegendaryLibraryNS
                     }
                     else
                     {
-                        File.Delete(LegendaryLauncher.TokensPath);
+                        FileSystem.DeleteFileSafe(LegendaryLauncher.TokensPath);
                     }
                     using (var view = playniteAPI.WebViews.CreateView(new WebViewSettings
                     {

@@ -2,6 +2,7 @@
 using CliWrap.Buffered;
 using CommonPlugin;
 using LegendaryLibraryNS.Models;
+using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
 using Microsoft.Win32;
 using Playnite.Common;
@@ -13,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -244,6 +246,14 @@ namespace LegendaryLibraryNS
             }
         }
 
+        public static string EncryptedTokensPath
+        {
+            get
+            {
+                return Path.Combine(Path.Combine(LegendaryLibrary.Instance.GetPluginUserDataPath(), "tokens_encrypted.json"));
+            }
+        }
+
         public static Dictionary<string, string> DefaultEnvironmentVariables
         {
             get
@@ -254,6 +264,10 @@ namespace LegendaryLibraryNS
                 {
                     envDict.Add("LEGENDARY_CONFIG_PATH", ConfigPath);
                 }
+                var playniteAPI = API.Instance;
+                var clientApi = new EpicAccountClient(playniteAPI);
+                var tokens = clientApi.LoadTokens();
+                envDict.Add("LEGENDARY_SECRET_USER_DATA", Convert.ToBase64String(Encoding.UTF8.GetBytes(Serialization.ToJson(tokens))));
                 return envDict;
             }
         }

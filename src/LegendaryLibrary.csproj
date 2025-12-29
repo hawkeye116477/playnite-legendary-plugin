@@ -114,6 +114,9 @@
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\Playnite\Common\Xaml.cs">
       <Link>Shared\Playnite\Xaml.cs</Link>
     </Compile>
+    <Compile Include="..\third_party\PlayniteExtensions\source\Generic\PlayniteExtensions.Common\Encryption.cs">
+      <Link>Shared\Playnite\Encryption.cs</Link>
+    </Compile>
     <Compile Include="..\third_party\PlayniteExtensions\source\Generic\PlayniteExtensions.Common\GlobalCommands.cs">
       <Link>Shared\Playnite\GlobalCommands.cs</Link>
     </Compile>

@@ -3,6 +3,7 @@ using CliWrap.EventStream;
 using CommonPlugin;
 using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
+using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
 using Playnite.Common;
 using Playnite.SDK;
@@ -39,9 +40,10 @@ namespace LegendaryLibraryNS
             }
             if (!cloudSaveFolder.IsNullOrEmpty())
             {
-                if (File.Exists(LegendaryLauncher.TokensPath))
+                var clientApi = new EpicAccountClient(playniteAPI);
+                var userData = clientApi.LoadTokens();
+                if (!userData.account_id.IsNullOrEmpty())
                 {
-                    var userData = Serialization.FromJson<OauthResponse>(FileSystem.ReadFileAsStringSafe(LegendaryLauncher.TokensPath));
                     var pathVariables = new Dictionary<string, string>
                     {
                         { "{installdir}", gameInstallDir },
@@ -50,7 +52,7 @@ namespace LegendaryLibraryNS
                         { "{userdir}", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) },
                         { "{userprofile}", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) },
                         { "{usersavedgames}", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Saved Games") }
-                     };
+                    };
                     foreach (var pathVar in pathVariables)
                     {
                         if (cloudSaveFolder.Contains(pathVar.Key, StringComparison.OrdinalIgnoreCase))

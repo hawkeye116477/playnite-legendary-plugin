@@ -1,15 +1,19 @@
-﻿using CommonPlugin;
+﻿using CliWrap;
+using CliWrap.Buffered;
+using CommonPlugin;
 using LegendaryLibraryNS.Models;
 using Linguini.Shared.Types.Bundle;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -115,6 +119,7 @@ namespace LegendaryLibraryNS.Services
             }
 
             FileSystem.DeleteFile(tokensPath);
+            FileSystem.DeleteFile(LegendaryLauncher.EncryptedTokensPath);
             if (string.IsNullOrEmpty(authorizationCode))
             {
                 logger.Error("Failed to get login exchange key for Epic account.");
@@ -125,6 +130,18 @@ namespace LegendaryLibraryNS.Services
 
         public async Task AuthenticateUsingAuthCode(string authorizationCode)
         {
+            bool useEncryptedTokens = true;
+            if (LegendaryLauncher.IsInstalled)
+            {
+                var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                      .AddCommandToLog()
+                                      .WithValidation(CommandResultValidation.None)
+                                      .ExecuteBufferedAsync();
+                if (!result.StandardOutput.Contains("secret-user-data"))
+                {
+                    useEncryptedTokens = false;
+                }
+            }
             using var content = new StringContent($"grant_type=authorization_code&code={authorizationCode}&token_type=eg1");
             content.Headers.Clear();
             content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
@@ -141,8 +158,17 @@ namespace LegendaryLibraryNS.Services
                 using var response = await httpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
                 var respContent = await response.Content.ReadAsStringAsync();
-                FileSystem.CreateDirectory(Path.GetDirectoryName(tokensPath));
-                File.WriteAllText(tokensPath, respContent);
+                if (!useEncryptedTokens)
+                {
+                    FileSystem.CreateDirectory(Path.GetDirectoryName(tokensPath));
+                    File.WriteAllText(tokensPath, respContent);
+                }
+                else
+                {
+                    FileSystem.CreateDirectory(Path.GetDirectoryName(LegendaryLauncher.EncryptedTokensPath));
+                    Encryption.EncryptToFile(LegendaryLauncher.EncryptedTokensPath, respContent, Encoding.UTF8,
+                                         WindowsIdentity.GetCurrent().User.Value);
+                }
             }
             catch (Exception ex)
             {
@@ -295,8 +321,22 @@ namespace LegendaryLibraryNS.Services
             {
                 response.EnsureSuccessStatusCode();
                 var respContent = await response.Content.ReadAsStringAsync();
-                FileSystem.CreateDirectory(Path.GetDirectoryName(tokensPath));
-                File.WriteAllText(tokensPath, respContent);
+                bool useEncryptedTokens = false;
+                if (File.Exists(LegendaryLauncher.EncryptedTokensPath))
+                {
+                    useEncryptedTokens = true;
+                }
+                if (!useEncryptedTokens)
+                {
+                    FileSystem.CreateDirectory(Path.GetDirectoryName(tokensPath));
+                    File.WriteAllText(tokensPath, respContent);
+                }
+                else
+                {
+                    FileSystem.CreateDirectory(Path.GetDirectoryName(LegendaryLauncher.EncryptedTokensPath));
+                    Encryption.EncryptToFile(LegendaryLauncher.EncryptedTokensPath, respContent, Encoding.UTF8,
+                                         WindowsIdentity.GetCurrent().User.Value);
+                }
                 return true;
             }
             catch (Exception ex)
@@ -333,7 +373,7 @@ namespace LegendaryLibraryNS.Services
             }
         }
 
-        private OauthResponse LoadTokens()
+        public OauthResponse LoadTokens()
         {
             if (File.Exists(tokensPath))
             {
@@ -346,7 +386,19 @@ namespace LegendaryLibraryNS.Services
                     logger.Error(e, "Failed to load saved tokens.");
                 }
             }
-
+            else if (File.Exists(LegendaryLauncher.EncryptedTokensPath))
+            {
+                try
+                {
+                    return Serialization.FromJson<OauthResponse>(
+                     Encryption.DecryptFromFile(LegendaryLauncher.EncryptedTokensPath, Encoding.UTF8,
+                                                WindowsIdentity.GetCurrent().User.Value));
+                }
+                catch (Exception e)
+                {
+                    logger.Error(e, "Failed to load saved tokens.");
+                }
+            }
             return null;
         }
 
