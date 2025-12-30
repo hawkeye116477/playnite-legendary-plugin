@@ -17,3 +17,4 @@ common-uploading-playtime = Przesyłanie czasu grania w grę { $gameTitle } do c
 common-upload-playtime-error = Wystąpił błąd podczas przesyłania czasu grania w grę { $gameTitle } do chmury.
 common-manual-sync-saves = Ręczna synchronizacja zapisów
 common-overlay = Nakładka { $overlayName }
+common-cloud-and-other = Chmura i inne usługi

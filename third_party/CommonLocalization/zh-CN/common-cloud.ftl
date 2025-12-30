@@ -16,3 +16,5 @@ common-sync-playtime = 同步游玩时间到云端
 common-uploading-playtime = 正在将 { $gameTitle } 游戏游玩时间上传到云端……
 common-upload-playtime-error = 在将 { $gameTitle } 游戏游玩时间上传到云端时发生错误。
 common-manual-sync-saves = 手动同步存档
+common-overlay = { $overlayName } 覆盖层
+common-cloud-and-other = 云服务和其他服务

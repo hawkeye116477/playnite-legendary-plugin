@@ -17,3 +17,4 @@ common-uploading-playtime = Uploading { $gameTitle } game playtime to the cloud.
 common-upload-playtime-error = An error occurred while uploading { $gameTitle } game playtime to the cloud.
 common-manual-sync-saves = Manual sync saves
 common-overlay = { $overlayName } Overlay
+common-cloud-and-other = Cloud and other services

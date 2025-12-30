@@ -146,10 +146,6 @@ namespace System
         /// </summary>
         public const string LegendaryCheckAllDlcs = "legendary-check-all-dlcs";
         /// <summary>
-        /// Additional services
-        /// </summary>
-        public const string LegendaryAdditionalServices = "legendary-additional-services";
-        /// <summary>
         /// Legendary update source
         /// </summary>
         public const string LegendaryLauncherUpdateSource = "legendary-launcher-update-source";
@@ -229,6 +225,10 @@ namespace System
         /// {$overlayName} Overlay
         /// </summary>
         public const string CommonOverlay = "common-overlay";
+        /// <summary>
+        /// Cloud and other services
+        /// </summary>
+        public const string CommonCloudAndOther = "common-cloud-and-other";
         /// <summary>
         /// Download all DLCs
         /// </summary>
