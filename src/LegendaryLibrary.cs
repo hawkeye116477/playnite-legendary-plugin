@@ -1014,7 +1014,7 @@ namespace LegendaryLibraryNS
                     if (gamesToCompleteInstall.Any())
                     {
                         var installProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonFinishingInstallation), false) { IsIndeterminate = false };
-                        PlayniteApi.Dialogs.ActivateGlobalProgress(async (progress) =>
+                        PlayniteApi.Dialogs.ActivateGlobalProgress((progress) =>
                         {
                             progress.ProgressMaxValue = gamesToCompleteInstall.Count;
                             int current = 0;

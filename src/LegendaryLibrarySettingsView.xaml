@@ -61,25 +61,25 @@
                         </StackPanel>
                         <Button Margin="0,5,0,0" HorizontalAlignment="Left" Name="LoginAlternativeBtn" Content="{common:Localize Key={x:Static system:LOC.LegendaryAuthenticateAlternativeLabel}}" Visibility="Collapsed" Click="LoginAlternativeBtn_Click"/>
                     </StackPanel>
-                    <Button Content="{common:Localize Key={x:Static system:LOC.CommonMigrateGamesOriginal},Args='originalPluginShortName=Epic'}" HorizontalAlignment="Left" Margin="0,5,0,0" Name="MigrateEpicBtn" IsEnabled="False" Click="MigrateEpicBtn_Click" ToolTip="Epic => Legendary"></Button>
-                    <Button Content="{common:Localize Key={x:Static system:LOC.CommonRevertMigrateGames},Args='originalPluginShortName=Epic'}" HorizontalAlignment="Left" Margin="0,15,0,15" Name="MigrateRevertBtn" IsEnabled="False" Click="MigrateRevertBtn_Click" 
+                    <Button Content="{common:Localize Key={x:Static system:LOC.CommonMigrateGamesOriginal},Args='originalPluginShortName=Epic'}" HorizontalAlignment="Left" Margin="0,8,0,0" Name="MigrateEpicBtn" IsEnabled="False" Click="MigrateEpicBtn_Click" ToolTip="Epic => Legendary"></Button>
+                    <Button Content="{common:Localize Key={x:Static system:LOC.CommonRevertMigrateGames},Args='originalPluginShortName=Epic'}" HorizontalAlignment="Left" Margin="0,10,0,0" Name="MigrateRevertBtn" IsEnabled="False" Click="MigrateRevertBtn_Click" 
                             ToolTip="Legendary => Epic"></Button>
-                    <CheckBox DockPanel.Dock="Top" Margin="0,0,0,10"
+                    <CheckBox DockPanel.Dock="Top" Margin="0,15,0,0"
                         IsChecked="{Binding Settings.LaunchOffline}"
                         Content="{common:Localize Key={x:Static system:LOC.LegendaryLaunchOffline}}" />
-                    <StackPanel Margin="0,10,0,0">
+                    <StackPanel Margin="0,20,0,0">
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteExtensionsUpdates}}" FontSize="18"
                         Margin="0,0,0,2" />
                         <Separator Margin="0,0,0,10" />
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                             <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonLauncherUpdatePolicy},Args='launcherName=Legendary'}" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                             <ComboBox Grid.Row="0" Grid.Column="1" x:Name="LauncherUpdatesCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.LauncherUpdatePolicy}" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Margin="10,0,0,0" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                             <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonGamesUpdatePolicy}}" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                             <ComboBox Grid.Row="0" Grid.Column="1" x:Name="GamesUpdatesCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.GamesUpdatePolicy}" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Margin="10,0,0,0" SelectionChanged="GamesUpdatesCBo_SelectionChanged" />
                         </StackPanel>
-                        <CheckBox Content="{common:Localize Key={x:Static system:LOC.CommonAutoUpdate}}" Margin="0,0,0,10" Name="AutoUpdateGamesChk" IsChecked="{Binding Settings.AutoUpdateGames}"></CheckBox>
+                        <CheckBox Content="{common:Localize Key={x:Static system:LOC.CommonAutoUpdate}}" Margin="0,0,0,8" Name="AutoUpdateGamesChk" IsChecked="{Binding Settings.AutoUpdateGames}"></CheckBox>
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>
@@ -88,20 +88,20 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="20">
                     <CheckBox Content="{common:Localize Key={x:Static system:LOC.CommonDisplayDownloadTaskFinishedNotifications}}"
-                          IsChecked="{Binding Settings.DisplayDownloadTaskFinishedNotifications}" Margin="0,0,0,10" />
+                          IsChecked="{Binding Settings.DisplayDownloadTaskFinishedNotifications}" Margin="0,0,0,8" />
                     <CheckBox Content="{common:Localize Key={x:Static system:LOC.CommonDisplayDownloadSpeedInBits}}"
-                          IsChecked="{Binding Settings.DisplayDownloadSpeedInBits}" Margin="0,0,0,10" />
+                          IsChecked="{Binding Settings.DisplayDownloadSpeedInBits}" Margin="0,0,0,8" />
                     <CheckBox Content="{common:Localize Key={x:Static system:LOC.CommonDownloadAllDlcs}}"
-                          IsChecked="{Binding Settings.DownloadAllDlcs}" Margin="0,0,0,10" />
+                          IsChecked="{Binding Settings.DownloadAllDlcs}" Margin="0,0,0,8" />
                     <CheckBox Content="{common:Localize Key={x:Static system:LOC.LegendaryHttpOnlyDownload}}"
-                          IsChecked="{Binding Settings.NoHttps}" Margin="0,0,0,10" />
+                          IsChecked="{Binding Settings.NoHttps}" Margin="0,0,0,8" />
                     <CheckBox Content="{common:Localize Key={x:Static system:LOC.LegendaryEnableReordering}}" ToolTip="{common:Localize Key={x:Static system:LOC.LegendaryEnableReorderingToolTip}}"
-                          IsChecked="{Binding Settings.EnableReordering}" Margin="0,0,0,10"/>
+                          IsChecked="{Binding Settings.EnableReordering}" Margin="0,0,0,8"/>
                     <CheckBox Content="{common:Localize Key={x:Static system:LOC.CommonUnattendedInstall}}" ToolTip="{common:Localize Key={x:Static system:LOC.CommonUnattendedInstallToolTip}}"
-                          IsChecked="{Binding Settings.UnattendedInstall}" Margin="0,0,0,10" />
+                          IsChecked="{Binding Settings.UnattendedInstall}" Margin="0,0,0,8" />
                     <DockPanel Margin="0,0,0,5">
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonGamesInstallationPath}}"
-                               Margin="0,0,7,0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                               Margin="0,0,8,0" VerticalAlignment="Center" HorizontalAlignment="Left">
                         </TextBlock>
                         <Button DockPanel.Dock="Right"  Margin="5,0,0,0"
                             Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" Content="&#xec5b;" 
@@ -131,24 +131,24 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonMaxWorkers}}" Grid.Column="0"
-                            Grid.Row="6" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        <common:NumericInput Grid.Row="6" Grid.Column="1" Margin="0,0,0,5" MinValue="0" x:Name="MaxWorkersNI" Value="{Binding Settings.MaxWorkers}" HorizontalAlignment="Left"/>
+                            Grid.Row="6" Margin="0,0,0,8" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        <common:NumericInput Grid.Row="6" Grid.Column="1" Margin="0,0,0,8" MinValue="0" x:Name="MaxWorkersNI" Value="{Binding Settings.MaxWorkers}" HorizontalAlignment="Left"/>
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonMaxSharedMemory}}" Grid.Column="0"
-                            Grid.Row="7" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        <common:NumericInput Grid.Row="7" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" Value="{Binding Settings.MaxSharedMemory}" HorizontalAlignment="Left"/>
+                            Grid.Row="7" Margin="0,0,0,8" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        <common:NumericInput Grid.Row="7" Grid.Column="1" Margin="0,0,0,8" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRAM)}" StepSize="128" Value="{Binding Settings.MaxSharedMemory}" HorizontalAlignment="Left"/>
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonConnectionTimeout}}" Grid.Column="0"
-                            Grid.Row="8" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        <common:NumericInput Grid.Row="8" Grid.Column="1" Margin="0,0,0,5" MinValue="0" MaxValue="600" StepSize="5" Value="{Binding Settings.ConnectionTimeout}" HorizontalAlignment="Left"/>
+                            Grid.Row="8" Margin="0,0,0,8" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        <common:NumericInput Grid.Row="8" Grid.Column="1" Margin="0,0,0,8" MinValue="0" MaxValue="600" StepSize="5" Value="{Binding Settings.ConnectionTimeout}" HorizontalAlignment="Left"/>
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonDownloaderPreferredCdn}}" Grid.Column="0"
-                            Grid.Row="9" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                            Grid.Row="9" Margin="0,0,0,8" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         <TextBox
                             Text="{Binding Settings.PreferredCdn, UpdateSourceTrigger=PropertyChanged}"
-                            Grid.Column="1" Grid.Row="9" Margin="0,0,0,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" />
+                            Grid.Column="1" Grid.Row="9" Margin="0,0,0,8" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" />
                         <TextBlock Grid.Column="0" Grid.Row="10"
-                            Text="{common:Localize Key={x:Static system:LOC.CommonAfterDownloadComplete}}" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"  />
-                        <ComboBox Grid.Column="1" Grid.Row="10" x:Name="AfterDownloadCompleteCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.DoActionAfterDownloadComplete}" SelectedValuePath="Key" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Margin="0,0,0,5" HorizontalAlignment="Left"/>
-                        <TextBlock Grid.Row="11" Grid.Column="0" Text="{common:Localize Key={x:Static system:LOC.CommonAutoRemoveCompletedDownloads}}" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
-                        <ComboBox Grid.Row="11" Grid.Column="1" x:Name="AutoRemoveCompletedDownloadsCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.AutoRemoveCompletedDownloads}" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  Margin="10,0,0,5" HorizontalAlignment="Left" />
+                            Text="{common:Localize Key={x:Static system:LOC.CommonAfterDownloadComplete}}" Margin="0,0,0,8" VerticalAlignment="Center" HorizontalAlignment="Left"  />
+                        <ComboBox Grid.Column="1" Grid.Row="10" x:Name="AfterDownloadCompleteCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.DoActionAfterDownloadComplete}" SelectedValuePath="Key" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Margin="8,0,0,8" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Row="11" Grid.Column="0" Text="{common:Localize Key={x:Static system:LOC.CommonAutoRemoveCompletedDownloads}}" Margin="0,0,0,8" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                        <ComboBox Grid.Row="11" Grid.Column="1" x:Name="AutoRemoveCompletedDownloadsCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.AutoRemoveCompletedDownloads}" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  Margin="8,0,0,8" HorizontalAlignment="Left" />
                     </Grid>
                 </StackPanel>
             </ScrollViewer>
@@ -227,17 +227,17 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonLauncherCustomPath},Args='launcherName=Legendary'}" Grid.Column="0" Grid.Row="0"
-                               Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left">
+                               Margin="0,0,0,8" VerticalAlignment="Center" HorizontalAlignment="Left">
                         </TextBlock>
                         <TextBox Text="{Binding Settings.SelectedLauncherPath, UpdateSourceTrigger=PropertyChanged}" x:Name="SelectedLauncherPathTxt" 
-                             Grid.Row="0" Grid.Column="1" Margin="10,0,0,5" VerticalAlignment="Center"/>
+                             Grid.Row="0" Grid.Column="1" Margin="8,0,0,8" VerticalAlignment="Center"/>
                         <Button Name="ChooseLauncherBtn"
-                            Margin="5,0,0,5" Content="&#xec5b;" FontFamily="{DynamicResource FontIcoFont}" Click="ChooseLauncherBtn_Click" Grid.Row="0" Grid.Column="2"
+                            Margin="8,0,0,8" Content="&#xec5b;" FontFamily="{DynamicResource FontIcoFont}" Click="ChooseLauncherBtn_Click" Grid.Row="0" Grid.Column="2"
                             ToolTip="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSelectFileTooltip}}" VerticalAlignment="Center"/>
                     </Grid>
                     <StackPanel Orientation="Horizontal" Margin="0">
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.LegendaryLauncherUpdateSource}}" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
-                        <ComboBox x:Name="LauncherUpdateSourceCBo" SelectedValue="{Binding Settings.LauncherUpdateSource}" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <ComboBox x:Name="LauncherUpdateSourceCBo" SelectedValue="{Binding Settings.LauncherUpdateSource}" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Margin="8,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" />
                     </StackPanel>
                     <StackPanel Margin="0,10,0,0">
                     <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonCache}}" FontSize="18"
@@ -252,8 +252,8 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{common:Localize Key={x:Static system:LOC.CommonAutoClearCache}}" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
-                        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="AutoClearCacheCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.AutoClearCache}" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  Margin="10,0,0,5" HorizontalAlignment="Left" />
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{common:Localize Key={x:Static system:LOC.CommonAutoClearCache}}" Margin="0,0,0,8" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="AutoClearCacheCBo" DisplayMemberPath="Value" SelectedValue="{Binding Settings.AutoClearCache}" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  Margin="8,0,0,8" HorizontalAlignment="Left" />
                         <Button Grid.Row="1" Content="{common:Localize Key={x:Static system:LOC.CommonClearCache}}" Name="ClearCacheBtn" Click="ClearCacheBtn_Click" HorizontalAlignment="Left" />
                     </Grid>
                 </StackPanel>
@@ -281,37 +281,37 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonPlayniteVersion}}" Grid.Column="0" Grid.Row="0"
-                               Margin="0,0,10,5" VerticalAlignment="Center">
+                               Margin="0,0,8,8" VerticalAlignment="Center">
                         </TextBlock>
-                        <TextBox x:Name="PlayniteVersionTxt" Grid.Column="1" Grid.Row="0" Margin="0,0,0,5" 
+                        <TextBox x:Name="PlayniteVersionTxt" Grid.Column="1" Grid.Row="0" Margin="0,0,0,8" 
                              VerticalAlignment="Center" IsReadOnly="True" HorizontalAlignment="Left"/>
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonPluginVersion}}" Grid.Column="0" Grid.Row="1"
-                               Margin="0,0,10,5" VerticalAlignment="Center" />
-                        <TextBox x:Name="PluginVersionTxt" Grid.Column="1" Grid.Row="1" Margin="0,0,0,5" 
+                               Margin="0,0,10,8" VerticalAlignment="Center" />
+                        <TextBox x:Name="PluginVersionTxt" Grid.Column="1" Grid.Row="1" Margin="0,0,0,8" 
                              VerticalAlignment="Center" IsReadOnly="True" HorizontalAlignment="Left"/>
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonLauncherVersion},Args='launcherName=Legendary'}" Grid.Column="0" Grid.Row="2"
-                               Margin="0,0,10,5" VerticalAlignment="Center" />
-                        <TextBox x:Name="LauncherVersionTxt" Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" VerticalAlignment="Center" 
+                               Margin="0,0,10,8" VerticalAlignment="Center" />
+                        <TextBox x:Name="LauncherVersionTxt" Grid.Column="1" Grid.Row="2" Margin="0,0,0,8" VerticalAlignment="Center" 
                              IsReadOnly="True" HorizontalAlignment="Left"/>
-                        <Button x:Name="CheckForUpdatesBtn" Grid.Column="2" Grid.Row="2" Margin="10,0,0,5" VerticalAlignment="Center"
+                        <Button x:Name="CheckForUpdatesBtn" Grid.Column="2" Grid.Row="2" Margin="10,0,0,8" VerticalAlignment="Center"
                             Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteCheckForUpdates}}" Click="CheckForUpdatesBtn_Click" />
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonLauncherBinary},Args='launcherName=Legendary'}" Grid.Column="0" Grid.Row="3"
-                               Margin="0,0,10,5" VerticalAlignment="Center"/>
-                        <TextBox x:Name="LauncherBinaryTxt" VerticalAlignment="Center" IsReadOnly="True" Grid.Column="1" Grid.Row="3" Margin="0,0,0,5"/>
-                        <Button x:Name="OpenLauncherBinaryBtn" Margin="10,0,0,5" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteOpen}}" 
+                               Margin="0,0,10,8" VerticalAlignment="Center"/>
+                        <TextBox x:Name="LauncherBinaryTxt" VerticalAlignment="Center" IsReadOnly="True" Grid.Column="1" Grid.Row="3" Margin="0,0,0,8"/>
+                        <Button x:Name="OpenLauncherBinaryBtn" Margin="10,0,0,8" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteOpen}}" 
                                 VerticalAlignment="Center" Click="OpenLauncherBinaryBtn_Click" Grid.Column="2" Grid.Row="3" />
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonGamesInstallationPath}}" Grid.Row="4" Grid.Column="0"
-                               Margin="0,0,10,5" VerticalAlignment="Center"/>
-                        <TextBox x:Name="GamesInstallationPathTxt" Margin="0,0,0,5" VerticalAlignment="Center" IsReadOnly="True" Grid.Column="1" Grid.Row="4" />
-                        <Button x:Name="OpenGamesInstallationPathBtn" Margin="10,0,0,5" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteOpen}}" 
+                               Margin="0,0,10,8" VerticalAlignment="Center"/>
+                        <TextBox x:Name="GamesInstallationPathTxt" Margin="0,0,0,8" VerticalAlignment="Center" IsReadOnly="True" Grid.Column="1" Grid.Row="4" />
+                        <Button x:Name="OpenGamesInstallationPathBtn" Margin="10,0,0,8" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteOpen}}" 
                                 VerticalAlignment="Center" Click="OpenGamesInstallationPathBtn_Click" Grid.Column="2" Grid.Row="4" />
-                        <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="5" Margin="0,0,10,5" Text="{common:Localize Key={x:Static system:LOC.CommonLogFilesPath}}"/>
-                        <TextBox x:Name="LogFilesPathTxt" Margin="0,0,0,5" VerticalAlignment="Center" IsReadOnly="True" Grid.Column="1" Grid.Row="5" />
-                        <Button x:Name="OpenLogFilesPathBtn" Margin="10,0,0,5" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteOpen}}" 
+                        <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="5" Margin="0,0,10,8" Text="{common:Localize Key={x:Static system:LOC.CommonLogFilesPath}}"/>
+                        <TextBox x:Name="LogFilesPathTxt" Margin="0,0,0,8" VerticalAlignment="Center" IsReadOnly="True" Grid.Column="1" Grid.Row="5" />
+                        <Button x:Name="OpenLogFilesPathBtn" Margin="10,0,0,8" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteOpen}}" 
                                 VerticalAlignment="Center" Grid.Column="2"  Grid.Row="5" Click="OpenLogFilesPathBtn_Click" />
-                        <Button Margin="0,10,5,5" Grid.Column="0" Grid.Row="6" Name="CopyRawDataBtn" Click="CopyRawDataBtn_Click" 
+                        <Button Margin="0,15,8,8" Grid.Column="0" Grid.Row="6" Name="CopyRawDataBtn" Click="CopyRawDataBtn_Click" 
                             Grid.ColumnSpan="2" HorizontalAlignment="Left" Content="{common:Localize Key={x:Static system:LOC.CommonCopyRawDataToClipboard}}"/>
-                        <TextBlock VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Grid.Column="0" Grid.Row="7" Margin="0,10,0,0">
+                        <TextBlock VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Grid.Column="0" Grid.Row="7" Margin="0,8,0,0">
                     <Hyperlink
                         NavigateUri="https://github.com/hawkeye116477/playnite-legendary-plugin/wiki/troubleshooting"
                         Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
@@ -319,7 +319,7 @@
                         <Run Text="{common:Localize Key={x:Static system:LOC.ThirdPartyEpicTroubleShootingIssues}}" />
                     </Hyperlink>
                         </TextBlock>
-                        <TextBlock VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Grid.Column="0" Grid.Row="8" Margin="0,10,0,0">
+                        <TextBlock VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Grid.Column="0" Grid.Row="8" Margin="0,8,0,0">
                     <Hyperlink 
                         Name="ReportBugHyp"
                         Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"

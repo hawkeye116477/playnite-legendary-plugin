@@ -18,7 +18,7 @@ legendary-activate-next-confirm = Do you want to activate next game?
 legendary-ea-notice = It is currently unknown which game requires activation, so an attempt will be made to activate everything. If EA App asks you to install game rather than to activate, then it has already been activated and the dialog can be dismissed.
 legendary-star-wars-message = May the Force be with you, Padawan.
 legendary-import-third-party-launcher-games = Import games requiring { $thirdPartyLauncherName }
-legendary-third-party-launcher-import-warn = These types of games doesn't require Legendary and not all of them can be installed via it. It's recommended to go to Additional services => { $thirdPartyLauncherName } => Activate games, and then install them directly via { $thirdPartyLauncherName }.
+legendary-third-party-launcher-import-warn = These types of games doesn't require Legendary and not all of them can be installed via it. It's recommended to go to Cloud and other services => { $thirdPartyLauncherName } => Activate games, and then install them directly via { $thirdPartyLauncherName }.
 legendary-required-install-via-third-party-launcher-error =
     { $count ->
         [one] { $gameTitle } requires direct installation via { $thirdPartyLauncherName }.
@@ -27,8 +27,8 @@ legendary-required-install-via-third-party-launcher-error =
 legendary-install-prerequisites = Install prerequisites ({ $prerequisiteName })
 legendary-required-install-of-third-party-launcher =
     { $count ->
-        [one] { $gameTitle } requires installation of { $thirdPartyLauncherName }. It's recommended to go to Plugin settings => Additional services => { $thirdPartyLauncherName } => Activate games, and then install it directly via { $thirdPartyLauncherName }.
-       *[other] Following games require installation of { $thirdPartyLauncherName }: { $gameTitle }. It's recommended to go to Plugin settings => Additional services => { $thirdPartyLauncherName } => Activate games, and then install them directly via { $thirdPartyLauncherName }.
+        [one] { $gameTitle } requires installation of { $thirdPartyLauncherName }. It's recommended to go to Plugin settings => Cloud and other services => { $thirdPartyLauncherName } => Activate games, and then install it directly via { $thirdPartyLauncherName }.
+       *[other] Following games require installation of { $thirdPartyLauncherName }: { $gameTitle }. It's recommended to go to Plugin settings => Cloud and other services => { $thirdPartyLauncherName } => Activate games, and then install them directly via { $thirdPartyLauncherName }.
     }
 legendary-installing-prerequisites = Installing prerequisites ({ $prerequisiteName })...
 legendary-authenticate-alternative-label = Authenticate using alternative method
