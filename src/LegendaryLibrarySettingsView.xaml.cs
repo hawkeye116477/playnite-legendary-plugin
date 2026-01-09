@@ -732,5 +732,10 @@ namespace LegendaryLibraryNS
                 }
             }, globalProgressOptions);
         }
+
+        private void EpicConnectAccountChk_Checked(object sender, RoutedEventArgs e)
+        {
+            UpdateAuthStatus();
+        }
     }
 }

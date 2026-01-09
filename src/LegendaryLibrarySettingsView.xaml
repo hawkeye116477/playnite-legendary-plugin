@@ -36,7 +36,7 @@
 
                     <CheckBox DockPanel.Dock="Top" Name="EpicConnectAccountChk"
                     IsChecked="{Binding Settings.ConnectAccount}"
-                    Content="{common:Localize Key={x:Static system:LOC.ThirdPartyEpicSettingsConnectAccount}}" />
+                    Content="{common:Localize Key={x:Static system:LOC.ThirdPartyEpicSettingsConnectAccount}}" Checked="EpicConnectAccountChk_Checked" />
 
                     <StackPanel DockPanel.Dock="Top" Margin="40,5,5,5"
                     IsEnabled="{Binding IsChecked, ElementName=EpicConnectAccountChk}">
