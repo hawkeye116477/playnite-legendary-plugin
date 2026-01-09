@@ -393,6 +393,22 @@ namespace LegendaryLibraryNS
                         DateTimeOffset now = DateTime.UtcNow;
                         if (now.ToUnixTimeSeconds() >= nextGamesUpdateTime)
                         {
+                            var cacheDirs = new List<string>()
+                            {
+                                GetCachePath("infocache"),
+                                GetCachePath("sdlcache"),
+                                GetCachePath("updateinfocache"),
+                                Path.Combine(LegendaryLauncher.ConfigPath, "metadata")
+                            };
+
+                            foreach (var cacheDir in cacheDirs)
+                            {
+                                if (Directory.Exists(cacheDir))
+                                {
+                                    Directory.Delete(cacheDir, true);
+                                }
+                            }
+
                             globalSettings.NextGamesUpdateTime = GetNextUpdateCheckTime(globalSettings.GamesUpdatePolicy);
                             SavePluginSettings(globalSettings);
                             LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();

@@ -376,7 +376,6 @@ namespace LegendaryLibraryNS
               
                 var cacheDirs = new List<string>()
                 {
-                    LegendaryLibrary.Instance.GetCachePath("catalogcache"),
                     LegendaryLibrary.Instance.GetCachePath("infocache"),
                     LegendaryLibrary.Instance.GetCachePath("sdlcache"),
                     LegendaryLibrary.Instance.GetCachePath("updateinfocache"),
