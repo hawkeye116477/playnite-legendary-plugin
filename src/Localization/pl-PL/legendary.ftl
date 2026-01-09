@@ -4,7 +4,6 @@ legendary-offline-mode = Tryb offline
 legendary-http-only-download = Wyłącz HTTPS (przydatne przy CDN'ach, np. LanCache)
 legendary-enable-reordering = Włącz optymalizację zmiany kolejności
 legendary-enable-reordering-tool-tip = To może zmniejszyć wymagania pamięci RAM podczas pobierania (może nie działać poprawnie w przypadku niektórych tytułów).
-legendary-eos-overlay = Nakładka EOS
 legendary-ignore-free-space = Ignoruj wolne miejsce
 legendary-ignore-free-space-tool-tip = Nie przerywaj, jeśli nie ma wystarczającej ilości wolnego miejsca.
 legendary-memory-error = Współdzielona pamięć podręczna jest mniejsza niż wymagana: { $currentMemory } < { $requiredMemory }. Spróbuj włączyć optymalizację zmiany kolejności, aby zmniejszyć zużycie pamięci lub zwiększ maksymalną ilość pamięci współdzielonej.
@@ -19,7 +18,7 @@ legendary-activate-next-confirm = Czy chcesz aktywować kolejną grę?
 legendary-ea-notice = Obecnie nie wiadomo, która gra wymaga aktywacji, więc zostanie podjęta próba aktywacji wszystkiego. Jeśli EA App zapyta cię o zainstalowanie gry zamiast jej aktywację, to oznacza, że została już aktywowana, a okno dialogowe może zostać odrzucone.
 legendary-star-wars-message = Niech Moc będzie z tobą, Padawanie.
 legendary-import-third-party-launcher-games = Importuj gry wymagające { $thirdPartyLauncherName }
-legendary-third-party-launcher-import-warn = Tego typu gry nie wymagają Legendary i nie wszystkie z nich można zainstalować za jego pomocą. Zalecane jest, by przejść do Dodatkowe usługi => { $thirdPartyLauncherName } => Aktywuj gry, a następnie zainstalować je bezpośrednio przez { $thirdPartyLauncherName }.
+legendary-third-party-launcher-import-warn = Tego typu gry nie wymagają Legendary i nie wszystkie z nich można zainstalować za jego pomocą. Zalecane jest, by przejść do zakładki Chmura i inne usługi => { $thirdPartyLauncherName } => Aktywuj gry, a następnie zainstalować je bezpośrednio przez { $thirdPartyLauncherName }.
 legendary-required-install-via-third-party-launcher-error =
     { $count ->
         [one] { $gameTitle } wymaga bezpośredniej instalacji przez { $thirdPartyLauncherName }.
@@ -28,8 +27,8 @@ legendary-required-install-via-third-party-launcher-error =
 legendary-install-prerequisites = Zainstaluj składniki wstępnie wymagane ({ $prerequisiteName })
 legendary-required-install-of-third-party-launcher =
     { $count ->
-        [one] { $gameTitle } wymaga instalacji { $thirdPartyLauncherName }. Zalecane jest, by przejść do ustawień wtyczki => Dodatkowe usługi => { $thirdPartyLauncherName } => Aktywuj gry, a następnie zainstalować to bezpośrednio przez { $thirdPartyLauncherName }.
-       *[other] Następujące gry wymagają instalacji { $thirdPartyLauncherName }: { $gameTitle }. Zalecane jest, by przejść do ustawień wtyczki => Dodatkowe usługi => { $thirdPartyLauncherName } => Aktywuj gry, a następnie zainstalować je bezpośrednio przez { $thirdPartyLauncherName }.
+        [one] { $gameTitle } wymaga instalacji { $thirdPartyLauncherName }. Zalecane jest, by przejść do ustawień wtyczki => Chmura i inne usługi => { $thirdPartyLauncherName } => Aktywuj gry, a następnie zainstalować to bezpośrednio przez { $thirdPartyLauncherName }.
+       *[other] Następujące gry wymagają instalacji { $thirdPartyLauncherName }: { $gameTitle }. Zalecane jest, by przejść do ustawień wtyczki => Chmura i inne usługi => { $thirdPartyLauncherName } => Aktywuj gry, a następnie zainstalować je bezpośrednio przez { $thirdPartyLauncherName }.
     }
 legendary-installing-prerequisites = Instalowanie składników wstępnie wymaganych ({ $prerequisiteName })...
 legendary-authenticate-alternative-label = Uwierzytelnij za pomocą alternatywnej metody
@@ -41,5 +40,4 @@ legendary-enable = Włącz
 legendary-game-import-failure = Nie udało się zaimportować gry. Powód: { $reason }.
 legendary-language-code = Język (kod w formacie RFC 1766)
 legendary-check-all-dlcs = Zaznacz wszystkie dodatki (DLC)
-legendary-additional-services = Dodatkowe usługi
 legendary-launcher-update-source = Źródło aktualizacji Legendary
