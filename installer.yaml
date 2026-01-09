@@ -1,5 +1,16 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.13.0
+    RequiredApiVersion: 6.14.0
+    ReleaseDate: 2026-01-10
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.13.0/LegendaryLibrary_1_13_0.pext
+    Changelog:
+      - Improved security by adding possibility to encrypt login tokens (switch to
+        my forked legendary and then logout and login again)
+      - Moved cloud settings to new "Cloud and other services" tab
+      - Improved settings layout
+      - Added automatic clearing cache for automatic update checking
+      - Added updating login status to connect account checkbox
   - Version: 1.12.0
     RequiredApiVersion: 6.14.0
     ReleaseDate: 2025-12-19
