@@ -402,9 +402,16 @@ namespace LegendaryLibraryNS
 
                             foreach (var cacheDir in cacheDirs)
                             {
-                                if (Directory.Exists(cacheDir))
+                                try
                                 {
-                                    Directory.Delete(cacheDir, true);
+                                    if (Directory.Exists(cacheDir))
+                                    {
+                                        Directory.Delete(cacheDir, true);
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    logger.Error(ex, "An error occured during removing directory");
                                 }
                             }
 
