@@ -118,8 +118,6 @@ namespace LegendaryLibraryNS.Services
                 return;
             }
 
-            FileSystem.DeleteFile(tokensPath);
-            FileSystem.DeleteFile(LegendaryLauncher.EncryptedTokensPath);
             if (string.IsNullOrEmpty(authorizationCode))
             {
                 logger.Error("Failed to get login exchange key for Epic account.");
@@ -328,12 +326,10 @@ namespace LegendaryLibraryNS.Services
                 }
                 if (!useEncryptedTokens)
                 {
-                    FileSystem.CreateDirectory(Path.GetDirectoryName(tokensPath));
                     File.WriteAllText(tokensPath, respContent);
                 }
                 else
                 {
-                    FileSystem.CreateDirectory(Path.GetDirectoryName(LegendaryLauncher.EncryptedTokensPath));
                     Encryption.EncryptToFile(LegendaryLauncher.EncryptedTokensPath, respContent, Encoding.UTF8,
                                          WindowsIdentity.GetCurrent().User.Value);
                 }
