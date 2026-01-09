@@ -74,7 +74,7 @@ namespace LegendaryLibraryNS
             {
                 var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                       .WithArguments(new[] { "list", "-T", "--json", "--force-refresh" })
-                                      .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                      .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
                                       .AddCommandToLog()
                                       .WithValidation(CommandResultValidation.None)
                                       .ExecuteBufferedAsync();
@@ -205,7 +205,7 @@ namespace LegendaryLibraryNS
                     var stdOutBuffer = new StringBuilder();
                     var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                           .WithArguments(new[] { "launch", selectedGame.app_name, "--origin" })
-                                          .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                          .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
                                           .AddCommandToLog()
                                           .WithValidation(CommandResultValidation.None);
                     await foreach (var cmdEvent in cmd.ListenAsync())

@@ -254,22 +254,23 @@ namespace LegendaryLibraryNS
             }
         }
 
-        public static Dictionary<string, string> DefaultEnvironmentVariables
+        public static async Task<Dictionary<string, string>> GetDefaultEnvironmentVariables()
         {
-            get
+
+            var envDict = new Dictionary<string, string>();
+            var heroicLegendaryConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "heroic", "legendaryConfig", "legendary");
+            if (ConfigPath == heroicLegendaryConfigPath)
             {
-                var envDict = new Dictionary<string, string>();
-                var heroicLegendaryConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "heroic", "legendaryConfig", "legendary");
-                if (ConfigPath == heroicLegendaryConfigPath)
-                {
-                    envDict.Add("LEGENDARY_CONFIG_PATH", ConfigPath);
-                }
-                var playniteAPI = API.Instance;
-                var clientApi = new EpicAccountClient(playniteAPI);
+                envDict.Add("LEGENDARY_CONFIG_PATH", ConfigPath);
+            }
+            var playniteAPI = API.Instance;
+            var clientApi = new EpicAccountClient(playniteAPI);
+            if (await clientApi.GetIsUserLoggedIn())
+            {
                 var tokens = clientApi.LoadTokens();
                 envDict.Add("LEGENDARY_SECRET_USER_DATA", Convert.ToBase64String(Encoding.UTF8.GetBytes(Serialization.ToJson(tokens))));
-                return envDict;
             }
+            return envDict;
         }
 
         public static async Task<UpdateInfo> GetUpdateSizes(string gameID)
@@ -304,7 +305,7 @@ namespace LegendaryLibraryNS
                 {
                     cmd = await Cli.Wrap(ClientExecPath)
                                    .WithArguments(new[] { "eos-overlay", "update" })
-                                   .WithEnvironmentVariables(DefaultEnvironmentVariables)
+                                   .WithEnvironmentVariables(await GetDefaultEnvironmentVariables())
                                    .WithStandardInputPipe(PipeSource.FromString("n"))
                                    .AddCommandToLog()
                                    .WithValidation(CommandResultValidation.None)
@@ -315,7 +316,7 @@ namespace LegendaryLibraryNS
                     cmd = await Cli.Wrap(ClientExecPath)
                                    .WithArguments(new[] { "update", gameID })
                                    .WithStandardInputPipe(PipeSource.FromString("n"))
-                                   .WithEnvironmentVariables(DefaultEnvironmentVariables)
+                                   .WithEnvironmentVariables(await GetDefaultEnvironmentVariables())
                                    .AddCommandToLog()
                                    .WithValidation(CommandResultValidation.None)
                                    .ExecuteBufferedAsync();
@@ -454,7 +455,7 @@ namespace LegendaryLibraryNS
                 {
                     result = await Cli.Wrap(ClientExecPath)
                                       .WithArguments(new[] { "eos-overlay", "install" })
-                                      .WithEnvironmentVariables(DefaultEnvironmentVariables)
+                                      .WithEnvironmentVariables(await GetDefaultEnvironmentVariables())
                                       .WithStandardInputPipe(PipeSource.FromString("n"))
                                       .AddCommandToLog()
                                       .WithValidation(CommandResultValidation.None)
@@ -464,7 +465,7 @@ namespace LegendaryLibraryNS
                 {
                     result = await Cli.Wrap(ClientExecPath)
                                       .WithArguments(new[] { "info", gameID, "--json" })
-                                      .WithEnvironmentVariables(DefaultEnvironmentVariables)
+                                      .WithEnvironmentVariables(await GetDefaultEnvironmentVariables())
                                       .AddCommandToLog()
                                       .WithValidation(CommandResultValidation.None)
                                       .ExecuteBufferedAsync();
@@ -494,7 +495,7 @@ namespace LegendaryLibraryNS
                     manifest.Game = new LegendaryGameInfo.Game
                     {
                         App_name = gameID,
-                        Title = LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS"})
+                        Title = LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS" })
                     };
                     manifest.Manifest = new LegendaryGameInfo.Manifest();
                     string[] lines = result.StandardError.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
@@ -664,7 +665,7 @@ namespace LegendaryLibraryNS
             {
                 var versionCmd = await Cli.Wrap(ClientExecPath)
                                           .WithArguments(new[] { "-V" })
-                                          .WithEnvironmentVariables(DefaultEnvironmentVariables)
+                                          .WithEnvironmentVariables(await GetDefaultEnvironmentVariables())
                                           .AddCommandToLog()
                                           .WithValidation(CommandResultValidation.None)
                                           .ExecuteBufferedAsync();

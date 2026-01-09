@@ -185,7 +185,7 @@ namespace LegendaryLibraryNS
                 {
                     var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                        .WithArguments(new[] { "-y", "uninstall", selectedDlc.Key })
-                                       .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                       .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
                                        .AddCommandToLog()
                                        .WithValidation(CommandResultValidation.None)
                                        .ExecuteBufferedAsync();

@@ -67,7 +67,7 @@ namespace LegendaryLibraryNS
                 var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                    .WithValidation(CommandResultValidation.None)
                                    .WithArguments(new[] { "-y", "eos-overlay", "remove" })
-                                   .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                   .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
                                    .AddCommandToLog()
                                    .ExecuteBufferedAsync();
                 if (cmd.StandardError.Contains("Done"))
@@ -128,7 +128,7 @@ namespace LegendaryLibraryNS
             }
             await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                      .WithArguments(new[] { "-y", "eos-overlay", toggleCommand })
-                     .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                     .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
                      .AddCommandToLog()
                      .WithValidation(CommandResultValidation.None)
                      .ExecuteAsync();
@@ -308,7 +308,7 @@ namespace LegendaryLibraryNS
                                 {
                                     var importCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                                              .WithArguments(new[] { "-y", "import", game.GameId, game.InstallDirectory })
-                                                             .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                                             .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
                                                              .AddCommandToLog()
                                                              .WithValidation(CommandResultValidation.None)
                                                              .ExecuteBufferedAsync();
@@ -433,7 +433,7 @@ namespace LegendaryLibraryNS
                     {
                         var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                               .WithArguments(new[] { "auth", "--delete" })
-                                              .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                              .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
                                               .AddCommandToLog()
                                               .WithValidation(CommandResultValidation.None)
                                               .ExecuteBufferedAsync();
@@ -501,7 +501,7 @@ namespace LegendaryLibraryNS
                 var errorBuffer = new StringBuilder();
                 var warningBuffer = new StringBuilder();
                 var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                             .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                             .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
                              .WithArguments(new[] { "activate", "-U" })
                              .AddCommandToLog()
                              .WithValidation(CommandResultValidation.None);

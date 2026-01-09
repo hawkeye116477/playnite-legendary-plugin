@@ -134,7 +134,7 @@ namespace LegendaryLibraryNS
             {
                 await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                          .WithArguments(new[] { "list", "-T", "--force-refresh" })
-                         .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                         .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
                          .AddCommandToLog()
                          .WithValidation(CommandResultValidation.None)
                          .ExecuteAsync();
@@ -715,7 +715,7 @@ namespace LegendaryLibraryNS
                                     {
                                         var importCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                                                  .WithArguments(new[] { "-y", "import", game.GameId, path })
-                                                                 .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                                                 .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
                                                                  .AddCommandToLog()
                                                                  .WithValidation(CommandResultValidation.None)
                                                                  .ExecuteBufferedAsync();
@@ -823,7 +823,7 @@ namespace LegendaryLibraryNS
                                                         a.CurrentProgressValue = 1;
                                                         var rewriteResult = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                                                                      .WithArguments(new[] { "move", game.GameId, newPath, "--skip-move" })
-                                                                                     .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                                                                     .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
                                                                                      .AddCommandToLog()
                                                                                      .ExecuteBufferedAsync();
                                                         var errorMessage = rewriteResult.StandardError;

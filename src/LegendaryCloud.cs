@@ -135,7 +135,7 @@ namespace LegendaryLibraryNS
                             }
                             cloudArgs.AddRange(new[] { "--save-path", cloudSaveFolder });
                             var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                         .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                                         .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
                                          .WithArguments(cloudArgs)
                                          .AddCommandToLog();
                             await foreach (var cmdEvent in cmd.ListenAsync())

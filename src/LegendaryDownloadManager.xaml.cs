@@ -329,7 +329,7 @@ namespace LegendaryLibraryNS
                 bool permissionErrorDisplayed = false;
                 bool diskSpaceErrorDisplayed = false;
                 var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                             .WithEnvironmentVariables(LegendaryLauncher.DefaultEnvironmentVariables)
+                             .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
                              .WithArguments(installCommand)
                              .AddCommandToLog()
                              .WithValidation(CommandResultValidation.None);
