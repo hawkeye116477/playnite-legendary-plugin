@@ -395,8 +395,11 @@ namespace LegendaryLibraryNS
                             var installedGamesIds = LegendaryLauncher.GetInstalledAppList()
                                                                      .Select(x => x.Key)
                                                                      .ToList();
+                            if (LegendaryLauncher.IsEOSOverlayInstalled)
+                            {
+                                installedGamesIds.Add("eos-overlay");
+                            }
                             LegendaryLauncher.ClearSpecificGamesCache(installedGamesIds);
-
                             globalSettings.NextGamesUpdateTime = GetNextUpdateCheckTime(globalSettings.GamesUpdatePolicy);
                             SavePluginSettings(globalSettings);
                             LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
@@ -646,33 +649,24 @@ namespace LegendaryLibraryNS
                                 {
                                     gamesToUpdate = await legendaryUpdateController.CheckGameUpdates(game.Name, game.GameId);
                                 }, updateCheckProgressOptions);
-                                if (gamesToUpdate.Count > 0)
+
+                                var checkedGames = new List<Game>
                                 {
-                                    var successUpdates = gamesToUpdate.Where(i => i.Value.Success).ToDictionary(i => i.Key, i => i.Value);
-                                    if (successUpdates.Count > 0)
-                                    {
-                                        Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
-                                        {
-                                            ShowMaximizeButton = false,
-                                        });
-                                        window.DataContext = successUpdates;
-                                        window.Title = $"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExtensionsUpdates)}";
-                                        window.Content = new LegendaryUpdater();
-                                        window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
-                                        window.SizeToContent = SizeToContent.WidthAndHeight;
-                                        window.MinWidth = 600;
-                                        window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                                        window.ShowDialog();
-                                    }
-                                    else
-                                    {
-                                        PlayniteApi.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdateCheckFailMessage), game.Name);
-                                    }
-                                }
-                                else
+                                    game
+                                };
+
+                                Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
                                 {
-                                    PlayniteApi.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNoUpdatesAvailable), game.Name);
-                                }
+                                    ShowMaximizeButton = false,
+                                });
+                                window.DataContext = gamesToUpdate;
+                                window.Title = $"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExtensionsUpdates)}";
+                                window.Content = new LegendaryUpdater(checkedGames);
+                                window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+                                window.SizeToContent = SizeToContent.WidthAndHeight;
+                                window.MinWidth = 600;
+                                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                                window.ShowDialog();
                             }
                         };
                     }
@@ -944,33 +938,51 @@ namespace LegendaryLibraryNS
                     {
                         gamesUpdates = await legendaryUpdateController.CheckAllGamesUpdates();
                     }, updateCheckProgressOptions);
-                    if (gamesUpdates.Count > 0)
+
+                    var checkedGames = new List<Game>();
+
+                    var appList = LegendaryLauncher.GetInstalledAppList();
+                    foreach (var game in appList.Where(item => item.Value.Is_dlc == false).OrderBy(item => item.Value.Title))
                     {
-                        var successUpdates = gamesUpdates.Where(i => i.Value.Success).ToDictionary(i => i.Key, i => i.Value);
-                        if (successUpdates.Count > 0)
+                        var gameID = game.Value.App_name;
+                        var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameID);
+                        bool canUpdate = true;
+                        if (gameSettings.DisableGameVersionCheck == true)
                         {
-                            Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                            canUpdate = false;
+                        }
+                        if (canUpdate)
+                        {
+                            var checkedGame = new Game
                             {
-                                ShowMaximizeButton = false,
-                            });
-                            window.DataContext = successUpdates;
-                            window.Title = $"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExtensionsUpdates)}";
-                            window.Content = new LegendaryUpdater();
-                            window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
-                            window.SizeToContent = SizeToContent.WidthAndHeight;
-                            window.MinWidth = 600;
-                            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                            window.ShowDialog();
-                        }
-                        else
-                        {
-                            PlayniteApi.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdateCheckFailMessage));
+                                GameId = game.Key,
+                                Name = game.Value.Title
+                            };
+                            checkedGames.Add(checkedGame);
                         }
                     }
-                    else
+                    if (LegendaryLauncher.IsEOSOverlayInstalled)
                     {
-                        PlayniteApi.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNoUpdatesAvailable));
+                        var checkedGame = new Game
+                        {
+                            GameId = "eos-overlay",
+                            Name = LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS" })
+                        };
+                        checkedGames.Add(checkedGame);
                     }
+
+                    Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                    {
+                        ShowMaximizeButton = false,
+                    });
+                    window.DataContext = gamesUpdates;
+                    window.Title = $"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExtensionsUpdates)}";
+                    window.Content = new LegendaryUpdater(checkedGames);
+                    window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+                    window.SizeToContent = SizeToContent.WidthAndHeight;
+                    window.MinWidth = 600;
+                    window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    window.ShowDialog();
                 }
             };
 
