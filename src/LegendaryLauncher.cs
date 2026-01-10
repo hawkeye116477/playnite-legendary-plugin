@@ -808,18 +808,21 @@ namespace LegendaryLibraryNS
 
             foreach (var cacheDir in cacheDirs)
             {
-                foreach (var file in Directory.EnumerateFiles(cacheDir, "*", SearchOption.AllDirectories))
+                if (Directory.Exists(cacheDir))
                 {
-                    try
+                    foreach (var file in Directory.EnumerateFiles(cacheDir, "*", SearchOption.AllDirectories))
                     {
-                        if (gameIds.Any(gameId => file.Contains(gameId)))
+                        try
                         {
-                            File.Delete(file);
+                            if (gameIds.Any(gameId => file.Contains(gameId)))
+                            {
+                                File.Delete(file);
+                            }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.Error(ex, $"An error occured during removing {file} file");
+                        catch (Exception ex)
+                        {
+                            logger.Error(ex, $"An error occured during removing {file} file");
+                        }
                     }
                 }
             }
