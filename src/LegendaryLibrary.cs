@@ -942,7 +942,7 @@ namespace LegendaryLibraryNS
                     var checkedGames = new List<Game>();
 
                     var appList = LegendaryLauncher.GetInstalledAppList();
-                    foreach (var game in appList.Where(item => item.Value.Is_dlc == false).OrderBy(item => item.Value.Title))
+                    foreach (var game in appList.OrderBy(item => item.Value.Title))
                     {
                         var gameID = game.Value.App_name;
                         var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameID);
