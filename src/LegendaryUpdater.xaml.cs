@@ -98,10 +98,5 @@ namespace LegendaryLibraryNS
                 await legendaryUpdateController.UpdateGame(updatesList, "", false, downloadProperties);
             }
         }
-
-        private void CancelBtn_Click(object sender, RoutedEventArgs e)
-        {
-            Window.GetWindow(this).Close();
-        }
     }
 }

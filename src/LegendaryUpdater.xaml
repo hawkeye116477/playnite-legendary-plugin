@@ -45,10 +45,10 @@
         </Grid>
         <StackPanel DockPanel.Dock="Top">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
-                <Button x:Name="UpdateBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteUpdaterInstallUpdate}}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xef07; {0}" Margin="0,0,5,0" IsEnabled="False" Click="UpdateBtn_Click" />
-                <Button x:Name="SelectAllBtn" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xeed9; {0}" Margin="0,0,5,0" Click="SelectAllBtn_Click"  />
+                <Button x:Name="UpdateBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteUpdaterInstallUpdate}}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xef07; {0}" Margin="0,0,8,0" IsEnabled="False" Click="UpdateBtn_Click" />
+                <Button x:Name="SelectAllBtn" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xeed9; {0}" Margin="0,0,8,0" Click="SelectAllBtn_Click"  />
                 <Button x:Name="CancelBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteCancelLabel}}" ContentStringFormat="&#xec4f; {0}" FontFamily="{DynamicResource FontIcoFont}"
-                    Margin="0,0,5,0" IsCancel="True" Click="CancelBtn_Click" />
+                    Margin="0,0,8,0" IsCancel="True" />
             </StackPanel>
             <Separator Margin="0,5,0,0"/>
             <ListBox BorderThickness="0" Name="UpdatesLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="UpdatesLB_SelectionChanged">
