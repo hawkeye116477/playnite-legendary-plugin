@@ -373,25 +373,10 @@ namespace LegendaryLibraryNS
             {
                 InstallBtn.IsEnabled = false;
                 DownloadSizeTB.Text = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoadingLabel);
-              
-                var cacheDirs = new List<string>()
-                {
-                    LegendaryLibrary.Instance.GetCachePath("infocache"),
-                    LegendaryLibrary.Instance.GetCachePath("sdlcache"),
-                    LegendaryLibrary.Instance.GetCachePath("updateinfocache"),
-                    Path.Combine(LegendaryLauncher.ConfigPath, "metadata")
-                };
 
-                foreach (var cacheDir in cacheDirs)
-                {
-                    foreach (var file in Directory.GetFiles(cacheDir, "*", SearchOption.AllDirectories))
-                    {
-                        if (file.Contains(GameId))
-                        {
-                            File.Delete(file);
-                        }
-                    }
-                }
+                var gameIds = new List<string> { GameId };
+                LegendaryLauncher.ClearSpecificGamesCache(gameIds);
+
                 await RefreshAll();
             }
         }

@@ -770,6 +770,7 @@ namespace LegendaryLibraryNS
 
         public static void ClearCache()
         {
+            var logger = LogManager.GetLogger();
             var cacheDirs = new List<string>()
             {
                 LegendaryLibrary.Instance.GetCachePath("catalogcache"),
@@ -780,12 +781,50 @@ namespace LegendaryLibraryNS
             };
             foreach (var cacheDir in cacheDirs)
             {
-                if (Directory.Exists(cacheDir))
+                try
                 {
-                    Directory.Delete(cacheDir, true);
+                    if (Directory.Exists(cacheDir))
+                    {
+                        Directory.Delete(cacheDir, true);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex, $"An error occured during removing {cacheDir} directory");
                 }
             }
         }
+
+        public static void ClearSpecificGamesCache(List<string> gameIds)
+        {
+            var logger = LogManager.GetLogger();
+            var cacheDirs = new List<string>()
+            {
+                LegendaryLibrary.Instance.GetCachePath("infocache"),
+                LegendaryLibrary.Instance.GetCachePath("sdlcache"),
+                LegendaryLibrary.Instance.GetCachePath("updateinfocache"),
+                Path.Combine(ConfigPath, "metadata")
+            };
+
+            foreach (var cacheDir in cacheDirs)
+            {
+                foreach (var file in Directory.EnumerateFiles(cacheDir, "*", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                        if (gameIds.Any(gameId => file.Contains(gameId)))
+                        {
+                            File.Delete(file);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Error(ex, $"An error occured during removing {file} file");
+                    }
+                }
+            }
+        }
+
 
         public static void ShowNotInstalledError()
         {

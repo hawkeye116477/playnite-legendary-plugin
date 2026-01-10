@@ -866,27 +866,9 @@ namespace LegendaryLibraryNS
                 InstallSizeTB.Text = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoadingLabel);
                 AfterInstallingTB.Text = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoadingLabel);
 
-                var cacheDirs = new List<string>()
-                {
-                    LegendaryLibrary.Instance.GetCachePath("infocache"),
-                    LegendaryLibrary.Instance.GetCachePath("sdlcache"),
-                    LegendaryLibrary.Instance.GetCachePath("updateinfocache"),
-                    Path.Combine(LegendaryLauncher.ConfigPath, "metadata")
-                };
+                var gameIds = MultiInstallData.Select(g => g.gameID).ToList();
+                LegendaryLauncher.ClearSpecificGamesCache(gameIds);
 
-                foreach (var cacheDir in cacheDirs)
-                {
-                    foreach (var file in Directory.GetFiles(cacheDir, "*", SearchOption.AllDirectories))
-                    {
-                        foreach (var installData in MultiInstallData)
-                        {
-                            if (file.Contains(installData.gameID))
-                            {
-                                File.Delete(file);
-                            }
-                        }
-                    }
-                }
                 await RefreshAll();
             }
         }

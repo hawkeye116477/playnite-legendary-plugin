@@ -392,28 +392,10 @@ namespace LegendaryLibraryNS
                         DateTimeOffset now = DateTime.UtcNow;
                         if (now.ToUnixTimeSeconds() >= nextGamesUpdateTime)
                         {
-                            var cacheDirs = new List<string>()
-                            {
-                                GetCachePath("infocache"),
-                                GetCachePath("sdlcache"),
-                                GetCachePath("updateinfocache"),
-                                Path.Combine(LegendaryLauncher.ConfigPath, "metadata")
-                            };
-
-                            foreach (var cacheDir in cacheDirs)
-                            {
-                                try
-                                {
-                                    if (Directory.Exists(cacheDir))
-                                    {
-                                        Directory.Delete(cacheDir, true);
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-                                    logger.Error(ex, "An error occured during removing directory");
-                                }
-                            }
+                            var installedGamesIds = LegendaryLauncher.GetInstalledAppList()
+                                                                     .Select(x => x.Key)
+                                                                     .ToList();
+                            LegendaryLauncher.ClearSpecificGamesCache(installedGamesIds);
 
                             globalSettings.NextGamesUpdateTime = GetNextUpdateCheckTime(globalSettings.GamesUpdatePolicy);
                             SavePluginSettings(globalSettings);
