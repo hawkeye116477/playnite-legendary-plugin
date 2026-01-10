@@ -828,7 +828,6 @@ namespace LegendaryLibraryNS
             }
         }
 
-
         public static void ShowNotInstalledError()
         {
             var playniteAPI = API.Instance;
