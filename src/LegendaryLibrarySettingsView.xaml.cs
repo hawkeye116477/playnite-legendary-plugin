@@ -272,11 +272,18 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private void MigrateEpicBtn_Click(object sender, RoutedEventArgs e)
+        private async void MigrateEpicBtn_Click(object sender, RoutedEventArgs e)
         {
             if (!LegendaryLauncher.IsInstalled)
             {
                 LegendaryLauncher.ShowNotInstalledError();
+                return;
+            }
+            var clientApi = new EpicAccountClient(playniteAPI);
+            var userLoggedIn = await clientApi.GetIsUserLoggedIn();
+            if (!userLoggedIn)
+            {
+                playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedInError));
                 return;
             }
             var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonMigrationConfirm), LocalizationManager.Instance.GetString(LOC.CommonMigrateGamesOriginal), MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -355,7 +362,6 @@ namespace LegendaryLibraryNS
             var troubleshootingJSON = Serialization.ToJson(troubleshootingInformation, true);
             Clipboard.SetText(troubleshootingJSON);
         }
-
 
         private void OpenGamesInstallationPathBtn_Click(object sender, RoutedEventArgs e)
         {
