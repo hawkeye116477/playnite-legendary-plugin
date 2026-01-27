@@ -256,7 +256,6 @@ namespace LegendaryLibraryNS
 
         public static async Task<Dictionary<string, string>> GetDefaultEnvironmentVariables()
         {
-
             var envDict = new Dictionary<string, string>();
             var heroicLegendaryConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "heroic", "legendaryConfig", "legendary");
             if (ConfigPath == heroicLegendaryConfigPath)
@@ -265,7 +264,7 @@ namespace LegendaryLibraryNS
             }
             var playniteAPI = API.Instance;
             var clientApi = new EpicAccountClient(playniteAPI);
-            if (await clientApi.GetIsUserLoggedIn())
+            if (File.Exists(EncryptedTokensPath) && await clientApi.GetIsUserLoggedIn())
             {
                 var tokens = clientApi.LoadTokens();
                 envDict.Add("LEGENDARY_SECRET_USER_DATA", Convert.ToBase64String(Encoding.UTF8.GetBytes(Serialization.ToJson(tokens))));
