@@ -1,5 +1,14 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.13.3
+    RequiredApiVersion: 6.14.0
+    ReleaseDate: 2026-01-27
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.13.3/LegendaryLibrary_1_13_3.pext
+    Changelog:
+      - Added checking if user is logged in before doing migration
+      - LEGENDARY_SECRET_USER_DATA env will now be only added if encrypted file present
+      - Set my launcher fork as default update source due to increased security
+      - Updated translations
   - Version: 1.13.2
     RequiredApiVersion: 6.14.0
     ReleaseDate: 2026-01-10
