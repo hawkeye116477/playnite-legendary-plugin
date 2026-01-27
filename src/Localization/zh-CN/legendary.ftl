@@ -18,12 +18,18 @@ legendary-activate-next-confirm = 您要激活下一个游戏吗？
 legendary-ea-notice = 目前不知道哪个游戏需要激活，因此将尝试激活所有内容。如果 EA App 要求您安装游戏而不是激活，则它已被激活，可以关闭对话框。
 legendary-star-wars-message = 愿原力与你同在，绝地学徒。
 legendary-import-third-party-launcher-games = 导入需要 { $thirdPartyLauncherName } 的游戏
+legendary-third-party-launcher-import-warn = 这些类型的游戏不需要 Legendary，并且并非所有都可以通过它安装。建议转到附加服务 => { $thirdPartyLauncherName } => 激活游戏，然后直接通过 { $thirdPartyLauncherName } 安装它们。
 legendary-required-install-via-third-party-launcher-error =
     { $count ->
             [one] { $gameTitle } 需要通过 { $thirdPartyLauncherName } 直接安装。
            *[other] 以下游戏需要通过 { $thirdPartyLauncherName } 直接安装：{ $gameTitle }。
     }
 legendary-install-prerequisites = 安装先决条件（{ $prerequisiteName }）
+legendary-required-install-of-third-party-launcher =
+    { $count ->
+            [one] { $gameTitle } 需要安装 { $thirdPartyLauncherName }。建议转到插件设置 => 附加服务 => { $thirdPartyLauncherName } => 激活游戏，然后直接通过 { $thirdPartyLauncherName } 安装它。
+           *[other] 以下游戏需要安装 { $thirdPartyLauncherName }：{ $gameTitle }。建议转到插件设置 => 附加服务 => { $thirdPartyLauncherName } => 激活游戏，然后直接通过 { $thirdPartyLauncherName } 安装它们。
+    }
 legendary-installing-prerequisites = 正在安装先决条件（{ $prerequisiteName }）……
 legendary-authenticate-alternative-label = 使用备用方法进行身份验证
 legendary-alternative-auth-instructions-first = 1. 在您的网页浏览器中登录 Epic Games Store。
