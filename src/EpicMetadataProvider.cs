@@ -1,6 +1,5 @@
 ﻿using CommonPlugin;
 using LegendaryLibraryNS.Models;
-using LegendaryLibraryNS.Services;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
@@ -8,9 +7,6 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LegendaryLibraryNS
 {
