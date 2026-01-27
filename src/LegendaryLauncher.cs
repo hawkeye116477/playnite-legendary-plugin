@@ -867,7 +867,7 @@ namespace LegendaryLibraryNS
             return installedInfo;
         }
 
-        public static string DefaultUpdateSource = "Heroic-Games-Launcher";
+        public static string DefaultUpdateSource = "hawkeye116477";
 
         public static string GetUpdateSource()
         {
