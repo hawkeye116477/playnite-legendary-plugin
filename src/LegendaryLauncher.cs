@@ -250,7 +250,7 @@ namespace LegendaryLibraryNS
         {
             get
             {
-                return Path.Combine(Path.Combine(LegendaryLibrary.Instance.GetPluginUserDataPath(), "tokens_encrypted.json"));
+                return Path.Combine(LegendaryLibrary.Instance.GetPluginUserDataPath(), "tokens_encrypted.json");
             }
         }
 
