@@ -501,6 +501,13 @@ namespace LegendaryLibraryNS
             var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.LegendaryContinueActivation, new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"Ubisoft" }), "", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
+                await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                         .WithArguments(new[] { "list", "-T", "--force-refresh" })
+                         .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
+                         .AddCommandToLog()
+                         .WithValidation(CommandResultValidation.None)
+                         .ExecuteAsync();
+
                 bool warningDisplayed = false;
                 bool errorDisplayed = false;
                 bool successDisplayed = false;
