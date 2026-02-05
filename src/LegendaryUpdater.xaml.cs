@@ -17,7 +17,7 @@ namespace LegendaryLibraryNS
     {
         public Dictionary<string, UpdateInfo> UpdatesList;
         private IPlayniteAPI playniteAPI = API.Instance;
-        public List<Playnite.SDK.Models.Game> checkedGames;
+        public List<Playnite.SDK.Models.Game> checkedGames = new List<Playnite.SDK.Models.Game>();
 
         public LegendaryUpdater()
         {
