@@ -321,7 +321,7 @@ namespace LegendaryLibraryNS
                                    .ExecuteBufferedAsync();
                 }
                 var errorMessage = cmd.StandardError;
-                if (!errorMessage.Contains("up to date"))
+                if (errorMessage != "" && !errorMessage.Contains("up to date"))
                 {
                     double downloadSizeNumber = 0;
                     double installSizeNumber = 0;
