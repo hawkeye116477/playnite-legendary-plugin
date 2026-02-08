@@ -142,7 +142,7 @@
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonDownloaderPreferredCdn}}" Grid.Column="0"
                             Grid.Row="9" Margin="0,0,0,8" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         <TextBox
-                            Text="{Binding Settings.PreferredCdn, UpdateSourceTrigger=PropertyChanged}"
+                            Text="{Binding Settings.PreferredCDN, UpdateSourceTrigger=PropertyChanged}"
                             Grid.Column="1" Grid.Row="9" Margin="0,0,0,8" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" />
                         <TextBlock Grid.Column="0" Grid.Row="10"
                             Text="{common:Localize Key={x:Static system:LOC.CommonAfterDownloadComplete}}" Margin="0,0,0,8" VerticalAlignment="Center" HorizontalAlignment="Left"  />
