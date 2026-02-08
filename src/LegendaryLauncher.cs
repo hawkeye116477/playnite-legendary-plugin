@@ -321,18 +321,13 @@ namespace LegendaryLibraryNS
                                    .ExecuteBufferedAsync();
                 }
                 var errorMessage = cmd.StandardError;
-                if (cmd.ExitCode != 0 || (!errorMessage.Contains("old manifest") && (errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") || errorMessage.Contains("Error"))))
-                {
-                    var logger = LogManager.GetLogger();
-                    logger.Error("[Legendary]" + cmd.StandardError);
-                }
-                else if (!cmd.StandardError.Contains("up to date"))
+                if (!errorMessage.Contains("up to date"))
                 {
                     double downloadSizeNumber = 0;
                     double installSizeNumber = 0;
                     string downloadSizeUnit = "B";
                     string installSizeUnit = "B";
-                    string[] lines = cmd.StandardError.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                    string[] lines = errorMessage.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
                     foreach (var line in lines)
                     {
                         var downloadSizeText = "Download size:";
@@ -359,6 +354,11 @@ namespace LegendaryLibraryNS
                             Directory.CreateDirectory(cacheUpdateInfoPath);
                         }
                         File.WriteAllText(cacheUpdateInfoFile, Serialization.ToJson(updateInfo));
+                    }
+                    else
+                    {
+                        var logger = LogManager.GetLogger();
+                        logger.Error("[Legendary]" + errorMessage);
                     }
                 }
             }
