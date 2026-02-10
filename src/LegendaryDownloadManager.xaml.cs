@@ -484,7 +484,7 @@ namespace LegendaryLibraryNS
                                 {
                                     diskSpaceErrorDisplayed = true;
                                 }
-                                if (!errorMessage.Contains("old manifest"))
+                                if (!errorMessage.Contains("old manifest") && !errorMessage.Contains("EGL ProgramData"))
                                 {
                                     errorDisplayed = true;
                                 }
