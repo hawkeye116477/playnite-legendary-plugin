@@ -83,11 +83,6 @@ namespace LegendaryLibraryNS
 
         private void EOSOInstallBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (!LegendaryLauncher.IsInstalled)
-            {
-                LegendaryLauncher.ShowNotInstalledError();
-                return;
-            }
             var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
             {
                 ShowMaximizeButton = false

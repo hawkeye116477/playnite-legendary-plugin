@@ -36,6 +36,25 @@ namespace LegendaryLibraryNS
             }
         }
 
+        public static bool CheckIfUdmInstalled()
+        {
+            var playniteAPI = API.Instance;
+            bool installed = playniteAPI.Addons.Plugins.Any(plugin => plugin.Id.Equals(UnifiedDownloadManagerSharedProperties.Id));
+            if (!installed)
+            {
+                var options = new List<MessageBoxOption>
+                {
+                    new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteInstallGame)),
+                    new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOkLabel)),
+                };
+                var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonLauncherNotInstalled, new Dictionary<string, IFluentType> { ["launcherName"] = (FluentString)"Unified Download Manager" }), "Legendary (Epic Games) library integration", MessageBoxImage.Information, options);
+                if (result == options[0])
+                {
+                    Playnite.Commands.GlobalCommands.NavigateUrl("playnite://playnite/installaddon/UnifiedDownloadManager");
+                }
+            }
+            return installed;
+        }
 
         public async Task AddTasks(List<DownloadManagerData.Download> downloadTasks)
         {

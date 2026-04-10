@@ -212,6 +212,11 @@ namespace LegendaryLibraryNS
         {
             if (AvailableDlcsLB.SelectedItems.Count > 0)
             {
+                var isUdmInstalled = LegendaryDownloadLogic.CheckIfUdmInstalled();
+                if (!isUdmInstalled)
+                {
+                    return;
+                }
                 var settings = LegendaryLibrary.GetSettings();
                 int maxWorkers = settings.MaxWorkers;
                 if (MaxWorkersNI.Value != "")

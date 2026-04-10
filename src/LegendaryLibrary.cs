@@ -836,12 +836,6 @@ namespace LegendaryLibraryNS
                         Icon = "RepairIcon",
                         Action = (args) =>
                         {
-                            if (!LegendaryLauncher.IsInstalled)
-                            {
-                                LegendaryLauncher.ShowNotInstalledError();
-                                return;
-                            }
-
                             Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
                             {
                                 ShowMaximizeButton = false,
@@ -898,7 +892,6 @@ namespace LegendaryLibraryNS
                         LegendaryLauncher.ShowNotInstalledError();
                         return;
                     }
-
                     var gamesUpdates = new Dictionary<string, UpdateInfo>();
                     LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
                     GlobalProgressOptions updateCheckProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonCheckingForUpdates), false) { IsIndeterminate = true };

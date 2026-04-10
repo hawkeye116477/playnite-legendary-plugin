@@ -184,6 +184,16 @@ namespace LegendaryLibraryNS
 
         private async void LegendaryGameInstallerUC_Loaded(object sender, RoutedEventArgs e)
         {
+            if (!LegendaryLauncher.IsInstalled)
+            {
+                LegendaryLauncher.ShowNotInstalledError();
+                return;
+            }
+            var isUdmInstalled = LegendaryDownloadLogic.CheckIfUdmInstalled();
+            if (!isUdmInstalled)
+            {
+                return;
+            }
             CommonHelpers.SetControlBackground(this);
             if (MultiInstallData.First().downloadProperties.downloadAction == DownloadAction.Repair)
             {

@@ -46,12 +46,6 @@ namespace LegendaryLibraryNS
         public static void LaunchInstaller(List<DownloadManagerData.Download> installData)
         {
             var playniteAPI = API.Instance;
-            if (!LegendaryLauncher.IsInstalled)
-            {
-                LegendaryLauncher.ShowNotInstalledError();
-                return;
-            }
-
             Window window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
             {
                 ShowMaximizeButton = false,

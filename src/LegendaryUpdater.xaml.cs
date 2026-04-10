@@ -32,6 +32,11 @@ namespace LegendaryLibraryNS
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            var isUdmInstalled = LegendaryDownloadLogic.CheckIfUdmInstalled();
+            if (!isUdmInstalled)
+            {
+                return;
+            }
             UpdatesList = (Dictionary<string, UpdateInfo>)DataContext;
             CommonHelpers.SetControlBackground(this);
             RefreshWindow();
