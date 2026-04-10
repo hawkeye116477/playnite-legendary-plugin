@@ -229,6 +229,10 @@ namespace LegendaryLibraryNS
             PlayniteVersionTxt.Text = troubleshootingInformation.PlayniteVersion;
             PluginVersionTxt.Text = troubleshootingInformation.PluginVersion;
             GamesInstallationPathTxt.Text = troubleshootingInformation.GamesInstallationPath;
+            if (!Directory.Exists(troubleshootingInformation.GamesInstallationPath))
+            {
+                OpenGamesInstallationPathBtn.IsEnabled = false;
+            }
             LogFilesPathTxt.Text = playniteAPI.Paths.ConfigurationPath;
             ReportBugHyp.NavigateUri = new Uri($"https://github.com/hawkeye116477/playnite-legendary-plugin/issues/new?assignees=&labels=bug&projects=&template=bugs.yml&legendaryV={troubleshootingInformation.PluginVersion}&playniteV={troubleshootingInformation.PlayniteVersion}&launcherV={troubleshootingInformation.LauncherVersion}");
 
@@ -354,7 +358,7 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.CommonPathNotExistsError));
+                logger.Error($"Path {troubleshootingInformation.GamesInstallationPath} not exists.");
             }
         }
 
