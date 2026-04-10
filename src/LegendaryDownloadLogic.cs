@@ -71,6 +71,8 @@ namespace LegendaryLibraryNS
                     fullInstallPath = downloadTask.fullInstallPath,
                     pluginId = LegendaryLibrary.Instance.Id.ToString(),
                     sourceName = "Epic",
+                    addedTime = downloadTask.addedTime,
+                    completedTime = downloadTask.completedTime
                 };
                 unifiedTasks.Add(unifiedTask);
             }

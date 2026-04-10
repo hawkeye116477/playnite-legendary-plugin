@@ -53,14 +53,16 @@ namespace LegendaryLibraryNS
             commonHelpers.LoadNeededResources();
             UnifiedDownloadLogic = new LegendaryDownloadLogic();
             pluginDownloadData = LoadSavedDownloadData();
+            MigrateOldDownloadData();
         }
+
 
         public DownloadManagerData LoadSavedDownloadData()
         {
             if (pluginDownloadData == null)
             {
                 var dataDir = Instance.GetPluginUserDataPath();
-                var dataFile = Path.Combine(dataDir, "downloadManager.json");
+                var dataFile = Path.Combine(dataDir, "downloads.json");
                 bool correctJson = false;
                 if (File.Exists(dataFile))
                 {
@@ -82,13 +84,36 @@ namespace LegendaryLibraryNS
                     };
                 }
             }
+
             return pluginDownloadData;
         }
 
         public void SaveDownloadData()
         {
            var commonHelpers = Instance.commonHelpers;
-           commonHelpers.SaveJsonSettingsToFile(pluginDownloadData, "", "downloadManager", true);
+           commonHelpers.SaveJsonSettingsToFile(pluginDownloadData, "", "downloads", true);
+        }
+
+        public async Task MigrateOldDownloadData()
+        {
+            var oldPluginDownloadDataForMigration = new DownloadManagerData();
+            var dataDir = Instance.GetPluginUserDataPath();
+            var oldDataFile = Path.Combine(dataDir, "downloadManager.json");
+            var oldDataBackupFile = Path.Combine(dataDir, "downloadManager.json.migrated");
+            if (File.Exists(oldDataFile))
+            {
+                var content = FileSystem.ReadFileAsStringSafe(oldDataFile);
+                if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out DownloadManagerData oldPluginDownloadData))
+                {
+                    if (oldPluginDownloadData != null && oldPluginDownloadData.downloads != null)
+                    {
+                        oldPluginDownloadDataForMigration = oldPluginDownloadData;
+                    }
+                }
+                File.Move(oldDataFile, oldDataBackupFile);
+                var legendaryDownloadLogic = (LegendaryDownloadLogic)LegendaryLibrary.Instance.UnifiedDownloadLogic;
+                await legendaryDownloadLogic.AddTasks(oldPluginDownloadDataForMigration.downloads.ToList());
+            }
         }
 
         public static LegendaryLibrarySettings GetSettings()
@@ -378,7 +403,8 @@ namespace LegendaryLibraryNS
 
         public override async void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            var globalSettings = GetSettings();
+            await MigrateOldDownloadData();
+            var globalSettings = GetSettings();;
             if (globalSettings != null)
             {
                 if (globalSettings.GamesUpdatePolicy != UpdatePolicy.Never)
