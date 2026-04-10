@@ -20,6 +20,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using UnifiedDownloadManagerApiNS;
+using UnifiedDownloadManagerApiNS.Models;
 
 namespace LegendaryLibraryNS
 {
@@ -121,7 +123,7 @@ namespace LegendaryLibraryNS
                         foreach (var game in games)
                         {
                             a.Text = $"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstalling)} {game.Name}... ";
-                            await LegendaryDownloadManager.WaitUntilLegendaryCloses();
+                            await LegendaryDownloadLogic.WaitUntilLegendaryCloses();
                             var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                                .WithArguments(new[] { "-y", "uninstall", game.GameId })
                                                .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
@@ -734,6 +736,7 @@ namespace LegendaryLibraryNS
 
         public async Task UpdateGame(Dictionary<string, UpdateInfo> gamesToUpdate, string gameTitle = "", bool silently = false, DownloadProperties downloadProperties = null)
         {
+            var unifiedDownloadManagerApi = new UnifiedDownloadManagerApi();
             var updateTasks = new List<DownloadManagerData.Download>();
             if (gamesToUpdate.Count > 0)
             {
@@ -745,24 +748,24 @@ namespace LegendaryLibraryNS
                         var playniteApi = API.Instance;
                         playniteApi.Notifications.Add(new NotificationMessage("LegendaryGamesUpdates", LocalizationManager.Instance.GetString(LOC.CommonGamesUpdatesUnderway), NotificationType.Info));
                     }
-                    LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
                     foreach (var gameToUpdate in gamesToUpdate)
                     {
-                        var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameToUpdate.Key);
-                        if (wantedItem != null)
+                        var wantedUnifiedItem = unifiedDownloadManagerApi.GetTask(gameToUpdate.Key, LegendaryLibrary.Instance.Id.ToString());
+                        if (wantedUnifiedItem != null)
                         {
-                            if (wantedItem.status == DownloadStatus.Completed)
+                            if (wantedUnifiedItem.status == UnifiedDownloadStatus.Completed)
                             {
-                                downloadManager.downloadManagerData.downloads.Remove(wantedItem);
-                                downloadManager.downloadsChanged = true;
-                                wantedItem = null;
+                                var wantedPluginItem = LegendaryLibrary.Instance.pluginDownloadData.downloads.FirstOrDefault(i => i.gameID == wantedUnifiedItem.gameID);
+                                LegendaryLibrary.Instance.pluginDownloadData.downloads.Remove(wantedPluginItem);
+                                wantedPluginItem = null;
+                                unifiedDownloadManagerApi.RemoveTask(wantedUnifiedItem);
                             }
                         }
-                        if (wantedItem != null)
+                        if (wantedUnifiedItem != null)
                         {
                             if (!silently)
                             {
-                                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonDownloadAlreadyExists, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)wantedItem.name }), "", MessageBoxButton.OK, MessageBoxImage.Error);
+                                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonDownloadAlreadyExists, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)wantedUnifiedItem.name }), "", MessageBoxButton.OK, MessageBoxImage.Error);
                             }
                         }
                         else
@@ -793,7 +796,8 @@ namespace LegendaryLibraryNS
                     }
                     if (updateTasks.Count > 0)
                     {
-                        await downloadManager.EnqueueMultipleJobs(updateTasks, silently);
+                        var downloadLogic = (LegendaryDownloadLogic)LegendaryLibrary.Instance.UnifiedDownloadLogic;
+                        await downloadLogic.AddTasks(updateTasks);
                     }
                 }
             }

@@ -14,6 +14,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using UnifiedDownloadManagerApiNS;
+using UnifiedDownloadManagerApiNS.Models;
 
 namespace LegendaryLibraryNS
 {
@@ -64,7 +66,6 @@ namespace LegendaryLibraryNS
 
         public async Task StartTask(DownloadAction downloadAction)
         {
-            var settings = LegendaryLibrary.GetSettings();
             var installPath = SelectedGamePathTxt.Text;
             if (installPath == "")
             {
@@ -76,65 +77,63 @@ namespace LegendaryLibraryNS
                 installPath = installPath.Replace(playniteDirectoryVariable, playniteAPI.Paths.ApplicationPath);
             }
             InstallerWindow.Close();
-            LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
+
+
             var downloadTasks = new List<DownloadManagerData.Download>();
             var downloadItemsAlreadyAdded = new List<string>();
+
 
             var installedAppList = LegendaryLauncher.GetInstalledAppList();
             foreach (var installData in MultiInstallData)
             {
                 var gameId = installData.gameID;
-                var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == gameId);
-                if (wantedItem == null)
+                if (!CommonHelpers.IsDirectoryWritable(installPath, LOC.CommonPermissionError))
                 {
-                    if (downloadAction != DownloadAction.Install)
-                    {
-                        var installedInfo = installedAppList[gameId];
-                        installPath = installedInfo.Install_path;
-                        installData.fullInstallPath = installPath;
-                    }
-                    if (!CommonHelpers.IsDirectoryWritable(installPath, LOC.CommonPermissionError))
-                    {
-                        continue;
-                    }
-                    var downloadProperties = GetDownloadProperties(installData, downloadAction, installPath);
-                    installData.downloadProperties = downloadProperties;
-                    downloadTasks.Add(installData);
+                    continue;
                 }
+                if (downloadAction != DownloadAction.Install)
+                {
+                    var installedInfo = installedAppList[gameId];
+                    installPath = installedInfo.Install_path;
+                    installData.fullInstallPath = installPath;
+                }
+                var downloadProperties = GetDownloadProperties(installData, downloadAction, installPath);
+                installData.downloadProperties = downloadProperties;
+
+
                 var selectedDlcs = installData.downloadProperties.selectedDlcs;
                 if (selectedDlcs != null && selectedDlcs.Count > 0)
                 {
                     foreach (var selectedDlc in selectedDlcs)
                     {
-                        var wantedDlc = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == selectedDlc.Key);
-                        if (wantedDlc != null)
+                        var dlcInstallData = selectedDlc.Value;
+                        if (downloadAction == DownloadAction.Repair)
                         {
-                            if (wantedDlc.status == DownloadStatus.Completed && !installedAppList.ContainsKey(wantedDlc.gameID))
-                            {
-                                downloadManager.downloadManagerData.downloads.Remove(wantedDlc);
-                            }
-                            else
-                            {
-                                downloadItemsAlreadyAdded.Add(selectedDlc.Value.name);
-                            }
+                            var installedInfo = installedAppList[selectedDlc.Key];
+                            installPath = CommonHelpers.NormalizePath(installedInfo.Install_path);
+                            dlcInstallData.fullInstallPath = installPath;
                         }
-                        if (wantedDlc == null)
-                        {
-                            var dlcInstallData = selectedDlc.Value;
-                            if (downloadAction == DownloadAction.Repair)
-                            {
-                                var installedInfo = installedAppList[selectedDlc.Key];
-                                installPath = CommonHelpers.NormalizePath(installedInfo.Install_path);
-                                dlcInstallData.fullInstallPath = installPath;
-                            }
-                            var downloadProperties = GetDownloadProperties(dlcInstallData, downloadAction, installPath);
-                            dlcInstallData.downloadProperties = downloadProperties;
-                            downloadTasks.Add(dlcInstallData);
-                        }
+                        var dlcDownloadProperties = GetDownloadProperties(dlcInstallData, downloadAction, installPath);
+                        dlcInstallData.downloadProperties = dlcDownloadProperties;
+                        downloadTasks.Add(dlcInstallData);
                     }
                 }
                 installData.extraContentAvailable = null;
                 installData.downloadProperties.selectedDlcs = null;
+                downloadTasks.Add(installData);
+            }
+            if (downloadTasks.Count > 0)
+            {
+                var pluginDownloadData = LegendaryLibrary.Instance.pluginDownloadData;
+                foreach (var downloadTask in downloadTasks.ToList())
+                {
+                    var wantedPluginDownloadDataItem = pluginDownloadData.downloads.FirstOrDefault(item => item.gameID == downloadTask.gameID);
+                    if (wantedPluginDownloadDataItem != null)
+                    {
+                        downloadItemsAlreadyAdded.Add(downloadTask.name);
+                        downloadTasks.Remove(downloadTask);
+                    }
+                }
             }
             if (downloadItemsAlreadyAdded.Count > 0)
             {
@@ -147,7 +146,8 @@ namespace LegendaryLibraryNS
             }
             if (downloadTasks.Count > 0)
             {
-                await downloadManager.EnqueueMultipleJobs(downloadTasks);
+                var legendaryDownloadLogic = new LegendaryDownloadLogic();
+                await legendaryDownloadLogic.AddTasks(downloadTasks);
             }
         }
 
@@ -219,6 +219,7 @@ namespace LegendaryLibraryNS
 
         public async Task RefreshAll()
         {
+            UnifiedDownloadManagerApi unifiedDownloadManagerApi = new UnifiedDownloadManagerApi();
             ReloadBtn.IsEnabled = false;
             AllDlcsChk.Visibility = Visibility.Collapsed;
             AllOrNothingChk.Visibility = Visibility.Collapsed;
@@ -236,19 +237,21 @@ namespace LegendaryLibraryNS
             var ubisoftRecommendedGames = new List<string>();
             var downloadItemsAlreadyAdded = new List<string>();
             var prerequisites = new Dictionary<string, string>();
-            LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
 
             bool gamesListShouldBeDisplayed = false;
 
+            var pluginDownloadData = LegendaryLibrary.Instance.pluginDownloadData;
             var installedAppList = LegendaryLauncher.GetInstalledAppList();
             foreach (var installData in MultiInstallData.ToList())
             {
-                var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == installData.gameID);
+                var wantedItem = pluginDownloadData.downloads.FirstOrDefault(item => item.gameID == installData.gameID);
+                var wantedUnifiedTask = unifiedDownloadManagerApi.GetTask(wantedItem.gameID, LegendaryLibrary.Instance.Id.ToString());
                 if (wantedItem != null)
                 {
-                    if (wantedItem.status == DownloadStatus.Completed && !installedAppList.ContainsKey(installData.gameID))
+                    if (wantedUnifiedTask?.status == UnifiedDownloadStatus.Completed && !installedAppList.ContainsKey(installData.gameID))
                     {
-                        downloadManager.downloadManagerData.downloads.Remove(wantedItem);
+                        pluginDownloadData.downloads.Remove(wantedItem);
+                        unifiedDownloadManagerApi.RemoveTask(wantedUnifiedTask);
                     }
                     else
                     {

@@ -8,28 +8,34 @@ using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
 using Playnite.Common;
 using Playnite.SDK;
+using Playnite.SDK.Data;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using UnifiedDownloadManagerApiNS;
+using UnifiedDownloadManagerApiNS.Interfaces;
+using UnifiedDownloadManagerApiNS.Models;
 
 namespace LegendaryLibraryNS
 {
     [LoadPlugin]
-    public class LegendaryLibrary : LibraryPluginBase<LegendaryLibrarySettingsViewModel>
+    public class LegendaryLibrary : LibraryPluginBase<LegendaryLibrarySettingsViewModel>, IUnifiedDownloadProvider
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         public static LegendaryLibrary Instance { get; set; }
         public static bool LegendaryGameInstaller { get; internal set; }
-        private LegendaryDownloadManager LegendaryDownloadManager;
-        private SidebarItem downloadManagerSidebarItem;
         public CommonHelpers commonHelpers { get; set; }
+        public IUnifiedDownloadLogic UnifiedDownloadLogic { get; set; }
+        public DownloadManagerData pluginDownloadData { get; set; }
+
 
         public LegendaryLibrary(IPlayniteAPI api) : base(
             "Legendary (Epic)",
@@ -45,34 +51,49 @@ namespace LegendaryLibraryNS
             SettingsViewModel = new LegendaryLibrarySettingsViewModel(this, api);
             Load3pLocalization();
             commonHelpers.LoadNeededResources();
-            LegendaryDownloadManager = new LegendaryDownloadManager();
+            UnifiedDownloadLogic = new LegendaryDownloadLogic();
+            pluginDownloadData = LoadSavedDownloadData();
+        }
+
+        public DownloadManagerData LoadSavedDownloadData()
+        {
+            if (pluginDownloadData == null)
+            {
+                var dataDir = Instance.GetPluginUserDataPath();
+                var dataFile = Path.Combine(dataDir, "downloadManager.json");
+                bool correctJson = false;
+                if (File.Exists(dataFile))
+                {
+                    var content = FileSystem.ReadFileAsStringSafe(dataFile);
+                    if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out DownloadManagerData newPluginDownloadData))
+                    {
+                        if (newPluginDownloadData != null && newPluginDownloadData.downloads != null)
+                        {
+                            correctJson = true;
+                            pluginDownloadData = newPluginDownloadData;
+                        }
+                    }
+                }
+                if (!correctJson)
+                {
+                    pluginDownloadData = new DownloadManagerData
+                    {
+                        downloads = new ObservableCollection<DownloadManagerData.Download>()
+                    };
+                }
+            }
+            return pluginDownloadData;
+        }
+
+        public void SaveDownloadData()
+        {
+           var commonHelpers = Instance.commonHelpers;
+           commonHelpers.SaveJsonSettingsToFile(pluginDownloadData, "", "downloadManager", true);
         }
 
         public static LegendaryLibrarySettings GetSettings()
         {
             return Instance.SettingsViewModel?.Settings ?? null;
-        }
-
-        public static SidebarItem GetPanel()
-        {
-            if (Instance.downloadManagerSidebarItem == null)
-            {
-                Instance.downloadManagerSidebarItem = new SidebarItem
-                {
-                    Title = LocalizationManager.Instance.GetString(LOC.CommonPanel),
-                    Icon = LegendaryLauncher.Icon,
-                    Type = SiderbarItemType.View,
-                    Opened = () => GetLegendaryDownloadManager(),
-                    ProgressValue = 0,
-                    ProgressMaximum = 100,
-                };
-            }
-            return Instance.downloadManagerSidebarItem;
-        }
-
-        public static LegendaryDownloadManager GetLegendaryDownloadManager()
-        {
-            return Instance.LegendaryDownloadManager;
         }
 
         internal Dictionary<string, GameMetadata> GetInstalledGames()
@@ -335,16 +356,11 @@ namespace LegendaryLibraryNS
             LocalizationManager.Instance.SetCommonArgs(commonFluentArgs);
         }
 
-        public override IEnumerable<SidebarItem> GetSidebarItems()
-        {
-            yield return downloadManagerSidebarItem;
-        }
-
         public bool StopDownloadManager(bool displayConfirm = false)
         {
-            LegendaryDownloadManager downloadManager = GetLegendaryDownloadManager();
-            var runningAndQueuedDownloads = downloadManager.downloadManagerData.downloads.Where(i => i.status == DownloadStatus.Running
-                                                                                                     || i.status == DownloadStatus.Queued).ToList();
+            var unifiedDownloadManagerApi = new UnifiedDownloadManagerApi();
+            var allDownloads = unifiedDownloadManagerApi.GetAllDownloads();
+            var runningAndQueuedDownloads = allDownloads.Where(i => i.status == UnifiedDownloadStatus.Running || i.status == UnifiedDownloadStatus.Queued).ToList();
             if (runningAndQueuedDownloads.Count > 0)
             {
                 if (displayConfirm)
@@ -355,17 +371,7 @@ namespace LegendaryLibraryNS
                         return false;
                     }
                 }
-                foreach (var download in runningAndQueuedDownloads)
-                {
-                    if (download.status == DownloadStatus.Running)
-                    {
-                        downloadManager.gracefulInstallerCTS?.Cancel();
-                        downloadManager.gracefulInstallerCTS?.Dispose();
-                        downloadManager.forcefulInstallerCTS?.Dispose();
-                    }
-                    download.status = DownloadStatus.Paused;
-                }
-                downloadManager.SaveData();
+                unifiedDownloadManagerApi.PauseAllTasks(Instance.Id.ToString());
             }
             return true;
         }
@@ -474,38 +480,9 @@ namespace LegendaryLibraryNS
 
         public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
         {
-            StopDownloadManager();
-            LegendaryDownloadManager downloadManager = GetLegendaryDownloadManager();
             var settings = GetSettings();
             if (settings != null)
             {
-                if (settings.AutoRemoveCompletedDownloads != ClearCacheTime.Never)
-                {
-                    var nextRemovingCompletedDownloadsTime = settings.NextRemovingCompletedDownloadsTime;
-                    if (nextRemovingCompletedDownloadsTime != 0)
-                    {
-                        DateTimeOffset now = DateTime.UtcNow;
-                        if (now.ToUnixTimeSeconds() >= nextRemovingCompletedDownloadsTime)
-                        {
-                            foreach (var downloadItem in downloadManager.downloadManagerData.downloads.ToList())
-                            {
-                                if (downloadItem.status == DownloadStatus.Completed)
-                                {
-                                    downloadManager.downloadManagerData.downloads.Remove(downloadItem);
-                                    downloadManager.downloadsChanged = true;
-                                }
-                            }
-                            settings.NextRemovingCompletedDownloadsTime = GetNextClearingTime(settings.AutoRemoveCompletedDownloads);
-                            SavePluginSettings(settings);
-                        }
-                    }
-                    else
-                    {
-                        settings.NextRemovingCompletedDownloadsTime = GetNextClearingTime(settings.AutoRemoveCompletedDownloads);
-                        SavePluginSettings(settings);
-                    }
-                }
-
                 if (settings.AutoClearCache != ClearCacheTime.Never)
                 {
                     var nextClearingTime = settings.NextClearingTime;
@@ -526,7 +503,7 @@ namespace LegendaryLibraryNS
                     }
                 }
             }
-            downloadManager.SaveData();
+            SaveDownloadData();
         }
 
         public static long GetNextUpdateCheckTime(UpdatePolicy frequency)
@@ -683,7 +660,7 @@ namespace LegendaryLibraryNS
                                     {
                                         return;
                                     }
-                                    await LegendaryDownloadManager.WaitUntilLegendaryCloses();
+                                    await LegendaryDownloadLogic.WaitUntilLegendaryCloses();
                                     GlobalProgressOptions importProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonImportingGame, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }), false) { IsIndeterminate = true };
                                     PlayniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
                                     {
@@ -792,7 +769,7 @@ namespace LegendaryLibraryNS
                                                         {
                                                             return;
                                                         }
-                                                        await LegendaryDownloadManager.WaitUntilLegendaryCloses();
+                                                        await LegendaryDownloadLogic.WaitUntilLegendaryCloses();
                                                         Directory.Move(oldPath, newPath);
                                                         a.CurrentProgressValue = 1;
                                                         var rewriteResult = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
@@ -976,28 +953,6 @@ namespace LegendaryLibraryNS
                     window.ShowDialog();
                 }
             };
-
-            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
-            {
-                yield return new MainMenuItem
-                {
-                    Description = LocalizationManager.Instance.GetString(LOC.CommonDownloadManager),
-                    MenuSection = $"@{Instance.Name}",
-                    Icon = "InstallIcon",
-                    Action = (args) =>
-                    {
-                        Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
-                        {
-                            ShowMaximizeButton = true,
-                        });
-                        window.Title = $"{LocalizationManager.Instance.GetString(LOC.CommonPanel)}";
-                        window.Content = GetLegendaryDownloadManager();
-                        window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
-                        window.SizeToContent = SizeToContent.WidthAndHeight;
-                        window.ShowDialog();
-                    }
-                };
-            }
 
             yield return new MainMenuItem
             {

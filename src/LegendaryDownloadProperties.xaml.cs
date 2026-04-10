@@ -8,6 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using UnifiedDownloadManagerApiNS;
+using UnifiedDownloadManagerApiNS.Models;
 
 namespace LegendaryLibraryNS
 {
@@ -17,7 +19,6 @@ namespace LegendaryLibraryNS
     public partial class LegendaryDownloadProperties : UserControl
     {
         private DownloadManagerData.Download SelectedDownload => (DownloadManagerData.Download)DataContext;
-        public DownloadManagerData downloadManagerData;
         private IPlayniteAPI playniteAPI = API.Instance;
         public List<string> requiredThings;
         public bool uncheckedByUser = true;
@@ -33,14 +34,6 @@ namespace LegendaryLibraryNS
         public LegendaryDownloadProperties()
         {
             InitializeComponent();
-            LoadSavedData();
-        }
-
-        private DownloadManagerData LoadSavedData()
-        {
-            var downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
-            downloadManagerData = downloadManager.downloadManagerData;
-            return downloadManagerData;
         }
 
         private async void LegendaryDownloadPropertiesUC_Loaded(object sender, RoutedEventArgs e)
@@ -92,7 +85,9 @@ namespace LegendaryLibraryNS
                 ExtraContentTbI.Visibility = Visibility.Visible;
             }
 
-            if (wantedItem.status == DownloadStatus.Canceled)
+            UnifiedDownloadManagerApi unifiedDownloadManagerApi = new UnifiedDownloadManagerApi();
+            var wantedUnifiedTask = unifiedDownloadManagerApi.GetTask(wantedItem.gameID, LegendaryLibrary.Instance.Id.ToString());
+            if (wantedUnifiedTask.status == UnifiedDownloadStatus.Canceled)
             {
                 AllOrNothingChk.IsEnabled = true;
                 ExtraContentLB.IsEnabled = true;
@@ -122,7 +117,7 @@ namespace LegendaryLibraryNS
 
         private async void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            var wantedItem = downloadManagerData.downloads.FirstOrDefault(item => item.gameID == SelectedDownload.gameID);
+            var wantedItem = LegendaryLibrary.Instance.pluginDownloadData.downloads.FirstOrDefault(item => item.gameID == SelectedDownload.gameID);
             var installPath = SelectedGamePathTxt.Text;
             var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory.ToString();
             if (installPath.Contains(playniteDirectoryVariable))
@@ -144,23 +139,14 @@ namespace LegendaryLibraryNS
             }
             wantedItem.downloadProperties.ignoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked;
             wantedItem.downloadProperties.extraContent = selectedSdls;
-            if (wantedItem.status == DownloadStatus.Canceled)
+            UnifiedDownloadManagerApi unifiedDownloadManagerApi = new UnifiedDownloadManagerApi();
+            var wantedUnifiedTask = unifiedDownloadManagerApi.GetTask(wantedItem.gameID, LegendaryLibrary.Instance.Id.ToString());
+            if (wantedUnifiedTask.status == UnifiedDownloadStatus.Canceled)
             {
                 var gameSize = await LegendaryLauncher.CalculateGameSize(GameData, selectedSdls);
-                wantedItem.downloadSizeNumber = gameSize.Download_size;
-                wantedItem.installSizeNumber = gameSize.Disk_size;
+                wantedUnifiedTask.downloadSizeBytes = gameSize.Download_size;
+                wantedUnifiedTask.installSizeBytes = gameSize.Download_size;
             }
-            var downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
-            var previouslySelected = downloadManager.DownloadsDG.SelectedIndex;
-            for (int i = 0; i < downloadManager.downloadManagerData.downloads.Count; i++)
-            {
-                if (downloadManager.downloadManagerData.downloads[i].gameID == SelectedDownload.gameID)
-                {
-                    downloadManager.downloadManagerData.downloads[i] = wantedItem;
-                    break;
-                }
-            }
-            downloadManager.DownloadsDG.SelectedIndex = previouslySelected;
             Window.GetWindow(this).Close();
         }
 

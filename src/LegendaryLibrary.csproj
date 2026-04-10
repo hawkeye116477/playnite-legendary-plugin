@@ -54,6 +54,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnifiedDownloadManagerApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\playnite-unifiedDownloadManager-plugin\src\api\bin\Release\UnifiedDownloadManagerApi.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup Label="compileInclude3p">
@@ -162,9 +166,6 @@
     <Compile Include="..\third_party\playnite-common-plugin\src\RetryHandler.cs">
       <Link>Shared\RetryHandler.cs</Link>
     </Compile>
-    <Compile Include="..\third_party\playnite-common-plugin\src\Converters\LongToDateConverter.cs">
-      <Link>Shared\Converters\LongToDateConverter.cs</Link>
-    </Compile>
     <Compile Include="..\third_party\playnite-common-plugin\src\Converters\NumericalSizeToStringConverter.cs">
       <Link>Shared\Converters\NumericalSizeToStringConverter.cs</Link>
     </Compile>
@@ -176,9 +177,6 @@
     </Compile>
     <Compile Include="..\third_party\playnite-common-plugin\src\Enums\DownloadAction.cs">
       <Link>Shared\Enums\DownloadAction.cs</Link>
-    </Compile>
-    <Compile Include="..\third_party\playnite-common-plugin\src\Enums\DownloadCompleteAction.cs">
-      <Link>Shared\Enums\DownloadCompleteAction.cs</Link>
     </Compile>
     <Compile Include="..\third_party\playnite-common-plugin\src\Enums\DownloadStatus.cs">
       <Link>Shared\Enums\DownloadStatus.cs</Link>
@@ -207,15 +205,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\DownloadStatusEnumToStringConverter.cs" />
     <Compile Include="Enums\UpdatePolicy.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="LegendaryAlternativeAuthView.xaml.cs">
       <DependentUpon>LegendaryAlternativeAuthView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LegendaryDownloadCompleteActionView.xaml.cs">
-      <DependentUpon>LegendaryDownloadCompleteActionView.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="LegendaryDownloadLogic.cs" />
     <Compile Include="LegendaryExtraInstallationContentView.xaml.cs">
       <DependentUpon>LegendaryExtraInstallationContentView.xaml</DependentUpon>
     </Compile>
@@ -223,9 +218,6 @@
     <Compile Include="LegendaryCloud.cs" />
     <Compile Include="LegendaryDlcManager.xaml.cs">
       <DependentUpon>LegendaryDlcManager.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="LegendaryDownloadManager.xaml.cs">
-      <DependentUpon>LegendaryDownloadManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="LegendaryDownloadProperties.xaml.cs">
       <DependentUpon>LegendaryDownloadProperties.xaml</DependentUpon>
@@ -321,14 +313,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LegendaryDlcManager.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="LegendaryDownloadCompleteActionView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="LegendaryDownloadManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

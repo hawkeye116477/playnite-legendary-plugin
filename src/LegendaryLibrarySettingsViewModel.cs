@@ -16,20 +16,15 @@ namespace LegendaryLibraryNS
         public bool LaunchOffline { get; set; } = false;
         public string PreferredCDN { get; set; } = "";
         public bool NoHttps { get; set; } = false;
-        public DownloadCompleteAction DoActionAfterDownloadComplete { get; set; } = DownloadCompleteAction.Nothing;
         public bool SyncGameSaves { get; set; } = false;
         public int MaxWorkers { get; set; } = 0;
         public int MaxSharedMemory { get; set; } = 0;
         public int ConnectionTimeout { get; set; } = 0;
         public bool EnableReordering { get; set; } = false;
-        public ClearCacheTime AutoRemoveCompletedDownloads { get; set; } = ClearCacheTime.Never;
         public ClearCacheTime AutoClearCache { get; set; } = ClearCacheTime.Never;
         public long NextClearingTime { get; set; } = 0;
-        public long NextRemovingCompletedDownloadsTime { get; set; } = 0;
         public bool UnattendedInstall { get; set; } = false;
         public bool DownloadAllDlcs { get; set; } = false;
-        public bool DisplayDownloadSpeedInBits { get; set; } = false;
-        public bool DisplayDownloadTaskFinishedNotifications { get; set; } = true;
         public bool SyncPlaytime { get; set; } = LegendaryLauncher.DefaultPlaytimeSyncEnabled;
         public string SyncPlaytimeMachineId { get; set; } = System.Guid.NewGuid().ToString("N");
         public UpdatePolicy GamesUpdatePolicy { get; set; } = UpdatePolicy.Month;
@@ -58,17 +53,6 @@ namespace LegendaryLibraryNS
                 else
                 {
                     Settings.NextClearingTime = 0;
-                }
-            }
-            if (EditingClone.AutoRemoveCompletedDownloads != Settings.AutoRemoveCompletedDownloads)
-            {
-                if (Settings.AutoRemoveCompletedDownloads != ClearCacheTime.Never)
-                {
-                    Settings.NextRemovingCompletedDownloadsTime = LegendaryLibrary.GetNextClearingTime(Settings.AutoRemoveCompletedDownloads);
-                }
-                else
-                {
-                    Settings.NextRemovingCompletedDownloadsTime = 0;
                 }
             }
             if (EditingClone.GamesUpdatePolicy != Settings.GamesUpdatePolicy)

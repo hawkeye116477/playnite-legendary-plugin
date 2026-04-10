@@ -224,12 +224,10 @@ namespace LegendaryLibraryNS
                     maxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
                 }
                 DlcManagerWindow.Close();
-                LegendaryDownloadManager downloadManager = LegendaryLibrary.GetLegendaryDownloadManager();
-
                 var tasks = new List<DownloadManagerData.Download>();
                 foreach (var selectedOption in AvailableDlcsLB.SelectedItems.Cast<KeyValuePair<string, LegendaryGameInfo.Rootobject>>())
                 {
-                    var wantedItem = downloadManager.downloadManagerData.downloads.FirstOrDefault(item => item.gameID == selectedOption.Key);
+                    var wantedItem = LegendaryLibrary.Instance.pluginDownloadData.downloads.FirstOrDefault(item => item.gameID == selectedOption.Key);
                     if (wantedItem != null)
                     {
                         playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonDownloadAlreadyExists, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)wantedItem.name }), "", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -265,7 +263,8 @@ namespace LegendaryLibraryNS
                 }
                 if (tasks.Count > 0)
                 {
-                    await downloadManager.EnqueueMultipleJobs(tasks);
+                    var downloadLogic = (LegendaryDownloadLogic)LegendaryLibrary.Instance.UnifiedDownloadLogic;
+                    await downloadLogic.AddTasks(tasks);
                 }
             }
         }

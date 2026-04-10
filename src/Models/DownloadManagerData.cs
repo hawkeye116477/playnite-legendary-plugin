@@ -28,16 +28,6 @@ namespace LegendaryLibraryNS.Models
                 set => SetValue(ref _installSizeNumber, value);
             }
 
-            public string downloadSize
-            {
-                get; set;
-            }
-
-            public string installSize
-            {
-                get; set;
-            }
-
             public long addedTime { get; set; }
 
             private long _completedTime;
