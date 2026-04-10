@@ -4,35 +4,19 @@ common-download-size = 下载大小：
 common-install-size = 安装大小：
 common-uninstall-game-confirm = 您确定要卸载 { $gameTitle } 吗？
 common-download-settings = 下载
-common-display-download-task-finished-notifications = 显示已完成任务的通知
-common-display-download-speed-in-bits = 以 比特(bps) 显示下载速度
 common-unattended-install = 启用无人值守安装模式
 common-unattended-install-tool-tip = 您无需在安装程序窗口中选择任何内容，下载所需信息后安装将自动开始。
 common-max-workers = 并联任务的最大数量
 common-max-shared-memory = 最大共享内存量 (MB)
 common-connection-timeout = 连接超时 (秒)
-common-after-download-complete = 下载完成后操作
-common-auto-remove-completed-downloads = 自动从列表中移除已完成下载
-common-system-shutdown-countdown = 系统即将关闭……
-common-system-restart-countdown = 系统即将重启……
-common-system-hibernate-countdown = 系统即将休眠……
-common-system-suspend-countdown = 系统即将挂起……
 common-space-available = 可用空间：
 common-after-installing = 安装后：
-common-downloaded = 已下载
-common-eta = 预计剩余时间：
-common-download-speed = 下载速度：
-common-disk-speed = 磁盘使用：
-common-elapsed = 已用时：
 common-verifying = 正在验证……
 common-verifying-large-file = 正在验证大文件 "{ $fileName }"：{ $progress }
 common-downloading-update = 正在下载更新……
 common-finishing-installation = 正在完成安装……
 common-finishing-update = 正在完成更新……
 common-finishing-repair = 正在完成修复……
-common-pause-download = 暂停
-common-resume-download = 恢复
-common-download-paused = 已暂停
 common-installation-finished = 安装完成。玩得开心。
 common-update-finished = 更新完成。玩得开心。
 common-repair-finished = 修复完成。玩得开心。
@@ -40,37 +24,13 @@ common-sync-error = { $gameTitle } 游戏存档同步到云端时发生错误。
 common-import-installed-game = 导入已安装游戏
 common-importing-game = 正在导入 { $gameTitle }……
 common-import-finished = 导入完成。玩得开心。
-common-download-manager = 下载管理器
-common-download-status = 状态
-common-progress = 进度
-common-download-completed-column = 已完成
-common-download-queued = 已排队
-common-download-running = 正在运行
-common-download-canceled = 已取消
-common-download-completed = 已完成
-common-remove-entry = 移除条目
-common-remove-entry-confirm = 您确定要从列表中移除 { $entryName } 吗？
-common-move-entry-top = 移到顶部
-common-move-entry-up = 向上移动
-common-move-entry-down = 向下移动
-common-move-entry-bottom = 移到底部
-common-remove-completed-downloads = 移除已完成下载
-common-remove-completed-downloads-confirm = 您确定要从列表中移除所有已完成下载吗？
-common-remove-selected-entries-confirm = 您确定要从列表中移除选定条目吗？
-common-select-all-entries = 选择所有条目
 common-repair = 修复
 common-advanced-options = 高级选项
 common-cache = 缓存
 common-clear-cache = 清除缓存
 common-auto-clear-cache = 自动清除缓存
-common-once-a-month = 每月一次
-common-once-every3-months = 每 3 个月一次
-common-once-every6-months = 每 6 个月一次
 common-clear-cache-confirm = 您确定要清除缓存吗？
 common-check-log = 检查日志文件以获取更多信息。
-common-edit-selected-download-properties = 编辑条目属性
-common-open-download-directory = 打开下载目录
-common-path-not-exists-error = 指定的路径不存在。
 common-task = 任务
 common-download-properties = 下载属性
 common-migration-completed = 迁移成功完成。
@@ -109,22 +69,21 @@ common-not-enough-space = 磁盘可用空间不足。
 common-checking-for-updates = 正在检查更新……
 common-uninstall-success =
     { $count ->
-            [one] { $appName } 已成功卸载。
-           *[other] 以下游戏已成功卸载：{ $appName }。
+        [one] { $appName } 已成功卸载。
+       *[other] 以下游戏已成功卸载：{ $appName }。
     }
 common-uninstall-error =
     { $count ->
-           *[other] 无法卸载以下游戏：{ $appName }。
+       *[other] 无法卸载以下游戏：{ $appName }。
     }
 common-games = 游戏
 common-launcher-update-policy = 检查 { $launcherName } 更新
 common-launcher-not-installed = { $launcherName } 未安装。
 common-panel = { $pluginShortName } 面板
-common-download-manager-whats-up = 下载即将开始。您可以通过菜单 => 查看或侧边栏访问 { $pluginShortName } 面板来查看其状态。
 common-download-already-exists =
     { $count ->
-            [one] { $appName } 已在下载列表中。您可以通过菜单 => 查看或侧边栏访问 { $pluginShortName } 面板来查看下载状态。
-           *[other] 以下游戏已在下载列表中：{ $appName }。您可以通过菜单 => 查看或侧边栏访问 { $pluginShortName } 面板来查看下载状态。
+        [one] { $appName } 已在下载列表中。您可以通过菜单 => 查看或侧边栏访问 { $pluginShortName } 面板来查看下载状态。
+       *[other] 以下游戏已在下载列表中：{ $appName }。您可以通过菜单 => 查看或侧边栏访问 { $pluginShortName } 面板来查看下载状态。
     }
 common-migrate-games-original = 从 { $originalPluginShortName } 插件迁移所有游戏
 common-migrating-games-original = 正在从 { $originalPluginShortName } 插件迁移所有游戏……
