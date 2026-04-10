@@ -607,6 +607,10 @@ namespace System
         /// </summary>
         public const string CommonReloadConfirm = "common-reload-confirm";
         /// <summary>
+        /// Migrating data... Please wait.
+        /// </summary>
+        public const string CommonMigratingData = "common-migrating-data";
+        /// <summary>
         /// Once a month
         /// </summary>
         public const string CommonOnceAMonth = "common-once-a-month";

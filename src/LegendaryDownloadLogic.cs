@@ -56,7 +56,7 @@ namespace LegendaryLibraryNS
             return installed;
         }
 
-        public async Task AddTasks(List<DownloadManagerData.Download> downloadTasks)
+        public async Task AddTasks(List<DownloadManagerData.Download> downloadTasks, bool setStatus = false)
         {
             var unifiedTasks = new List<UnifiedDownload>();
             foreach (var downloadTask in downloadTasks)
@@ -72,8 +72,12 @@ namespace LegendaryLibraryNS
                     pluginId = LegendaryLibrary.Instance.Id.ToString(),
                     sourceName = "Epic",
                     addedTime = downloadTask.addedTime,
-                    completedTime = downloadTask.completedTime
+                    completedTime = downloadTask.completedTime,
                 };
+                if (setStatus)
+                {
+                    unifiedTask.status = (UnifiedDownloadStatus)downloadTask.status;
+                }
                 unifiedTasks.Add(unifiedTask);
             }
             UnifiedDownloadManagerApi unifiedDownloadManagerApi = new UnifiedDownloadManagerApi();

@@ -89,29 +89,47 @@ namespace LegendaryLibraryNS
 
         public void SaveDownloadData()
         {
-           var commonHelpers = Instance.commonHelpers;
-           commonHelpers.SaveJsonSettingsToFile(pluginDownloadData, "", "downloads", true);
+            var commonHelpers = Instance.commonHelpers;
+            commonHelpers.SaveJsonSettingsToFile(pluginDownloadData, "", "downloads", true);
         }
 
-        public async Task MigrateOldDownloadData()
+        public void MigrateOldDownloadData()
         {
             var oldPluginDownloadDataForMigration = new DownloadManagerData();
             var dataDir = Instance.GetPluginUserDataPath();
             var oldDataFile = Path.Combine(dataDir, "downloadManager.json");
             var oldDataBackupFile = Path.Combine(dataDir, "downloadManager.json.migrated");
+
             if (File.Exists(oldDataFile))
             {
-                var content = FileSystem.ReadFileAsStringSafe(oldDataFile);
-                if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out DownloadManagerData oldPluginDownloadData))
+                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonMigratingData), false) { IsIndeterminate = true };
+                PlayniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
                 {
-                    if (oldPluginDownloadData != null && oldPluginDownloadData.downloads != null)
+                    await PlayniteApi.MainView.UIDispatcher.InvokeAsync(async () =>
                     {
-                        oldPluginDownloadDataForMigration = oldPluginDownloadData;
-                    }
-                }
-                File.Move(oldDataFile, oldDataBackupFile);
-                var legendaryDownloadLogic = (LegendaryDownloadLogic)LegendaryLibrary.Instance.UnifiedDownloadLogic;
-                await legendaryDownloadLogic.AddTasks(oldPluginDownloadDataForMigration.downloads.ToList());
+                        logger.Debug("Migrating old downloads data...");
+                        var content = FileSystem.ReadFileAsStringSafe(oldDataFile);
+                        if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out DownloadManagerData oldPluginDownloadData))
+                        {
+                            if (oldPluginDownloadData != null && oldPluginDownloadData.downloads != null)
+                            {
+                                oldPluginDownloadDataForMigration = oldPluginDownloadData;
+                            }
+                        }
+                        var legendaryDownloadLogic = (LegendaryDownloadLogic)Instance.UnifiedDownloadLogic;
+                        var oldData = oldPluginDownloadDataForMigration.downloads.ToList();
+                        foreach (var oldDownload in oldData)
+                        {
+                            if (oldDownload.status == DownloadStatus.Running || oldDownload.status == DownloadStatus.Queued)
+                            {
+                                oldDownload.status = DownloadStatus.Paused;
+                            }
+                        }
+                        await legendaryDownloadLogic.AddTasks(oldData, true);
+                        File.Move(oldDataFile, oldDataBackupFile);
+                        logger.Debug("Migration done.");
+                    });
+                }, globalProgressOptions);
             }
         }
 
@@ -402,8 +420,8 @@ namespace LegendaryLibraryNS
 
         public override async void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            await MigrateOldDownloadData();
-            var globalSettings = GetSettings();;
+            MigrateOldDownloadData();
+            var globalSettings = GetSettings();
             if (globalSettings != null)
             {
                 if (globalSettings.GamesUpdatePolicy != UpdatePolicy.Never)

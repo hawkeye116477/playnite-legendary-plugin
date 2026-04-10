@@ -4,7 +4,6 @@ common-install-size = Įdiegties dydis:
 common-uninstall-game-confirm = Ar tikrai norite išdiegti { $gameTitle }?
 common-max-shared-memory = Maksimalus bendros atminties kiekis (MB)
 common-space-available = Yra vietos:
-common-installation-finished = Diegimas baigtas. Smagaus.
 common-importing-game = Importuojama { $gameTitle }...
 common-import-finished = Importas baigtas. Smagaus.
 common-repair = Sutaisyti

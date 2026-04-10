@@ -91,3 +91,4 @@ common-games-updates-underway = Updates for games from { $updatesSourceName } ar
 common-instance-notice = Only one instance of { $pluginShortName } may install/import/move applications at a time. Do you want to pause download manager tasks to continue?
 common-reload = Reload
 common-reload-confirm = Are you sure you want to reload data? That may cause earthquake near { $updatesSourceName } servers.
+common-migrating-data = Migrating data... Please wait.
