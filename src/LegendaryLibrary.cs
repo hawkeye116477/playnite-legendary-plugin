@@ -53,7 +53,6 @@ namespace LegendaryLibraryNS
             commonHelpers.LoadNeededResources();
             UnifiedDownloadLogic = new LegendaryDownloadLogic();
             pluginDownloadData = LoadSavedDownloadData();
-            MigrateOldDownloadData();
         }
 
 

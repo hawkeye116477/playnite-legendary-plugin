@@ -274,18 +274,6 @@ namespace System
         /// </summary>
         public const string CommonNoFinishNeeded = "common-no-finish-needed";
         /// <summary>
-        /// Once a month
-        /// </summary>
-        public const string CommonOnceAMonth = "common-once-a-month";
-        /// <summary>
-        /// Once every 3 months
-        /// </summary>
-        public const string CommonOnceEvery3Months = "common-once-every3-months";
-        /// <summary>
-        /// Once every 6 months
-        /// </summary>
-        public const string CommonOnceEvery6Months = "common-once-every6-months";
-        /// <summary>
         /// {$launcherName} Path
         /// </summary>
         public const string CommonLauncherCustomPath = "common-launcher-custom-path";
