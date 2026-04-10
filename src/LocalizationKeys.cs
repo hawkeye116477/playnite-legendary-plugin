@@ -619,6 +619,22 @@ namespace System
         /// </summary>
         public const string CommonReloadConfirm = "common-reload-confirm";
         /// <summary>
+        /// Once a month
+        /// </summary>
+        public const string CommonOnceAMonth = "common-once-a-month";
+        /// <summary>
+        /// Once every 3 months
+        /// </summary>
+        public const string CommonOnceEvery3Months = "common-once-every3-months";
+        /// <summary>
+        /// Once every 6 months
+        /// </summary>
+        public const string CommonOnceEvery6Months = "common-once-every6-months";
+        /// <summary>
+        /// The specified path does not exist.
+        /// </summary>
+        public const string CommonPathNotExistsError = "common-path-not-exists-error";
+        /// <summary>
         /// Filter Active
         /// </summary>
         public const string ThirdPartyPlayniteFilterActiveLabel = "third-party-playnite-filter-active-label";

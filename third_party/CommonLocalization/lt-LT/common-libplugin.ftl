@@ -1,0 +1,16 @@
+common-games-installation-path = Žaidimų įdiegimo kelias
+common-download-size = Atsisiuntimo dydis:
+common-install-size = Įdiegties dydis:
+common-uninstall-game-confirm = Ar tikrai norite išdiegti { $gameTitle }?
+common-max-shared-memory = Maksimalus bendros atminties kiekis (MB)
+common-space-available = Yra vietos:
+common-installation-finished = Diegimas baigtas. Smagaus.
+common-importing-game = Importuojama { $gameTitle }...
+common-import-finished = Importas baigtas. Smagaus.
+common-repair = Sutaisyti
+common-advanced-options = Išplėstinės Parinktys
+common-cache = Podėlis
+common-clear-cache = Išvalyti podėlį
+common-auto-clear-cache = Podėlį išvalyti automatškai
+common-clear-cache-confirm = Ar tikrai norite išvalyti podėlį?
+common-check-log = Daugiau informacijos ieškokite žurnaluose.
