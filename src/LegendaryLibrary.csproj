@@ -166,9 +166,6 @@
     <Compile Include="..\third_party\playnite-common-plugin\src\RetryHandler.cs">
       <Link>Shared\RetryHandler.cs</Link>
     </Compile>
-    <Compile Include="..\third_party\playnite-common-plugin\src\Converters\NumericalSizeToStringConverter.cs">
-      <Link>Shared\Converters\NumericalSizeToStringConverter.cs</Link>
-    </Compile>
     <Compile Include="..\third_party\playnite-common-plugin\src\Enums\ClearCacheTime.cs">
       <Link>Shared\Enums\ClearCacheTime.cs</Link>
     </Compile>
