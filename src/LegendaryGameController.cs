@@ -777,6 +777,7 @@ namespace LegendaryLibraryNS
                                 newDownloadProperties = Serialization.GetClone(downloadProperties);
                             }
                             newDownloadProperties.installPath = gameToUpdate.Value.Install_path;
+
                             var updateTask = new DownloadManagerData.Download
                             {
                                 gameID = gameToUpdate.Key,
@@ -784,8 +785,9 @@ namespace LegendaryLibraryNS
                                 downloadSizeNumber = gameToUpdate.Value.Download_size,
                                 installSizeNumber = gameToUpdate.Value.Disk_size,
                                 downloadProperties = newDownloadProperties,
-                                fullInstallPath = newDownloadProperties.installPath
                             };
+                            updateTask.downloadProperties.installPath = Directory.GetParent(gameToUpdate.Value.Install_path).FullName;
+                            updateTask.fullInstallPath = gameToUpdate.Value.Install_path;
                             updateTasks.Add(updateTask);
                         }
                     }
