@@ -255,10 +255,15 @@ namespace LegendaryLibraryNS
             foreach (var installData in MultiInstallData.ToList())
             {
                 var wantedItem = pluginDownloadData.downloads.FirstOrDefault(item => item.gameID == installData.gameID);
-                var wantedUnifiedTask = unifiedDownloadManagerApi.GetTask(wantedItem.gameID, LegendaryLibrary.Instance.Id.ToString());
+                var wantedUnifiedTask = unifiedDownloadManagerApi.GetTask(installData.gameID, LegendaryLibrary.Instance.Id.ToString());
                 if (wantedItem != null)
                 {
-                    if (wantedUnifiedTask?.status == UnifiedDownloadStatus.Completed && !installedAppList.ContainsKey(installData.gameID))
+                    bool completedDownload = true;
+                    if (wantedUnifiedTask?.status != UnifiedDownloadStatus.Completed)
+                    {
+                        completedDownload = false;
+                    }
+                    if (completedDownload && !installedAppList.ContainsKey(installData.gameID))
                     {
                         pluginDownloadData.downloads.Remove(wantedItem);
                         unifiedDownloadManagerApi.RemoveTask(wantedUnifiedTask);
