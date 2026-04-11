@@ -732,10 +732,6 @@ namespace LegendaryLibraryNS
                     logger.Error(ex, "An error occurred while downloading Legendary's version info.");
                 }
             }
-            if (!Version.TryParse(newVersionInfoContent.Tag_name, out Version validVersion))
-            {
-                newVersionInfoContent.Tag_name = Regex.Replace(newVersionInfoContent.Tag_name, @"[^\d\.]", "");
-            }
             return newVersionInfoContent;
         }
 
@@ -923,6 +919,86 @@ namespace LegendaryLibraryNS
                 gameSettings.InstallPrerequisites = false;
                 var commonHelpers = LegendaryLibrary.Instance.commonHelpers;
                 commonHelpers.SaveJsonSettingsToFile(gameSettings, "GamesSettings", gameId, true);
+            }
+        }
+
+        public static async Task CheckForUpdates(bool displayMessages = true)
+        {
+            var playniteAPI = API.Instance;
+            var versionInfoContent = await GetVersionInfoContent();
+            var newFixedTag = Regex.Replace(versionInfoContent.Tag_name, @"[^\d\.]", "");
+            if (versionInfoContent.Tag_name != null && Version.TryParse(newFixedTag, out Version newValidVersion))
+            {
+                var newVersion = new Version(newFixedTag);
+                var oldVersion = new Version(await LegendaryLauncher.GetLauncherVersion());
+                if (oldVersion.CompareTo(newVersion) < 0)
+                {
+                    var options = new List<MessageBoxOption>
+                    {
+                        new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.CommonViewChangelog)),
+                        new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteInstallGame)),
+                        new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOkLabel)),
+                    };
+                    var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNewVersionAvailable, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)"Legendary Launcher", ["appVersion"] = (FluentString)newVersion.ToString() }), LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
+                    if (result == options[0])
+                    {
+                        var changelogURL = versionInfoContent.Html_url;
+                        Playnite.Commands.GlobalCommands.NavigateUrl(changelogURL);
+                    }
+                    else if (result == options[1])
+                    {
+                        var newAsset = versionInfoContent.Assets.FirstOrDefault(a => a.Browser_download_url.Contains($"{versionInfoContent.Tag_name}/legendary.exe"));
+                        if (newAsset != null)
+                        {
+                            var appsToUpdate = new Dictionary<string, UpdateInfo>();
+                            var appTitle = "Legendary Launcher";
+                            var updateInfo = new UpdateInfo
+                            {
+                                Install_path = Path.GetDirectoryName(Path.Combine(LegendaryLauncher.LauncherPath, "legendary.exe")),
+                                Version = newVersion.ToString(),
+                                Download_size = newAsset.Size,
+                                Disk_size = newAsset.Size,
+                                Title = appTitle,
+                                Title_for_updater = $"{appTitle} {newVersion}",
+                            };
+                            appsToUpdate.Add("legendary-launcher", updateInfo);
+                            if (appsToUpdate.Count > 0)
+                            {
+                                Window window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
+                                {
+                                    ShowMaximizeButton = false,
+                                });
+                                window.DataContext = appsToUpdate;
+                                window.Title = $"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExtensionsUpdates)}";
+                                window.Content = new LegendaryUpdater();
+                                window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
+                                window.SizeToContent = SizeToContent.WidthAndHeight;
+                                window.MinWidth = 600;
+                                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                                window.ShowDialog();
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (displayMessages)
+                    {
+                        playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNoUpdatesAvailable));
+                    }
+                }
+            }
+            else
+            {
+                if (displayMessages)
+                {
+                    playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdateCheckFailMessage), "Legendary Launcher");
+                }
+                else
+                {
+                    var logger = LogManager.GetLogger();
+                    logger.Error("An error occured during checking for Legendary launcher update");
+                }
             }
         }
     }

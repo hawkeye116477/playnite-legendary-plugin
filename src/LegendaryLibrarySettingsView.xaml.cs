@@ -222,7 +222,7 @@ namespace LegendaryLibraryNS
                 troubleshootingInformation.LauncherVersion = "Not%20installed";
                 LauncherVersionTxt.Text = LocalizationManager.Instance.GetString(LOC.CommonLauncherNotInstalled);
                 LauncherBinaryTxt.Text = LocalizationManager.Instance.GetString(LOC.CommonLauncherNotInstalled);
-                CheckForUpdatesBtn.IsEnabled = false;
+                CheckForLauncherUpdatesBtn.IsEnabled = false;
                 OpenLauncherBinaryBtn.IsEnabled = false;
             }
 
@@ -363,36 +363,9 @@ namespace LegendaryLibraryNS
             LegendaryLauncher.StartClient();
         }
 
-        private async void CheckForUpdatesBtn_Click(object sender, RoutedEventArgs e)
+        private async void CheckForLauncherUpdatesBtn_Click(object sender, RoutedEventArgs e)
         {
-            var versionInfoContent = await LegendaryLauncher.GetVersionInfoContent();
-            if (versionInfoContent.Tag_name != null && Version.TryParse(versionInfoContent.Tag_name, out Version newValidVersion))
-            {
-                var newVersion = new Version(versionInfoContent.Tag_name);
-                var oldVersion = new Version(troubleshootingInformation.LauncherVersion);
-                if (oldVersion.CompareTo(newVersion) < 0)
-                {
-                    var options = new List<MessageBoxOption>
-                    {
-                        new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.CommonViewChangelog)),
-                        new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOkLabel)),
-                    };
-                    var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNewVersionAvailable, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)"Legendary Launcher", ["appVersion"] = (FluentString)newVersion.ToString() }), LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
-                    if (result == options[0])
-                    {
-                        var changelogURL = versionInfoContent.Html_url;
-                        Playnite.Commands.GlobalCommands.NavigateUrl(changelogURL);
-                    }
-                }
-                else
-                {
-                    playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNoUpdatesAvailable));
-                }
-            }
-            else
-            {
-                playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdateCheckFailMessage), "Legendary Launcher");
-            }
+            await LegendaryLauncher.CheckForUpdates();
         }
 
         private async void LoginBtn_Click(object sender, RoutedEventArgs e)

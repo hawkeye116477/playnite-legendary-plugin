@@ -5,13 +5,17 @@ using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
+using Playnite.Common;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using UnifiedDownloadManagerApiNS;
@@ -22,6 +26,8 @@ namespace LegendaryLibraryNS
 {
     public class LegendaryDownloadLogic : IUnifiedDownloadLogic
     {
+        private static readonly RetryHandler retryHandler = new RetryHandler(new HttpClientHandler());
+        private static readonly HttpClient client = new HttpClient(retryHandler);
         private static readonly ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI playniteAPI = API.Instance;
         public bool downloadsChanged = false;
@@ -86,16 +92,226 @@ namespace LegendaryLibraryNS
         }
 
 
+        private async Task DownloadLauncher(UnifiedDownload downloadTask, int bufferSize = 1 * 1024 * 1024)
+        {
+            var totalStopwatch = Stopwatch.StartNew();
+            downloadTask.status = UnifiedDownloadStatus.Running;
+            client.DefaultRequestHeaders.Clear();
+            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", LegendaryLauncher.userAgent);
+
+            var tempDir = Path.Combine(downloadTask.fullInstallPath, ".Downloader_temp");
+            if (!CommonHelpers.IsDirectoryWritable(tempDir))
+            {
+                var tempFolderName = $"{downloadTask.gameID}_PlayniteLegendaryPlugin";
+                tempDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "temp", tempFolderName);
+            }
+            Directory.CreateDirectory(tempDir);
+
+            long totalSize = 0;
+            long downloadedBytes = 0;
+
+            var url = "";
+            var versionInfoContent = await LegendaryLauncher.GetVersionInfoContent();
+            if (versionInfoContent.Tag_name != null)
+            {
+                var repoOwner = LegendaryLauncher.GetUpdateSource();
+                var newAsset = versionInfoContent.Assets.FirstOrDefault(a => a.Browser_download_url.Contains($"{ versionInfoContent.Tag_name}/legendary.exe"));
+                if (newAsset.Browser_download_url != null)
+                {
+                    url = newAsset.Browser_download_url;
+                }
+            }
+            using var headRequest = new HttpRequestMessage(HttpMethod.Head, url);
+            using var headResponse = await client.SendAsync(headRequest, HttpCompletionOption.ResponseHeadersRead, downloadTask.gracefulCts.Token);
+            headResponse.EnsureSuccessStatusCode();
+            totalSize = headResponse.Content.Headers.ContentLength ?? 0;
+            downloadTask.downloadSizeBytes = totalSize;
+            downloadTask.installSizeBytes = totalSize;
+            var contentDisposition = headResponse.Content.Headers.ContentDisposition;
+            var serverFileName =
+                contentDisposition?.FileNameStar ??
+                contentDisposition?.FileName;
+            if (serverFileName.IsNullOrEmpty())
+            {
+                var finalUrl = headResponse.RequestMessage.RequestUri;
+                serverFileName = Path.GetFileName(finalUrl.LocalPath);
+            }
+            var tempPath = Path.Combine(tempDir, serverFileName.Trim('"'));
+            downloadedBytes = File.Exists(tempPath) ? new FileInfo(tempPath).Length : 0;
+            long lastBytes = downloadedBytes;
+
+            var finalPath = Path.Combine(downloadTask.fullInstallPath, serverFileName.Trim('"'));
+
+            void DoFinalStep(string tempPath, string finalPath)
+            {
+                if (!CommonHelpers.IsDirectoryWritable(Path.GetDirectoryName(finalPath)))
+                {
+                    var roboCopyArgs = new List<string>()
+                {
+                    Path.GetDirectoryName(tempPath),
+                    Path.GetDirectoryName(finalPath),
+                    Path.GetFileName(tempPath),
+                    "/R:3",
+                    "/COPYALL"
+                };
+                    var roboCopyCmd = Cli.Wrap("robocopy")
+                                         .WithArguments(roboCopyArgs);
+                    var proc = ProcessStarter.StartProcess("robocopy", roboCopyCmd.Arguments, true);
+                    proc.WaitForExit();
+                }
+                else
+                {
+                    File.Move(tempPath, finalPath);
+                }
+            }
+
+            if (totalSize > 0 && downloadedBytes >= totalSize)
+            {
+                DoFinalStep(tempPath, finalPath);
+                downloadTask.downloadedBytes = downloadedBytes;
+                downloadTask.status = UnifiedDownloadStatus.Completed;
+                return;
+            }
+
+            using var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+            if (downloadedBytes > 0)
+            {
+                request.Headers.Range = new System.Net.Http.Headers.RangeHeaderValue(downloadedBytes, null);
+            }
+
+            var speedStopwatch = Stopwatch.StartNew();
+            using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, downloadTask.gracefulCts.Token);
+            response.EnsureSuccessStatusCode();
+
+            using var networkStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+
+            int bytesRead = 0;
+            long totalNetWorkBytes = downloadedBytes;
+            long totalDiskBytes = downloadedBytes;
+            long lastNetWorkBytes = downloadedBytes;
+            long lastDiskBytes = downloadedBytes;
+
+            byte[] buffer = new byte[bufferSize];
+            FileMode fileMode = downloadedBytes > 0 ? FileMode.Append : FileMode.Create;
+
+            using (var tempFs = new FileStream(tempPath, fileMode, FileAccess.Write, FileShare.Read, bufferSize, FileOptions.Asynchronous))
+            {
+                while ((bytesRead = await networkStream.ReadAsync(buffer, 0, buffer.Length, downloadTask.gracefulCts.Token).ConfigureAwait(false)) > 0)
+                {
+                    totalNetWorkBytes += bytesRead;
+
+                    await tempFs.WriteAsync(buffer, 0, bytesRead, downloadTask.gracefulCts.Token).ConfigureAwait(false);
+
+                    totalDiskBytes += bytesRead;
+
+                    if (speedStopwatch.ElapsedMilliseconds >= 900)
+                    {
+                        var elapsed = speedStopwatch.Elapsed;
+                        double seconds = elapsed.TotalSeconds;
+
+                        if (seconds > 0)
+                        {
+                            long deltaNet = totalNetWorkBytes - lastNetWorkBytes;
+                            downloadTask.downloadSpeedBytes = deltaNet / seconds;
+
+                            long deltaDisk = totalDiskBytes - lastDiskBytes;
+                            downloadTask.diskWriteSpeedBytes = deltaDisk / seconds;
+
+                            downloadTask.downloadedBytes = totalDiskBytes;
+
+                            long currentPercentProgress = 0;
+                            if (totalSize > 0)
+                            {
+                                currentPercentProgress = totalDiskBytes / totalSize * 100;
+                            }
+                            downloadTask.progress = currentPercentProgress;
+
+                            downloadTask.elapsed = totalStopwatch.Elapsed;
+
+                            if (totalSize > 0)
+                            {
+                                if (downloadTask.downloadSpeedBytes > 0)
+                                {
+                                    double remaining = (totalSize - totalDiskBytes) / downloadTask.downloadSpeedBytes;
+                                    downloadTask.eta = (remaining < TimeSpan.MaxValue.TotalSeconds)
+                                        ? TimeSpan.FromSeconds(remaining)
+                                        : TimeSpan.MaxValue;
+                                }
+                                else
+                                {
+                                    downloadTask.eta = TimeSpan.MaxValue;
+                                }
+                            }
+                        }
+
+                        lastNetWorkBytes = totalNetWorkBytes;
+                        lastDiskBytes = totalDiskBytes;
+                        speedStopwatch.Restart();
+                    }
+                }
+            }
+
+            downloadTask.diskWriteSpeedBytes = 0;
+            downloadTask.downloadSpeedBytes = 0;
+
+            downloadTask.gracefulCts.Token.ThrowIfCancellationRequested();
+
+            DoFinalStep(tempPath, finalPath);
+
+            try
+            {
+                if (Directory.Exists(tempDir))
+                {
+                    Directory.Delete(tempDir, true);
+                }
+            }
+            catch
+            {
+
+            }
+            downloadTask.downloadedBytes = totalDiskBytes;
+            long newCurrentPercentProgress = 0;
+            if (downloadTask.downloadSizeBytes > 0)
+            {
+                newCurrentPercentProgress = totalDiskBytes / totalSize * 100;
+            }
+            downloadTask.progress = newCurrentPercentProgress;
+            downloadTask.elapsed = totalStopwatch.Elapsed;
+            downloadTask.status = UnifiedDownloadStatus.Completed;
+            DateTimeOffset now = DateTime.UtcNow;
+            downloadTask.completedTime = now.ToUnixTimeSeconds();
+        }
+
         public async Task StartDownload(UnifiedDownload downloadTask)
         {
+            var gameID = downloadTask.gameID;
             UnifiedDownloadManagerApi unifiedDownloadManagerApi = new UnifiedDownloadManagerApi();
+            var wantedUnifiedTask = unifiedDownloadManagerApi.GetTask(gameID, LegendaryLibrary.Instance.Id.ToString());
+            var forcefulInstallerCTS = wantedUnifiedTask.forcefulCts;
+            var gracefulInstallerCTS = wantedUnifiedTask.gracefulCts;
+            if (gameID == "legendary-launcher")
+            {
+                try
+                {
+                    await DownloadLauncher(wantedUnifiedTask);
+                }
+                catch (Exception ex)
+                {
+                    if (ex is OperationCanceledException)
+                    {
+                        return;
+                    }
+                    logger.Debug($"An error occured during downloading launcher: {ex.Message}");
+                    downloadTask.status = UnifiedDownloadStatus.Error;
+                }
+                return;
+            }
+
             await WaitUntilLegendaryCloses();
             var installCommand = new List<string>();
             var settings = LegendaryLibrary.GetSettings();
-            var gameID = downloadTask.gameID;
-            var wantedUnifiedTask = unifiedDownloadManagerApi.GetTask(gameID, LegendaryLibrary.Instance.Id.ToString());
             var matchingPluginTask = LegendaryLibrary.Instance.pluginDownloadData.downloads.FirstOrDefault(t => t.gameID == gameID);
-
 
             var downloadProperties = matchingPluginTask.downloadProperties;
             var gameTitle = wantedUnifiedTask.name;
@@ -181,8 +397,6 @@ namespace LegendaryLibraryNS
                 installCommand.Add("--skip-dlcs");
             }
 
-            var forcefulInstallerCTS = wantedUnifiedTask.forcefulCts;
-            var gracefulInstallerCTS = wantedUnifiedTask.gracefulCts;
             try
             {
                 bool errorDisplayed = false;
@@ -460,9 +674,20 @@ namespace LegendaryLibraryNS
                     }
                 }
             }
-            catch (OperationCanceledException)
+            catch (Exception ex)
             {
-                // Command was canceled
+                if (ex is OperationCanceledException && (downloadTask.status == UnifiedDownloadStatus.Canceled || downloadTask.status == UnifiedDownloadStatus.Paused))
+                {
+                    if (downloadTask.status == UnifiedDownloadStatus.Canceled)
+                    {
+                        await OnCancelDownload(downloadTask);
+                    }
+                }
+                else
+                {
+                    logger.Debug($"An error occured during downloading {downloadTask.name}: {ex.Message}");
+                }
+                downloadTask.status = UnifiedDownloadStatus.Error;
             }
             finally
             {

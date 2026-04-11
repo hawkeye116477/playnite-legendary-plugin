@@ -489,31 +489,7 @@ namespace LegendaryLibraryNS
                         {
                             globalSettings.NextLauncherUpdateTime = GetNextUpdateCheckTime(globalSettings.LauncherUpdatePolicy);
                             SavePluginSettings(globalSettings);
-                            var versionInfoContent = await LegendaryLauncher.GetVersionInfoContent();
-                            if (versionInfoContent.Tag_name != null && Version.TryParse(versionInfoContent.Tag_name, out Version newValidVersion))
-                            {
-                                var newVersion = new Version(versionInfoContent.Tag_name);
-                                var oldVersion = new Version(await LegendaryLauncher.GetLauncherVersion());
-                                if (oldVersion.CompareTo(newVersion) < 0)
-                                {
-                                    var options = new List<MessageBoxOption>
-                                    {
-                                        new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.CommonViewChangelog), true),
-                                        new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOkLabel), false, true),
-                                    };
-                                    var launcherFluentArgs = new Dictionary<string, IFluentType>
-                                    {
-                                        ["appName"] = (FluentString)"Legendary Launcher",
-                                        ["appVersion"] = (FluentString)newVersion.ToString()
-                                    };
-                                    var result = PlayniteApi.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNewVersionAvailable, launcherFluentArgs), LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
-                                    if (result == options[0])
-                                    {
-                                        var changelogURL = versionInfoContent.Html_url;
-                                        Playnite.Commands.GlobalCommands.NavigateUrl(changelogURL);
-                                    }
-                                }
-                            }
+                            await LegendaryLauncher.CheckForUpdates(false);
                         }
                     }
 

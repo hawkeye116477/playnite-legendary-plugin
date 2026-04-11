@@ -69,10 +69,11 @@ namespace CommonPlugin
             }
         }
 
-        public static bool IsDirectoryWritable(string folderPath, string permissionErrorString)
+        public static bool IsDirectoryWritable(string folderPath, string permissionErrorString = "")
         {
             try
             {
+                Directory.CreateDirectory(folderPath);
                 using (FileStream fs = File.Create(Path.Combine(folderPath, Path.GetRandomFileName()),
                                                    1,
                                                    FileOptions.DeleteOnClose)
@@ -82,8 +83,11 @@ namespace CommonPlugin
             }
             catch (UnauthorizedAccessException)
             {
-                var playniteAPI = API.Instance;
-                playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(permissionErrorString));
+                if (permissionErrorString != "")
+                {
+                    var playniteAPI = API.Instance;
+                    playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(permissionErrorString));
+                }
                 return false;
             }
             catch (Exception ex)

@@ -783,7 +783,8 @@ namespace LegendaryLibraryNS
                                 name = gameToUpdate.Value.Title,
                                 downloadSizeNumber = gameToUpdate.Value.Download_size,
                                 installSizeNumber = gameToUpdate.Value.Disk_size,
-                                downloadProperties = newDownloadProperties
+                                downloadProperties = newDownloadProperties,
+                                fullInstallPath = newDownloadProperties.installPath
                             };
                             updateTasks.Add(updateTask);
                         }
