@@ -719,7 +719,7 @@ namespace LegendaryLibraryNS
             if (LegendaryLauncher.IsEOSOverlayInstalled)
             {
                 LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
-                var overlayToUpdate = await legendaryUpdateController.CheckGameUpdates(LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS"}), "eos-overlay");
+                var overlayToUpdate = await legendaryUpdateController.CheckGameUpdates(LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS" }), "eos-overlay");
                 if (overlayToUpdate.Count > 0)
                 {
                     gamesToUpdate.Add("eos-overlay", overlayToUpdate["eos-overlay"]);
@@ -745,16 +745,26 @@ namespace LegendaryLibraryNS
                     foreach (var gameToUpdate in gamesToUpdate)
                     {
                         var wantedUnifiedItem = unifiedDownloadManagerApi.GetTask(gameToUpdate.Key, LegendaryLibrary.Instance.Id.ToString());
+
+                        bool completedDownload = true;
+
                         if (wantedUnifiedItem != null)
                         {
-                            if (wantedUnifiedItem.status == UnifiedDownloadStatus.Completed)
+                            if (wantedUnifiedItem.status != UnifiedDownloadStatus.Completed)
                             {
-                                var wantedPluginItem = LegendaryLibrary.Instance.pluginDownloadData.downloads.FirstOrDefault(i => i.gameID == wantedUnifiedItem.gameID);
-                                LegendaryLibrary.Instance.pluginDownloadData.downloads.Remove(wantedPluginItem);
-                                wantedPluginItem = null;
-                                unifiedDownloadManagerApi.RemoveTask(wantedUnifiedItem);
+                                completedDownload = false;
                             }
                         }
+
+                        if (completedDownload)
+                        {
+                            var wantedPluginItem = LegendaryLibrary.Instance.pluginDownloadData.downloads.FirstOrDefault(i => i.gameID == wantedUnifiedItem.gameID);
+                            LegendaryLibrary.Instance.pluginDownloadData.downloads.Remove(wantedPluginItem);
+                            wantedPluginItem = null;
+                            unifiedDownloadManagerApi.RemoveTask(wantedUnifiedItem);
+                            wantedUnifiedItem = unifiedDownloadManagerApi.GetTask(gameToUpdate.Key, LegendaryLibrary.Instance.Id.ToString());
+                        }
+
                         if (wantedUnifiedItem != null)
                         {
                             if (!silently)

@@ -259,14 +259,18 @@ namespace LegendaryLibraryNS
                 if (wantedItem != null)
                 {
                     bool completedDownload = true;
-                    if (wantedUnifiedTask?.status != UnifiedDownloadStatus.Completed)
+                    if (wantedUnifiedTask != null)
                     {
-                        completedDownload = false;
+                        if (wantedUnifiedTask.status != UnifiedDownloadStatus.Completed)
+                        {
+                            completedDownload = false;
+                        }
                     }
                     if (completedDownload && !installedAppList.ContainsKey(installData.gameID))
                     {
                         pluginDownloadData.downloads.Remove(wantedItem);
                         unifiedDownloadManagerApi.RemoveTask(wantedUnifiedTask);
+                        wantedUnifiedTask = unifiedDownloadManagerApi.GetTask(installData.gameID, LegendaryLibrary.Instance.Id.ToString());
                     }
                     else
                     {
