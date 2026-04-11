@@ -30,7 +30,6 @@ namespace LegendaryLibraryNS
         private static readonly HttpClient client = new HttpClient(retryHandler);
         private static readonly ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI playniteAPI = API.Instance;
-        public bool downloadsChanged = false;
 
         public static async Task WaitUntilLegendaryCloses()
         {
@@ -710,7 +709,7 @@ namespace LegendaryLibraryNS
             }
             finally
             {
-                downloadsChanged = true;
+
             }
         }
 
@@ -765,7 +764,6 @@ namespace LegendaryLibraryNS
             var matchingPluginTask = LegendaryLibrary.Instance.pluginDownloadData.downloads.FirstOrDefault(t => t.gameID == downloadTask.gameID);
             if (matchingPluginTask != null)
             {
-                downloadsChanged = true;
                 LegendaryLibrary.Instance.pluginDownloadData.downloads.Remove(matchingPluginTask);
                 LegendaryLibrary.Instance.SaveDownloadData();
             }
