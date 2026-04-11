@@ -100,7 +100,8 @@ namespace LegendaryLibraryNS
             var oldDataFile = Path.Combine(dataDir, "downloadManager.json");
             var oldDataBackupFile = Path.Combine(dataDir, "downloadManager.json.migrated");
 
-            if (File.Exists(oldDataFile))
+            bool udmInstalled = PlayniteApi.Addons.Plugins.Any(plugin => plugin.Id.Equals(UnifiedDownloadManagerSharedProperties.Id));
+            if (File.Exists(oldDataFile) && udmInstalled)
             {
                 GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonMigratingData), false) { IsIndeterminate = true };
                 PlayniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
