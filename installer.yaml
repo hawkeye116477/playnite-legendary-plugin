@@ -1,5 +1,11 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.14.1
+    RequiredApiVersion: 6.14.0
+    ReleaseDate: 2026-04-12
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.14.1/LegendaryLibrary_1_14_1.pext
+    Changelog:
+      - Adjusted to new UDM Api
   - Version: 1.14.0
     RequiredApiVersion: 6.14.0
     ReleaseDate: 2026-04-11
