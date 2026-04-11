@@ -62,7 +62,7 @@ namespace LegendaryLibraryNS
             return installed;
         }
 
-        public async Task AddTasks(List<DownloadManagerData.Download> downloadTasks, bool setStatus = false)
+        public async Task AddTasks(List<DownloadManagerData.Download> downloadTasks, bool migrate = false)
         {
             var unifiedTasks = new List<UnifiedDownload>();
             foreach (var downloadTask in downloadTasks)
@@ -78,11 +78,13 @@ namespace LegendaryLibraryNS
                     pluginId = LegendaryLibrary.Instance.Id.ToString(),
                     sourceName = "Epic",
                     addedTime = downloadTask.addedTime,
-                    completedTime = downloadTask.completedTime,
                 };
-                if (setStatus)
+                if (migrate)
                 {
                     unifiedTask.status = (UnifiedDownloadStatus)downloadTask.status;
+                    unifiedTask.progress = downloadTask.progress;
+                    unifiedTask.downloadedBytes = downloadTask.downloadedNumber;
+                    unifiedTask.completedTime = downloadTask.completedTime;
                 }
                 unifiedTasks.Add(unifiedTask);
             }
@@ -91,6 +93,43 @@ namespace LegendaryLibraryNS
             LegendaryLibrary.Instance.SaveDownloadData();
         }
 
+
+        public async Task StartDownload(UnifiedDownload downloadTask)
+        {
+            var gameID = downloadTask.gameID;
+            UnifiedDownloadManagerApi unifiedDownloadManagerApi = new UnifiedDownloadManagerApi();
+            var wantedUnifiedTask = unifiedDownloadManagerApi.GetTask(gameID, LegendaryLibrary.Instance.Id.ToString());
+            try
+            {
+                if (gameID == "legendary-launcher")
+                {
+                    await DownloadLauncher(wantedUnifiedTask);
+                }
+                else
+                {
+                    await DownloadOtherThings(downloadTask);
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex is OperationCanceledException && (downloadTask.status == UnifiedDownloadStatus.Canceled || downloadTask.status == UnifiedDownloadStatus.Paused))
+                {
+                    if (downloadTask.status == UnifiedDownloadStatus.Canceled)
+                    {
+                        await OnCancelDownload(downloadTask);
+                    }
+                }
+                else
+                {
+                    logger.Debug($"An error occured during downloading {downloadTask.name}: {ex.Message}");
+                    downloadTask.status = UnifiedDownloadStatus.Error;
+                }
+            }
+            finally
+            {
+                LegendaryLibrary.Instance.SaveDownloadData();
+            }
+        }
 
         private async Task DownloadLauncher(UnifiedDownload downloadTask, int bufferSize = 1 * 1024 * 1024)
         {
@@ -283,31 +322,12 @@ namespace LegendaryLibraryNS
             downloadTask.completedTime = now.ToUnixTimeSeconds();
         }
 
-        public async Task StartDownload(UnifiedDownload downloadTask)
+        public async Task DownloadOtherThings(UnifiedDownload downloadTask)
         {
             var gameID = downloadTask.gameID;
-            UnifiedDownloadManagerApi unifiedDownloadManagerApi = new UnifiedDownloadManagerApi();
-            var wantedUnifiedTask = unifiedDownloadManagerApi.GetTask(gameID, LegendaryLibrary.Instance.Id.ToString());
+            var wantedUnifiedTask = downloadTask;
             var forcefulInstallerCTS = wantedUnifiedTask.forcefulCts;
             var gracefulInstallerCTS = wantedUnifiedTask.gracefulCts;
-            if (gameID == "legendary-launcher")
-            {
-                try
-                {
-                    await DownloadLauncher(wantedUnifiedTask);
-                }
-                catch (Exception ex)
-                {
-                    if (ex is OperationCanceledException)
-                    {
-                        return;
-                    }
-                    logger.Debug($"An error occured during downloading launcher: {ex.Message}");
-                    downloadTask.status = UnifiedDownloadStatus.Error;
-                }
-                return;
-            }
-
             await WaitUntilLegendaryCloses();
             var installCommand = new List<string>();
             var settings = LegendaryLibrary.GetSettings();
@@ -494,7 +514,6 @@ namespace LegendaryLibraryNS
                                 wantedUnifiedTask.downloadedBytes = totalDownloadedNumber;
                                 double newProgress = totalDownloadedNumber / wantedUnifiedTask.downloadSizeBytes * 100;
                                 wantedUnifiedTask.progress = newProgress;
-                                //legendaryPanel.ProgressValue = newProgress;
 
                                 if (totalDownloadedNumber == wantedUnifiedTask.downloadSizeBytes)
                                 {
@@ -686,8 +705,8 @@ namespace LegendaryLibraryNS
                 else
                 {
                     logger.Debug($"An error occured during downloading {downloadTask.name}: {ex.Message}");
+                    downloadTask.status = UnifiedDownloadStatus.Error;
                 }
-                downloadTask.status = UnifiedDownloadStatus.Error;
             }
             finally
             {
