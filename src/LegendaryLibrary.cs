@@ -425,6 +425,15 @@ namespace LegendaryLibraryNS
             var globalSettings = GetSettings();
             if (globalSettings != null)
             {
+                // TODO: Remove in the future
+                if (!globalSettings.SelectedLauncherPath.IsNullOrEmpty())
+                {
+                    globalSettings.SelectedFullLauncherPath = Path.Combine(globalSettings.SelectedLauncherPath, "legendary.exe");
+                    globalSettings.SelectedLauncherPath = null;
+                    SavePluginSettings(globalSettings);
+                }
+                //
+
                 if (globalSettings.GamesUpdatePolicy != UpdatePolicy.Never)
                 {
                     var nextGamesUpdateTime = globalSettings.NextGamesUpdateTime;

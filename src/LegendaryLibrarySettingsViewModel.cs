@@ -11,7 +11,12 @@ namespace LegendaryLibraryNS
         public bool ImportUninstalledGames { get; set; } = false;
         public bool ImportUbisoftLauncherGames { get; set; } = false;
         public bool ImportEALauncherGames { get; set; } = false;
+
+        // TODO: Remove in the future
         public string SelectedLauncherPath { get; set; } = "";
+        //
+
+        public string SelectedFullLauncherPath { get; set; } = "";
         public string GamesInstallationPath { get; set; } = "";
         public bool LaunchOffline { get; set; } = false;
         public string PreferredCDN { get; set; } = "";

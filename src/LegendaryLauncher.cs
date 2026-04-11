@@ -68,7 +68,7 @@ namespace LegendaryLibraryNS
             get
             {
                 var path = LauncherPath;
-                return string.IsNullOrEmpty(path) ? string.Empty : GetExecutablePath(path);
+                return string.IsNullOrEmpty(path) ? string.Empty : path;
             }
         }
 
@@ -92,17 +92,18 @@ namespace LegendaryLibraryNS
             get
             {
                 var launcherPath = "";
+
                 var envPath = Environment.GetEnvironmentVariable("PATH")
-                                         .Split(';')
-                                         .Select(x => Path.Combine(x))
-                                         .FirstOrDefault(x => File.Exists(Path.Combine(x, "legendary.exe")));
+                    .Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(dir => Path.Combine(dir, "legendary.exe"))
+                    .FirstOrDefault(File.Exists);
                 if (string.IsNullOrWhiteSpace(envPath) == false)
                 {
                     launcherPath = envPath;
                 }
                 else if (File.Exists(Path.Combine(HeroicLegendaryPath, "legendary.exe")))
                 {
-                    launcherPath = HeroicLegendaryPath;
+                    launcherPath = Path.Combine(HeroicLegendaryPath, "legendary.exe");
                 }
                 else
                 {
@@ -111,20 +112,21 @@ namespace LegendaryLibraryNS
                     {
                         pf64 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
                     }
-                    launcherPath = Path.Combine(pf64, "Legendary");
-                    if (!File.Exists(Path.Combine(launcherPath, "legendary.exe")))
+                    var launcherBasePath = Path.Combine(pf64, "Legendary");
+                    if (!File.Exists(Path.Combine(launcherBasePath, "legendary.exe")))
                     {
                         var playniteAPI = API.Instance;
-                        if (playniteAPI.ApplicationInfo.IsPortable)
-                        {
-                            launcherPath = Path.Combine(playniteAPI.Paths.ApplicationPath, "Legendary");
-                        }
+                        launcherPath = Path.Combine(playniteAPI.Paths.ApplicationPath, "Legendary");
+                    }
+                    else
+                    {
+                        launcherPath = Path.Combine(launcherBasePath, "legendary.exe");
                     }
                 }
                 var savedSettings = LegendaryLibrary.GetSettings();
                 if (savedSettings != null)
                 {
-                    var savedLauncherPath = savedSettings.SelectedLauncherPath;
+                    var savedLauncherPath = savedSettings.SelectedFullLauncherPath;
                     var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory.ToString();
                     if (savedLauncherPath != "")
                     {
@@ -133,13 +135,13 @@ namespace LegendaryLibraryNS
                             var playniteAPI = API.Instance;
                             savedLauncherPath = savedLauncherPath.Replace(playniteDirectoryVariable, playniteAPI.Paths.ApplicationPath);
                         }
-                        if (Directory.Exists(savedLauncherPath))
+                        if (File.Exists(savedLauncherPath))
                         {
                             launcherPath = savedLauncherPath;
                         }
                     }
                 }
-                if (!File.Exists(Path.Combine(launcherPath, "legendary.exe")))
+                if (!File.Exists(launcherPath))
                 {
                     launcherPath = "";
                 }
@@ -152,7 +154,7 @@ namespace LegendaryLibraryNS
             get
             {
                 var path = LauncherPath;
-                return !string.IsNullOrEmpty(path) && Directory.Exists(path);
+                return !string.IsNullOrEmpty(path) && File.Exists(path);
             }
         }
 
@@ -954,7 +956,7 @@ namespace LegendaryLibraryNS
                             var appTitle = "Legendary Launcher";
                             var updateInfo = new UpdateInfo
                             {
-                                Install_path = Path.GetDirectoryName(Path.Combine(LegendaryLauncher.LauncherPath, "legendary.exe")),
+                                Install_path = Path.GetDirectoryName(LauncherPath),
                                 Version = newVersion.ToString(),
                                 Download_size = newAsset.Size,
                                 Disk_size = newAsset.Size,

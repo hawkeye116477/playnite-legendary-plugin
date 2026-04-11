@@ -220,7 +220,7 @@
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonLauncherCustomPath},Args='launcherName=Legendary'}" Grid.Column="0" Grid.Row="0"
                                Margin="0,0,0,8" VerticalAlignment="Center" HorizontalAlignment="Left">
                         </TextBlock>
-                        <TextBox Text="{Binding Settings.SelectedLauncherPath, UpdateSourceTrigger=PropertyChanged}" x:Name="SelectedLauncherPathTxt" 
+                        <TextBox Text="{Binding Settings.SelectedFullLauncherPath, UpdateSourceTrigger=PropertyChanged}" x:Name="SelectedLauncherPathTxt" 
                              Grid.Row="0" Grid.Column="1" Margin="8,0,0,8" VerticalAlignment="Center"/>
                         <Button Name="ChooseLauncherBtn"
                             Margin="8,0,0,8" Content="&#xec5b;" FontFamily="{DynamicResource FontIcoFont}" Click="ChooseLauncherBtn_Click" Grid.Row="0" Grid.Column="2"
