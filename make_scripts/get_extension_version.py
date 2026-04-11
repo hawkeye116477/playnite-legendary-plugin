@@ -16,7 +16,8 @@ def run():
     with open(pn(pj(mainPath, r"src\Properties\AssemblyInfo.cs")), "r", encoding="utf-8") as assemblyInfo:
         assemblyInfoLines = assemblyInfo.read().splitlines()
         for line in assemblyInfoLines:
+            version = ""
             if line.startswith("[") and "AssemblyVersion" in line:
                 version = line.split('AssemblyVersion("')[
-                    1].replace('")]', '').replace(".*", "")
+                    1].replace('")]', '')
     return version
