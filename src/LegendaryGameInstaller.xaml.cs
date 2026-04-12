@@ -184,14 +184,20 @@ namespace LegendaryLibraryNS
 
         private async void LegendaryGameInstallerUC_Loaded(object sender, RoutedEventArgs e)
         {
+            bool shouldCloseWindow = false;
             if (!LegendaryLauncher.IsInstalled)
             {
+                shouldCloseWindow = true;
                 LegendaryLauncher.ShowNotInstalledError();
-                return;
             }
             var isUdmInstalled = LegendaryDownloadLogic.CheckIfUdmInstalled();
             if (!isUdmInstalled)
             {
+                shouldCloseWindow = true;
+            }
+            if (shouldCloseWindow)
+            {
+                Window.GetWindow(this).Close();
                 return;
             }
             CommonHelpers.SetControlBackground(this);

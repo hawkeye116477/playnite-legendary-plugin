@@ -35,6 +35,7 @@ namespace LegendaryLibraryNS
             var isUdmInstalled = LegendaryDownloadLogic.CheckIfUdmInstalled();
             if (!isUdmInstalled)
             {
+                Window.GetWindow(this).Close();
                 return;
             }
             UpdatesList = (Dictionary<string, UpdateInfo>)DataContext;
