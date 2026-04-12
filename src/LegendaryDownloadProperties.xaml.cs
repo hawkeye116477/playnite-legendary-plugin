@@ -147,6 +147,7 @@ namespace LegendaryLibraryNS
                 wantedUnifiedTask.downloadSizeBytes = gameSize.Download_size;
                 wantedUnifiedTask.installSizeBytes = gameSize.Download_size;
             }
+            LegendaryLibrary.Instance.SaveDownloadData();
             Window.GetWindow(this).Close();
         }
 
