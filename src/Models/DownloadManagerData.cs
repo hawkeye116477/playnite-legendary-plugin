@@ -1,5 +1,4 @@
 ﻿using CommonPlugin.Enums;
-using Playnite.SDK.Data;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -16,7 +15,6 @@ namespace LegendaryLibraryNS.Models
             public string fullInstallPath { get; set; }
 
             private double _downloadSizeNumber;
-            [DontSerialize]
             public double downloadSizeNumber
             {
                 get => _downloadSizeNumber;
@@ -24,18 +22,15 @@ namespace LegendaryLibraryNS.Models
             }
 
             private double _installSizeNumber;
-            [DontSerialize]
             public double installSizeNumber
             {
                 get => _installSizeNumber;
                 set => SetValue(ref _installSizeNumber, value);
             }
 
-            [DontSerialize]
             public long addedTime { get; set; }
 
             private long _completedTime;
-            [DontSerialize]
             public long completedTime
             {
                 get => _completedTime;
@@ -43,7 +38,6 @@ namespace LegendaryLibraryNS.Models
             }
 
             private DownloadStatus _status;
-            [DontSerialize]
             public DownloadStatus status
             {
                 get => _status;
@@ -51,7 +45,6 @@ namespace LegendaryLibraryNS.Models
             }
 
             private double _progress;
-            [DontSerialize]
             public double progress
             {
                 get => _progress;
@@ -59,7 +52,6 @@ namespace LegendaryLibraryNS.Models
             }
 
             private double _downloadedNumber;
-            [DontSerialize]
             public double downloadedNumber
             {
                 get => _downloadedNumber;
