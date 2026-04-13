@@ -758,7 +758,7 @@ namespace LegendaryLibraryNS
 
                         if (completedDownload)
                         {
-                            var wantedPluginItem = LegendaryLibrary.Instance.pluginDownloadData.downloads.FirstOrDefault(i => i.gameID == wantedUnifiedItem.gameID);
+                            var wantedPluginItem = LegendaryLibrary.Instance.pluginDownloadData.downloads.FirstOrDefault(i => i.gameID == gameToUpdate.Key);
                             LegendaryLibrary.Instance.pluginDownloadData.downloads.Remove(wantedPluginItem);
                             wantedPluginItem = null;
                             unifiedDownloadManagerApi.RemoveTask(wantedUnifiedItem);
