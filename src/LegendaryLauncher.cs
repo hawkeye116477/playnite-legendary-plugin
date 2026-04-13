@@ -220,11 +220,6 @@ namespace LegendaryLibraryNS
             }
         }
 
-        internal static string GetExecutablePath(string rootPath)
-        {
-            return Path.Combine(rootPath, "legendary.exe");
-        }
-
         public static Dictionary<string, Installed> GetInstalledAppList()
         {
             var installListPath = Path.Combine(ConfigPath, "installed.json");
