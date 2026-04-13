@@ -35,9 +35,8 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CliWrap, Version=3.6.7.0, Culture=neutral, PublicKeyToken=1c4a4fc2d6886e5a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\CliWrap\CliWrap\bin\Release\net462\CliWrap.dll</HintPath>
+    <Reference Include="CliWrap-net462">
+      <HintPath>..\..\CliWrap-net462\CliWrap\bin\Release\net462\CliWrap-net462.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
