@@ -1,5 +1,17 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.14.3
+    RequiredApiVersion: 6.14.0
+    ReleaseDate: 2026-04-13
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.14.3/LegendaryLibrary_1_14_3.pext
+    Changelog:
+      - Now installer window will be closed instantly if UDM or launcher not installed
+      - Added missing icons to few buttons
+      - Fixed potential problems with old downloads migration (if you had problems
+        with incorrect displayed data, then close Playnite, go to plugin data dir,
+        remove `downloads.json`, then rename `downloadManager.json.migrated` by removing
+        `.migrated` part from it, then go to UDM data dir, remove unfiedDownloads.json
+        file and launch Playnite again)
   - Version: 1.14.1
     RequiredApiVersion: 6.14.0
     ReleaseDate: 2026-04-12
