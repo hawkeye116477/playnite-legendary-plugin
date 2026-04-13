@@ -95,7 +95,7 @@ namespace LegendaryLibraryNS
 
         public void MigrateOldDownloadData()
         {
-            var oldPluginDownloadDataForMigration = new DownloadManagerData();
+            var oldPluginDownloadDataForMigration = new OldDownloadManagerData();
             var dataDir = Instance.GetPluginUserDataPath();
             var oldDataFile = Path.Combine(dataDir, "downloadManager.json");
             var oldDataBackupFile = Path.Combine(dataDir, "downloadManager.json.migrated");
@@ -110,7 +110,7 @@ namespace LegendaryLibraryNS
                     {
                         logger.Debug("Migrating old downloads data...");
                         var content = FileSystem.ReadFileAsStringSafe(oldDataFile);
-                        if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out DownloadManagerData oldPluginDownloadData))
+                        if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out OldDownloadManagerData oldPluginDownloadData))
                         {
                             if (oldPluginDownloadData != null && oldPluginDownloadData.downloads != null)
                             {
@@ -119,14 +119,49 @@ namespace LegendaryLibraryNS
                         }
                         var legendaryDownloadLogic = (LegendaryDownloadLogic)Instance.UnifiedDownloadLogic;
                         var oldData = oldPluginDownloadDataForMigration.downloads.ToList();
+                        var unifiedTasks = new List<UnifiedDownload>();
                         foreach (var oldDownload in oldData)
                         {
                             if (oldDownload.status == DownloadStatus.Running || oldDownload.status == DownloadStatus.Queued)
                             {
                                 oldDownload.status = DownloadStatus.Paused;
                             }
+                            var newPluginTask = new DownloadManagerData.Download
+                            {
+                                addedTime = oldDownload.addedTime,
+                                completedTime = oldDownload.completedTime,
+                                downloadedNumber = oldDownload.downloadedNumber,
+                                downloadProperties = Serialization.GetClone(oldDownload.downloadProperties),
+                                downloadSizeNumber = oldDownload.downloadSizeNumber,
+                                extraContentAvailable = oldDownload.extraContentAvailable,
+                                fullInstallPath = oldDownload.fullInstallPath,
+                                gameID = oldDownload.gameID,
+                                installSizeNumber = oldDownload.installSizeNumber,
+                                name = oldDownload.name,
+                                progress = oldDownload.progress,
+                                status = oldDownload.status
+                            };
+                            LegendaryLibrary.Instance.pluginDownloadData.downloads.Add(newPluginTask);
+                            var unifiedTask = new UnifiedDownload
+                            {
+                                gameID = oldDownload.gameID,
+                                name = oldDownload.name,
+                                downloadSizeBytes = oldDownload.downloadSizeNumber,
+                                installSizeBytes = oldDownload.installSizeNumber,
+                                fullInstallPath = oldDownload.fullInstallPath,
+                                pluginId = Instance.Id.ToString(),
+                                sourceName = "Epic",
+                                addedTime = oldDownload.addedTime,
+                            };
+                            unifiedTask.status = (UnifiedDownloadStatus)oldDownload.status;
+                            unifiedTask.progress = oldDownload.progress;
+                            unifiedTask.downloadedBytes = oldDownload.downloadedNumber;
+                            unifiedTask.completedTime = oldDownload.completedTime;
+                            unifiedTasks.Add(unifiedTask);
                         }
-                        await legendaryDownloadLogic.AddTasks(oldData, true);
+                        UnifiedDownloadManagerApi unifiedDownloadManagerApi = new UnifiedDownloadManagerApi();
+                        await unifiedDownloadManagerApi.AddTasks(unifiedTasks);
+                        Instance.SaveDownloadData();
                         File.Move(oldDataFile, oldDataBackupFile);
                         logger.Debug("Migration done.");
                     });

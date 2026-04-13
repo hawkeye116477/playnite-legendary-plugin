@@ -252,6 +252,7 @@
     <Compile Include="Models\LegendaryMetadata.cs" />
     <Compile Include="Models\LegendarySDLInfo.cs" />
     <Compile Include="Models\LibraryItemsResponse.cs" />
+    <Compile Include="Models\OldDownloadManagerData.cs" />
     <Compile Include="Models\OverlayVersion.cs" />
     <Compile Include="Models\Prerequisite.cs" />
     <Compile Include="Models\UpdateInfo.cs" />

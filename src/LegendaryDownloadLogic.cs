@@ -7,6 +7,7 @@ using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
 using Playnite.Common;
 using Playnite.SDK;
+using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -61,7 +62,7 @@ namespace LegendaryLibraryNS
             return installed;
         }
 
-        public async Task AddTasks(List<DownloadManagerData.Download> downloadTasks, bool migrate = false)
+        public async Task AddTasks(List<DownloadManagerData.Download> downloadTasks)
         {
             var unifiedTasks = new List<UnifiedDownload>();
             foreach (var downloadTask in downloadTasks)
@@ -78,20 +79,12 @@ namespace LegendaryLibraryNS
                     sourceName = "Epic",
                     addedTime = downloadTask.addedTime,
                 };
-                if (migrate)
-                {
-                    unifiedTask.status = (UnifiedDownloadStatus)downloadTask.status;
-                    unifiedTask.progress = downloadTask.progress;
-                    unifiedTask.downloadedBytes = downloadTask.downloadedNumber;
-                    unifiedTask.completedTime = downloadTask.completedTime;
-                }
                 unifiedTasks.Add(unifiedTask);
             }
             UnifiedDownloadManagerApi unifiedDownloadManagerApi = new UnifiedDownloadManagerApi();
             await unifiedDownloadManagerApi.AddTasks(unifiedTasks);
             LegendaryLibrary.Instance.SaveDownloadData();
         }
-
 
         public async Task StartDownload(UnifiedDownload downloadTask)
         {

@@ -1,11 +1,10 @@
 ﻿using CommonPlugin.Enums;
-using Playnite.SDK.Data;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace LegendaryLibraryNS.Models
 {
-    public class DownloadManagerData
+    public class OldDownloadManagerData
     {
         public ObservableCollection<Download> downloads { get; set; }
 
@@ -16,7 +15,6 @@ namespace LegendaryLibraryNS.Models
             public string fullInstallPath { get; set; }
 
             private double _downloadSizeNumber;
-            [DontSerialize]
             public double downloadSizeNumber
             {
                 get => _downloadSizeNumber;
@@ -24,18 +22,15 @@ namespace LegendaryLibraryNS.Models
             }
 
             private double _installSizeNumber;
-            [DontSerialize]
             public double installSizeNumber
             {
                 get => _installSizeNumber;
                 set => SetValue(ref _installSizeNumber, value);
             }
 
-            [DontSerialize]
             public long addedTime { get; set; }
 
             private long _completedTime;
-            [DontSerialize]
             public long completedTime
             {
                 get => _completedTime;
@@ -43,7 +38,6 @@ namespace LegendaryLibraryNS.Models
             }
 
             private DownloadStatus _status;
-            [DontSerialize]
             public DownloadStatus status
             {
                 get => _status;
@@ -51,7 +45,6 @@ namespace LegendaryLibraryNS.Models
             }
 
             private double _progress;
-            [DontSerialize]
             public double progress
             {
                 get => _progress;
@@ -59,7 +52,6 @@ namespace LegendaryLibraryNS.Models
             }
 
             private double _downloadedNumber;
-            [DontSerialize]
             public double downloadedNumber
             {
                 get => _downloadedNumber;
@@ -68,19 +60,5 @@ namespace LegendaryLibraryNS.Models
             public DownloadProperties downloadProperties { get; set; } = new DownloadProperties();
             public bool? extraContentAvailable { get; set; } = null;
         }
-    }
-
-    public class DownloadProperties : ObservableObject
-    {
-        public string installPath { get; set; } = "";
-        public DownloadAction downloadAction { get; set; }
-        public bool installPrerequisites { get; set; } = false;
-        public string prerequisitesName { get; set; }
-        public bool ignoreFreeSpace { get; set; } = false;
-        public bool enableReordering { get; set; }
-        public int maxWorkers { get; set; }
-        public int maxSharedMemory { get; set; }
-        public List<string> extraContent { get; set; } = new List<string>();
-        public Dictionary<string, DownloadManagerData.Download> selectedDlcs { get; set; }
     }
 }
