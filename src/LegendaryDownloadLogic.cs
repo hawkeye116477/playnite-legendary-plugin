@@ -718,6 +718,17 @@ namespace LegendaryLibraryNS
             {
                 try
                 {
+                    var tempDir = Path.Combine(downloadTask.fullInstallPath, ".Downloader_temp");
+                    if (Directory.Exists(tempDir))
+                    {
+                        Directory.Delete(tempDir, true);
+                    }
+                    var tempFolderName = $"{downloadTask.gameID}_PlayniteLegendaryPlugin";
+                    tempDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "temp", tempFolderName);
+                    if (Directory.Exists(tempDir))
+                    {
+                        Directory.Delete(tempDir, true);
+                    }
                     var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", gameID + ".resume");
                     if (File.Exists(resumeFile))
                     {
