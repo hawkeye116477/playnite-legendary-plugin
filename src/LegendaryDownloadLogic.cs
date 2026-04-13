@@ -145,8 +145,8 @@ namespace LegendaryLibraryNS
             var versionInfoContent = await LegendaryLauncher.GetVersionInfoContent();
             if (versionInfoContent.Tag_name != null)
             {
-                var repoOwner = LegendaryLauncher.GetUpdateSource();
-                var newAsset = versionInfoContent.Assets.FirstOrDefault(a => a.Browser_download_url.Contains($"{ versionInfoContent.Tag_name}/legendary.exe"));
+                var newAsset = versionInfoContent.Assets.FirstOrDefault(a => a.Browser_download_url.Contains($"{versionInfoContent.Tag_name}/legendary")
+                                                                             && a.Browser_download_url.EndsWith(".exe"));
                 if (newAsset.Browser_download_url != null)
                 {
                     url = newAsset.Browser_download_url;
