@@ -714,27 +714,29 @@ namespace LegendaryLibraryNS
             var matchingPluginTask = LegendaryLibrary.Instance.pluginDownloadData.downloads.FirstOrDefault(t => t.gameID == gameID);
             const int maxRetries = 5;
             int delayMs = 100;
+            var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", gameID + ".resume");
+            var repairFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", gameID + ".repair");
+            var tempDir = Path.Combine(downloadTask.fullInstallPath, ".Downloader_temp");
+            if (!Directory.Exists(tempDir))
+            {
+                var tempFolderName = $"{downloadTask.gameID}_PlayniteLegendaryPlugin";
+                tempDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "temp", tempFolderName);
+            }
+
             for (int i = 0; i < maxRetries; i++)
             {
                 try
                 {
-                    var tempDir = Path.Combine(downloadTask.fullInstallPath, ".Downloader_temp");
                     if (Directory.Exists(tempDir))
                     {
                         Directory.Delete(tempDir, true);
                     }
-                    var tempFolderName = $"{downloadTask.gameID}_PlayniteLegendaryPlugin";
-                    tempDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "temp", tempFolderName);
-                    if (Directory.Exists(tempDir))
-                    {
-                        Directory.Delete(tempDir, true);
-                    }
-                    var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", gameID + ".resume");
+                   
                     if (File.Exists(resumeFile))
                     {
                         File.Delete(resumeFile);
                     }
-                    var repairFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", gameID + ".repair");
+
                     if (File.Exists(repairFile))
                     {
                         File.Delete(repairFile);
