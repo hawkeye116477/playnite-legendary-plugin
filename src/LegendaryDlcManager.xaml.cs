@@ -233,38 +233,32 @@ namespace LegendaryLibraryNS
                 foreach (var selectedOption in AvailableDlcsLB.SelectedItems.Cast<KeyValuePair<string, LegendaryGameInfo.Rootobject>>())
                 {
                     var wantedItem = LegendaryLibrary.Instance.pluginDownloadData.downloads.FirstOrDefault(item => item.gameID == selectedOption.Key);
-                    if (wantedItem != null)
+
+                    DownloadProperties downloadProperties = new DownloadProperties()
                     {
-                        playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonDownloadAlreadyExists, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)wantedItem.name }), "", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                    else
+                        downloadAction = DownloadAction.Install,
+                        enableReordering = (bool)ReorderingChk.IsChecked,
+                        maxWorkers = maxWorkers,
+                        maxSharedMemory = maxSharedMemory,
+                        ignoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked
+                    };
+                    if (installedSdls.Count > 0)
                     {
-                        DownloadProperties downloadProperties = new DownloadProperties()
+                        foreach (var installedSdl in installedSdls)
                         {
-                            downloadAction = DownloadAction.Install,
-                            enableReordering = (bool)ReorderingChk.IsChecked,
-                            maxWorkers = maxWorkers,
-                            maxSharedMemory = maxSharedMemory,
-                            ignoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked
-                        };
-                        if (installedSdls.Count > 0)
-                        {
-                            foreach (var installedSdl in installedSdls)
-                            {
-                                downloadProperties.extraContent.AddMissing(installedSdl);
-                            }
+                            downloadProperties.extraContent.AddMissing(installedSdl);
                         }
-                        var downloadTask = new DownloadManagerData.Download
-                        {
-                            gameID = selectedOption.Key,
-                            name = selectedOption.Value.Game.Title,
-                            downloadProperties = downloadProperties
-                        };
-                        var dlcSize = await LegendaryLauncher.CalculateGameSize(downloadTask);
-                        downloadTask.downloadSizeNumber = dlcSize.Download_size;
-                        downloadTask.installSizeNumber = dlcSize.Disk_size;
-                        tasks.Add(downloadTask);
                     }
+                    var downloadTask = new DownloadManagerData.Download
+                    {
+                        gameID = selectedOption.Key,
+                        name = selectedOption.Value.Game.Title,
+                        downloadProperties = downloadProperties
+                    };
+                    var dlcSize = await LegendaryLauncher.CalculateGameSize(downloadTask);
+                    downloadTask.downloadSizeNumber = dlcSize.Download_size;
+                    downloadTask.installSizeNumber = dlcSize.Disk_size;
+                    tasks.Add(downloadTask);
                 }
                 if (tasks.Count > 0)
                 {

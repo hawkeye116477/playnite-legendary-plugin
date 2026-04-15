@@ -64,7 +64,7 @@ namespace LegendaryLibraryNS
             Window.GetWindow(this).Close();
         }
 
-        public async Task StartTask(DownloadAction downloadAction)
+        public async Task StartTask(DownloadAction downloadAction, bool silently = false)
         {
             var installPath = SelectedGamePathTxt.Text;
             if (installPath == "")
@@ -80,7 +80,6 @@ namespace LegendaryLibraryNS
 
 
             var downloadTasks = new List<DownloadManagerData.Download>();
-            var downloadItemsAlreadyAdded = new List<string>();
 
 
             var installedAppList = LegendaryLauncher.GetInstalledAppList();
@@ -122,32 +121,11 @@ namespace LegendaryLibraryNS
                 installData.downloadProperties.selectedDlcs = null;
                 downloadTasks.Add(installData);
             }
-            if (downloadTasks.Count > 0)
-            {
-                var pluginDownloadData = LegendaryLibrary.Instance.pluginDownloadData;
-                foreach (var downloadTask in downloadTasks.ToList())
-                {
-                    var wantedPluginDownloadDataItem = pluginDownloadData.downloads.FirstOrDefault(item => item.gameID == downloadTask.gameID);
-                    if (wantedPluginDownloadDataItem != null)
-                    {
-                        downloadItemsAlreadyAdded.Add(downloadTask.name);
-                        downloadTasks.Remove(downloadTask);
-                    }
-                }
-            }
-            if (downloadItemsAlreadyAdded.Count > 0)
-            {
-                string downloadItemsAlreadyAddedList = downloadItemsAlreadyAdded[0];
-                if (downloadItemsAlreadyAdded.Count > 1)
-                {
-                    downloadItemsAlreadyAddedList = string.Join(", ", downloadItemsAlreadyAdded.Select(item => item.ToString()));
-                }
-                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonDownloadAlreadyExists, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)downloadItemsAlreadyAddedList, ["count"] = (FluentNumber)downloadItemsAlreadyAdded.Count }), "", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+
             if (downloadTasks.Count > 0)
             {
                 var legendaryDownloadLogic = new LegendaryDownloadLogic();
-                await legendaryDownloadLogic.AddTasks(downloadTasks);
+                await legendaryDownloadLogic.AddTasks(downloadTasks, silently);
             }
         }
 
@@ -229,7 +207,7 @@ namespace LegendaryLibraryNS
             await RefreshAll();
             if (settings.UnattendedInstall && (MultiInstallData.First().downloadProperties.downloadAction == DownloadAction.Install))
             {
-                await StartTask(DownloadAction.Install);
+                await StartTask(DownloadAction.Install, true);
             }
         }
 
@@ -251,7 +229,6 @@ namespace LegendaryLibraryNS
             var eaAppGames = new List<string>();
             var ubisoftOnlyGames = new List<string>();
             var ubisoftRecommendedGames = new List<string>();
-            var downloadItemsAlreadyAdded = new List<string>();
             var prerequisites = new Dictionary<string, string>();
 
             bool gamesListShouldBeDisplayed = false;
@@ -262,29 +239,6 @@ namespace LegendaryLibraryNS
             {
                 var wantedItem = pluginDownloadData.downloads.FirstOrDefault(item => item.gameID == installData.gameID);
                 var wantedUnifiedTask = unifiedDownloadManagerApi.GetTask(installData.gameID, LegendaryLibrary.Instance.Id.ToString());
-                if (wantedItem != null)
-                {
-                    bool completedDownload = true;
-                    if (wantedUnifiedTask != null)
-                    {
-                        if (wantedUnifiedTask.status != UnifiedDownloadStatus.Completed)
-                        {
-                            completedDownload = false;
-                        }
-                    }
-                    if (completedDownload && !installedAppList.ContainsKey(installData.gameID))
-                    {
-                        pluginDownloadData.downloads.Remove(wantedItem);
-                        unifiedDownloadManagerApi.RemoveTask(wantedUnifiedTask);
-                        wantedUnifiedTask = unifiedDownloadManagerApi.GetTask(installData.gameID, LegendaryLibrary.Instance.Id.ToString());
-                    }
-                    else
-                    {
-                        downloadItemsAlreadyAdded.Add(installData.name);
-                        MultiInstallData.Remove(installData);
-                        continue;
-                    }
-                }
                 if (installData.downloadProperties.downloadAction == DownloadAction.Repair && installedAppList.ContainsKey(installData.gameID))
                 {
                     var installedSdls = installedAppList[installData.gameID].Install_tags;
@@ -575,17 +529,6 @@ namespace LegendaryLibraryNS
                 }
                 fluentUbisoftArgs["thirdPartyLauncherName"] = (FluentString)"Ubisoft Connect";
                 playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.LegendaryRequiredInstallOfThirdPartyLauncher, fluentUbisoftArgs));
-            }
-
-            if (downloadItemsAlreadyAdded.Count > 0)
-            {
-                var downloadItemsAlreadyAddedList = downloadItemsAlreadyAdded[0];
-                if (downloadItemsAlreadyAdded.Count > 1)
-                {
-                    downloadItemsAlreadyAddedList = string.Join(", ", downloadItemsAlreadyAdded.Select(item => item.ToString()));
-
-                }
-                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonDownloadAlreadyExists, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)downloadItemsAlreadyAddedList, ["pluginShortName"] = (FluentString)"Legendary", ["count"] = (FluentNumber)downloadItemsAlreadyAdded.Count }), "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             CalculateTotalSize();

@@ -746,65 +746,36 @@ namespace LegendaryLibraryNS
                     {
                         var wantedUnifiedItem = unifiedDownloadManagerApi.GetTask(gameToUpdate.Key, LegendaryLibrary.Instance.Id.ToString());
 
-                        bool completedDownload = true;
-
-                        if (wantedUnifiedItem != null)
+                        var settings = LegendaryLibrary.GetSettings();
+                        var newDownloadProperties = new DownloadProperties()
                         {
-                            if (wantedUnifiedItem.status != UnifiedDownloadStatus.Completed)
-                            {
-                                completedDownload = false;
-                            }
-                        }
-
-                        if (completedDownload)
+                            downloadAction = DownloadAction.Update,
+                            enableReordering = settings.EnableReordering,
+                            maxWorkers = settings.MaxWorkers,
+                            maxSharedMemory = settings.MaxSharedMemory,
+                        };
+                        if (downloadProperties != null)
                         {
-                            var wantedPluginItem = LegendaryLibrary.Instance.pluginDownloadData.downloads.FirstOrDefault(i => i.gameID == gameToUpdate.Key);
-                            LegendaryLibrary.Instance.pluginDownloadData.downloads.Remove(wantedPluginItem);
-                            wantedPluginItem = null;
-                            unifiedDownloadManagerApi.RemoveTask(wantedUnifiedItem);
-                            wantedUnifiedItem = unifiedDownloadManagerApi.GetTask(gameToUpdate.Key, LegendaryLibrary.Instance.Id.ToString());
+                            newDownloadProperties = Serialization.GetClone(downloadProperties);
                         }
+                        newDownloadProperties.installPath = gameToUpdate.Value.Install_path;
 
-                        if (wantedUnifiedItem != null)
+                        var updateTask = new DownloadManagerData.Download
                         {
-                            if (!silently)
-                            {
-                                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonDownloadAlreadyExists, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)wantedUnifiedItem.name }), "", MessageBoxButton.OK, MessageBoxImage.Error);
-                            }
-                        }
-                        else
-                        {
-                            var settings = LegendaryLibrary.GetSettings();
-                            var newDownloadProperties = new DownloadProperties()
-                            {
-                                downloadAction = DownloadAction.Update,
-                                enableReordering = settings.EnableReordering,
-                                maxWorkers = settings.MaxWorkers,
-                                maxSharedMemory = settings.MaxSharedMemory,
-                            };
-                            if (downloadProperties != null)
-                            {
-                                newDownloadProperties = Serialization.GetClone(downloadProperties);
-                            }
-                            newDownloadProperties.installPath = gameToUpdate.Value.Install_path;
-
-                            var updateTask = new DownloadManagerData.Download
-                            {
-                                gameID = gameToUpdate.Key,
-                                name = gameToUpdate.Value.Title,
-                                downloadSizeNumber = gameToUpdate.Value.Download_size,
-                                installSizeNumber = gameToUpdate.Value.Disk_size,
-                                downloadProperties = newDownloadProperties,
-                            };
-                            updateTask.downloadProperties.installPath = Directory.GetParent(gameToUpdate.Value.Install_path).FullName;
-                            updateTask.fullInstallPath = gameToUpdate.Value.Install_path;
-                            updateTasks.Add(updateTask);
-                        }
+                            gameID = gameToUpdate.Key,
+                            name = gameToUpdate.Value.Title,
+                            downloadSizeNumber = gameToUpdate.Value.Download_size,
+                            installSizeNumber = gameToUpdate.Value.Disk_size,
+                            downloadProperties = newDownloadProperties,
+                        };
+                        updateTask.downloadProperties.installPath = Directory.GetParent(gameToUpdate.Value.Install_path).FullName;
+                        updateTask.fullInstallPath = gameToUpdate.Value.Install_path;
+                        updateTasks.Add(updateTask);
                     }
                     if (updateTasks.Count > 0)
                     {
                         var downloadLogic = (LegendaryDownloadLogic)LegendaryLibrary.Instance.UnifiedDownloadLogic;
-                        await downloadLogic.AddTasks(updateTasks);
+                        await downloadLogic.AddTasks(updateTasks, silently);
                     }
                 }
             }
