@@ -35,7 +35,7 @@
             <TextBlock>
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
-                        <Setter Property="FontFamily" Value="{DynamicResource FontIcoFont}" />
+                        <Setter Property="FontFamily" Value="{DynamicResource IcoFont}" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DisplayIcon}" Value="{x:Static MessageBoxImage.Error}">
                                 <Setter Property="Text" Value="&#xef16;" />

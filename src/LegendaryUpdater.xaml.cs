@@ -1,7 +1,7 @@
 ﻿using CommonPlugin;
 using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
-using Playnite.SDK;
+using Playnite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,30 +16,31 @@ namespace LegendaryLibraryNS
     public partial class LegendaryUpdater : UserControl
     {
         public Dictionary<string, UpdateInfo> UpdatesList;
-        private IPlayniteAPI playniteAPI = API.Instance;
-        public List<Playnite.SDK.Models.Game> checkedGames = new List<Playnite.SDK.Models.Game>();
+        private readonly IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
+        private readonly List<Playnite.Game> checkedGames = [];
+        private CommonHelpers commonHelpers = LegendaryLibrary.Instance.CommonHelpers;
 
         public LegendaryUpdater()
         {
             InitializeComponent();
         }
 
-        public LegendaryUpdater(List<Playnite.SDK.Models.Game> games)
+        public LegendaryUpdater(List<Playnite.Game> games)
         {
             InitializeComponent();
             checkedGames = games;
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            var isUdmInstalled = LegendaryDownloadLogic.CheckIfUdmInstalled();
+            var isUdmInstalled = await LegendaryDownloadLogic.CheckIfUdmInstalled();
             if (!isUdmInstalled)
             {
-                Window.GetWindow(this).Close();
+                Window.GetWindow(this)?.Close();
                 return;
             }
             UpdatesList = (Dictionary<string, UpdateInfo>)DataContext;
-            CommonHelpers.SetControlBackground(this);
+            commonHelpers.SetControlBackground(this);
             RefreshWindow();
             var settings = LegendaryLibrary.GetSettings();
             MaxWorkersNI.MaxValue = CommonHelpers.CpuThreadsNumber;
@@ -51,24 +52,24 @@ namespace LegendaryLibraryNS
 
             if (UpdatesList.Count > 0 && successUpdates.Count == 0)
             {
-                playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdateCheckFailMessage), LegendaryLibrary.Instance.Name);
-                Window.GetWindow(this).Close();
+                await playniteApi.Dialogs.ShowErrorMessageAsync(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdateCheckFailMessage), LegendaryLibrary.LibraryName);
+                Window.GetWindow(this)?.Close();
                 return;
             }
 
             if (checkedGames.Count > 0 && (UpdatesList.Count == 0))
             {
-                var options = new List<MessageBoxOption>
+                var options = new List<MessageBoxResponse>
                 {
-                    new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.CommonReload), false),
-                    new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOkLabel), true, true),
+                    new (LocalizationManager.Instance.GetString(LOC.CommonReload), false),
+                    new (LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOkLabel), true, true),
                 };
-                var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNoUpdatesAvailable), LegendaryLibrary.Instance.Name, MessageBoxImage.Information, options);
+                var result = await playniteApi.Dialogs.ShowMessageAsync(LocalizationManager.Instance.GetString(LOC.CommonNoUpdatesAvailable), LegendaryLibrary.LibraryName, MessageBoxSeverity.Information, options, []);
                 if (result == options[0])
                 {
-                    var checkedGamesIds = checkedGames.Select(g => g.GameId).ToList();
+                    var checkedGamesIds = checkedGames.Select(g => g.LibraryGameId).ToList();
                     GlobalProgressOptions updateCheckProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonCheckingForUpdates), false) { IsIndeterminate = true };
-                    playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
+                    await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(updateCheckProgressOptions, async (a) =>
                     {
                         LegendaryLauncher.ClearSpecificGamesCache(checkedGamesIds);
                         LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
@@ -78,12 +79,12 @@ namespace LegendaryLibraryNS
                         }
                         else
                         {
-                            UpdatesList = await legendaryUpdateController.CheckGameUpdates(checkedGames[0].Name, checkedGames[0].GameId);
+                            UpdatesList = await legendaryUpdateController.CheckGameUpdates(checkedGames[0].Name, checkedGames[0].LibraryGameId);
                         }
-                    }, updateCheckProgressOptions);
+                    });
                     if (UpdatesList.Count == 0)
                     {
-                        playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNoUpdatesAvailable), LegendaryLibrary.Instance.Name);
+                        await playniteApi.Dialogs.ShowMessageAsync(LocalizationManager.Instance.GetString(LOC.CommonNoUpdatesAvailable), LegendaryLibrary.LibraryName);
                         Window.GetWindow(this).Close();
                         return;
                     }
@@ -162,11 +163,11 @@ namespace LegendaryLibraryNS
                 LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
                 DownloadProperties downloadProperties = new DownloadProperties
                 {
-                    downloadAction = DownloadAction.Update,
-                    maxWorkers = maxWorkers,
-                    maxSharedMemory = maxSharedMemory,
-                    enableReordering = (bool)ReorderingChk.IsChecked,
-                    ignoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked
+                    DownloadAction = DownloadAction.Update,
+                    MaxWorkers = maxWorkers,
+                    MaxSharedMemory = maxSharedMemory,
+                    EnableReordering = (bool)ReorderingChk.IsChecked,
+                    IgnoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked
                 };
                 Window.GetWindow(this).Close();
                 var updatesList = new Dictionary<string, UpdateInfo>();

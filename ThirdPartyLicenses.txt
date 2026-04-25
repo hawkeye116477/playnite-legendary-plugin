@@ -4,38 +4,32 @@ MIT License
 Copyright (c) 2020 Josef Nemec
 
 ----------------------------------------------------------------------------------------
-CliWrap - https://github.com/hawkeye116477/CliWrap
+CliWrap - https://github.com/Tyrrrz/CliWrap
 MIT License
 Copyright (c) 2017-2025 Oleksii Holub
-
-----------------------------------------------------------------------------------------
-Microsoft.Bcl.AsyncInterfaces - https://github.com/dotnet/runtime
-The MIT License (MIT)
-Copyright (c) .NET Foundation and Contributors
-All rights reserved.
-
-
-----------------------------------------------------------------------------------------
-corefx - https://github.com/dotnet/corefx
-The MIT License (MIT)
-Copyright (c) .NET Foundation and Contributors
-All rights reserved.
-
 
 ----------------------------------------------------------------------------------------
 ByteSize - https://github.com/omar/ByteSize
 The MIT License (MIT)
 Copyright (c) 2013-2022 Omar Khudeira (http://omar.io)
 
-
 ----------------------------------------------------------------------------------------
 Linguini - https://github.com/Ygg01/Linguini/
 License: MIT (dual-licensed MIT / Apache 2.0)
 Copyright 2021 Daniel Fath
 
+----------------------------------------------------------------------------------------
+Generator.Equals - https://github.com/diegofrata/Generator.Equals
+The MIT License (MIT)
+Copyright 2020 Diego Frata
 
 ----------------------------------------------------------------------------------------
-IndexRange - https://github.com/bgrainger/IndexRange
+ByteAether.Ulid - https://github.com/ByteAether/Ulid
 MIT License
-Copyright (c) 2019–2022 Bradley Grainger
+Copyright (c) 2024 ByteAether, Joonatan Uusväli
 
+----------------------------------------------------------------------------------------
+CommunityToolkit.Mvvm - https://github.com/CommunityToolkit/dotnet
+MIT License (MIT)
+Copyright © .NET Foundation and Contributors
+All rights reserved.

@@ -1,7 +1,7 @@
 ﻿using CommonPlugin;
 using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
-using Playnite.SDK;
+using Playnite;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,16 +19,17 @@ namespace LegendaryLibraryNS
     public partial class LegendaryDownloadProperties : UserControl
     {
         private DownloadManagerData.Download SelectedDownload => (DownloadManagerData.Download)DataContext;
-        private IPlayniteAPI playniteAPI = API.Instance;
-        public List<string> requiredThings;
-        public bool uncheckedByUser = true;
+        private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
+        public List<string> RequiredThings;
+        private bool uncheckedByUser = true;
         private bool checkedByUser = true;
-        public List<string> selectedSdls = new List<string>();
+        private List<string> selectedSdls = [];
+        private readonly CommonHelpers commonHelpers = LegendaryLibrary.Instance.CommonHelpers;
 
-        public LegendaryGameInfo.Game GameData => new LegendaryGameInfo.Game
+        private LegendaryGameInfo.Game GameData => new LegendaryGameInfo.Game
         {
-            App_name = SelectedDownload.gameID,
-            Title = SelectedDownload.name
+            App_name = SelectedDownload.GameId,
+            Title = SelectedDownload.Name
         };
 
         public LegendaryDownloadProperties()
@@ -38,27 +39,27 @@ namespace LegendaryLibraryNS
 
         private async void LegendaryDownloadPropertiesUC_Loaded(object sender, RoutedEventArgs e)
         {
-            CommonHelpers.SetControlBackground(this);
+            commonHelpers.SetControlBackground(this);
             MaxWorkersNI.MaxValue = CommonHelpers.CpuThreadsNumber;
             var wantedItem = SelectedDownload;
-            if (wantedItem.downloadProperties != null)
-            {
-                SelectedGamePathTxt.Text = wantedItem.downloadProperties.installPath;
-                ReorderingChk.IsChecked = wantedItem.downloadProperties.enableReordering;
-                IgnoreFreeSpaceChk.IsChecked = wantedItem.downloadProperties.ignoreFreeSpace;
-                MaxWorkersNI.Value = wantedItem.downloadProperties.maxWorkers.ToString();
-                MaxSharedMemoryNI.Value = wantedItem.downloadProperties.maxSharedMemory.ToString();
-                TaskCBo.SelectedValue = wantedItem.downloadProperties.downloadAction;
-            }
+            SelectedGamePathTxt.Text = wantedItem.DownloadProperties.InstallPath;
+            ReorderingChk.IsChecked = wantedItem.DownloadProperties.EnableReordering;
+            IgnoreFreeSpaceChk.IsChecked = wantedItem.DownloadProperties.IgnoreFreeSpace;
+            MaxWorkersNI.Value = wantedItem.DownloadProperties.MaxWorkers.ToString();
+            MaxSharedMemoryNI.Value = wantedItem.DownloadProperties.MaxSharedMemory.ToString();
+            TaskCBo.SelectedValue = wantedItem.DownloadProperties.DownloadAction;
             var downloadActionOptions = new Dictionary<DownloadAction, string>
             {
                 { DownloadAction.Install, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteInstallGame) },
                 { DownloadAction.Repair, LocalizationManager.Instance.GetString(LOC.CommonRepair) },
-                { DownloadAction.Update, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdaterInstallUpdate) }
+                {
+                    DownloadAction.Update,
+                    LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdaterInstallUpdate)
+                }
             };
             TaskCBo.ItemsSource = downloadActionOptions;
 
-            Dictionary<string, LegendarySDLInfo> extraContentInfo = await LegendaryLauncher.GetExtraContentInfo(SelectedDownload);
+            var extraContentInfo = await LegendaryLauncher.GetExtraContentInfo(SelectedDownload);
             if (extraContentInfo.Count > 0)
             {
                 var sdls = extraContentInfo.Where(i => i.Value.Is_dlc == false);
@@ -66,14 +67,16 @@ namespace LegendaryLibraryNS
                 {
                     SizeGrd.Visibility = Visibility.Visible;
                 }
+
                 if (sdls.Count() > 1)
                 {
                     AllOrNothingChk.Visibility = Visibility.Visible;
                 }
+
                 ExtraContentLB.ItemsSource = sdls;
-                if (wantedItem.downloadProperties.extraContent.Count > 0)
+                if (wantedItem.DownloadProperties.ExtraContent.Count > 0)
                 {
-                    foreach (var sdl in wantedItem.downloadProperties.extraContent)
+                    foreach (var sdl in wantedItem.DownloadProperties.ExtraContent)
                     {
                         var selectedItem = extraContentInfo.FirstOrDefault(i => i.Key == sdl);
                         if (selectedItem.Key != null)
@@ -82,71 +85,82 @@ namespace LegendaryLibraryNS
                         }
                     }
                 }
+
                 ExtraContentTbI.Visibility = Visibility.Visible;
             }
 
-            UnifiedDownloadManagerApi unifiedDownloadManagerApi = new UnifiedDownloadManagerApi();
-            var wantedUnifiedTask = unifiedDownloadManagerApi.GetTask(wantedItem.gameID, LegendaryLibrary.Instance.Id.ToString());
-            if (wantedUnifiedTask.status == UnifiedDownloadStatus.Canceled)
+            UnifiedDownloadManagerApi unifiedDownloadManagerApi = new UnifiedDownloadManagerApi(playniteApi);
+            var wantedUnifiedTask =
+                unifiedDownloadManagerApi.GetTask(wantedItem.GameId, LegendaryLibrary.PluginId);
+            if (wantedUnifiedTask?.Status == UnifiedDownloadStatus.Canceled)
             {
                 AllOrNothingChk.IsEnabled = true;
                 ExtraContentLB.IsEnabled = true;
             }
 
-            if (!wantedItem.downloadProperties.prerequisitesName.IsNullOrEmpty())
+            if (!wantedItem.DownloadProperties.PrerequisitesName.IsNullOrEmpty())
             {
-                PrerequisitesChk.IsChecked = wantedItem.downloadProperties.installPrerequisites;
+                PrerequisitesChk.IsChecked = wantedItem.DownloadProperties.InstallPrerequisites;
                 PrerequisitesChk.Visibility = Visibility.Visible;
-                PrerequisitesChk.Content = PrerequisitesChk.Content.ToString().Replace("$prerequisiteName", wantedItem.downloadProperties.prerequisitesName);
+                PrerequisitesChk.Content = PrerequisitesChk.Content.ToString()
+                                                          ?.Replace("$prerequisiteName",
+                                                                wantedItem.DownloadProperties.PrerequisitesName);
             }
 
             var gameSize = await LegendaryLauncher.CalculateGameSize(GameData, selectedSdls);
             DownloadSizeTB.Text = CommonHelpers.FormatSize(gameSize.Download_size);
             InstallSizeTB.Text = CommonHelpers.FormatSize(gameSize.Disk_size);
-            UpdateSpaceInfo(SelectedDownload.downloadProperties.installPath, gameSize.Disk_size);
+            UpdateSpaceInfo(SelectedDownload.DownloadProperties.InstallPath, gameSize.Disk_size);
         }
 
-        private void ChooseGamePathBtn_Click(object sender, RoutedEventArgs e)
+        private async void ChooseGamePathBtn_Click(object sender, RoutedEventArgs e)
         {
-            var path = playniteAPI.Dialogs.SelectFolder();
-            if (path != "")
+            var folders = await playniteApi.Dialogs.SelectFolderAsync();
+            if (folders is { Count: > 0 } && folders[0] != "")
             {
-                SelectedGamePathTxt.Text = path;
+                SelectedGamePathTxt.Text = folders[0];
             }
         }
 
         private async void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            var wantedItem = LegendaryLibrary.Instance.pluginDownloadData.downloads.FirstOrDefault(item => item.gameID == SelectedDownload.gameID);
+            var wantedItem =
+                LegendaryLibrary.Instance.PluginDownloadData.Downloads.FirstOrDefault(item =>
+                    item.GameId == SelectedDownload.GameId);
             var installPath = SelectedGamePathTxt.Text;
             var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory.ToString();
             if (installPath.Contains(playniteDirectoryVariable))
             {
-                installPath = installPath.Replace(playniteDirectoryVariable, playniteAPI.Paths.ApplicationPath);
+                installPath = installPath.Replace(playniteDirectoryVariable, playniteApi.AppInfo.ApplicationDirectory);
             }
-            if (!CommonHelpers.IsDirectoryWritable(installPath, LOC.CommonPermissionError))
+
+            if (!await commonHelpers.IsDirectoryWritable(installPath, LOC.CommonPermissionError))
             {
                 return;
             }
-            wantedItem.downloadProperties.installPath = installPath;
-            wantedItem.downloadProperties.downloadAction = (DownloadAction)TaskCBo.SelectedValue;
-            wantedItem.downloadProperties.enableReordering = (bool)ReorderingChk.IsChecked;
-            wantedItem.downloadProperties.maxWorkers = int.Parse(MaxWorkersNI.Value);
-            wantedItem.downloadProperties.maxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
+
+            wantedItem.DownloadProperties.InstallPath = installPath;
+            wantedItem.DownloadProperties.DownloadAction = (DownloadAction)TaskCBo.SelectedValue;
+            wantedItem.DownloadProperties.EnableReordering = (bool)ReorderingChk.IsChecked;
+            wantedItem.DownloadProperties.MaxWorkers = int.Parse(MaxWorkersNI.Value);
+            wantedItem.DownloadProperties.MaxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
             if (PrerequisitesChk.IsEnabled)
             {
-                wantedItem.downloadProperties.installPrerequisites = (bool)PrerequisitesChk.IsChecked;
+                wantedItem.DownloadProperties.InstallPrerequisites = (bool)PrerequisitesChk.IsChecked;
             }
-            wantedItem.downloadProperties.ignoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked;
-            wantedItem.downloadProperties.extraContent = selectedSdls;
-            UnifiedDownloadManagerApi unifiedDownloadManagerApi = new UnifiedDownloadManagerApi();
-            var wantedUnifiedTask = unifiedDownloadManagerApi.GetTask(wantedItem.gameID, LegendaryLibrary.Instance.Id.ToString());
-            if (wantedUnifiedTask.status == UnifiedDownloadStatus.Canceled)
+
+            wantedItem.DownloadProperties.IgnoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked;
+            wantedItem.DownloadProperties.ExtraContent = selectedSdls;
+            UnifiedDownloadManagerApi unifiedDownloadManagerApi = new UnifiedDownloadManagerApi(playniteApi);
+            var wantedUnifiedTask =
+                unifiedDownloadManagerApi.GetTask(wantedItem.GameId, LegendaryLibrary.PluginId);
+            if (wantedUnifiedTask.Status == UnifiedDownloadStatus.Canceled)
             {
                 var gameSize = await LegendaryLauncher.CalculateGameSize(GameData, selectedSdls);
-                wantedUnifiedTask.downloadSizeBytes = gameSize.Download_size;
-                wantedUnifiedTask.installSizeBytes = gameSize.Download_size;
+                wantedUnifiedTask.DownloadSizeBytes = gameSize.Download_size;
+                wantedUnifiedTask.InstallSizeBytes = gameSize.Download_size;
             }
+
             LegendaryLibrary.Instance.SaveDownloadData();
             Window.GetWindow(this).Close();
         }
@@ -185,6 +199,7 @@ namespace LegendaryLibraryNS
             {
                 afterInstallSizeNumber = 0;
             }
+
             AfterInstallingTB.Text = CommonHelpers.FormatSize(afterInstallSizeNumber);
         }
 
@@ -199,21 +214,25 @@ namespace LegendaryLibraryNS
                     selectedSdls.AddMissing(requiredTag);
                 }
             }
-            var selectedExtraContent = ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().ToList();
+
+            var selectedExtraContent =
+                ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySdlInfo>>().ToList();
             foreach (var selectedSdl in selectedExtraContent)
             {
                 selectedSdls.Add(selectedSdl.Key);
             }
+
             var gameSize = await LegendaryLauncher.CalculateGameSize(GameData, selectedSdls);
             DownloadSizeTB.Text = CommonHelpers.FormatSize(gameSize.Download_size);
             InstallSizeTB.Text = CommonHelpers.FormatSize(gameSize.Disk_size);
-            UpdateSpaceInfo(SelectedDownload.downloadProperties.installPath, gameSize.Disk_size);
+            UpdateSpaceInfo(SelectedDownload.DownloadProperties.InstallPath, gameSize.Disk_size);
             if (AllOrNothingChk.IsChecked == true && selectedExtraContent.Count() != ExtraContentLB.Items.Count)
             {
                 uncheckedByUser = false;
                 AllOrNothingChk.IsChecked = false;
                 uncheckedByUser = true;
             }
+
             if (AllOrNothingChk.IsChecked == false && selectedExtraContent.Count() == ExtraContentLB.Items.Count)
             {
                 checkedByUser = false;

@@ -1,7 +1,7 @@
 ﻿using Playnite.Common;
-using Playnite.SDK.Data;
 using System;
 using System.IO;
+using CommonPlugin;
 
 namespace LegendaryLibraryNS
 {
@@ -15,7 +15,7 @@ namespace LegendaryLibraryNS
         public static LegendaryMessagesSettingsModel LoadSettings()
         {
             LegendaryMessagesSettingsModel messagesSettings = null;
-            var dataDir = LegendaryLibrary.Instance.GetPluginUserDataPath();
+            var dataDir = LegendaryLibrary.PlayniteApi.UserDataDir;
             var dataFile = Path.Combine(dataDir, "messages.json");
             bool correctJson = false;
             if (File.Exists(dataFile))
@@ -35,7 +35,7 @@ namespace LegendaryLibraryNS
 
         public static void SaveSettings(LegendaryMessagesSettingsModel messagesSettings)
         {
-            var commonHelpers = LegendaryLibrary.Instance.commonHelpers;
+            var commonHelpers = LegendaryLibrary.Instance.CommonHelpers;
             commonHelpers.SaveJsonSettingsToFile(messagesSettings, "", "messages", true);
         }
     }

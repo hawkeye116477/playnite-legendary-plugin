@@ -1,7 +1,6 @@
 ﻿using Linguini.Bundle;
 using Linguini.Bundle.Builder;
 using Linguini.Shared.Types.Bundle;
-using Playnite.SDK;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,23 +9,24 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Playnite;
 
 namespace CommonPlugin
 {
     public class LocalizationManager
     {
-        private ILogger logger = LogManager.GetLogger();
-        private static readonly LocalizationManager _instance = new LocalizationManager();
-        public static LocalizationManager Instance => _instance;
-        private FluentBundle _bundle;
+        private readonly ILogger _logger = LogManager.GetLogger();
+        public static LocalizationManager Instance { get; } = new LocalizationManager();
+
+        private FluentBundle _bundle = null!;
         private Dictionary<string, IFluentType> _commonArgs = new Dictionary<string, IFluentType>();
-        private string fallbackLanguage = "en-US";
+        private const string FallbackLanguage = "en-US";
 
         private LocalizationManager()
         {
             if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
             {
-                SetLanguage(fallbackLanguage);
+                SetLanguage(FallbackLanguage);
             }
         }
 
@@ -34,10 +34,10 @@ namespace CommonPlugin
         {
             var resources = new List<string>
             {
-                ReadFtl(fallbackLanguage)
+                ReadFtl(FallbackLanguage)
             };
             var builder = LinguiniBuilder.Builder().CultureInfo(new CultureInfo(language)).AddResources(resources).UncheckedBuild();
-            if (language != fallbackLanguage)
+            if (language != FallbackLanguage)
             {
                 builder.AddResourceOverriding(ReadFtl(language));
             }
@@ -48,7 +48,7 @@ namespace CommonPlugin
         {
             var combinedContent = new StringBuilder();
             List<string> localizationSources;
-            string baseDir;
+            string? baseDir;
 
             if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
             {
@@ -60,18 +60,23 @@ namespace CommonPlugin
                 }
                 else
                 {
-                    localizationSources = new List<string> { "Localization" };
+                    localizationSources = ["Localization"];
                 }
                 
             }
             else
             {
                 baseDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                localizationSources = new List<string> { "Localization" };
+                localizationSources = ["Localization"];
             }
 
             foreach (var relativePath in localizationSources)
             {
+                if (baseDir == null)
+                {
+                    continue;
+                }
+
                 var locDir = Path.Combine(baseDir, relativePath.Trim(), language);
                 if (Directory.Exists(locDir))
                 {
@@ -84,7 +89,7 @@ namespace CommonPlugin
                         }
                         catch (Exception ex)
                         {
-                            logger.Error($"Error reading file {file}: {ex.Message}");
+                            _logger.Error($"Error reading file {file}: {ex.Message}");
                         }
                     }
                 }
@@ -98,7 +103,7 @@ namespace CommonPlugin
             _bundle = MakeBundle(language);
         }
 
-        public void SetCommonArgs(Dictionary<string, IFluentType> args)
+        public void SetCommonArgs(Dictionary<string, IFluentType>? args)
         {
             if (args != null)
             {
@@ -106,7 +111,7 @@ namespace CommonPlugin
             }
         }
 
-        public string GetString(string key, Dictionary<string, IFluentType> args = null)
+        public string GetString(string key, Dictionary<string, IFluentType>? args = null)
         {
             var finalArgs = new Dictionary<string, IFluentType>();
             foreach (var arg in _commonArgs)
@@ -124,12 +129,8 @@ namespace CommonPlugin
             {
                 finalArgs["count"] = (FluentNumber)1;
             }
-            var message = _bundle.GetAttrMessage(key, finalArgs);
-            if (message == null)
-            {
-                return $"[[{key}]]";
-            }
-            return message;
+            _bundle.TryGetAttrMessage(key, finalArgs, out var errors, out var message);
+            return message ?? $"[[{key}]]";
         }
     }
 }

@@ -13,7 +13,7 @@ namespace LegendaryLibraryNS.Models
 
         public class Game
         {
-            public string App_name { get; set; }
+            public string? App_name { get; set; }
             public string Title { get; set; }
             public string Version { get; set; }
             public bool Cloud_saves_supported { get; set; }

@@ -49,7 +49,7 @@ namespace LegendaryLibraryNS.Models
             public string applicationId;
             public Category[] categories;
             public DateTime creationDate;
-            public CustomAttributeType customAttributes;
+            public CustomAttributeType? customAttributes;
             public string description;
             public string developer;
             public string developerId;
@@ -61,7 +61,7 @@ namespace LegendaryLibraryNS.Models
             public string itemType;
             public Keyimage[] keyImages;
             public DateTime lastModifiedDate;
-            public Metadata mainGameItem;
+            public Metadata? mainGameItem;
             public string _namespace;
             public Releaseinfo[] releaseInfo;
             public string status;

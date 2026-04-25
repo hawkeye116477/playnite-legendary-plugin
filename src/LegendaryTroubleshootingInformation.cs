@@ -1,18 +1,12 @@
-﻿using Playnite.SDK;
+﻿using Playnite;
 
 namespace LegendaryLibraryNS
 {
     public class LegendaryTroubleshootingInformation
     {
-        public string PlayniteVersion
-        {
-            get
-            {
-                var playniteAPI = API.Instance;
-                return playniteAPI.ApplicationInfo.ApplicationVersion.ToString();
-            }
-        }
-        public string PluginVersion
+        public static string PlayniteVersion => LegendaryLibrary.PlayniteApi.AppInfo.ApplicationVersion.ToString();
+
+        public static string? PluginVersion
         {
             get
             {

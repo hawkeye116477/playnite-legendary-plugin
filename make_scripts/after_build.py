@@ -13,8 +13,8 @@ compiledPath = pn(sys.argv[1])
 
 version = get_extension_version.run()
 
-with open(pj(compiledPath, "extension.yaml"), 'r', encoding='utf-8') as extManifest:
+with open(pj(compiledPath, "extension.toml"), 'r', encoding='utf-8') as extManifest:
     data = extManifest.read()
     data = data.replace("_version_", version)
-with open(pj(compiledPath, "extension.yaml"), 'w', encoding='utf-8') as extManifest:
+with open(pj(compiledPath, "extension.toml"), 'w', encoding='utf-8') as extManifest:
     extManifest.write(data)

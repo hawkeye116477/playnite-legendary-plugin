@@ -1,4 +1,4 @@
-﻿using Playnite.SDK;
+﻿using Playnite;
 using System;
 using System.Net.Http;
 using System.Threading;

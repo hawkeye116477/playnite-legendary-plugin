@@ -1,0 +1,5 @@
+id = "hawkeye116477.LegendaryLibrary"
+name = "Legendary (Epic Games) library integration"
+author = "hawkeye116477"
+version =  "_version_"
+module = "LegendaryLibrary.dll"

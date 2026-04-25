@@ -3,10 +3,8 @@ using CliWrap.Buffered;
 using CommonPlugin;
 using LegendaryLibraryNS.Models;
 using Linguini.Shared.Types.Bundle;
+using Playnite;
 using Playnite.Common;
-using Playnite.SDK;
-using Playnite.SDK.Data;
-using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
@@ -17,41 +15,45 @@ using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Playnite.WebViews;
 
 namespace LegendaryLibraryNS.Services
 {
-    public class TokenException : Exception
-    {
-        public TokenException(string message) : base(message)
-        {
-        }
-    }
+    public class TokenException(string message) : Exception(message);
 
     public class ApiRedirectResponse
     {
-        public string redirectUrl { get; set; }
-        public string sid { get; set; }
-        public string authorizationCode { get; set; }
+        public string? RedirectUrl { get; set; }
+        public string? Sid { get; set; }
+        public string? AuthorizationCode { get; set; }
     }
 
     public class EpicAccountClient
     {
         private ILogger logger = LogManager.GetLogger();
-        private IPlayniteAPI api;
+        private IPlayniteApi api;
         private string tokensPath;
         private readonly string loginUrl = "https://www.epicgames.com/id/login?responseType=code";
-        public static string authCodeUrl = "https://www.epicgames.com/id/api/redirect?clientId=34a02cf8f4414e29b15921876da36f9a&responseType=code";
+
+        public static string AuthCodeUrl =
+            "https://www.epicgames.com/id/api/redirect?clientId=34a02cf8f4414e29b15921876da36f9a&responseType=code";
+
         private readonly string oauthUrl = @"";
         private readonly string accountUrl = @"";
         private readonly string catalogUrl = @"";
         private readonly string playtimeUrl = @"";
         private readonly string libraryItemsUrl = @"";
-        private const string authEncodedString = "MzRhMDJjZjhmNDQxNGUyOWIxNTkyMTg3NmRhMzZmOWE6ZGFhZmJjY2M3Mzc3NDUwMzlkZmZlNTNkOTRmYzc2Y2Y=";
-        private const string userAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) EpicGamesLauncher/18.9.0-45233261+++Portal+Release-Live";
-        public static readonly RetryHandler retryHandler = new RetryHandler(new HttpClientHandler());
-        public static readonly HttpClient httpClient = new HttpClient(retryHandler);
 
-        public EpicAccountClient(IPlayniteAPI api)
+        private const string AuthEncodedString =
+            "MzRhMDJjZjhmNDQxNGUyOWIxNTkyMTg3NmRhMzZmOWE6ZGFhZmJjY2M3Mzc3NDUwMzlkZmZlNTNkOTRmYzc2Y2Y=";
+
+        private const string UserAgent =
+            @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) EpicGamesLauncher/18.9.0-45233261+++Portal+Release-Live";
+
+        private static readonly RetryHandler RetryHandler = new RetryHandler(new HttpClientHandler());
+        private static readonly HttpClient HttpClient = new HttpClient(RetryHandler);
+
+        public EpicAccountClient(IPlayniteApi api)
         {
             this.api = api;
             tokensPath = LegendaryLauncher.TokensPath;
@@ -79,39 +81,42 @@ namespace LegendaryLibraryNS.Services
             var apiRedirectContent = string.Empty;
             var authorizationCode = "";
 
-            using (var view = api.WebViews.CreateView(new WebViewSettings
+            using var view = api.WebView.CreateView(new WebViewSettings
             {
                 WindowWidth = 580,
                 WindowHeight = 700,
                 // This is needed otherwise captcha won't pass
-                UserAgent = userAgent,
-            }))
+                UserAgent = UserAgent,
+            });
+            view.LoadingChangedCallbackAsync = async (e) =>
             {
-                view.LoadingChanged += async (s, e) =>
+                var address = view.GetCurrentAddress();
+                var pageText = await view.GetPageTextAsync();
+
+                if (!pageText.IsNullOrEmpty() && pageText.Contains(@"localhost") && !e.IsLoading)
                 {
-                    var address = view.GetCurrentAddress();
-                    var pageText = await view.GetPageTextAsync();
-
-                    if (!pageText.IsNullOrEmpty() && pageText.Contains(@"localhost") && !e.IsLoading)
+                    var source = await view.GetPageSourceAsync();
+                    var matches = Regex.Matches(source, @"localhost\/launcher\/authorized\?code=([a-zA-Z0-9]+)",
+                        RegexOptions.IgnoreCase);
+                    if (matches.Count > 0 && matches[0].Groups.Count > 1)
                     {
-                        var source = await view.GetPageSourceAsync();
-                        var matches = Regex.Matches(source, @"localhost\/launcher\/authorized\?code=([a-zA-Z0-9]+)", RegexOptions.IgnoreCase);
-                        if (matches.Count > 0 && matches[0].Groups.Count > 1)
+                        authorizationCode = matches[0].Groups[1].Value;
+                        if (!authorizationCode.IsNullOrWhiteSpace())
                         {
-                            authorizationCode = matches[0].Groups[1].Value;
-                            if (!authorizationCode.IsNullOrWhiteSpace())
-                            {
-                                loggedIn = true;
-                            }
+                            loggedIn = true;
                         }
-                        view.Close();
                     }
-                };
 
-                view.DeleteDomainCookies(".epicgames.com");
+                    view.Close();
+                }
+            };
+
+            view.WebViewInitializedCallbackAsync = async (_) =>
+            {
+                await view.DeleteDomainCookiesAsync(".epicgames.com");
                 view.Navigate(loginUrl);
-                view.OpenDialog();
-            }
+            };
+            await view.OpenDialogAsync();
 
             if (!loggedIn)
             {
@@ -123,6 +128,7 @@ namespace LegendaryLibraryNS.Services
                 logger.Error("Failed to get login exchange key for Epic account.");
                 return;
             }
+
             await AuthenticateUsingAuthCode(authorizationCode);
         }
 
@@ -140,7 +146,9 @@ namespace LegendaryLibraryNS.Services
                     useEncryptedTokens = false;
                 }
             }
-            using var content = new StringContent($"grant_type=authorization_code&code={authorizationCode}&token_type=eg1");
+
+            using var content =
+                new StringContent($"grant_type=authorization_code&code={authorizationCode}&token_type=eg1");
             content.Headers.Clear();
             content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
 
@@ -148,12 +156,12 @@ namespace LegendaryLibraryNS.Services
             {
                 Content = content
             };
-            request.Headers.Add("User-Agent", userAgent);
-            request.Headers.Add("Authorization", "basic " + authEncodedString);
+            request.Headers.Add("User-Agent", UserAgent);
+            request.Headers.Add("Authorization", "basic " + AuthEncodedString);
 
             try
             {
-                using var response = await httpClient.SendAsync(request);
+                using var response = await HttpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
                 var respContent = await response.Content.ReadAsStringAsync();
                 if (!useEncryptedTokens)
@@ -165,7 +173,7 @@ namespace LegendaryLibraryNS.Services
                 {
                     FileSystem.CreateDirectory(Path.GetDirectoryName(LegendaryLauncher.EncryptedTokensPath));
                     Encryption.EncryptToFile(LegendaryLauncher.EncryptedTokensPath, respContent, Encoding.UTF8,
-                                         WindowsIdentity.GetCurrent().User.Value);
+                        WindowsIdentity.GetCurrent().User.Value);
                 }
             }
             catch (Exception ex)
@@ -185,6 +193,7 @@ namespace LegendaryLibraryNS.Services
                     username = tokens.displayName;
                 }
             }
+
             return username;
         }
 
@@ -215,6 +224,7 @@ namespace LegendaryLibraryNS.Services
                             {
                                 return false;
                             }
+
                             var account = await InvokeRequest<AccountResponse>(accountUrl + tokens.account_id, tokens);
                             return account.Item2.id == tokens.account_id;
                         }
@@ -225,6 +235,7 @@ namespace LegendaryLibraryNS.Services
                         }
                     }
                 }
+
                 logger.Error(ex, "Failed to validation Epic authentication.");
                 return false;
             }
@@ -250,9 +261,11 @@ namespace LegendaryLibraryNS.Services
                 assets.AddRange(response.Item2.records);
                 nextCursor = response.Item2.responseMetadata.nextCursor;
             }
+
             var filteredAssets = assets.Where(asset => !asset.appName.IsNullOrEmpty()
                                                        && asset.sandboxType != "PRIVATE"
-                                                       && asset.@namespace != "ue").ToList();
+                                                       && asset.@namespace != "ue")
+                                       .ToList();
             return filteredAssets;
         }
 
@@ -269,14 +282,15 @@ namespace LegendaryLibraryNS.Services
             return response.Item2;
         }
 
-        public CatalogItem GetCatalogItem(string nameSpace, string id, string cachePath)
+        public async Task<CatalogItem?> GetCatalogItem(string nameSpace, string id, string cachePath)
         {
-            Dictionary<string, CatalogItem> result = null;
+            Dictionary<string, CatalogItem>? result = null;
             if (!cachePath.IsNullOrEmpty() && FileSystem.FileExists(cachePath))
             {
                 try
                 {
-                    result = Serialization.FromJson<Dictionary<string, CatalogItem>>(FileSystem.ReadStringFromFile(cachePath));
+                    result = Serialization.FromJson<Dictionary<string, CatalogItem>>(
+                        FileSystem.ReadStringFromFile(cachePath));
                 }
                 catch (Exception e)
                 {
@@ -286,8 +300,9 @@ namespace LegendaryLibraryNS.Services
 
             if (result == null)
             {
-                var url = string.Format("{0}/bulk/items?id={1}&country=US&locale=en-US&includeMainGameDetails=true", nameSpace, id);
-                var catalogResponse = InvokeRequest<Dictionary<string, CatalogItem>>(catalogUrl + url, LoadTokens()).GetAwaiter().GetResult();
+                var url = string.Format("{0}/bulk/items?id={1}&country=US&locale=en-US&includeMainGameDetails=true",
+                    nameSpace, id);
+                var catalogResponse = await InvokeRequest<Dictionary<string, CatalogItem>>(catalogUrl + url, LoadTokens());
                 result = catalogResponse.Item2;
                 FileSystem.WriteStringToFile(cachePath, catalogResponse.Item1);
             }
@@ -296,25 +311,24 @@ namespace LegendaryLibraryNS.Services
             {
                 return catalogItem;
             }
-            else
-            {
-                throw new Exception($"Epic catalog item for {id} {nameSpace} not found.");
-            }
+
+            throw new Exception($"Epic catalog item for {id} {nameSpace} not found.");
         }
 
         private async Task<bool> RenewTokens(string refreshToken)
         {
-            using var content = new StringContent($"grant_type=refresh_token&refresh_token={refreshToken}&token_type=eg1");
+            using var content =
+                new StringContent($"grant_type=refresh_token&refresh_token={refreshToken}&token_type=eg1");
             content.Headers.Clear();
             content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
             var request = new HttpRequestMessage(HttpMethod.Post, oauthUrl)
             {
                 Content = content
             };
-            request.Headers.Add("User-Agent", userAgent);
-            request.Headers.Add("Authorization", "basic " + authEncodedString);
+            request.Headers.Add("User-Agent", UserAgent);
+            request.Headers.Add("Authorization", "basic " + AuthEncodedString);
 
-            using var response = await httpClient.SendAsync(request);
+            using var response = await HttpClient.SendAsync(request);
             try
             {
                 response.EnsureSuccessStatusCode();
@@ -324,15 +338,17 @@ namespace LegendaryLibraryNS.Services
                 {
                     useEncryptedTokens = true;
                 }
+
                 if (!useEncryptedTokens)
                 {
-                    File.WriteAllText(tokensPath, respContent);
+                    await File.WriteAllTextAsync(tokensPath, respContent);
                 }
                 else
                 {
                     Encryption.EncryptToFile(LegendaryLauncher.EncryptedTokensPath, respContent, Encoding.UTF8,
-                                         WindowsIdentity.GetCurrent().User.Value);
+                        WindowsIdentity.GetCurrent().User!.Value);
                 }
+
                 return true;
             }
             catch (Exception ex)
@@ -345,10 +361,10 @@ namespace LegendaryLibraryNS.Services
         private async Task<Tuple<string, T>> InvokeRequest<T>(string url, OauthResponse tokens) where T : class
         {
             var request = new HttpRequestMessage(HttpMethod.Get, url);
-            request.Headers.Add("User-Agent", userAgent);
+            request.Headers.Add("User-Agent", UserAgent);
             request.Headers.Add("Authorization", tokens.token_type + " " + tokens.access_token);
 
-            using var response = await httpClient.SendAsync(request);
+            using var response = await HttpClient.SendAsync(request);
             var str = await response.Content.ReadAsStringAsync();
             if (Serialization.TryFromJson<ErrorResponse>(str, out var error) && !string.IsNullOrEmpty(error.errorCode))
             {
@@ -358,7 +374,7 @@ namespace LegendaryLibraryNS.Services
             {
                 try
                 {
-                    return new Tuple<string, T>(str, Serialization.FromJson<T>(str));
+                    return new Tuple<string, T>(str, Serialization.FromJson<T>(str)!);
                 }
                 catch
                 {
@@ -369,7 +385,7 @@ namespace LegendaryLibraryNS.Services
             }
         }
 
-        public OauthResponse LoadTokens()
+        public OauthResponse? LoadTokens()
         {
             if (File.Exists(tokensPath))
             {
@@ -387,33 +403,36 @@ namespace LegendaryLibraryNS.Services
                 try
                 {
                     return Serialization.FromJson<OauthResponse>(
-                     Encryption.DecryptFromFile(LegendaryLauncher.EncryptedTokensPath, Encoding.UTF8,
-                                                WindowsIdentity.GetCurrent().User.Value));
+                        Encryption.DecryptFromFile(LegendaryLauncher.EncryptedTokensPath, Encoding.UTF8,
+                            WindowsIdentity.GetCurrent().User.Value));
                 }
                 catch (Exception e)
                 {
                     logger.Error(e, "Failed to load saved tokens.");
                 }
             }
+
             return null;
         }
 
-        public void UploadPlaytime(DateTime startTime, DateTime endTime, Game game, int attempts = 3)
+        public async Task UploadPlaytime(DateTime startTime, DateTime endTime, Game game, int attempts = 3)
         {
-            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonUploadingPlaytime, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }), false);
-            api.Dialogs.ActivateGlobalProgress(async (a) =>
+            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                LocalizationManager.Instance.GetString(LOC.CommonUploadingPlaytime,
+                    new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }), false);
+            await api.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async (a) =>
             {
-                a.IsIndeterminate = true;
                 var userLoggedIn = await GetIsUserLoggedIn();
                 if (userLoggedIn)
                 {
                     var userData = LoadTokens();
                     if (userData != null)
                     {
-                        var uri = $"https://library-service.live.use1a.on.epicgames.com/library/api/public/playtime/account/{userData.account_id}";
+                        var uri =
+                            $"https://library-service.live.use1a.on.epicgames.com/library/api/public/playtime/account/{userData.account_id}";
                         PlaytimePayload playtimePayload = new PlaytimePayload
                         {
-                            artifactId = game.GameId,
+                            artifactId = game.LibraryGameId,
                             machineId = LegendaryLibrary.GetSettings().SyncPlaytimeMachineId
                         };
                         DateTime now = DateTime.UtcNow;
@@ -425,16 +444,18 @@ namespace LegendaryLibraryNS.Services
                         {
                             Content = content
                         };
-                        request.Headers.Add("User-Agent", userAgent);
+                        request.Headers.Add("User-Agent", UserAgent);
                         request.Headers.Add("Authorization", userData.token_type + " " + userData.access_token);
                         try
                         {
-                            using var response = await httpClient.SendAsync(request);
+                            using var response = await HttpClient.SendAsync(request);
                             response.EnsureSuccessStatusCode();
                         }
                         catch (Exception ex)
                         {
-                            api.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.CommonUploadPlaytimeError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }));
+                            await api.Dialogs.ShowErrorMessageAsync(LocalizationManager.Instance.GetString(
+                                LOC.CommonUploadPlaytimeError,
+                                new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }));
                             logger.Error(ex, $"An error occured during uploading playtime to the cloud.");
                         }
                     }
@@ -442,9 +463,10 @@ namespace LegendaryLibraryNS.Services
                 else
                 {
                     logger.Error($"Can't upload playtime, because user is not authenticated.");
-                    api.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedInError));
+                    await api.Dialogs.ShowErrorMessageAsync(
+                        LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedInError));
                 }
-            }, globalProgressOptions);
+            });
         }
     }
 }

@@ -67,6 +67,6 @@ namespace LegendaryLibraryNS.Models
         public string developer;
         public string developerId;
         public bool endOfSupport;
-        public MainGameItem mainGameItem;
+        public MainGameItem? mainGameItem;
     }
 }

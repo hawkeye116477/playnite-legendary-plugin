@@ -1,55 +1,83 @@
-﻿using CommonPlugin.Enums;
+﻿using CommonPlugin;
+using CommonPlugin.Enums;
+using CommunityToolkit.Mvvm.ComponentModel;
 using LegendaryLibraryNS.Enums;
-using Playnite.SDK;
+using Playnite;
+using Playnite.Common;
+using System.IO;
+using System.Threading.Tasks;
+using System.Windows;
+using UnifiedDownloadManagerApiNS.Interfaces;
 
 namespace LegendaryLibraryNS
 {
-    public class LegendaryLibrarySettings
+    public partial class LegendaryLibrarySettings : ObservableObject
     {
-        public bool ImportInstalledGames { get; set; } = LegendaryLauncher.IsInstalled;
-        public bool ConnectAccount { get; set; } = false;
-        public bool ImportUninstalledGames { get; set; } = false;
-        public bool ImportUbisoftLauncherGames { get; set; } = false;
-        public bool ImportEALauncherGames { get; set; } = false;
-
-        // TODO: Remove in the future
-        public string SelectedLauncherPath { get; set; } = "";
-        //
-
-        public string SelectedFullLauncherPath { get; set; } = "";
-        public string GamesInstallationPath { get; set; } = "";
-        public bool LaunchOffline { get; set; } = false;
-        public string PreferredCDN { get; set; } = "";
-        public bool NoHttps { get; set; } = false;
-        public bool SyncGameSaves { get; set; } = false;
-        public int MaxWorkers { get; set; } = 0;
-        public int MaxSharedMemory { get; set; } = 0;
-        public int ConnectionTimeout { get; set; } = 0;
-        public bool EnableReordering { get; set; } = false;
-        public ClearCacheTime AutoClearCache { get; set; } = ClearCacheTime.Never;
-        public long NextClearingTime { get; set; } = 0;
-        public bool UnattendedInstall { get; set; } = false;
-        public bool DownloadAllDlcs { get; set; } = false;
-        public bool SyncPlaytime { get; set; } = LegendaryLauncher.DefaultPlaytimeSyncEnabled;
-        public string SyncPlaytimeMachineId { get; set; } = System.Guid.NewGuid().ToString("N");
-        public UpdatePolicy GamesUpdatePolicy { get; set; } = UpdatePolicy.Month;
-        public long NextGamesUpdateTime { get; set; } = 0;
-        public bool AutoUpdateGames { get; set; } = false;
-        public UpdatePolicy LauncherUpdatePolicy { get; set; } = UpdatePolicy.Never;
-        public long NextLauncherUpdateTime { get; set; } = 0;
-        public string LauncherUpdateSource { get; set; } = LegendaryLauncher.DefaultUpdateSource;
+        [ObservableProperty] private bool _importInstalledGames = LegendaryLauncher.IsInstalled;
+        [ObservableProperty] private bool _connectAccount = false;
+        [ObservableProperty] private bool _importUninstalledGames = false;
+        [ObservableProperty] private bool _importUbisoftLauncherGames = false;
+        [ObservableProperty] private bool _importEALauncherGames = false;
+        [ObservableProperty] private string _selectedFullLauncherPath = "";
+        [ObservableProperty] private string _gamesInstallationPath = "";
+        [ObservableProperty] private bool _launchOffline = false;
+        [ObservableProperty] private string _preferredCDN = "";
+        [ObservableProperty] private bool _noHttps = false;
+        [ObservableProperty] private bool _syncGameSaves = false;
+        [ObservableProperty] private int _maxWorkers = 0;
+        [ObservableProperty] private int _maxSharedMemory = 0;
+        [ObservableProperty] private int _connectionTimeout = 0;
+        [ObservableProperty] private bool _enableReordering = false;
+        [ObservableProperty] private ClearCacheTime _autoClearCache = ClearCacheTime.Never;
+        [ObservableProperty] private long _nextClearingTime = 0;
+        [ObservableProperty] private bool _unattendedInstall = false;
+        [ObservableProperty] private bool _downloadAllDlcs = false;
+        [ObservableProperty] private bool _syncPlaytime = LegendaryLauncher.DefaultPlaytimeSyncEnabled;
+        [ObservableProperty] private string _syncPlaytimeMachineId = System.Guid.NewGuid().ToString("N");
+        [ObservableProperty] private UpdatePolicy _gamesUpdatePolicy = UpdatePolicy.Month;
+        [ObservableProperty] private long _nextGamesUpdateTime = 0;
+        [ObservableProperty] private bool _autoUpdateGames = false;
+        [ObservableProperty] private UpdatePolicy _launcherUpdatePolicy = UpdatePolicy.Never;
+        [ObservableProperty] private long _nextLauncherUpdateTime = 0;
+        [ObservableProperty] private string _launcherUpdateSource = LegendaryLauncher.DefaultUpdateSource;
     }
 
-    public class LegendaryLibrarySettingsViewModel : PluginSettingsViewModel<LegendaryLibrarySettings, LegendaryLibrary>
+    [INotifyPropertyChanged]
+    public partial class LegendaryLibrarySettingsViewModel(LegendaryLibrary plugin) : PluginSettingsHandler
     {
-        public LegendaryLibrarySettingsViewModel(LegendaryLibrary library, IPlayniteAPI api) : base(library, api)
+        private static readonly ILogger Logger = LogManager.GetLogger();
+
+        [ObservableProperty] private LegendaryLibrarySettings _settings = new();
+
+        public override FrameworkElement GetEditView(GetSettingsViewArgs args)
         {
-            Settings = LoadSavedSettings() ?? new LegendaryLibrarySettings();
+            return new LegendaryLibrarySettingsView { DataContext = this };
         }
 
-        public override void EndEdit()
+        public static LegendaryLibrarySettings LoadPluginSettings(string dataDir)
         {
-            if (EditingClone.AutoClearCache != Settings.AutoClearCache)
+            LegendaryLibrarySettings? settings = null;
+            var settingsFile = Path.Combine(dataDir, "settings.json");
+            if (File.Exists(settingsFile))
+            {
+                var content = FileSystem.ReadFileAsStringSafe(settingsFile);
+                if (!Serialization.TryFromJson(content, out settings))
+                {
+                    Logger.Error("Failed to load plugin settings.");
+                }
+            }
+            return settings ?? new LegendaryLibrarySettings();
+        }
+
+        public override async Task BeginEditAsync(BeginEditArgs args)
+        {
+            Settings = plugin.Settings.GetClone();
+            await Task.CompletedTask;
+        }
+
+        public override async Task EndEditAsync(EndEditArgs args)
+        {
+            if (plugin.Settings.AutoClearCache != Settings.AutoClearCache)
             {
                 if (Settings.AutoClearCache != ClearCacheTime.Never)
                 {
@@ -60,7 +88,7 @@ namespace LegendaryLibraryNS
                     Settings.NextClearingTime = 0;
                 }
             }
-            if (EditingClone.GamesUpdatePolicy != Settings.GamesUpdatePolicy)
+            if (plugin.Settings.GamesUpdatePolicy != Settings.GamesUpdatePolicy)
             {
                 if (Settings.GamesUpdatePolicy != UpdatePolicy.Never)
                 {
@@ -71,7 +99,7 @@ namespace LegendaryLibraryNS
                     Settings.NextGamesUpdateTime = 0;
                 }
             }
-            if (EditingClone.LauncherUpdatePolicy != Settings.LauncherUpdatePolicy)
+            if (plugin.Settings.LauncherUpdatePolicy != Settings.LauncherUpdatePolicy)
             {
                 if (Settings.LauncherUpdatePolicy != UpdatePolicy.Never)
                 {
@@ -82,7 +110,9 @@ namespace LegendaryLibraryNS
                     Settings.NextLauncherUpdateTime = 0;
                 }
             }
-            base.EndEdit();
+            plugin.Settings = Settings;
+            plugin.SavePluginSettings(Settings);
+            await Task.CompletedTask;
         }
     }
 }

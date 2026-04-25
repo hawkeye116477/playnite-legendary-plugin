@@ -2,24 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Management;
-using System.Threading;
 using System.IO;
-using Playnite.SDK;
 
 namespace Playnite.Common
 {
-    public class MonitorProcess
+    public class MonitorProcess(Process process)
     {
-        private readonly Process process;
-
-        public MonitorProcess(Process process)
-        {
-            this.process = process;
-        }
-
         public bool IsProcessRunning()
         {
             return !process.HasExited;
@@ -28,7 +16,7 @@ namespace Playnite.Common
 
     public class MonitorProcessTree
     {
-        private List<int> relatedIds = new List<int>();
+        private List<int> relatedIds = [];
 
         public MonitorProcessTree(int originalId)
         {
@@ -67,8 +55,8 @@ namespace Playnite.Common
     public class MonitorProcessNames
     {
         private readonly ILogger logger = LogManager.GetLogger();
-        private readonly List<string> procNames = new List<string>();
-        private readonly List<string> procNamesNoExt = new List<string>();
+        private readonly List<string> procNames = [];
+        private readonly List<string> procNamesNoExt = [];
 
         public MonitorProcessNames(string directory)
         {

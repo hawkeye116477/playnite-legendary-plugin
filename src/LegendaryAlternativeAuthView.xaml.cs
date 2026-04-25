@@ -1,7 +1,7 @@
 ﻿using CommonPlugin;
 using LegendaryLibraryNS.Services;
 using Playnite.Common;
-using Playnite.SDK;
+using Playnite;
 using System;
 using System.Diagnostics;
 using System.Windows;
@@ -14,7 +14,7 @@ namespace LegendaryLibraryNS
     /// </summary>
     public partial class LegendaryAlternativeAuthView : UserControl
     {
-        private IPlayniteAPI playniteAPI = API.Instance;
+        private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
         private ILogger logger = LogManager.GetLogger();
         public Window alternativeAuthWindow => Window.GetWindow(this);
 
@@ -25,8 +25,8 @@ namespace LegendaryLibraryNS
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            CommonHelpers.SetControlBackground(this);
-            AuthLinkTxt.Text = EpicAccountClient.authCodeUrl;
+            LegendaryLibrary.Instance.CommonHelpers.SetControlBackground(this);
+            AuthLinkTxt.Text = EpicAccountClient.AuthCodeUrl;
         }
 
         private void CopyBtn_Click(object sender, RoutedEventArgs e)
@@ -38,12 +38,12 @@ namespace LegendaryLibraryNS
 
         private void OpenBtn_Click(object sender, RoutedEventArgs e)
         {
-            ProcessStarter.StartUrl(EpicAccountClient.authCodeUrl);
+            ProcessStarter.StartUrl(EpicAccountClient.AuthCodeUrl);
         }
 
         private async void AuthBtn_Click(object sender, RoutedEventArgs e)
         {
-            var clientApi = new EpicAccountClient(playniteAPI);
+            var clientApi = new EpicAccountClient(playniteApi);
             if (AuthCodeTxt.Text != "")
             {
                 try
@@ -53,7 +53,7 @@ namespace LegendaryLibraryNS
                 }
                 catch (Exception ex) when (!Debugger.IsAttached)
                 {
-                    playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedInError), "");
+                    await playniteApi.Dialogs.ShowErrorMessageAsync(LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedInError), "");
                     logger.Error(ex, "Failed to authenticate user.");
                     alternativeAuthWindow.DialogResult = false;
                 }

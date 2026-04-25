@@ -26,8 +26,8 @@
         <TextBlock Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteLoadingLabel}}" Margin="0,5,0,0"  Visibility="Collapsed" Name="LoadingEaTB" />
         <StackPanel x:Name="EaGamesSP">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
-                <Button x:Name="ActivateBtn" Content="{common:Localize Key={x:Static system:LOC.LegendaryActivateGames}}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xecaa; {0}" Margin="0,0,5,0" IsEnabled="False" Click="ActivateBtn_Click" />
-                <Button x:Name="SelectAllBtn" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" FontFamily="{DynamicResource FontIcoFont}" ContentStringFormat="&#xeed9; {0}" Margin="0,0,5,0" Click="SelectAllBtn_Click"  />
+                <Button x:Name="ActivateBtn" Content="{common:Localize Key={x:Static system:LOC.LegendaryActivateGames}}" FontFamily="{DynamicResource IcoFont}" ContentStringFormat="&#xecaa; {0}" Margin="0,0,5,0" IsEnabled="False" Click="ActivateBtn_Click" />
+                <Button x:Name="SelectAllBtn" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" FontFamily="{DynamicResource IcoFont}" ContentStringFormat="&#xeed9; {0}" Margin="0,0,5,0" Click="SelectAllBtn_Click"  />
             </StackPanel>
             <Separator Margin="0,5,0,0" />
             <ListBox BorderThickness="0" Name="EaGamesLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="EaGamesLB_SelectionChanged">

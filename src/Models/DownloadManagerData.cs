@@ -1,86 +1,65 @@
 ﻿using CommonPlugin.Enums;
-using Playnite.SDK.Data;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace LegendaryLibraryNS.Models
 {
-    public class DownloadManagerData
+    public partial class DownloadManagerData  : ObservableObject
     {
-        public ObservableCollection<Download> downloads { get; set; }
+        public ObservableCollection<Download>? Downloads { get; set; }
 
-        public class Download : ObservableObject
+        public partial class Download : ObservableObject
         {
-            public string gameID { get; set; }
-            public string name { get; set; }
-            public string fullInstallPath { get; set; }
+            public string GameId { get; set; } = "";
+            public string Name { get; set; } = "";
+            public string FullInstallPath { get; set; } = "";
 
-            private double _downloadSizeNumber;
-            [DontSerialize]
-            public double downloadSizeNumber
-            {
-                get => _downloadSizeNumber;
-                set => SetValue(ref _downloadSizeNumber, value);
-            }
+            [ObservableProperty]
+            [field: JsonIgnore]
+            public partial double DownloadSizeNumber { get; set; }
 
-            private double _installSizeNumber;
-            [DontSerialize]
-            public double installSizeNumber
-            {
-                get => _installSizeNumber;
-                set => SetValue(ref _installSizeNumber, value);
-            }
+            [ObservableProperty]
+            [field: JsonIgnore]
+            public partial double InstallSizeNumber { get; set; }
 
-            [DontSerialize]
-            public long addedTime { get; set; }
+            [ObservableProperty]
+            [field: JsonIgnore]
+            public partial long AddedTime { get; set; }
 
-            private long _completedTime;
-            [DontSerialize]
-            public long completedTime
-            {
-                get => _completedTime;
-                set => SetValue(ref _completedTime, value);
-            }
+            [ObservableProperty]
+            [field: JsonIgnore]
+            public partial long CompletedTime { get; set; }
 
-            private DownloadStatus _status;
-            [DontSerialize]
-            public DownloadStatus status
-            {
-                get => _status;
-                set => SetValue(ref _status, value);
-            }
+            [ObservableProperty]
+            [field: JsonIgnore]
+            public partial DownloadStatus Status { get; set; }
 
-            private double _progress;
-            [DontSerialize]
-            public double progress
-            {
-                get => _progress;
-                set => SetValue(ref _progress, value);
-            }
+            [ObservableProperty]
+            [field: JsonIgnore]
+            public partial double Progress { get; set; }
 
-            private double _downloadedNumber;
-            [DontSerialize]
-            public double downloadedNumber
-            {
-                get => _downloadedNumber;
-                set => SetValue(ref _downloadedNumber, value);
-            }
-            public DownloadProperties downloadProperties { get; set; } = new DownloadProperties();
-            public bool? extraContentAvailable { get; set; } = null;
+            [ObservableProperty]
+            [field: JsonIgnore]
+            public partial double DownloadedNumber { get; set; }
+
+            public DownloadProperties DownloadProperties { get; set; } = new();
+            public bool? ExtraContentAvailable { get; set; }
         }
     }
 
     public class DownloadProperties : ObservableObject
     {
-        public string installPath { get; set; } = "";
-        public DownloadAction downloadAction { get; set; }
-        public bool installPrerequisites { get; set; } = false;
-        public string prerequisitesName { get; set; }
-        public bool ignoreFreeSpace { get; set; } = false;
-        public bool enableReordering { get; set; }
-        public int maxWorkers { get; set; }
-        public int maxSharedMemory { get; set; }
-        public List<string> extraContent { get; set; } = new List<string>();
-        public Dictionary<string, DownloadManagerData.Download> selectedDlcs { get; set; }
+        public string InstallPath { get; set; } = "";
+        public DownloadAction DownloadAction { get; set; }
+        public bool InstallPrerequisites { get; set; } = false;
+        public string PrerequisitesName { get; set; } = "";
+        public bool IgnoreFreeSpace { get; set; } = false;
+        public bool EnableReordering { get; set; }
+        public int MaxWorkers { get; set; }
+        public int MaxSharedMemory { get; set; }
+        public List<string>? ExtraContent { get; set; }
+        public Dictionary<string, DownloadManagerData.Download>? SelectedDlcs { get; set; }
     }
 }

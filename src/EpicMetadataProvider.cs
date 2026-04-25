@@ -1,67 +1,80 @@
 ﻿using CommonPlugin;
 using LegendaryLibraryNS.Models;
 using Playnite.Common;
-using Playnite.SDK;
-using Playnite.SDK.Data;
-using Playnite.SDK.Models;
+using Playnite;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace LegendaryLibraryNS
 {
-    public class EpicMetadataProvider : LibraryMetadataProvider
+    public class EpicMetadataProvider : MetadataProvider
     {
-        private readonly IPlayniteAPI api;
-
-        public EpicMetadataProvider(IPlayniteAPI api)
+        // ReSharper disable once AsyncMethodWithoutAwait
+        public override async Task<MetadataProviderGameSession?> CreateGameSessionAsync(CreateGameMetadataSessionArgs args)
         {
-            this.api = api;
+            if (args.Game.LibraryId != LegendaryLibrary.PluginId)
+                return null;
+
+            return new EpicMetadataGameSession(args.Game);
         }
+    }
 
-        public override GameMetadata GetMetadata(Game game)
+    public class EpicMetadataGameSession(Game game) : MetadataProviderGameSession(game)
+    {
+        private ImportableFile? GetIconImage()
         {
-            var gameInfo = new GameMetadata() { Links = new List<Link>() };
-            var metadatafile = Path.Combine(LegendaryLauncher.ConfigPath, "metadata", game.GameId + ".json");
+            // There's not icon available on Epic servers so we will load one from EXE
+            if (Game.InstallState == InstallState.Installed)
+            {
+                var installedAppList = LegendaryLauncher.GetInstalledAppList();
+                if (Game.LibraryGameId != null && installedAppList.TryGetValue(Game.LibraryGameId, out var value))
+                {
+                    var exePath = Path.Combine(value.Install_path, value.Executable);
+                    if (File.Exists(exePath))
+                    {
+                        return new ImportableFile(BuiltInGameDataId.DesktopIcon, exePath);
+                    }
+                }
+            }
+            return null;
+        }
+        
+        public override async Task<object?> GetDataAsync(GetDataArgs dataArgs)
+        {
+            var gameFeatures = new List<NameImportableProperty>();
+            var metadatafile = Path.Combine(LegendaryLauncher.ConfigPath, "metadata", Game.LibraryGameId + ".json");
             if (File.Exists(metadatafile))
             {
-                LegendaryMetadata legendaryMetadata = null;
-                if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(metadatafile), out legendaryMetadata))
+                if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(metadatafile), out LegendaryMetadata? legendaryMetadata))
                 {
                     if (legendaryMetadata != null)
                     {
-                        gameInfo.Features = new HashSet<MetadataProperty>() { };
                         if (legendaryMetadata.metadata.customAttributes?.CloudSaveFolder != null)
                         {
-                            gameInfo.Features.Add(new MetadataNameProperty(LocalizationManager.Instance.GetString(LOC.CommonCloudSaves)));
+                            gameFeatures.Add(new NameImportableProperty(LocalizationManager.Instance.GetString(LOC.CommonCloudSaves)));
                         }
                         if (legendaryMetadata.metadata.mainGameItem != null)
                         {
-                            gameInfo.Features.Add(new MetadataNameProperty(LocalizationManager.Instance.GetString(LOC.CommonExtraContent)));
+                            gameFeatures.Add(new NameImportableProperty(LocalizationManager.Instance.GetString(LOC.CommonExtraContent)));
                         }
                         if (legendaryMetadata.metadata.customAttributes?.CanRunOffline?.value == "true")
                         {
-                            gameInfo.Features.Add(new MetadataNameProperty(LocalizationManager.Instance.GetString(LOC.LegendaryOfflineMode)));
+                            gameFeatures.Add(new NameImportableProperty(LocalizationManager.Instance.GetString(LOC.LegendaryOfflineMode)));
                         }
                     }
                 }
             }
 
-            // There's not icon available on Epic servers so we will load one from EXE
-            if (game.IsInstalled && string.IsNullOrEmpty(game.Icon))
+            
+            return dataArgs.DataId switch
             {
-                var installedAppList = LegendaryLauncher.GetInstalledAppList();
-                if (installedAppList.ContainsKey(game.GameId))
-                {
-                    var exePath = Path.Combine(installedAppList[game.GameId].Install_path, installedAppList[game.GameId].Executable);
-                    if (File.Exists(exePath))
-                    {
-                        gameInfo.Icon = new MetadataFile(exePath);
-                    }
-                }
-            }
-
-            return gameInfo;
+                BuiltInGameDataId.Name => Game.Name,
+                BuiltInGameDataId.DesktopIcon => GetIconImage(),
+                BuiltInGameDataId.Features => gameFeatures,
+                _ => null
+            };
         }
     }
 }

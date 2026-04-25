@@ -6,21 +6,21 @@ using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
 using Playnite.Common;
-using Playnite.SDK;
-using Playnite.SDK.Data;
+using Playnite;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace LegendaryLibraryNS
 {
     public class LegendaryCloud
     {
-        internal static string CalculateGameSavesPath(string gameName, string gameID, string gameInstallDir, bool skipRefreshingMetadata = true)
+        internal static async Task<string> CalculateGameSavesPath(string gameName, string gameID, string gameInstallDir, bool skipRefreshingMetadata = true)
         {
             string cloudSaveFolder = "";
-            var playniteAPI = API.Instance;
+            var playniteAPI = LegendaryLibrary.PlayniteApi;
             GlobalProgressOptions metadataProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteProgressMetadata), false);
 
             var manifest = new LegendaryGameInfo.Rootobject();
@@ -29,10 +29,10 @@ namespace LegendaryLibraryNS
                 Title = gameName,
                 App_name = gameID
             };
-            playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
+            await playniteAPI.Dialogs.ShowAsyncBlockingProgressAsync(metadataProgressOptions, async (a) =>
             {
                 manifest = await LegendaryLauncher.GetGameInfo(gameData, skipRefreshingMetadata);
-            }, metadataProgressOptions);
+            });
 
             if (manifest.Game != null)
             {
@@ -67,10 +67,11 @@ namespace LegendaryLibraryNS
         }
 
 
-        internal static void SyncGameSaves(Playnite.SDK.Models.Game game, CloudSyncAction cloudSyncAction, bool force = false, bool manualSync = false, bool skipRefreshingMetadata = true, string cloudSaveFolder = "")
+        internal static async Task SyncGameSaves(Playnite.Game game, CloudSyncAction cloudSyncAction, bool force = false, bool manualSync = false, bool skipRefreshingMetadata = true, string cloudSaveFolder = "")
         {
+            var playniteAPI = LegendaryLibrary.PlayniteApi;
             var cloudSyncEnabled = LegendaryLibrary.GetSettings().SyncGameSaves;
-            var gameSettings = LegendaryGameSettingsView.LoadGameSettings(game.GameId);
+            var gameSettings = LegendaryGameSettingsView.LoadGameSettings(game.LibraryGameId);
             bool errorDisplayed = false;
             bool loginErrorDisplayed = false;
             if (gameSettings?.AutoSyncSaves != null)
@@ -92,9 +93,9 @@ namespace LegendaryLibraryNS
                     else
                     {
                         var installedList = LegendaryLauncher.GetInstalledAppList();
-                        if (installedList.ContainsKey(game.GameId))
+                        if (installedList.ContainsKey(game.LibraryGameId))
                         {
-                            var installedGame = installedList[game.GameId];
+                            var installedGame = installedList[game.LibraryGameId];
                             if (!installedGame.Save_path.IsNullOrEmpty())
                             {
                                 cloudSaveFolder = installedGame.Save_path;
@@ -103,22 +104,22 @@ namespace LegendaryLibraryNS
                     }
                     if (cloudSaveFolder == "" || !Directory.Exists(cloudSaveFolder))
                     {
-                        cloudSaveFolder = CalculateGameSavesPath(game.Name, game.GameId, game.InstallDirectory, skipRefreshingMetadata);
+                        cloudSaveFolder = await CalculateGameSavesPath(game.Name, game.LibraryGameId, game.InstallDirectory, skipRefreshingMetadata);
                     }
                 }
                 if (cloudSaveFolder != null)
                 {
                     if (Directory.Exists(cloudSaveFolder))
                     {
-                        var playniteAPI = API.Instance;
                         var logger = LogManager.GetLogger();
                         GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonSyncing, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }), false);
-                        playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
+
+                        await playniteAPI.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async (a) =>
                         {
-                            a.ProgressMaxValue = 100;
-                            a.CurrentProgressValue = 0;
+                            a.SetCrrentProgressValue(100);
+                            a.SetCrrentProgressValue(0);
                             var cloudArgs = new List<string>();
-                            cloudArgs.AddRange(new[] { "-y", "sync-saves", game.GameId });
+                            cloudArgs.AddRange(new[] { "-y", "sync-saves", game.LibraryGameId });
                             var skippedActivity = "--skip-upload";
                             if (cloudSyncAction == CloudSyncAction.Upload)
                             {
@@ -143,7 +144,7 @@ namespace LegendaryLibraryNS
                                 switch (cmdEvent)
                                 {
                                     case StartedCommandEvent started:
-                                        a.CurrentProgressValue = 1;
+                                        a.SetCrrentProgressValue(1);
                                         break;
                                     case StandardErrorCommandEvent stdErr:
                                         var errorMessage = stdErr.Text;
@@ -169,16 +170,16 @@ namespace LegendaryLibraryNS
                                         }
                                         break;
                                     case ExitedCommandEvent exited:
-                                        a.CurrentProgressValue = 100;
+                                        a.SetCrrentProgressValue(100);
                                         if (exited.ExitCode != 0 || errorDisplayed)
                                         {
                                             if (loginErrorDisplayed)
                                             {
-                                                playniteAPI.Dialogs.ShowErrorMessage($"{LocalizationManager.Instance.GetString(LOC.CommonSyncError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name })} {LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired)}.");
+                                                await playniteAPI.Dialogs.ShowErrorMessageAsync($"{LocalizationManager.Instance.GetString(LOC.CommonSyncError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name })} {LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired)}.");
                                             }
                                             else
                                             {
-                                                playniteAPI.Dialogs.ShowErrorMessage($"{LocalizationManager.Instance.GetString(LOC.CommonSyncError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name })} {LocalizationManager.Instance.GetString(LOC.CommonCheckLog)}");
+                                                await playniteAPI.Dialogs.ShowErrorMessageAsync($"{LocalizationManager.Instance.GetString(LOC.CommonSyncError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name })} {LocalizationManager.Instance.GetString(LOC.CommonCheckLog)}");
                                             }
                                         }
                                         break;
@@ -186,7 +187,7 @@ namespace LegendaryLibraryNS
                                         break;
                                 }
                             }
-                        }, globalProgressOptions);
+                        });
                     }
                 }
             }

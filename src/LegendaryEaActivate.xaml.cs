@@ -5,8 +5,7 @@ using CommonPlugin;
 using LegendaryLibraryNS.Models;
 using Linguini.Shared.Types.Bundle;
 using Playnite.Common;
-using Playnite.SDK;
-using Playnite.SDK.Data;
+using Playnite;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using MessageBoxResult = Playnite.MessageBoxResult;
 
 namespace LegendaryLibraryNS
 {
@@ -23,7 +23,8 @@ namespace LegendaryLibraryNS
     public partial class LegendaryEaActivate : UserControl
     {
         private ILogger logger = LogManager.GetLogger();
-        private IPlayniteAPI playniteAPI = API.Instance;
+        private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
+        private readonly CommonHelpers commonHelpers = LegendaryLibrary.Instance.CommonHelpers;
 
         public LegendaryEaActivate()
         {
@@ -32,12 +33,12 @@ namespace LegendaryLibraryNS
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            CommonHelpers.SetControlBackground(this);
+            commonHelpers.SetControlBackground(this);
             EaGamesSP.Visibility = Visibility.Collapsed;
             LoadingEaTB.Visibility = Visibility.Visible;
             if (!LegendaryLauncher.IsInstalled)
             {
-                playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.CommonLauncherNotInstalled));
+                await playniteApi.Dialogs.ShowErrorMessageAsync(LocalizationManager.Instance.GetString(LOC.CommonLauncherNotInstalled));
                 return;
             }
             var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("infocache");
@@ -86,11 +87,11 @@ namespace LegendaryLibraryNS
                         || result.StandardError.Contains("Login failed")
                         || result.StandardError.Contains("No saved credentials"))
                     {
-                        playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteMetadataDownloadError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired) }));
+                        await playniteApi.Dialogs.ShowErrorMessageAsync(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteMetadataDownloadError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired) }));
                     }
                     else
                     {
-                        playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteMetadataDownloadError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonCheckLog) }));
+                        await playniteApi.Dialogs.ShowErrorMessageAsync(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteMetadataDownloadError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonCheckLog) }));
                     }
                 }
                 else
@@ -132,9 +133,9 @@ namespace LegendaryLibraryNS
                     {
                         if (jediFound)
                         {
-                            playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.LegendaryStarWarsMessage), "", MessageBoxButton.OK, MessageBoxImage.Information);
+                            await playniteApi.Dialogs.ShowMessageAsync(LocalizationManager.Instance.GetString(LOC.LegendaryStarWarsMessage), "", MessageBoxButtons.OK, MessageBoxSeverity.Information);
                         }
-                        var commonHelpers = LegendaryLibrary.Instance.commonHelpers;
+                        var commonHelpers = LegendaryLibrary.Instance.CommonHelpers;
                         commonHelpers.SaveJsonSettingsToFile(eaGamesOnly, cacheInfoPath, "_allEaGames");
                     }
                 }
@@ -182,7 +183,7 @@ namespace LegendaryLibraryNS
 
         private async void ActivateBtn_Click(object sender, RoutedEventArgs e)
         {
-            playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.LegendaryEaNotice), "", MessageBoxButton.OK, MessageBoxImage.Information);
+            await playniteApi.Dialogs.ShowMessageAsync(LocalizationManager.Instance.GetString(LOC.LegendaryEaNotice), "", MessageBoxButtons.OK, MessageBoxSeverity.Information);
             bool errorDisplayed = false;
             int i = 0;
             foreach (var selectedGame in EaGamesLB.SelectedItems.Cast<LegendaryMetadata>())
@@ -191,10 +192,10 @@ namespace LegendaryLibraryNS
                 i++;
                 if (i > 1)
                 {
-                    var confirmActivate = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.LegendaryActivateNextConfirm),
+                    var confirmActivate = await playniteApi.Dialogs.ShowMessageAsync(LocalizationManager.Instance.GetString(LOC.LegendaryActivateNextConfirm),
                                          "",
-                                         MessageBoxButton.YesNo,
-                                         MessageBoxImage.Question);
+                                         MessageBoxButtons.YesNo,
+                                         MessageBoxSeverity.Question);
                     if (confirmActivate == MessageBoxResult.No)
                     {
                         canActivate = false;
@@ -204,7 +205,7 @@ namespace LegendaryLibraryNS
                 {
                     var stdOutBuffer = new StringBuilder();
                     var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                          .WithArguments(new[] { "launch", selectedGame.app_name, "--origin" })
+                                          .WithArguments(["launch", selectedGame.app_name, "--origin"])
                                           .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
                                           .AddCommandToLog()
                                           .WithValidation(CommandResultValidation.None);
@@ -231,7 +232,7 @@ namespace LegendaryLibraryNS
                                         || errorMessage.Contains("Login failed")
                                         || errorMessage.Contains("No saved credentials"))
                                     {
-                                        playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired));
+                                        await playniteApi.Dialogs.ShowErrorMessageAsync(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired));
                                     }
                                 }
                                 break;
@@ -241,11 +242,11 @@ namespace LegendaryLibraryNS
             }
             if (errorDisplayed)
             {
-                playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.LegendaryGamesActivateFailure, new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"EA", ["reason"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonCheckLog) }));
+                await playniteApi.Dialogs.ShowErrorMessageAsync(LocalizationManager.Instance.GetString(LOC.LegendaryGamesActivateFailure, new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"EA", ["reason"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonCheckLog) }));
             }
             else
             {
-                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.LegendaryGamesActivateSuccess, new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"EA" }));
+                await playniteApi.Dialogs.ShowMessageAsync(LocalizationManager.Instance.GetString(LOC.LegendaryGamesActivateSuccess, new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"EA" }));
             }
         }
     }

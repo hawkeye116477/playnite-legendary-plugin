@@ -1,4 +1,4 @@
-﻿using Playnite.SDK;
+﻿using Playnite;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,7 +17,7 @@ namespace CommonPlugin
     /// </summary>
     public partial class MessageCheckBoxDialog : UserControl
     {
-        private IPlayniteAPI playniteAPI = API.Instance;
+        private IPlayniteApi PlayniteApi { get; set; }
         public string MessageText { get; set; }
         public string CheckBoxText { get; set; }
         public bool ShowOkBtn { get; set; }
@@ -26,8 +26,9 @@ namespace CommonPlugin
         public MessageBoxImage DisplayIcon { get; set; }
         public MessageDialogSettings DialogSettings { get; set; }
 
-        public MessageCheckBoxDialog()
+        public MessageCheckBoxDialog(IPlayniteApi playniteApi)
         {
+            this.PlayniteApi = playniteApi;
         }
 
         public MessageCheckBoxDialog(string messageBoxText, string checkBoxText, MessageBoxButton button, MessageBoxImage icon, MessageDialogSettings messageDialogSettings)
@@ -37,14 +38,14 @@ namespace CommonPlugin
             switch (button)
             {
                 case MessageBoxButton.OK:
-                    OkBtn.Content = ResourceProvider.GetString("LOCOKLabel");
+                    OkBtn.Content = LocalizationManager.Instance.GetString("third-party-playnite-ok-label");
                     ShowOkBtn = true;
                     OkBtn.IsDefault = true;
                     OkBtn.Focus();
                     break;
                 case MessageBoxButton.YesNo:
-                    YesBtn.Content = ResourceProvider.GetString("LOCYesLabel");
-                    NoBtn.Content = ResourceProvider.GetString("LOCNoLabel");
+                    YesBtn.Content = LocalizationManager.Instance.GetString("third-party-playnite-yes-label");
+                    NoBtn.Content = LocalizationManager.Instance.GetString("third-party-playnite-no-label");
                     ShowYesBtn = true;
                     YesBtn.Focus();
                     YesBtn.IsDefault = true;
@@ -52,7 +53,7 @@ namespace CommonPlugin
                     NoBtn.IsCancel = true;
                     break;
                 default:
-                    OkBtn.Content = ResourceProvider.GetString("LOCOKLabel");
+                    OkBtn.Content = LocalizationManager.Instance.GetString("third-party-playnite-ok-label");
                     ShowOkBtn = true;
                     OkBtn.Focus();
                     OkBtn.IsDefault = true;
@@ -83,45 +84,44 @@ namespace CommonPlugin
 
         private void OkBtn_Click(object sender, RoutedEventArgs e)
         {
-            Window.GetWindow(this).DialogResult = true;
+            Window.GetWindow(this)?.DialogResult = true;
         }
 
         private void YesBtn_Click(object sender, RoutedEventArgs e)
         {
-            Window.GetWindow(this).DialogResult = true;
+            Window.GetWindow(this)?.DialogResult = true;
         }
 
         private void NoBtn_Click(object sender, RoutedEventArgs e)
         {
-            Window.GetWindow(this).DialogResult = false;
+            Window.GetWindow(this)?.DialogResult = false;
         }
 
         private void Chk_Checked(object sender, RoutedEventArgs e)
         {
-            DialogSettings.CheckboxChecked = (bool)Chk.IsChecked;
+            DialogSettings.CheckboxChecked = (bool)Chk.IsChecked!;
         }
 
-        public static MessageDialogSettings ShowMessage(string title, string message, string checkBoxText, MessageBoxButton buttonType, MessageBoxImage icon)
+        public MessageDialogSettings ShowMessage(string title, string message, string checkBoxText, MessageBoxButton buttonType, MessageBoxImage icon)
         {
             MessageDialogSettings messageDialogSettings = new MessageDialogSettings();
-            var playniteAPI = API.Instance;
-            Window window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
+            Window window = PlayniteApi.CreateWindow(new WindowCreationOptions
             {
                 ShowMaximizeButton = false,
                 ShowCloseButton = false,
                 ShowMinimizeButton = false,
             });
-            if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+            if (PlayniteApi.AppInfo.Mode == AppMode.Fullscreen)
             {
-                window.Background = (System.Windows.Media.Brush)ResourceProvider.GetResource("ControlBackgroundBrush");
+                window.Background = (System.Windows.Media.Brush)Application.Current?.TryFindResource("ControlBackgroundBrush")!;
             }
             window.Title = title;
-            window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
+            window.Owner = PlayniteApi.GetLastActiveWindow();
             window.Content = new MessageCheckBoxDialog(message, checkBoxText, buttonType, icon, messageDialogSettings);
             window.SizeToContent = SizeToContent.WidthAndHeight;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             var result = window.ShowDialog();
-            messageDialogSettings.Result = (bool)result;
+            messageDialogSettings.Result = (bool)result!;
             return messageDialogSettings;
         }
     }

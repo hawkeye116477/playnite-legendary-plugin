@@ -5,13 +5,12 @@ using System.Linq;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using Playnite.SDK.Data;
+using Playnite;
 using Playnite.Common;
-using Playnite.SDK;
-using Playnite.SDK.Models;
 using LegendaryLibraryNS.Enums;
 using CommonPlugin;
 using CommonPlugin.Enums;
+using MessageBoxResult = Playnite.MessageBoxResult;
 
 namespace LegendaryLibraryNS
 {
@@ -21,10 +20,11 @@ namespace LegendaryLibraryNS
     public partial class LegendaryGameSettingsView : UserControl
     {
         private Game Game => DataContext as Game;
-        public string GameID => Game.GameId;
-        private IPlayniteAPI playniteAPI = API.Instance;
+        public string GameID => Game.LibraryGameId;
+        private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
         private string cloudPath;
         public GameSettings gameSettings;
+        private CommonHelpers commonHelpers = LegendaryLibrary.Instance.CommonHelpers;
 
 
         public LegendaryGameSettingsView()
@@ -34,8 +34,9 @@ namespace LegendaryLibraryNS
 
         public static GameSettings LoadGameSettings(string gameID)
         {
+            IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
             var gameSettings = new GameSettings();
-            var gameSettingsFile = Path.Combine(LegendaryLibrary.Instance.GetPluginUserDataPath(), "GamesSettings", $"{gameID}.json");
+            var gameSettingsFile = Path.Combine(playniteApi.UserDataDir, "GamesSettings", $"{gameID}.json");
             if (File.Exists(gameSettingsFile))
             {
                 if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(gameSettingsFile), out GameSettings savedGameSettings))
@@ -90,7 +91,7 @@ namespace LegendaryLibraryNS
             {
                 newGameSettings.AutoSyncPlaytime = AutoSyncPlaytimeChk.IsChecked;
             }
-            var gameSettingsFile = Path.Combine(LegendaryLibrary.Instance.GetPluginUserDataPath(), "GamesSettings", $"{GameID}.json");
+            var gameSettingsFile = Path.Combine(playniteApi.UserDataDir, "GamesSettings", $"{GameID}.json");
             if (newGameSettings.GetType().GetProperties().Any(p => p.GetValue(newGameSettings) != null) || File.Exists(gameSettingsFile))
             {
                 if (File.Exists(gameSettingsFile))
@@ -101,7 +102,7 @@ namespace LegendaryLibraryNS
                         newGameSettings.InstallPrerequisites = true;
                     }
                 }
-                var commonHelpers = LegendaryLibrary.Instance.commonHelpers;
+                var commonHelpers = LegendaryLibrary.Instance.CommonHelpers;
                 commonHelpers.SaveJsonSettingsToFile(newGameSettings, "GamesSettings", GameID, true);
             }
             Window.GetWindow(this).Close();
@@ -109,7 +110,7 @@ namespace LegendaryLibraryNS
 
         private void LegendaryGameSettingsViewUC_Loaded(object sender, RoutedEventArgs e)
         {
-            CommonHelpers.SetControlBackground(this);
+            commonHelpers.SetControlBackground(this);
             var globalSettings = LegendaryLibrary.GetSettings();
             EnableOfflineModeChk.IsChecked = globalSettings.LaunchOffline;
             if (globalSettings.GamesUpdatePolicy == UpdatePolicy.Never)
@@ -151,14 +152,14 @@ namespace LegendaryLibraryNS
             {
                 AutoSyncPlaytimeChk.IsChecked = gameSettings.AutoSyncPlaytime;
             }
-            if (playniteAPI.ApplicationSettings.PlaytimeImportMode == PlaytimeImportMode.Never)
-            {
-                AutoSyncPlaytimeChk.IsEnabled = false;
-            }
+            // if (playniteApi.ApplicationSettings.PlaytimeImportMode == PlaytimeImportMode.Never)
+            // {
+            //     AutoSyncPlaytimeChk.IsEnabled = false;
+            // }
             var appList = LegendaryLauncher.GetInstalledAppList();
             if (appList.ContainsKey(GameID))
             {
-                if (appList[Game.GameId].Can_run_offline)
+                if (appList[Game.LibraryGameId].Can_run_offline)
                 {
                     EnableOfflineModeChk.IsEnabled = true;
                 }
@@ -171,9 +172,9 @@ namespace LegendaryLibraryNS
             ManualSyncSavesCBo.ItemsSource = cloudSyncActions;
             ManualSyncSavesCBo.SelectedIndex = 0;
 
-            Dispatcher.BeginInvoke((Action)(() =>
+            Dispatcher.BeginInvoke((Action)(async void () =>
             {
-                cloudPath = LegendaryCloud.CalculateGameSavesPath(Game.Name, Game.GameId, Game.InstallDirectory);
+                cloudPath = await LegendaryCloud.CalculateGameSavesPath(Game.Name, Game.LibraryGameId, Game.InstallDirectory);
                 if (cloudPath.IsNullOrEmpty())
                 {
                     CloudSavesSP.Visibility = Visibility.Collapsed;
@@ -182,23 +183,27 @@ namespace LegendaryLibraryNS
             }));
         }
 
-        private void ChooseAlternativeExeBtn_Click(object sender, RoutedEventArgs e)
+        private async void ChooseAlternativeExeBtn_Click(object sender, RoutedEventArgs e)
         {
-            var file = playniteAPI.Dialogs.SelectFile($"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExecutableTitle)}|*.exe");
-            if (file != "")
+            var fileTypes = new Dictionary<string, string[]>
+            {
+                {LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExecutableTitle), new[] { "*.exe" } },
+            };
+            var files = await playniteApi.Dialogs.SelectFileAsync(fileTypes, initialDir: Game.InstallDirectory);
+            if (files is { Count: > 0 })
             {
                 if (!Game.InstallDirectory.IsNullOrEmpty())
                 {
-                    SelectedAlternativeExeTxt.Text = RelativePath.Get(Game.InstallDirectory, file);
+                    SelectedAlternativeExeTxt.Text = RelativePath.Get(Game.InstallDirectory, files[0]);
                 }
             }
         }
 
-        private void CalculatePathBtn_Click(object sender, RoutedEventArgs e)
+        private async void CalculatePathBtn_Click(object sender, RoutedEventArgs e)
         {
             if (cloudPath.IsNullOrEmpty())
             {
-                cloudPath = LegendaryCloud.CalculateGameSavesPath(Game.Name, Game.GameId, Game.InstallDirectory, false);
+                cloudPath = await LegendaryCloud.CalculateGameSavesPath(Game.Name, Game.LibraryGameId, Game.InstallDirectory, false);
             }
             if (!cloudPath.IsNullOrEmpty())
             {
@@ -206,26 +211,26 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private void ChooseSavePathBtn_Click(object sender, RoutedEventArgs e)
+        private async void ChooseSavePathBtn_Click(object sender, RoutedEventArgs e)
         {
-            var selectedCloudPath = playniteAPI.Dialogs.SelectFolder();
-            if (selectedCloudPath != "")
+            var result = await playniteApi.Dialogs.SelectFolderAsync();
+            if (result is { Count: > 0 })
             {
-                SelectedSavePathTxt.Text = selectedCloudPath;
+                SelectedSavePathTxt.Text = result[0];
             }
         }
 
-        private void AutoSyncSavesChk_Click(object sender, RoutedEventArgs e)
+        private async void AutoSyncSavesChk_Click(object sender, RoutedEventArgs e)
         {
             if (AutoSyncSavesChk.IsChecked == true)
             {
-                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonSyncGameSavesWarn), "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                await playniteApi.Dialogs.ShowMessageAsync(LocalizationManager.Instance.GetString(LOC.CommonSyncGameSavesWarn), "", MessageBoxButtons.OK, MessageBoxSeverity.Warning);
             }
         }
 
-        private void SyncSavesBtn_Click(object sender, RoutedEventArgs e)
+        private async void SyncSavesBtn_Click(object sender, RoutedEventArgs e)
         {
-            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonCloudSaveConfirm), LocalizationManager.Instance.GetString(LOC.CommonCloudSaves), MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = await playniteApi.Dialogs.ShowMessageAsync(LocalizationManager.Instance.GetString(LOC.CommonCloudSaveConfirm), LocalizationManager.Instance.GetString(LOC.CommonCloudSaves), MessageBoxButtons.YesNo, MessageBoxSeverity.Question);
             if (result == MessageBoxResult.Yes)
             {
                 bool forceCloudSync = (bool)ForceCloudActionChk.IsChecked;
@@ -233,11 +238,11 @@ namespace LegendaryLibraryNS
                 var selectedSavePath = SelectedSavePathTxt.Text;
                 if (selectedSavePath != "")
                 {
-                    LegendaryCloud.SyncGameSaves(Game, selectedCloudSyncAction, forceCloudSync, true, true, selectedSavePath);
+                    await LegendaryCloud.SyncGameSaves(Game, selectedCloudSyncAction, forceCloudSync, true, true, selectedSavePath);
                 }
                 else
                 {
-                    LegendaryCloud.SyncGameSaves(Game, selectedCloudSyncAction, forceCloudSync, true);
+                    await LegendaryCloud.SyncGameSaves(Game, selectedCloudSyncAction, forceCloudSync, true);
                 }
             }
         }

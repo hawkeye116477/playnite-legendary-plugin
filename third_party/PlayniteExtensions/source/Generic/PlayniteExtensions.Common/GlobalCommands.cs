@@ -1,6 +1,5 @@
 ﻿using Playnite.Common;
-using Playnite.SDK;
-using Playnite.SDK.Models;
+using Playnite;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Documents;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Playnite.Commands
 {
@@ -55,9 +56,12 @@ namespace Playnite.Commands
             {
                 NavigateUrl(stringUrl);
             }
-            else if (url is Link linkUrl)
+            else if (url is Playnite.WebLink linkUrl)
             {
-                NavigateUrl(linkUrl.Url);
+                if (linkUrl.Url != null)
+                {
+                    NavigateUrl(linkUrl.Url);
+                }
             }
             else if (url is Uri uriUrl)
             {

@@ -3,21 +3,25 @@
 # pylint: disable=C0301
 """Get extension version"""
 import os
+import xml.etree.ElementTree as ET
 
 pj = os.path.join
 pn = os.path.normpath
 
-scriptPath = os.path.dirname(os.path.realpath(__file__))
-mainPath = pn(scriptPath + "/..")
+script_path = os.path.dirname(os.path.realpath(__file__))
+main_path = pn(script_path + "/..")
+src_path = pj(main_path, "src")
 
+csproj_path = pj(src_path, "LegendaryLibrary.csproj")
+csproj = ET.parse(csproj_path)
+xml_ns = "{http://schemas.microsoft.com/developer/msbuild/2003}"
 
 def run():
     """Let's start"""
-    with open(pn(pj(mainPath, r"src\Properties\AssemblyInfo.cs")), "r", encoding="utf-8") as assemblyInfo:
-        assemblyInfoLines = assemblyInfo.read().splitlines()
-        for line in assemblyInfoLines:
-            version = ""
-            if line.startswith("[") and "AssemblyVersion" in line:
-                version = line.split('AssemblyVersion("')[
-                    1].replace('")]', '')
-    return version
+    root = csproj.getroot()
+    v = ""
+    for pg in root.findall(".//PropertyGroup"):
+        v = pg.find("Version")
+        if v is not None and v.text:
+            return v.text
+    return v
