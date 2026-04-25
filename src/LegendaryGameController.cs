@@ -88,11 +88,23 @@ namespace LegendaryLibraryNS
                 return;
             }
             var playniteApi = LegendaryLibrary.PlayniteApi;
-            var messageCheckBoxDialog = new MessageCheckBoxDialog(playniteApi);
             string gamesCombined = string.Join(", ", games.Select(item => item.Name));
 
-            var result = messageCheckBoxDialog.ShowMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame), LocalizationManager.Instance.GetString(LOC.CommonUninstallGameConfirm, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)gamesCombined }), LocalizationManager.Instance.GetString(LOC.CommonRemoveGameLaunchSettings), MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result.Result)
+            var responses = new List<MessageBoxResponse>
+            {
+                new(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteYesLabel)),
+                new(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteNoLabel))
+            };
+            
+            var removeGameLaunchSettingsCheckbox =
+                new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.CommonRemoveGameLaunchSettings), false);
+
+            var result = await playniteApi.Dialogs.ShowMessageAsync(
+                LocalizationManager.Instance.GetString(LOC.CommonUninstallGameConfirm,
+                    new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)gamesCombined }),
+                LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame),
+                MessageBoxSeverity.Question, responses, [removeGameLaunchSettingsCheckbox]);
+            if (result.Title == LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteYesLabel))
             {
                 var canContinue = await LegendaryLibrary.Instance.StopDownloadManager(true);
                 if (!canContinue)
@@ -119,7 +131,7 @@ namespace LegendaryLibraryNS
                                            .ExecuteBufferedAsync();
                         if (cmd.StandardError.Contains("has been uninstalled"))
                         {
-                            if (result.CheckboxChecked)
+                            if (removeGameLaunchSettingsCheckbox.IsSelected)
                             {
                                 var gameSettingsFile = Path.Combine(Path.Combine(playniteApi.UserDataDir, "GamesSettings", $"{game.LibraryGameId}.json"));
                                 if (File.Exists(gameSettingsFile))

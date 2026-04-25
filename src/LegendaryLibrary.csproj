@@ -46,14 +46,6 @@
     <Compile Include="..\third_party\playnite-common-plugin\src\CommonHelpers.cs" Link="Shared\CommonHelpers.cs" />
     <Compile Include="..\third_party\playnite-common-plugin\src\LocalizationManager.cs" Link="Shared\LocalizationManager.cs" />
     <Compile Include="..\third_party\playnite-common-plugin\src\LocalizeExtension.cs" Link="Shared\LocalizeExtension.cs" />
-    <Page Include="..\third_party\playnite-common-plugin\src\MessageCheckBoxDialog.xaml">
-      <Link>Shared\MessageCheckBoxDialog.xaml</Link>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Compile Include="..\third_party\playnite-common-plugin\src\MessageCheckBoxDialog.xaml.cs" Link="Shared\MessageCheckBoxDialog.xaml.cs">
-      <DependentUpon>MessageCheckBoxDialog.xaml</DependentUpon>
-    </Compile>
     <Page Include="..\third_party\playnite-common-plugin\src\NumericInput.xaml">
       <Link>Shared\NumericInput.xaml</Link>
       <SubType>Designer</SubType>
