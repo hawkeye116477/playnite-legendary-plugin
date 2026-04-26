@@ -94,9 +94,10 @@ namespace LegendaryLibraryNS
                 var launcherPath = "";
 
                 var envPath = Environment.GetEnvironmentVariable("PATH")
-                    .Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(dir => Path.Combine(dir, "legendary.exe"))
-                    .FirstOrDefault(File.Exists);
+                                         .Split(new char[] { Path.PathSeparator }, StringSplitOptions.RemoveEmptyEntries)
+                                         .Where(p => p.IndexOfAny(Path.GetInvalidPathChars()) < 0)
+                                         .Select(dir => Path.Combine(dir, "legendary.exe"))
+                                         .FirstOrDefault(File.Exists);
                 if (string.IsNullOrWhiteSpace(envPath) == false)
                 {
                     launcherPath = envPath;
