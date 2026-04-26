@@ -875,18 +875,18 @@ namespace LegendaryLibraryNS
                 {
                     if (legendaryGames.Count > 1)
                     {
-                        var installData = new List<DownloadManagerData.Download>();
-                        foreach (var notInstalledLegendaryGame in notInstalledLegendaryGames)
-                        {
-                            var installProperties = new DownloadProperties { downloadAction = DownloadAction.Install };
-                            installData.Add(new DownloadManagerData.Download { gameID = notInstalledLegendaryGame.GameId, name = notInstalledLegendaryGame.Name, downloadProperties = installProperties });
-                        }
                         yield return new GameMenuItem
                         {
                             Description = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteInstallGame),
                             Icon = "InstallIcon",
                             Action = (args) =>
                             {
+                                var installData = new List<DownloadManagerData.Download>();
+                                foreach (var notInstalledLegendaryGame in notInstalledLegendaryGames)
+                                {
+                                    var installProperties = new DownloadProperties { downloadAction = DownloadAction.Install };
+                                    installData.Add(new DownloadManagerData.Download { gameID = notInstalledLegendaryGame.GameId, name = notInstalledLegendaryGame.Name, downloadProperties = installProperties });
+                                }
                                 LegendaryInstallController.LaunchInstaller(installData);
                             }
                         };
