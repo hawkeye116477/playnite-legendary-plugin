@@ -339,7 +339,7 @@ namespace LegendaryLibraryNS
                 {
                     var iterator = 0;
                     a.SetProgressMaxValue(gamesToMigrate.Count + 1);
-                    a.SetCrrentProgressValue(0);
+                    a.SetCurrentProgressValue(0);
                     foreach (var game in gamesToMigrate.ToList())
                     {
                         iterator++;
@@ -370,11 +370,11 @@ namespace LegendaryLibraryNS
 
                             await playniteApi.Library.Games.UpdateAsync(game);
                             migratedGames.Add(game.LibraryGameId!);
-                            a.SetCrrentProgressValue(iterator);
+                            a.SetCurrentProgressValue(iterator);
                         }
                     }
 
-                    a.SetCrrentProgressValue(gamesToMigrate.Count() + 1);
+                    a.SetCurrentProgressValue(gamesToMigrate.Count() + 1);
                     if (migratedGames.Count > 0)
                     {
                         await playniteApi.Dialogs.ShowMessageAsync(
@@ -400,7 +400,7 @@ namespace LegendaryLibraryNS
                 else
                 {
                     a.SetProgressMaxValue(1);
-                    a.SetCrrentProgressValue(1);
+                    a.SetCurrentProgressValue(1);
                     await playniteApi.Dialogs.ShowErrorMessageAsync(
                         LocalizationManager.Instance.GetString(LOC.CommonMigrationNoGames));
                 }
@@ -811,7 +811,7 @@ namespace LegendaryLibraryNS
                 {
                     var iterator = 0;
                     a.SetProgressMaxValue(gamesToMigrate.Count() + 1);
-                    a.SetCrrentProgressValue(0);
+                    a.SetCurrentProgressValue(0);
                     foreach (var game in gamesToMigrate.ToList())
                     {
                         iterator++;
@@ -822,11 +822,11 @@ namespace LegendaryLibraryNS
                             game.LibraryId = "Crow.EpicGames";
                             await playniteApi.Library.Games.UpdateAsync(game);
                             migratedGames.Add(game.LibraryGameId!);
-                            a.SetCrrentProgressValue(iterator);
+                            a.SetCurrentProgressValue(iterator);
                         }
                     }
 
-                    a.SetCrrentProgressValue(gamesToMigrate.Count + 1);
+                    a.SetCurrentProgressValue(gamesToMigrate.Count + 1);
                     if (migratedGames.Count > 0)
                     {
                         await playniteApi.Dialogs.ShowMessageAsync(
@@ -845,7 +845,7 @@ namespace LegendaryLibraryNS
                 else
                 {
                     a.SetProgressMaxValue(1);
-                    a.SetCrrentProgressValue(1);
+                    a.SetCurrentProgressValue(1);
                     await playniteApi.Dialogs.ShowErrorMessageAsync(
                         LocalizationManager.Instance.GetString(LOC.CommonMigrationNoGames));
                 }

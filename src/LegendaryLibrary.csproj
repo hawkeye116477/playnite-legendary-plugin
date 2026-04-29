@@ -14,7 +14,7 @@
     <Configurations>Release;Debug</Configurations>
     <Platforms>x64</Platforms>
     <IsPackable>false</IsPackable>
-    <Version>1.14.4</Version>
+    <Version>1.14.0.11</Version>
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
   <PropertyGroup>
@@ -142,7 +142,7 @@
     <PackageReference Include="ByteSize" Version="2.1.2" />
     <PackageReference Include="CliWrap" Version="3.10.1" />
     <PackageReference Include="Linguini.Bundle" Version="0.11.0" />
-    <PackageReference Include="Playnite.SDK" Version="11.0.0-alpha9" />
+    <PackageReference Include="Playnite.SDK" Version="11.0.0-alpha11" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnifiedDownloadManagerApi">

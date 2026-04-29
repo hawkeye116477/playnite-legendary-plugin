@@ -113,8 +113,8 @@ namespace LegendaryLibraryNS
 
                         await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async (a) =>
                         {
-                            a.SetCrrentProgressValue(100);
-                            a.SetCrrentProgressValue(0);
+                            a.SetCurrentProgressValue(100);
+                            a.SetCurrentProgressValue(0);
                             var cloudArgs = new List<string>();
                             cloudArgs.AddRange(["-y", "sync-saves", game.LibraryGameId!]);
                             var skippedActivity = "--skip-upload";
@@ -141,7 +141,7 @@ namespace LegendaryLibraryNS
                                 switch (cmdEvent)
                                 {
                                     case StartedCommandEvent:
-                                        a.SetCrrentProgressValue(1);
+                                        a.SetCurrentProgressValue(1);
                                         break;
                                     case StandardErrorCommandEvent stdErr:
                                         var errorMessage = stdErr.Text;
@@ -167,7 +167,7 @@ namespace LegendaryLibraryNS
                                         }
                                         break;
                                     case ExitedCommandEvent exited:
-                                        a.SetCrrentProgressValue(100);
+                                        a.SetCurrentProgressValue(100);
                                         if (exited.ExitCode != 0 || errorDisplayed)
                                         {
                                             if (loginErrorDisplayed)

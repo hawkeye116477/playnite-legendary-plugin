@@ -204,7 +204,7 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
                     await PlayniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async a =>
                     {
                         a.SetProgressMaxValue(3);
-                        a.SetCrrentProgressValue(0);
+                        a.SetCurrentProgressValue(0);
                         _ = (Application.Current.Dispatcher?.BeginInvoke((Action)async delegate
                         {
                             try
@@ -217,7 +217,7 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
 
                                 await LegendaryDownloadLogic.WaitUntilLegendaryCloses();
                                 Directory.Move(oldPath, newPath);
-                                a.SetCrrentProgressValue(1);
+                                a.SetCurrentProgressValue(1);
                                 var rewriteResult = await Cli
                                                          .Wrap(LegendaryLauncher.ClientExecPath)
                                                          .WithArguments(["move", Game.LibraryGameId!, newPath, "--skip-move"])
@@ -236,17 +236,17 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
                                         $"[Legendary Cli] exit code: {rewriteResult.ExitCode}");
                                 }
 
-                                a.SetCrrentProgressValue(2);
+                                a.SetCurrentProgressValue(2);
                                 Game.InstallDirectory = newPath;
                                 await PlayniteApi.Library.Games.UpdateAsync(Game);
-                                a.SetCrrentProgressValue(3);
+                                a.SetCurrentProgressValue(3);
                                 await PlayniteApi.Dialogs.ShowMessageAsync(
                                     LocalizationManager.Instance.GetString(
                                         LOC.CommonMoveGameSuccess, moveFluentArgs));
                             }
                             catch (Exception e)
                             {
-                                a.SetCrrentProgressValue(3);
+                                a.SetCurrentProgressValue(3);
                                 await PlayniteApi.Dialogs.ShowErrorMessageAsync(
                                     LocalizationManager.Instance.GetString(
                                         LOC.CommonMoveGameError, moveFluentArgs));

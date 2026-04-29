@@ -24,9 +24,9 @@ namespace LegendaryLibraryNS
     {
         private static readonly ILogger Logger = LogManager.GetLogger();
         public static LegendaryLibrary Instance { get; private set; } = null!;
-        public CommonHelpers CommonHelpers { get; set; }  = null!;
+        public CommonHelpers CommonHelpers { get; set; } = null!;
         public IUnifiedDownloadLogic UnifiedDownloadLogic { get; set; }
-        public DownloadManagerData PluginDownloadData { get; set; }  = null!;
+        public DownloadManagerData PluginDownloadData { get; set; } = null!;
         public const string PluginId = "hawkeye116477.LegendaryLibrary";
         public static IPlayniteApi PlayniteApi { get; private set; } = null!;
         public LegendaryLibrarySettings? Settings { get; set; }
@@ -228,7 +228,8 @@ namespace LegendaryLibraryNS
                         }
                     }
 
-                    var newGame = new ImportableGame((catalogItem.Title ?? "").RemoveTrademarks(), PluginId, gameAsset.AppName)
+                    var newGame = new ImportableGame((catalogItem.Title ?? "").RemoveTrademarks(), PluginId,
+                        gameAsset.AppName)
                     {
                         Source = new IdImportableProperty("epic", "Epic"),
                         Platforms = [PcSpecProperty]
@@ -389,9 +390,9 @@ namespace LegendaryLibraryNS
             var unifiedDownloadManagerApi = new UnifiedDownloadManagerApi(PlayniteApi);
             var allDownloads = unifiedDownloadManagerApi.GetAllDownloads();
             var runningAndQueuedDownloads = allDownloads?.Where(i =>
-                                                             i.Status == UnifiedDownloadStatus.Running ||
-                                                             i.Status == UnifiedDownloadStatus.Queued)
-                                                        .ToList();
+                                                              i.Status == UnifiedDownloadStatus.Running ||
+                                                              i.Status == UnifiedDownloadStatus.Queued)
+                                                         .ToList();
             if (runningAndQueuedDownloads?.Count > 0)
             {
                 if (displayConfirm)
@@ -598,12 +599,12 @@ namespace LegendaryLibraryNS
                 {
                     menuItems.Add(new MenuItemImpl(
                         LocalizationManager.Instance.GetString(LOC.CommonLauncherSettings),
-                        legendaryGameMenuActions.OpenLauncherSettingsWindow,
+                        async (_) => await legendaryGameMenuActions.OpenLauncherSettingsWindow(),
                         icon: CommonIcons.ModifyLaunchSettingsIcon
                     ));
                     menuItems.Add(new MenuItemImpl(
                         LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteCheckForUpdates),
-                        async () => { await legendaryGameMenuActions.OpenCheckForGamesUpdatesWindow(); },
+                        async (_) => { await legendaryGameMenuActions.OpenCheckForGamesUpdatesWindow(); },
                         icon: CommonIcons.UpdateIcon
                     ));
                 }
@@ -612,7 +613,7 @@ namespace LegendaryLibraryNS
                     menuItems.Add(
                         new MenuItemImpl(
                             LocalizationManager.Instance.GetString(LOC.CommonImportInstalledGame),
-                            async () => { await legendaryGameMenuActions.OpenImportGameWindow(); },
+                            async (_) => { await legendaryGameMenuActions.OpenImportGameWindow(); },
                             icon: CommonIcons.ImportGameIcon)
                     );
                 }
@@ -620,7 +621,7 @@ namespace LegendaryLibraryNS
                 menuItems.Add(
                     new MenuItemImpl(
                         LocalizationManager.Instance.GetString(LOC.CommonManageDlcs),
-                        legendaryGameMenuActions.OpenDlcManagerWindow,
+                        async (_) => { await legendaryGameMenuActions.OpenDlcManagerWindow(); },
                         icon: CommonIcons.InstallIcon)
                 );
 
@@ -628,7 +629,7 @@ namespace LegendaryLibraryNS
                 {
                     menuItems.Add(new MenuItemImpl(
                         LocalizationManager.Instance.GetString(LOC.CommonMove),
-                        async () => { await legendaryGameMenuActions.OpenMoveGameWindow(); }
+                        async (_) => { await legendaryGameMenuActions.OpenMoveGameWindow(); }
                       , icon: CommonIcons.MoveIcon)
                     );
                 }
@@ -641,7 +642,7 @@ namespace LegendaryLibraryNS
                 {
                     menuItems.Add(new MenuItemImpl(
                         LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteInstallGame),
-                        () =>
+                        (_) =>
                         {
                             var installData = new List<DownloadManagerData.Download>();
                             foreach (var notInstalledLegendaryGame in notInstalledLegendaryGames)
@@ -667,7 +668,7 @@ namespace LegendaryLibraryNS
                 {
                     menuItems.Add(new MenuItemImpl(
                         LocalizationManager.Instance.GetString(LOC.CommonRepair),
-                        () =>
+                        (_) =>
                         {
                             var installData = new List<DownloadManagerData.Download>();
                             foreach (var game in installedLegendaryGames)
@@ -703,7 +704,7 @@ namespace LegendaryLibraryNS
                     ));
                     menuItems.Add(new MenuItemImpl(
                         LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame),
-                        async () => { await LegendaryUninstallController.LaunchUninstaller(installedLegendaryGames); },
+                        async (_) => { await LegendaryUninstallController.LaunchUninstaller(installedLegendaryGames); },
                         icon: CommonIcons.UninstallIcon
                     ));
                 }
@@ -717,7 +718,7 @@ namespace LegendaryLibraryNS
             var items = new List<MenuItemImpl>
             {
                 new(LocalizationManager.Instance.GetString(LOC.CommonCheckForGamesUpdatesButton),
-                    async () =>
+                    async (_) =>
                     {
                         if (!LegendaryLauncher.IsInstalled)
                         {
@@ -783,7 +784,7 @@ namespace LegendaryLibraryNS
                     icon: CommonIcons.UpdateIcon
                 ),
                 new(LocalizationManager.Instance.GetString(LOC.CommonFinishInstallation),
-                    async () =>
+                    async (_) =>
                     {
                         var installedAppList = LegendaryLauncher.GetInstalledAppList();
                         var gamesToCompleteInstall = new Dictionary<string, Installed>();
@@ -814,7 +815,7 @@ namespace LegendaryLibraryNS
                                             $"{LocalizationManager.Instance.GetString(LOC.CommonFinishingInstallation)} ({game.Value.Title})");
                                         LegendaryLauncher.CompleteGameInstallation(game.Key);
                                         current++;
-                                        progress.SetCrrentProgressValue(current);
+                                        progress.SetCurrentProgressValue(current);
                                     }
                                 }
                             );

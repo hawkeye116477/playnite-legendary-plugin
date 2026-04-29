@@ -157,7 +157,7 @@ namespace LegendaryLibraryNS
                             Logger.Error("[Legendary] exit code: " + cmd.ExitCode);
                         }
                         counter += 1;
-                        a.SetCrrentProgressValue(counter);
+                        a.SetCurrentProgressValue(counter);
                     }
                 });
                 if (uninstalledGames.Count > 0)
