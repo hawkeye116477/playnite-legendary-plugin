@@ -11,7 +11,7 @@ namespace LegendaryLibraryNS
     /// <summary>
     /// Interaction logic for LegendaryExtraInstallationContentView.xaml
     /// </summary>
-    public partial class LegendaryExtraInstallationContentView : UserControl
+    public partial class LegendaryExtraInstallationContentView
     {
         public LegendaryExtraInstallationContentView()
         {
@@ -20,11 +20,10 @@ namespace LegendaryLibraryNS
 
         private DownloadManagerData.Download ChosenGame
         {
-            get => DataContext as DownloadManagerData.Download;
+            get => (DataContext as DownloadManagerData.Download)!;
             set { }
         }
 
-        private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
         private readonly CommonHelpers commonHelpers = LegendaryLibrary.Instance.CommonHelpers;
         private bool uncheckedByUser = true;
         private bool checkedByUser = true;
@@ -33,9 +32,9 @@ namespace LegendaryLibraryNS
         private async void LegendaryExtraInstallationContentUC_Loaded(object sender, RoutedEventArgs e)
         {
             commonHelpers.SetControlBackground(this);
-            Dictionary<string, LegendarySdlInfo> extraContentInfo = await LegendaryLauncher.GetExtraContentInfo(ChosenGame);
+            var extraContentInfo = await LegendaryLauncher.GetExtraContentInfo(ChosenGame);
             var dlcs = extraContentInfo.Where(i => i.Value.Is_dlc).ToList();
-            var sdls = extraContentInfo.Where(i => i.Value.Is_dlc == false).ToList();
+            var sdls = extraContentInfo.Where(i => !i.Value.Is_dlc).ToList();
             if (dlcs.Count > 1)
             {
                 AllDlcsChk.Visibility = Visibility.Visible;
@@ -50,7 +49,7 @@ namespace LegendaryLibraryNS
                 ExtraContentSP.Visibility = Visibility.Visible;
                 var selectedExtraContent = new Dictionary<string, LegendarySdlInfo>();
                 var selectedDlcs = ChosenGame.DownloadProperties.SelectedDlcs;
-                if (selectedDlcs != null && selectedDlcs.Count > 0)
+                if (selectedDlcs is { Count: > 0 })
                 {
                     foreach (var selectedDlc in selectedDlcs)
                     {
@@ -62,7 +61,7 @@ namespace LegendaryLibraryNS
                     }
                 }
                 var selectedSdls = ChosenGame.DownloadProperties.ExtraContent;
-                if (selectedSdls.Count > 0)
+                if (selectedSdls is { Count: > 0 })
                 {
                     foreach (var selectedSdl  in selectedSdls)
                     {
@@ -165,7 +164,7 @@ namespace LegendaryLibraryNS
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
-            Window.GetWindow(this).Close();
+            Window.GetWindow(this)?.Close();
         }
 
         private void AllDlcsChk_Checked(object sender, RoutedEventArgs e)

@@ -1,72 +1,75 @@
 ﻿using System;
 using System.Collections.Generic;
+// ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable UnusedMember.Global
+// ReSharper disable UnassignedField.Global
 
 namespace LegendaryLibraryNS.Models
 {
     public class LegendaryMetadata
     {
-        public string app_name { get; set; }
-        public string app_title { get; set; }
-        public Dictionary<string, AssetInfo> asset_infos;
-        public string[] base_urls;
-        public Metadata metadata;
+        public string App_name { get; set; } = "";
+        public string App_title { get; set; } = "";
+        public Dictionary<string, AssetInfo>? Asset_infos;
+        public string[]? Base_urls;
+        public MetadataModel? Metadata;
 
         public class CustomAttribute
         {
-            public string type;
-            public string value;
+            public string? Type;
+            public string? Value;
         }
 
         public class AssetInfo
         {
-            public string app_name;
-            public string asset_id;
-            public string build_version;
-            public string catalog_item_id;
-            public string label_name;
-            public Metadata metadata;
-            public string _namespace;
+            public string? App_name { get; set; }
+            public string? Asset_id { get; set; }
+            public string? Build_version { get; set; }
+            public string? Catalog_item_id { get; set; }
+            public string? Label_name { get; set; }
+            public MetadataModel? MetadataModel { get; set; }
+            public string? Namespace { get; set; }
         }
 
         public class CustomAttributeType
         {
-            public CustomAttribute AdditionalCommandline;
-            public CustomAttribute CanRunOffline;
-            public CustomAttribute CanSkipKoreanIdVerification;
-            public CustomAttribute CloudIncludeList;
-            public CustomAttribute CloudSaveFolder;
-            public CustomAttribute FolderName;
-            public CustomAttribute MonitorPresence;
-            public CustomAttribute PresenceId;
-            public CustomAttribute RequirementsJson;
-            public CustomAttribute ThirdPartyManagedApp;
-            public CustomAttribute UseAccessControl;
+            public CustomAttribute? AdditionalCommandline;
+            public CustomAttribute? CanRunOffline;
+            public CustomAttribute? CanSkipKoreanIdVerification;
+            public CustomAttribute? CloudIncludeList;
+            public CustomAttribute? CloudSaveFolder;
+            public CustomAttribute? FolderName;
+            public CustomAttribute? MonitorPresence;
+            public CustomAttribute? PresenceId;
+            public CustomAttribute? RequirementsJson;
+            public CustomAttribute? ThirdPartyManagedApp;
+            public CustomAttribute? UseAccessControl;
         }
 
-        public class Metadata
+        public class MetadataModel
         {
-            public Agegatings ageGatings;
-            public string applicationId;
-            public Category[] categories;
-            public DateTime creationDate;
-            public CustomAttributeType? customAttributes;
-            public string description;
-            public string developer;
-            public string developerId;
-            public bool endOfSupport;
-            public string entitlementName;
-            public string entitlementType;
-            public string[] eulaIds;
-            public string id;
-            public string itemType;
-            public Keyimage[] keyImages;
-            public DateTime lastModifiedDate;
-            public Metadata? mainGameItem;
-            public string _namespace;
-            public Releaseinfo[] releaseInfo;
-            public string status;
-            public string title;
-            public bool unsearchable;
+            public Agegatings? AgeGatings;
+            public string? ApplicationId;
+            public Category[]? Categories;
+            public DateTime CreationDate;
+            public CustomAttributeType? CustomAttributes;
+            public string? Description;
+            public string? Developer;
+            public string? DeveloperId;
+            public bool EndOfSupport;
+            public string? EntitlementName;
+            public string? EntitlementType;
+            public string[]? EulaIds;
+            public string? Id;
+            public string? ItemType;
+            public Keyimage[]? KeyImages;
+            public DateTime LastModifiedDate;
+            public MetadataModel? MainGameItem;
+            public string? Namespace;
+            public Releaseinfo[]? ReleaseInfo;
+            public string? Status;
+            public string? Title;
+            public bool Unsearchable;
         }
 
         public class Agegatings
@@ -75,26 +78,26 @@ namespace LegendaryLibraryNS.Models
 
         public class Category
         {
-            public string path;
+            public string? Path;
         }
 
         public class Keyimage
         {
-            public int height;
-            public string md5;
-            public int size;
-            public string type;
-            public DateTime uploadedDate;
-            public string url;
-            public int width;
+            public int Height;
+            public string? Md5;
+            public int Size;
+            public string? Type;
+            public DateTime UploadedDate;
+            public string? Url;
+            public int Width;
         }
 
         public class Releaseinfo
         {
-            public string appId;
-            public DateTime dateAdded;
-            public string id;
-            public string[] platform;
+            public string? AppId;
+            public DateTime DateAdded;
+            public string? Id;
+            public string[]? Platform;
         }
 
     }

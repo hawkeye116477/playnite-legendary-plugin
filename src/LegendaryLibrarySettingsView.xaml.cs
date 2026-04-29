@@ -20,18 +20,17 @@ using System.Windows;
 using System.Windows.Controls;
 using Playnite;
 using Playnite.WebViews;
-using MessageBoxResult = System.Windows.MessageBoxResult;
 
 namespace LegendaryLibraryNS
 {
     /// <summary>
     /// Interaction logic for LegendaryLibrarySettingsView.xaml
     /// </summary>
-    public partial class LegendaryLibrarySettingsView : UserControl
+    public partial class LegendaryLibrarySettingsView
     {
         private ILogger logger = LogManager.GetLogger();
         private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
-        private LegendaryTroubleshootingInformation troubleshootingInformation;
+        private LegendaryTroubleshootingInformation troubleshootingInformation = new();
 
         public LegendaryLibrarySettingsView()
         {
@@ -82,10 +81,10 @@ namespace LegendaryLibraryNS
                                    .ExecuteBufferedAsync();
                 if (cmd.StandardError.Contains("Done"))
                 {
-                    EOSOInstallBtn.Visibility = Visibility.Visible;
-                    EOSOUninstallBtn.Visibility = Visibility.Collapsed;
-                    EOSOToggleBtn.Visibility = Visibility.Collapsed;
-                    EOSOCheckForUpdatesBtn.Visibility = Visibility.Collapsed;
+                    OvInstallBtn.Visibility = Visibility.Visible;
+                    OvUninstallBtn.Visibility = Visibility.Collapsed;
+                    OvToggleBtn.Visibility = Visibility.Collapsed;
+                    OvCheckForUpdatesBtn.Visibility = Visibility.Collapsed;
                     await playniteApi.Dialogs.ShowMessageAsync(LocalizationManager.Instance.GetString(
                         LOC.CommonUninstallSuccess,
                         new Dictionary<string, IFluentType>
@@ -125,13 +124,13 @@ namespace LegendaryLibraryNS
             var result = window.ShowDialog();
             if (result == true)
             {
-                if (LegendaryLauncher.IsEOSOverlayInstalled)
+                if (LegendaryLauncher.IsEosOverlayInstalled)
                 {
-                    EOSOInstallBtn.Visibility = Visibility.Collapsed;
-                    EOSOUninstallBtn.Visibility = Visibility.Visible;
-                    EOSOToggleBtn.Content = LocalizationManager.Instance.GetString(LOC.LegendaryDisable);
-                    EOSOToggleBtn.Visibility = Visibility.Visible;
-                    EOSOCheckForUpdatesBtn.Visibility = Visibility.Visible;
+                    OvInstallBtn.Visibility = Visibility.Collapsed;
+                    OvUninstallBtn.Visibility = Visibility.Visible;
+                    OvToggleBtn.Content = LocalizationManager.Instance.GetString(LOC.LegendaryDisable);
+                    OvToggleBtn.Visibility = Visibility.Visible;
+                    OvCheckForUpdatesBtn.Visibility = Visibility.Visible;
                 }
             }
         }
@@ -139,24 +138,24 @@ namespace LegendaryLibraryNS
         private async void EOSOToggleBtn_Click(object sender, RoutedEventArgs e)
         {
             var toggleCommand = "disable";
-            if (!LegendaryLauncher.IsEOSOverlayEnabled)
+            if (!LegendaryLauncher.IsEosOverlayEnabled)
             {
                 toggleCommand = "enable";
             }
 
             await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                     .WithArguments(new[] { "-y", "eos-overlay", toggleCommand })
+                     .WithArguments(["-y", "eos-overlay", toggleCommand])
                      .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
                      .AddCommandToLog()
                      .WithValidation(CommandResultValidation.None)
                      .ExecuteAsync();
             var toggleTxt = LOC.LegendaryEnable;
-            if (LegendaryLauncher.IsEOSOverlayEnabled)
+            if (LegendaryLauncher.IsEosOverlayEnabled)
             {
                 toggleTxt = LOC.LegendaryDisable;
             }
 
-            EOSOToggleBtn.Content = LocalizationManager.Instance.GetString(toggleTxt);
+            OvToggleBtn.Content = LocalizationManager.Instance.GetString(toggleTxt);
         }
 
         private async void LegendarySettingsUC_Loaded(object sender, RoutedEventArgs e)
@@ -168,18 +167,18 @@ namespace LegendaryLibraryNS
                 MigrateRevertBtn.IsEnabled = true;
             }
 
-            if (!LegendaryLauncher.IsEOSOverlayInstalled)
+            if (!LegendaryLauncher.IsEosOverlayInstalled)
             {
-                EOSOInstallBtn.Visibility = Visibility.Visible;
-                EOSOToggleBtn.Visibility = Visibility.Collapsed;
-                EOSOUninstallBtn.Visibility = Visibility.Collapsed;
-                EOSOCheckForUpdatesBtn.Visibility = Visibility.Collapsed;
+                OvInstallBtn.Visibility = Visibility.Visible;
+                OvToggleBtn.Visibility = Visibility.Collapsed;
+                OvUninstallBtn.Visibility = Visibility.Collapsed;
+                OvCheckForUpdatesBtn.Visibility = Visibility.Collapsed;
             }
             else
             {
-                if (!LegendaryLauncher.IsEOSOverlayEnabled)
+                if (!LegendaryLauncher.IsEosOverlayEnabled)
                 {
-                    EOSOToggleBtn.Content = LocalizationManager.Instance.GetString(LOC.LegendaryEnable);
+                    OvToggleBtn.Content = LocalizationManager.Instance.GetString(LOC.LegendaryEnable);
                 }
             }
 
@@ -227,16 +226,18 @@ namespace LegendaryLibraryNS
             };
             AutoClearCacheCBo.ItemsSource = autoClearOptions;
 
-            var launcherUpdateSourceFile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+            var launcherUpdateSourceFile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
                 "LauncherUpdateSource.json");
             List<string> repoList = new List<string>();
             if (File.Exists(launcherUpdateSourceFile))
             {
                 var content = FileSystem.ReadFileAsStringSafe(launcherUpdateSourceFile);
-                var savedRepoList = new List<string>();
-                if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out savedRepoList))
+                if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out List<string>? savedRepoList))
                 {
-                    repoList = savedRepoList;
+                    if (savedRepoList != null)
+                    {
+                        repoList = savedRepoList;
+                    }
                 }
             }
 
@@ -264,7 +265,7 @@ namespace LegendaryLibraryNS
             }
 
             PlayniteVersionTxt.Text = LegendaryTroubleshootingInformation.PlayniteVersion;
-            PluginVersionTxt.Text = LegendaryTroubleshootingInformation.PluginVersion;
+            PluginVersionTxt.Text = LegendaryTroubleshootingInformation.PluginVersion ?? "";
             GamesInstallationPathTxt.Text = troubleshootingInformation.GamesInstallationPath;
             LogFilesPathTxt.Text = playniteApi.AppInfo.ConfigurationDirectory;
             ReportBugHyp.NavigateUri = new Uri(
@@ -351,7 +352,7 @@ namespace LegendaryLibraryNS
                             {
                                 var importCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                                          .WithArguments([
-                                                              "-y", "import", game.LibraryGameId, game.InstallDirectory
+                                                              "-y", "import", game.LibraryGameId!, game.InstallDirectory!
                                                           ])
                                                          .WithEnvironmentVariables(await LegendaryLauncher
                                                              .GetDefaultEnvironmentVariables())
@@ -360,7 +361,7 @@ namespace LegendaryLibraryNS
                                                          .ExecuteBufferedAsync();
                                 if (!importCmd.StandardError.Contains("has been imported"))
                                 {
-                                    notImportedGames.Add(game.LibraryGameId);
+                                    notImportedGames.Add(game.LibraryGameId!);
                                     game.InstallState = InstallState.Uninstalled;
                                     logger.Debug("[Legendary] " + importCmd.StandardError);
                                     logger.Error("[Legendary] exit code: " + importCmd.ExitCode);
@@ -368,7 +369,7 @@ namespace LegendaryLibraryNS
                             }
 
                             await playniteApi.Library.Games.UpdateAsync(game);
-                            migratedGames.Add(game.LibraryGameId);
+                            migratedGames.Add(game.LibraryGameId!);
                             a.SetCrrentProgressValue(iterator);
                         }
                     }
@@ -408,8 +409,8 @@ namespace LegendaryLibraryNS
 
         private void CopyRawDataBtn_Click(object sender, RoutedEventArgs e)
         {
-            var troubleshootingJSON = Serialization.ToJson(troubleshootingInformation, true);
-            Clipboard.SetText(troubleshootingJSON);
+            var troubleshootingJson = Serialization.ToJson(troubleshootingInformation, true);
+            Clipboard.SetText(troubleshootingJson);
         }
 
         private async void OpenGamesInstallationPathBtn_Click(object sender, RoutedEventArgs e)
@@ -465,7 +466,7 @@ namespace LegendaryLibraryNS
                     if (LegendaryLauncher.IsInstalled)
                     {
                         var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                              .WithArguments(new[] { "auth", "--delete" })
+                                              .WithArguments(["auth", "--delete"])
                                               .WithEnvironmentVariables(
                                                    await LegendaryLauncher.GetDefaultEnvironmentVariables())
                                               .AddCommandToLog()
@@ -527,7 +528,7 @@ namespace LegendaryLibraryNS
         {
             if (!LegendaryLauncher.IsInstalled)
             {
-                LegendaryLauncher.ShowNotInstalledError();
+                await LegendaryLauncher.ShowNotInstalledError();
                 return;
             }
 
@@ -538,7 +539,7 @@ namespace LegendaryLibraryNS
             if (result == Playnite.MessageBoxResult.Yes)
             {
                 await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                         .WithArguments(new[] { "list", "-T", "--force-refresh" })
+                         .WithArguments(["list", "-T", "--force-refresh"])
                          .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
                          .AddCommandToLog()
                          .WithValidation(CommandResultValidation.None)
@@ -551,7 +552,7 @@ namespace LegendaryLibraryNS
                 var warningBuffer = new StringBuilder();
                 var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
                              .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
-                             .WithArguments(new[] { "activate", "-U" })
+                             .WithArguments(["activate", "-U"])
                              .AddCommandToLog()
                              .WithValidation(CommandResultValidation.None);
                 await foreach (CommandEvent cmdEvent in cmd.ListenAsync())
@@ -820,7 +821,7 @@ namespace LegendaryLibraryNS
                         {
                             game.LibraryId = "Crow.EpicGames";
                             await playniteApi.Library.Games.UpdateAsync(game);
-                            migratedGames.Add(game.LibraryGameId);
+                            migratedGames.Add(game.LibraryGameId!);
                             a.SetCrrentProgressValue(iterator);
                         }
                     }

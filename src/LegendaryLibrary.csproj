@@ -22,6 +22,12 @@
     <LocalAppData>$([System.Environment]::GetFolderPath(SpecialFolder.LocalApplicationData))</LocalAppData>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
   <ItemGroup Label="compileInclude3p">
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\Converters\InvertedBoolenConverter.cs" Link="Shared\Playnite\Converters\InvertedBoolenConverter.cs" />
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\native\Fileapi.cs" Link="Shared\Playnite\Native\Fileapi.cs" />
@@ -40,10 +46,10 @@
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\ProcessMonitor.cs" Link="Shared\Playnite\ProcessMonitor.cs" />
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\ProcessStarter.cs" Link="Shared\Playnite\ProcessStarter.cs" />
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\Playnite\Common\Xaml.cs" Link="Shared\Playnite\Xaml.cs" />
-    <Compile Include="..\third_party\PlayniteExtensions\source\Generic\PlayniteExtensions.Common\Encryption.cs" Link="Shared\Playnite\Encryption.cs" />
     <Compile Include="..\third_party\PlayniteExtensions\source\Generic\PlayniteExtensions.Common\GlobalCommands.cs" Link="Shared\Playnite\GlobalCommands.cs" />
     <Compile Include="..\third_party\playnite-common-plugin\src\CliWrapCommandExtensions.cs" Link="Shared\CliWrapCommandExtensions.cs" />
     <Compile Include="..\third_party\playnite-common-plugin\src\CommonHelpers.cs" Link="Shared\CommonHelpers.cs" />
+    <Compile Include="..\third_party\playnite-common-plugin\src\Encryption.cs" Link="Shared\Encryption.cs" />
     <Compile Include="..\third_party\playnite-common-plugin\src\LocalizationManager.cs" Link="Shared\LocalizationManager.cs" />
     <Compile Include="..\third_party\playnite-common-plugin\src\LocalizeExtension.cs" Link="Shared\LocalizeExtension.cs" />
     <Page Include="..\third_party\playnite-common-plugin\src\NumericInput.xaml">
@@ -79,6 +85,8 @@
       <Link>Shared\Resources\CommonIcons.cs</Link>
     </Compile>
     <Compile Include="..\third_party\playnite-common-plugin\src\SplitOutsideQuotesExtensions.cs" Link="Shared\SplitOutsideQuotesExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="extension.toml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -86,8 +94,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="$(LocalAppData)\Playnite\Templates\Themes\Fonts\icofont.ttf">
       <Link>Fonts/icofont.ttf</Link>
     </None>

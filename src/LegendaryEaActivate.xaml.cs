@@ -20,7 +20,7 @@ namespace LegendaryLibraryNS
     /// <summary>
     /// Interaction logic for LegendaryEaActivate.xaml
     /// </summary>
-    public partial class LegendaryEaActivate : UserControl
+    public partial class LegendaryEaActivate
     {
         private ILogger logger = LogManager.GetLogger();
         private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
@@ -53,7 +53,7 @@ namespace LegendaryLibraryNS
                 }
             }
 
-            var eaGamesOutput = new List<LegendaryMetadata>();
+            List<LegendaryMetadata>? eaGamesOutput;
             string content;
             if (File.Exists(cacheInfoFile))
             {
@@ -62,11 +62,14 @@ namespace LegendaryLibraryNS
                 {
                     if (Serialization.TryFromJson(content, out eaGamesOutput))
                     {
-                        foreach (LegendaryMetadata eaGame in eaGamesOutput)
+                        if (eaGamesOutput != null)
                         {
-                            eaGamesOnly.Add(eaGame);
+                            foreach (LegendaryMetadata eaGame in eaGamesOutput)
+                            {
+                                eaGamesOnly.Add(eaGame);
+                            }
+                            correctJson = true;
                         }
-                        correctJson = true;
                     }
                 }
             }
@@ -74,7 +77,7 @@ namespace LegendaryLibraryNS
             if (!correctJson)
             {
                 var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                      .WithArguments(new[] { "list", "-T", "--json", "--force-refresh" })
+                                      .WithArguments(["list", "-T", "--json", "--force-refresh"])
                                       .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
                                       .AddCommandToLog()
                                       .WithValidation(CommandResultValidation.None)
@@ -96,35 +99,43 @@ namespace LegendaryLibraryNS
                 }
                 else
                 {
-                    bool jediFound = false;
+                    var jediFound = false;
                     if (Serialization.TryFromJson(result.StandardOutput, out eaGamesOutput))
                     {
-                        foreach (LegendaryMetadata eaGame in eaGamesOutput)
+                        if (eaGamesOutput != null)
                         {
-                            var thirdPartyManagedApp = eaGame.metadata?.customAttributes?.ThirdPartyManagedApp?.value.ToLower();
-                            if (thirdPartyManagedApp == "origin" || thirdPartyManagedApp == "the ea app")
+                            foreach (var eaGame in eaGamesOutput)
                             {
-                                if (thirdPartyManagedApp == "the ea app")
+                                var thirdPartyManagedApp = eaGame.Metadata?.CustomAttributes?.ThirdPartyManagedApp
+                                                                ?.Value?.ToLower();
+                                if (thirdPartyManagedApp is "origin" or "the ea app")
                                 {
-                                    eaGame.metadata.customAttributes.ThirdPartyManagedApp.value = "Origin";
-                                    var metadataFile = Path.Combine(LegendaryLauncher.ConfigPath, "metadata", eaGame.app_name + ".json");
-                                    if (File.Exists(metadataFile))
+                                    if (thirdPartyManagedApp == "the ea app")
                                     {
-                                        content = FileSystem.ReadFileAsStringSafe(metadataFile);
-                                        if (!content.IsNullOrEmpty())
+                                        eaGame.Metadata?.CustomAttributes?.ThirdPartyManagedApp?.Value = "Origin";
+                                        var metadataFile = Path.Combine(LegendaryLauncher.ConfigPath, "metadata",
+                                            eaGame.App_name + ".json");
+                                        if (File.Exists(metadataFile))
                                         {
-                                            var contentObject = Serialization.FromJson<LegendaryMetadata>(content);
-                                            contentObject.metadata.customAttributes.ThirdPartyManagedApp.value = "Origin";
-                                            var strConf = Serialization.ToJson(contentObject, true);
-                                            File.WriteAllText(metadataFile, strConf);
+                                            content = FileSystem.ReadFileAsStringSafe(metadataFile);
+                                            if (!content.IsNullOrEmpty() && Serialization.TryFromJson(content, out LegendaryMetadata? eaGameMeta))
+                                            {
+                                                if (eaGameMeta != null)
+                                                {
+                                                    eaGameMeta.Metadata?.CustomAttributes?.ThirdPartyManagedApp?.Value = "Origin";
+                                                    var strConf = Serialization.ToJson(eaGameMeta, true);
+                                                    await File.WriteAllTextAsync(metadataFile, strConf);
+                                                }
+                                            }
                                         }
                                     }
-                                }
-                                eaGame.app_title = eaGame.app_title.RemoveTrademarks();
-                                eaGamesOnly.Add(eaGame);
-                                if (!jediFound && eaGame.app_title.Contains("Star Wars"))
-                                {
-                                    jediFound = true;
+
+                                    eaGame.App_title = eaGame.App_title.RemoveTrademarks();
+                                    eaGamesOnly.Add(eaGame);
+                                    if (!jediFound && eaGame.App_title.Contains("Star Wars"))
+                                    {
+                                        jediFound = true;
+                                    }
                                 }
                             }
                         }
@@ -135,7 +146,6 @@ namespace LegendaryLibraryNS
                         {
                             await playniteApi.Dialogs.ShowMessageAsync(LocalizationManager.Instance.GetString(LOC.LegendaryStarWarsMessage), "", MessageBoxButtons.OK, MessageBoxSeverity.Information);
                         }
-                        var commonHelpers = LegendaryLibrary.Instance.CommonHelpers;
                         commonHelpers.SaveJsonSettingsToFile(eaGamesOnly, cacheInfoPath, "_allEaGames");
                     }
                 }
@@ -205,7 +215,7 @@ namespace LegendaryLibraryNS
                 {
                     var stdOutBuffer = new StringBuilder();
                     var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                          .WithArguments(["launch", selectedGame.app_name, "--origin"])
+                                          .WithArguments(["launch", selectedGame.App_name, "--origin"])
                                           .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
                                           .AddCommandToLog()
                                           .WithValidation(CommandResultValidation.None);

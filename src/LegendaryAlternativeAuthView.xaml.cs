@@ -5,18 +5,17 @@ using Playnite;
 using System;
 using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace LegendaryLibraryNS
 {
     /// <summary>
     /// Interaction logic for LegendaryAlternativeAuthView.xaml
     /// </summary>
-    public partial class LegendaryAlternativeAuthView : UserControl
+    public partial class LegendaryAlternativeAuthView
     {
         private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
         private ILogger logger = LogManager.GetLogger();
-        public Window alternativeAuthWindow => Window.GetWindow(this);
+        private Window AlternativeAuthWindow => Window.GetWindow(this)!;
 
         public LegendaryAlternativeAuthView()
         {
@@ -49,15 +48,15 @@ namespace LegendaryLibraryNS
                 try
                 {
                     await clientApi.AuthenticateUsingAuthCode(AuthCodeTxt.Text.Trim());
-                    alternativeAuthWindow.DialogResult = true;
+                    AlternativeAuthWindow.DialogResult = true;
                 }
                 catch (Exception ex) when (!Debugger.IsAttached)
                 {
                     await playniteApi.Dialogs.ShowErrorMessageAsync(LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedInError), "");
                     logger.Error(ex, "Failed to authenticate user.");
-                    alternativeAuthWindow.DialogResult = false;
+                    AlternativeAuthWindow.DialogResult = false;
                 }
-                alternativeAuthWindow.Close();
+                AlternativeAuthWindow.Close();
             }
         }
     }

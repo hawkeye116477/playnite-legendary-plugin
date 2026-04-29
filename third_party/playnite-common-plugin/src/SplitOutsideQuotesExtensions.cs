@@ -11,24 +11,24 @@ namespace CommonPlugin
         /// Splits the string by specified separator, but only when the separator is outside the quotes.
         /// </summary>
         /// <param name="source">The source string to separate.</param>
-        /// <param name="splitChar">The character used to split strings.</param>
+        /// <param name="separator">The character used to split strings.</param>
         /// <param name="trimSplits">If set to <c>true</c>, split strings are trimmed (whitespaces are removed).</param>
         /// <param name="ignoreEmptyResults">If set to <c>true</c>, empty split results are ignored (not included in the result).</param>
         /// <param name="preserveEscapeCharInQuotes">If set to <c>true</c>, then the escape character (\) used to escape e.g. quotes is included in the results.</param>
-        public static string[] SplitOutsideQuotes(this string source, char separator, bool trimSplits = true, bool ignoreEmptyResults = true, bool preserveEscapeCharInQuotes = true)
+        public static string[]? SplitOutsideQuotes(this string source, char separator, bool trimSplits = true, bool ignoreEmptyResults = true, bool preserveEscapeCharInQuotes = true)
         {
-            return source.SplitOutsideQuotes(new[] { separator }, trimSplits, ignoreEmptyResults, preserveEscapeCharInQuotes);
+            return source.SplitOutsideQuotes([separator], trimSplits, ignoreEmptyResults, preserveEscapeCharInQuotes);
         }
 
         /// <summary>
         /// Splits the string by specified separator, but only when the separator is outside the quotes.
         /// </summary>
         /// <param name="source">The source string to separate.</param>
-        /// <param name="splitChars">The characters used to split strings.</param>
+        /// <param name="separators">The characters used to split strings.</param>
         /// <param name="trimSplits">If set to <c>true</c>, split strings are trimmed (whitespaces are removed).</param>
         /// <param name="ignoreEmptyResults">If set to <c>true</c>, empty split results are ignored (not included in the result).</param>
         /// <param name="preserveEscapeCharInQuotes">If set to <c>true</c>, then the escape character (\) used to escape e.g. quotes is included in the results.</param>
-        public static string[] SplitOutsideQuotes(this string source, char[] separators, bool trimSplits = true, bool ignoreEmptyResults = true, bool preserveEscapeCharInQuotes = true)
+        public static string[]? SplitOutsideQuotes(this string? source, char[] separators, bool trimSplits = true, bool ignoreEmptyResults = true, bool preserveEscapeCharInQuotes = true)
         {
             if (source == null) return null;
 
@@ -71,7 +71,7 @@ namespace CommonPlugin
                 }
             }
 
-            if (escapeFlag) currentItem.Append("\\");
+            if (escapeFlag) currentItem.Append('\\');
 
             var lastCurrentItemString = trimSplits ? currentItem.ToString().Trim() : currentItem.ToString();
             if (!(string.IsNullOrEmpty(lastCurrentItemString) && ignoreEmptyResults)) result.Add(lastCurrentItemString);

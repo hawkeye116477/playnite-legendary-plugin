@@ -2,9 +2,9 @@
 {
     public class Prerequisite
     {
-        public string[] ids { get; set; }
-        public string name { get; set; }
-        public string path { get; set; }
-        public string args { get; set; }
+        public string[] Ids { get; set; } = [];
+        public string Name { get; set; } = "";
+        public string Path { get; set; } = "";
+        public string Args { get; set; } = "";
     }
 }

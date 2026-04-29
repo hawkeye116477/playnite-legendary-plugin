@@ -7,8 +7,8 @@ namespace CommonPlugin
 {
     public class LocalizeExtension : MarkupExtension
     {
-        public string Key { get; set; }
-        public string Args { get; set; }
+        public string? Key { get; set; }
+        public string? Args { get; set; }
 
         public LocalizeExtension() { }
 
@@ -17,6 +17,12 @@ namespace CommonPlugin
             Key = key;
         }
 
+        public LocalizeExtension(string key, string args)
+        {
+            Key = key;
+            Args = args;
+        }
+        
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (string.IsNullOrEmpty(Key))
@@ -28,11 +34,11 @@ namespace CommonPlugin
             if (!string.IsNullOrEmpty(Args))
             {
                 var trimmedArgs = Args.Trim();
-                var pairs = trimmedArgs.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                var pairs = trimmedArgs.Split([','], StringSplitOptions.RemoveEmptyEntries);
 
                 foreach (var pair in pairs)
                 {
-                    var parts = pair.Split(new[] { '=' }, 2, StringSplitOptions.None);
+                    var parts = pair.Split(['='], 2, StringSplitOptions.None);
                     if (parts.Length == 2)
                     {
                         var key = parts[0].Trim();

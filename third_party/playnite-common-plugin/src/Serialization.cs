@@ -1,11 +1,13 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Playnite;
 
 namespace CommonPlugin
 {
     public static class Serialization
     {
+        private static readonly ILogger Logger = LogManager.GetLogger();
         private static readonly JsonSerializerOptions JsonSerializerSettings = new()
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
@@ -29,6 +31,7 @@ namespace CommonPlugin
             catch (Exception e)
             {
                 deserialized = null;
+                Logger.Debug(e, "An error occured during reading json");
                 return false;
             }
         }
@@ -55,7 +58,6 @@ namespace CommonPlugin
         {
             return JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(source, JsonSerializerSettings)) ??
                    throw new Exception("Failed to clone object via serialization");
-            ;
         }
     }
 }

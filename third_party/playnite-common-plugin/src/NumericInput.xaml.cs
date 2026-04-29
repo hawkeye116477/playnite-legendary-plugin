@@ -8,7 +8,7 @@ namespace CommonPlugin
     /// <summary>
     /// Interaction logic for NumericInput.xaml
     /// </summary>
-    public partial class NumericInput : UserControl
+    public partial class NumericInput
     {
         public NumericInput()
         {
@@ -19,7 +19,7 @@ namespace CommonPlugin
         public static readonly DependencyProperty MaxValueProperty = DependencyProperty.Register(nameof(MaxValue), typeof(int), typeof(NumericInput));
         public static readonly DependencyProperty StepSizeProperty = DependencyProperty.Register(nameof(StepSize), typeof(int), typeof(NumericInput), new FrameworkPropertyMetadata(
         1));
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(string), typeof(NumericInput), new FrameworkPropertyMetadata(
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(string), typeof(NumericInput), new FrameworkPropertyMetadata(
         "", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public int MinValue
@@ -37,7 +37,7 @@ namespace CommonPlugin
             get => (int)GetValue(StepSizeProperty);
             set => SetValue(StepSizeProperty, value);
         }
-        private string lastGoodValue;
+        private string lastGoodValue = "";
         public string Value
         {
             get => (string)GetValue(ValueProperty);
@@ -73,7 +73,7 @@ namespace CommonPlugin
             lastGoodValue = !NumericTxt.Text.IsNullOrEmpty() ? NumericTxt.Text : MinValue.ToString();
         }
 
-        public void Increment()
+        private void Increment()
         {
             int number = !NumericTxt.Text.IsNullOrEmpty() ? Convert.ToInt32(NumericTxt.Text) : Convert.ToInt32(lastGoodValue);
             if (number < MaxValue)

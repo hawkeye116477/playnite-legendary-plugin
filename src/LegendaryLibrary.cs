@@ -1,5 +1,3 @@
-using CliWrap;
-using CliWrap.Buffered;
 using CommonPlugin;
 using CommonPlugin.Enums;
 using LegendaryLibraryNS.Enums;
@@ -10,8 +8,6 @@ using Playnite;
 using Playnite.Common;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -27,19 +23,20 @@ namespace LegendaryLibraryNS
     public class LegendaryLibrary : Plugin, IUnifiedDownloadProvider
     {
         private static readonly ILogger Logger = LogManager.GetLogger();
-        public static LegendaryLibrary? Instance { get; private set; }
-        public CommonHelpers CommonHelpers { get; set; }
+        public static LegendaryLibrary Instance { get; private set; } = null!;
+        public CommonHelpers CommonHelpers { get; set; }  = null!;
         public IUnifiedDownloadLogic UnifiedDownloadLogic { get; set; }
-        public DownloadManagerData? PluginDownloadData { get; set; }
+        public DownloadManagerData PluginDownloadData { get; set; }  = null!;
         public const string PluginId = "hawkeye116477.LegendaryLibrary";
         public static IPlayniteApi PlayniteApi { get; private set; } = null!;
-        public LegendaryLibrarySettings Settings { get; set; } = new();
+        public LegendaryLibrarySettings? Settings { get; set; }
         private static readonly SpecImportableProperty PcSpecProperty = new("pc_windows");
         public const string LibraryName = "Legendary (Epic)";
 
         public LegendaryLibrary()
         {
             Instance = this;
+            UnifiedDownloadLogic = new LegendaryDownloadLogic();
             XamlId = "Legendary";
             LibrarySettings = new LibrarySupport
             {
@@ -60,9 +57,7 @@ namespace LegendaryLibraryNS
             Settings = LegendaryLibrarySettingsViewModel.LoadPluginSettings(PlayniteApi.UserDataDir);
             Load3PLocalization();
             CommonHelpers.LoadNeededResources();
-            UnifiedDownloadLogic = new LegendaryDownloadLogic();
             PluginDownloadData = LoadSavedDownloadData();
-            await Task.CompletedTask;
         }
 
         public void SavePluginSettings(LegendaryLibrarySettings settings)
@@ -105,19 +100,16 @@ namespace LegendaryLibraryNS
 
         public void SaveDownloadData()
         {
-            var commonHelpers = Instance?.CommonHelpers;
-            if (PluginDownloadData != null)
-            {
-                commonHelpers?.SaveJsonSettingsToFile(PluginDownloadData, "", "downloads", true);
-            }
+            var commonHelpers = Instance.CommonHelpers;
+            commonHelpers.SaveJsonSettingsToFile(PluginDownloadData, "", "downloads", true);
         }
 
         public static LegendaryLibrarySettings? GetSettings()
         {
-            return Instance?.Settings ?? null;
+            return Instance.Settings;
         }
 
-        internal Dictionary<string, ImportableGame> GetInstalledGames()
+        private Dictionary<string, ImportableGame> GetInstalledGames()
         {
             var games = new Dictionary<string, ImportableGame>();
             var appList = LegendaryLauncher.GetInstalledAppList();
@@ -138,7 +130,7 @@ namespace LegendaryLibraryNS
                 }
 
                 var installLocation = app.Install_path;
-                var gameName = app?.Title ?? Path.GetFileName(installLocation);
+                var gameName = app.Title;
                 if (installLocation.IsNullOrEmpty())
                 {
                     continue;
@@ -182,7 +174,7 @@ namespace LegendaryLibraryNS
             var playtimeItems = await accountApi.GetPlaytimeItems();
             if (assets.Count > 0)
             {
-                foreach (var gameAsset in assets.Where(a => a.@namespace != "ue"))
+                foreach (var gameAsset in assets.Where(a => a.Namespace != "ue"))
                 {
                     if (cancelToken.IsCancellationRequested)
                     {
@@ -191,58 +183,58 @@ namespace LegendaryLibraryNS
 
                     var cacheFile =
                         Paths.GetSafePathName(
-                            $"{gameAsset.@namespace}_{gameAsset.catalogItemId}_{gameAsset.buildVersion}.json");
+                            $"{gameAsset.Namespace}_{gameAsset.CatalogItemId}_{gameAsset.BuildVersion}.json");
                     cacheFile = Path.Combine(cacheDir, cacheFile);
                     var catalogItem =
-                        await accountApi.GetCatalogItem(gameAsset.@namespace, gameAsset.catalogItemId, cacheFile);
+                        await accountApi.GetCatalogItem(gameAsset.Namespace, gameAsset.CatalogItemId, cacheFile);
 
                     if (catalogItem == null)
                     {
                         continue;
                     }
 
-                    if (catalogItem.categories?.Any(a => a.path == "applications") != true)
+                    if (catalogItem.Categories?.Any(a => a.Path == "applications") != true)
                     {
                         continue;
                     }
 
-                    if ((catalogItem.mainGameItem != null) &&
-                        (catalogItem.categories?.Any(a => a.path == "addons/launchable") == false))
+                    if ((catalogItem.MainGameItem != null) &&
+                        (catalogItem.Categories?.Any(a => a.Path == "addons/launchable") == false))
                     {
                         continue;
                     }
 
-                    if (catalogItem.categories?.Any(a =>
-                            a.path == "digitalextras" || a.path == "plugins" || a.path == "plugins/engine") == true)
+                    if (catalogItem.Categories?.Any(a =>
+                            a.Path == "digitalextras" || a.Path == "plugins" || a.Path == "plugins/engine") == true)
                     {
                         continue;
                     }
 
-                    if (!GetSettings().ImportEALauncherGames)
+                    if (GetSettings() is not { ImportEaLauncherGames: true })
                     {
-                        if ((catalogItem?.customAttributes?.ThirdPartyManagedApp != null) &&
-                            (catalogItem?.customAttributes?.ThirdPartyManagedApp.value.ToLower() == "the ea app" ||
-                             catalogItem?.customAttributes?.ThirdPartyManagedApp.value.ToLower() == "origin"))
+                        if ((catalogItem.CustomAttributes?.ThirdPartyManagedApp != null) &&
+                            (catalogItem.CustomAttributes?.ThirdPartyManagedApp.Value.ToLower() == "the ea app" ||
+                             catalogItem.CustomAttributes?.ThirdPartyManagedApp.Value.ToLower() == "origin"))
                         {
                             continue;
                         }
                     }
 
-                    if (!GetSettings().ImportUbisoftLauncherGames)
+                    if (GetSettings() is not { ImportUbisoftLauncherGames: true })
                     {
-                        if (catalogItem?.customAttributes?.PartnerLinkType is { value: "ubisoft" })
+                        if (catalogItem.CustomAttributes?.PartnerLinkType is { Value: "ubisoft" })
                         {
                             continue;
                         }
                     }
 
-                    var newGame = new ImportableGame(catalogItem!.title.RemoveTrademarks(), PluginId, gameAsset.appName)
+                    var newGame = new ImportableGame((catalogItem.Title ?? "").RemoveTrademarks(), PluginId, gameAsset.AppName)
                     {
                         Source = new IdImportableProperty("epic", "Epic"),
                         Platforms = [PcSpecProperty]
                     };
 
-                    var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameAsset.appName);
+                    var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameAsset.AppName);
                     var playtimeSyncEnabled = GetSettings() is { SyncPlaytime: true };
                     if (gameSettings.AutoSyncPlaytime != null)
                     {
@@ -251,10 +243,10 @@ namespace LegendaryLibraryNS
 
                     if (playtimeSyncEnabled)
                     {
-                        var playtimeItem = playtimeItems?.FirstOrDefault(x => x.artifactId == gameAsset.appName);
+                        var playtimeItem = playtimeItems?.FirstOrDefault(x => x.ArtifactId == gameAsset.AppName);
                         if (playtimeItem != null)
                         {
-                            newGame.PlayTime = (uint)(playtimeItem.totalTime);
+                            newGame.PlayTime = (uint)(playtimeItem.TotalTime);
                         }
                     }
 
@@ -272,7 +264,7 @@ namespace LegendaryLibraryNS
             var installedGames = new Dictionary<string, ImportableGame>();
             Exception? importError = null;
 
-            if (Settings.ImportInstalledGames)
+            if (Settings is { ImportInstalledGames: true })
             {
                 try
                 {
@@ -287,7 +279,7 @@ namespace LegendaryLibraryNS
                 }
             }
 
-            if (Settings.ConnectAccount)
+            if (Settings is { ConnectAccount: true })
             {
                 try
                 {
@@ -396,11 +388,11 @@ namespace LegendaryLibraryNS
         {
             var unifiedDownloadManagerApi = new UnifiedDownloadManagerApi(PlayniteApi);
             var allDownloads = unifiedDownloadManagerApi.GetAllDownloads();
-            var runningAndQueuedDownloads = allDownloads.Where(i =>
+            var runningAndQueuedDownloads = allDownloads?.Where(i =>
                                                              i.Status == UnifiedDownloadStatus.Running ||
                                                              i.Status == UnifiedDownloadStatus.Queued)
                                                         .ToList();
-            if (runningAndQueuedDownloads.Count > 0)
+            if (runningAndQueuedDownloads?.Count > 0)
             {
                 if (displayConfirm)
                 {
@@ -440,7 +432,7 @@ namespace LegendaryLibraryNS
                         var installedGamesIds = LegendaryLauncher.GetInstalledAppList()
                                                                  .Select(x => x.Key)
                                                                  .ToList();
-                        if (LegendaryLauncher.IsEOSOverlayInstalled)
+                        if (LegendaryLauncher.IsEosOverlayInstalled)
                         {
                             installedGamesIds.Add("eos-overlay");
                         }
@@ -558,8 +550,6 @@ namespace LegendaryLibraryNS
                 case UpdatePolicy.SixMonths:
                     updateTime = now.AddMonths(6);
                     break;
-                default:
-                    break;
             }
 
             return updateTime?.ToUnixTimeSeconds() ?? 0;
@@ -586,14 +576,12 @@ namespace LegendaryLibraryNS
                 case ClearCacheTime.SixMonths:
                     clearingTime = now.AddMonths(6);
                     break;
-                default:
-                    break;
             }
 
             return clearingTime?.ToUnixTimeSeconds() ?? 0;
         }
 
-        public override ICollection<MenuItemImpl>? GetGameMenuItems(GetGameMenuItemsArgs args)
+        public override ICollection<MenuItemImpl> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
             var menuItems = new List<MenuItemImpl>();
             var legendaryGames = args.Games.Where(i => i.LibraryId == PluginId).ToList();
@@ -662,7 +650,7 @@ namespace LegendaryLibraryNS
                                     { DownloadAction = DownloadAction.Install };
                                 installData.Add(new DownloadManagerData.Download
                                 {
-                                    GameId = notInstalledLegendaryGame.LibraryGameId,
+                                    GameId = notInstalledLegendaryGame.LibraryGameId ?? "",
                                     Name = notInstalledLegendaryGame.Name,
                                     DownloadProperties = installProperties
                                 });
@@ -688,7 +676,7 @@ namespace LegendaryLibraryNS
                                     { DownloadAction = DownloadAction.Repair };
                                 installData.Add(new DownloadManagerData.Download
                                 {
-                                    GameId = game.LibraryGameId, Name = game.Name,
+                                    GameId = game.LibraryGameId!, Name = game.Name,
                                     DownloadProperties = installProperties
                                 });
                             }
@@ -724,7 +712,7 @@ namespace LegendaryLibraryNS
             return menuItems;
         }
 
-        public override ICollection<MenuItemImpl>? GetAppMenuItems(GetAppMenuItemsArgs args)
+        public override ICollection<MenuItemImpl> GetAppMenuItems(GetAppMenuItemsArgs args)
         {
             var items = new List<MenuItemImpl>
             {
@@ -744,7 +732,7 @@ namespace LegendaryLibraryNS
                                 LocalizationManager.Instance.GetString(LOC.CommonCheckingForUpdates),
                                 false) { IsIndeterminate = true };
                         await PlayniteApi.Dialogs.ShowAsyncBlockingProgressAsync(updateCheckProgressOptions,
-                            async (a) => { gamesUpdates = await legendaryUpdateController.CheckAllGamesUpdates(); }
+                            async (_) => { gamesUpdates = await legendaryUpdateController.CheckAllGamesUpdates(); }
                         );
 
                         var checkedGames = new List<Game>();
@@ -767,7 +755,7 @@ namespace LegendaryLibraryNS
                             }
                         }
 
-                        if (LegendaryLauncher.IsEOSOverlayInstalled)
+                        if (LegendaryLauncher.IsEosOverlayInstalled)
                         {
                             var checkedGame = new Game
                             {

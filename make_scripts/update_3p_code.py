@@ -23,16 +23,18 @@ if os.path.exists(pj(third_party_path, "PlayniteExtensions")):
 legendary_csproj = ET.parse(pj(src_path, "LegendaryLibrary.csproj"))
 xml_ns = "{http://schemas.microsoft.com/developer/msbuild/2003}"
 for child in legendary_csproj.getroot():
-    if child.tag == f"{xml_ns}ItemGroup":
-        if "Label" in child.attrib:
+    if child.tag == "ItemGroup":
+        if "Label" in child.attrib and child.get("Label") == "compileInclude3p":
             for compile_items in child:
-                needed_file = compile_items.get('Include').replace("..\\third_party\\", "")
-                needed_file = pn(pj(main_path, "..", needed_file))
-                dst = os.path.relpath(os.path.dirname(needed_file), pj(main_path, ".."))
-                dst = pj(third_party_path, dst)
-                if not os.path.exists(dst):
-                    os.makedirs(dst)
-                shutil.copy(needed_file, pj(dst, os.path.basename(needed_file)))
+                include_tag = compile_items.get('Include')
+                if include_tag is not None:
+                    needed_file = include_tag.replace("..\\third_party\\", "")
+                    needed_file = pn(pj(main_path, "..", needed_file))
+                    dst = os.path.relpath(os.path.dirname(needed_file), pj(main_path, ".."))
+                    dst = pj(third_party_path, dst)
+                    if not os.path.exists(dst):
+                        os.makedirs(dst)
+                    shutil.copy(needed_file, pj(dst, os.path.basename(needed_file)))
 
 shutil.copy(pj(main_path, "..", "PlayniteExtensions", "LICENSE.md"), pj(third_party_path, "PlayniteExtensions", "LICENSE.md"))
 shutil.copy(pj(main_path, "..", "PlayniteExtensions", "PlayniteRepo", "LICENSE.md"), pj(third_party_path, "PlayniteExtensions", "PlayniteRepo", "LICENSE.md"))

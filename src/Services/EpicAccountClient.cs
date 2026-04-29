@@ -5,7 +5,6 @@ using LegendaryLibraryNS.Models;
 using Linguini.Shared.Types.Bundle;
 using Playnite;
 using Playnite.Common;
-using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,7 +31,7 @@ namespace LegendaryLibraryNS.Services
     {
         private ILogger logger = LogManager.GetLogger();
         private IPlayniteApi api;
-        private string tokensPath;
+        private string TokensPath { get; set; }
         private readonly string loginUrl = "https://www.epicgames.com/id/login?responseType=code";
 
         public static string AuthCodeUrl =
@@ -56,12 +55,13 @@ namespace LegendaryLibraryNS.Services
         public EpicAccountClient(IPlayniteApi api)
         {
             this.api = api;
-            tokensPath = LegendaryLauncher.TokensPath;
-            var oauthUrlMask = @"https://{0}/account/api/oauth/token";
-            var accountUrlMask = @"https://{0}/account/api/public/account/";
-            var libraryItemsUrlMask = @"https://{0}/library/api/public/items?includeMetadata=true&platform=Windows";
-            var catalogUrlMask = @"https://{0}/catalog/api/shared/namespace/";
-            var playtimeUrlMask = @"https://{0}/library/api/public/playtime/account/{1}/all";
+            TokensPath = LegendaryLauncher.TokensPath;
+            const string oauthUrlMask = @"https://{0}/account/api/oauth/token";
+            const string accountUrlMask = @"https://{0}/account/api/public/account/";
+            const string libraryItemsUrlMask =
+                @"https://{0}/library/api/public/items?includeMetadata=true&platform=Windows";
+            const string catalogUrlMask = @"https://{0}/catalog/api/shared/namespace/";
+            const string playtimeUrlMask = @"https://{0}/library/api/public/playtime/account/{1}/all";
 
             var loadedFromConfig = false;
 
@@ -166,14 +166,14 @@ namespace LegendaryLibraryNS.Services
                 var respContent = await response.Content.ReadAsStringAsync();
                 if (!useEncryptedTokens)
                 {
-                    FileSystem.CreateDirectory(Path.GetDirectoryName(tokensPath));
-                    File.WriteAllText(tokensPath, respContent);
+                    FileSystem.CreateDirectory(Path.GetDirectoryName(TokensPath)!);
+                    await File.WriteAllTextAsync(TokensPath, respContent);
                 }
                 else
                 {
-                    FileSystem.CreateDirectory(Path.GetDirectoryName(LegendaryLauncher.EncryptedTokensPath));
+                    FileSystem.CreateDirectory(Path.GetDirectoryName(LegendaryLauncher.EncryptedTokensPath)!);
                     Encryption.EncryptToFile(LegendaryLauncher.EncryptedTokensPath, respContent, Encoding.UTF8,
-                        WindowsIdentity.GetCurrent().User.Value);
+                        WindowsIdentity.GetCurrent().User!.Value);
                 }
             }
             catch (Exception ex)
@@ -188,9 +188,9 @@ namespace LegendaryLibraryNS.Services
             var username = "";
             if (tokens != null)
             {
-                if (!tokens.displayName.IsNullOrEmpty())
+                if (!tokens.DisplayName.IsNullOrEmpty())
                 {
-                    username = tokens.displayName;
+                    username = tokens.DisplayName;
                 }
             }
 
@@ -207,14 +207,14 @@ namespace LegendaryLibraryNS.Services
 
             try
             {
-                var account = await InvokeRequest<AccountResponse>(accountUrl + tokens.account_id, tokens);
-                return account.Item2.id == tokens.account_id;
+                var account = await InvokeRequest<AccountResponse>(accountUrl + tokens.Account_id, tokens);
+                return account.Item2.Id == tokens.Account_id;
             }
             catch (Exception ex)
             {
                 if (ex is TokenException)
                 {
-                    var renewSuccess = await RenewTokens(tokens.refresh_token);
+                    var renewSuccess = await RenewTokens(tokens.Refresh_token);
                     if (renewSuccess)
                     {
                         try
@@ -225,8 +225,8 @@ namespace LegendaryLibraryNS.Services
                                 return false;
                             }
 
-                            var account = await InvokeRequest<AccountResponse>(accountUrl + tokens.account_id, tokens);
-                            return account.Item2.id == tokens.account_id;
+                            var account = await InvokeRequest<AccountResponse>(accountUrl + tokens.Account_id, tokens);
+                            return account.Item2.Id == tokens.Account_id;
                         }
                         catch (Exception ex2)
                         {
@@ -243,41 +243,42 @@ namespace LegendaryLibraryNS.Services
 
         public async Task<List<Asset>> GetLibraryItems()
         {
-            if (!await GetIsUserLoggedIn())
+            var tokens = LoadTokens();
+            if (!await GetIsUserLoggedIn() || tokens == null)
             {
                 throw new Exception("User is not authenticated.");
             }
 
-            var response = await InvokeRequest<LibraryItemsResponse>(libraryItemsUrl, LoadTokens());
             var assets = new List<Asset>();
-            assets.AddRange(response.Item2.records);
+            var response = await InvokeRequest<LibraryItemsResponse>(libraryItemsUrl, tokens);
+            assets.AddRange(response.Item2.Records);
 
-            string nextCursor = response.Item2.responseMetadata?.nextCursor;
+            string? nextCursor = response.Item2.ResponseMetadata?.NextCursor;
             while (nextCursor != null)
             {
                 response = await InvokeRequest<LibraryItemsResponse>(
                     $"{libraryItemsUrl}&cursor={nextCursor}",
-                    LoadTokens());
-                assets.AddRange(response.Item2.records);
-                nextCursor = response.Item2.responseMetadata.nextCursor;
+                    tokens);
+                assets.AddRange(response.Item2.Records);
+                nextCursor = response.Item2.ResponseMetadata?.NextCursor;
             }
 
-            var filteredAssets = assets.Where(asset => !asset.appName.IsNullOrEmpty()
-                                                       && asset.sandboxType != "PRIVATE"
-                                                       && asset.@namespace != "ue")
+            var filteredAssets = assets.Where(asset => !asset.AppName.IsNullOrEmpty()
+                                                       && asset.SandboxType != "PRIVATE"
+                                                       && asset.Namespace != "ue")
                                        .ToList();
             return filteredAssets;
         }
 
         public async Task<List<PlaytimeItem>> GetPlaytimeItems()
         {
-            if (!await GetIsUserLoggedIn())
+            var tokens = LoadTokens();
+            if (!await GetIsUserLoggedIn() || tokens == null)
             {
                 throw new Exception("User is not authenticated.");
             }
 
-            var tokens = LoadTokens();
-            var formattedPlaytimeUrl = string.Format(playtimeUrl, tokens.account_id);
+            var formattedPlaytimeUrl = string.Format(playtimeUrl, tokens.Account_id);
             var response = await InvokeRequest<List<PlaytimeItem>>(formattedPlaytimeUrl, tokens);
             return response.Item2;
         }
@@ -297,17 +298,20 @@ namespace LegendaryLibraryNS.Services
                     logger.Error(e, "Failed to load Epic catalog cache.");
                 }
             }
-
             if (result == null)
             {
-                var url = string.Format("{0}/bulk/items?id={1}&country=US&locale=en-US&includeMainGameDetails=true",
-                    nameSpace, id);
-                var catalogResponse = await InvokeRequest<Dictionary<string, CatalogItem>>(catalogUrl + url, LoadTokens());
-                result = catalogResponse.Item2;
-                FileSystem.WriteStringToFile(cachePath, catalogResponse.Item1);
+                var tokens = LoadTokens();
+                if (tokens != null)
+                {
+                    var url = $"{nameSpace}/bulk/items?id={id}&country=US&locale=en-US&includeMainGameDetails=true";
+                    var catalogResponse =
+                        await InvokeRequest<Dictionary<string, CatalogItem>>(catalogUrl + url, tokens);
+                    result = catalogResponse.Item2;
+                    FileSystem.WriteStringToFile(cachePath, catalogResponse.Item1);
+                }
             }
 
-            if (result.TryGetValue(id, out var catalogItem))
+            if (result != null && result.TryGetValue(id, out var catalogItem))
             {
                 return catalogItem;
             }
@@ -341,7 +345,7 @@ namespace LegendaryLibraryNS.Services
 
                 if (!useEncryptedTokens)
                 {
-                    await File.WriteAllTextAsync(tokensPath, respContent);
+                    await File.WriteAllTextAsync(TokensPath, respContent);
                 }
                 else
                 {
@@ -362,13 +366,13 @@ namespace LegendaryLibraryNS.Services
         {
             var request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Add("User-Agent", UserAgent);
-            request.Headers.Add("Authorization", tokens.token_type + " " + tokens.access_token);
+            request.Headers.Add("Authorization", tokens.Token_type + " " + tokens.Access_token);
 
             using var response = await HttpClient.SendAsync(request);
             var str = await response.Content.ReadAsStringAsync();
-            if (Serialization.TryFromJson<ErrorResponse>(str, out var error) && !string.IsNullOrEmpty(error.errorCode))
+            if (Serialization.TryFromJson<ErrorResponse>(str, out var error) && !string.IsNullOrEmpty(error?.ErrorCode))
             {
-                throw new TokenException(error.errorCode);
+                throw new TokenException(error.ErrorCode);
             }
             else
             {
@@ -387,11 +391,11 @@ namespace LegendaryLibraryNS.Services
 
         public OauthResponse? LoadTokens()
         {
-            if (File.Exists(tokensPath))
+            if (File.Exists(TokensPath))
             {
                 try
                 {
-                    return Serialization.FromJson<OauthResponse>(FileSystem.ReadFileAsStringSafe(tokensPath));
+                    return Serialization.FromJson<OauthResponse>(FileSystem.ReadFileAsStringSafe(TokensPath));
                 }
                 catch (Exception e)
                 {
@@ -404,7 +408,7 @@ namespace LegendaryLibraryNS.Services
                 {
                     return Serialization.FromJson<OauthResponse>(
                         Encryption.DecryptFromFile(LegendaryLauncher.EncryptedTokensPath, Encoding.UTF8,
-                            WindowsIdentity.GetCurrent().User.Value));
+                            WindowsIdentity.GetCurrent().User?.Value ?? ""));
                 }
                 catch (Exception e)
                 {
@@ -420,7 +424,7 @@ namespace LegendaryLibraryNS.Services
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
                 LocalizationManager.Instance.GetString(LOC.CommonUploadingPlaytime,
                     new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }), false);
-            await api.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async (a) =>
+            await api.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async (_) =>
             {
                 var userLoggedIn = await GetIsUserLoggedIn();
                 if (userLoggedIn)
@@ -429,15 +433,14 @@ namespace LegendaryLibraryNS.Services
                     if (userData != null)
                     {
                         var uri =
-                            $"https://library-service.live.use1a.on.epicgames.com/library/api/public/playtime/account/{userData.account_id}";
-                        PlaytimePayload playtimePayload = new PlaytimePayload
+                            $"https://library-service.live.use1a.on.epicgames.com/library/api/public/playtime/account/{userData.Account_id}";
+                        var playtimePayload = new PlaytimePayload
                         {
-                            artifactId = game.LibraryGameId,
-                            machineId = LegendaryLibrary.GetSettings().SyncPlaytimeMachineId
+                            ArtifactId = game.LibraryGameId!,
+                            MachineId = LegendaryLibrary.GetSettings()?.SyncPlaytimeMachineId,
+                            EndTime = endTime,
+                            StartTime = startTime
                         };
-                        DateTime now = DateTime.UtcNow;
-                        playtimePayload.endTime = endTime;
-                        playtimePayload.startTime = startTime;
                         var playtimeJson = Serialization.ToJson(playtimePayload);
                         var content = new StringContent(playtimeJson, Encoding.UTF8, "application/json");
                         var request = new HttpRequestMessage(HttpMethod.Put, uri)
@@ -445,7 +448,7 @@ namespace LegendaryLibraryNS.Services
                             Content = content
                         };
                         request.Headers.Add("User-Agent", UserAgent);
-                        request.Headers.Add("Authorization", userData.token_type + " " + userData.access_token);
+                        request.Headers.Add("Authorization", userData.Token_type + " " + userData.Access_token);
                         try
                         {
                             using var response = await HttpClient.SendAsync(request);

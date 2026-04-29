@@ -4,13 +4,13 @@ namespace LegendaryLibraryNS.Models
 {
     public class LibraryItemsResponse
     {
-        public Responsemetadata responseMetadata { get; set; } = new Responsemetadata();
-        public List<Asset> records { get; set; }
+        public Responsemetadata? ResponseMetadata { get; set; }
+        public List<Asset> Records { get; set; } = [];
 
         public class Responsemetadata
         {
-            public string nextCursor { get; set; }
-            public string stateToken { get; set; }
+            public string NextCursor { get; set; } = "";
+            public string StateToken { get; set; } = "";
         }
     }
 }

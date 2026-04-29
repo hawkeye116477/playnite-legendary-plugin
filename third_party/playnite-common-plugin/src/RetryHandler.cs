@@ -1,5 +1,6 @@
 ﻿using Playnite;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,19 +9,19 @@ namespace CommonPlugin
 {
     public class RetryHandler : DelegatingHandler
     {
-        private readonly int _maxRetries = 3;
-        private readonly int _baseDelayMs = 500;
+        private readonly int maxRetries = 3;
+        private readonly int baseDelayMs = 500;
         private ILogger logger = LogManager.GetLogger();
 
         public RetryHandler(HttpMessageHandler innerHandler) : base(innerHandler) { }
 
         public RetryHandler(HttpMessageHandler innerHandler, int maxRetries, int baseDelayMs) : base(innerHandler)
         {
-            _maxRetries = maxRetries;
-            _baseDelayMs = baseDelayMs;
+            this.maxRetries = maxRetries;
+            this.baseDelayMs = baseDelayMs;
         }
 
-        internal static async Task<HttpRequestMessage> CloneRequestAsync(HttpRequestMessage originalRequest)
+        private static async Task<HttpRequestMessage> CloneRequestAsync(HttpRequestMessage originalRequest)
         {
             var newRequest = new HttpRequestMessage(originalRequest.Method, originalRequest.RequestUri)
             {
@@ -31,10 +32,10 @@ namespace CommonPlugin
             {
                 newRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
             }
-
-            foreach (var property in originalRequest.Properties)
+            
+            foreach (var option in originalRequest.Options)
             {
-                newRequest.Properties.Add(property);
+                newRequest.Options.TryAdd(option.Key, option.Value);
             }
 
             if (originalRequest.Content != null)
@@ -54,8 +55,8 @@ namespace CommonPlugin
             HttpRequestMessage request,
             CancellationToken token)
         {
-            HttpResponseMessage response = null;
-            for (var i = 0; i < _maxRetries; i++)
+            HttpResponseMessage? response = null;
+            for (var i = 0; i < maxRetries; i++)
             {
                 try
                 {
@@ -63,20 +64,17 @@ namespace CommonPlugin
                     response = await base.SendAsync(newRequest, token);
                     if ((int)response.StatusCode >= 500 && (int)response.StatusCode < 600)
                     {
-                        var errorBody = await response.Content.ReadAsStringAsync();
+                        var errorBody = await response.Content.ReadAsStringAsync(token);
                         throw new HttpRequestException($"Server error: {(int)response.StatusCode} {response.ReasonPhrase}. Body: {errorBody}");
                     }
-                    else
-                    {
-                        return response;
-                    }
+                    return response;
                 }
                 catch when (!token.IsCancellationRequested)
                 {
-                    if (i < _maxRetries - 1)
+                    if (i < maxRetries - 1)
                     {
-                        int delay = (int)(_baseDelayMs * Math.Pow(2, i));
-                        logger.Debug($"Retrying request.... . Attempts left: {_maxRetries - i - 1}");
+                        int delay = (int)(baseDelayMs * Math.Pow(2, i));
+                        logger.Debug($"Retrying request.... . Attempts left: {maxRetries - i - 1}");
                         await Task.Delay(delay, token);
                     }
                     else
@@ -84,6 +82,15 @@ namespace CommonPlugin
                         throw;
                     }
                 }
+            }
+
+            if (response == null)
+            {
+                return new HttpResponseMessage()
+                {
+                    ReasonPhrase = "Response was null",
+                    RequestMessage = request
+                };
             }
             return response;
         }

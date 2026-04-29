@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LegendaryLibraryNS.Models
+﻿namespace LegendaryLibraryNS.Models
 {
     public class PlaytimeItem
     {
-        public string accountId;
-        public string artifactId;
-        public ulong totalTime;
+        public string AccountId { get; set; } = "";
+        public string ArtifactId { get; set; } = "";
+        public ulong TotalTime;
     }
 }

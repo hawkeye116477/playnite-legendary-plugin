@@ -64,7 +64,7 @@
                     </Style>
                 </ListBox.Resources>
             </ListBox>
-            <Border BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Margin="0,5,0,0">
+            <Border BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,5,0,0">
                 <Expander Margin="2,2,5,2" HorizontalAlignment="Left" >
                     <Expander.Header >
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonAdvancedOptions}}"

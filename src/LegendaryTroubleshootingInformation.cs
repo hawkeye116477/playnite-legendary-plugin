@@ -1,6 +1,4 @@
-﻿using Playnite;
-
-namespace LegendaryLibraryNS
+﻿namespace LegendaryLibraryNS
 {
     public class LegendaryTroubleshootingInformation
     {

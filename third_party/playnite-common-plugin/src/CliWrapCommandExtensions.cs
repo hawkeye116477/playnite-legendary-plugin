@@ -28,11 +28,10 @@ namespace CliWrap
                 }
             }
 
-            var tokens = (command.Arguments ?? "").Split(' ').ToList();
+            var tokens = (command.Arguments).Split(' ').ToList();
             for (int i = 0; i < tokens.Count - 1; i++)
             {
                 string current = tokens[i];
-                string next = tokens[i + 1];
 
                 if ((current.StartsWith("--") || current.StartsWith("-"))
                     && sensitiveValues.Any(s => current.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0))

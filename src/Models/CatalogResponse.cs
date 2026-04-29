@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+// ReSharper disable UnassignedField.Global
+// ReSharper disable ClassNeverInstantiated.Global
 
 namespace LegendaryLibraryNS.Models
 {
@@ -7,66 +9,66 @@ namespace LegendaryLibraryNS.Models
     {
         public class CustomAttribute
         {
-            public string type;
-            public string value;
+            public string Type  { get; set; } = "";
+            public string Value  { get; set; } = "";
         }
 
         public class Image
         {
-            public int height { get; set; }
-            public string md5 { get; set; }
-            public int size { get; set; }
-            public string type { get; set; }
-            public DateTime uploadedDate { get; set; }
-            public string url { get; set; }
-            public int width { get; set; }
+            public int Height;
+            public string? Md5;
+            public int Size;
+            public string? Type;
+            public DateTime UploadedDate;
+            public string? Url;
+            public int Width;
         }
 
         public class Category
         {
-            public string path;
+            public string? Path;
         }
 
-        public class ReleaseInfo
+        public class ReleaseInfoModel
         {
-            public string appId;
-            public List<string> platform;
-            public DateTime? dateAdded;
+            public string? AppId;
+            public List<string?> Platform = [];
+            public DateTime? DateAdded;
         }
 
         public class CustomAttributeType
         {
-            public CustomAttribute CanRunOffline;
-            public CustomAttribute CanSkipKoreanIdVerification;
-            public CustomAttribute CloudIncludeList;
-            public CustomAttribute CloudSaveFolder;
-            public CustomAttribute FolderName;
-            public CustomAttribute PartnerLinkType;
-            public CustomAttribute ThirdPartyManagedApp;
+            public CustomAttribute? CanRunOffline;
+            public CustomAttribute? CanSkipKoreanIdVerification;
+            public CustomAttribute? CloudIncludeList;
+            public CustomAttribute? CloudSaveFolder;
+            public CustomAttribute? FolderName;
+            public CustomAttribute? PartnerLinkType;
+            public CustomAttribute? ThirdPartyManagedApp;
         }
 
-        public class MainGameItem
+        public class MainGameItemModel
         {
-            public string id;
+            public string? Id;
         }
 
-        public string id;
-        public string title;
-        public string description;
-        public List<Image> keyImages;
-        public List<Category> categories;
-        public string @namespace;
-        public string status;
-        public DateTime? creationDate;
-        public DateTime? lastModifiedDate;
-        public CustomAttributeType customAttributes;
-        public string entitlementName;
-        public string entitlementType;
-        public string itemType;
-        public List<ReleaseInfo> releaseInfo;
-        public string developer;
-        public string developerId;
-        public bool endOfSupport;
-        public MainGameItem? mainGameItem;
+        public string? Id;
+        public string? Title;
+        public string? Description;
+        public List<Image>? KeyImages;
+        public List<Category>? Categories;
+        public string? Namespace;
+        public string? Status;
+        public DateTime? CreationDate;
+        public DateTime? LastModifiedDate;
+        public CustomAttributeType? CustomAttributes;
+        public string? EntitlementName;
+        public string? EntitlementType;
+        public string? ItemType;
+        public List<ReleaseInfoModel>? ReleaseInfo;
+        public string? Developer;
+        public string? DeveloperId;
+        public bool EndOfSupport;
+        public MainGameItemModel? MainGameItem;
     }
 }

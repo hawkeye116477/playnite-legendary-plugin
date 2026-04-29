@@ -16,11 +16,10 @@ namespace LegendaryLibraryNS
     /// <summary>
     /// Interaction logic for LegendaryDownloadProperties.xaml
     /// </summary>
-    public partial class LegendaryDownloadProperties : UserControl
+    public partial class LegendaryDownloadProperties
     {
         private DownloadManagerData.Download SelectedDownload => (DownloadManagerData.Download)DataContext;
         private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
-        public List<string> RequiredThings;
         private bool uncheckedByUser = true;
         private bool checkedByUser = true;
         private List<string> selectedSdls = [];
@@ -62,19 +61,19 @@ namespace LegendaryLibraryNS
             var extraContentInfo = await LegendaryLauncher.GetExtraContentInfo(SelectedDownload);
             if (extraContentInfo.Count > 0)
             {
-                var sdls = extraContentInfo.Where(i => i.Value.Is_dlc == false);
-                if (sdls.Count() > 0)
+                var sdls = extraContentInfo.Where(i => !i.Value.Is_dlc).ToList();
+                if (sdls.Count > 0)
                 {
                     SizeGrd.Visibility = Visibility.Visible;
                 }
 
-                if (sdls.Count() > 1)
+                if (sdls.Count > 1)
                 {
                     AllOrNothingChk.Visibility = Visibility.Visible;
                 }
 
                 ExtraContentLB.ItemsSource = sdls;
-                if (wantedItem.DownloadProperties.ExtraContent.Count > 0)
+                if (wantedItem.DownloadProperties.ExtraContent is { Count: > 0 })
                 {
                     foreach (var sdl in wantedItem.DownloadProperties.ExtraContent)
                     {
@@ -125,10 +124,10 @@ namespace LegendaryLibraryNS
         private async void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             var wantedItem =
-                LegendaryLibrary.Instance.PluginDownloadData.Downloads.FirstOrDefault(item =>
+                LegendaryLibrary.Instance.PluginDownloadData.Downloads.First(item =>
                     item.GameId == SelectedDownload.GameId);
             var installPath = SelectedGamePathTxt.Text;
-            var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory.ToString();
+            var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory;
             if (installPath.Contains(playniteDirectoryVariable))
             {
                 installPath = installPath.Replace(playniteDirectoryVariable, playniteApi.AppInfo.ApplicationDirectory);
@@ -141,20 +140,20 @@ namespace LegendaryLibraryNS
 
             wantedItem.DownloadProperties.InstallPath = installPath;
             wantedItem.DownloadProperties.DownloadAction = (DownloadAction)TaskCBo.SelectedValue;
-            wantedItem.DownloadProperties.EnableReordering = (bool)ReorderingChk.IsChecked;
+            wantedItem.DownloadProperties.EnableReordering = (bool)ReorderingChk.IsChecked!;
             wantedItem.DownloadProperties.MaxWorkers = int.Parse(MaxWorkersNI.Value);
             wantedItem.DownloadProperties.MaxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
             if (PrerequisitesChk.IsEnabled)
             {
-                wantedItem.DownloadProperties.InstallPrerequisites = (bool)PrerequisitesChk.IsChecked;
+                wantedItem.DownloadProperties.InstallPrerequisites = (bool)PrerequisitesChk.IsChecked!;
             }
 
-            wantedItem.DownloadProperties.IgnoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked;
+            wantedItem.DownloadProperties.IgnoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked!;
             wantedItem.DownloadProperties.ExtraContent = selectedSdls;
             UnifiedDownloadManagerApi unifiedDownloadManagerApi = new UnifiedDownloadManagerApi(playniteApi);
             var wantedUnifiedTask =
                 unifiedDownloadManagerApi.GetTask(wantedItem.GameId, LegendaryLibrary.PluginId);
-            if (wantedUnifiedTask.Status == UnifiedDownloadStatus.Canceled)
+            if (wantedUnifiedTask is { Status: UnifiedDownloadStatus.Canceled })
             {
                 var gameSize = await LegendaryLauncher.CalculateGameSize(GameData, selectedSdls);
                 wantedUnifiedTask.DownloadSizeBytes = gameSize.Download_size;
@@ -162,7 +161,7 @@ namespace LegendaryLibraryNS
             }
 
             LegendaryLibrary.Instance.SaveDownloadData();
-            Window.GetWindow(this).Close();
+            Window.GetWindow(this)?.Close();
         }
 
         private void AllOrNothingChk_Checked(object sender, RoutedEventArgs e)
@@ -194,7 +193,7 @@ namespace LegendaryLibraryNS
 
         private void UpdateAfterInstallingSize(long availableFreeSpace, double installSizeNumber)
         {
-            double afterInstallSizeNumber = (double)(availableFreeSpace - installSizeNumber);
+            double afterInstallSizeNumber = availableFreeSpace - installSizeNumber;
             if (afterInstallSizeNumber < 0)
             {
                 afterInstallSizeNumber = 0;

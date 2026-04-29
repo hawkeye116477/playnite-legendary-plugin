@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Playnite.Native;
 
 namespace Playnite.Common
@@ -14,7 +11,7 @@ namespace Playnite.Common
     {
         private const string longPathPrefix = @"\\?\";
         private const string longPathUncPrefix = @"\\?\UNC\";
-        public static readonly char[] DirectorySeparators = new char[] { '\\', '/' };
+        public static readonly char[] DirectorySeparators = ['\\', '/'];
 
         public static string GetFinalPathName(string path)
         {
@@ -75,7 +72,7 @@ namespace Playnite.Common
                     return false;
                 }
 
-                string drive = Path.GetPathRoot(path);
+                string? drive = Path.GetPathRoot(path);
                 if (!string.IsNullOrEmpty(drive) && !Directory.Exists(drive))
                 {
                     return false;

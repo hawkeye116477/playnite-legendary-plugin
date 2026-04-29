@@ -114,13 +114,13 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                        <TextBox Text="{Binding name}" IsReadOnly="True" Margin="0,0,10,0"
+                                        <TextBox Text="{Binding Name}" IsReadOnly="True" Margin="0,0,10,0"
                                                  VerticalAlignment="Center" HorizontalAlignment="Left" />
                                         <Button
                                             Content="{common:Localize Key={x:Static system:LOC.CommonExtraContent}}"
                                             Name="GameExtraContentBtn" VerticalAlignment="Center"
                                             HorizontalAlignment="Left" Click="GameExtraContentBtn_Click"
-                                            Visibility="{Binding extraContentAvailable, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                            Visibility="{Binding ExtraContentAvailable, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>

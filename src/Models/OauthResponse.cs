@@ -4,20 +4,20 @@ namespace LegendaryLibraryNS.Models
 {
     public class OauthResponse
     {
-        public string access_token;
-        public long expires_in;
-        public DateTime expires_at;
-        public string token_type;
-        public string refresh_token;
-        public long refresh_expires;
-        public DateTime refresh_expires_at;
-        public string account_id;
-        public string client_id;
-        public bool internal_client;
-        public string client_service;
-        public string app;
-        public string in_app_id;
-        public string device_id;
-        public string displayName;
+        public string Access_token { get; set; } = "";
+        public long Expires_in;
+        public DateTime Expires_at;
+        public string Token_type { get; set; } = "";
+        public string Refresh_token { get; set; } = "";
+        public long Refresh_expires;
+        public DateTime Refresh_expires_at;
+        public string Account_id { get; set; } = "";
+        public string Client_id { get; set; } = "";
+        public bool Internal_client;
+        public string Client_service { get; set; } = "";
+        public string App { get; set; } = "";
+        public string In_app_id { get; set; } = "";
+        public string Device_id { get; set; } = "";
+        public string DisplayName { get; set; } = "";
     }
 }

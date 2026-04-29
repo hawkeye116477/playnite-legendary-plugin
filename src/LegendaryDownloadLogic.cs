@@ -15,7 +15,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using UnifiedDownloadManagerApiNS;
@@ -26,9 +25,9 @@ namespace LegendaryLibraryNS
 {
     public class LegendaryDownloadLogic : IUnifiedDownloadLogic
     {
-        private static readonly RetryHandler retryHandler = new RetryHandler(new HttpClientHandler());
-        private static readonly HttpClient client = new HttpClient(retryHandler);
-        private static readonly ILogger logger = LogManager.GetLogger();
+        private static readonly RetryHandler RetryHandler = new RetryHandler(new HttpClientHandler());
+        private static readonly HttpClient Client = new HttpClient(RetryHandler);
+        private static readonly ILogger Logger = LogManager.GetLogger();
         private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
 
         public static async Task WaitUntilLegendaryCloses()
@@ -43,8 +42,9 @@ namespace LegendaryLibraryNS
 
         public static async Task<bool> CheckIfUdmInstalled()
         {
-            var playniteAPI = LegendaryLibrary.PlayniteApi;
-            bool installed = playniteAPI.Addons.Plugins.Any(plugin => plugin.Id.Equals(UnifiedDownloadManagerSharedProperties.Id));
+            var playniteApi = LegendaryLibrary.PlayniteApi;
+            bool installed =
+                playniteApi.Addons.Plugins.Any(plugin => plugin.Id.Equals(UnifiedDownloadManagerSharedProperties.Id));
             if (!installed)
             {
                 var options = new List<MessageBoxResponse>
@@ -52,12 +52,18 @@ namespace LegendaryLibraryNS
                     new(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteInstallGame)),
                     new(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOkLabel)),
                 };
-                var result = await playniteAPI.Dialogs.ShowMessageAsync(LocalizationManager.Instance.GetString(LOC.CommonLauncherNotInstalled, new Dictionary<string, IFluentType> { ["launcherName"] = (FluentString)"Unified Download Manager" }), "Legendary (Epic Games) library integration", MessageBoxSeverity.Error, options, []);
+                var result = await playniteApi.Dialogs.ShowMessageAsync(
+                    LocalizationManager.Instance.GetString(LOC.CommonLauncherNotInstalled,
+                        new Dictionary<string, IFluentType>
+                            { ["launcherName"] = (FluentString)"Unified Download Manager" }),
+                    "Legendary (Epic Games) library integration", MessageBoxSeverity.Error, options, []);
                 if (result == options[0])
                 {
-                    Playnite.Commands.GlobalCommands.NavigateUrl("playnite://playnite/installaddon/UnifiedDownloadManager");
+                    Playnite.Commands.GlobalCommands.NavigateUrl(
+                        "playnite://playnite/installaddon/UnifiedDownloadManager");
                 }
             }
+
             return installed;
         }
 
@@ -69,7 +75,8 @@ namespace LegendaryLibraryNS
             foreach (var downloadTask in downloadTasks)
             {
                 bool completedDownload = true;
-                var wantedUnifiedItem = unifiedDownloadManagerApi.GetTask(downloadTask.GameId,  LegendaryLibrary.PluginId);
+                var wantedUnifiedItem =
+                    unifiedDownloadManagerApi.GetTask(downloadTask.GameId, LegendaryLibrary.PluginId);
                 if (wantedUnifiedItem != null)
                 {
                     if (wantedUnifiedItem.Status != UnifiedDownloadStatus.Completed)
@@ -77,31 +84,37 @@ namespace LegendaryLibraryNS
                         completedDownload = false;
                     }
                 }
+
                 if (completedDownload)
                 {
-                    var wantedPluginItem = LegendaryLibrary.Instance.PluginDownloadData?.Downloads?.FirstOrDefault(item => item.GameId == downloadTask.GameId);
+                    var wantedPluginItem =
+                        LegendaryLibrary.Instance?.PluginDownloadData?.Downloads?.FirstOrDefault(item =>
+                            item.GameId == downloadTask.GameId);
                     if (wantedPluginItem != null)
                     {
-                        LegendaryLibrary.Instance.PluginDownloadData?.Downloads?.Remove(wantedPluginItem);
-                        wantedPluginItem = LegendaryLibrary.Instance.PluginDownloadData.Downloads.FirstOrDefault(item => item.GameId == downloadTask.GameId);
+                        LegendaryLibrary.Instance?.PluginDownloadData?.Downloads?.Remove(wantedPluginItem);
                     }
+
                     if (wantedUnifiedItem != null)
                     {
                         unifiedDownloadManagerApi.RemoveTask(wantedUnifiedItem);
-                        wantedUnifiedItem = unifiedDownloadManagerApi.GetTask(downloadTask.GameId, LegendaryLibrary.PluginId);
+                        wantedUnifiedItem =
+                            unifiedDownloadManagerApi.GetTask(downloadTask.GameId, LegendaryLibrary.PluginId);
                     }
                 }
+
                 if (wantedUnifiedItem != null)
                 {
                     downloadItemsAlreadyAdded.Add(wantedUnifiedItem.Name);
                     continue;
                 }
-                LegendaryLibrary.Instance.PluginDownloadData?.Downloads?.Add(downloadTask);
+
+                LegendaryLibrary.Instance?.PluginDownloadData?.Downloads?.Add(downloadTask);
                 var unifiedTask = new UnifiedDownload
                 {
                     GameId = downloadTask.GameId,
                     Name = downloadTask.Name,
-                    PluginId = LegendaryLibrary.PluginId.ToString(),
+                    PluginId = LegendaryLibrary.PluginId,
                     SourceName = "Epic",
                     AddedTime = downloadTask.AddedTime,
                     DownloadSizeBytes = downloadTask.DownloadSizeNumber,
@@ -110,8 +123,9 @@ namespace LegendaryLibraryNS
                 };
                 unifiedTasks.Add(unifiedTask);
             }
+
             await unifiedDownloadManagerApi.AddTasks(unifiedTasks);
-            LegendaryLibrary.Instance.SaveDownloadData();
+            LegendaryLibrary.Instance?.SaveDownloadData();
 
             if (!silently && unifiedTasks.Count == 0)
             {
@@ -120,9 +134,18 @@ namespace LegendaryLibraryNS
                     string downloadItemsAlreadyAddedCombined = downloadItemsAlreadyAdded[0];
                     if (downloadItemsAlreadyAdded.Count > 1)
                     {
-                        downloadItemsAlreadyAddedCombined = string.Join(", ", downloadItemsAlreadyAdded.Select(item => item.ToString()));
+                        downloadItemsAlreadyAddedCombined = string.Join(", ",
+                            downloadItemsAlreadyAdded.Select(item => item.ToString()));
                     }
-                    await playniteApi.Dialogs.ShowMessageAsync(LocalizationManager.Instance.GetString(LOC.CommonDownloadAlreadyExists, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)downloadItemsAlreadyAddedCombined, ["count"] = (FluentNumber)downloadItemsAlreadyAdded.Count, ["pluginShortName"] = (FluentString)"Unified Download Manager" }), "", MessageBoxButtons.OK, MessageBoxSeverity.Error);
+
+                    await playniteApi.Dialogs.ShowMessageAsync(
+                        LocalizationManager.Instance.GetString(LOC.CommonDownloadAlreadyExists,
+                            new Dictionary<string, IFluentType>
+                            {
+                                ["appName"] = (FluentString)downloadItemsAlreadyAddedCombined,
+                                ["count"] = (FluentNumber)downloadItemsAlreadyAdded.Count,
+                                ["pluginShortName"] = (FluentString)"Unified Download Manager"
+                            }), "", MessageBoxButtons.OK, MessageBoxSeverity.Error);
                 }
             }
         }
@@ -148,7 +171,8 @@ namespace LegendaryLibraryNS
             }
             catch (Exception ex)
             {
-                if (ex is OperationCanceledException && (downloadTask.Status == UnifiedDownloadStatus.Canceled || downloadTask.Status == UnifiedDownloadStatus.Paused))
+                if (ex is OperationCanceledException && (downloadTask.Status == UnifiedDownloadStatus.Canceled ||
+                                                         downloadTask.Status == UnifiedDownloadStatus.Paused))
                 {
                     if (downloadTask.Status == UnifiedDownloadStatus.Canceled)
                     {
@@ -157,7 +181,7 @@ namespace LegendaryLibraryNS
                 }
                 else
                 {
-                    logger.Debug($"An error occured during downloading {downloadTask.Name}: {ex.Message}");
+                    Logger.Debug($"An error occured during downloading {downloadTask.Name}: {ex.Message}");
                     downloadTask.Status = UnifiedDownloadStatus.Error;
                 }
             }
@@ -171,15 +195,17 @@ namespace LegendaryLibraryNS
         {
             var totalStopwatch = Stopwatch.StartNew();
             downloadTask.Status = UnifiedDownloadStatus.Running;
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", LegendaryLauncher.userAgent);
+            Client.DefaultRequestHeaders.Clear();
+            Client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", LegendaryLauncher.UserAgent);
 
             var tempDir = Path.Combine(downloadTask.FullInstallPath, ".Downloader_temp");
             if (!await LegendaryLibrary.Instance.CommonHelpers.IsDirectoryWritable(tempDir))
             {
                 var tempFolderName = $"{downloadTask.GameId}_PlayniteLegendaryPlugin";
-                tempDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "temp", tempFolderName);
+                tempDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "temp", tempFolderName);
             }
+
             Directory.CreateDirectory(tempDir);
 
             long totalSize = 0;
@@ -189,17 +215,20 @@ namespace LegendaryLibraryNS
             var versionInfoContent = await LegendaryLauncher.GetVersionInfoContent();
             if (!versionInfoContent.Tag_name.IsNullOrEmpty())
             {
-                var newAsset = versionInfoContent.Assets.FirstOrDefault(a => a.Browser_download_url.Contains($"{versionInfoContent.Tag_name}/legendary")
-                                                                             && a.Browser_download_url.EndsWith(".exe"));
+                var newAsset = versionInfoContent.Assets.FirstOrDefault(a =>
+                    a.Browser_download_url.Contains($"{versionInfoContent.Tag_name}/legendary")
+                    && a.Browser_download_url.EndsWith(".exe"));
                 if (newAsset?.Browser_download_url != null)
                 {
                     url = newAsset.Browser_download_url;
                 }
             }
+
             using var headRequest = new HttpRequestMessage(HttpMethod.Head, url);
             if (downloadTask.GracefulCts != null)
             {
-                using var headResponse = await client.SendAsync(headRequest, HttpCompletionOption.ResponseHeadersRead, downloadTask.GracefulCts.Token);
+                using var headResponse = await Client.SendAsync(headRequest, HttpCompletionOption.ResponseHeadersRead,
+                    downloadTask.GracefulCts.Token);
                 headResponse.EnsureSuccessStatusCode();
                 totalSize = headResponse.Content.Headers.ContentLength ?? 0;
                 downloadTask.DownloadSizeBytes = totalSize;
@@ -208,43 +237,45 @@ namespace LegendaryLibraryNS
                 var serverFileName =
                     contentDisposition?.FileNameStar ??
                     contentDisposition?.FileName;
-                if (serverFileName.IsNullOrEmpty())
+                if (!string.IsNullOrEmpty(serverFileName))
                 {
-                    var finalUrl = headResponse.RequestMessage.RequestUri;
-                    serverFileName = Path.GetFileName(finalUrl.LocalPath);
+                    var finalUrl = headResponse.RequestMessage?.RequestUri;
+                    serverFileName = Path.GetFileName(finalUrl?.LocalPath);
                 }
-                var tempPath = Path.Combine(tempDir, serverFileName.Trim('"'));
+
+                var tempPath = Path.Combine(tempDir, serverFileName?.Trim('"') ?? "");
                 downloadedBytes = File.Exists(tempPath) ? new FileInfo(tempPath).Length : 0;
                 long lastBytes = downloadedBytes;
 
-                var finalPath = Path.Combine(downloadTask.FullInstallPath, serverFileName.Trim('"'));
+                var finalPath = Path.Combine(downloadTask.FullInstallPath, serverFileName?.Trim('"') ?? "");
 
-                async Task DoFinalStep(string tempPath, string finalPath)
+                async Task DoFinalStep(string tempPathFs, string finalPathFs)
                 {
-                    if (!await LegendaryLibrary.Instance.CommonHelpers.IsDirectoryWritable(Path.GetDirectoryName(finalPath)))
+                    if (!await LegendaryLibrary.Instance.CommonHelpers.IsDirectoryWritable(
+                            Path.GetDirectoryName(finalPathFs)!))
                     {
                         var roboCopyArgs = new List<string?>()
                         {
-                            Path.GetDirectoryName(tempPath),
-                            Path.GetDirectoryName(finalPath),
-                            Path.GetFileName(tempPath),
+                            Path.GetDirectoryName(tempPathFs),
+                            Path.GetDirectoryName(finalPathFs),
+                            Path.GetFileName(tempPathFs),
                             "/R:3",
                             "/COPYALL"
                         };
                         var roboCopyCmd = Cli.Wrap("robocopy")
                                              .WithArguments(roboCopyArgs!);
                         var proc = ProcessStarter.StartProcess("robocopy", roboCopyCmd.Arguments, true);
-                        proc.WaitForExit();
+                        await proc.WaitForExitAsync();
                     }
                     else
                     {
-                        File.Move(tempPath, finalPath);
+                        File.Move(tempPathFs, finalPathFs);
                     }
                 }
 
                 if (totalSize > 0 && downloadedBytes >= totalSize)
                 {
-                    DoFinalStep(tempPath, finalPath);
+                    await DoFinalStep(tempPath, finalPath);
                     downloadTask.DownloadedBytes = downloadedBytes;
                     downloadTask.Status = UnifiedDownloadStatus.Completed;
                     return;
@@ -258,7 +289,8 @@ namespace LegendaryLibraryNS
                 }
 
                 var speedStopwatch = Stopwatch.StartNew();
-                using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, downloadTask.GracefulCts.Token);
+                using var response = await Client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead,
+                    downloadTask.GracefulCts.Token);
                 response.EnsureSuccessStatusCode();
 
                 using var networkStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
@@ -272,13 +304,17 @@ namespace LegendaryLibraryNS
                 byte[] buffer = new byte[bufferSize];
                 FileMode fileMode = downloadedBytes > 0 ? FileMode.Append : FileMode.Create;
 
-                using (var tempFs = new FileStream(tempPath, fileMode, FileAccess.Write, FileShare.Read, bufferSize, FileOptions.Asynchronous))
+                using (var tempFs = new FileStream(tempPath, fileMode, FileAccess.Write, FileShare.Read, bufferSize,
+                           FileOptions.Asynchronous))
                 {
-                    while ((bytesRead = await networkStream.ReadAsync(buffer, 0, buffer.Length, downloadTask.GracefulCts.Token).ConfigureAwait(false)) > 0)
+                    while ((bytesRead = await networkStream
+                                             .ReadAsync(buffer, 0, buffer.Length, downloadTask.GracefulCts.Token)
+                                             .ConfigureAwait(false)) > 0)
                     {
                         totalNetWorkBytes += bytesRead;
 
-                        await tempFs.WriteAsync(buffer, 0, bytesRead, downloadTask.GracefulCts.Token).ConfigureAwait(false);
+                        await tempFs.WriteAsync(buffer, 0, bytesRead, downloadTask.GracefulCts.Token)
+                                    .ConfigureAwait(false);
 
                         totalDiskBytes += bytesRead;
 
@@ -302,6 +338,7 @@ namespace LegendaryLibraryNS
                                 {
                                     currentPercentProgress = totalDiskBytes / totalSize * 100;
                                 }
+
                                 downloadTask.Progress = currentPercentProgress;
 
                                 downloadTask.Elapsed = totalStopwatch.Elapsed;
@@ -310,7 +347,8 @@ namespace LegendaryLibraryNS
                                 {
                                     if (downloadTask.DownloadSpeedBytes > 0)
                                     {
-                                        double remaining = (totalSize - totalDiskBytes) / downloadTask.DownloadSpeedBytes;
+                                        double remaining = (totalSize - totalDiskBytes) /
+                                                           downloadTask.DownloadSpeedBytes;
                                         downloadTask.Eta = (remaining < TimeSpan.MaxValue.TotalSeconds)
                                             ? TimeSpan.FromSeconds(remaining)
                                             : TimeSpan.MaxValue;
@@ -345,14 +383,16 @@ namespace LegendaryLibraryNS
                 }
                 catch
                 {
-
+                    // ignored
                 }
+
                 downloadTask.DownloadedBytes = totalDiskBytes;
                 long newCurrentPercentProgress = 0;
                 if (downloadTask.DownloadSizeBytes > 0)
                 {
                     newCurrentPercentProgress = totalDiskBytes / totalSize * 100;
                 }
+
                 downloadTask.Progress = newCurrentPercentProgress;
             }
 
@@ -364,14 +404,15 @@ namespace LegendaryLibraryNS
 
         public async Task DownloadOtherThings(UnifiedDownload downloadTask)
         {
-            var gameID = downloadTask.GameId;
+            var gameId = downloadTask.GameId;
             var wantedUnifiedTask = downloadTask;
-            var forcefulInstallerCTS = wantedUnifiedTask.ForcefulCts;
-            var gracefulInstallerCTS = wantedUnifiedTask.GracefulCts;
+            var forcefulInstallerCts = wantedUnifiedTask.ForcefulCts;
+            var gracefulInstallerCts = wantedUnifiedTask.GracefulCts;
             await WaitUntilLegendaryCloses();
-            var installCommand = new List<string>();
+            List<string> installCommand;
             var settings = LegendaryLibrary.GetSettings();
-            var matchingPluginTask = LegendaryLibrary.Instance.PluginDownloadData.Downloads.FirstOrDefault(t => t.GameId == gameID);
+            var matchingPluginTask =
+                LegendaryLibrary.Instance.PluginDownloadData.Downloads.First(t => t.GameId == gameId);
 
             var downloadProperties = matchingPluginTask.DownloadProperties;
             var gameTitle = wantedUnifiedTask.Name;
@@ -379,13 +420,14 @@ namespace LegendaryLibraryNS
             double cachedDownloadSizeNumber = wantedUnifiedTask.DownloadSizeBytes;
             double newDownloadSizeNumber = 0;
             double downloadCache = 0;
-            if (gameID == "eos-overlay")
+            if (gameId == "eos-overlay")
             {
                 var fullInstallPath = Path.Combine(downloadProperties.InstallPath, ".eos-overlay");
                 if (downloadProperties.DownloadAction != DownloadAction.Install)
                 {
                     fullInstallPath = downloadProperties.InstallPath;
                 }
+
                 wantedUnifiedTask.FullInstallPath = fullInstallPath;
                 installCommand = ["-y", "eos-overlay"];
                 if (downloadProperties.DownloadAction == DownloadAction.Update)
@@ -399,58 +441,70 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                installCommand = ["-y", "install", gameID];
+                installCommand = ["-y", "install", gameId];
                 if (downloadProperties.InstallPath != "")
                 {
                     installCommand.AddRange(["--base-path", downloadProperties.InstallPath]);
                 }
-                if (settings.PreferredCDN != "")
+
+                if (settings != null && settings.PreferredCdn != "")
                 {
-                    installCommand.AddRange(["--preferred-cdn", settings.PreferredCDN]);
+                    installCommand.AddRange(["--preferred-cdn", settings.PreferredCdn]);
                 }
-                if (settings.NoHttps)
+
+                if (settings is { NoHttps: true })
                 {
                     installCommand.Add("--no-https");
                 }
+
                 if (downloadProperties.MaxWorkers != 0)
                 {
                     installCommand.AddRange(["--max-workers", downloadProperties.MaxWorkers.ToString()]);
                 }
+
                 if (downloadProperties.MaxSharedMemory != 0)
                 {
                     installCommand.AddRange(["--max-shared-memory", downloadProperties.MaxSharedMemory.ToString()]);
                 }
+
                 if (downloadProperties.EnableReordering)
                 {
                     installCommand.Add("--enable-reordering");
                 }
+
                 if (downloadProperties.IgnoreFreeSpace)
                 {
                     installCommand.Add("--ignore-free-space");
                 }
-                if (settings.ConnectionTimeout != 0)
+
+                if (settings != null && settings.ConnectionTimeout != 0)
                 {
-                    installCommand.AddRange(new[] { "--dl-timeout", settings.ConnectionTimeout.ToString() });
+                    installCommand.AddRange(["--dl-timeout", settings.ConnectionTimeout.ToString()]);
                 }
+
                 if (downloadProperties.DownloadAction == DownloadAction.Repair)
                 {
                     installCommand.Add("--repair");
                 }
+
                 if (downloadProperties.DownloadAction == DownloadAction.Update)
                 {
                     installCommand.Add("--update-only");
                 }
+
                 if (downloadProperties.ExtraContent is { Count: > 0 })
                 {
                     foreach (var singleSelectedContent in downloadProperties.ExtraContent)
                     {
                         installCommand.Add("--install-tag=" + singleSelectedContent);
                     }
+
                     if (downloadProperties.DownloadAction == DownloadAction.Repair)
                     {
                         installCommand.Add("--reset-sdl");
                     }
                 }
+
                 installCommand.Add("--skip-dlcs");
             }
 
@@ -467,7 +521,8 @@ namespace LegendaryLibraryNS
                              .WithArguments(installCommand)
                              .AddCommandToLog()
                              .WithValidation(CommandResultValidation.None);
-                await foreach (CommandEvent cmdEvent in cmd.ListenAsync(Encoding.Default, Encoding.Default, forcefulInstallerCTS.Token, gracefulInstallerCTS.Token))
+                await foreach (CommandEvent cmdEvent in cmd.ListenAsync(Encoding.Default, Encoding.Default,
+                                   forcefulInstallerCts!.Token, gracefulInstallerCts!.Token))
                 {
                     switch (cmdEvent)
                     {
@@ -477,121 +532,160 @@ namespace LegendaryLibraryNS
                         case StandardOutputCommandEvent stdOut:
                             if (downloadProperties.DownloadAction == DownloadAction.Repair)
                             {
-                                var verificationProgressMatch = Regex.Match(stdOut.Text, @"Verification progress:.*\((\d.*%)");
+                                var verificationProgressMatch =
+                                    Regex.Match(stdOut.Text, @"Verification progress:.*\((\d.*%)");
                                 if (verificationProgressMatch.Length >= 2)
                                 {
-                                    double progress = CommonHelpers.ToDouble(verificationProgressMatch.Groups[1].Value.Replace("%", ""));
+                                    double progress =
+                                        CommonHelpers.ToDouble(verificationProgressMatch.Groups[1]
+                                           .Value.Replace("%", ""));
                                     wantedUnifiedTask.Progress = progress;
                                 }
-                                var verificationFileProgressMatch = Regex.Match(stdOut.Text, @"Verifying large file \""(.*)""\: (\d.*%) \((\d+\.\d+)\/(\d+\.\d+) (\wiB)");
+
+                                var verificationFileProgressMatch = Regex.Match(stdOut.Text,
+                                    @"Verifying large file \""(.*)""\: (\d.*%) \((\d+\.\d+)\/(\d+\.\d+) (\wiB)");
                                 if (verificationFileProgressMatch.Length >= 2)
                                 {
                                     string fileName = verificationFileProgressMatch.Groups[1].Value;
                                     string largeProgressPercent = verificationFileProgressMatch.Groups[2].Value;
-                                    string readSize = CommonHelpers.FormatSize(CommonHelpers.ToDouble(verificationFileProgressMatch.Groups[3].Value), verificationFileProgressMatch.Groups[5].Value);
-                                    string fullSize = CommonHelpers.FormatSize(CommonHelpers.ToDouble(verificationFileProgressMatch.Groups[4].Value), verificationFileProgressMatch.Groups[5].Value);
-                                    wantedUnifiedTask.Activity = LocalizationManager.Instance.GetString(LOC.CommonVerifyingLargeFile, new Dictionary<string, IFluentType> { ["fileName"] = (FluentString)fileName, ["progress"] = (FluentString)$"{largeProgressPercent} ({readSize}/{fullSize})" });
+                                    string readSize = CommonHelpers.FormatSize(
+                                        CommonHelpers.ToDouble(verificationFileProgressMatch.Groups[3].Value),
+                                        verificationFileProgressMatch.Groups[5].Value);
+                                    string fullSize = CommonHelpers.FormatSize(
+                                        CommonHelpers.ToDouble(verificationFileProgressMatch.Groups[4].Value),
+                                        verificationFileProgressMatch.Groups[5].Value);
+                                    wantedUnifiedTask.Activity = LocalizationManager.Instance.GetString(
+                                        LOC.CommonVerifyingLargeFile,
+                                        new Dictionary<string, IFluentType>
+                                        {
+                                            ["fileName"] = (FluentString)fileName,
+                                            ["progress"] =
+                                                (FluentString)$"{largeProgressPercent} ({readSize}/{fullSize})"
+                                        });
                                 }
                                 else if (stdOut.Text.Contains("Verification"))
                                 {
-                                    wantedUnifiedTask.Activity = LocalizationManager.Instance.GetString(LOC.CommonVerifying);
+                                    wantedUnifiedTask.Activity =
+                                        LocalizationManager.Instance.GetString(LOC.CommonVerifying);
                                 }
                             }
+
                             break;
                         case StandardErrorCommandEvent stdErr:
                             var downloadSizeMatch = Regex.Match(stdErr.Text, @"Download size: (\S+) (\wiB)");
                             if (downloadSizeMatch.Length >= 2)
                             {
-                                newDownloadSizeNumber = CommonHelpers.ToBytes(CommonHelpers.ToDouble(downloadSizeMatch.Groups[1].Value), downloadSizeMatch.Groups[2].Value);
+                                newDownloadSizeNumber = CommonHelpers.ToBytes(
+                                    CommonHelpers.ToDouble(downloadSizeMatch.Groups[1].Value),
+                                    downloadSizeMatch.Groups[2].Value);
                                 if (newDownloadSizeNumber > cachedDownloadSizeNumber)
                                 {
                                     wantedUnifiedTask.DownloadSizeBytes = newDownloadSizeNumber;
                                     cachedDownloadSizeNumber = newDownloadSizeNumber;
                                 }
+
                                 downloadCache = cachedDownloadSizeNumber - newDownloadSizeNumber;
                             }
+
                             var installSizeMatch = Regex.Match(stdErr.Text, @"Install size: (\S+) (\wiB)");
                             if (installSizeMatch.Length >= 2)
                             {
-                                double installSizeNumber = CommonHelpers.ToBytes(CommonHelpers.ToDouble(installSizeMatch.Groups[1].Value), installSizeMatch.Groups[2].Value);
+                                double installSizeNumber = CommonHelpers.ToBytes(
+                                    CommonHelpers.ToDouble(installSizeMatch.Groups[1].Value),
+                                    installSizeMatch.Groups[2].Value);
                                 wantedUnifiedTask.InstallSizeBytes = installSizeNumber;
                             }
+
                             var fullInstallPathMatch = Regex.Match(stdErr.Text, @"Install path: (\S+)");
                             if (fullInstallPathMatch.Length >= 2)
                             {
                                 wantedUnifiedTask.FullInstallPath = fullInstallPathMatch.Groups[1].Value;
                             }
+
                             var progressMatch = Regex.Match(stdErr.Text, @"Progress: (\d.*%)");
                             if (progressMatch.Length >= 2)
                             {
                                 if (downloadProperties.DownloadAction != DownloadAction.Update)
                                 {
-                                    wantedUnifiedTask.Activity = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteDownloadingLabel);
+                                    wantedUnifiedTask.Activity =
+                                        LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteDownloadingLabel);
                                 }
                                 else
                                 {
-                                    wantedUnifiedTask.Activity = LocalizationManager.Instance.GetString(LOC.CommonDownloadingUpdate);
+                                    wantedUnifiedTask.Activity =
+                                        LocalizationManager.Instance.GetString(LOC.CommonDownloadingUpdate);
                                 }
                             }
+
                             var elapsedMatch = Regex.Match(stdErr.Text, @"Running for (\d\d:\d\d:\d\d)");
                             if (elapsedMatch.Length >= 2)
                             {
                                 wantedUnifiedTask.Elapsed = TimeSpan.Parse(elapsedMatch.Groups[1].Value);
                             }
-                            var ETAMatch = Regex.Match(stdErr.Text, @"ETA: (\d\d:\d\d:\d\d)");
-                            if (ETAMatch.Length >= 2)
+
+                            var etaMatch = Regex.Match(stdErr.Text, @"ETA: (\d\d:\d\d:\d\d)");
+                            if (etaMatch.Length >= 2)
                             {
-                                wantedUnifiedTask.Eta = TimeSpan.Parse(ETAMatch.Groups[1].Value);
+                                wantedUnifiedTask.Eta = TimeSpan.Parse(etaMatch.Groups[1].Value);
                             }
+
                             var downloadedMatch = Regex.Match(stdErr.Text, @"Downloaded: (\S+) (\wiB)");
                             if (downloadedMatch.Length >= 2)
                             {
-                                double downloadedNumber = CommonHelpers.ToBytes(CommonHelpers.ToDouble(downloadedMatch.Groups[1].Value), downloadedMatch.Groups[2].Value);
+                                double downloadedNumber = CommonHelpers.ToBytes(
+                                    CommonHelpers.ToDouble(downloadedMatch.Groups[1].Value),
+                                    downloadedMatch.Groups[2].Value);
                                 double totalDownloadedNumber = downloadedNumber + downloadCache;
                                 wantedUnifiedTask.DownloadedBytes = totalDownloadedNumber;
                                 double newProgress = totalDownloadedNumber / wantedUnifiedTask.DownloadSizeBytes * 100;
                                 wantedUnifiedTask.Progress = newProgress;
 
-                                if (totalDownloadedNumber == wantedUnifiedTask.DownloadSizeBytes)
+                                if (Math.Abs(totalDownloadedNumber - wantedUnifiedTask.DownloadSizeBytes) < 1)
                                 {
-                                    switch (downloadProperties.DownloadAction)
+                                    wantedUnifiedTask.Activity = downloadProperties.DownloadAction switch
                                     {
-                                        case DownloadAction.Install:
-                                            wantedUnifiedTask.Activity = LocalizationManager.Instance.GetString(LOC.CommonFinishingInstallation);
-                                            break;
-                                        case DownloadAction.Update:
-                                            wantedUnifiedTask.Activity = LocalizationManager.Instance.GetString(LOC.CommonFinishingUpdate);
-                                            break;
-                                        case DownloadAction.Repair:
-                                            wantedUnifiedTask.Activity = LocalizationManager.Instance.GetString(LOC.CommonFinishingRepair);
-                                            break;
-                                        default:
-                                            break;
-                                    }
+                                        DownloadAction.Install => LocalizationManager.Instance.GetString(
+                                            LOC.CommonFinishingInstallation),
+                                        DownloadAction.Update => LocalizationManager.Instance.GetString(
+                                            LOC.CommonFinishingUpdate),
+                                        DownloadAction.Repair => LocalizationManager.Instance.GetString(
+                                            LOC.CommonFinishingRepair),
+                                        _ => wantedUnifiedTask.Activity
+                                    };
                                 }
                             }
+
                             var downloadSpeedMatch = Regex.Match(stdErr.Text, @"Download\t- (\S+) (\wiB)");
                             if (downloadSpeedMatch.Length >= 2)
                             {
-                                wantedUnifiedTask.DownloadSpeedBytes = CommonHelpers.ToBytes(CommonHelpers.ToDouble(downloadSpeedMatch.Groups[1].Value), downloadSpeedMatch.Groups[2].Value);
+                                wantedUnifiedTask.DownloadSpeedBytes = CommonHelpers.ToBytes(
+                                    CommonHelpers.ToDouble(downloadSpeedMatch.Groups[1].Value),
+                                    downloadSpeedMatch.Groups[2].Value);
                             }
+
                             var diskSpeedMatch = Regex.Match(stdErr.Text, @"Disk\t- (\S+) (\wiB)");
                             if (diskSpeedMatch.Length >= 2)
                             {
-                                wantedUnifiedTask.DiskWriteSpeedBytes = CommonHelpers.ToBytes(CommonHelpers.ToDouble(diskSpeedMatch.Groups[1].Value), diskSpeedMatch.Groups[2].Value);
+                                wantedUnifiedTask.DiskWriteSpeedBytes = CommonHelpers.ToBytes(
+                                    CommonHelpers.ToDouble(diskSpeedMatch.Groups[1].Value),
+                                    diskSpeedMatch.Groups[2].Value);
                             }
+
                             var errorMessage = stdErr.Text;
-                            if (errorMessage.Contains("finished") || errorMessage.Contains("Finished") || errorMessage.Contains("already up to date"))
+                            if (errorMessage.Contains("finished") || errorMessage.Contains("Finished") ||
+                                errorMessage.Contains("already up to date"))
                             {
                                 successDisplayed = true;
                             }
-                            else if (errorMessage.Contains("WARNING") && !errorMessage.Contains("exit requested") && !errorMessage.Contains("PermissionError"))
+                            else if (errorMessage.Contains("WARNING") && !errorMessage.Contains("exit requested") &&
+                                     !errorMessage.Contains("PermissionError"))
                             {
-                                logger.Warn($"[Legendary] {errorMessage}");
+                                Logger.Warn($"[Legendary] {errorMessage}");
                             }
-                            else if (errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") || errorMessage.Contains("Error") || errorMessage.Contains("Failure"))
+                            else if (errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") ||
+                                     errorMessage.Contains("Error") || errorMessage.Contains("Failure"))
                             {
-                                logger.Error($"[Legendary] {errorMessage}");
+                                Logger.Error($"[Legendary] {errorMessage}");
                                 if (errorMessage.Contains("Failed to establish a new connection")
                                     || errorMessage.Contains("Log in failed")
                                     || errorMessage.Contains("Login failed")
@@ -611,54 +705,90 @@ namespace LegendaryLibraryNS
                                 {
                                     diskSpaceErrorDisplayed = true;
                                 }
+
                                 if (!errorMessage.Contains("old manifest") && !errorMessage.Contains("EGL ProgramData"))
                                 {
                                     errorDisplayed = true;
                                 }
                             }
+
                             break;
                         case ExitedCommandEvent exited:
                             if ((!successDisplayed && errorDisplayed) || exited.ExitCode != 0)
                             {
                                 if (loginErrorDisplayed)
                                 {
-                                    await playniteApi.Dialogs.ShowErrorMessageAsync(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameInstallError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired) }));
+                                    await playniteApi.Dialogs.ShowErrorMessageAsync(
+                                        LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameInstallError,
+                                            new Dictionary<string, IFluentType>
+                                            {
+                                                ["var0"] = (FluentString)LocalizationManager.Instance.GetString(
+                                                    LOC.ThirdPartyPlayniteLoginRequired)
+                                            }));
                                 }
                                 else if (memoryErrorMessage != "")
                                 {
-                                    var memoryErrorMatch = Regex.Match(memoryErrorMessage, @"MemoryError: Current shared memory cache is smaller than required: (\S+) MiB < (\S+) MiB");
+                                    var memoryErrorMatch = Regex.Match(memoryErrorMessage,
+                                        @"MemoryError: Current shared memory cache is smaller than required: (\S+) MiB < (\S+) MiB");
                                     var gameErrorFluentArgs = new Dictionary<string, IFluentType>
                                     {
-                                        ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.LegendaryMemoryError, new Dictionary<string, IFluentType> { ["currentMemory"] = (FluentString)$"{memoryErrorMatch.Groups[1]} MB", ["requiredMemory"] = (FluentString)$"{memoryErrorMatch.Groups[2]} MB" })
+                                        ["var0"] = (FluentString)LocalizationManager.Instance.GetString(
+                                            LOC.LegendaryMemoryError,
+                                            new Dictionary<string, IFluentType>
+                                            {
+                                                ["currentMemory"] = (FluentString)$"{memoryErrorMatch.Groups[1]} MB",
+                                                ["requiredMemory"] = (FluentString)$"{memoryErrorMatch.Groups[2]} MB"
+                                            })
                                     };
-                                    await playniteApi.Dialogs.ShowErrorMessageAsync(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameInstallError, gameErrorFluentArgs));
+                                    await playniteApi.Dialogs.ShowErrorMessageAsync(
+                                        LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameInstallError,
+                                            gameErrorFluentArgs));
                                 }
                                 else if (permissionErrorDisplayed)
                                 {
-                                    await playniteApi.Dialogs.ShowErrorMessageAsync(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameInstallError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonPermissionError) }));
+                                    await playniteApi.Dialogs.ShowErrorMessageAsync(
+                                        LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameInstallError,
+                                            new Dictionary<string, IFluentType>
+                                            {
+                                                ["var0"] = (FluentString)LocalizationManager.Instance.GetString(
+                                                    LOC.CommonPermissionError)
+                                            }));
                                 }
                                 else if (diskSpaceErrorDisplayed)
                                 {
-                                    await playniteApi.Dialogs.ShowErrorMessageAsync(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameInstallError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonNotEnoughSpace) }));
+                                    await playniteApi.Dialogs.ShowErrorMessageAsync(
+                                        LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameInstallError,
+                                            new Dictionary<string, IFluentType>
+                                            {
+                                                ["var0"] = (FluentString)LocalizationManager.Instance.GetString(
+                                                    LOC.CommonNotEnoughSpace)
+                                            }));
                                 }
                                 else
                                 {
-                                    await playniteApi.Dialogs.ShowErrorMessageAsync(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameInstallError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonCheckLog) }));
+                                    await playniteApi.Dialogs.ShowErrorMessageAsync(
+                                        LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameInstallError,
+                                            new Dictionary<string, IFluentType>
+                                            {
+                                                ["var0"] = (FluentString)LocalizationManager.Instance.GetString(
+                                                    LOC.CommonCheckLog)
+                                            }));
                                 }
+
                                 wantedUnifiedTask.Status = UnifiedDownloadStatus.Error;
                             }
                             else
                             {
                                 var installedAppList = LegendaryLauncher.GetInstalledAppList();
-                                if (installedAppList != null)
+                                if (installedAppList.Count > 0)
                                 {
-                                    if (installedAppList.ContainsKey(gameID))
+                                    if (installedAppList.TryGetValue(gameId, out var installedGameInfo))
                                     {
-                                        var installedGameInfo = installedAppList[gameID];
-                                        Playnite.Game game = new();
                                         if (!installedGameInfo.Is_dlc || !installedGameInfo.Executable.IsNullOrEmpty())
                                         {
-                                            game = playniteApi.Library.Games.First(item => item.LibraryId == LegendaryLibrary.PluginId && item.LibraryGameId == gameID);
+                                            var game = playniteApi.Library.Games.First(item =>
+                                                item.LibraryId == LegendaryLibrary.PluginId &&
+                                                item.LibraryGameId == gameId);
                                             game.InstallDirectory = installedGameInfo.Install_path;
                                             //game.Version = installedGameInfo.Version;
                                             game.InstallSize = (ulong)installedGameInfo.Install_size;
@@ -666,36 +796,46 @@ namespace LegendaryLibraryNS
                                             var playtimeSyncEnabled = false;
                                             if (downloadProperties.DownloadAction == DownloadAction.Repair)
                                             {
-                                                playtimeSyncEnabled = LegendaryLibrary.GetSettings().SyncPlaytime;
-                                                var gameSettings = LegendaryGameSettingsView.LoadGameSettings(game.LibraryGameId);
-                                                if (gameSettings?.AutoSyncPlaytime != null)
+                                                playtimeSyncEnabled = LegendaryLibrary.GetSettings() is
+                                                    { SyncPlaytime: true };
+                                                var gameSettings =
+                                                    LegendaryGameSettingsView.LoadGameSettings(game.LibraryGameId!);
+                                                if (gameSettings.AutoSyncPlaytime != null)
                                                 {
                                                     playtimeSyncEnabled = (bool)gameSettings.AutoSyncPlaytime;
                                                 }
+
                                                 if (playtimeSyncEnabled)
                                                 {
                                                     var accountApi = new EpicAccountClient(playniteApi);
                                                     var playtimeItems = await accountApi.GetPlaytimeItems();
-                                                    var playtimeItem = playtimeItems?.FirstOrDefault(x => x.artifactId == gameID);
+                                                    var playtimeItem =
+                                                        playtimeItems.FirstOrDefault(x => x.ArtifactId == gameId);
                                                     if (playtimeItem != null)
                                                     {
-                                                        game.PlayTime = (uint)playtimeItem.totalTime;
+                                                        game.PlayTime = (uint)playtimeItem.TotalTime;
                                                     }
                                                 }
                                             }
+
                                             // Some games need specific key in registry, otherwise they can't launch
                                             try
                                             {
-                                                using var regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey("com.epicgames.launcher", false);
+                                                using var regKey =
+                                                    Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(
+                                                        "com.epicgames.launcher", false);
                                                 if (regKey == null)
                                                 {
-                                                    Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\com.epicgames.launcher");
+                                                    Microsoft.Win32.Registry.CurrentUser.CreateSubKey(
+                                                        @"Software\Classes\com.epicgames.launcher");
                                                 }
                                             }
                                             catch (Exception ex)
                                             {
-                                                logger.Error($"Failed to create registry key for {gameTitle}. Error: {ex.Message}");
+                                                Logger.Error(
+                                                    $"Failed to create registry key for {gameTitle}. Error: {ex.Message}");
                                             }
+
                                             if (downloadProperties.InstallPrerequisites)
                                             {
                                                 if (installedGameInfo.Prereq_info != null)
@@ -705,29 +845,32 @@ namespace LegendaryLibraryNS
                                                         InstallPrerequisites = true
                                                     };
                                                     var commonHelpers = LegendaryLibrary.Instance.CommonHelpers;
-                                                    commonHelpers.SaveJsonSettingsToFile(gameSettings, "GamesSettings", gameID, true);
+                                                    commonHelpers.SaveJsonSettingsToFile(gameSettings, "GamesSettings",
+                                                        gameId, true);
                                                 }
                                             }
+
                                             await playniteApi.Library.Games.UpdateAsync(game);
                                         }
                                     }
                                 }
+
                                 wantedUnifiedTask.Status = UnifiedDownloadStatus.Completed;
                                 wantedUnifiedTask.Progress = 100;
                                 DateTimeOffset now = DateTime.UtcNow;
                                 wantedUnifiedTask.CompletedTime = now.ToUnixTimeSeconds();
                             }
-                            gracefulInstallerCTS?.Dispose();
-                            forcefulInstallerCTS?.Dispose();
-                            break;
-                        default:
+
+                            gracefulInstallerCts?.Dispose();
+                            forcefulInstallerCts?.Dispose();
                             break;
                     }
                 }
             }
             catch (Exception ex)
             {
-                if (ex is OperationCanceledException && (downloadTask.Status == UnifiedDownloadStatus.Canceled || downloadTask.Status == UnifiedDownloadStatus.Paused))
+                if (ex is OperationCanceledException && (downloadTask.Status == UnifiedDownloadStatus.Canceled ||
+                                                         downloadTask.Status == UnifiedDownloadStatus.Paused))
                 {
                     if (downloadTask.Status == UnifiedDownloadStatus.Canceled)
                     {
@@ -736,31 +879,29 @@ namespace LegendaryLibraryNS
                 }
                 else
                 {
-                    logger.Debug($"An error occured during downloading {downloadTask.Name}: {ex.Message}");
+                    Logger.Debug($"An error occured during downloading {downloadTask.Name}: {ex.Message}");
                     downloadTask.Status = UnifiedDownloadStatus.Error;
                 }
-            }
-            finally
-            {
-
             }
         }
 
 
         public async Task OnCancelDownload(UnifiedDownload downloadTask)
         {
-            var gameID = downloadTask.GameId;
+            var gameId = downloadTask.GameId;
             await WaitUntilLegendaryCloses();
-            var matchingPluginTask = LegendaryLibrary.Instance.PluginDownloadData.Downloads.FirstOrDefault(t => t.GameId == gameID);
+            var matchingPluginTask =
+                LegendaryLibrary.Instance.PluginDownloadData.Downloads.FirstOrDefault(t => t.GameId == gameId);
             const int maxRetries = 5;
             int delayMs = 100;
-            var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", gameID + ".resume");
-            var repairFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", gameID + ".repair");
+            var resumeFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", gameId + ".resume");
+            var repairFile = Path.Combine(LegendaryLauncher.ConfigPath, "tmp", gameId + ".repair");
             var tempDir = Path.Combine(downloadTask.FullInstallPath, ".Downloader_temp");
             if (!Directory.Exists(tempDir))
             {
                 var tempFolderName = $"{downloadTask.GameId}_PlayniteLegendaryPlugin";
-                tempDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "temp", tempFolderName);
+                tempDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "temp", tempFolderName);
             }
 
             for (int i = 0; i < maxRetries; i++)
@@ -771,7 +912,7 @@ namespace LegendaryLibraryNS
                     {
                         Directory.Delete(tempDir, true);
                     }
-                   
+
                     if (File.Exists(resumeFile))
                     {
                         File.Delete(resumeFile);
@@ -781,7 +922,9 @@ namespace LegendaryLibraryNS
                     {
                         File.Delete(repairFile);
                     }
-                    if (downloadTask.FullInstallPath != null && matchingPluginTask.DownloadProperties.DownloadAction == DownloadAction.Install)
+
+                    if (downloadTask.FullInstallPath != null && matchingPluginTask?.DownloadProperties.DownloadAction ==
+                        DownloadAction.Install)
                     {
                         if (Directory.Exists(downloadTask.FullInstallPath))
                         {
@@ -798,7 +941,7 @@ namespace LegendaryLibraryNS
                     }
                     else
                     {
-                        logger.Warn(rex, $"Can't cleanup after cancellation. Please try removing files manually.");
+                        Logger.Warn(rex, $"Can't cleanup after cancellation. Please try removing files manually.");
                         break;
                     }
                 }
@@ -807,12 +950,15 @@ namespace LegendaryLibraryNS
 
         public Task OnRemoveDownloadEntry(UnifiedDownload downloadTask)
         {
-            var matchingPluginTask = LegendaryLibrary.Instance.PluginDownloadData.Downloads.FirstOrDefault(t => t.GameId == downloadTask.GameId);
+            var matchingPluginTask =
+                LegendaryLibrary.Instance.PluginDownloadData.Downloads.FirstOrDefault(t =>
+                    t.GameId == downloadTask.GameId);
             if (matchingPluginTask != null)
             {
                 LegendaryLibrary.Instance.PluginDownloadData.Downloads.Remove(matchingPluginTask);
                 LegendaryLibrary.Instance.SaveDownloadData();
             }
+
             return Task.CompletedTask;
         }
 
@@ -822,8 +968,11 @@ namespace LegendaryLibraryNS
             {
                 ShowMaximizeButton = false,
             });
-            var matchingPluginTask = LegendaryLibrary.Instance.PluginDownloadData.Downloads.FirstOrDefault(t => t.GameId == selectedEntry.GameId);
-            window.Title = selectedEntry.Name + " — " + LocalizationManager.Instance.GetString(LOC.CommonDownloadProperties);
+            var matchingPluginTask =
+                LegendaryLibrary.Instance.PluginDownloadData.Downloads.FirstOrDefault(t =>
+                    t.GameId == selectedEntry.GameId);
+            window.Title =
+                $"{selectedEntry.Name} — {LocalizationManager.Instance.GetString(LOC.CommonDownloadProperties)}";
             window.DataContext = matchingPluginTask;
             window.Content = new LegendaryDownloadProperties();
             window.Owner = playniteApi.GetLastActiveWindow();
@@ -831,6 +980,5 @@ namespace LegendaryLibraryNS
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.ShowDialog();
         }
-
     }
 }

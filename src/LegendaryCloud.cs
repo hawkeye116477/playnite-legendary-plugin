@@ -5,49 +5,47 @@ using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
-using Playnite.Common;
 using Playnite;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace LegendaryLibraryNS
 {
     public class LegendaryCloud
     {
-        internal static async Task<string> CalculateGameSavesPath(string gameName, string gameID, string gameInstallDir, bool skipRefreshingMetadata = true)
+        internal static async Task<string> CalculateGameSavesPath(string gameName, string gameId, string gameInstallDir, bool skipRefreshingMetadata = true)
         {
             string cloudSaveFolder = "";
-            var playniteAPI = LegendaryLibrary.PlayniteApi;
+            var playniteApi = LegendaryLibrary.PlayniteApi;
             GlobalProgressOptions metadataProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteProgressMetadata), false);
 
             var manifest = new LegendaryGameInfo.Rootobject();
             var gameData = new LegendaryGameInfo.Game
             {
                 Title = gameName,
-                App_name = gameID
+                App_name = gameId
             };
-            await playniteAPI.Dialogs.ShowAsyncBlockingProgressAsync(metadataProgressOptions, async (a) =>
+            await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(metadataProgressOptions, async (_) =>
             {
                 manifest = await LegendaryLauncher.GetGameInfo(gameData, skipRefreshingMetadata);
             });
 
-            if (manifest.Game != null)
+            if (!string.IsNullOrEmpty(manifest.Game?.Cloud_save_folder))
             {
                 cloudSaveFolder = manifest.Game.Cloud_save_folder;
             }
-            if (!cloudSaveFolder.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(cloudSaveFolder))
             {
-                var clientApi = new EpicAccountClient(playniteAPI);
+                var clientApi = new EpicAccountClient(playniteApi);
                 var userData = clientApi.LoadTokens();
-                if (!userData.account_id.IsNullOrEmpty())
+                if (!string.IsNullOrEmpty(userData?.Account_id))
                 {
                     var pathVariables = new Dictionary<string, string>
                     {
                         { "{installdir}", gameInstallDir },
-                        { "{epicid}",  userData.account_id },
+                        { "{epicid}",  userData.Account_id },
                         { "{appdata}",  Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) },
                         { "{userdir}", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) },
                         { "{userprofile}", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) },
@@ -67,14 +65,14 @@ namespace LegendaryLibraryNS
         }
 
 
-        internal static async Task SyncGameSaves(Playnite.Game game, CloudSyncAction cloudSyncAction, bool force = false, bool manualSync = false, bool skipRefreshingMetadata = true, string cloudSaveFolder = "")
+        internal static async Task SyncGameSaves(Game game, CloudSyncAction cloudSyncAction, bool force = false, bool manualSync = false, bool skipRefreshingMetadata = true, string cloudSaveFolder = "")
         {
-            var playniteAPI = LegendaryLibrary.PlayniteApi;
-            var cloudSyncEnabled = LegendaryLibrary.GetSettings().SyncGameSaves;
-            var gameSettings = LegendaryGameSettingsView.LoadGameSettings(game.LibraryGameId);
+            var playniteApi = LegendaryLibrary.PlayniteApi;
+            var cloudSyncEnabled = LegendaryLibrary.GetSettings() is { SyncGameSaves: true };
+            var gameSettings = LegendaryGameSettingsView.LoadGameSettings(game.LibraryGameId!);
             bool errorDisplayed = false;
             bool loginErrorDisplayed = false;
-            if (gameSettings?.AutoSyncSaves != null)
+            if (gameSettings.AutoSyncSaves != null)
             {
                 cloudSyncEnabled = (bool)gameSettings.AutoSyncSaves;
             }
@@ -93,10 +91,9 @@ namespace LegendaryLibraryNS
                     else
                     {
                         var installedList = LegendaryLauncher.GetInstalledAppList();
-                        if (installedList.ContainsKey(game.LibraryGameId))
+                        if (installedList.TryGetValue(game.LibraryGameId!, out var installedGame))
                         {
-                            var installedGame = installedList[game.LibraryGameId];
-                            if (!installedGame.Save_path.IsNullOrEmpty())
+                            if (!string.IsNullOrEmpty(installedGame.Save_path))
                             {
                                 cloudSaveFolder = installedGame.Save_path;
                             }
@@ -104,22 +101,22 @@ namespace LegendaryLibraryNS
                     }
                     if (cloudSaveFolder == "" || !Directory.Exists(cloudSaveFolder))
                     {
-                        cloudSaveFolder = await CalculateGameSavesPath(game.Name, game.LibraryGameId, game.InstallDirectory, skipRefreshingMetadata);
+                        cloudSaveFolder = await CalculateGameSavesPath(game.Name, game.LibraryGameId!, game.InstallDirectory!, skipRefreshingMetadata);
                     }
                 }
-                if (cloudSaveFolder != null)
+                if (!cloudSaveFolder.IsNullOrEmpty())
                 {
                     if (Directory.Exists(cloudSaveFolder))
                     {
                         var logger = LogManager.GetLogger();
                         GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonSyncing, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }), false);
 
-                        await playniteAPI.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async (a) =>
+                        await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async (a) =>
                         {
                             a.SetCrrentProgressValue(100);
                             a.SetCrrentProgressValue(0);
                             var cloudArgs = new List<string>();
-                            cloudArgs.AddRange(new[] { "-y", "sync-saves", game.LibraryGameId });
+                            cloudArgs.AddRange(["-y", "sync-saves", game.LibraryGameId!]);
                             var skippedActivity = "--skip-upload";
                             if (cloudSyncAction == CloudSyncAction.Upload)
                             {
@@ -134,7 +131,7 @@ namespace LegendaryLibraryNS
                             {
                                 cloudArgs.Add("--force-upload");
                             }
-                            cloudArgs.AddRange(new[] { "--save-path", cloudSaveFolder });
+                            cloudArgs.AddRange(["--save-path", cloudSaveFolder]);
                             var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                          .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
                                          .WithArguments(cloudArgs)
@@ -143,7 +140,7 @@ namespace LegendaryLibraryNS
                             {
                                 switch (cmdEvent)
                                 {
-                                    case StartedCommandEvent started:
+                                    case StartedCommandEvent:
                                         a.SetCrrentProgressValue(1);
                                         break;
                                     case StandardErrorCommandEvent stdErr:
@@ -166,7 +163,7 @@ namespace LegendaryLibraryNS
                                         }
                                         else
                                         {
-                                            logger.Debug("[Legendary] " + stdErr.ToString());
+                                            logger.Debug("[Legendary] " + stdErr);
                                         }
                                         break;
                                     case ExitedCommandEvent exited:
@@ -175,15 +172,13 @@ namespace LegendaryLibraryNS
                                         {
                                             if (loginErrorDisplayed)
                                             {
-                                                await playniteAPI.Dialogs.ShowErrorMessageAsync($"{LocalizationManager.Instance.GetString(LOC.CommonSyncError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name })} {LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired)}.");
+                                                await playniteApi.Dialogs.ShowErrorMessageAsync($"{LocalizationManager.Instance.GetString(LOC.CommonSyncError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name })} {LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired)}.");
                                             }
                                             else
                                             {
-                                                await playniteAPI.Dialogs.ShowErrorMessageAsync($"{LocalizationManager.Instance.GetString(LOC.CommonSyncError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name })} {LocalizationManager.Instance.GetString(LOC.CommonCheckLog)}");
+                                                await playniteApi.Dialogs.ShowErrorMessageAsync($"{LocalizationManager.Instance.GetString(LOC.CommonSyncError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name })} {LocalizationManager.Instance.GetString(LOC.CommonCheckLog)}");
                                             }
                                         }
-                                        break;
-                                    default:
                                         break;
                                 }
                             }

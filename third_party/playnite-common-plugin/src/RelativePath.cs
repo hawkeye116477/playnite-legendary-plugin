@@ -24,10 +24,10 @@ namespace CommonPlugin
             if (!basePath.EndsWith("\\"))
                 basePath += "\\";
 
-            Uri baseUri = new Uri(basePath);
-            Uri fullUri = new Uri(fullPath);
+            var baseUri = new Uri(basePath);
+            var fullUri = new Uri(fullPath);
 
-            Uri relativeUri = baseUri.MakeRelativeUri(fullUri);
+            var relativeUri = baseUri.MakeRelativeUri(fullUri);
 
             // Uri's use forward slashes so convert back to backward slashes
             // Uri's also escape some chars, co convert back to unescaped format

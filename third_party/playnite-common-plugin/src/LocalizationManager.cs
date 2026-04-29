@@ -15,11 +15,11 @@ namespace CommonPlugin
 {
     public class LocalizationManager
     {
-        private readonly ILogger _logger = LogManager.GetLogger();
+        private readonly ILogger logger = LogManager.GetLogger();
         public static LocalizationManager Instance { get; } = new LocalizationManager();
 
-        private FluentBundle _bundle = null!;
-        private Dictionary<string, IFluentType> _commonArgs = new Dictionary<string, IFluentType>();
+        private FluentBundle bundle = null!;
+        private Dictionary<string, IFluentType> commonArgs = new Dictionary<string, IFluentType>();
         private const string FallbackLanguage = "en-US";
 
         private LocalizationManager()
@@ -53,7 +53,7 @@ namespace CommonPlugin
             if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
             {
                 baseDir = Environment.CurrentDirectory;
-                string configPath = Path.Combine(baseDir, "LocalizationPathsForDesignMode.txt");
+                var configPath = Path.Combine(baseDir, "LocalizationPathsForDesignMode.txt");
                 if (File.Exists(configPath))
                 {
                     localizationSources = File.ReadAllLines(configPath).Where(line => !string.IsNullOrWhiteSpace(line)).ToList();
@@ -89,7 +89,7 @@ namespace CommonPlugin
                         }
                         catch (Exception ex)
                         {
-                            _logger.Error($"Error reading file {file}: {ex.Message}");
+                            logger.Error($"Error reading file {file}: {ex.Message}");
                         }
                     }
                 }
@@ -100,21 +100,21 @@ namespace CommonPlugin
         public void SetLanguage(string language)
         {
             language = language.Replace("_", "-");
-            _bundle = MakeBundle(language);
+            bundle = MakeBundle(language);
         }
 
         public void SetCommonArgs(Dictionary<string, IFluentType>? args)
         {
             if (args != null)
             {
-                _commonArgs = args;
+                commonArgs = args;
             }
         }
 
         public string GetString(string key, Dictionary<string, IFluentType>? args = null)
         {
             var finalArgs = new Dictionary<string, IFluentType>();
-            foreach (var arg in _commonArgs)
+            foreach (var arg in commonArgs)
             {
                 finalArgs[arg.Key] = arg.Value;
             }
@@ -129,7 +129,7 @@ namespace CommonPlugin
             {
                 finalArgs["count"] = (FluentNumber)1;
             }
-            _bundle.TryGetAttrMessage(key, finalArgs, out var errors, out var message);
+            bundle.TryGetAttrMessage(key, finalArgs, out var errors, out var message);
             return message ?? $"[[{key}]]";
         }
     }

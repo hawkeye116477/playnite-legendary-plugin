@@ -2,7 +2,7 @@
 {
     public class AccountResponse
     {
-        public string id;
-        public string displayName;
+        public string Id  { get; set; } = "";
+        public string DisplayName  { get; set; } = "";
     }
 }

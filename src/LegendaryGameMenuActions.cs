@@ -20,11 +20,11 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
     private IPlayniteApi PlayniteApi { get; set; } = playniteApi;
     private Game Game { get; set; } = games.First();
 
-    public void OpenLauncherSettingsWindow()
+    public async Task OpenLauncherSettingsWindow()
     {
         if (!LegendaryLauncher.IsInstalled)
         {
-            LegendaryLauncher.ShowNotInstalledError();
+            await LegendaryLauncher.ShowNotInstalledError();
             return;
         }
 
@@ -47,7 +47,7 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
     {
         if (!LegendaryLauncher.IsInstalled)
         {
-            LegendaryLauncher.ShowNotInstalledError();
+            await LegendaryLauncher.ShowNotInstalledError();
             return;
         }
 
@@ -57,7 +57,7 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
             new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonCheckingForUpdates), false)
                 { IsIndeterminate = true };
         await PlayniteApi.Dialogs.ShowAsyncBlockingProgressAsync(updateCheckProgressOptions,
-            async a => { gamesToUpdate = await legendaryUpdateController.CheckGameUpdates(Game.Name, Game.LibraryGameId); });
+            async a => { gamesToUpdate = await legendaryUpdateController.CheckGameUpdates(Game.Name, Game.LibraryGameId!); });
 
         var checkedGames = new List<Game>
         {
@@ -82,7 +82,7 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
     {
         if (!LegendaryLauncher.IsInstalled)
         {
-            LegendaryLauncher.ShowNotInstalledError();
+            await LegendaryLauncher.ShowNotInstalledError();
             return;
         }
 
@@ -106,10 +106,10 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
                 async a =>
                 {
                     var importCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                             .WithArguments(["-y", "import", Game.LibraryGameId, path]!)
+                                             .WithArguments(["-y", "import", Game.LibraryGameId!, path!])
                                              .WithEnvironmentVariables(
                                                   (await LegendaryLauncher
-                                                     .GetDefaultEnvironmentVariables())!)
+                                                     .GetDefaultEnvironmentVariables()))
                                              .AddCommandToLog()
                                              .WithValidation(CommandResultValidation.None)
                                              .ExecuteBufferedAsync();
@@ -117,7 +117,7 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
                     if (importCmd.StandardError.Contains("has been imported"))
                     {
                         var installedAppList = LegendaryLauncher.GetInstalledAppList();
-                        if (installedAppList.TryGetValue(Game.LibraryGameId, out var installedGameInfo))
+                        if (installedAppList.TryGetValue(Game.LibraryGameId!, out var installedGameInfo))
                         {
                             Game.InstallDirectory = installedGameInfo.Install_path;
                             //game.Version = installedGameInfo.Version;
@@ -141,11 +141,11 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
         }
     }
 
-    public void OpenDlcManagerWindow()
+    public async Task OpenDlcManagerWindow()
     {
         if (!LegendaryLauncher.IsInstalled)
         {
-            LegendaryLauncher.ShowNotInstalledError();
+            await LegendaryLauncher.ShowNotInstalledError();
             return;
         }
 
@@ -167,7 +167,7 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
     {
         if (!LegendaryLauncher.IsInstalled)
         {
-            LegendaryLauncher.ShowNotInstalledError();
+            await LegendaryLauncher.ShowNotInstalledError();
             return;
         }
 
@@ -186,7 +186,7 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
                 }
 
                 var folderName = Path.GetFileName(Path.GetDirectoryName(oldPath));
-                newPath = Path.Combine(newPath, folderName);
+                newPath = Path.Combine(newPath, folderName!);
                 var moveFluentArgs = new Dictionary<string, IFluentType>
                 {
                     ["appName"] = (FluentString)Game.Name,
@@ -220,7 +220,7 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
                                 a.SetCrrentProgressValue(1);
                                 var rewriteResult = await Cli
                                                          .Wrap(LegendaryLauncher.ClientExecPath)
-                                                         .WithArguments(["move", Game.LibraryGameId, newPath, "--skip-move"])
+                                                         .WithArguments(["move", Game.LibraryGameId!, newPath, "--skip-move"])
                                                          .WithEnvironmentVariables(await LegendaryLauncher
                                                              .GetDefaultEnvironmentVariables())
                                                          .AddCommandToLog()

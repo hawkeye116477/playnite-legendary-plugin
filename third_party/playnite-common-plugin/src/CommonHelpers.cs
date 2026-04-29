@@ -10,14 +10,9 @@ using Playnite.Common;
 
 namespace CommonPlugin
 {
-    public class CommonHelpers
+    public class CommonHelpers(IPlayniteApi playniteApi)
     {
-        public IPlayniteApi PlayniteApi { get; set; }
-
-        public CommonHelpers(IPlayniteApi playniteApi)
-        {
-            this.PlayniteApi = playniteApi;
-        }
+        private IPlayniteApi PlayniteApi { get; set; } = playniteApi;
 
         public static string FormatSize(double size, string unit = "B", bool toBits = false)
         {
@@ -68,15 +63,14 @@ namespace CommonPlugin
             }
         }
 
-        public async Task<bool> IsDirectoryWritable(string? folderPath, string permissionErrorString = "")
+        public async Task<bool> IsDirectoryWritable(string folderPath, string permissionErrorString = "")
         {
             try
             {
                 Directory.CreateDirectory(folderPath);
-                await using (var fs = File.Create(Path.Combine(folderPath, Path.GetRandomFileName()),
+                await using (File.Create(Path.Combine(folderPath, Path.GetRandomFileName()),
                                  1,
-                                 FileOptions.DeleteOnClose)
-                            )
+                                 FileOptions.DeleteOnClose))
                 { }
                 return true;
             }
@@ -120,7 +114,7 @@ namespace CommonPlugin
             var dictionaries = Application.Current.Resources.MergedDictionaries;
             if (styles)
             {
-                var resDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources");
+                var resDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "Resources");
                 var stylesName = "NormalStyles.xaml";
                 if (PlayniteApi.AppInfo.Mode == AppMode.Fullscreen)
                 {

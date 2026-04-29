@@ -12,7 +12,6 @@
     <UserControl.Resources>
         <sys:Boolean x:Key="True">True</sys:Boolean>
         <sys:Boolean x:Key="False">False</sys:Boolean>
-        <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
         <Style TargetType="Separator" BasedOn="{StaticResource HawkeyeSeparatorStyle}" />
         <Style TargetType="Border" BasedOn="{StaticResource HawkeyeBorderStyle}" />
         <Style TargetType="ListBox" BasedOn="{StaticResource HawkeyeListBoxStyle}" />
@@ -25,7 +24,7 @@
         HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" SelectionChanged="TabControl_SelectionChanged">
         <TabItem Header="{common:Localize Key={x:Static system:LOC.CommonAvailableDlcs}}">
             <DockPanel Margin="10,5,0,5">
-                <Grid DockPanel.Dock="Bottom" Margin="0,5,0,0" x:Name="BottomADGrd">
+                <Grid DockPanel.Dock="Bottom" Margin="0,5,0,0" x:Name="BottomAvDlcGrd">
                     <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -55,7 +54,7 @@
                     Margin="5,0,5,0" Name="AfterInstallingTB" />
                     </StackPanel>
                 </Grid>
-                <StackPanel x:Name="TopADSP" DockPanel.Dock="Top">
+                <StackPanel x:Name="TopAvDlcSP" DockPanel.Dock="Top">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" DockPanel.Dock="Top" Name="AvailableDlcsActionSP">
                         <Button x:Name="InstallBtn" Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteInstallGame}}" FontFamily="{DynamicResource IcoFont}" ContentStringFormat="&#xef07; {0}" Click="InstallBtn_Click" Margin="0,0,8,0" IsEnabled="False" />
                         <Button x:Name="SelectAllAvDlcsBtn" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" FontFamily="{DynamicResource IcoFont}" ContentStringFormat="&#xeed9; {0}" Margin="0,0,8,0" Click="SelectAllAvDlcsBtn_Click"  />
@@ -107,7 +106,7 @@
                     </Border>
                 </StackPanel>
                 <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonNoAvailableDlcs}}" Margin="0,5,0,0" Visibility="Collapsed" Name="NoAvailableDlcsTB"/>
-                <TextBlock Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteLoadingLabel}}" Margin="0,5,0,0"  Visibility="Collapsed" Name="LoadingATB" />
+                <TextBlock Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteLoadingLabel}}" Margin="0,5,0,0"  Visibility="Collapsed" Name="LoadingAvTB" />
             </DockPanel>
         </TabItem>
         <TabItem Header="{common:Localize Key={x:Static system:LOC.CommonInstalledDlcs}}" Name="InstalledDlcsTbI">

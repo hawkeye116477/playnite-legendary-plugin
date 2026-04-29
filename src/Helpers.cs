@@ -4,35 +4,36 @@ using System.Runtime.InteropServices;
 
 namespace LegendaryLibraryNS
 {
-    public class Helpers
+    public static partial class Helpers
     {
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        private class MemoryStatusEx
+        private readonly struct MemoryStatusEx()
         {
-            public uint dwLength = (uint)Marshal.SizeOf(typeof(MemoryStatusEx));
-            public uint dwMemoryLoad;
-            public ulong ullTotalPhys;
-            public ulong ullAvailPhys;
-            public ulong ullTotalPageFile;
-            public ulong ullAvailPageFile;
-            public ulong ullTotalVirtual;
-            public ulong ullAvailVirtual;
-            public ulong ullAvailExtendedVirtual;
+            public readonly uint dwLength = (uint)Marshal.SizeOf<MemoryStatusEx>();
+            public readonly uint dwMemoryLoad;
+            public readonly ulong ullTotalPhys;
+            public readonly ulong ullAvailPhys;
+            public readonly ulong ullTotalPageFile;
+            public readonly ulong ullAvailPageFile;
+            public readonly ulong ullTotalVirtual;
+            public readonly ulong ullAvailVirtual;
+            public readonly ulong ullAvailExtendedVirtual;
         }
-        
-        [DllImport("kernel32.dll")]
+
+        [LibraryImport("kernel32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool GlobalMemoryStatusEx([In, Out] MemoryStatusEx lpBuffer);
-        
+        private static partial bool GlobalMemoryStatusEx(ref MemoryStatusEx lpBuffer);
+
         public static int TotalRam
         {
             get
             {
                 MemoryStatusEx memStatus = new();
-                if (!GlobalMemoryStatusEx(memStatus))
+                if (!GlobalMemoryStatusEx(ref memStatus))
                 {
                     return 0;
                 }
+
                 ulong ram = memStatus.ullTotalPhys / (1024 * 1024);
                 return Convert.ToInt32(ram);
             }
@@ -49,6 +50,7 @@ namespace LegendaryLibraryNS
             {
                 return true;
             }
+
             return false;
         }
     }

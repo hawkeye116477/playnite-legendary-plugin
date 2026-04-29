@@ -49,17 +49,17 @@ namespace LegendaryLibraryNS
             {
                 if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(metadatafile), out LegendaryMetadata? legendaryMetadata))
                 {
-                    if (legendaryMetadata != null)
+                    if (legendaryMetadata?.Metadata != null)
                     {
-                        if (legendaryMetadata.metadata.customAttributes?.CloudSaveFolder != null)
+                        if (legendaryMetadata.Metadata.CustomAttributes?.CloudSaveFolder != null)
                         {
                             gameFeatures.Add(new NameImportableProperty(LocalizationManager.Instance.GetString(LOC.CommonCloudSaves)));
                         }
-                        if (legendaryMetadata.metadata.mainGameItem != null)
+                        if (legendaryMetadata.Metadata.MainGameItem != null)
                         {
                             gameFeatures.Add(new NameImportableProperty(LocalizationManager.Instance.GetString(LOC.CommonExtraContent)));
                         }
-                        if (legendaryMetadata.metadata.customAttributes?.CanRunOffline?.value == "true")
+                        if (legendaryMetadata.Metadata.CustomAttributes?.CanRunOffline?.Value == "true")
                         {
                             gameFeatures.Add(new NameImportableProperty(LocalizationManager.Instance.GetString(LOC.LegendaryOfflineMode)));
                         }

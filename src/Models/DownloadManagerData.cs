@@ -8,7 +8,7 @@ namespace LegendaryLibraryNS.Models
 {
     public partial class DownloadManagerData  : ObservableObject
     {
-        public ObservableCollection<Download>? Downloads { get; set; }
+        public ObservableCollection<Download> Downloads { get; set; } = [];
 
         public partial class Download : ObservableObject
         {
@@ -53,13 +53,13 @@ namespace LegendaryLibraryNS.Models
     {
         public string InstallPath { get; set; } = "";
         public DownloadAction DownloadAction { get; set; }
-        public bool InstallPrerequisites { get; set; } = false;
+        public bool InstallPrerequisites { get; set; }
         public string PrerequisitesName { get; set; } = "";
-        public bool IgnoreFreeSpace { get; set; } = false;
+        public bool IgnoreFreeSpace { get; set; }
         public bool EnableReordering { get; set; }
         public int MaxWorkers { get; set; }
         public int MaxSharedMemory { get; set; }
-        public List<string>? ExtraContent { get; set; }
+        public List<string> ExtraContent { get; set; } = [];
         public Dictionary<string, DownloadManagerData.Download>? SelectedDlcs { get; set; }
     }
 }
