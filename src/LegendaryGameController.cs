@@ -70,8 +70,8 @@ namespace LegendaryLibraryNS
             {
                 game
             };
-            await GameUninstallationCancelledAsync(new GameUninstallCancelledArgs());
             await LaunchUninstaller(games);
+            await GameUninstallationCancelledAsync(new GameUninstallCancelledArgs());
         }
 
         public static async Task LaunchUninstaller(List<Game> games)

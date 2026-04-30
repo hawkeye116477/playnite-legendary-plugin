@@ -199,8 +199,7 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
                 if (moveConfirm == MessageBoxResult.Yes)
                 {
                     var globalProgressOptions =
-                        new GlobalProgressOptions(
-                            LocalizationManager.Instance.GetString(LOC.CommonMovingGame, moveFluentArgs), false);
+                        new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonMovingGame, moveFluentArgs), false);
                     await PlayniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async a =>
                     {
                         a.SetProgressMaxValue(3);
@@ -226,10 +225,10 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
                                                          .AddCommandToLog()
                                                          .ExecuteBufferedAsync();
                                 var errorMessage = rewriteResult.StandardError;
-                                if (rewriteResult.ExitCode != 0 ||
-                                    errorMessage.Contains("ERROR") ||
-                                    errorMessage.Contains("CRITICAL") ||
-                                    errorMessage.Contains("Error"))
+                                if (rewriteResult.ExitCode != 0
+                                    || errorMessage.Contains("ERROR")
+                                    || errorMessage.Contains("CRITICAL")
+                                    || errorMessage.Contains("Error"))
                                 {
                                     Logger.Error($"[Legendary Cli] {errorMessage}");
                                     Logger.Error(
@@ -258,5 +257,4 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
             }
         }
     }
-    
 }
