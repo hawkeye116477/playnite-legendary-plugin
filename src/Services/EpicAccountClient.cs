@@ -371,7 +371,7 @@ public class EpicAccountClient
 
         using var response = await HttpClient.SendAsync(request);
         var str = await response.Content.ReadAsStringAsync();
-        if (Serialization.TryFromJson<ErrorResponse>(str, out var error) && !string.IsNullOrEmpty(error?.ErrorCode))
+        if (Serialization.TryFromJson<ErrorResponse>(str, out var error, false) && !string.IsNullOrEmpty(error?.ErrorCode))
         {
             throw new TokenException(error.ErrorCode);
         }

@@ -21,7 +21,7 @@ namespace CommonPlugin
             return JsonSerializer.Deserialize<T>(json, JsonSerializerSettings);
         }
         
-        public static bool TryFromJson<T>(string json, out T? deserialized) where T : class
+        public static bool TryFromJson<T>(string json, out T? deserialized, bool writeToLog = true) where T : class
         {
             try
             {
@@ -31,7 +31,10 @@ namespace CommonPlugin
             catch (Exception e)
             {
                 deserialized = null;
-                Logger.Debug(e, "An error occured during reading json");
+                if (writeToLog)
+                {
+                    Logger.Error(e, "An error occured during reading json");
+                }
                 return false;
             }
         }

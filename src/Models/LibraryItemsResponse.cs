@@ -9,7 +9,7 @@ public class LibraryItemsResponse
 
     public class Responsemetadata
     {
-        public string NextCursor { get; set; } = "";
-        public string StateToken { get; set; } = "";
+        public string? NextCursor { get; set; }
+        public string? StateToken { get; set; }
     }
 }
