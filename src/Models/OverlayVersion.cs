@@ -1,16 +1,14 @@
-﻿namespace LegendaryLibraryNS.Models
+﻿namespace LegendaryLibraryNS.Models;
+
+public class OverlayVersion
 {
-    public class OverlayVersion
+    public class Rootobject
     {
-        public class Rootobject
-        {
-            public Data? Data { get; set; }
-        }
+        public Data? Data { get; set; }
+    }
 
-        public class Data
-        {
-            public string BuildVersion { get; set; } = "";
-        }
-
+    public class Data
+    {
+        public string BuildVersion { get; set; } = "";
     }
 }

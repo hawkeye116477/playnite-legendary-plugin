@@ -11,9 +11,6 @@
              d:DesignHeight="330" d:DesignWidth="600">
 
     <UserControl.Resources>
-        <sys:Boolean x:Key="True">True</sys:Boolean>
-        <sys:Boolean x:Key="False">False</sys:Boolean>
-        <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <Style TargetType="Separator" BasedOn="{StaticResource HawkeyeSeparatorStyle}" />
         <Style TargetType="Border" BasedOn="{StaticResource HawkeyeBorderStyle}" />
@@ -95,8 +92,7 @@
             <Separator Margin="0,5" />
             <DockPanel Margin="0,0,0,5" Name="FolderDP">
                 <TextBlock Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteGameInstallDirTitle}}"
-                           VerticalAlignment="Center" Margin="0,0,10,0">
-                </TextBlock>
+                           VerticalAlignment="Center" Margin="0,0,10,0" />
                 <Button DockPanel.Dock="Right" Padding="5" Margin="5 0 0 0" Content="&#xec5b;"
                         Name="ChooseGamePathBtn" Click="ChooseGamePathBtn_Click" FontFamily="{DynamicResource IcoFont}"
                         ToolTip="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSelectDirectoryTooltip}}" />
@@ -170,7 +166,7 @@
                 <Expander Margin="2,2,5,2" HorizontalAlignment="Left">
                     <Expander.Header>
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonAdvancedOptions}}"
-                                   HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                   HorizontalAlignment="Left" VerticalAlignment="Center" />
                     </Expander.Header>
                     <Grid Margin="5">
                         <Grid.ColumnDefinitions>

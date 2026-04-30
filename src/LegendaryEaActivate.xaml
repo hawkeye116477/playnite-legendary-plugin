@@ -1,18 +1,14 @@
 ﻿<UserControl x:Class="LegendaryLibraryNS.LegendaryEaActivate"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:LegendaryLibraryNS"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:common="clr-namespace:CommonPlugin"
              xmlns:system="clr-namespace:System"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <UserControl.Resources>
-        <sys:Boolean x:Key="True">True</sys:Boolean>
-        <sys:Boolean x:Key="False">False</sys:Boolean>
-        <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
         <Style TargetType="Separator" BasedOn="{StaticResource HawkeyeSeparatorStyle}" />
         <Style TargetType="Border" BasedOn="{StaticResource HawkeyeBorderStyle}" />
         <Style TargetType="ListBox" BasedOn="{StaticResource HawkeyeListBoxStyle}" />
@@ -22,21 +18,32 @@
         <Style TargetType="TabControl" BasedOn="{StaticResource HawkeyeTabControlStyle}" />
     </UserControl.Resources>
     <StackPanel Margin="10">
-        <TextBlock Text="{common:Localize Key={x:Static system:LOC.LegendaryNoAvailableEaGames}}" Margin="0,5,0,0"  Visibility="Collapsed" Name="NoEaGamesTB" />
-        <TextBlock Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteLoadingLabel}}" Margin="0,5,0,0"  Visibility="Collapsed" Name="LoadingEaTB" />
+        <TextBlock Text="{common:Localize Key={x:Static system:LOC.LegendaryNoAvailableEaGames}}" Margin="0,5,0,0"
+                   Visibility="Collapsed" Name="NoEaGamesTB" />
+        <TextBlock Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteLoadingLabel}}" Margin="0,5,0,0"
+                   Visibility="Collapsed" Name="LoadingEaTB" />
         <StackPanel x:Name="EaGamesSP">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
-                <Button x:Name="ActivateBtn" Content="{common:Localize Key={x:Static system:LOC.LegendaryActivateGames}}" FontFamily="{DynamicResource IcoFont}" ContentStringFormat="&#xecaa; {0}" Margin="0,0,5,0" IsEnabled="False" Click="ActivateBtn_Click" />
-                <Button x:Name="SelectAllBtn" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" FontFamily="{DynamicResource IcoFont}" ContentStringFormat="&#xeed9; {0}" Margin="0,0,5,0" Click="SelectAllBtn_Click"  />
+                <Button x:Name="ActivateBtn"
+                        Content="{common:Localize Key={x:Static system:LOC.LegendaryActivateGames}}"
+                        FontFamily="{DynamicResource IcoFont}" ContentStringFormat="&#xecaa; {0}" Margin="0,0,5,0"
+                        IsEnabled="False" Click="ActivateBtn_Click" />
+                <Button x:Name="SelectAllBtn"
+                        Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}"
+                        FontFamily="{DynamicResource IcoFont}" ContentStringFormat="&#xeed9; {0}" Margin="0,0,5,0"
+                        Click="SelectAllBtn_Click" />
             </StackPanel>
             <Separator Margin="0,5,0,0" />
-            <ListBox BorderThickness="0" Name="EaGamesLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="EaGamesLB_SelectionChanged">
+            <ListBox BorderThickness="0" Name="EaGamesLB" SelectionMode="Multiple" Margin="0,5"
+                     SelectionChanged="EaGamesLB_SelectionChanged">
                 <ListBox.Resources>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListBoxItem">
-                                    <CheckBox Content="{Binding App_title}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Margin="0,5,0,0" Name="EaGamesLBChk"/>
+                                    <CheckBox Content="{Binding App_title}"
+                                              IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+                                              Margin="0,5,0,0" Name="EaGamesLBChk" />
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>

@@ -6,58 +6,59 @@ using System;
 using System.Diagnostics;
 using System.Windows;
 
-namespace LegendaryLibraryNS
+namespace LegendaryLibraryNS;
+
+/// <summary>
+/// Interaction logic for LegendaryAlternativeAuthView.xaml
+/// </summary>
+public partial class LegendaryAlternativeAuthView
 {
-    /// <summary>
-    /// Interaction logic for LegendaryAlternativeAuthView.xaml
-    /// </summary>
-    public partial class LegendaryAlternativeAuthView
+    private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
+    private ILogger logger = LogManager.GetLogger();
+    private Window AlternativeAuthWindow => Window.GetWindow(this)!;
+
+    public LegendaryAlternativeAuthView()
     {
-        private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
-        private ILogger logger = LogManager.GetLogger();
-        private Window AlternativeAuthWindow => Window.GetWindow(this)!;
+        InitializeComponent();
+    }
 
-        public LegendaryAlternativeAuthView()
-        {
-            InitializeComponent();
-        }
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    {
+        LegendaryLibrary.Instance.CommonHelpers.SetControlBackground(this);
+        AuthLinkTxt.Text = EpicAccountClient.AuthCodeUrl;
+    }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            LegendaryLibrary.Instance.CommonHelpers.SetControlBackground(this);
-            AuthLinkTxt.Text = EpicAccountClient.AuthCodeUrl;
-        }
+    private void CopyBtn_Click(object sender, RoutedEventArgs e)
+    {
+        AuthLinkTxt.Focus();
+        AuthLinkTxt.SelectAll();
+        Clipboard.SetText(AuthLinkTxt.Text);
+    }
 
-        private void CopyBtn_Click(object sender, RoutedEventArgs e)
-        {
-            AuthLinkTxt.Focus();
-            AuthLinkTxt.SelectAll();
-            Clipboard.SetText(AuthLinkTxt.Text);
-        }
+    private void OpenBtn_Click(object sender, RoutedEventArgs e)
+    {
+        ProcessStarter.StartUrl(EpicAccountClient.AuthCodeUrl);
+    }
 
-        private void OpenBtn_Click(object sender, RoutedEventArgs e)
+    private async void AuthBtn_Click(object sender, RoutedEventArgs e)
+    {
+        var clientApi = new EpicAccountClient(playniteApi);
+        if (AuthCodeTxt.Text != "")
         {
-            ProcessStarter.StartUrl(EpicAccountClient.AuthCodeUrl);
-        }
-
-        private async void AuthBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var clientApi = new EpicAccountClient(playniteApi);
-            if (AuthCodeTxt.Text != "")
+            try
             {
-                try
-                {
-                    await clientApi.AuthenticateUsingAuthCode(AuthCodeTxt.Text.Trim());
-                    AlternativeAuthWindow.DialogResult = true;
-                }
-                catch (Exception ex) when (!Debugger.IsAttached)
-                {
-                    await playniteApi.Dialogs.ShowErrorMessageAsync(LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedInError), "");
-                    logger.Error(ex, "Failed to authenticate user.");
-                    AlternativeAuthWindow.DialogResult = false;
-                }
-                AlternativeAuthWindow.Close();
+                await clientApi.AuthenticateUsingAuthCode(AuthCodeTxt.Text.Trim());
+                AlternativeAuthWindow.DialogResult = true;
             }
+            catch (Exception ex) when (!Debugger.IsAttached)
+            {
+                await playniteApi.Dialogs.ShowErrorMessageAsync(
+                    LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedInError), "");
+                logger.Error(ex, "Failed to authenticate user.");
+                AlternativeAuthWindow.DialogResult = false;
+            }
+
+            AlternativeAuthWindow.Close();
         }
     }
 }

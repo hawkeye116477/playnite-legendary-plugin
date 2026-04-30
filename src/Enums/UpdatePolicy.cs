@@ -1,14 +1,13 @@
-﻿namespace LegendaryLibraryNS.Enums
+﻿namespace LegendaryLibraryNS.Enums;
+
+public enum UpdatePolicy
 {
-    public enum UpdatePolicy
-    {
-        Never,
-        GameLaunch,
-        PlayniteLaunch = 3,
-        Day,
-        Week,
-        Month,
-        ThreeMonths,
-        SixMonths
-    }
+    Never,
+    GameLaunch,
+    PlayniteLaunch = 3,
+    Day,
+    Week,
+    Month,
+    ThreeMonths,
+    SixMonths
 }

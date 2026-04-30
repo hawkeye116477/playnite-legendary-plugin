@@ -1,19 +1,16 @@
 ﻿<UserControl x:Class="LegendaryLibraryNS.LegendaryDownloadProperties"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:LegendaryLibraryNS"
              xmlns:common="clr-namespace:CommonPlugin"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:system="clr-namespace:System"
-             xmlns:pcmd="clr-namespace:Playnite.Commands"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="400" Name="LegendaryDownloadPropertiesUC" Loaded="LegendaryDownloadPropertiesUC_Loaded">
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="400" Name="LegendaryDownloadPropertiesUC"
+             Loaded="LegendaryDownloadPropertiesUC_Loaded">
     <UserControl.Resources>
-        <sys:Boolean x:Key="True">True</sys:Boolean>
-        <sys:Boolean x:Key="False">False</sys:Boolean>
-        <FontFamily x:Key="FontIcoFont">/Fonts/icofont.ttf#icofont</FontFamily>
         <Style TargetType="Separator" BasedOn="{StaticResource HawkeyeSeparatorStyle}" />
         <Style TargetType="Border" BasedOn="{StaticResource HawkeyeBorderStyle}" />
         <Style TargetType="ListBox" BasedOn="{StaticResource HawkeyeListBoxStyle}" />
@@ -24,39 +21,55 @@
     </UserControl.Resources>
     <DockPanel Margin="0,0,0,10">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,10,0">
-            <Button Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSaveLabel}}" ContentStringFormat="&#xee00; {0}" FontFamily="{DynamicResource IcoFont}" Click="SaveBtn_Click" Margin="0,0,8,0" Name="SaveBtn" />
-            <Button Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteCancelLabel}}" ContentStringFormat="&#xec4f; {0}"
+            <Button Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSaveLabel}}"
+                    ContentStringFormat="&#xee00; {0}" FontFamily="{DynamicResource IcoFont}" Click="SaveBtn_Click"
+                    Margin="0,0,8,0" Name="SaveBtn" />
+            <Button Content="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteCancelLabel}}"
+                    ContentStringFormat="&#xec4f; {0}"
                     FontFamily="{DynamicResource IcoFont}" Name="CancelBtn" IsCancel="True" />
         </StackPanel>
         <Grid DockPanel.Dock="Bottom" Margin="10,5" x:Name="SizeGrd" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Separator Margin="0,5,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5" Grid.Row="1" Grid.Column="0">
-                <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonDownloadSize}}" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                <TextBlock x:Name="DownloadSizeTB" Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteLoadingLabel}}"
-                    VerticalAlignment="Top" Margin="5,0,5,0" />
+            <Separator Margin="0,5,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5"
+                        Grid.Row="1" Grid.Column="0">
+                <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonDownloadSize}}"
+                           HorizontalAlignment="Left" VerticalAlignment="Center" />
+                <TextBlock x:Name="DownloadSizeTB"
+                           Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteLoadingLabel}}"
+                           VerticalAlignment="Top" Margin="5,0,5,0" />
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" Grid.Row="2" Grid.Column="0">
-                <TextBlock VerticalAlignment="Top" Text="{common:Localize Key={x:Static system:LOC.CommonInstallSize}}" Margin="0,0,0,0" />
-                <TextBlock x:Name="InstallSizeTB" Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteLoadingLabel}}" VerticalAlignment="Top" Margin="5,0,5,0" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"
+                        Grid.Row="2" Grid.Column="0">
+                <TextBlock VerticalAlignment="Top" Text="{common:Localize Key={x:Static system:LOC.CommonInstallSize}}"
+                           Margin="0,0,0,0" />
+                <TextBlock x:Name="InstallSizeTB"
+                           Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteLoadingLabel}}"
+                           VerticalAlignment="Top" Margin="5,0,5,0" />
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,5,0,5" Grid.Row="1" Grid.Column="1">
-                <TextBlock VerticalAlignment="Top" Text="{common:Localize Key={x:Static system:LOC.CommonSpaceAvailable}}" Margin="0,0,0,0" />
-                <TextBlock VerticalAlignment="Top" Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteLoadingLabel}}"
-                    Margin="5,0,5,0" Name="SpaceTB" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,5,0,5"
+                        Grid.Row="1" Grid.Column="1">
+                <TextBlock VerticalAlignment="Top"
+                           Text="{common:Localize Key={x:Static system:LOC.CommonSpaceAvailable}}" Margin="0,0,0,0" />
+                <TextBlock VerticalAlignment="Top"
+                           Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteLoadingLabel}}"
+                           Margin="5,0,5,0" Name="SpaceTB" />
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" Name="AfterInstallingSP" Margin="10,0,0,0">
-                <TextBlock VerticalAlignment="Top" Text="{common:Localize Key={x:Static system:LOC.CommonAfterInstalling}}" Margin="0,0,0,0" />
-                <TextBlock VerticalAlignment="Top" Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteLoadingLabel}}"
-                    Margin="5,0,5,0" Name="AfterInstallingTB" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="2"
+                        Grid.Column="1" Name="AfterInstallingSP" Margin="10,0,0,0">
+                <TextBlock VerticalAlignment="Top"
+                           Text="{common:Localize Key={x:Static system:LOC.CommonAfterInstalling}}" Margin="0,0,0,0" />
+                <TextBlock VerticalAlignment="Top"
+                           Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteLoadingLabel}}"
+                           Margin="5,0,5,0" Name="AfterInstallingTB" />
             </StackPanel>
         </Grid>
         <TabControl>
@@ -71,26 +84,42 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <DockPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,0,5">
-                        <TextBlock Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteGameInstallDirTitle}}" VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <TextBlock
+                            Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteGameInstallDirTitle}}"
+                            VerticalAlignment="Center" Margin="0,0,10,0" />
                         <Button DockPanel.Dock="Right" Padding="5" Margin="5 0 0 0" Content="&#xec5b;"
-                                Name="ChooseGamePathBtn" FontFamily="{DynamicResource IcoFont}" ToolTip="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSelectDirectoryTooltip}}" Click="ChooseGamePathBtn_Click" />
+                                Name="ChooseGamePathBtn" FontFamily="{DynamicResource IcoFont}"
+                                ToolTip="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSelectDirectoryTooltip}}"
+                                Click="ChooseGamePathBtn_Click" />
                         <TextBox Name="SelectedGamePathTxt" VerticalAlignment="Center" Margin="0" />
                     </DockPanel>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{common:Localize Key={x:Static system:LOC.CommonTask}}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,10,0"></TextBlock>
-                    <ComboBox Grid.Row="1" Grid.Column="1" x:Name="TaskCBo" DisplayMemberPath="Value" SelectedValuePath="Key" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Width="Auto" />
+                    <TextBlock Grid.Row="1" Grid.Column="0"
+                               Text="{common:Localize Key={x:Static system:LOC.CommonTask}}" VerticalAlignment="Center"
+                               HorizontalAlignment="Left" Margin="0,0,10,0" />
+                    <ComboBox Grid.Row="1" Grid.Column="1" x:Name="TaskCBo" DisplayMemberPath="Value"
+                              SelectedValuePath="Key" VerticalContentAlignment="Center"
+                              HorizontalContentAlignment="Left" Width="Auto" />
                 </Grid>
             </TabItem>
-            <TabItem Header="{common:Localize Key={x:Static system:LOC.CommonExtraContent}}" Visibility="Collapsed" Name="ExtraContentTbI">
+            <TabItem Header="{common:Localize Key={x:Static system:LOC.CommonExtraContent}}" Visibility="Collapsed"
+                     Name="ExtraContentTbI">
                 <StackPanel Margin="10">
-                    <CheckBox Margin="2,0,0,5" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" x:Name="AllOrNothingChk" Checked="AllOrNothingChk_Checked" Unchecked="AllOrNothingChk_Unchecked" Visibility="Collapsed" IsEnabled="False" />
+                    <CheckBox Margin="2,0,0,5"
+                              Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}"
+                              x:Name="AllOrNothingChk" Checked="AllOrNothingChk_Checked"
+                              Unchecked="AllOrNothingChk_Unchecked" Visibility="Collapsed" IsEnabled="False" />
                     <Separator Margin="2,0,0,5" />
-                    <ListBox BorderThickness="0" Name="ExtraContentLB" SelectionMode="Multiple" Margin="0,0,0,5" SelectionChanged="ExtraContentLB_SelectionChanged" IsEnabled="False">
+                    <ListBox BorderThickness="0" Name="ExtraContentLB" SelectionMode="Multiple" Margin="0,0,0,5"
+                             SelectionChanged="ExtraContentLB_SelectionChanged" IsEnabled="False">
                         <ListBox.Resources>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="ListBoxItem">
-                                            <CheckBox Content="{Binding Value.Name}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" ToolTip="{Binding Value.Description}" Margin="0,5,0,0" Name="ExtraContentChk"/>
+                                            <CheckBox Content="{Binding Value.Name}"
+                                                      IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+                                                      ToolTip="{Binding Value.Description}" Margin="0,5,0,0"
+                                                      Name="ExtraContentChk" />
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
@@ -115,19 +144,26 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <CheckBox Grid.Column="0" Grid.Row="0" Content="{common:Localize Key={x:Static system:LOC.LegendaryInstallPrerequisites},Args='prerequisiteName=$prerequisiteName'}" 
-                              Margin="0,0,0,5" Name="PrerequisitesChk" Visibility="Collapsed"/>
-                    <CheckBox Grid.Column="0" Grid.Row="1" Content="{common:Localize Key={x:Static system:LOC.LegendaryIgnoreFreeSpace}}" 
-                              Margin="0,0,0,5" Name="IgnoreFreeSpaceChk" ToolTip="{common:Localize Key={x:Static system:LOC.LegendaryIgnoreFreeSpaceToolTip}}"/>
-                    <CheckBox Grid.Column="0" Grid.Row="2" Content="{common:Localize Key={x:Static system:LOC.LegendaryEnableReordering}}"
+                    <CheckBox Grid.Column="0" Grid.Row="0"
+                              Content="{common:Localize Key={x:Static system:LOC.LegendaryInstallPrerequisites},Args='prerequisiteName=$prerequisiteName'}"
+                              Margin="0,0,0,5" Name="PrerequisitesChk" Visibility="Collapsed" />
+                    <CheckBox Grid.Column="0" Grid.Row="1"
+                              Content="{common:Localize Key={x:Static system:LOC.LegendaryIgnoreFreeSpace}}"
+                              Margin="0,0,0,5" Name="IgnoreFreeSpaceChk"
+                              ToolTip="{common:Localize Key={x:Static system:LOC.LegendaryIgnoreFreeSpaceToolTip}}" />
+                    <CheckBox Grid.Column="0" Grid.Row="2"
+                              Content="{common:Localize Key={x:Static system:LOC.LegendaryEnableReordering}}"
                               ToolTip="{common:Localize Key={x:Static system:LOC.LegendaryEnableReorderingToolTip}}"
-                              Margin="0,0,0,5" Name="ReorderingChk"/>
+                              Margin="0,0,0,5" Name="ReorderingChk" />
                     <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonMaxWorkers}}" Grid.Column="0"
                                Grid.Row="3" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                    <common:NumericInput Grid.Row="3" Grid.Column="1" Margin="10,0,0,5" MinValue="0" x:Name="MaxWorkersNI"/>
+                    <common:NumericInput Grid.Row="3" Grid.Column="1" Margin="10,0,0,5" MinValue="0"
+                                         x:Name="MaxWorkersNI" />
                     <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonMaxSharedMemory}}" Grid.Column="0"
                                Grid.Row="4" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                    <common:NumericInput Grid.Row="4" Grid.Column="1" Margin="10,0,0,5" MinValue="0" MaxValue="{Binding Path=(local:Helpers.TotalRam)}" StepSize="128" x:Name="MaxSharedMemoryNI"/>
+                    <common:NumericInput Grid.Row="4" Grid.Column="1" Margin="10,0,0,5" MinValue="0"
+                                         MaxValue="{Binding Path=(local:Helpers.TotalRam)}" StepSize="128"
+                                         x:Name="MaxSharedMemoryNI" />
                 </Grid>
             </TabItem>
         </TabControl>

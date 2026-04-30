@@ -6,204 +6,212 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace LegendaryLibraryNS
+namespace LegendaryLibraryNS;
+
+/// <summary>
+/// Interaction logic for LegendaryExtraInstallationContentView.xaml
+/// </summary>
+public partial class LegendaryExtraInstallationContentView
 {
-    /// <summary>
-    /// Interaction logic for LegendaryExtraInstallationContentView.xaml
-    /// </summary>
-    public partial class LegendaryExtraInstallationContentView
+    public LegendaryExtraInstallationContentView()
     {
-        public LegendaryExtraInstallationContentView()
+        InitializeComponent();
+    }
+
+    private DownloadManagerData.Download ChosenGame
+    {
+        get => (DataContext as DownloadManagerData.Download)!;
+        set { }
+    }
+
+    private readonly CommonHelpers commonHelpers = LegendaryLibrary.Instance.CommonHelpers;
+    private bool uncheckedByUser = true;
+    private bool checkedByUser = true;
+
+
+    private async void LegendaryExtraInstallationContentUC_Loaded(object sender, RoutedEventArgs e)
+    {
+        commonHelpers.SetControlBackground(this);
+        var extraContentInfo = await LegendaryLauncher.GetExtraContentInfo(ChosenGame);
+        var dlcs = extraContentInfo.Where(i => i.Value.Is_dlc).ToList();
+        var sdls = extraContentInfo.Where(i => !i.Value.Is_dlc).ToList();
+        if (dlcs.Count > 1)
         {
-            InitializeComponent();
+            AllDlcsChk.Visibility = Visibility.Visible;
         }
 
-        private DownloadManagerData.Download ChosenGame
+        if (sdls.Count > 1)
         {
-            get => (DataContext as DownloadManagerData.Download)!;
-            set { }
+            AllOrNothingChk.Visibility = Visibility.Visible;
         }
 
-        private readonly CommonHelpers commonHelpers = LegendaryLibrary.Instance.CommonHelpers;
-        private bool uncheckedByUser = true;
-        private bool checkedByUser = true;
-
-
-        private async void LegendaryExtraInstallationContentUC_Loaded(object sender, RoutedEventArgs e)
+        if (extraContentInfo.Count > 0)
         {
-            commonHelpers.SetControlBackground(this);
-            var extraContentInfo = await LegendaryLauncher.GetExtraContentInfo(ChosenGame);
-            var dlcs = extraContentInfo.Where(i => i.Value.Is_dlc).ToList();
-            var sdls = extraContentInfo.Where(i => !i.Value.Is_dlc).ToList();
-            if (dlcs.Count > 1)
+            ExtraContentLB.ItemsSource = extraContentInfo;
+            ExtraContentSP.Visibility = Visibility.Visible;
+            var selectedExtraContent = new Dictionary<string, LegendarySdlInfo>();
+            var selectedDlcs = ChosenGame.DownloadProperties.SelectedDlcs;
+            if (selectedDlcs is { Count: > 0 })
             {
-                AllDlcsChk.Visibility = Visibility.Visible;
-            }
-            if (sdls.Count > 1)
-            {
-                AllOrNothingChk.Visibility = Visibility.Visible;
-            }
-            if (extraContentInfo.Count > 0)
-            {
-                ExtraContentLB.ItemsSource = extraContentInfo;
-                ExtraContentSP.Visibility = Visibility.Visible;
-                var selectedExtraContent = new Dictionary<string, LegendarySdlInfo>();
-                var selectedDlcs = ChosenGame.DownloadProperties.SelectedDlcs;
-                if (selectedDlcs is { Count: > 0 })
+                foreach (var selectedDlc in selectedDlcs)
                 {
-                    foreach (var selectedDlc in selectedDlcs)
+                    var sdlInfo = new LegendarySdlInfo
                     {
-                        var sdlInfo = new LegendarySdlInfo
-                        {
-                            Is_dlc = true,
-                        };
-                        selectedExtraContent.Add(selectedDlc.Key, sdlInfo);
-                    }
-                }
-                var selectedSdls = ChosenGame.DownloadProperties.ExtraContent;
-                if (selectedSdls is { Count: > 0 })
-                {
-                    foreach (var selectedSdl  in selectedSdls)
-                    {
-                        var sdlInfo = new LegendarySdlInfo
-                        {
-                            Is_dlc = false,
-                        };
-                        selectedExtraContent.Add(selectedSdl, sdlInfo);
-                    }
-                }
-                if (selectedExtraContent.Count > 0)
-                {
-                    foreach (var singleSelectedExtraContent in selectedExtraContent)
-                    {
-                        var selectedItem = extraContentInfo.FirstOrDefault(i => i.Key == singleSelectedExtraContent.Key);
-                        if (selectedItem.Key != null)
-                        {
-                            ExtraContentLB.SelectedItems.Add(selectedItem);
-                        }
-                    }
-                }
-            }
-        }
-
-        private async void ExtraContentLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var selectedExtraContent = ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySdlInfo>>().ToList();
-            var selectedDlCs = selectedExtraContent.Where(i => i.Value.Is_dlc).ToList();
-            var sdls = selectedExtraContent.Where(i => i.Value.Is_dlc == false).ToList();
-
-            var selectedSdls = new List<string>();
-
-            if (sdls.Count > 0)
-            {
-                foreach (var sdl in sdls)
-                {
-                    selectedSdls.AddMissing(sdl.Key);
-                }
-            }
-            ChosenGame.DownloadProperties.SelectedDlcs = new Dictionary<string, DownloadManagerData.Download>();
-            if (selectedDlCs.Count > 0)
-            {
-                foreach (var dlc in selectedDlCs)
-                {
-                    var dlcData = new LegendaryGameInfo.Game
-                    {
-                        Title = dlc.Value.Name,
-                        App_name = dlc.Key
+                        Is_dlc = true
                     };
-                    var dlcInstallData = new DownloadManagerData.Download
+                    selectedExtraContent.Add(selectedDlc.Key, sdlInfo);
+                }
+            }
+
+            var selectedSdls = ChosenGame.DownloadProperties.ExtraContent;
+            if (selectedSdls is { Count: > 0 })
+            {
+                foreach (var selectedSdl in selectedSdls)
+                {
+                    var sdlInfo = new LegendarySdlInfo
                     {
-                        GameId = dlcData.App_name,
-                        Name = dlcData.Title,
+                        Is_dlc = false
                     };
-                    ChosenGame.DownloadProperties.SelectedDlcs.Add(dlcData.App_name, dlcInstallData);
+                    selectedExtraContent.Add(selectedSdl, sdlInfo);
                 }
             }
 
-            var requiredTags = await LegendaryLauncher.GetRequiredSdlsTags(ChosenGame);
-            if (requiredTags.Count > 0)
+            if (selectedExtraContent.Count > 0)
             {
-                foreach (var requiredTag in requiredTags)
+                foreach (var singleSelectedExtraContent in selectedExtraContent)
                 {
-                    selectedSdls.AddMissing(requiredTag);
+                    var selectedItem = extraContentInfo.FirstOrDefault(i => i.Key == singleSelectedExtraContent.Key);
+                    if (selectedItem.Key != null)
+                    {
+                        ExtraContentLB.SelectedItems.Add(selectedItem);
+                    }
                 }
             }
-            ChosenGame.DownloadProperties.ExtraContent = selectedSdls;
-            var gameData = new LegendaryGameInfo.Game
-            {
-                App_name = ChosenGame.GameId,
-                Title = ChosenGame.Name,
-            };
+        }
+    }
 
-            if (AllOrNothingChk.IsChecked == true && selectedExtraContent.Count() != ExtraContentLB.Items.Count)
+    private async void ExtraContentLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var selectedExtraContent = ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySdlInfo>>().ToList();
+        var selectedDlCs = selectedExtraContent.Where(i => i.Value.Is_dlc).ToList();
+        var sdls = selectedExtraContent.Where(i => i.Value.Is_dlc == false).ToList();
+
+        var selectedSdls = new List<string>();
+
+        if (sdls.Count > 0)
+        {
+            foreach (var sdl in sdls)
             {
-                uncheckedByUser = false;
-                AllOrNothingChk.IsChecked = false;
-                uncheckedByUser = true;
-            }
-            if (AllOrNothingChk.IsChecked == false && selectedExtraContent.Count() == ExtraContentLB.Items.Count)
-            {
-                checkedByUser = false;
-                AllOrNothingChk.IsChecked = true;
-                checkedByUser = true;
-            }
-            var allDlCs = ExtraContentLB.Items.Cast<KeyValuePair<string, LegendarySdlInfo>>().Where(i => i.Value.Is_dlc).ToList();
-            if (AllDlcsChk.IsChecked == true && selectedDlCs.Count() != allDlCs.Count)
-            {
-                uncheckedByUser = false;
-                AllDlcsChk.IsChecked = false;
-                uncheckedByUser = true;
-            }
-            if (AllDlcsChk.IsChecked == false && selectedDlCs.Count() == allDlCs.Count)
-            {
-                checkedByUser = false;
-                AllDlcsChk.IsChecked = true;
-                checkedByUser = true;
+                selectedSdls.AddMissing(sdl.Key);
             }
         }
 
-        private void CloseBtn_Click(object sender, RoutedEventArgs e)
+        ChosenGame.DownloadProperties.SelectedDlcs = new Dictionary<string, DownloadManagerData.Download>();
+        if (selectedDlCs.Count > 0)
         {
-            Window.GetWindow(this)?.Close();
-        }
-
-        private void AllDlcsChk_Checked(object sender, RoutedEventArgs e)
-        {
-            if (checkedByUser)
+            foreach (var dlc in selectedDlCs)
             {
-                var dlcs = ExtraContentLB.Items.Cast<KeyValuePair<string, LegendarySdlInfo>>().Where(x => x.Value.Is_dlc).ToList();
-                foreach (var dlc in dlcs)
+                var dlcData = new LegendaryGameInfo.Game
                 {
-                    ExtraContentLB.SelectedItems.Add(dlc);
-                }
-            }
-        }
-
-        private void AllOrNothingChk_Checked(object sender, RoutedEventArgs e)
-        {
-            if (checkedByUser)
-            {
-                ExtraContentLB.SelectAll();
-            }
-        }
-
-        private void AllOrNothingChk_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (uncheckedByUser)
-            {
-                ExtraContentLB.SelectedItems.Clear();
-            }
-        }
-
-        private void AllDlcsChk_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (uncheckedByUser)
-            {
-                var dlcs = ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySdlInfo>>().Where(x => x.Value.Is_dlc).ToList();
-                foreach (var dlc in dlcs)
+                    Title = dlc.Value.Name,
+                    App_name = dlc.Key
+                };
+                var dlcInstallData = new DownloadManagerData.Download
                 {
-                    ExtraContentLB.SelectedItems.Remove(dlc);
-                }
+                    GameId = dlcData.App_name,
+                    Name = dlcData.Title
+                };
+                ChosenGame.DownloadProperties.SelectedDlcs.Add(dlcData.App_name, dlcInstallData);
+            }
+        }
+
+        var requiredTags = await LegendaryLauncher.GetRequiredSdlsTags(ChosenGame);
+        if (requiredTags.Count > 0)
+        {
+            foreach (var requiredTag in requiredTags)
+            {
+                selectedSdls.AddMissing(requiredTag);
+            }
+        }
+
+        ChosenGame.DownloadProperties.ExtraContent = selectedSdls;
+        var gameData = new LegendaryGameInfo.Game
+        {
+            App_name = ChosenGame.GameId,
+            Title = ChosenGame.Name
+        };
+
+        if (AllOrNothingChk.IsChecked == true && selectedExtraContent.Count() != ExtraContentLB.Items.Count)
+        {
+            uncheckedByUser = false;
+            AllOrNothingChk.IsChecked = false;
+            uncheckedByUser = true;
+        }
+
+        if (AllOrNothingChk.IsChecked == false && selectedExtraContent.Count() == ExtraContentLB.Items.Count)
+        {
+            checkedByUser = false;
+            AllOrNothingChk.IsChecked = true;
+            checkedByUser = true;
+        }
+
+        var allDlCs = ExtraContentLB.Items.Cast<KeyValuePair<string, LegendarySdlInfo>>().Where(i => i.Value.Is_dlc).ToList();
+        if (AllDlcsChk.IsChecked == true && selectedDlCs.Count() != allDlCs.Count)
+        {
+            uncheckedByUser = false;
+            AllDlcsChk.IsChecked = false;
+            uncheckedByUser = true;
+        }
+
+        if (AllDlcsChk.IsChecked == false && selectedDlCs.Count() == allDlCs.Count)
+        {
+            checkedByUser = false;
+            AllDlcsChk.IsChecked = true;
+            checkedByUser = true;
+        }
+    }
+
+    private void CloseBtn_Click(object sender, RoutedEventArgs e)
+    {
+        Window.GetWindow(this)?.Close();
+    }
+
+    private void AllDlcsChk_Checked(object sender, RoutedEventArgs e)
+    {
+        if (checkedByUser)
+        {
+            var dlcs = ExtraContentLB.Items.Cast<KeyValuePair<string, LegendarySdlInfo>>().Where(x => x.Value.Is_dlc).ToList();
+            foreach (var dlc in dlcs)
+            {
+                ExtraContentLB.SelectedItems.Add(dlc);
+            }
+        }
+    }
+
+    private void AllOrNothingChk_Checked(object sender, RoutedEventArgs e)
+    {
+        if (checkedByUser)
+        {
+            ExtraContentLB.SelectAll();
+        }
+    }
+
+    private void AllOrNothingChk_Unchecked(object sender, RoutedEventArgs e)
+    {
+        if (uncheckedByUser)
+        {
+            ExtraContentLB.SelectedItems.Clear();
+        }
+    }
+
+    private void AllDlcsChk_Unchecked(object sender, RoutedEventArgs e)
+    {
+        if (uncheckedByUser)
+        {
+            var dlcs = ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySdlInfo>>().Where(x => x.Value.Is_dlc).ToList();
+            foreach (var dlc in dlcs)
+            {
+                ExtraContentLB.SelectedItems.Remove(dlc);
             }
         }
     }

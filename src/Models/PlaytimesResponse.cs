@@ -1,9 +1,8 @@
-﻿namespace LegendaryLibraryNS.Models
+﻿namespace LegendaryLibraryNS.Models;
+
+public class PlaytimeItem
 {
-    public class PlaytimeItem
-    {
-        public string AccountId { get; set; } = "";
-        public string ArtifactId { get; set; } = "";
-        public ulong TotalTime;
-    }
+    public string AccountId { get; set; } = "";
+    public string ArtifactId { get; set; } = "";
+    public ulong TotalTime;
 }

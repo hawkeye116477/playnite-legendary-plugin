@@ -108,8 +108,8 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
                     var importCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                              .WithArguments(["-y", "import", Game.LibraryGameId!, path!])
                                              .WithEnvironmentVariables(
-                                                  (await LegendaryLauncher
-                                                     .GetDefaultEnvironmentVariables()))
+                                                  await LegendaryLauncher
+                                                     .GetDefaultEnvironmentVariables())
                                              .AddCommandToLog()
                                              .WithValidation(CommandResultValidation.None)
                                              .ExecuteBufferedAsync();
@@ -151,7 +151,7 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
 
         var window = PlayniteApi.CreateWindow(new WindowCreationOptions
         {
-            ShowMaximizeButton = false,
+            ShowMaximizeButton = false
         });
         window.Title = $"{LocalizationManager.Instance.GetString(LOC.CommonManageDlcs)} - {Game.Name}";
         window.DataContext = Game;
@@ -178,8 +178,8 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
             var oldPath = Game.InstallDirectory;
             if (Directory.Exists(oldPath) && Directory.Exists(newPath))
             {
-                string sepChar = Path.DirectorySeparatorChar.ToString();
-                string altChar = Path.AltDirectorySeparatorChar.ToString();
+                var sepChar = Path.DirectorySeparatorChar.ToString();
+                var altChar = Path.AltDirectorySeparatorChar.ToString();
                 if (!oldPath.EndsWith(sepChar) && !oldPath.EndsWith(altChar))
                 {
                     oldPath += sepChar;
@@ -204,11 +204,11 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
                     {
                         a.SetProgressMaxValue(3);
                         a.SetCurrentProgressValue(0);
-                        _ = (Application.Current.Dispatcher?.BeginInvoke((Action)async delegate
+                        _ = Application.Current.Dispatcher?.BeginInvoke((Action)async delegate
                         {
                             try
                             {
-                                bool canContinue = await LegendaryLibrary.Instance.StopDownloadManager(true);
+                                var canContinue = await LegendaryLibrary.Instance.StopDownloadManager(true);
                                 if (!canContinue)
                                 {
                                     return;
@@ -251,7 +251,7 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
                                         LOC.CommonMoveGameError, moveFluentArgs));
                                 Logger.Error(e.Message);
                             }
-                        }));
+                        });
                     });
                 }
             }
