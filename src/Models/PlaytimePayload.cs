@@ -8,4 +8,6 @@ public class PlaytimePayload
     public string? ArtifactId;
     public DateTime StartTime;
     public DateTime EndTime;
+    public bool StartSegment = true;
+    public bool EndSegment = true;
 }
