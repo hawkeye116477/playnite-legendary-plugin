@@ -92,6 +92,9 @@ public partial class LegendaryLibrarySettings : ObservableObject
 
     [ObservableProperty]
     public partial string LauncherUpdateSource { get; set; } = LegendaryLauncher.DefaultUpdateSource;
+
+    [ObservableProperty]
+    public partial PlayTimeImportMode PlayTimeImportMode { get; set; } = PlayTimeImportMode.NewImportsOnly;
 }
 
 [INotifyPropertyChanged]

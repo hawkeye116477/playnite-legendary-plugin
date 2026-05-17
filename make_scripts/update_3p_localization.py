@@ -49,10 +49,10 @@ NSMAP = {None: xmlns,
         "x":  xmlns_x}
 
 git_repo = git.Repo(
-    pj(main_path, "..", "PlayniteExtensions"), search_parent_directories=True)
+    pj(main_path, "..", "..", "PlayniteExtensions"), search_parent_directories=True)
 commit = git_repo.head.object.hexsha
 source = git_repo.remotes.origin.url.replace(".git", f"/tree/{commit}")
-Playnite_git_repo = git.Repo(pj(main_path, "..", "PlayniteExtensions", "PlayniteRepo"), search_parent_directories=True)
+Playnite_git_repo = git.Repo(pj(main_path, "..", "..", "PlayniteExtensions", "PlayniteRepo"), search_parent_directories=True)
 commit2 = Playnite_git_repo.head.object.hexsha
 source2 = Playnite_git_repo.remotes.origin.url.replace(".git", f"/tree/{commit2}")
 
@@ -62,7 +62,7 @@ convertToFtl_script = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(convertToFtl_script)
 
 # Copy localizations from Playnite
-for filename in os.listdir(pj(main_path, "..", "PlayniteExtensions", "PlayniteRepo", "source", "Playnite", "Localization")):
+for filename in os.listdir(pj(main_path, "..", "..", "PlayniteExtensions", "PlayniteRepo", "source", "Playnite", "Localization")):
     xml_root = ET.Element("ResourceDictionary", nsmap=NSMAP)
     xml_doc = ET.ElementTree(xml_root)
 
@@ -70,7 +70,7 @@ for filename in os.listdir(pj(main_path, "..", "PlayniteExtensions", "PlayniteRe
     if filename not in ["LocSource.xaml", "LocalizationKeys.cs", "locstatus.json"]:
         if filename == "en_US.xaml":
             new_filename = "LocSource.xaml"
-        playnite_loc = ET.parse(pj(main_path, "..", "PlayniteExtensions",
+        playnite_loc = ET.parse(pj(main_path, "..", "..", "PlayniteExtensions",
                                 "PlayniteRepo", "source", "Playnite", "Localization", new_filename))
         for child in playnite_loc.getroot():
             key = child.get(ET.QName(xmlns_x, "Key"))
@@ -86,7 +86,7 @@ for filename in os.listdir(pj(main_path, "..", "PlayniteExtensions", "PlayniteRe
 
     if filename not in ["LocSource.xaml", "LocalizationKeys.cs", "locstatus.json"]:
         loc_sub_dir = filename.replace("_", "-").replace(".xaml", "")
-        epic_file_path = pj(main_path, "..", "PlayniteExtensions",
+        epic_file_path = pj(main_path, "..", "..", "PlayniteExtensions",
                             "source", "Libraries", "EpicLibrary", "Localization", filename)
         if os.path.isfile(epic_file_path):
             epic_loc = ET.parse(epic_file_path)
@@ -151,5 +151,5 @@ def copy_specific_named_files_with_subdirs(source_dir, destination_dir, file_nam
                 except Exception as e:
                     print(f"An error occured during copying file {source_file_path}: {e}")
 
-common_loc_path_source = pj(main_path, "..", "playnite-common-plugin", "src", "Localization")
+common_loc_path_source = pj(main_path, "..", "..", "playnite-common-plugin", "src", "Localization")
 copy_specific_named_files_with_subdirs(common_loc_path_source, common_localization_path)

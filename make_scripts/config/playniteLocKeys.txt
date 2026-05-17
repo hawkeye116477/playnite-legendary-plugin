@@ -49,3 +49,6 @@ LOCDownloadingLabel
 LOCUninstalling
 LOCCopyTitle
 LOCDownloadError
+LOCSettingsPlaytimeImportModeAlways
+LOCSettingsPlaytimeImportModeNewImportsOnly
+LOCSettingsPlaytimeImportMode

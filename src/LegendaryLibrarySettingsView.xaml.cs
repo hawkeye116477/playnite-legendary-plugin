@@ -226,6 +226,13 @@ public partial class LegendaryLibrarySettingsView
         };
         AutoClearCacheCBo.ItemsSource = autoClearOptions;
 
+        Dictionary<PlayTimeImportMode, string> playTimeImportModes = new()
+        {
+            { PlayTimeImportMode.Always, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteSettingsPlaytimeImportModeAlways) },
+            { PlayTimeImportMode.NewImportsOnly, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteSettingsPlaytimeImportModeNewImportsOnly) }
+        };
+        ImportPlaytimeCBo.ItemsSource = playTimeImportModes;
+
         var launcherUpdateSourceFile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
             "LauncherUpdateSource.json");
         var repoList = new List<string>();

@@ -723,6 +723,18 @@ namespace System
         /// </summary>
         public const string ThirdPartyPlayniteSettingsClearCacheTitle = "third-party-playnite-settings-clear-cache-title";
         /// <summary>
+        /// Import playtime of games in library:
+        /// </summary>
+        public const string ThirdPartyPlayniteSettingsPlaytimeImportMode = "third-party-playnite-settings-playtime-import-mode";
+        /// <summary>
+        /// Always
+        /// </summary>
+        public const string ThirdPartyPlayniteSettingsPlaytimeImportModeAlways = "third-party-playnite-settings-playtime-import-mode-always";
+        /// <summary>
+        /// Only for newly imported games
+        /// </summary>
+        public const string ThirdPartyPlayniteSettingsPlaytimeImportModeNewImportsOnly = "third-party-playnite-settings-playtime-import-mode-new-imports-only";
+        /// <summary>
         /// Never
         /// </summary>
         public const string ThirdPartyPlayniteSettingsPlaytimeImportModeNever = "third-party-playnite-settings-playtime-import-mode-never";

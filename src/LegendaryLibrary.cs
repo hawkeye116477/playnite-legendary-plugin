@@ -41,12 +41,13 @@ public class LegendaryLibrary : Plugin, IUnifiedDownloadProvider
         LibrarySettings = new LibrarySupport
         {
             LibraryName = LibraryName,
-            ClientName = "Comet",
+            ClientName = "Legendary",
             CanCloseOriginalClient = false,
             CanOpenOriginalClient = false,
             ProvidesStoreMetadata = true,
-            CanImportPlaytime = true,
-            CanImportPlaySessions = true
+            CanImportPlaytime = false,
+            CanImportPlaySessions = false,
+            HasCustomGameImport = true
         };
     }
 
@@ -109,6 +110,7 @@ public class LegendaryLibrary : Plugin, IUnifiedDownloadProvider
         return Instance.Settings;
     }
 
+
     private Dictionary<string, ImportableGame> GetInstalledGames()
     {
         var games = new Dictionary<string, ImportableGame>();
@@ -165,6 +167,7 @@ public class LegendaryLibrary : Plugin, IUnifiedDownloadProvider
         var cacheDir = GetCachePath("catalogcache");
         var games = new Dictionary<string, ImportableGame>();
         var accountApi = new EpicAccountClient(PlayniteApi);
+
         var assets = await accountApi.GetLibraryItems();
         if (assets.Count <= 0)
         {
@@ -234,21 +237,10 @@ public class LegendaryLibrary : Plugin, IUnifiedDownloadProvider
                     Source = new IdImportableProperty("epic", "Epic"),
                     Platforms = [PcSpecProperty]
                 };
-
-                var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameAsset.AppName);
-                var playtimeSyncEnabled = GetSettings() is { SyncPlaytime: true };
-                if (gameSettings.AutoSyncPlaytime != null)
+                var playtimeItem = playtimeItems?.FirstOrDefault(x => x.ArtifactId == gameAsset.AppName);
+                if (playtimeItem != null)
                 {
-                    playtimeSyncEnabled = (bool)gameSettings.AutoSyncPlaytime;
-                }
-
-                if (playtimeSyncEnabled)
-                {
-                    var playtimeItem = playtimeItems?.FirstOrDefault(x => x.ArtifactId == gameAsset.AppName);
-                    if (playtimeItem != null)
-                    {
-                        newGame.PlayTime = (uint)playtimeItem.TotalTime;
-                    }
+                    newGame.PlayTime = (uint)playtimeItem.TotalTime;
                 }
 
                 games.TryAdd(newGame.GameId, newGame);
@@ -258,7 +250,7 @@ public class LegendaryLibrary : Plugin, IUnifiedDownloadProvider
         return games;
     }
 
-    public override async Task<List<ImportableGame>> GetGamesAsync(LibraryGetGamesArgs args)
+    private async Task<List<ImportableGame>> GetAllGames(CancellationToken cts)
     {
         const string importErrorMessageId = $"{PluginId}_libImportError";
         var allGames = new List<ImportableGame>();
@@ -284,7 +276,7 @@ public class LegendaryLibrary : Plugin, IUnifiedDownloadProvider
         {
             try
             {
-                var libraryGames = await GetLibraryGames(args.CancelToken);
+                var libraryGames = await GetLibraryGames(cts);
                 Logger.Debug($"Found {libraryGames.Count} library Epic games.");
 
                 if (!Settings.ImportUninstalledGames)
@@ -329,6 +321,101 @@ public class LegendaryLibrary : Plugin, IUnifiedDownloadProvider
         }
 
         return allGames;
+    }
+
+    public override async Task<List<Game>> ImportGamesAsync(ImportGamesArgs args)
+    {
+        var addedGames = new List<Game>();
+        var allGames = await GetAllGames(args.CancelToken);
+        foreach (var newGame in allGames)
+        {
+            bool gameIsExcluded = false; // TODO: Add excluding when will be exposed in PlayniteAPI
+            if (gameIsExcluded)
+            {
+                continue;
+            }
+
+            var existingGame =
+                PlayniteApi.Library.Games.FirstOrDefault(a =>
+                    a.LibraryGameId == newGame.GameId && a.LibraryId == PluginId);
+            if (existingGame == null)
+            {
+                Logger.Info($"Adding new game {newGame.GameId} from {LibraryName} plugin.");
+                try
+                {
+                    if (newGame.PlayTime != 0)
+                    {
+                        var gameSettings = LegendaryGameSettingsView.LoadGameSettings(newGame.GameId);
+                        var playtimeSyncEnabled = GetSettings() is { SyncPlaytime: true };
+                        if (gameSettings.AutoSyncPlaytime != null)
+                        {
+                            playtimeSyncEnabled = (bool)gameSettings.AutoSyncPlaytime;
+                        }
+
+                        if (!playtimeSyncEnabled)
+                        {
+                            newGame.PlayTime = 0;
+                        }
+                    }
+
+                    var importedGame = await PlayniteApi.Library.ImportGameAsync(newGame);
+                    addedGames.Add(importedGame);
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e, "Failed to import game into database.");
+                }
+            }
+            else
+            {
+                if (!existingGame.OverrideInstallState)
+                {
+                    if (existingGame.InstallState != newGame.InstallState)
+                    {
+                        existingGame.InstallState = newGame.InstallState;
+                    }
+
+                    if (!string.Equals(existingGame.InstallDirectory, newGame.InstallDirectory, StringComparison.OrdinalIgnoreCase))
+                    {
+                        existingGame.InstallDirectory = newGame.InstallDirectory;
+                    }
+                }
+
+                var gameSettings = LegendaryGameSettingsView.LoadGameSettings(existingGame.LibraryGameId!);
+                var playtimeSyncEnabled = GetSettings() is { SyncPlaytime: true };
+                if (gameSettings.AutoSyncPlaytime != null)
+                {
+                    playtimeSyncEnabled = (bool)gameSettings.AutoSyncPlaytime;
+                }
+
+                if (playtimeSyncEnabled && Settings?.PlayTimeImportMode == PlayTimeImportMode.Always && newGame.PlayTime > 0)
+                {
+                    if (existingGame.PlayTime != newGame.PlayTime)
+                    {
+                        existingGame.PlayTime = newGame.PlayTime;
+                    }
+
+                    // The LastPlayedDate value of the newGame is only applied if newer than
+                    // the existing game, to prevent cases of DRM free games being launched without
+                    // the client or offline, which would prevent the date from being updated in the service
+                    if (newGame.LastPlayedDate != null &&
+                        (existingGame.LastPlayedDate == null || newGame.LastPlayedDate > existingGame.LastPlayedDate))
+                    {
+                        existingGame.LastPlayedDate = newGame.LastPlayedDate;
+                    }
+                }
+
+                if (existingGame.InstallState != InstallState.Installed && newGame.InstallSize > 0 &&
+                    existingGame.InstallSize != newGame.InstallSize)
+                {
+                    existingGame.InstallSize = newGame.InstallSize;
+                }
+
+                await PlayniteApi.Library.Games.UpdateAsync(existingGame);
+            }
+        }
+
+        return addedGames;
     }
 
     public string GetCachePath(string dirName)
