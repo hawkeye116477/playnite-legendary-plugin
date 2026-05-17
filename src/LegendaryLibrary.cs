@@ -43,7 +43,7 @@ public class LegendaryLibrary : Plugin, IUnifiedDownloadProvider
             LibraryName = LibraryName,
             ClientName = "Legendary",
             CanCloseOriginalClient = false,
-            CanOpenOriginalClient = false,
+            CanOpenOriginalClient = true,
             ProvidesStoreMetadata = true,
             CanImportPlaytime = false,
             CanImportPlaySessions = false,
