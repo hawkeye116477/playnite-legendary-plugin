@@ -191,20 +191,20 @@
                                    Margin="0,0,0,2" />
                         <Separator Margin="0,0,0,10" />
                         <CheckBox DockPanel.Dock="Top"
-                                  Margin="0,0,0,8"
-                                  IsChecked="{Binding Settings.SyncGameSaves}"
-                                  Content="{common:Localize Key={x:Static system:LOC.CommonSyncGameSaves}}"
-                                  Name="SyncGameSavesChk" Click="SyncGameSavesChk_Click" />
-                        <CheckBox DockPanel.Dock="Top"
-                                  Margin="0,0,0,8"
+                                  Margin="0,0,0,5"
                                   IsChecked="{Binding Settings.SyncPlaytime}"
                                   Content="{common:Localize Key={x:Static system:LOC.CommonSyncPlaytime}}"
                                   Name="SyncPlaytimeChk" />
-                        <StackPanel Orientation="Horizontal" Margin="40,0,0,0" Name="ImportPlaytimeSP" IsEnabled="{Binding Settings.SyncPlaytime}">
+                        <StackPanel Orientation="Horizontal" Margin="40,0,0,8" Name="ImportPlaytimeSP" IsEnabled="{Binding Settings.SyncPlaytime}">
                             <TextBlock Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSettingsPlaytimeImportMode}}" Margin="0,0,8,0" VerticalAlignment="Center" HorizontalAlignment="Left" />
                             <ComboBox VerticalAlignment="Center" x:Name="ImportPlaytimeCBo"
                                       DisplayMemberPath="Value" SelectedValue="{Binding Settings.PlayTimeImportMode}" SelectedValuePath="Key"></ComboBox>
                         </StackPanel>
+                        <CheckBox DockPanel.Dock="Top"
+                                  Margin="0,0,0,0"
+                                  IsChecked="{Binding Settings.SyncGameSaves}"
+                                  Content="{common:Localize Key={x:Static system:LOC.CommonSyncGameSaves}}"
+                                  Name="SyncGameSavesChk" Click="SyncGameSavesChk_Click" />
                     </StackPanel>
 
                     <StackPanel Margin="0,0,0,20">
