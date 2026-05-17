@@ -62,17 +62,12 @@ public class EpicAccountClient
             @"https://{0}/library/api/public/items?includeMetadata=true&platform=Windows";
         const string catalogUrlMask = @"https://{0}/catalog/api/shared/namespace/";
         const string playtimeUrlMask = @"https://{0}/library/api/public/playtime/account/{1}/all";
-
-        var loadedFromConfig = false;
-
-        if (!loadedFromConfig)
-        {
-            oauthUrl = string.Format(oauthUrlMask, "account-public-service-prod03.ol.epicgames.com");
-            accountUrl = string.Format(accountUrlMask, "account-public-service-prod03.ol.epicgames.com");
-            catalogUrl = string.Format(catalogUrlMask, "catalog-public-service-prod06.ol.epicgames.com");
-            playtimeUrl = string.Format(playtimeUrlMask, "library-service.live.use1a.on.epicgames.com", "{0}");
-            libraryItemsUrl = string.Format(libraryItemsUrlMask, "library-service.live.use1a.on.epicgames.com");
-        }
+        
+        oauthUrl = string.Format(oauthUrlMask, "account-public-service-prod03.ol.epicgames.com");
+        accountUrl = string.Format(accountUrlMask, "account-public-service-prod03.ol.epicgames.com");
+        catalogUrl = string.Format(catalogUrlMask, "catalog-public-service-prod06.ol.epicgames.com");
+        playtimeUrl = string.Format(playtimeUrlMask, "library-service.live.use1a.on.epicgames.com", "{0}");
+        libraryItemsUrl = string.Format(libraryItemsUrlMask, "library-service.live.use1a.on.epicgames.com");
     }
 
     public async Task Login()
@@ -283,6 +278,7 @@ public class EpicAccountClient
         return response.Item2;
     }
 
+
     public async Task<CatalogItem?> GetCatalogItem(string nameSpace, string id, string cachePath)
     {
         Dictionary<string, CatalogItem>? result = null;
@@ -418,58 +414,5 @@ public class EpicAccountClient
         }
 
         return null;
-    }
-
-    public async Task UploadPlaytime(DateTime startTime, DateTime endTime, Game game, int attempts = 3)
-    {
-        var globalProgressOptions = new GlobalProgressOptions(
-            LocalizationManager.Instance.GetString(LOC.CommonUploadingPlaytime,
-                new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }), false);
-        await api.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async (_) =>
-        {
-            var userLoggedIn = await GetIsUserLoggedIn();
-            if (userLoggedIn)
-            {
-                var userData = LoadTokens();
-                if (userData != null)
-                {
-                    var uri =
-                        $"https://library-service.live.use1a.on.epicgames.com/library/api/public/playtime/account/{userData.Account_id}";
-                    var playtimePayload = new PlaytimePayload
-                    {
-                        ArtifactId = game.LibraryGameId!,
-                        MachineId = LegendaryLibrary.GetSettings()?.SyncPlaytimeMachineId,
-                        EndTime = endTime,
-                        StartTime = startTime
-                    };
-                    var playtimeJson = Serialization.ToJson(playtimePayload);
-                    var content = new StringContent(playtimeJson, Encoding.UTF8, "application/json");
-                    var request = new HttpRequestMessage(HttpMethod.Put, uri)
-                    {
-                        Content = content
-                    };
-                    request.Headers.Add("User-Agent", UserAgent);
-                    request.Headers.Add("Authorization", userData.Token_type + " " + userData.Access_token);
-                    try
-                    {
-                        using var response = await HttpClient.SendAsync(request);
-                        response.EnsureSuccessStatusCode();
-                    }
-                    catch (Exception ex)
-                    {
-                        await api.Dialogs.ShowErrorMessageAsync(LocalizationManager.Instance.GetString(
-                            LOC.CommonUploadPlaytimeError,
-                            new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }));
-                        logger.Error(ex, $"An error occured during uploading playtime to the cloud.");
-                    }
-                }
-            }
-            else
-            {
-                logger.Error($"Can't upload playtime, because user is not authenticated.");
-                await api.Dialogs.ShowErrorMessageAsync(
-                    LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedInError));
-            }
-        });
     }
 }

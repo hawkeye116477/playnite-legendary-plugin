@@ -35,7 +35,6 @@ common-migration-no-games = Игры для переноса не найдены
 common-sign-out = Выйти
 common-troubleshooting-information = Информация о поиске неисправностей
 common-playnite-version = Версия Playnite
-common-plugin-version = Версия плагина Legendary
 common-launcher-version = { $launcherName } версия
 common-launcher-binary = { $launcherName } бинарный
 common-copy-raw-data-to-clipboard = Копирование исходных данных в буфер обмена

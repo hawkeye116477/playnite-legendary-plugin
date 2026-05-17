@@ -256,7 +256,6 @@ public class LegendaryPlayController(Game game) : PlayController(game.LibraryGam
         await LegendaryCloud.SyncGameSaves(game, CloudSyncAction.Upload);
         var playtimeSyncEnabled = false;
         var playtimeImportEnabled = false;
-        //playtimeImportEnabled = playniteAPI.Settings.PlaytimeImportMode != PlaytimeImportMode.Never;
         if (playtimeImportEnabled)
         {
             playtimeSyncEnabled = LegendaryLibrary.GetSettings() is { SyncPlaytime: true };
@@ -272,8 +271,8 @@ public class LegendaryPlayController(Game game) : PlayController(game.LibraryGam
             var now = DateTime.UtcNow;
             var totalSeconds = sessionLength;
             var startTime = now.AddSeconds(-totalSeconds);
-            var clientApi = new EpicAccountClient(playniteApi);
-            await clientApi.UploadPlaytime(startTime, now, game);
+            var legendaryCloud = new LegendaryCloud();
+            await legendaryCloud.UploadPlaytime(startTime, now, game);
         }
     }
 
