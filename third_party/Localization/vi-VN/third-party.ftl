@@ -40,6 +40,7 @@ third-party-playnite-library-import-error = Không thể nhập trò chơi từ 
 third-party-playnite-metadata-download-error = Không tải xuống được siêu dữ liệu: { $var0 }
 third-party-playnite-download-error = Lỗi Tải Xuống
 third-party-playnite-uninstalling = Gỡ cài đặt
+third-party-playnite-game-launching = Ra mắt
 third-party-playnite-do-nothing = Không làm gì cả
 third-party-playnite-close = Đóng cửa sổ
 third-party-playnite-updater-window-title = Bản cập nhật có sẵn

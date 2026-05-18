@@ -40,6 +40,7 @@ third-party-playnite-library-import-error = Nem sikerült a { $var0 } játékok 
 third-party-playnite-metadata-download-error = Hiba a metaadatok letöltésekor: { $var0 }
 third-party-playnite-download-error = Hiba a letöltésben
 third-party-playnite-uninstalling = Eltávolítás
+third-party-playnite-game-launching = Indítás
 third-party-playnite-do-nothing = Ne tegyen semmit
 third-party-playnite-close = Bezárás
 third-party-playnite-updater-window-title = Frissítés elérhető

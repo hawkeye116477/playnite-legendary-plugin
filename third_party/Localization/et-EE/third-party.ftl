@@ -40,6 +40,7 @@ third-party-playnite-library-import-error = Ei saanud importida mänge kohast { 
 third-party-playnite-metadata-download-error = Metaandmete allalaadimine ebaõnnestus: { $var0 }
 third-party-playnite-download-error = Allalaadimise viga
 third-party-playnite-uninstalling = Desinstallimine
+third-party-playnite-game-launching = Käivitamine
 third-party-playnite-do-nothing = Ära tee midagi
 third-party-playnite-close = Sulge
 third-party-playnite-updater-window-title = Värskendus on saadaval

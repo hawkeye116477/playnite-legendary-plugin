@@ -52,3 +52,4 @@ LOCDownloadError
 LOCSettingsPlaytimeImportModeAlways
 LOCSettingsPlaytimeImportModeNewImportsOnly
 LOCSettingsPlaytimeImportMode
+LOCGameLaunching

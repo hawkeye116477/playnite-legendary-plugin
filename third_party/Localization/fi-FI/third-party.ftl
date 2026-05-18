@@ -40,6 +40,7 @@ third-party-playnite-library-import-error = Pelejä ei voitu tuoda sijainnista {
 third-party-playnite-metadata-download-error = Tietojen lataaminen epäonnistui: { $var0 }
 third-party-playnite-download-error = Latausvirhe
 third-party-playnite-uninstalling = Poistetaan
+third-party-playnite-game-launching = Käynnistetään
 third-party-playnite-do-nothing = Älä tee mitään
 third-party-playnite-close = Sulje
 third-party-playnite-updater-window-title = Päivitys saatavilla

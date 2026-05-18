@@ -40,6 +40,7 @@ third-party-playnite-library-import-error = Importuoti žaidimus iš { $var0 }.
 third-party-playnite-metadata-download-error = Nepavyko atsisiųsti metadata: { $var0 }
 third-party-playnite-download-error = Atsiuntimo klaida
 third-party-playnite-uninstalling = Išdiegti
+third-party-playnite-game-launching = Paleidžiama
 third-party-playnite-do-nothing = Nieko nedaryti
 third-party-playnite-close = Uždaryti
 third-party-playnite-updater-window-title = Galimas atnaujinimas

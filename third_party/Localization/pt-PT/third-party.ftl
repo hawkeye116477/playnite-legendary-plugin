@@ -40,6 +40,7 @@ third-party-playnite-library-import-error = Falha ao importar jogos de { $var0 }
 third-party-playnite-metadata-download-error = Falha ao transferir metadados: { $var0 }
 third-party-playnite-download-error = Erro na transferência
 third-party-playnite-uninstalling = A desinstalar
+third-party-playnite-game-launching = A iniciar
 third-party-playnite-do-nothing = Não fazer nada
 third-party-playnite-close = Fechar
 third-party-playnite-updater-window-title = Atualização Disponível

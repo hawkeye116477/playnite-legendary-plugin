@@ -40,6 +40,7 @@ third-party-playnite-library-import-error = فشل استيراد الألعاب
 third-party-playnite-metadata-download-error = فشل تحميل بيانات التعريف:{ $var0 }
 third-party-playnite-download-error = خطأ في التحميل
 third-party-playnite-uninstalling = جاري إلغاء التثبيت
+third-party-playnite-game-launching = جاري التشغيل
 third-party-playnite-do-nothing = ‮لا تفعل شيئا
 third-party-playnite-close = إغلاق
 third-party-playnite-updater-window-title = التحديث متوفر

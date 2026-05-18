@@ -40,6 +40,7 @@ third-party-playnite-library-import-error = נכשל ביבוא משחקים מ 
 third-party-playnite-metadata-download-error = נכשלה הורדת נתונים: { $var0 }
 third-party-playnite-download-error = שגיאת הורדה
 third-party-playnite-uninstalling = מסיר התקנה
+third-party-playnite-game-launching = מפעיל
 third-party-playnite-do-nothing = אל תעשה דבר
 third-party-playnite-close = סגור
 third-party-playnite-updater-window-title = עדכון זמין

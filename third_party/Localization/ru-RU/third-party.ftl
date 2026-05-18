@@ -40,6 +40,7 @@ third-party-playnite-library-import-error = Не удалось импортир
 third-party-playnite-metadata-download-error = Не удалось скачать метаданные: { $var0 }
 third-party-playnite-download-error = Ошибка загрузки
 third-party-playnite-uninstalling = Удаление
+third-party-playnite-game-launching = Запускается
 third-party-playnite-do-nothing = Ничего не делать
 third-party-playnite-close = Закрыть
 third-party-playnite-updater-window-title = Вышла новая версия

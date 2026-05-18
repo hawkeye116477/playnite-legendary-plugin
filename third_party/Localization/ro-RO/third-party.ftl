@@ -40,6 +40,7 @@ third-party-playnite-library-import-error = Nu s-a putut importa jocuri de la { 
 third-party-playnite-metadata-download-error = Nu s-a putut descărca metadata: { $var0 }
 third-party-playnite-download-error = Eroare la descărcare
 third-party-playnite-uninstalling = Se dezinstalează
+third-party-playnite-game-launching = Se lansează
 third-party-playnite-do-nothing = Repaus
 third-party-playnite-close = Închideţi
 third-party-playnite-updater-window-title = Versiune nouă disponibilă

@@ -685,11 +685,6 @@ public class LegendaryLibrary : Plugin, IUnifiedDownloadProvider
             if (game.InstallState == InstallState.Installed)
             {
                 menuItems.Add(new MenuItemImpl(
-                    LocalizationManager.Instance.GetString(LOC.CommonLauncherSettings),
-                    async (_) => await legendaryGameMenuActions.OpenLauncherSettingsWindow(),
-                    icon: CommonIcons.ModifyLaunchSettingsIcon
-                ));
-                menuItems.Add(new MenuItemImpl(
                     LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteCheckForUpdates),
                     async (_) => { await legendaryGameMenuActions.OpenCheckForGamesUpdatesWindow(); },
                     icon: CommonIcons.UpdateIcon
@@ -927,5 +922,14 @@ public class LegendaryLibrary : Plugin, IUnifiedDownloadProvider
         }
 
         LegendaryLauncher.StartClient();
+    }
+
+    public override async Task<GameEditSessionHandler?> GetGameEditHandlerAsync(GetGameEditHandlerArgs args)
+    {
+        if (args.Games.Count == 1 && args.Games[0].LibraryId == PluginId && LegendaryLauncher.IsInstalled)
+        {
+            return new LegendaryGameEditSessionHandler(args.Games[0]);
+        }
+        return null;
     }
 }

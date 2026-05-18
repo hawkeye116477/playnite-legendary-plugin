@@ -40,6 +40,7 @@ third-party-playnite-library-import-error = 從 { $var0 } 匯入遊戲失敗。
 third-party-playnite-metadata-download-error = 下載元資料失敗: { $var0 }
 third-party-playnite-download-error = 下載錯誤
 third-party-playnite-uninstalling = 移除中
+third-party-playnite-game-launching = 啟動中
 third-party-playnite-do-nothing = 不做任何事
 third-party-playnite-close = 關閉
 third-party-playnite-updater-window-title = 有可用的更新

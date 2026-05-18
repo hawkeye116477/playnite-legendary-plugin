@@ -40,6 +40,7 @@ third-party-playnite-library-import-error = Αποτυχία εισαγωγής 
 third-party-playnite-metadata-download-error = Αποτυχία λήψης metadata: { $var0 }
 third-party-playnite-download-error = Σφάλμα λήψης
 third-party-playnite-uninstalling = Απεγκατάσταση
+third-party-playnite-game-launching = Εκκίνηση
 third-party-playnite-do-nothing = καμία ενέργεια
 third-party-playnite-close = κλείσιμο
 third-party-playnite-updater-window-title = Διαθέσιμη Ενημέρωση

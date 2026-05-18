@@ -40,6 +40,7 @@ third-party-playnite-library-import-error = Nepodarilo sa importovať hry z { $v
 third-party-playnite-metadata-download-error = Nepodarilo sa prevziať metadáta: { $var0 }
 third-party-playnite-download-error = Chyba preberania
 third-party-playnite-uninstalling = Prebieha odinštalácia
+third-party-playnite-game-launching = Spúšťa sa
 third-party-playnite-do-nothing = Nerobiť nič
 third-party-playnite-close = Zavrieť
 third-party-playnite-updater-window-title = Dostupná aktualizácia

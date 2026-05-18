@@ -50,7 +50,7 @@ public partial class LegendaryGameSettingsView
         return gameSettings;
     }
 
-    private void SaveBtn_Click(object sender, RoutedEventArgs e)
+    public GameSettings PrepareNewGameSettings()
     {
         var globalSettings = LegendaryLibrary.GetSettings();
         var newGameSettings = new GameSettings();
@@ -100,22 +100,23 @@ public partial class LegendaryGameSettingsView
             newGameSettings.AutoSyncPlaytime = AutoSyncPlaytimeChk.IsChecked;
         }
 
-        var gameSettingsFile = Path.Combine(playniteApi.UserDataDir, "GamesSettings", $"{GameId}.json");
-        if (newGameSettings.GetType().GetProperties().Any(p => p.GetValue(newGameSettings) != null) || File.Exists(gameSettingsFile))
+        var oldGameSettings = LoadGameSettings(GameId);
+        if (oldGameSettings.InstallPrerequisites)
         {
-            if (File.Exists(gameSettingsFile))
-            {
-                var oldGameSettings = LoadGameSettings(GameId);
-                if (oldGameSettings.InstallPrerequisites)
-                {
-                    newGameSettings.InstallPrerequisites = true;
-                }
-            }
-
-            commonHelpers.SaveJsonSettingsToFile(newGameSettings, "GamesSettings", GameId, true);
+            newGameSettings.InstallPrerequisites = true;
         }
 
-        Window.GetWindow(this)?.Close();
+        return newGameSettings;
+    }
+
+
+    public void Save()
+    {
+        var newGameSettings = PrepareNewGameSettings();
+        if (newGameSettings.GetType().GetProperties().Any(p => p.GetValue(newGameSettings) != null))
+        {
+            commonHelpers.SaveJsonSettingsToFile(newGameSettings, "GamesSettings", GameId, true);
+        }
     }
 
     private void LegendaryGameSettingsViewUC_Loaded(object sender, RoutedEventArgs e)
@@ -171,10 +172,6 @@ public partial class LegendaryGameSettingsView
             AutoSyncPlaytimeChk.IsChecked = GameSettings.AutoSyncPlaytime;
         }
 
-        // if (playniteApi.ApplicationSettings.PlaytimeImportMode == PlaytimeImportMode.Never)
-        // {
-        //     AutoSyncPlaytimeChk.IsEnabled = false;
-        // }
         var appList = LegendaryLauncher.GetInstalledAppList();
         if (appList.ContainsKey(GameId))
         {

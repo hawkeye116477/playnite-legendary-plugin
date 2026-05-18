@@ -40,6 +40,7 @@ third-party-playnite-library-import-error = Kan geen spellen importeren van { $v
 third-party-playnite-metadata-download-error = Downloaden van metadata mislukt: { $var0 }
 third-party-playnite-download-error = Download Fout
 third-party-playnite-uninstalling = Aan het deinstalleren
+third-party-playnite-game-launching = Aan het starten
 third-party-playnite-do-nothing = Doe niets
 third-party-playnite-close = Sluiten
 third-party-playnite-updater-window-title = Update Beschikbaar

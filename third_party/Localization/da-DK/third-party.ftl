@@ -32,6 +32,7 @@ third-party-playnite-login-required = Godkendelse krævet
 third-party-playnite-executable-title = Eksekverings-fil
 third-party-playnite-game-name-title = Navn
 third-party-playnite-uninstalling = Afinstallerer
+third-party-playnite-game-launching = Starter
 third-party-playnite-do-nothing = Gør ingenting
 third-party-playnite-close = Luk
 third-party-playnite-install-game = Installér

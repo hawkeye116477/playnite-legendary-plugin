@@ -20,29 +20,6 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
     private IPlayniteApi PlayniteApi { get; set; } = playniteApi;
     private Game Game { get; set; } = games.First();
 
-    public async Task OpenLauncherSettingsWindow()
-    {
-        if (!LegendaryLauncher.IsInstalled)
-        {
-            await LegendaryLauncher.ShowNotInstalledError();
-            return;
-        }
-
-        var window = PlayniteApi.CreateWindow(new WindowCreationOptions
-        {
-            ShowMaximizeButton = false
-        });
-        window.DataContext = Game;
-        window.Title =
-            $"{LocalizationManager.Instance.GetString(LOC.CommonLauncherSettings)} - {Game.Name}";
-        window.Content = new LegendaryGameSettingsView();
-        window.Owner = PlayniteApi.GetLastActiveWindow();
-        window.SizeToContent = SizeToContent.WidthAndHeight;
-        window.MinWidth = 600;
-        window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-        window.ShowDialog();
-    }
-
     public async Task OpenCheckForGamesUpdatesWindow()
     {
         if (!LegendaryLauncher.IsInstalled)

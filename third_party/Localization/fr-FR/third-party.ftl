@@ -40,6 +40,7 @@ third-party-playnite-library-import-error = Echec de l'importation depuis { $var
 third-party-playnite-metadata-download-error = Échec du téléchargement des métadonnées : { $var0 }
 third-party-playnite-download-error = Erreur de téléchargement
 third-party-playnite-uninstalling = Désinstallation en cours...
+third-party-playnite-game-launching = Démarrage...
 third-party-playnite-do-nothing = Ne rien faire
 third-party-playnite-close = Fermer
 third-party-playnite-updater-window-title = Mise à jour disponible

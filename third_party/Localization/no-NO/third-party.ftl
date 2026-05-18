@@ -40,6 +40,7 @@ third-party-playnite-library-import-error = Kunne ikke importere spill fra { $va
 third-party-playnite-metadata-download-error = Kunne ikke laste ned metadata: { $var0 }
 third-party-playnite-download-error = Feil ved nedlasting
 third-party-playnite-uninstalling = Avinstallerer
+third-party-playnite-game-launching = Starter
 third-party-playnite-do-nothing = Gjør ingenting
 third-party-playnite-close = Lukk
 third-party-playnite-updater-window-title = Oppdatering er tilgjengelig

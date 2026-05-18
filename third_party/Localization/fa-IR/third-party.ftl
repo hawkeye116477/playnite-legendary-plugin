@@ -40,6 +40,7 @@ third-party-playnite-library-import-error = ناکامی در درون‌برد 
 third-party-playnite-metadata-download-error = ناکامی در بارگیری فراداده: { $var0 }
 third-party-playnite-download-error = خطا در بارگیری
 third-party-playnite-uninstalling = در حال حذف نصب
+third-party-playnite-game-launching = در حال آغاز
 third-party-playnite-do-nothing = کاری نکن
 third-party-playnite-close = بستن
 third-party-playnite-updater-window-title = به روزرسانی در دسترس است

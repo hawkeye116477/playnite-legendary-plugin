@@ -771,6 +771,10 @@ namespace System
         /// </summary>
         public const string ThirdPartyPlayniteUninstalling = "third-party-playnite-uninstalling";
         /// <summary>
+        /// Launching
+        /// </summary>
+        public const string ThirdPartyPlayniteGameLaunching = "third-party-playnite-game-launching";
+        /// <summary>
         /// Do nothing
         /// </summary>
         public const string ThirdPartyPlayniteDoNothing = "third-party-playnite-do-nothing";
