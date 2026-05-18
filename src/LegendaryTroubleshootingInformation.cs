@@ -2,9 +2,9 @@
 
 public class LegendaryTroubleshootingInformation
 {
-    public static string PlayniteVersion => LegendaryLibrary.PlayniteApi.AppInfo.ApplicationVersion.ToString();
+    public string PlayniteVersion => LegendaryLibrary.PlayniteApi.AppInfo.ApplicationVersion.ToString();
 
-    public static string? PluginVersion
+    public string? PluginVersion
     {
         get
         {

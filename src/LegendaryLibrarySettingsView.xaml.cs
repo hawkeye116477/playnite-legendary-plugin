@@ -271,17 +271,12 @@ public partial class LegendaryLibrarySettingsView
             OpenLauncherBinaryBtn.IsEnabled = false;
         }
 
-        PlayniteVersionTxt.Text = LegendaryTroubleshootingInformation.PlayniteVersion;
-        PluginVersionTxt.Text = LegendaryTroubleshootingInformation.PluginVersion ?? "";
+        PlayniteVersionTxt.Text = troubleshootingInformation.PlayniteVersion;
+        PluginVersionTxt.Text = troubleshootingInformation.PluginVersion ?? "";
         GamesInstallationPathTxt.Text = troubleshootingInformation.GamesInstallationPath;
         LogFilesPathTxt.Text = playniteApi.AppInfo.ConfigurationDirectory;
         ReportBugHyp.NavigateUri = new Uri(
-            $"https://github.com/hawkeye116477/playnite-legendary-plugin/issues/new?assignees=&labels=bug&projects=&template=bugs.yml&legendaryV={LegendaryTroubleshootingInformation.PluginVersion}&playniteV={LegendaryTroubleshootingInformation.PlayniteVersion}&launcherV={troubleshootingInformation.LauncherVersion}");
-
-        // if (playniteApi.ApplicationSettings.PlaytimeImportMode == PlaytimeImportMode.Never)
-        // {
-        //     SyncPlaytimeChk.IsEnabled = false;
-        // }
+            $"https://github.com/hawkeye116477/playnite-legendary-plugin/issues/new?assignees=&labels=bug&projects=&template=bugs.yml&legendaryV={troubleshootingInformation.PluginVersion}&playniteV={troubleshootingInformation.PlayniteVersion}&launcherV={troubleshootingInformation.LauncherVersion}");
     }
 
     private async void ClearCacheBtn_Click(object sender, RoutedEventArgs e)
