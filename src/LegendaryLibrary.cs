@@ -679,6 +679,10 @@ public class LegendaryLibrary : Plugin, IUnifiedDownloadProvider
         }
 
         var legendaryGameMenuActions = new LegendaryGameMenuActions(PlayniteApi, legendaryGames);
+
+        var installedLegendaryGames =
+            legendaryGames.Where(i => i.InstallState == InstallState.Installed).ToList();
+
         if (legendaryGames.Count == 1)
         {
             var game = legendaryGames.First();
@@ -744,52 +748,54 @@ public class LegendaryLibrary : Plugin, IUnifiedDownloadProvider
                 ));
             }
 
-            var installedLegendaryGames =
-                legendaryGames.Where(i => i.InstallState == InstallState.Installed).ToList();
             if (installedLegendaryGames.Count > 0)
             {
-                menuItems.Add(new MenuItemImpl(
-                    LocalizationManager.Instance.GetString(LOC.CommonRepair),
-                    (_) =>
-                    {
-                        var installData = new List<DownloadManagerData.Download>();
-                        foreach (var game in installedLegendaryGames)
-                        {
-                            var installProperties = new DownloadProperties
-                                { DownloadAction = DownloadAction.Repair };
-                            installData.Add(new DownloadManagerData.Download
-                            {
-                                GameId = game.LibraryGameId!, Name = game.Name,
-                                DownloadProperties = installProperties
-                            });
-                        }
-
-                        var window = PlayniteApi.CreateWindow(new WindowCreationOptions
-                        {
-                            ShowMaximizeButton = false
-                        });
-                        window.DataContext = installData;
-                        window.Content = new LegendaryGameInstaller();
-                        window.Owner = PlayniteApi.GetLastActiveWindow();
-                        window.SizeToContent = SizeToContent.WidthAndHeight;
-                        window.MinWidth = 600;
-                        window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                        var title = LocalizationManager.Instance.GetString(LOC.CommonRepair);
-                        if (installedLegendaryGames.Count == 1)
-                        {
-                            title = installedLegendaryGames[0].Name;
-                        }
-
-                        window.Title = title;
-                        window.ShowDialog();
-                    }, icon: CommonIcons.RepairIcon
-                ));
                 menuItems.Add(new MenuItemImpl(
                     LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame),
                     async (_) => { await LegendaryUninstallController.LaunchUninstaller(installedLegendaryGames); },
                     icon: CommonIcons.UninstallIcon
                 ));
             }
+        }
+
+        if (installedLegendaryGames.Count > 0)
+        {
+            menuItems.Add(new MenuItemImpl(
+                LocalizationManager.Instance.GetString(LOC.CommonRepair),
+                (_) =>
+                {
+                    var installData = new List<DownloadManagerData.Download>();
+                    foreach (var game in installedLegendaryGames)
+                    {
+                        var installProperties = new DownloadProperties
+                            { DownloadAction = DownloadAction.Repair };
+                        installData.Add(new DownloadManagerData.Download
+                        {
+                            GameId = game.LibraryGameId!, Name = game.Name,
+                            DownloadProperties = installProperties
+                        });
+                    }
+
+                    var window = PlayniteApi.CreateWindow(new WindowCreationOptions
+                    {
+                        ShowMaximizeButton = false
+                    });
+                    window.DataContext = installData;
+                    window.Content = new LegendaryGameInstaller();
+                    window.Owner = PlayniteApi.GetLastActiveWindow();
+                    window.SizeToContent = SizeToContent.WidthAndHeight;
+                    window.MinWidth = 600;
+                    window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    var title = LocalizationManager.Instance.GetString(LOC.CommonRepair);
+                    if (installedLegendaryGames.Count == 1)
+                    {
+                        title = installedLegendaryGames[0].Name;
+                    }
+
+                    window.Title = title;
+                    window.ShowDialog();
+                }, icon: CommonIcons.RepairIcon
+            ));
         }
 
         return menuItems;
@@ -930,6 +936,7 @@ public class LegendaryLibrary : Plugin, IUnifiedDownloadProvider
         {
             return new LegendaryGameEditSessionHandler(args.Games[0]);
         }
+
         return null;
     }
 }
