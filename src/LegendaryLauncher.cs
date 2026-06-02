@@ -945,8 +945,11 @@ namespace LegendaryLibraryNS
                     }
                     else if (result == options[1])
                     {
-                        var newAsset = versionInfoContent.Assets.FirstOrDefault(a => a.Browser_download_url.Contains($"{versionInfoContent.Tag_name}/legendary")
-                                                                                     && a.Browser_download_url.EndsWith(".exe"));
+                        var latestTag = $"{versionInfoContent.Tag_name}/legendary";
+                        var newAsset = versionInfoContent.Assets.FirstOrDefault(a => a.Browser_download_url.Contains(latestTag)
+                                                                                     && a.Browser_download_url.EndsWith("_x86_64.exe"))
+                                       ?? versionInfoContent.Assets.FirstOrDefault(a => a.Browser_download_url.Contains(latestTag)
+                                                                                        && a.Browser_download_url.EndsWith(".exe"));
                         if (newAsset != null)
                         {
                             var appsToUpdate = new Dictionary<string, UpdateInfo>();
