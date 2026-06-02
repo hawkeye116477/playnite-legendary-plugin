@@ -94,6 +94,14 @@ namespace LegendaryLibraryNS
                     Window.GetWindow(this).Close();
                 }
             }
+            if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+            {
+                var firstEnabledBtn = LogicalTreeHelper.GetChildren(TopButtonsSP).OfType<Button>().FirstOrDefault(b => b.IsEnabled && b.IsVisible);
+                if (firstEnabledBtn != null)
+                {
+                    firstEnabledBtn.Focus();
+                }
+            }
         }
 
         private void RefreshWindow()
@@ -176,6 +184,11 @@ namespace LegendaryLibraryNS
                 }
                 await legendaryUpdateController.UpdateGame(updatesList, "", false, downloadProperties);
             }
+        }
+
+        private void UserControl_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            CommonControllerHelpers.UC_PreviewKeyDown(sender, e);
         }
     }
 }

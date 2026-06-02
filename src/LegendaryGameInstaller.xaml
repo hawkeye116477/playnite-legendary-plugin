@@ -8,7 +8,7 @@
     xmlns:common="clr-namespace:CommonPlugin"
     xmlns:system="clr-namespace:System"
     mc:Ignorable="d" Name="LegendaryGameInstallerUC" Loaded="LegendaryGameInstallerUC_Loaded"
-    d:DesignHeight="330" d:DesignWidth="600">
+    d:DesignHeight="330" d:DesignWidth="600" PreviewKeyDown="LegendaryGameInstallerUC_PreviewKeyDown">
 
     <UserControl.Resources>
         <sys:Boolean x:Key="True">True</sys:Boolean>
@@ -20,8 +20,10 @@
         <Style TargetType="ListBox" BasedOn="{StaticResource HawkeyeListBoxStyle}" />
         <Style TargetType="TextBlock" BasedOn="{StaticResource HawkeyeTextBlockStyle}" />
         <Style TargetType="Button" BasedOn="{StaticResource HawkeyeButtonStyle}" />
+        <Style TargetType="RepeatButton" BasedOn="{StaticResource HawkeyeRepeatButtonStyle}" />
         <Style TargetType="Expander" BasedOn="{StaticResource HawkeyeExpanderStyle}" />
         <Style TargetType="TabControl" BasedOn="{StaticResource HawkeyeTabControlStyle}" />
+        <Style TargetType="CheckBox" BasedOn="{StaticResource HawkeyeCheckBoxStyle}" />
     </UserControl.Resources>
     <DockPanel Margin="10">
         <Grid DockPanel.Dock="Bottom" Margin="0,5,0,0">
@@ -57,7 +59,7 @@
         </Grid>
         <StackPanel x:Name="TopSP" DockPanel.Dock="Top">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,0"
-                VerticalAlignment="Top">
+                VerticalAlignment="Top" Name="TopButtonsSP">
                 <Button x:Name="RepairBtn" Content="{common:Localize Key={x:Static system:LOC.CommonRepair}}" ContentStringFormat="&#xefd2; {0}" 
                     FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
                     Margin="0,0,8,0" Visibility="Collapsed" Click="RepairBtn_Click" IsEnabled="False"/>
@@ -107,7 +109,7 @@
                         <CheckBox Margin="7,0,0,5" Content="{common:Localize Key={x:Static system:LOC.CommonCheckAllContent}}" x:Name="AllOrNothingChk" Checked="AllOrNothingChk_Checked" Visibility="Collapsed" Unchecked="AllOrNothingChk_Unchecked" />
                         <CheckBox Margin="7,0,0,5" Content="{common:Localize Key={x:Static system:LOC.LegendaryCheckAllDlcs}}" x:Name="AllDlcsChk" Checked="AllDlcsChk_Checked" Unchecked="AllDlcsChk_Unchecked" Visibility="Collapsed"/>
                         <Separator Margin="7,0,0,5" />
-                        <ListBox BorderThickness="0" Name="ExtraContentLB" SelectionMode="Multiple" SelectionChanged="ExtraContentLB_SelectionChanged" Margin="5,0,5,5">
+                        <ListBox BorderThickness="0" Name="ExtraContentLB" SelectionMode="Multiple" SelectionChanged="ExtraContentLB_SelectionChanged" Margin="5,0,5,5" Focusable="False" IsTabStop="False" KeyboardNavigation.TabNavigation="Continue" KeyboardNavigation.DirectionalNavigation="Contained">
                             <ListBox.Resources>
                                 <Style TargetType="ListBoxItem">
                                     <Setter Property="Template">
@@ -117,6 +119,8 @@
                                             </ControlTemplate>
                                         </Setter.Value>
                                     </Setter>
+                                    <Setter Property="IsTabStop" Value="False"/>
+                                    <Setter Property="Focusable" Value="False"/>
                                 </Style>
                             </ListBox.Resources>
                         </ListBox>

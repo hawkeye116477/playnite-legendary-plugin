@@ -8,7 +8,7 @@
              xmlns:common="clr-namespace:CommonPlugin"
              xmlns:system="clr-namespace:System"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded" PreviewKeyDown="UserControl_PreviewKeyDown">
     <UserControl.Resources>
         <sys:Boolean x:Key="True">True</sys:Boolean>
         <sys:Boolean x:Key="False">False</sys:Boolean>
@@ -18,12 +18,15 @@
         <Style TargetType="ListBox" BasedOn="{StaticResource HawkeyeListBoxStyle}" />
         <Style TargetType="TextBlock" BasedOn="{StaticResource HawkeyeTextBlockStyle}" />
         <Style TargetType="Button" BasedOn="{StaticResource HawkeyeButtonStyle}" />
+        <Style TargetType="RepeatButton" BasedOn="{StaticResource HawkeyeRepeatButtonStyle}" />
         <Style TargetType="Expander" BasedOn="{StaticResource HawkeyeExpanderStyle}" />
         <Style TargetType="TabControl" BasedOn="{StaticResource HawkeyeTabControlStyle}" />
+        <Style TargetType="TabItem" BasedOn="{StaticResource HawkeyeTabItemStyle}" />
+        <Style TargetType="CheckBox" BasedOn="{StaticResource HawkeyeCheckBoxStyle}" />
     </UserControl.Resources>
     <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled"
         HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" SelectionChanged="TabControl_SelectionChanged">
-        <TabItem Header="{common:Localize Key={x:Static system:LOC.CommonAvailableDlcs}}">
+        <TabItem Header="{common:Localize Key={x:Static system:LOC.CommonAvailableDlcs}}" Name="AvailableDlcsTab">
             <DockPanel Margin="10,5,0,5">
                 <Grid DockPanel.Dock="Bottom" Margin="0,5,0,0" x:Name="BottomADGrd">
                     <Grid.ColumnDefinitions>
@@ -63,16 +66,19 @@
                           FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,8,0" IsEnabled="False" Click="ReloadABtn_Click" />
                     </StackPanel>
                     <Separator Margin="0,5,0,0" />
-                    <ListBox BorderThickness="0" Name="AvailableDlcsLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="AvailableDlcsLB_SelectionChanged">
+                    <ListBox BorderThickness="0" Name="AvailableDlcsLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="AvailableDlcsLB_SelectionChanged" Focusable="False" IsTabStop="False" KeyboardNavigation.TabNavigation="Continue" KeyboardNavigation.DirectionalNavigation="Contained">
                         <ListBox.Resources>
-                            <Style TargetType="ListBoxItem">
+                            <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="ListBoxItem">
-                                            <CheckBox Content="{Binding Value.Game.Title}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Margin="0,5,0,0" />
+                                            <CheckBox Content="{Binding Value.Game.Title}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Margin="0,5,0,0"
+                                                      Focusable="True" IsTabStop="True" />
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
+                                <Setter Property="IsTabStop" Value="False"/>
+                                <Setter Property="Focusable" Value="False"/>
                             </Style>
                         </ListBox.Resources>
                     </ListBox>
@@ -119,16 +125,18 @@
                                 ContentStringFormat="&#xeed9; {0}" Margin="0,0,8,0" Click="SelectAllInDlcsBtn_Click_1" />
                     </StackPanel>
                     <Separator Margin="0,5,0,0" />
-                    <ListBox BorderThickness="0" Name="InstalledDlcsLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="InstalledDlcsLB_SelectionChanged">
+                    <ListBox BorderThickness="0" Name="InstalledDlcsLB" SelectionMode="Multiple" Margin="0,5" SelectionChanged="InstalledDlcsLB_SelectionChanged" Focusable="False" IsTabStop="False" KeyboardNavigation.TabNavigation="Continue" KeyboardNavigation.DirectionalNavigation="Contained">
                         <ListBox.Resources>
-                            <Style TargetType="ListBoxItem">
+                            <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="ListBoxItem">
-                                            <CheckBox Content="{Binding Value.Game.Title}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Margin="0,5,0,0" Name="ExtraContentLBChk"/>
+                                            <CheckBox Content="{Binding Value.Game.Title}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Margin="0,5,0,0" Name="ExtraContentLBChk" Focusable="True" IsTabStop="True"/>
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
+                                <Setter Property="IsTabStop" Value="False"/>
+                                <Setter Property="Focusable" Value="False"/>
                             </Style>
                         </ListBox.Resources>
                     </ListBox>

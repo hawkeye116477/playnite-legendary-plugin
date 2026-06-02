@@ -104,6 +104,10 @@ namespace LegendaryLibraryNS
             DownloadSizeTB.Text = CommonHelpers.FormatSize(gameSize.Download_size);
             InstallSizeTB.Text = CommonHelpers.FormatSize(gameSize.Disk_size);
             UpdateSpaceInfo(SelectedDownload.downloadProperties.installPath, gameSize.Disk_size);
+            if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+            {
+                GeneralTab.Focus();
+            }
         }
 
         private void ChooseGamePathBtn_Click(object sender, RoutedEventArgs e)
@@ -220,6 +224,11 @@ namespace LegendaryLibraryNS
                 AllOrNothingChk.IsChecked = true;
                 checkedByUser = true;
             }
+        }
+
+        private void LegendaryDownloadPropertiesUC_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            CommonControllerHelpers.UC_PreviewKeyDown(sender, e);
         }
     }
 }

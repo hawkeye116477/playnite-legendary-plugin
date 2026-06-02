@@ -47,6 +47,7 @@ namespace LegendaryLibraryNS
             if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
             {
                 CloseWindowTab.Visibility = Visibility.Visible;
+                AvailableDlcsTab.Focus();
             }
             CommonHelpers.SetControlBackground(this);
             await RefreshAll();
@@ -377,6 +378,11 @@ namespace LegendaryLibraryNS
 
                 await RefreshAll();
             }
+        }
+
+        private void UserControl_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            CommonControllerHelpers.UC_PreviewKeyDown(sender, e);
         }
     }
 }

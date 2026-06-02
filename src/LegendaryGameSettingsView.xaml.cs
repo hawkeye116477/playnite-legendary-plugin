@@ -171,6 +171,21 @@ namespace LegendaryLibraryNS
             ManualSyncSavesCBo.ItemsSource = cloudSyncActions;
             ManualSyncSavesCBo.SelectedIndex = 0;
 
+            if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+            {
+                StartupArgumentsTxt.Focusable = false;
+                LanguageCodeTxt.Focusable = false;
+                SelectedAlternativeExeTxt.Focusable = false;
+                ChooseAlternativeExeBtn.Focusable = false;
+                SelectedSavePathTxt.Focusable = false;
+                ChooseSavePathBtn.Focusable = false;
+                var firstCheckBox = LogicalTreeHelper.GetChildren(ButtonsGrd).OfType<CheckBox>().FirstOrDefault(b => b.IsEnabled && b.IsVisible);
+                if (firstCheckBox != null)
+                {
+                    firstCheckBox.Focus();
+                }
+            }
+
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 cloudPath = LegendaryCloud.CalculateGameSavesPath(Game.Name, Game.GameId, Game.InstallDirectory);
@@ -240,6 +255,11 @@ namespace LegendaryLibraryNS
                     LegendaryCloud.SyncGameSaves(Game, selectedCloudSyncAction, forceCloudSync, true);
                 }
             }
+        }
+
+        private void LegendaryGameSettingsViewUC_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            CommonControllerHelpers.UC_PreviewKeyDown(sender, e);
         }
     }
 }

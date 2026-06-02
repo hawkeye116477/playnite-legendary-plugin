@@ -206,5 +206,10 @@ namespace LegendaryLibraryNS
                 }
             }
         }
+
+        private void LegendaryExtraInstallationContentUC_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            CommonControllerHelpers.UC_PreviewKeyDown(sender, e);
+        }
     }
 }

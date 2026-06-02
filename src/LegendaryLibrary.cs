@@ -20,6 +20,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using UnifiedDownloadManagerApiNS;
 using UnifiedDownloadManagerApiNS.Interfaces;
 using UnifiedDownloadManagerApiNS.Models;
@@ -31,7 +36,6 @@ namespace LegendaryLibraryNS
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         public static LegendaryLibrary Instance { get; set; }
-        public static bool LegendaryGameInstaller { get; internal set; }
         public CommonHelpers commonHelpers { get; set; }
         public IUnifiedDownloadLogic UnifiedDownloadLogic { get; set; }
         public DownloadManagerData pluginDownloadData { get; set; }
@@ -1053,6 +1057,20 @@ namespace LegendaryLibraryNS
                     }
                 }
             };
+        }
+
+        public override void OnControllerButtonStateChanged(OnControllerButtonStateChangedArgs args)
+        {
+            var windows = new HashSet<Type>
+            {
+                typeof(LegendaryDownloadProperties),
+                typeof(LegendaryGameInstaller),
+                typeof(LegendaryGameSettingsView),
+                typeof(LegendaryDlcManager),
+                typeof(LegendaryExtraInstallationContentView),
+                typeof(LegendaryUpdater),
+            };
+            CommonControllerHelpers.OnControllerButtonStateChanged(args, windows);
         }
 
     }

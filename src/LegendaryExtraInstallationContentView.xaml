@@ -7,7 +7,7 @@
              xmlns:common="clr-namespace:CommonPlugin"
              xmlns:system="clr-namespace:System"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Name="LegendaryExtraInstallationContentUC" Loaded="LegendaryExtraInstallationContentUC_Loaded">
+             d:DesignHeight="450" d:DesignWidth="800" Name="LegendaryExtraInstallationContentUC" Loaded="LegendaryExtraInstallationContentUC_Loaded" PreviewKeyDown="LegendaryExtraInstallationContentUC_PreviewKeyDown">
     <UserControl.Resources>
         <sys:Boolean x:Key="True">True</sys:Boolean>
         <sys:Boolean x:Key="False">False</sys:Boolean>

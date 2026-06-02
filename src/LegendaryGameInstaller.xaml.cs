@@ -209,6 +209,16 @@ namespace LegendaryLibraryNS
             {
                 await StartTask(DownloadAction.Install, true);
             }
+            else if (playniteAPI.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+            {
+                var firstEnabledBtn = LogicalTreeHelper.GetChildren(TopButtonsSP).OfType<Button>().FirstOrDefault(b => b.IsEnabled && b.IsVisible);
+                if (firstEnabledBtn != null)
+                {
+                    firstEnabledBtn.Focus();
+                }
+                SelectedGamePathTxt.Focusable = false;
+                ChooseGamePathBtn.Focusable = false;
+            }
         }
 
         public async Task RefreshAll()
@@ -829,8 +839,8 @@ namespace LegendaryLibraryNS
 
         private async void ReloadBtn_Click(object sender, RoutedEventArgs e)
         {
-            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonReloadConfirm), LocalizationManager.Instance.GetString(LOC.CommonReload), MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
+            var result = MessageCheckBoxDialog.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonReload), LocalizationManager.Instance.GetString(LOC.CommonReloadConfirm), null, MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result.Result)
             {
                 InstallBtn.IsEnabled = false;
                 DownloadSizeTB.Text = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoadingLabel);
@@ -842,6 +852,11 @@ namespace LegendaryLibraryNS
 
                 await RefreshAll();
             }
+        }
+
+        private void LegendaryGameInstallerUC_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            CommonControllerHelpers.UC_PreviewKeyDown(sender, e);
         }
     }
 }

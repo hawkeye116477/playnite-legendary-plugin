@@ -54,6 +54,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="UnifiedDownloadManagerApi, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\playnite-unifiedDownloadManager-plugin\src\api\bin\Release\UnifiedDownloadManagerApi.dll</HintPath>
@@ -135,6 +136,9 @@
     </Compile>
     <Compile Include="..\third_party\playnite-common-plugin\src\CommonHelpers.cs">
       <Link>Shared\CommonHelpers.cs</Link>
+    </Compile>
+      <Compile Include="..\third_party\playnite-common-plugin\src\CommonControllerHelpers.cs">
+      <Link>Shared\CommonControllerHelpers.cs</Link>
     </Compile>
     <Compile Include="..\third_party\playnite-common-plugin\src\LocalizationManager.cs">
       <Link>Shared\LocalizationManager.cs</Link>
