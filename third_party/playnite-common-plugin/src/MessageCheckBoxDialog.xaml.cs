@@ -1,8 +1,9 @@
 ﻿using Playnite.SDK;
+using Playnite.SDK.Events;
 using System;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Windows.Input;
 
 namespace CommonPlugin
 {
@@ -74,9 +75,13 @@ namespace CommonPlugin
             {
                 CheckBoxText = LocalizationManager.Instance.GetString(checkBoxText);
             }
-            else
+            else if (checkBoxText != null)
             {
                 CheckBoxText = checkBoxText;
+            }
+            else
+            {
+                Chk.Visibility = Visibility.Collapsed;
             }
             DisplayIcon = icon;
         }
@@ -123,6 +128,22 @@ namespace CommonPlugin
             var result = window.ShowDialog();
             messageDialogSettings.Result = (bool)result;
             return messageDialogSettings;
+        }
+
+        public static void HandleControllerInput(ControllerInput button)
+        {
+            switch (button)
+            {
+                case ControllerInput.A:
+                    if (Keyboard.FocusedElement is Button btn)
+                    {
+                        btn.RaiseEvent(
+                            new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
