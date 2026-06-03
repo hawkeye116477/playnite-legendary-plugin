@@ -22,6 +22,7 @@
         <Style TargetType="Expander" BasedOn="{StaticResource HawkeyeExpanderStyle}" />
         <Style TargetType="TabControl" BasedOn="{StaticResource HawkeyeTabControlStyle}" />
         <Style TargetType="TabItem" BasedOn="{StaticResource HawkeyeTabItemStyle}" />
+        <Style TargetType="CheckBox" BasedOn="{StaticResource HawkeyeCheckBoxStyle}" />
     </UserControl.Resources>
     <DockPanel Margin="10">
         <Grid DockPanel.Dock="Bottom" Margin="0,5,0,0">
