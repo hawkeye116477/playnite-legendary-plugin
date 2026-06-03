@@ -969,13 +969,16 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
         var matchingPluginTask =
             LegendaryLibrary.Instance.PluginDownloadData.Downloads.FirstOrDefault(t =>
                 t.GameId == selectedEntry.GameId);
-        window.Title =
-            $"{selectedEntry.Name} — {LocalizationManager.Instance.GetString(LOC.CommonDownloadProperties)}";
-        window.DataContext = matchingPluginTask;
-        window.Content = new LegendaryDownloadProperties();
-        window.Owner = playniteApi.GetLastActiveWindow();
-        window.SizeToContent = SizeToContent.WidthAndHeight;
-        window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-        window.ShowDialog();
+        if (matchingPluginTask != null)
+        {
+            window.Title =
+                $"{selectedEntry.Name} — {LocalizationManager.Instance.GetString(LOC.CommonDownloadProperties)}";
+            window.DataContext = matchingPluginTask;
+            window.Content = new LegendaryDownloadProperties();
+            window.Owner = playniteApi.GetLastActiveWindow();
+            window.SizeToContent = SizeToContent.WidthAndHeight;
+            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            window.ShowDialog();
+        }
     }
 }
