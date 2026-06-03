@@ -828,13 +828,16 @@ namespace LegendaryLibraryNS
                 ShowMaximizeButton = false,
             });
             var matchingPluginTask = LegendaryLibrary.Instance.pluginDownloadData.downloads.FirstOrDefault(t => t.gameID == selectedEntry.gameID);
-            window.Title = selectedEntry.name + " — " + LocalizationManager.Instance.GetString(LOC.CommonDownloadProperties);
-            window.DataContext = matchingPluginTask;
-            window.Content = new LegendaryDownloadProperties();
-            window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
-            window.SizeToContent = SizeToContent.WidthAndHeight;
-            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            window.ShowDialog();
+            if (matchingPluginTask != null)
+            {
+                window.Title = selectedEntry.name + " — " + LocalizationManager.Instance.GetString(LOC.CommonDownloadProperties);
+                window.DataContext = matchingPluginTask;
+                window.Content = new LegendaryDownloadProperties();
+                window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
+                window.SizeToContent = SizeToContent.WidthAndHeight;
+                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                window.ShowDialog();
+            }
         }
 
     }
