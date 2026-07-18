@@ -1,7 +1,7 @@
 ###
 ### Automatically generated via update_3p_localization.py script using files from 
-### https://github.com/JosefNemec/PlayniteExtensions/tree/2571993a388889c024561d1626dfaf2b3fd55da7 and 
-### https://github.com/JosefNemec/Playnite/tree/81a66b1b0cdca691eefcc03095ca20ce627db907. 
+### https://github.com/JosefNemec/PlayniteExtensions/tree/3980301159b8d8909395225d1a81f02108ea47a7 and 
+### https://github.com/JosefNemec/Playnite/tree/02fc1972a1f0c4b7e5f2bc2b91d8dfe643141965. 
 ### DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 ###
 third-party-playnite-filter-active-label = Bộ lọc đang được sử dụng
@@ -56,8 +56,8 @@ third-party-playnite-option-once-a-day = Mỗi ngày một lần
 third-party-playnite-option-once-a-week = Mỗi tuần một lần
 third-party-playnite-open = Mở
 third-party-playnite-unsaved-changes-ask-message = Bạn có muốn lưu các thay đổi không?
-third-party-epic-settings-import-installed-label = Nhập vào các trò chơi đã được cài đặt
-third-party-epic-settings-import-uninstalled-label = Nhập vào các trò chơi chưa được cài đặt
+third-party-epic-settings-import-installed-label = Nhập vào các trò chơi đã cài
+third-party-epic-settings-import-uninstalled-label = Nhập vào các trò chơi chưa cài
 third-party-epic-settings-connect-account = Kết nối tài khoản
 third-party-epic-login-checking = Đang kiểm tra trạng thái xác thực…
 third-party-epic-not-logged-in = Yêu cầu xác thực

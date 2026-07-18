@@ -1,7 +1,7 @@
 ###
 ### Automatically generated via update_3p_localization.py script using files from 
-### https://github.com/JosefNemec/PlayniteExtensions/tree/2571993a388889c024561d1626dfaf2b3fd55da7 and 
-### https://github.com/JosefNemec/Playnite/tree/81a66b1b0cdca691eefcc03095ca20ce627db907. 
+### https://github.com/JosefNemec/PlayniteExtensions/tree/3980301159b8d8909395225d1a81f02108ea47a7 and 
+### https://github.com/JosefNemec/Playnite/tree/02fc1972a1f0c4b7e5f2bc2b91d8dfe643141965. 
 ### DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 ###
 third-party-playnite-filter-active-label = Филтърът е активен
@@ -58,10 +58,10 @@ third-party-playnite-open = Отвори
 third-party-playnite-unsaved-changes-ask-message = Искате ли да запазите направените промени?
 third-party-epic-settings-import-installed-label = Импортиране на инсталирани игри
 third-party-epic-settings-import-uninstalled-label = Импортиране на неинсталирани игри
-third-party-epic-settings-connect-account = Свързване на акаун
+third-party-epic-settings-connect-account = Свързване на акаунт
 third-party-epic-login-checking = Проверява се състоянието на удостоверяване...
 third-party-epic-not-logged-in = Изисква удостоверяване
 third-party-epic-not-logged-in-error = Неуспешно удостоверяване на потребителя.
 third-party-epic-authenticate-label = Удостоверяване
 third-party-epic-trouble-shooting-issues = Отстраняване на проблеми
-third-party-epic-start-using-client = Започнете да използвате { $var0 } клиен
+third-party-epic-start-using-client = Започнете да използвате { $var0 } клиент

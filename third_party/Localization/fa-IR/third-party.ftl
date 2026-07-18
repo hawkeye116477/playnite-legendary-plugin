@@ -1,7 +1,7 @@
 ###
 ### Automatically generated via update_3p_localization.py script using files from 
-### https://github.com/JosefNemec/PlayniteExtensions/tree/2571993a388889c024561d1626dfaf2b3fd55da7 and 
-### https://github.com/JosefNemec/Playnite/tree/81a66b1b0cdca691eefcc03095ca20ce627db907. 
+### https://github.com/JosefNemec/PlayniteExtensions/tree/3980301159b8d8909395225d1a81f02108ea47a7 and 
+### https://github.com/JosefNemec/Playnite/tree/02fc1972a1f0c4b7e5f2bc2b91d8dfe643141965. 
 ### DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 ###
 third-party-playnite-filter-active-label = فیلتر فعال
@@ -56,12 +56,12 @@ third-party-playnite-option-once-a-day = یک بار در روز
 third-party-playnite-option-once-a-week = یکبار در هفته
 third-party-playnite-open = باز کن
 third-party-playnite-unsaved-changes-ask-message = آیا می خواهید تغییراتی را که ایجاد کرده اید ذخیره کنید؟
-third-party-epic-settings-import-installed-label = وارد کردن بازی های نصب شده
-third-party-epic-settings-import-uninstalled-label = واردات بازی های نصب نشده
+third-party-epic-settings-import-installed-label = درون‌برد بازی‌های نصب‌شده
+third-party-epic-settings-import-uninstalled-label = درون‌برد بازی‌های نصب‌نشده
 third-party-epic-settings-connect-account = اتصال حساب
 third-party-epic-login-checking = بررسی وضیعت تایید…
-third-party-epic-not-logged-in = نیاز به تائید هویت
-third-party-epic-not-logged-in-error = شکست در تایید کاربر.
+third-party-epic-not-logged-in = نیاز به تأیید هویت
+third-party-epic-not-logged-in-error = ناکامی در تایید کاربر.
 third-party-epic-authenticate-label = احراز هویت
-third-party-epic-trouble-shooting-issues = عیب یابی مشکلات
-third-party-epic-start-using-client = شروع به استفاده از سرویس گیرنده { $var0 } کنید
+third-party-epic-trouble-shooting-issues = عیب‌یابی مشکل‌ها
+third-party-epic-start-using-client = آغاز به‌کارگیری از کارخواه { $var0 }
