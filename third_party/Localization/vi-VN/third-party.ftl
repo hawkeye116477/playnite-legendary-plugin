@@ -55,6 +55,7 @@ third-party-playnite-option-only-manually = Chỉ chạy thủ công
 third-party-playnite-option-once-a-day = Mỗi ngày một lần
 third-party-playnite-option-once-a-week = Mỗi tuần một lần
 third-party-playnite-open = Mở
+third-party-playnite-unsaved-changes-ask-message = Bạn có muốn lưu các thay đổi không?
 third-party-epic-settings-import-installed-label = Nhập vào các trò chơi đã được cài đặt
 third-party-epic-settings-import-uninstalled-label = Nhập vào các trò chơi chưa được cài đặt
 third-party-epic-settings-connect-account = Kết nối tài khoản

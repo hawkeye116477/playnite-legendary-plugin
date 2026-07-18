@@ -55,6 +55,7 @@ third-party-playnite-option-only-manually = تنها دستی
 third-party-playnite-option-once-a-day = یک بار در روز
 third-party-playnite-option-once-a-week = یکبار در هفته
 third-party-playnite-open = باز کن
+third-party-playnite-unsaved-changes-ask-message = آیا می خواهید تغییراتی را که ایجاد کرده اید ذخیره کنید؟
 third-party-epic-settings-import-installed-label = وارد کردن بازی های نصب شده
 third-party-epic-settings-import-uninstalled-label = واردات بازی های نصب نشده
 third-party-epic-settings-connect-account = اتصال حساب

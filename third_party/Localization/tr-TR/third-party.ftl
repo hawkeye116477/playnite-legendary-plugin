@@ -55,6 +55,7 @@ third-party-playnite-option-only-manually = Sadece el ile
 third-party-playnite-option-once-a-day = Günde bir
 third-party-playnite-option-once-a-week = Haftada bir
 third-party-playnite-open = Aç
+third-party-playnite-unsaved-changes-ask-message = Yaptığınız değişiklikleri kaydetmek istiyor musunuz?
 third-party-epic-settings-import-installed-label = Kurulu oyunları içeri aktar
 third-party-epic-settings-import-uninstalled-label = Kurulu olmayan oyunları içe aktar
 third-party-epic-settings-connect-account = Hesap bağla

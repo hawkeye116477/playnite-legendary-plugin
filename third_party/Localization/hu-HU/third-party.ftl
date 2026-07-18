@@ -55,6 +55,7 @@ third-party-playnite-option-only-manually = Csak kézzel
 third-party-playnite-option-once-a-day = Naponta egyszer
 third-party-playnite-option-once-a-week = Hetente egyszer
 third-party-playnite-open = Megnyitás
+third-party-playnite-unsaved-changes-ask-message = Szeretnéd menteni változtatásaidat?
 third-party-epic-settings-import-installed-label = Telepített játékok importálása
 third-party-epic-settings-import-uninstalled-label = Nem telepített játékok importálása
 third-party-epic-settings-connect-account = Összekapcsolás a fiókkal

@@ -55,6 +55,7 @@ third-party-playnite-option-only-manually = Pouze ručně
 third-party-playnite-option-once-a-day = Jednou denně
 third-party-playnite-option-once-a-week = Jednou týdně
 third-party-playnite-open = Otevřít
+third-party-playnite-unsaved-changes-ask-message = Chcete uložit provedené změny?
 third-party-epic-settings-import-installed-label = Importovat nainstalované hry
 third-party-epic-settings-import-uninstalled-label = Importovat neinstalované hry
 third-party-epic-settings-connect-account = Připojit účet

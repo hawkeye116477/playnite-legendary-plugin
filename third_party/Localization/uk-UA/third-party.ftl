@@ -55,6 +55,7 @@ third-party-playnite-option-only-manually = Тільки вручну
 third-party-playnite-option-once-a-day = Раз на день
 third-party-playnite-option-once-a-week = Раз на тиждень
 third-party-playnite-open = Відкрити
+third-party-playnite-unsaved-changes-ask-message = Бажаєте зберегти внесені зміни?
 third-party-epic-settings-import-installed-label = Імпортувати встановлені ігри
 third-party-epic-settings-import-uninstalled-label = Імпортувати не встановлені ігри
 third-party-epic-settings-connect-account = Під'єднати обліковий запис

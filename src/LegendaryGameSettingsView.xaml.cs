@@ -21,7 +21,7 @@ namespace LegendaryLibraryNS
     public partial class LegendaryGameSettingsView : UserControl
     {
         private Game Game => DataContext as Game;
-        public string GameID => Game.GameId;
+        public string GameId => Game.GameId;
         private IPlayniteAPI playniteAPI = API.Instance;
         private string cloudPath;
         public GameSettings gameSettings;
@@ -49,7 +49,7 @@ namespace LegendaryLibraryNS
             return gameSettings;
         }
 
-        private void SaveBtn_Click(object sender, RoutedEventArgs e)
+        public GameSettings PrepareNewGameSettings()
         {
             var globalSettings = LegendaryLibrary.GetSettings();
             var newGameSettings = new GameSettings();
@@ -90,20 +90,28 @@ namespace LegendaryLibraryNS
             {
                 newGameSettings.AutoSyncPlaytime = AutoSyncPlaytimeChk.IsChecked;
             }
-            var gameSettingsFile = Path.Combine(LegendaryLibrary.Instance.GetPluginUserDataPath(), "GamesSettings", $"{GameID}.json");
+            var oldGameSettings = LoadGameSettings(GameId);
+            if (oldGameSettings.InstallPrerequisites)
+            {
+                newGameSettings.InstallPrerequisites = true;
+            }
+            return newGameSettings;
+        }
+
+        private void SaveGameSettings()
+        {
+            var newGameSettings = PrepareNewGameSettings();
+            var gameSettingsFile = Path.Combine(LegendaryLibrary.Instance.GetPluginUserDataPath(), "GamesSettings", $"{GameId}.json");
             if (newGameSettings.GetType().GetProperties().Any(p => p.GetValue(newGameSettings) != null) || File.Exists(gameSettingsFile))
             {
-                if (File.Exists(gameSettingsFile))
-                {
-                    var oldGameSettings = LoadGameSettings(GameID);
-                    if (oldGameSettings.InstallPrerequisites)
-                    {
-                        newGameSettings.InstallPrerequisites = true;
-                    }
-                }
                 var commonHelpers = LegendaryLibrary.Instance.commonHelpers;
-                commonHelpers.SaveJsonSettingsToFile(newGameSettings, "GamesSettings", GameID, true);
+                commonHelpers.SaveJsonSettingsToFile(newGameSettings, "GamesSettings", GameId, true);
             }
+        }
+
+        private void SaveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            SaveGameSettings();
             Window.GetWindow(this).Close();
         }
 
@@ -118,7 +126,7 @@ namespace LegendaryLibraryNS
             }
             AutoSyncSavesChk.IsChecked = globalSettings.SyncGameSaves;
             AutoSyncPlaytimeChk.IsChecked = globalSettings.SyncPlaytime;
-            gameSettings = LoadGameSettings(GameID);
+            gameSettings = LoadGameSettings(GameId);
             if (gameSettings.LaunchOffline != null)
             {
                 EnableOfflineModeChk.IsChecked = gameSettings.LaunchOffline;
@@ -160,7 +168,7 @@ namespace LegendaryLibraryNS
                 AutoSyncPlaytimeChk.IsEnabled = false;
             }
             var appList = LegendaryLauncher.GetInstalledAppList();
-            if (appList.ContainsKey(GameID))
+            if (appList.ContainsKey(GameId))
             {
                 if (appList[Game.GameId].Can_run_offline)
                 {
@@ -264,6 +272,21 @@ namespace LegendaryLibraryNS
         private void LegendaryGameSettingsViewUC_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             CommonControllerHelpers.UC_PreviewKeyDown(sender, e);
+        }
+
+        private void CancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var oldGameSettings = LoadGameSettings(GameId);
+            var newGameSettings = PrepareNewGameSettings();
+            if (Serialization.ToJson(newGameSettings) != Serialization.ToJson(oldGameSettings))
+            {
+                var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUnsavedChangesAskMessage), "", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
+                {
+                    SaveGameSettings();
+                }
+            }
+            Window.GetWindow(this).Close();
         }
     }
 }

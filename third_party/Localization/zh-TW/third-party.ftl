@@ -55,6 +55,7 @@ third-party-playnite-option-only-manually = 僅手動
 third-party-playnite-option-once-a-day = 每天一次
 third-party-playnite-option-once-a-week = 每週一次
 third-party-playnite-open = 開啟
+third-party-playnite-unsaved-changes-ask-message = 是否要儲存所做的更改？
 third-party-epic-settings-import-installed-label = 匯入已安裝的遊戲
 third-party-epic-settings-import-uninstalled-label = 匯入未安裝遊戲
 third-party-epic-settings-connect-account = 連結帳號

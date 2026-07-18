@@ -49,3 +49,4 @@ LOCDownloadingLabel
 LOCUninstalling
 LOCCopyTitle
 LOCDownloadError
+LOCUnsavedChangesAskMessage

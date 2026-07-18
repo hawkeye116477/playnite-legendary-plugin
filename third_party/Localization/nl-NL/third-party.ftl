@@ -55,6 +55,7 @@ third-party-playnite-option-only-manually = Alleen handmatig
 third-party-playnite-option-once-a-day = Eens per dag
 third-party-playnite-option-once-a-week = Eens per week
 third-party-playnite-open = Open
+third-party-playnite-unsaved-changes-ask-message = Wil je de wijzigingen opslaan?
 third-party-epic-settings-import-installed-label = Importeer geïnstalleerde spellen
 third-party-epic-settings-import-uninstalled-label = Importeer niet-geïnstalleerde spellen
 third-party-epic-settings-connect-account = Accounts koppelen

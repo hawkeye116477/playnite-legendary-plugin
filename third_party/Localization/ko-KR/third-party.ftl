@@ -55,6 +55,7 @@ third-party-playnite-option-only-manually = 수동으로만
 third-party-playnite-option-once-a-day = 하루에 한 번
 third-party-playnite-option-once-a-week = 일주일에 한 번
 third-party-playnite-open = 열기
+third-party-playnite-unsaved-changes-ask-message = 변경 사항을 저장하시겠습니까?
 third-party-epic-settings-import-installed-label = 설치된 게임 가져오기
 third-party-epic-settings-import-uninstalled-label = 설치되지 않은 게임 가져오기
 third-party-epic-settings-connect-account = 계정 연결

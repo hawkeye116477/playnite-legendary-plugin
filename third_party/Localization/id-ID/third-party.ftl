@@ -55,6 +55,7 @@ third-party-playnite-option-only-manually = Hanya secara manual
 third-party-playnite-option-once-a-day = Sekali sehari
 third-party-playnite-option-once-a-week = Sekali seminggu
 third-party-playnite-open = Buka
+third-party-playnite-unsaved-changes-ask-message = Apakah Anda ingin menyimpan perubahan yang Anda buat?
 third-party-epic-settings-import-installed-label = Impor game yang terpasang
 third-party-epic-settings-import-uninstalled-label = Impor game tidak terpasang
 third-party-epic-settings-connect-account = Hubungkan akun
