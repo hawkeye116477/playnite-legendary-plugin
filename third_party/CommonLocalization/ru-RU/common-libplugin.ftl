@@ -90,3 +90,5 @@ common-games-updates-underway = Обновления игр от { $updatesSourc
 common-instance-notice = Только один экземпляр { $pluginShortName } может одновременно устанавливать/импортировать/перемещать приложения. Хотите ли вы приостановить выполнение задач менеджера загрузки, чтобы продолжить работу?
 common-reload = Перезагрузить
 common-reload-confirm = Вы уверены, что хотите перезагрузить данные? Это может привести к землетрясению вблизи серверов { $updatesSourceName }.
+common-finish-installation = Завершить установку игр
+common-no-finish-needed = Нет игр, требующих завершения установки.
