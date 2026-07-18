@@ -297,7 +297,17 @@ namespace LegendaryLibraryNS
             }
             if (gameSettings.StartupArguments?.Any() == true)
             {
-                playArgs.AddRange(gameSettings.StartupArguments);
+                foreach (var userArg in gameSettings.StartupArguments)
+                {
+                    if (userArg.Contains("{"))
+                    {
+                        playArgs.Add(playniteAPI.ExpandGameVariables(Game, userArg));
+                    }
+                    else
+                    {
+                        playArgs.Add(userArg);
+                    }
+                }
             }
             if (!gameSettings.LanguageCode.IsNullOrEmpty())
             {

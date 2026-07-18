@@ -68,7 +68,7 @@ namespace LegendaryLibraryNS
             }
             if (StartupArgumentsTxt.Text != "")
             {
-                newGameSettings.StartupArguments = StartupArgumentsTxt.Text.SplitOutsideQuotes(' ').ToList();
+                newGameSettings.StartupArguments = CommonHelpers.SplitArguments(StartupArgumentsTxt.Text).ToList();
             }
             if (LanguageCodeTxt.Text != "")
             {
@@ -129,7 +129,11 @@ namespace LegendaryLibraryNS
             }
             if (gameSettings.StartupArguments != null)
             {
-                StartupArgumentsTxt.Text = string.Join(" ", gameSettings.StartupArguments);
+                StartupArgumentsTxt.Text = string.Join(" ",
+                  gameSettings.StartupArguments.Select(a =>
+                  {
+                      return a.Contains(" ") ? $"\"{a}\"" : a;
+                  }));
             }
             if (gameSettings.LanguageCode != null)
             {

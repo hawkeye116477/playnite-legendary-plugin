@@ -8,6 +8,8 @@ using Playnite.SDK.Plugins;
 using System.Windows;
 using System.Reflection;
 using Playnite.Common;
+using System.Collections.Generic;
+using System.Text;
 
 namespace CommonPlugin
 {
@@ -156,6 +158,44 @@ namespace CommonPlugin
             {
                 var thisWindow = Window.GetWindow(windowDependency);
                 thisWindow.Background = (System.Windows.Media.Brush)ResourceProvider.GetResource("ControlBackgroundBrush");
+            }
+        }
+
+        public static IEnumerable<string> SplitArguments(string commandLine)
+        {
+            var currentArgument = new StringBuilder();
+            bool inSingleQuote = false;
+            bool inDoubleQuote = false;
+
+            foreach (char c in commandLine)
+            {
+                switch (c)
+                {
+                    case '\'' when !inDoubleQuote:
+                        inSingleQuote = !inSingleQuote;
+                        break;
+
+                    case '"' when !inSingleQuote:
+                        inDoubleQuote = !inDoubleQuote;
+                        break;
+
+                    case ' ' when !inSingleQuote && !inDoubleQuote:
+                        if (currentArgument.Length > 0)
+                        {
+                            yield return currentArgument.ToString();
+                            currentArgument.Clear();
+                        }
+                        break;
+
+                    default:
+                        currentArgument.Append(c);
+                        break;
+                }
+            }
+
+            if (currentArgument.Length > 0)
+            {
+                yield return currentArgument.ToString();
             }
         }
     }
