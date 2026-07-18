@@ -603,6 +603,7 @@ namespace LegendaryLibraryNS
                                         Download_size = result.Download_size,
                                         Disk_size = result.Disk_size,
                                         Install_path = overlayInstallInfo.Install_path,
+                                        Old_version = overlayInstallInfo.Version,
                                     };
                                     gamesToUpdate.Add(gameId, updateInfo);
                                 }
@@ -640,6 +641,7 @@ namespace LegendaryLibraryNS
                                 Download_size = resultUpdateSizes.Download_size,
                                 Disk_size = resultUpdateSizes.Disk_size,
                                 Install_path = oldGameInfo.Install_path,
+                                Old_version = oldGameInfo.Version,
                             };
                             gamesToUpdate.Add(oldGameInfo.App_name, updateInfo);
                         }

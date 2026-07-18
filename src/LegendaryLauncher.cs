@@ -928,7 +928,8 @@ namespace LegendaryLibraryNS
             if (versionInfoContent.Tag_name != null && Version.TryParse(newFixedTag, out Version newValidVersion))
             {
                 var newVersion = new Version(newFixedTag);
-                var oldVersion = new Version(await LegendaryLauncher.GetLauncherVersion());
+                var oldStringVersion = await LegendaryLauncher.GetLauncherVersion();
+                var oldVersion = new Version(oldStringVersion);
                 if (oldVersion.CompareTo(newVersion) < 0)
                 {
                     var options = new List<MessageBoxOption>
@@ -961,7 +962,7 @@ namespace LegendaryLibraryNS
                                 Download_size = newAsset.Size,
                                 Disk_size = newAsset.Size,
                                 Title = appTitle,
-                                Title_for_updater = $"{appTitle} {newVersion}",
+                                Old_version = oldStringVersion,
                             };
                             appsToUpdate.Add("legendary-launcher", updateInfo);
                             if (appsToUpdate.Count > 0)

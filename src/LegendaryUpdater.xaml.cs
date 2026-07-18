@@ -111,10 +111,6 @@ namespace LegendaryLibraryNS
             InstallSizeTB.Text = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoadingLabel);
 
             var successUpdates = UpdatesList.Where(i => i.Value.Success).ToDictionary(i => i.Key, i => i.Value);
-            foreach (var gameUpdate in successUpdates)
-            {
-                gameUpdate.Value.Title_for_updater = $"{gameUpdate.Value.Title.RemoveTrademarks()} {gameUpdate.Value.Version}";
-            }
             UpdatesLB.ItemsSource = successUpdates;
             UpdatesLB.SelectAll();
             if (UpdatesList.Count > 0)
