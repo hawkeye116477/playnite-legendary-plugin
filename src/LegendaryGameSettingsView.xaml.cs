@@ -57,15 +57,7 @@ namespace LegendaryLibraryNS
             {
                 newGameSettings.LaunchOffline = EnableOfflineModeChk.IsChecked;
             }
-            bool globalDisableUpdates = false;
-            if (globalSettings.GamesUpdatePolicy == UpdatePolicy.Never)
-            {
-                globalDisableUpdates = true;
-            }
-            if (DisableGameUpdateCheckingChk.IsChecked != globalDisableUpdates)
-            {
-                newGameSettings.DisableGameVersionCheck = DisableGameUpdateCheckingChk.IsChecked;
-            }
+            newGameSettings.DisableGameVersionCheck = DisableGameUpdateCheckingChk.IsChecked;
             if (StartupArgumentsTxt.Text != "")
             {
                 newGameSettings.StartupArguments = CommonHelpers.SplitArguments(StartupArgumentsTxt.Text).ToList();
