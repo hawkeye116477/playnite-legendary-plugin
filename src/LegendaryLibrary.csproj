@@ -116,6 +116,9 @@
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\ProcessStarter.cs">
       <Link>Shared\Playnite\ProcessStarter.cs</Link>
     </Compile>
+    <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\Programs.cs">
+      <Link>Shared\Playnite\Programs.cs</Link>
+    </Compile>
     <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\Playnite\Common\Xaml.cs">
       <Link>Shared\Playnite\Xaml.cs</Link>
     </Compile>

@@ -103,8 +103,14 @@ namespace LegendaryLibraryNS
         {
             get
             {
-                var heroicResourcesBasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                                                           @"Programs\heroic\resources\app.asar.unpacked\build\bin");
+                var heroicPath = Path.GetDirectoryName(Programs.GetUnistallProgramsList().FirstOrDefault(p => p.DisplayName?.StartsWith("Heroic") == true
+                                                                                                              && p.Publisher == "Heroic Games Launcher")?.DisplayIcon.Split(',')[0]);
+                if (heroicPath.IsNullOrEmpty())
+                {
+                    heroicPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                                                           @"Programs\heroic");
+                }
+                var heroicResourcesBasePath = Path.Combine(@$"{heroicPath}\resources\app.asar.unpacked\build\bin");
                 var path = Path.Combine(heroicResourcesBasePath, @"win32\");
                 if (!Directory.Exists(path))
                 {
@@ -118,37 +124,39 @@ namespace LegendaryLibraryNS
         {
             get
             {
+                string[] validLegendaryBinaries = { "legendary_windows_x86_64.exe", "legendary.exe" };
                 var launcherPath = "";
-
-                var envPath = Environment.GetEnvironmentVariable("PATH")
-                                         .Split(new char[] { Path.PathSeparator }, StringSplitOptions.RemoveEmptyEntries)
-                                         .Where(p => p.IndexOfAny(Path.GetInvalidPathChars()) < 0)
-                                         .Select(dir => Path.Combine(dir, "legendary.exe"))
-                                         .FirstOrDefault(File.Exists);
+                string envPath = Environment.GetEnvironmentVariable("PATH")?
+                                            .Split(new char[] { Path.PathSeparator }, StringSplitOptions.RemoveEmptyEntries)
+                                            .Where(p => p.IndexOfAny(Path.GetInvalidPathChars()) < 0)
+                                            .SelectMany(pathEntry => validLegendaryBinaries.Select(legendaryBinary => Path.Combine(pathEntry.Trim(), legendaryBinary)))
+                                            .FirstOrDefault(File.Exists);
                 if (string.IsNullOrWhiteSpace(envPath) == false)
                 {
                     launcherPath = envPath;
                 }
-                else if (File.Exists(Path.Combine(HeroicLegendaryPath, "legendary.exe")))
-                {
-                    launcherPath = Path.Combine(HeroicLegendaryPath, "legendary.exe");
-                }
                 else
                 {
-                    var pf64 = Environment.GetEnvironmentVariable("ProgramW6432");
-                    if (string.IsNullOrEmpty(pf64))
+                    var launcherMatches = validLegendaryBinaries.Select(legendaryBinary => Path.Combine(HeroicLegendaryPath, legendaryBinary)).Where(File.Exists);
+                    if (launcherMatches.Count() == 0)
                     {
-                        pf64 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+                        var pf64 = Environment.GetEnvironmentVariable("ProgramW6432");
+                        if (string.IsNullOrEmpty(pf64))
+                        {
+                            pf64 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+                        }
+                        var launcherBasePath = Path.Combine(pf64, "Legendary");
+                        launcherMatches = validLegendaryBinaries.Select(legendaryBinary => Path.Combine(launcherBasePath, legendaryBinary)).Where(File.Exists);
+                        if (launcherMatches.Count() == 0)
+                        {
+                            var playniteAPI = API.Instance;
+                            launcherBasePath = Path.Combine(playniteAPI.Paths.ApplicationPath, "Legendary");
+                            launcherMatches = validLegendaryBinaries.Select(legendaryBinary => Path.Combine(launcherBasePath, legendaryBinary)).Where(File.Exists);
+                        }
                     }
-                    var launcherBasePath = Path.Combine(pf64, "Legendary");
-                    if (!File.Exists(Path.Combine(launcherBasePath, "legendary.exe")))
+                    if (launcherMatches.Count() > 0)
                     {
-                        var playniteAPI = API.Instance;
-                        launcherPath = Path.Combine(playniteAPI.Paths.ApplicationPath, "Legendary");
-                    }
-                    else
-                    {
-                        launcherPath = Path.Combine(launcherBasePath, "legendary.exe");
+                        launcherPath = launcherMatches.First();
                     }
                 }
                 var savedSettings = LegendaryLibrary.GetSettings();
