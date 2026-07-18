@@ -220,6 +220,25 @@ namespace LegendaryLibraryNS
 
             void DoFinalStep(string tempPath, string finalPath)
             {
+                var oldBinary = LegendaryLauncher.ClientExecPath;
+                if (File.Exists(oldBinary))
+                {
+                    try
+                    {
+                        File.Delete(oldBinary);
+                    }
+                    catch
+                    {
+                        var proc = new ProcessStartInfo
+                        {
+                            FileName = "cmd.exe",
+                            Arguments = $"/c del \"{oldBinary}\"",
+                            Verb = "runas",
+                            UseShellExecute = true
+                        };
+                        Process.Start(proc);
+                    }
+                }
                 if (!CommonHelpers.IsDirectoryWritable(Path.GetDirectoryName(finalPath)))
                 {
                     var roboCopyArgs = new List<string>()
@@ -776,7 +795,7 @@ namespace LegendaryLibraryNS
                     {
                         Directory.Delete(tempDir, true);
                     }
-                   
+
                     if (File.Exists(resumeFile))
                     {
                         File.Delete(resumeFile);
