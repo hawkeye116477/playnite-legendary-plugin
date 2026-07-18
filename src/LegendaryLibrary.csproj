@@ -137,7 +137,7 @@
     <Compile Include="..\third_party\playnite-common-plugin\src\CommonHelpers.cs">
       <Link>Shared\CommonHelpers.cs</Link>
     </Compile>
-      <Compile Include="..\third_party\playnite-common-plugin\src\CommonControllerHelpers.cs">
+    <Compile Include="..\third_party\playnite-common-plugin\src\CommonControllerHelpers.cs">
       <Link>Shared\CommonControllerHelpers.cs</Link>
     </Compile>
     <Compile Include="..\third_party\playnite-common-plugin\src\LocalizationManager.cs">

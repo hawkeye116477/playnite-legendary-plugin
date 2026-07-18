@@ -584,10 +584,9 @@ namespace LegendaryLibraryNS
                 if (correctJson)
                 {
                     newVersion = overlayVersionInfo.Data.BuildVersion;
-                    var overlayInstallInfo = new Installed();
                     var overlayInstallFile = Path.Combine(LegendaryLauncher.ConfigPath, "overlay_install.json");
                     var overlayInstallContent = FileSystem.ReadFileAsStringSafe(overlayInstallFile);
-                    if (!overlayInstallContent.IsNullOrWhiteSpace() && Serialization.TryFromJson(overlayInstallContent, out overlayInstallInfo))
+                    if (!overlayInstallContent.IsNullOrWhiteSpace() && Serialization.TryFromJson(overlayInstallContent, out Installed overlayInstallInfo))
                     {
                         if (overlayInstallInfo != null && overlayInstallInfo.Version != null)
                         {
