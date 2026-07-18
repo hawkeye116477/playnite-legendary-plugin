@@ -1,2 +1,2 @@
 Source: https://github.com/JosefNemec/PlayniteExtensions.git
-Commit: 2571993a388889c024561d1626dfaf2b3fd55da7
+Commit: 3980301159b8d8909395225d1a81f02108ea47a7
