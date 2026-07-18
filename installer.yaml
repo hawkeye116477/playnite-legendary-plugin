@@ -1,5 +1,23 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.16.0
+    RequiredApiVersion: 6.14.0
+    ReleaseDate: 2026-07-18
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.16.0/LegendaryLibrary_1_16_0.pext
+    Changelog:
+      - Added Japanese translations by coil3569
+      - Added possibility to use Playnite's variables for startup arguments in "modify
+        launch settings" window
+      - Added warning about unsaved changes in "modify launch settings" window
+      - Improved updater appearance
+      - Added few fixes for full screen mode
+      - Removed "Heroic" from update sources (now original version is maintained by
+        them and my fork almost matches Heroic version, so seems no longer needed)
+      - Old launcher binary now should be removed when updating
+      - Fixed launcher path handling (added 1 more allowed default exe name and fixed
+        Heroic path)
+      - Fixed updating some games
+      - Fixed parsing custom startup arguments
   - Version: 1.15.0
     RequiredApiVersion: 6.14.0
     ReleaseDate: 2026-06-03
