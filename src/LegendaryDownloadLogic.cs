@@ -445,7 +445,7 @@ namespace LegendaryLibraryNS
                         {
                             installCommand.Add("--install-tag=" + singleSelectedContent);
                         }
-                        if (downloadProperties.downloadAction == DownloadAction.Repair)
+                        if (downloadProperties.downloadAction != DownloadAction.Install)
                         {
                             installCommand.Add("--reset-sdl");
                         }

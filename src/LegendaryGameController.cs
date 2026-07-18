@@ -730,7 +730,6 @@ namespace LegendaryLibraryNS
 
         public async Task UpdateGame(Dictionary<string, UpdateInfo> gamesToUpdate, string gameTitle = "", bool silently = false, DownloadProperties downloadProperties = null)
         {
-            var unifiedDownloadManagerApi = new UnifiedDownloadManagerApi();
             var updateTasks = new List<DownloadManagerData.Download>();
             if (gamesToUpdate.Count > 0)
             {
@@ -742,10 +741,9 @@ namespace LegendaryLibraryNS
                         var playniteApi = API.Instance;
                         playniteApi.Notifications.Add(new NotificationMessage("LegendaryGamesUpdates", LocalizationManager.Instance.GetString(LOC.CommonGamesUpdatesUnderway), NotificationType.Info));
                     }
+                    var installedAppList = LegendaryLauncher.GetInstalledAppList();
                     foreach (var gameToUpdate in gamesToUpdate)
                     {
-                        var wantedUnifiedItem = unifiedDownloadManagerApi.GetTask(gameToUpdate.Key, LegendaryLibrary.Instance.Id.ToString());
-
                         var settings = LegendaryLibrary.GetSettings();
                         var newDownloadProperties = new DownloadProperties()
                         {
@@ -770,6 +768,22 @@ namespace LegendaryLibraryNS
                         };
                         updateTask.downloadProperties.installPath = Directory.GetParent(gameToUpdate.Value.Install_path).FullName;
                         updateTask.fullInstallPath = gameToUpdate.Value.Install_path;
+                        if (installedAppList != null)
+                        {
+                            if (installedAppList.ContainsKey(gameToUpdate.Key))
+                            {
+                                var installedGameData = installedAppList[gameToUpdate.Key];
+                                if (installedGameData.Install_tags != null && installedGameData.Install_tags.Count > 0)
+                                {
+                                    updateTask.downloadProperties.extraContent = installedGameData.Install_tags;
+                                }
+                                var requiredTags = await LegendaryLauncher.GetRequiredSdlsTags(updateTask);
+                                foreach (var requiredTag in requiredTags)
+                                {
+                                    updateTask.downloadProperties.extraContent.AddMissing(requiredTag);
+                                }
+                            }
+                        }
                         updateTasks.Add(updateTask);
                     }
                     if (updateTasks.Count > 0)
