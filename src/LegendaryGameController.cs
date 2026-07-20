@@ -673,7 +673,9 @@ namespace LegendaryLibraryNS
                                                     Version = newDlcInfo.Game.Version,
                                                     Title = newDlcInfo.Game.Title,
                                                     Download_size = resultDlcUpdateSizes.Download_size,
-                                                    Disk_size = resultDlcUpdateSizes.Disk_size
+                                                    Disk_size = resultDlcUpdateSizes.Disk_size,
+                                                    Install_path = oldDlcInfo.Install_path,
+                                                    Old_version = oldDlcInfo.Version,
                                                 };
                                                 gamesToUpdate.Add(oldDlcInfo.App_name, updateDlcInfo);
                                             }
@@ -777,6 +779,11 @@ namespace LegendaryLibraryNS
                             installSizeNumber = gameToUpdate.Value.Disk_size,
                             downloadProperties = newDownloadProperties,
                         };
+                        if (gameToUpdate.Value.Install_path.IsNullOrEmpty())
+                        {
+                            logger.Warn($"No install path for {gameToUpdate.Value.Title}, skipping...");
+                            continue;
+                        }
                         updateTask.downloadProperties.installPath = Directory.GetParent(gameToUpdate.Value.Install_path).FullName;
                         updateTask.fullInstallPath = gameToUpdate.Value.Install_path;
                         if (installedAppList != null)
