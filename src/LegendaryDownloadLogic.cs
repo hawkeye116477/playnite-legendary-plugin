@@ -220,42 +220,30 @@ namespace LegendaryLibraryNS
 
             void DoFinalStep(string tempPath, string finalPath)
             {
-                var oldBinary = LegendaryLauncher.ClientExecPath;
-                if (File.Exists(oldBinary))
-                {
-                    try
-                    {
-                        File.Delete(oldBinary);
-                    }
-                    catch
-                    {
-                        var proc = new ProcessStartInfo
-                        {
-                            FileName = "cmd.exe",
-                            Arguments = $"/c del \"{oldBinary}\"",
-                            Verb = "runas",
-                            UseShellExecute = true
-                        };
-                        Process.Start(proc);
-                    }
-                }
+                var oldBinaryPath = LegendaryLauncher.ClientExecPath;
                 if (!CommonHelpers.IsDirectoryWritable(Path.GetDirectoryName(finalPath)))
                 {
-                    var roboCopyArgs = new List<string>()
-                {
-                    Path.GetDirectoryName(tempPath),
-                    Path.GetDirectoryName(finalPath),
-                    Path.GetFileName(tempPath),
-                    "/R:3",
-                    "/COPYALL"
-                };
-                    var roboCopyCmd = Cli.Wrap("robocopy")
-                                         .WithArguments(roboCopyArgs);
-                    var proc = ProcessStarter.StartProcess("robocopy", roboCopyCmd.Arguments, true);
+                    var copyCmdArgs = new List<string>()
+                    {
+                        "/c",
+                        "del",
+                        {oldBinaryPath},
+                        "&&",
+                        "robocopy",
+                        Path.GetDirectoryName(tempPath),
+                        Path.GetDirectoryName(finalPath),
+                        Path.GetFileName(tempPath),
+                        "/R:3",
+                        "/COPYALL",
+                    };
+                    var copyCmd = Cli.Wrap("cmd.exe")
+                                         .WithArguments(copyCmdArgs);
+                    var proc = ProcessStarter.StartProcess("cmd.exe", copyCmd.Arguments, true);
                     proc.WaitForExit();
                 }
                 else
                 {
+                    File.Delete(oldBinaryPath);
                     File.Move(tempPath, finalPath);
                 }
             }
