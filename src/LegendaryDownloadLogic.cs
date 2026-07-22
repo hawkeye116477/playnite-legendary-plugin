@@ -458,6 +458,10 @@ namespace LegendaryLibraryNS
                         }
                     }
                 }
+                else
+                {
+                    installCommand.Add("--skip-sdl");
+                }
                 installCommand.Add("--skip-dlcs");
             }
 
