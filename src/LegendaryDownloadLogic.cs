@@ -221,21 +221,32 @@ namespace LegendaryLibraryNS
             void DoFinalStep(string tempPath, string finalPath)
             {
                 var oldBinaryPath = LegendaryLauncher.ClientExecPath;
+                var newBinary = Path.GetFileName(tempPath);
                 if (!CommonHelpers.IsDirectoryWritable(Path.GetDirectoryName(finalPath)))
                 {
                     var copyCmdArgs = new List<string>()
                     {
                         "/c",
-                        "del",
-                        {oldBinaryPath},
-                        "&&",
                         "robocopy",
                         Path.GetDirectoryName(tempPath),
                         Path.GetDirectoryName(finalPath),
-                        Path.GetFileName(tempPath),
+                        newBinary,
                         "/R:3",
                         "/COPYALL",
                     };
+                    if (File.Exists(oldBinaryPath) && Path.GetFileName(oldBinaryPath) != newBinary)
+                    {
+                        copyCmdArgs.AddRange(new List<string>()
+                        {
+                            "&",
+                            "if",
+                            "%errorlevel%",
+                            "LSS",
+                            "2",
+                            "del",
+                            {oldBinaryPath},
+                        });
+                    }
                     var copyCmd = Cli.Wrap("cmd.exe")
                                      .WithArguments(copyCmdArgs);
                     var proc = ProcessStarter.StartProcess("cmd.exe", copyCmd.Arguments, true);
@@ -243,8 +254,11 @@ namespace LegendaryLibraryNS
                 }
                 else
                 {
-                    File.Delete(oldBinaryPath);
                     File.Move(tempPath, finalPath);
+                    if (File.Exists(oldBinaryPath) && Path.GetFileName(oldBinaryPath) != newBinary)
+                    {
+                        File.Delete(oldBinaryPath);
+                    }
                 }
             }
 
