@@ -237,7 +237,7 @@ namespace LegendaryLibraryNS
                         "/COPYALL",
                     };
                     var copyCmd = Cli.Wrap("cmd.exe")
-                                         .WithArguments(copyCmdArgs);
+                                     .WithArguments(copyCmdArgs);
                     var proc = ProcessStarter.StartProcess("cmd.exe", copyCmd.Arguments, true);
                     proc.WaitForExit();
                 }
