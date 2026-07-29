@@ -297,7 +297,7 @@ namespace LegendaryLibraryNS
             }
             var playniteAPI = API.Instance;
             var clientApi = new EpicAccountClient(playniteAPI);
-            if (File.Exists(EncryptedTokensPath) && await clientApi.GetIsUserLoggedIn())
+            if (await clientApi.GetIsUserLoggedIn() && File.Exists(EncryptedTokensPath))
             {
                 var tokens = clientApi.LoadTokens();
                 envDict.Add("LEGENDARY_SECRET_USER_DATA", Convert.ToBase64String(Encoding.UTF8.GetBytes(Serialization.ToJson(tokens))));
