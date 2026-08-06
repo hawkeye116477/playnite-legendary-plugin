@@ -893,7 +893,7 @@ namespace LegendaryLibraryNS
 
         public static string GetUpdateSource()
         {
-            return UpdateSources[LegendaryLibrary.GetSettings().ChosenLauncherUpdateSource];
+            return UpdateSources[LegendaryLibrary.GetSettings().LauncherUpdateRepo];
         }
 
         public static void CompleteGameInstallation(string gameId)
