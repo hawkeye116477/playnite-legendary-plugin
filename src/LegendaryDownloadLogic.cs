@@ -488,7 +488,7 @@ namespace LegendaryLibraryNS
                 bool permissionErrorDisplayed = false;
                 bool diskSpaceErrorDisplayed = false;
                 var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                             .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
+                             .WithEnvironmentVariables(LegendaryLauncher.GetDefaultEnvironmentVariables())
                              .WithArguments(installCommand)
                              .AddCommandToLog()
                              .WithValidation(CommandResultValidation.None);

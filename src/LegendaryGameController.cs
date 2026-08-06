@@ -120,7 +120,7 @@ namespace LegendaryLibraryNS
                             await LegendaryDownloadLogic.WaitUntilLegendaryCloses();
                             var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                                .WithArguments(new[] { "-y", "uninstall", game.GameId })
-                                               .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
+                                               .WithEnvironmentVariables(LegendaryLauncher.GetDefaultEnvironmentVariables())
                                                .AddCommandToLog()
                                                .WithValidation(CommandResultValidation.None)
                                                .ExecuteBufferedAsync();
@@ -320,7 +320,7 @@ namespace LegendaryLibraryNS
             var stdOutBuffer = new StringBuilder();
             var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
                          .WithArguments(playArgs)
-                         .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
+                         .WithEnvironmentVariables(LegendaryLauncher.GetDefaultEnvironmentVariables())
                          .AddCommandToLog()
                          .WithValidation(CommandResultValidation.None);
             await foreach (var cmdEvent in cmd.ListenAsync())
@@ -560,7 +560,7 @@ namespace LegendaryLibraryNS
                 {
                     var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                        .WithArguments(new[] { "status", "--json" })
-                                       .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
+                                       .WithEnvironmentVariables(LegendaryLauncher.GetDefaultEnvironmentVariables())
                                        .AddCommandToLog()
                                        .WithValidation(CommandResultValidation.None)
                                        .ExecuteBufferedAsync();

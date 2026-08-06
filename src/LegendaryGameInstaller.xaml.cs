@@ -368,7 +368,7 @@ namespace LegendaryLibraryNS
                             {
                                 var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                                           .WithArguments(new[] { "install", installData.gameID })
-                                                          .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
+                                                          .WithEnvironmentVariables(LegendaryLauncher.GetDefaultEnvironmentVariables())
                                                           .WithStandardInputPipe(PipeSource.FromString("n"))
                                                           .AddCommandToLog()
                                                           .WithValidation(CommandResultValidation.None)
