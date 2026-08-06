@@ -125,7 +125,7 @@ namespace LegendaryLibraryNS
         {
             get
             {
-                string[] validLegendaryBinaries = { "legendary_windows_x86_64.exe", "legendary.exe" };
+                string[] validLegendaryBinaries = { "legendary_windows_x86_64.exe", "legendary_windows_x64.exe", "legendary.exe" };
                 var launcherPath = "";
                 string envPath = Environment.GetEnvironmentVariable("PATH")?
                                             .Split(new char[] { Path.PathSeparator }, StringSplitOptions.RemoveEmptyEntries)
