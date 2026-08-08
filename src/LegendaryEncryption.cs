@@ -107,13 +107,20 @@ namespace LegendaryLibraryNS
             {
                 isKeyNull = true;
             }
+            var userInfoContent = LegendaryLauncher.GetUserInfo();
             if (isKeyNull || key.IsNullOrEmpty())
             {
-                var userInfoContent = LegendaryLauncher.GetUserInfo();
                 using var sha256 = SHA256.Create();
                 if (!userInfoContent.account_id.IsNullOrEmpty() && !userInfoContent.key.IsNullOrEmpty())
                 {
-                    key = Convert.ToBase64String(sha256.ComputeHash(Encoding.UTF8.GetBytes(userInfoContent.account_id + userInfoContent.key)));
+                    try
+                    {
+                        key = Convert.ToBase64String(sha256.ComputeHash(Encoding.UTF8.GetBytes(userInfoContent.account_id + userInfoContent.key)));
+                    }
+                    catch
+                    {
+                        key = "";
+                    }
                 }
                 else
                 {
