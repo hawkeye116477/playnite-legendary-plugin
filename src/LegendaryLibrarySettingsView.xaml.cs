@@ -379,6 +379,7 @@ namespace LegendaryLibraryNS
                 var answer = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonSignOutConfirm), LocalizationManager.Instance.GetString(LOC.CommonSignOut), MessageBoxButton.YesNo);
                 if (answer == MessageBoxResult.Yes)
                 {
+                    LegendaryEncryption.Cleanup();
                     FileSystem.DeleteFileSafe(LegendaryLauncher.OldPluginEncryptedTokensPath);
                     if (LegendaryLauncher.IsInstalled)
                     {

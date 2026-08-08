@@ -1,4 +1,5 @@
 ﻿using LegendaryLibraryNS.Models;
+using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using SIL.Secrets;
@@ -146,6 +147,14 @@ namespace LegendaryLibraryNS
                 userInfo.key = key;
                 File.WriteAllText(LegendaryLauncher.UserInfoPath, Serialization.ToJson(userInfo));
             }
+        }
+
+        public static void Cleanup()
+        {
+            var userInfoContent = LegendaryLauncher.GetUserInfo();
+            PasswordStore.DeletePassword($"legendary", userInfoContent.account_id);
+            FileSystem.DeleteFileSafe(Path.Combine(LegendaryLauncher.ConfigPath, $"{userInfoContent.account_id.MD5()}.enc"));
+            FileSystem.DeleteFileSafe(LegendaryLauncher.UserInfoPath);
         }
     }
 }

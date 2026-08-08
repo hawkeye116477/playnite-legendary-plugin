@@ -382,7 +382,6 @@ namespace LegendaryLibraryNS.Services
                 if (File.Exists(tokensPath))
                 {
                     return Serialization.FromJson<OauthResponse>(FileSystem.ReadFileAsStringSafe(tokensPath));
-
                 }
                 else if (File.Exists(LegendaryLauncher.OldPluginEncryptedTokensPath))
                 {
