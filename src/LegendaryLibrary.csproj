@@ -40,8 +40,7 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="SIL.PasswordStore, Version=0.1.0.0, Culture=neutral, PublicKeyToken=cab3c8c5232dfcf2, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="SIL.PasswordStore">
       <HintPath>..\third_party\SIL.PasswordStore\SIL.PasswordStore\bin\Release\net461\SIL.PasswordStore.dll</HintPath>
     </Reference>
     <Reference Include="System" />
