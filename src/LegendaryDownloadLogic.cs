@@ -188,10 +188,7 @@ namespace LegendaryLibraryNS
             if (versionInfoContent.Tag_name != null)
             {
                 var latestTag = $"{versionInfoContent.Tag_name}/legendary";
-                var newAsset = versionInfoContent.Assets.FirstOrDefault(a => a.Browser_download_url.Contains(latestTag)
-                                                                             && a.Browser_download_url.EndsWith("_x86_64.exe")) ??
-                               versionInfoContent.Assets.FirstOrDefault(a => a.Browser_download_url.Contains(latestTag)
-                                                                             && a.Browser_download_url.EndsWith(".exe"));
+                var newAsset = versionInfoContent.Assets.FirstOrDefault(a => a.Browser_download_url.Contains(latestTag) && (a.Browser_download_url.EndsWith("_x86_64.exe") || a.Browser_download_url.EndsWith("_x64.exe") || a.Browser_download_url.EndsWith(".exe")));
                 if (newAsset.Browser_download_url != null)
                 {
                     url = newAsset.Browser_download_url;
