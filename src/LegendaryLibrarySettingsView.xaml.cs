@@ -205,6 +205,10 @@ namespace LegendaryLibraryNS
                     LauncherVersionTxt.Text = troubleshootingInformation.LauncherVersion;
                 }
                 LauncherBinaryTxt.Text = troubleshootingInformation.LauncherBinary;
+                if (troubleshootingInformation.LauncherBinary.Contains(LegendaryLauncher.HeroicLegendaryPath))
+                {
+                    CheckForLauncherUpdatesBtn.IsEnabled = false;
+                }
             }
             else
             {
