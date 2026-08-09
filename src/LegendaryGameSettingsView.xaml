@@ -6,6 +6,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:common="clr-namespace:CommonPlugin"
              xmlns:system="clr-namespace:System"
+             xmlns:pcmd="clr-namespace:Playnite.Commands"
              mc:Ignorable="d"
              d:DesignHeight="550" d:DesignWidth="600" Loaded="LegendaryGameSettingsViewUC_Loaded"
              Name="LegendaryGameSettingsViewUC">
@@ -37,16 +38,21 @@
                     </Grid.RowDefinitions>
                     <CheckBox Grid.Column="0" Grid.Row="0"
                                   Content="{common:Localize Key={x:Static system:LOC.LegendaryEnableOfflineMode}}"
-                                  Margin="0,0,0,10" x:Name="EnableOfflineModeChk" IsEnabled="False" />
+                                  Margin="0,0,0,8" x:Name="EnableOfflineModeChk" IsEnabled="False" />
                     <CheckBox Grid.Column="0" Grid.Row="1"
                                   Content="{common:Localize Key={x:Static system:LOC.CommonDisableGameUpdateChecking}}"
-                                  Margin="0,0,0,10" x:Name="DisableGameUpdateCheckingChk" />
+                                  Margin="0,0,0,8" x:Name="DisableGameUpdateCheckingChk" />
                     <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonStartupArguments}}"
                                    Grid.Column="0"
-                                   Grid.Row="2" Margin="0,0,5,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                   Grid.Row="2" Margin="0,0,8,8" VerticalAlignment="Center" HorizontalAlignment="Left" />
                     <TextBox x:Name="StartupArgumentsTxt"
-                                 Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" VerticalContentAlignment="Center"
+                                 Grid.Column="1" Grid.Row="2" Margin="0,0,0,8" VerticalContentAlignment="Center"
                                  HorizontalContentAlignment="Left" />
+                    <Button x:Name="StartupArgumentsHelpBtn" 
+                                Grid.Column="2" Grid.Row="2" Margin="8,0,0,8" Content="&#xefca;" 
+                                FontFamily="{DynamicResource IcoFont}" 
+                                Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                                CommandParameter="https://github.com/hawkeye116477/playnite-legendary-plugin/wiki/Game-startup-arguments"/>
                     <TextBlock Text="{common:Localize Key={x:Static system:LOC.LegendaryLanguageCode}}"
                                    Grid.Column="0"
                                    Grid.Row="3" Margin="0,0,5,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
