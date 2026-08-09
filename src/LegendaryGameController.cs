@@ -797,7 +797,6 @@ public class LegendaryUpdateController
         Dictionary<string, UpdateInfo> gamesToUpdate, string gameTitle = "", bool silently = false,
         DownloadProperties? downloadProperties = null)
     {
-        var unifiedDownloadManagerApi = new UnifiedDownloadManagerApi(playniteApi);
         var updateTasks = new List<DownloadManagerData.Download>();
         if (gamesToUpdate.Count > 0)
         {
@@ -810,10 +809,9 @@ public class LegendaryUpdateController
                         LocalizationManager.Instance.GetString(LOC.CommonGamesUpdatesUnderway), NotificationSeverity.Info));
                 }
 
+                var installedAppList = LegendaryLauncher.GetInstalledAppList();
                 foreach (var gameToUpdate in gamesToUpdate)
                 {
-                    var wantedUnifiedItem = unifiedDownloadManagerApi.GetTask(gameToUpdate.Key, LegendaryLibrary.PluginId);
-
                     var settings = LegendaryLibrary.GetSettings();
                     var newDownloadProperties = new DownloadProperties
                     {
@@ -839,6 +837,22 @@ public class LegendaryUpdateController
                     };
                     updateTask.DownloadProperties.InstallPath = Directory.GetParent(gameToUpdate.Value.Install_path)?.FullName!;
                     updateTask.FullInstallPath = gameToUpdate.Value.Install_path;
+                    if (installedAppList != null)
+                    {
+                        if (installedAppList.ContainsKey(gameToUpdate.Key))
+                        {
+                            var installedGameData = installedAppList[gameToUpdate.Key];
+                            if (installedGameData.Install_tags.Count > 0)
+                            {
+                                updateTask.DownloadProperties.ExtraContent = installedGameData.Install_tags;
+                            }
+                            var requiredTags = await LegendaryLauncher.GetRequiredSdlsTags(updateTask);
+                            foreach (var requiredTag in requiredTags)
+                            {
+                                updateTask.DownloadProperties.ExtraContent.AddMissing(requiredTag);
+                            }
+                        }
+                    }
                     updateTasks.Add(updateTask);
                 }
 

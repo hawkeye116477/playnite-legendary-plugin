@@ -499,7 +499,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                     installCommand.Add("--install-tag=" + singleSelectedContent);
                 }
 
-                if (downloadProperties.DownloadAction == DownloadAction.Repair)
+                if (downloadProperties.DownloadAction != DownloadAction.Install)
                 {
                     installCommand.Add("--reset-sdl");
                 }
