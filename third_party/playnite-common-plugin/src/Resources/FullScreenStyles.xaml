@@ -4,27 +4,85 @@
         <Setter Property="Background" Value="{DynamicResource TextBrushDark}"></Setter>
     </Style>
     <Style x:Key="HawkeyeBorderStyle" TargetType="Border">
-        <Setter Property="BorderBrush" Value="{DynamicResource GlyphBrush}"></Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource GlyphLightBrush}"></Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="BorderBrush" Value="{DynamicResource GlyphLightBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource GlyphBrush}" />
             </Trigger>
             <Trigger Property="IsFocused" Value="True">
-                <Setter Property="BorderBrush" Value="{DynamicResource GlyphLightBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource GlyphBrush}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource GlyphBrush}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource GlyphBrush}" />
             </Trigger>
         </Style.Triggers>
+
     </Style>
     <Style x:Key="HawkeyeListBoxStyle" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
         <Setter Property="Background" Value="Transparent"></Setter>
     </Style>
-    <Style x:Key="HawkeyeTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}"/>
-    <Style x:Key="HawkeyeButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-        <Setter Property="BorderThickness" Value="1" />
+    <Style x:Key="HawkeyeCheckBoxStyle" TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Grid Background="{TemplateBinding Background}">
-                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                <ControlTemplate TargetType="CheckBox">
+
+                    <Grid Background="{TemplateBinding Background}" Margin="{TemplateBinding Padding}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Background="{DynamicResource CheckBoxCheckMarkBkBrush}" VerticalAlignment="Center"
+                                BorderThickness="2" BorderBrush="{DynamicResource ControlBackgroundBrush}"
+                                Width="26" Height="26">
+
+                            <Viewbox x:Name="CheckIcon" Visibility="Collapsed">
+                                <TextBlock Text="b" FontFamily="Marlett" Foreground="White"/>
+                            </Viewbox>
+
+                        </Border>
+
+                        <TextBlock Grid.Column="1" Style="{DynamicResource TextBlockBaseStyle}"
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                   TextTrimming="WordEllipsis" Margin="8,0,0,0"
+                                   Foreground="{TemplateBinding Foreground}">
+                            <ContentPresenter RecognizesAccessKey="True"/>
+                        </TextBlock>
+
+                        <Border x:Name="BorderFocus" Width="26" Height="26" BorderThickness="3"
+                                BorderBrush="{DynamicResource SelectionBrush}"
+                                Visibility="Hidden"/>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="CheckIcon"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource GlyphLightBrush}" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="BorderFocus"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource GlyphLightBrush}" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="BorderFocus"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <ControlTemplate TargetType="{x:Type ButtonBase}" x:Key="HawkeyeButtonTemplate">
+        <Grid Background="{TemplateBinding Background}">
+            <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
                                    FontFamily="{TemplateBinding FontFamily}"
                                    Foreground="{TemplateBinding Foreground}"
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -32,40 +90,47 @@
                                    Margin="{TemplateBinding Margin}"
                                    Padding="{TemplateBinding Padding}">
                             <ContentPresenter />
-                        </TextBlock>
-                        <Border BorderThickness="{TemplateBinding BorderThickness}"
+            </TextBlock>
+            <Border BorderThickness="{TemplateBinding BorderThickness}"
                                 BorderBrush="{DynamicResource SelectionLightBrush}"
                                 x:Name="BorderStandard" />
-                        <Border x:Name="BorderFocus" Margin="-3"
+            <Border x:Name="BorderFocus" Margin="-3"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 BorderBrush="{DynamicResource SelectionBrush}"
                                 BorderThickness="3" Visibility="Hidden" />
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource ControlBackgroundDarkBrush}" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="BorderFocus" />
-                            <Setter Property="Visibility" Value="Hidden" TargetName="BorderStandard" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource ControlBackgroundDarkBrush}" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="BorderFocus" />
-                            <Setter Property="Visibility" Value="Hidden" TargetName="BorderStandard" />
-                        </Trigger>
-                        <Trigger Property="Tag" Value="{StaticResource True}">
-                            <Setter Property="Foreground" Value="{DynamicResource GlyphLightBrush}" />
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.5"/>
-                            <Setter TargetName="BorderFocus" Property="Visibility" Value="Hidden" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ControlBackgroundDarkBrush}" />
+                <Setter Property="Visibility" Value="Visible" TargetName="BorderFocus" />
+                <Setter Property="Visibility" Value="Hidden" TargetName="BorderStandard" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ControlBackgroundDarkBrush}" />
+                <Setter Property="Visibility" Value="Visible" TargetName="BorderFocus" />
+                <Setter Property="Visibility" Value="Hidden" TargetName="BorderStandard" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.5"/>
+                <Setter TargetName="BorderFocus" Property="Visibility" Value="Hidden" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <Style x:Key="HawkeyeTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}"/>
+    <Style x:Key="HawkeyeButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template"
+            Value="{StaticResource HawkeyeButtonTemplate}" />
     </Style>
-    <Style x:Key="ExpanderDownHeaderStyle" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="HawkeyeRepeatButtonStyle" TargetType="RepeatButton" BasedOn="{StaticResource {x:Type RepeatButton}}">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="5,0,0,5"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="Template"
+            Value="{StaticResource HawkeyeButtonTemplate}" />
+    </Style>
+    <Style x:Key="HawkeyeExpanderDownHeaderStyle" TargetType="{x:Type ToggleButton}">
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -113,14 +178,14 @@
                 <ControlTemplate TargetType="{x:Type Expander}">
                     <DockPanel>
                         <ToggleButton BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                                      Style="{DynamicResource ExpanderDownHeaderStyle}"
+                                      Style="{DynamicResource HawkeyeExpanderDownHeaderStyle}"
                                       Padding="{TemplateBinding Padding}"
                                       MinHeight="25" DockPanel.Dock="Top"
                                       Background="{TemplateBinding Background}"
                                       Content="{TemplateBinding Header}"
-                                      IsChecked="{Binding Path=IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                      IsChecked="{Binding Path=IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
                         <Border x:Name="Border" DockPanel.Dock="Top" Visibility="Collapsed"
-                                BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+                                BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" >
                             <ContentPresenter Focusable="False"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"  />
@@ -137,6 +202,30 @@
     </Style>
     <Style x:Key="HawkeyeTabControlStyle" TargetType="{x:Type TabControl}" BasedOn="{StaticResource {x:Type TabControl}}">
         <Setter Property="Background" Value="Transparent"></Setter>
+    </Style>
+    <Style TargetType="TabItem" x:Key="HawkeyeTabItemStyle" BasedOn="{StaticResource {x:Type TabItem}}" >
+        <Setter Property="FontSize" Value="{DynamicResource FontSize}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Grid Name="Panel">
+                        <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Panel" Property="Background" Value="{DynamicResource SelectionBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter TargetName="Panel" Property="Background" Value="{DynamicResource TextBrush}"  />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
     <Style x:Key="HawkeyeDataGridStyle" TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundDarkBrush}"></Setter>
