@@ -1,17 +1,16 @@
 AddonId: LegendaryLibrary
 Packages:
+  - Version: 1.16.5
+    RequiredApiVersion: 6.14.0
+    ReleaseDate: 2026-08-09
+    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.16.5/LegendaryLibrary_1_16_5.pext
+    Changelog:
+      - Fixed updating Legendary launcher
   - Version: 1.16.4
     RequiredApiVersion: 6.14.0
     ReleaseDate: 2026-08-09
     PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.16.4/LegendaryLibrary_1_16_4.pext
     Changelog:
-      - Fixed updating Legendary launcher
-  - Version: 1.16.3
-    RequiredApiVersion: 6.14.0
-    ReleaseDate: 2026-08-09
-    PackageUrl: https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/1.16.3/LegendaryLibrary_1_16_3.pext
-    Changelog:
-      - Fixed updating Legendary launcher
       - Disabled updates for Heroic legendary binary
       - Tweaked encryption of tokens (now it will work fine with CustomLegendaryEpicUriHandler)
       - If you used my forked legendary launcher, then you need to update it now to
