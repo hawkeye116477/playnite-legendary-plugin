@@ -72,7 +72,7 @@ public partial class LegendaryGameSettingsView
 
         if (StartupArgumentsTxt.Text != "")
         {
-            newGameSettings.StartupArguments = StartupArgumentsTxt.Text.SplitOutsideQuotes(' ')!.ToList();
+            newGameSettings.StartupArguments = CommonHelpers.SplitArguments(StartupArgumentsTxt.Text).ToList();
         }
 
         if (LanguageCodeTxt.Text != "")
@@ -144,7 +144,8 @@ public partial class LegendaryGameSettingsView
 
         if (GameSettings.StartupArguments != null)
         {
-            StartupArgumentsTxt.Text = string.Join(" ", GameSettings.StartupArguments);
+            StartupArgumentsTxt.Text = string.Join(" ",
+                GameSettings.StartupArguments.Select(a => a.Contains(' ') ? $"\"{a}\"" : a));
         }
 
         if (GameSettings.LanguageCode != null)

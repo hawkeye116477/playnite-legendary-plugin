@@ -319,7 +319,17 @@ public class LegendaryPlayController(Game game) : PlayController(game.LibraryGam
 
         if (gameSettings.StartupArguments is { Count: > 0 })
         {
-            playArgs.AddRange(gameSettings.StartupArguments);
+            foreach (var userArg in gameSettings.StartupArguments)
+            {
+                if (userArg.Contains('{'))
+                {
+                    playArgs.Add(playniteApi.ExpandVariables(game, userArg, false));
+                }
+                else
+                {
+                    playArgs.Add(userArg);
+                }
+            }
         }
 
         if (!string.IsNullOrEmpty(gameSettings.LanguageCode))

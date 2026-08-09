@@ -84,7 +84,6 @@
         <Compile Include="..\third_party\playnite-common-plugin\src\Resources\CommonIcons.cs">
             <Link>Shared\Resources\CommonIcons.cs</Link>
         </Compile>
-        <Compile Include="..\third_party\playnite-common-plugin\src\SplitOutsideQuotesExtensions.cs" Link="Shared\SplitOutsideQuotesExtensions.cs"/>
     </ItemGroup>
     <ItemGroup>
         <None Update="extension.toml">
