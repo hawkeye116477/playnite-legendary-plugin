@@ -65,7 +65,7 @@
                         </StackPanel>
                         <Button Margin="0,5,0,0" HorizontalAlignment="Left" Name="LoginAlternativeBtn"
                                 Content="{common:Localize Key={x:Static system:LOC.LegendaryAuthenticateAlternativeLabel}}"
-                                Visibility="Collapsed" Click="LoginAlternativeBtn_Click" />
+                                Click="LoginAlternativeBtn_Click" />
                     </StackPanel>
                     <Button
                         Content="{common:Localize Key={x:Static system:LOC.CommonMigrateGamesOriginal},Args='originalPluginShortName=Epic'}"
