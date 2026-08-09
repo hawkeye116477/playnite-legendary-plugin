@@ -953,10 +953,10 @@ namespace LegendaryLibraryNS
             var newFixedTag = Regex.Replace(versionInfoContent.Tag_name, @"[^\d\.]", "");
             if (versionInfoContent.Tag_name != null && Version.TryParse(newFixedTag, out Version newValidVersion))
             {
-                var newVersion = new Version(newFixedTag);
+                var newVersion = newFixedTag;
                 var oldStringVersion = await LegendaryLauncher.GetLauncherVersion();
-                var oldVersion = new Version(oldStringVersion);
-                if (oldVersion.CompareTo(newVersion) < 0)
+                var oldVersion = oldStringVersion;
+                if (oldVersion != newVersion)
                 {
                     var options = new List<MessageBoxOption>
                     {
