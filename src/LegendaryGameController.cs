@@ -849,6 +849,11 @@ public class LegendaryUpdateController
                         InstallSizeNumber = gameToUpdate.Value.Disk_size,
                         DownloadProperties = newDownloadProperties
                     };
+                    if (gameToUpdate.Value.Install_path.IsNullOrEmpty())
+                    {
+                        logger.Warn($"No install path for {gameToUpdate.Value.Title}, skipping...");
+                        continue;
+                    }
                     updateTask.DownloadProperties.InstallPath = Directory.GetParent(gameToUpdate.Value.Install_path)?.FullName!;
                     updateTask.FullInstallPath = gameToUpdate.Value.Install_path;
                     if (installedAppList != null)
