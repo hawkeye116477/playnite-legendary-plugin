@@ -499,13 +499,15 @@ public partial class LegendaryLibrarySettingsView
             AuthStatusTB.Text = LocalizationManager.Instance.GetString(LOC.CommonSignedInAs,
                 new Dictionary<string, IFluentType> { ["userName"] = (FluentString)clientApi.GetUsername() });
             LoginBtn.Content = LocalizationManager.Instance.GetString(LOC.CommonSignOut);
-            LoginBtn.IsChecked = true;
+            LoginBtn.IsChecked = true; 
+            LoginAlternativeBtn.Visibility = Visibility.Collapsed;
         }
         else
         {
             AuthStatusTB.Text = LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedIn);
             LoginBtn.Content = LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicAuthenticateLabel);
             LoginBtn.IsChecked = false;
+            LoginAlternativeBtn.Visibility = Visibility.Visible;
         }
 
         LoginBtn.IsEnabled = true;
