@@ -959,19 +959,36 @@ public class LegendaryLauncher
 
         return installedInfo;
     }
-
-    public static string DefaultUpdateSource = "hawkeye116477";
-
+    
+    public static Dictionary<int, string> UpdateSources
+    {
+        get
+        {
+            Dictionary<int, string> LauncherUpdateSources = new Dictionary<int, string>();
+            string result = "";
+            try
+            {
+                var thisAssembly = Assembly.GetExecutingAssembly();
+                using Stream launcherUpdateSourceFile = thisAssembly.GetManifestResourceStream($"{typeof(LegendaryLibrary).Namespace}.LauncherUpdateSource.json");
+                using var reader = new StreamReader(launcherUpdateSourceFile);
+                result = reader.ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+                var logger = LogManager.GetLogger();
+                logger.Error(ex, $"An error occured during loading launcher update sources");
+            }
+            if (!result.IsNullOrWhiteSpace() && Serialization.TryFromJson(result, out List<string> savedRepoList))
+            {
+                LauncherUpdateSources = savedRepoList.Select((value, index) => new { index, value }).ToDictionary(x => x.index, x => x.value);
+            }
+            return LauncherUpdateSources;
+        }
+    }
+    
     public static string GetUpdateSource()
     {
-        var launcherSource = DefaultUpdateSource;
-        var savedUpdateSource = LegendaryLibrary.GetSettings()!.LauncherUpdateSource;
-        if (!savedUpdateSource.IsNullOrEmpty())
-        {
-            launcherSource = savedUpdateSource;
-        }
-
-        return launcherSource;
+        return UpdateSources[LegendaryLibrary.GetSettings().LauncherUpdateRepo];
     }
 
     public static void CompleteGameInstallation(string gameId)

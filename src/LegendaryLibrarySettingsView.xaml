@@ -292,7 +292,7 @@
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.LegendaryLauncherUpdateSource}}"
                                    VerticalAlignment="Center" HorizontalAlignment="Left" />
                         <ComboBox x:Name="LauncherUpdateSourceCBo"
-                                  SelectedValue="{Binding Settings.LauncherUpdateSource}"
+                                  SelectedValue="{Binding Settings.LauncherUpdateRepo}"
                                   VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Margin="8,0,0,0"
                                   HorizontalAlignment="Left" VerticalAlignment="Center" />
                     </StackPanel>

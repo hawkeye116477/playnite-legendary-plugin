@@ -233,22 +233,7 @@ public partial class LegendaryLibrarySettingsView
         };
         ImportPlaytimeCBo.ItemsSource = playTimeImportModes;
 
-        var launcherUpdateSourceFile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
-            "LauncherUpdateSource.json");
-        var repoList = new List<string>();
-        if (File.Exists(launcherUpdateSourceFile))
-        {
-            var content = FileSystem.ReadFileAsStringSafe(launcherUpdateSourceFile);
-            if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out List<string>? savedRepoList))
-            {
-                if (savedRepoList != null)
-                {
-                    repoList = savedRepoList;
-                }
-            }
-        }
-
-        LauncherUpdateSourceCBo.ItemsSource = repoList;
+        LauncherUpdateSourceCBo.ItemsSource = LegendaryLauncher.UpdateSources;
 
         troubleshootingInformation = new LegendaryTroubleshootingInformation();
         if (LegendaryLauncher.IsInstalled)

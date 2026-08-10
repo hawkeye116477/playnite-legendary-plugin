@@ -91,7 +91,7 @@ public partial class LegendaryLibrarySettings : ObservableObject
     public partial long NextLauncherUpdateTime { get; set; } = 0;
 
     [ObservableProperty]
-    public partial string LauncherUpdateSource { get; set; } = LegendaryLauncher.DefaultUpdateSource;
+    public partial int LauncherUpdateRepo { get; set; } = 0;
 
     [ObservableProperty]
     public partial PlayTimeImportMode PlayTimeImportMode { get; set; } = PlayTimeImportMode.NewImportsOnly;
