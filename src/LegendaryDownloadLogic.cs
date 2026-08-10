@@ -251,25 +251,46 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
 
             async Task DoFinalStep(string tempPathFs, string finalPathFs)
             {
+                var oldBinaryPath = LegendaryLauncher.ClientExecPath;
+                var newBinary = Path.GetFileName(tempPath);
                 if (!await LegendaryLibrary.Instance.CommonHelpers.IsDirectoryWritable(
                         Path.GetDirectoryName(finalPathFs)!))
                 {
-                    var roboCopyArgs = new List<string?>
+                    var copyCmdArgs = new List<string?>()
                     {
-                        Path.GetDirectoryName(tempPathFs),
-                        Path.GetDirectoryName(finalPathFs),
-                        Path.GetFileName(tempPathFs),
+                        "/c",
+                        "robocopy",
+                        Path.GetDirectoryName(tempPath),
+                        Path.GetDirectoryName(finalPath),
+                        newBinary,
                         "/R:3",
-                        "/COPYALL"
+                        "/COPYALL",
                     };
-                    var roboCopyCmd = Cli.Wrap("robocopy")
-                                         .WithArguments(roboCopyArgs!);
-                    var proc = ProcessStarter.StartProcess("robocopy", roboCopyCmd.Arguments, true);
+                    if (File.Exists(oldBinaryPath) && Path.GetFileName(oldBinaryPath) != newBinary)
+                    {
+                        copyCmdArgs.AddRange(new List<string>()
+                        {
+                            "&",
+                            "if",
+                            "%errorlevel%",
+                            "LSS",
+                            "2",
+                            "del",
+                            {oldBinaryPath},
+                        });
+                    }
+                    var copyCmd = Cli.Wrap("cmd.exe")
+                                     .WithArguments(copyCmdArgs);
+                    var proc = ProcessStarter.StartProcess("cmd.exe", copyCmd.Arguments, true);
                     await proc.WaitForExitAsync();
                 }
                 else
                 {
-                    File.Move(tempPathFs, finalPathFs);
+                    File.Move(tempPath, finalPath);
+                    if (File.Exists(oldBinaryPath) && Path.GetFileName(oldBinaryPath) != newBinary)
+                    {
+                        File.Delete(oldBinaryPath);
+                    }
                 }
             }
 
