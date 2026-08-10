@@ -44,6 +44,7 @@
         <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\FileSystem.cs" Link="Shared\Playnite\FileSystem.cs" />
         <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\Paths.cs" Link="Shared\Playnite\Paths.cs" />
         <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\ProcessMonitor.cs" Link="Shared\Playnite\ProcessMonitor.cs" />
+        <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\Programs.cs"> <Link>Shared\Playnite\Programs.cs</Link> </Compile>
         <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\ProcessStarter.cs" Link="Shared\Playnite\ProcessStarter.cs" />
         <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\Playnite\Common\Xaml.cs" Link="Shared\Playnite\Xaml.cs" />
         <Compile Include="..\third_party\PlayniteExtensions\source\Generic\PlayniteExtensions.Common\GlobalCommands.cs" Link="Shared\Playnite\GlobalCommands.cs" />
