@@ -1033,7 +1033,8 @@ public class LegendaryLauncher
         if (versionInfoContent.Tag_name != "" && Version.TryParse(newFixedTag, out var newValidVersion))
         {
             var newVersion = new Version(newFixedTag);
-            var oldVersion = new Version(await GetLauncherVersion());
+            var oldStringVersion = await GetLauncherVersion();
+            var oldVersion = new Version(oldStringVersion);
             if (oldVersion.CompareTo(newVersion) < 0)
             {
                 var options = new List<MessageBoxResponse>
@@ -1071,7 +1072,7 @@ public class LegendaryLauncher
                             Download_size = newAsset.Size,
                             Disk_size = newAsset.Size,
                             Title = appTitle,
-                            Title_for_updater = $"{appTitle} {newVersion}"
+                            Old_version = oldStringVersion,
                         };
                         appsToUpdate.Add("legendary-launcher", updateInfo);
                         if (appsToUpdate.Count > 0)

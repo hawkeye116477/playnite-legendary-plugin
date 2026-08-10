@@ -663,7 +663,8 @@ public class LegendaryUpdateController
                                     Title = gameTitle,
                                     Download_size = result.Download_size,
                                     Disk_size = result.Disk_size,
-                                    Install_path = overlayInstallInfo.Install_path
+                                    Install_path = overlayInstallInfo.Install_path,
+                                    Old_version = overlayInstallInfo.Version,
                                 };
                                 gamesToUpdate.Add(gameId, updateInfo);
                             }
@@ -702,7 +703,8 @@ public class LegendaryUpdateController
                             Title = newGameInfo.Game.Title,
                             Download_size = resultUpdateSizes.Download_size,
                             Disk_size = resultUpdateSizes.Disk_size,
-                            Install_path = oldGameInfo.Install_path
+                            Install_path = oldGameInfo.Install_path,
+                            Old_version = oldGameInfo.Version,
                         };
                         gamesToUpdate.Add(oldGameInfo.App_name, updateInfo);
                     }
@@ -736,7 +738,9 @@ public class LegendaryUpdateController
                                                 Version = newDlcInfo.Game.Version,
                                                 Title = newDlcInfo.Game.Title,
                                                 Download_size = resultDlcUpdateSizes.Download_size,
-                                                Disk_size = resultDlcUpdateSizes.Disk_size
+                                                Disk_size = resultDlcUpdateSizes.Disk_size,
+                                                Install_path = oldDlcInfo.Install_path,
+                                                Old_version = oldDlcInfo.Version,
                                             };
                                             gamesToUpdate.Add(oldDlcInfo.App_name, updateDlcInfo);
                                         }
