@@ -215,9 +215,11 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
         var versionInfoContent = await LegendaryLauncher.GetVersionInfoContent();
         if (!versionInfoContent.Tag_name.IsNullOrEmpty())
         {
-            var newAsset = versionInfoContent.Assets.FirstOrDefault(a =>
-                a.Browser_download_url.Contains($"{versionInfoContent.Tag_name}/legendary")
-                && a.Browser_download_url.EndsWith(".exe"));
+            var latestTag = $"{versionInfoContent.Tag_name}/legendary";
+            string[] validLegendarySuffixes = { "x86_64.exe", "x64.exe", ".exe" };
+            var newAsset = validLegendarySuffixes.Select(suffix =>
+                versionInfoContent.Assets.FirstOrDefault(a => a.Browser_download_url.Contains(latestTag)
+                                                              && a.Browser_download_url.EndsWith(suffix))).FirstOrDefault(a => a != null);
             if (newAsset?.Browser_download_url != null)
             {
                 url = newAsset.Browser_download_url;
