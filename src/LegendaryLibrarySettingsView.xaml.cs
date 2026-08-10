@@ -246,6 +246,10 @@ public partial class LegendaryLibrarySettingsView
             }
 
             LauncherBinaryTxt.Text = troubleshootingInformation.LauncherBinary;
+            if (troubleshootingInformation.LauncherBinary.Contains(LegendaryLauncher.HeroicLegendaryPath))
+            {
+                CheckForLauncherUpdatesBtn.IsEnabled = false;
+            }
         }
         else
         {
