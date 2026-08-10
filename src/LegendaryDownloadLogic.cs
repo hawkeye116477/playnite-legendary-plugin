@@ -525,7 +525,10 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                     installCommand.Add("--reset-sdl");
                 }
             }
-
+            else
+            {
+                installCommand.Add("--skip-sdl");
+            }
             installCommand.Add("--skip-dlcs");
         }
 
