@@ -472,7 +472,7 @@ namespace LegendaryLibraryNS
                 {
                     var nextGamesUpdateTime = globalSettings.NextGamesUpdateTime;
                     bool udmInstalled = PlayniteApi.Addons.Plugins.Any(plugin => plugin.Id.Equals(UnifiedDownloadManagerSharedProperties.Id));
-                    if (nextGamesUpdateTime != 0 && udmInstalled)
+                    if (nextGamesUpdateTime != 0 && udmInstalled && LegendaryLauncher.IsInstalled)
                     {
                         DateTimeOffset now = DateTime.UtcNow;
                         if (now.ToUnixTimeSeconds() >= nextGamesUpdateTime)
