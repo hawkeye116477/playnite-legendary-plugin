@@ -811,9 +811,13 @@ public class LegendaryLauncher
             }
         }
 
+        var repoOwner = GetUpdateSource();
+        if (correctJson && !newVersionInfoContent.Html_url.Contains(repoOwner))
+        {
+            correctJson = false;
+        }
         if (!File.Exists(cacheVersionFile) || !correctJson)
         {
-            var repoOwner = GetUpdateSource();
             try
             {
                 using var response =
