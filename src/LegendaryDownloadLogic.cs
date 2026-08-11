@@ -543,7 +543,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
             var permissionErrorDisplayed = false;
             var diskSpaceErrorDisplayed = false;
             var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                         .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
+                         .WithEnvironmentVariables(LegendaryLauncher.GetDefaultEnvironmentVariables())
                          .WithArguments(installCommand)
                          .AddCommandToLog()
                          .WithValidation(CommandResultValidation.None);

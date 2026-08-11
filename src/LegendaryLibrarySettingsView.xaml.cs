@@ -76,7 +76,7 @@ public partial class LegendaryLibrarySettingsView
             var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                .WithValidation(CommandResultValidation.None)
                                .WithArguments(["-y", "eos-overlay", "remove"])
-                               .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
+                               .WithEnvironmentVariables(LegendaryLauncher.GetDefaultEnvironmentVariables())
                                .AddCommandToLog()
                                .ExecuteBufferedAsync();
             if (cmd.StandardError.Contains("Done"))
@@ -145,7 +145,7 @@ public partial class LegendaryLibrarySettingsView
 
         await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                  .WithArguments(["-y", "eos-overlay", toggleCommand])
-                 .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
+                 .WithEnvironmentVariables(LegendaryLauncher.GetDefaultEnvironmentVariables())
                  .AddCommandToLog()
                  .WithValidation(CommandResultValidation.None)
                  .ExecuteAsync();
@@ -345,7 +345,7 @@ public partial class LegendaryLibrarySettingsView
                                                      .WithArguments([
                                                           "-y", "import", game.LibraryGameId!, game.InstallDirectory!
                                                       ])
-                                                     .WithEnvironmentVariables(await LegendaryLauncher
+                                                     .WithEnvironmentVariables(LegendaryLauncher
                                                          .GetDefaultEnvironmentVariables())
                                                      .AddCommandToLog()
                                                      .WithValidation(CommandResultValidation.None)
@@ -453,13 +453,14 @@ public partial class LegendaryLibrarySettingsView
                 LocalizationManager.Instance.GetString(LOC.CommonSignOut), MessageBoxButtons.YesNo);
             if (answer == Playnite.MessageBoxResult.Yes)
             {
-                FileSystem.DeleteFileSafe(LegendaryLauncher.EncryptedTokensPath);
+                LegendaryEncryption.Cleanup();
+                FileSystem.DeleteFileSafe(LegendaryLauncher.OldPluginEncryptedTokensPath);
                 if (LegendaryLauncher.IsInstalled)
                 {
                     var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                           .WithArguments(["auth", "--delete"])
                                           .WithEnvironmentVariables(
-                                               await LegendaryLauncher.GetDefaultEnvironmentVariables())
+                                               LegendaryLauncher.GetDefaultEnvironmentVariables())
                                           .AddCommandToLog()
                                           .WithValidation(CommandResultValidation.None)
                                           .ExecuteBufferedAsync();
@@ -533,7 +534,7 @@ public partial class LegendaryLibrarySettingsView
         {
             await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                      .WithArguments(["list", "-T", "--force-refresh"])
-                     .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
+                     .WithEnvironmentVariables(LegendaryLauncher.GetDefaultEnvironmentVariables())
                      .AddCommandToLog()
                      .WithValidation(CommandResultValidation.None)
                      .ExecuteAsync();
@@ -544,7 +545,7 @@ public partial class LegendaryLibrarySettingsView
             var errorBuffer = new StringBuilder();
             var warningBuffer = new StringBuilder();
             var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                         .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
+                         .WithEnvironmentVariables(LegendaryLauncher.GetDefaultEnvironmentVariables())
                          .WithArguments(["activate", "-U"])
                          .AddCommandToLog()
                          .WithValidation(CommandResultValidation.None);

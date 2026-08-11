@@ -379,7 +379,7 @@ public partial class LegendaryGameInstaller : UserControl
                         {
                             var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                                   .WithArguments(new[] { "install", installData.GameId })
-                                                  .WithEnvironmentVariables(await LegendaryLauncher
+                                                  .WithEnvironmentVariables(LegendaryLauncher
                                                       .GetDefaultEnvironmentVariables())
                                                   .WithStandardInputPipe(PipeSource.FromString("n"))
                                                   .AddCommandToLog()

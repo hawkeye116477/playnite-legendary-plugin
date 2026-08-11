@@ -2,7 +2,6 @@
 using CliWrap.Buffered;
 using CommonPlugin;
 using LegendaryLibraryNS.Models;
-using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
 using Microsoft.Win32;
 using Playnite.Common;
@@ -12,7 +11,6 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -278,9 +276,15 @@ public class LegendaryLauncher
 
     public static string TokensPath => Path.Combine(ConfigPath, "user.json");
 
-    public static string EncryptedTokensPath => Path.Combine(LegendaryLibrary.PlayniteApi.UserDataDir, "tokens_encrypted.json");
+    public static string OldPluginEncryptedTokensPath
+    {
+        get
+        {
+            return Path.Combine(LegendaryLibrary.PlayniteApi.UserDataDir, "tokens_encrypted.json");
+        }
+    }
 
-    public static async Task<Dictionary<string, string?>> GetDefaultEnvironmentVariables()
+    public static Dictionary<string, string?> GetDefaultEnvironmentVariables()
     {
         var envDict = new Dictionary<string, string?>();
         var heroicLegendaryConfigPath =
@@ -290,19 +294,6 @@ public class LegendaryLauncher
         {
             envDict.Add("LEGENDARY_CONFIG_PATH", ConfigPath);
         }
-
-        var playniteApi = LegendaryLibrary.PlayniteApi;
-        var clientApi = new EpicAccountClient(playniteApi);
-        if (File.Exists(EncryptedTokensPath) && await clientApi.GetIsUserLoggedIn())
-        {
-            var tokens = clientApi.LoadTokens();
-            if (tokens != null)
-            {
-                envDict.Add("LEGENDARY_SECRET_USER_DATA",
-                    Convert.ToBase64String(Encoding.UTF8.GetBytes(Serialization.ToJson(tokens))));
-            }
-        }
-
         return envDict;
     }
 
@@ -340,7 +331,7 @@ public class LegendaryLauncher
             {
                 cmd = await Cli.Wrap(ClientExecPath)
                                .WithArguments(["eos-overlay", "update"])
-                               .WithEnvironmentVariables(await GetDefaultEnvironmentVariables())
+                               .WithEnvironmentVariables(GetDefaultEnvironmentVariables())
                                .WithStandardInputPipe(PipeSource.FromString("n"))
                                .AddCommandToLog()
                                .WithValidation(CommandResultValidation.None)
@@ -351,7 +342,7 @@ public class LegendaryLauncher
                 cmd = await Cli.Wrap(ClientExecPath)
                                .WithArguments(["update", gameId])
                                .WithStandardInputPipe(PipeSource.FromString("n"))
-                               .WithEnvironmentVariables(await GetDefaultEnvironmentVariables())
+                               .WithEnvironmentVariables(GetDefaultEnvironmentVariables())
                                .AddCommandToLog()
                                .WithValidation(CommandResultValidation.None)
                                .ExecuteBufferedAsync();
@@ -512,7 +503,7 @@ public class LegendaryLauncher
             {
                 result = await Cli.Wrap(ClientExecPath)
                                   .WithArguments(["eos-overlay", "install"])
-                                  .WithEnvironmentVariables(await GetDefaultEnvironmentVariables())
+                                  .WithEnvironmentVariables(GetDefaultEnvironmentVariables())
                                   .WithStandardInputPipe(PipeSource.FromString("n"))
                                   .AddCommandToLog()
                                   .WithValidation(CommandResultValidation.None)
@@ -522,7 +513,7 @@ public class LegendaryLauncher
             {
                 result = await Cli.Wrap(ClientExecPath)
                                   .WithArguments(["info", gameId, "--json"])
-                                  .WithEnvironmentVariables(await GetDefaultEnvironmentVariables())
+                                  .WithEnvironmentVariables(GetDefaultEnvironmentVariables())
                                   .AddCommandToLog()
                                   .WithValidation(CommandResultValidation.None)
                                   .ExecuteBufferedAsync();
@@ -757,7 +748,7 @@ public class LegendaryLauncher
         {
             var versionCmd = await Cli.Wrap(ClientExecPath)
                                       .WithArguments(["-V"])
-                                      .WithEnvironmentVariables(await GetDefaultEnvironmentVariables())
+                                      .WithEnvironmentVariables(GetDefaultEnvironmentVariables())
                                       .AddCommandToLog()
                                       .WithValidation(CommandResultValidation.None)
                                       .ExecuteBufferedAsync();
@@ -1158,5 +1149,33 @@ public class LegendaryLauncher
                 logger.Error("An error occured during checking for Legendary launcher update");
             }
         }
+    }
+    
+    
+    public static string UserInfoPath
+    {
+        get
+        {
+            var path = Path.Combine(ConfigPath, "current_user.json");
+            return string.IsNullOrEmpty(path) ? string.Empty : path;
+        }
+    }
+
+    public static LegendaryUserInfo GetUserInfo()
+    {
+        var userInfoJson = new LegendaryUserInfo();
+        if (File.Exists(UserInfoPath))
+        {
+            var userInfoContent = FileSystem.ReadFileAsStringSafe(UserInfoPath);
+            if (!userInfoContent.IsNullOrEmpty() && Serialization.TryFromJson(userInfoContent, out LegendaryUserInfo? newUserInfoJson))
+            {
+                if (newUserInfoJson != null)
+                {
+                    userInfoJson = newUserInfoJson;
+                }
+
+            }
+        }
+        return userInfoJson;
     }
 }

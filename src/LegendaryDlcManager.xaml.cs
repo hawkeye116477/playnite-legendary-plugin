@@ -208,7 +208,7 @@ public partial class LegendaryDlcManager
                 var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                    .WithArguments(["-y", "uninstall", selectedDlc.Key])
                                    .WithEnvironmentVariables(
-                                        await LegendaryLauncher.GetDefaultEnvironmentVariables())
+                                        LegendaryLauncher.GetDefaultEnvironmentVariables())
                                    .AddCommandToLog()
                                    .WithValidation(CommandResultValidation.None)
                                    .ExecuteBufferedAsync();

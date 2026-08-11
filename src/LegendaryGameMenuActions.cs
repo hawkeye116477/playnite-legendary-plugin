@@ -85,7 +85,7 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
                     var importCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                              .WithArguments(["-y", "import", Game.LibraryGameId!, path!])
                                              .WithEnvironmentVariables(
-                                                  await LegendaryLauncher
+                                                  LegendaryLauncher
                                                      .GetDefaultEnvironmentVariables())
                                              .AddCommandToLog()
                                              .WithValidation(CommandResultValidation.None)
@@ -197,7 +197,7 @@ public class LegendaryGameMenuActions(IPlayniteApi playniteApi, List<Game> games
                                 var rewriteResult = await Cli
                                                          .Wrap(LegendaryLauncher.ClientExecPath)
                                                          .WithArguments(["move", Game.LibraryGameId!, newPath, "--skip-move"])
-                                                         .WithEnvironmentVariables(await LegendaryLauncher
+                                                         .WithEnvironmentVariables(LegendaryLauncher
                                                              .GetDefaultEnvironmentVariables())
                                                          .AddCommandToLog()
                                                          .ExecuteBufferedAsync();

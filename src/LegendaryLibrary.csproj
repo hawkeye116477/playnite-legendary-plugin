@@ -51,6 +51,7 @@
         <Compile Include="..\third_party\playnite-common-plugin\src\CliWrapCommandExtensions.cs" Link="Shared\CliWrapCommandExtensions.cs" />
         <Compile Include="..\third_party\playnite-common-plugin\src\CommonHelpers.cs" Link="Shared\CommonHelpers.cs" />
         <Compile Include="..\third_party\playnite-common-plugin\src\Encryption.cs" Link="Shared\Encryption.cs" />
+        <Compile Include="..\third_party\playnite-common-plugin\src\Keyring.cs" Link="Shared\Keyring.cs" />
         <Compile Include="..\third_party\playnite-common-plugin\src\LocalizationManager.cs" Link="Shared\LocalizationManager.cs" />
         <Compile Include="..\third_party\playnite-common-plugin\src\LocalizeExtension.cs" Link="Shared\LocalizeExtension.cs" />
         <Page Include="..\third_party\playnite-common-plugin\src\NumericInput.xaml">
@@ -137,8 +138,10 @@
         </Content>
     </ItemGroup>
     <ItemGroup>
+        <PackageReference Include="AdysTech.CredentialManager" Version="3.1.0" />
         <PackageReference Include="ByteSize" Version="2.1.2" />
         <PackageReference Include="CliWrap" Version="3.10.1" />
+        <PackageReference Include="GnomeStack.Secrets.OperatingSystem" Version="0.1.6" />
         <PackageReference Include="Linguini.Bundle" Version="0.11.0" />
         <PackageReference Include="Playnite.SDK" Version="11.0.0-zeta10" />
     </ItemGroup>

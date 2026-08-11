@@ -80,7 +80,7 @@ public partial class LegendaryEaActivate
         {
             var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                   .WithArguments(["list", "-T", "--json", "--force-refresh"])
-                                  .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
+                                  .WithEnvironmentVariables(LegendaryLauncher.GetDefaultEnvironmentVariables())
                                   .AddCommandToLog()
                                   .WithValidation(CommandResultValidation.None)
                                   .ExecuteBufferedAsync();
@@ -230,7 +230,7 @@ public partial class LegendaryEaActivate
                 var stdOutBuffer = new StringBuilder();
                 var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
                              .WithArguments(["launch", selectedGame.App_name, "--origin"])
-                             .WithEnvironmentVariables(await LegendaryLauncher.GetDefaultEnvironmentVariables())
+                             .WithEnvironmentVariables(LegendaryLauncher.GetDefaultEnvironmentVariables())
                              .AddCommandToLog()
                              .WithValidation(CommandResultValidation.None);
                 await foreach (var cmdEvent in cmd.ListenAsync())
