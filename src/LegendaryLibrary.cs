@@ -150,7 +150,7 @@ public class LegendaryLibrary : Plugin, IUnifiedDownloadProvider
                 Source = new IdImportableProperty("epic", "Epic"),
                 InstallState = InstallState.Installed,
                 //Version = app.Version,
-                //InstallSize = (ulong?)app.Install_size,
+                InstallSize = (ulong)app.Install_size,
                 InstallDirectory = installLocation,
                 Platforms = [PcSpecProperty]
             };
@@ -329,7 +329,7 @@ public class LegendaryLibrary : Plugin, IUnifiedDownloadProvider
         var allGames = await GetAllGames(args.CancelToken);
         foreach (var newGame in allGames)
         {
-            bool gameIsExcluded = false; // TODO: Add excluding when will be exposed in PlayniteAPI
+            bool gameIsExcluded = args.Exclusions?.FirstOrDefault(g => g.GameId == newGame.GameId) == null;
             if (gameIsExcluded)
             {
                 continue;
