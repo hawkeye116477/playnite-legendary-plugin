@@ -97,6 +97,10 @@ namespace LegendaryLibraryNS.Services
                 {
                     var tokenInfo = Serialization.FromJson<OauthResponse>(content);
                     LegendaryEncryption.Encrypt(Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.account_id.MD5()}.enc"), content);
+                    if (File.Exists(LegendaryLauncher.TokensPath))
+                    {
+                        File.Delete(LegendaryLauncher.TokensPath);
+                    }
                 }
                 else
                 {
