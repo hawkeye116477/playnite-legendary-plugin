@@ -97,10 +97,6 @@ namespace LegendaryLibraryNS.Services
                 {
                     var tokenInfo = Serialization.FromJson<OauthResponse>(content);
                     LegendaryEncryption.Encrypt(Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.account_id.MD5()}.enc"), content);
-                    if (File.Exists(LegendaryLauncher.TokensPath))
-                    {
-                        File.Delete(LegendaryLauncher.TokensPath);
-                    }
                 }
                 else
                 {
@@ -153,7 +149,7 @@ namespace LegendaryLibraryNS.Services
             {
                 return;
             }
-
+            await LegendaryLauncher.RemoveAllTokens();
             if (string.IsNullOrEmpty(authorizationCode))
             {
                 logger.Error("Failed to get login exchange key for Epic account.");
@@ -385,14 +381,22 @@ namespace LegendaryLibraryNS.Services
                 }
                 else if (File.Exists(LegendaryLauncher.OldPluginEncryptedTokensPath))
                 {
-                    var decryptedTokens = Encryption.DecryptFromFile(LegendaryLauncher.OldPluginEncryptedTokensPath,
-                                                                      Encoding.UTF8,
-                                                                      WindowsIdentity.GetCurrent().User.Value);
-                    logger.Debug("Migrating tokens to new encryption format...");
-                    var tokenInfo = Serialization.FromJson<OauthResponse>(decryptedTokens);
-                    LegendaryEncryption.Encrypt(Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.account_id.MD5()}.enc"), decryptedTokens);
-                    File.Delete(LegendaryLauncher.OldPluginEncryptedTokensPath);
-                    return Serialization.FromJson<OauthResponse>(decryptedTokens);
+                    try
+                    {
+                        var decryptedTokens = Encryption.DecryptFromFile(LegendaryLauncher.OldPluginEncryptedTokensPath,
+                                                                         Encoding.UTF8,
+                                                                         WindowsIdentity.GetCurrent().User.Value);
+                        logger.Debug("Migrating tokens to new encryption format...");
+                        var tokenInfo = Serialization.FromJson<OauthResponse>(decryptedTokens);
+                        LegendaryEncryption.Encrypt(Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.account_id.MD5()}.enc"), decryptedTokens);
+                        FileSystem.DeleteFileSafe(LegendaryLauncher.OldPluginEncryptedTokensPath);
+                        return Serialization.FromJson<OauthResponse>(decryptedTokens);
+                    }
+                    catch (Exception e)
+                    {
+                        logger.Error(e, "Failed to decrypt tokens.");
+                        FileSystem.DeleteFileSafe(LegendaryLauncher.OldPluginEncryptedTokensPath);
+                    }
                 }
                 else if (newEncryptedTokensPath != "" && File.Exists(newEncryptedTokensPath))
                 {

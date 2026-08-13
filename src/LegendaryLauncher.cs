@@ -1053,5 +1053,26 @@ namespace LegendaryLibraryNS
             }
             return userInfoJson;
         }
+
+        public static async Task RemoveAllTokens()
+        {
+            LegendaryEncryption.Cleanup();
+            FileSystem.DeleteFileSafe(LegendaryLauncher.OldPluginEncryptedTokensPath);
+            FileSystem.DeleteFileSafe(LegendaryLauncher.TokensPath);
+            if (LegendaryLauncher.IsInstalled)
+            {
+                var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                      .WithArguments(new[] { "auth", "--delete" })
+                                      .WithEnvironmentVariables(LegendaryLauncher.GetDefaultEnvironmentVariables())
+                                      .AddCommandToLog()
+                                      .WithValidation(CommandResultValidation.None)
+                                      .ExecuteBufferedAsync();
+                if (!result.StandardError.Contains("User data deleted"))
+                {
+                    var logger = LogManager.GetLogger();
+                    logger.Error($"[Legendary] Failed to sign out. Error: {result.StandardError}");
+                }
+            }
+        }
     }
 }

@@ -18,6 +18,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -383,26 +384,6 @@ namespace LegendaryLibraryNS
                 var answer = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonSignOutConfirm), LocalizationManager.Instance.GetString(LOC.CommonSignOut), MessageBoxButton.YesNo);
                 if (answer == MessageBoxResult.Yes)
                 {
-                    LegendaryEncryption.Cleanup();
-                    FileSystem.DeleteFileSafe(LegendaryLauncher.OldPluginEncryptedTokensPath);
-                    if (LegendaryLauncher.IsInstalled)
-                    {
-                        var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                              .WithArguments(new[] { "auth", "--delete" })
-                                              .WithEnvironmentVariables(LegendaryLauncher.GetDefaultEnvironmentVariables())
-                                              .AddCommandToLog()
-                                              .WithValidation(CommandResultValidation.None)
-                                              .ExecuteBufferedAsync();
-                        if (!result.StandardError.Contains("User data deleted"))
-                        {
-                            logger.Error($"[Legendary] Failed to sign out. Error: {result.StandardError}");
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        FileSystem.DeleteFileSafe(LegendaryLauncher.TokensPath);
-                    }
                     using (var view = playniteAPI.WebViews.CreateView(new WebViewSettings
                     {
                         WindowWidth = 580,
@@ -411,6 +392,7 @@ namespace LegendaryLibraryNS
                     {
                         view.DeleteDomainCookies(".epicgames.com");
                     }
+                    await LegendaryLauncher.RemoveAllTokens();
                     UpdateAuthStatus();
                 }
                 else

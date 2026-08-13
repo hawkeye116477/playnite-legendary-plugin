@@ -91,7 +91,8 @@ namespace LegendaryLibraryNS
             catch (Exception ex)
             {
                 var logger = LogManager.GetLogger();
-                logger.Error(ex, "Can't decrypt tokens");
+                logger.Error(ex, "Failed to decrypt tokens.");
+                FileSystem.DeleteFileSafe(filePath);
                 return null;
             }
         }
