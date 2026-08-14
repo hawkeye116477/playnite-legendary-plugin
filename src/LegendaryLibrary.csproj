@@ -40,9 +40,6 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="SIL.PasswordStore">
-      <HintPath>..\third_party\SIL.PasswordStore\SIL.PasswordStore\bin\Release\net461\SIL.PasswordStore.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -375,6 +372,12 @@
     <PackageReference Include="System.Memory">
       <Version>4.5.4</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\third_party\SIL.PasswordStore\SIL.PasswordStore\SIL.PasswordStore.csproj">
+      <Project>{b0050375-4231-b1bb-2590-fff743a348c5}</Project>
+      <Name>SIL.PasswordStore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

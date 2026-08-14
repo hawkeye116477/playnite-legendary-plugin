@@ -9,6 +9,7 @@ using Microsoft.Win32;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
+using SIL.Secrets;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -1056,7 +1057,10 @@ namespace LegendaryLibraryNS
 
         public static async Task RemoveAllTokens()
         {
-            LegendaryEncryption.Cleanup();
+            var userInfoContent = LegendaryLauncher.GetUserInfo();
+            PasswordStore.DeletePassword($"legendary/{userInfoContent.account_id}", userInfoContent.account_id);
+            FileSystem.DeleteFileSafe(Path.Combine(LegendaryLauncher.ConfigPath, $"{userInfoContent.account_id.MD5()}.enc"));
+            FileSystem.DeleteFileSafe(LegendaryLauncher.UserInfoPath);
             FileSystem.DeleteFileSafe(LegendaryLauncher.OldPluginEncryptedTokensPath);
             FileSystem.DeleteFileSafe(LegendaryLauncher.TokensPath);
             if (LegendaryLauncher.IsInstalled)

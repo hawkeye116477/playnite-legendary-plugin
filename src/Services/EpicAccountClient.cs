@@ -407,7 +407,7 @@ namespace LegendaryLibraryNS.Services
                     var decryptedTokens = LegendaryEncryption.Decrypt(newEncryptedTokensPath);
                     if (!decryptedTokens.IsNullOrEmpty())
                     {
-                        return Serialization.FromJson<OauthResponse>(LegendaryEncryption.Decrypt(newEncryptedTokensPath));
+                        return Serialization.FromJson<OauthResponse>(decryptedTokens);
                     }
                 }
             }

@@ -58,7 +58,7 @@ namespace LegendaryLibraryNS
                 var key = GetEncryptionKey(userInfoContent.account_id);
                 if (key.Length != 32)
                 {
-                    return "";
+                    throw new CryptographicException("Invalid encryption key");
                 }
                 using var stream = new FileStream(filePath, FileMode.Open);
                 byte[] encryptedIv = new byte[16];
@@ -75,7 +75,7 @@ namespace LegendaryLibraryNS
                 byte[] encryptedData = new byte[stream.Length - 16];
                 stream.Read(encryptedData, 0, encryptedData.Length);
 
-                using var cipher = new AesManaged();
+                using var cipher = Aes.Create();
                 cipher.KeySize = 256;
                 cipher.BlockSize = 128;
                 cipher.Padding = PaddingMode.PKCS7;
@@ -92,7 +92,6 @@ namespace LegendaryLibraryNS
             {
                 var logger = LogManager.GetLogger();
                 logger.Error(ex, "Failed to decrypt tokens.");
-                FileSystem.DeleteFileSafe(filePath);
                 return null;
             }
         }
@@ -103,12 +102,28 @@ namespace LegendaryLibraryNS
             var key = "";
             try
             {
-                key = PasswordStore.GetPassword($"legendary", userId);
+                key = PasswordStore.GetPassword($"legendary/{userId}", userId);
             }
             catch
             {
                 isKeyNull = true;
             }
+
+            // Migrate old key
+            if (isKeyNull == true) 
+            {
+                try
+                {
+                    key = PasswordStore.GetPassword($"legendary:{userId}", userId);
+                    PasswordStore.SetPassword($"legendary/{userId}", userId, key);
+                    PasswordStore.DeletePassword($"legendary:{userId}", userId);
+                }
+                catch
+                {
+                    isKeyNull = true;
+                }
+            }
+
             var userInfoContent = LegendaryLauncher.GetUserInfo();
             if (isKeyNull || key.IsNullOrEmpty())
             {
@@ -140,7 +155,7 @@ namespace LegendaryLibraryNS
             var key = Convert.ToBase64String(keyBytes);
             try
             {
-                PasswordStore.SetPassword($"legendary", userInfo.account_id, key);
+                PasswordStore.SetPassword($"legendary/{userInfo.account_id}", userInfo.account_id, key);
                 File.WriteAllText(LegendaryLauncher.UserInfoPath, Serialization.ToJson(userInfo));
             }
             catch
@@ -148,14 +163,6 @@ namespace LegendaryLibraryNS
                 userInfo.key = key;
                 File.WriteAllText(LegendaryLauncher.UserInfoPath, Serialization.ToJson(userInfo));
             }
-        }
-
-        public static void Cleanup()
-        {
-            var userInfoContent = LegendaryLauncher.GetUserInfo();
-            PasswordStore.DeletePassword($"legendary", userInfoContent.account_id);
-            FileSystem.DeleteFileSafe(Path.Combine(LegendaryLauncher.ConfigPath, $"{userInfoContent.account_id.MD5()}.enc"));
-            FileSystem.DeleteFileSafe(LegendaryLauncher.UserInfoPath);
         }
     }
 }

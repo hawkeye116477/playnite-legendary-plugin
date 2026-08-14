@@ -425,6 +425,25 @@ namespace LegendaryLibraryNS
             LoginBtn.IsEnabled = true;
         }
 
+        private void LoginAlternativeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
+            {
+                ShowMaximizeButton = false
+            });
+            window.Title = LocalizationManager.Instance.GetString(LOC.LegendaryAuthenticateAlternativeLabel);
+            window.Content = new LegendaryAlternativeAuthView();
+            window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
+            window.SizeToContent = SizeToContent.Height;
+            window.Width = 600;
+            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            var result = window.ShowDialog();
+            if (result == true)
+            {
+                UpdateAuthStatus();
+            }
+        }
+
         private async void ActivateUbisoftBtn_Click(object sender, RoutedEventArgs e)
         {
             if (!LegendaryLauncher.IsInstalled)
@@ -601,25 +620,6 @@ namespace LegendaryLibraryNS
             if (ImportEALauncherGamesChk.IsChecked == true)
             {
                 playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.LegendaryThirdPartyLauncherImportWarn, new Dictionary<string, IFluentType> { ["thirdPartyLauncherName"] = (FluentString)"EA App" }), "", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
-
-        private void LoginAlternativeBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
-            {
-                ShowMaximizeButton = false
-            });
-            window.Title = LocalizationManager.Instance.GetString(LOC.LegendaryAuthenticateAlternativeLabel);
-            window.Content = new LegendaryAlternativeAuthView();
-            window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
-            window.SizeToContent = SizeToContent.Height;
-            window.Width = 600;
-            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            var result = window.ShowDialog();
-            if (result == true)
-            {
-                UpdateAuthStatus();
             }
         }
 
