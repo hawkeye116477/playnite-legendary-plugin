@@ -383,10 +383,10 @@ namespace LegendaryLibraryNS.Services
                 {
                     try
                     {
+                        logger.Debug("Migrating tokens to new encryption format...");
                         var decryptedTokens = Encryption.DecryptFromFile(LegendaryLauncher.OldPluginEncryptedTokensPath,
                                                                          Encoding.UTF8,
                                                                          WindowsIdentity.GetCurrent().User.Value);
-                        logger.Debug("Migrating tokens to new encryption format...");
                         var tokenInfo = Serialization.FromJson<OauthResponse>(decryptedTokens);
                         LegendaryEncryption.Encrypt(Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.account_id.MD5()}.enc"), decryptedTokens);
                         FileSystem.DeleteFileSafe(LegendaryLauncher.OldPluginEncryptedTokensPath);
@@ -400,6 +400,7 @@ namespace LegendaryLibraryNS.Services
                 }
                 else if (newEncryptedTokensPath != "" && File.Exists(newEncryptedTokensPath))
                 {
+                    logger.Debug("Loading encrypted tokens...");
                     var decryptedTokens = LegendaryEncryption.Decrypt(newEncryptedTokensPath);
                     if (!decryptedTokens.IsNullOrEmpty())
                     {
@@ -408,6 +409,7 @@ namespace LegendaryLibraryNS.Services
                 }
                 else if (File.Exists(tokensPath))
                 {
+                    logger.Debug("Loading non-encrypted tokens...");
                     return Serialization.FromJson<OauthResponse>(FileSystem.ReadFileAsStringSafe(tokensPath));
                 }
             }
