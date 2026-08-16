@@ -41,7 +41,7 @@ Copyright (c) 2019–2022 Bradley Grainger
 
 
 ----------------------------------------------------------------------------------------
-SIL.PasswordStore - https://github.com/sillsdev/SIL.PasswordStore
+SIL.PasswordStore - https://github.com/hawkeye116477/SIL.PasswordStore
 The MIT License (MIT)
 Copyright (c) 2022 SIL International
 
