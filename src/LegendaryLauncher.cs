@@ -1058,8 +1058,11 @@ namespace LegendaryLibraryNS
         public static async Task RemoveAllTokens()
         {
             var userInfoContent = LegendaryLauncher.GetUserInfo();
-            PasswordStore.DeletePassword($"legendary/{userInfoContent.account_id}", userInfoContent.account_id);
-            FileSystem.DeleteFileSafe(Path.Combine(LegendaryLauncher.ConfigPath, $"{userInfoContent.account_id.MD5()}.enc"));
+            if (!userInfoContent.account_id.IsNullOrEmpty())
+            {
+                PasswordStore.DeletePassword($"legendary/{userInfoContent.account_id}", userInfoContent.account_id);
+                FileSystem.DeleteFileSafe(Path.Combine(LegendaryLauncher.ConfigPath, $"{userInfoContent.account_id.MD5()}.enc"));
+            }
             FileSystem.DeleteFileSafe(LegendaryLauncher.UserInfoPath);
             FileSystem.DeleteFileSafe(LegendaryLauncher.OldPluginEncryptedTokensPath);
             FileSystem.DeleteFileSafe(LegendaryLauncher.TokensPath);
