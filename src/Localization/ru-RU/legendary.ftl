@@ -25,6 +25,11 @@ legendary-required-install-via-third-party-launcher-error =
        *[other] Следующие игры требуют прямой установки через { $thirdPartyLauncherName }: { $gameTitle }.
     }
 legendary-install-prerequisites = Установите предварительные требования ({ $prerequisiteName })
+legendary-required-install-of-third-party-launcher =
+    { $count ->
+        [one] { $gameTitle } требует установки { $thirdPartyLauncherName }. Рекомендуется перейти в настройки плагинов => Облако и другие сервисы => { $thirdPartyLauncherName } => Активировать игры, и затем установить его напрямую через { $thirdPartyLauncherName }.
+       *[other] Следующие игры требуют установки { $thirdPartyLauncherName }: { $gameTitle }. Рекомендуется перейти в настройки плагинов => Облако и другие сервисы => { $thirdPartyLauncherName } => Активировать игры, и затем установить их напрямую через { $thirdPartyLauncherName }.
+    }
 legendary-installing-prerequisites = Установка предварительных требований ({ $prerequisiteName })...
 legendary-authenticate-alternative-label = Аутентификация с помощью альтернативного метода
 legendary-alternative-auth-instructions-first = 1. Войдите в магазин Epic Games в вашем браузере.
