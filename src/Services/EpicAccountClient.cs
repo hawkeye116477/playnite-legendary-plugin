@@ -379,11 +379,7 @@ namespace LegendaryLibraryNS.Services
             }
             try
             {
-                if (File.Exists(tokensPath))
-                {
-                    return Serialization.FromJson<OauthResponse>(FileSystem.ReadFileAsStringSafe(tokensPath));
-                }
-                else if (File.Exists(LegendaryLauncher.OldPluginEncryptedTokensPath))
+                if (File.Exists(LegendaryLauncher.OldPluginEncryptedTokensPath))
                 {
                     try
                     {
@@ -409,6 +405,10 @@ namespace LegendaryLibraryNS.Services
                     {
                         return Serialization.FromJson<OauthResponse>(decryptedTokens);
                     }
+                }
+                else if (File.Exists(tokensPath))
+                {
+                    return Serialization.FromJson<OauthResponse>(FileSystem.ReadFileAsStringSafe(tokensPath));
                 }
             }
             catch (Exception e)
