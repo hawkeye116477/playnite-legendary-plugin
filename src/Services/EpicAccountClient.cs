@@ -394,13 +394,13 @@ namespace LegendaryLibraryNS.Services
                     }
                     catch (Exception e)
                     {
-                        logger.Error(e, "Failed to decrypt tokens.");
+                        logger.Trace(e, "Failed to decrypt tokens.");
                         FileSystem.DeleteFileSafe(LegendaryLauncher.OldPluginEncryptedTokensPath);
                     }
                 }
                 else if (newEncryptedTokensPath != "" && File.Exists(newEncryptedTokensPath))
                 {
-                    logger.Debug("Loading encrypted tokens...");
+                    logger.Trace("Loading encrypted tokens...");
                     var decryptedTokens = LegendaryEncryption.Decrypt(newEncryptedTokensPath);
                     if (!decryptedTokens.IsNullOrEmpty())
                     {
@@ -409,7 +409,7 @@ namespace LegendaryLibraryNS.Services
                 }
                 else if (File.Exists(tokensPath))
                 {
-                    logger.Debug("Loading non-encrypted tokens...");
+                    logger.Trace("Loading non-encrypted tokens...");
                     return Serialization.FromJson<OauthResponse>(FileSystem.ReadFileAsStringSafe(tokensPath));
                 }
             }
