@@ -219,7 +219,7 @@ public partial class LegendaryGameInstaller : UserControl
 
     public async Task RefreshAll()
     {
-        var unifiedDownloadManagerApi = new UnifiedDownloadManagerApi(playniteApi);
+        var unifiedDownloadManagerApi = LegendaryLibrary.Instance.UnifiedDownloadManagerApi;
         ReloadBtn.IsEnabled = false;
         AllDlcsChk.Visibility = Visibility.Collapsed;
         AllOrNothingChk.Visibility = Visibility.Collapsed;

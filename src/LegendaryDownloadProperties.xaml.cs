@@ -88,9 +88,8 @@ public partial class LegendaryDownloadProperties
             ExtraContentTbI.Visibility = Visibility.Visible;
         }
 
-        var unifiedDownloadManagerApi = new UnifiedDownloadManagerApi(playniteApi);
-        var wantedUnifiedTask =
-            unifiedDownloadManagerApi.GetTask(wantedItem.GameId, LegendaryLibrary.PluginId);
+        var unifiedDownloadManagerApi = LegendaryLibrary.Instance.UnifiedDownloadManagerApi;
+        var wantedUnifiedTask = unifiedDownloadManagerApi.GetTask(wantedItem.GameId, LegendaryLibrary.PluginId);
         if (wantedUnifiedTask?.Status == UnifiedDownloadStatus.Canceled)
         {
             AllOrNothingChk.IsEnabled = true;
@@ -150,7 +149,7 @@ public partial class LegendaryDownloadProperties
 
         wantedItem.DownloadProperties.IgnoreFreeSpace = (bool)IgnoreFreeSpaceChk.IsChecked!;
         wantedItem.DownloadProperties.ExtraContent = selectedSdls;
-        var unifiedDownloadManagerApi = new UnifiedDownloadManagerApi(playniteApi);
+        var unifiedDownloadManagerApi = LegendaryLibrary.Instance.UnifiedDownloadManagerApi;
         var wantedUnifiedTask =
             unifiedDownloadManagerApi.GetTask(wantedItem.GameId, LegendaryLibrary.PluginId);
         if (wantedUnifiedTask is { Status: UnifiedDownloadStatus.Canceled })

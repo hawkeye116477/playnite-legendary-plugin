@@ -20,23 +20,25 @@ using UnifiedDownloadManagerApiNS.Models;
 
 namespace LegendaryLibraryNS;
 
-public class LegendaryLibrary : Plugin, IUnifiedDownloadProvider
+public class LegendaryLibrary : Plugin
 {
     private static readonly ILogger Logger = LogManager.GetLogger();
     public static LegendaryLibrary Instance { get; private set; } = null!;
     public CommonHelpers CommonHelpers { get; set; } = null!;
-    public IUnifiedDownloadLogic UnifiedDownloadLogic { get; set; }
+    public LegendaryDownloadLogic UnifiedDownloadLogic { get; set; } = null!;
     public DownloadManagerData PluginDownloadData { get; set; } = null!;
     public const string PluginId = "hawkeye116477.LegendaryLibrary";
-    public static IPlayniteApi PlayniteApi { get; private set; } = null!;
+
     public LegendaryLibrarySettings? Settings { get; set; }
+
+    public static IPlayniteApi PlayniteApi { get; private set; } = null!;
     private static readonly SpecImportableProperty PcSpecProperty = new("pc_windows");
     public const string LibraryName = "Legendary (Epic)";
+    public IUnifiedDownloadManagerApi UnifiedDownloadManagerApi { get; set; } = null!;
+
 
     public LegendaryLibrary()
     {
-        Instance = this;
-        UnifiedDownloadLogic = new LegendaryDownloadLogic();
         XamlId = "Legendary";
         LibrarySettings = new LibrarySupport
         {
@@ -53,12 +55,33 @@ public class LegendaryLibrary : Plugin, IUnifiedDownloadProvider
 
     public override async Task InitializeAsync(InitializeArgs args)
     {
+        Instance = this;
         PlayniteApi = args.Api;
         CommonHelpers = new CommonHelpers(PlayniteApi);
         Settings = LegendaryLibrarySettingsViewModel.LoadPluginSettings(PlayniteApi.UserDataDir);
         Load3PLocalization();
         CommonHelpers.LoadNeededResources();
         PluginDownloadData = LoadSavedDownloadData();
+        UnifiedDownloadLogic = new LegendaryDownloadLogic();
+    }
+
+    public override async Task PostInitializationAsync(PostInitializationArgs args)
+    {
+        var result = await PlayniteApi.CallPluginAsync(new(UnifiedDownloadManagerSharedProperties.Id, UnifiedDownloadManagerSharedProperties.GetApi));
+        if (result?.Success == true && result.Value is IUnifiedDownloadManagerApi udmApi)
+        {
+            UnifiedDownloadManagerApi = udmApi;
+        }
+    }
+
+    public override async Task<object?> OnPluginCallRequestAsync(PluginCallRequestAsyncArgs args)
+    {
+        if (args.CallId == UnifiedDownloadManagerSharedProperties.GetDownloadLogic)
+        {
+            return this.UnifiedDownloadLogic;
+
+        }
+        return null;
     }
 
     public void SavePluginSettings(LegendaryLibrarySettings settings)
@@ -474,8 +497,8 @@ public class LegendaryLibrary : Plugin, IUnifiedDownloadProvider
 
     public async Task<bool> StopDownloadManager(bool displayConfirm = false)
     {
-        var unifiedDownloadManagerApi = new UnifiedDownloadManagerApi(PlayniteApi);
-        var allDownloads = unifiedDownloadManagerApi.GetAllDownloads();
+        var unifiedDownloadManagerApi = LegendaryLibrary.Instance.UnifiedDownloadManagerApi;
+        var allDownloads = unifiedDownloadManagerApi.Downloads;
         var runningAndQueuedDownloads = allDownloads?.Where(i =>
                                                           i.Status == UnifiedDownloadStatus.Running ||
                                                           i.Status == UnifiedDownloadStatus.Queued)

@@ -71,7 +71,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
     {
         var unifiedTasks = new List<UnifiedDownload>();
         var downloadItemsAlreadyAdded = new List<string>();
-        var unifiedDownloadManagerApi = new UnifiedDownloadManagerApi(playniteApi);
+        var unifiedDownloadManagerApi = LegendaryLibrary.Instance.UnifiedDownloadManagerApi;
         foreach (var downloadTask in downloadTasks)
         {
             var completedDownload = true;
@@ -153,7 +153,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
     public async Task StartDownload(UnifiedDownload downloadTask)
     {
         var gameId = downloadTask.GameId;
-        var unifiedDownloadManagerApi = new UnifiedDownloadManagerApi(playniteApi);
+        var unifiedDownloadManagerApi = LegendaryLibrary.Instance.UnifiedDownloadManagerApi;
         var wantedUnifiedTask = unifiedDownloadManagerApi.GetTask(gameId, LegendaryLibrary.PluginId);
         try
         {

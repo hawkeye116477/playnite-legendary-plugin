@@ -3,3 +3,7 @@ name = "Legendary (Epic Games) library integration"
 author = "hawkeye116477"
 version =  "_version_"
 module = "LegendaryLibrary.dll"
+
+[[dependencies]]
+addon_id = "hawkeye116477.UDM"
+min_version = "1.0"
