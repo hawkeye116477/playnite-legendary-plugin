@@ -60,7 +60,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
             if (result == options[0])
             {
                 Playnite.Commands.GlobalCommands.NavigateUrl(
-                    "playnite://playnite/installaddon/UnifiedDownloadManager");
+                    "https://github.com/hawkeye116477/playnite-unifiedDownloadManager-plugin/releases");
             }
         }
 
