@@ -453,28 +453,6 @@ public partial class LegendaryLibrarySettingsView
                 LocalizationManager.Instance.GetString(LOC.CommonSignOut), MessageBoxButtons.YesNo);
             if (answer == Playnite.MessageBoxResult.Yes)
             {
-                LegendaryEncryption.Cleanup();
-                FileSystem.DeleteFileSafe(LegendaryLauncher.OldPluginEncryptedTokensPath);
-                if (LegendaryLauncher.IsInstalled)
-                {
-                    var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                          .WithArguments(["auth", "--delete"])
-                                          .WithEnvironmentVariables(
-                                               LegendaryLauncher.GetDefaultEnvironmentVariables())
-                                          .AddCommandToLog()
-                                          .WithValidation(CommandResultValidation.None)
-                                          .ExecuteBufferedAsync();
-                    if (!result.StandardError.Contains("User data deleted"))
-                    {
-                        logger.Error($"[Legendary] Failed to sign out. Error: {result.StandardError}");
-                        return;
-                    }
-                }
-                else
-                {
-                    FileSystem.DeleteFileSafe(LegendaryLauncher.TokensPath);
-                }
-
                 using (var view = playniteApi.WebView.CreateView(new WebViewSettings
                        {
                            WindowWidth = 580,
@@ -483,7 +461,7 @@ public partial class LegendaryLibrarySettingsView
                 {
                     await view.DeleteDomainCookiesAsync(".epicgames.com");
                 }
-
+                await LegendaryLauncher.RemoveAllTokens();
                 UpdateAuthStatus();
             }
             else

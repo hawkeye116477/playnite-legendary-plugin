@@ -1178,4 +1178,32 @@ public class LegendaryLauncher
         }
         return userInfoJson;
     }
+    
+    public static async Task RemoveAllTokens()
+    {
+        var userInfoContent = LegendaryLauncher.GetUserInfo();
+        if (!userInfoContent.Account_id.IsNullOrEmpty())
+        {
+            Keyring.DeletePassword($"legendary", userInfoContent.Account_id);
+            FileSystem.DeleteFileSafe(Path.Combine(LegendaryLauncher.ConfigPath, $"{userInfoContent.Account_id.MD5()}.enc")); 
+        }
+        FileSystem.DeleteFileSafe(LegendaryLauncher.UserInfoPath);
+        
+        FileSystem.DeleteFileSafe(OldPluginEncryptedTokensPath);
+        FileSystem.DeleteFileSafe(TokensPath);
+        if (IsInstalled)
+        {
+            var result = await Cli.Wrap(ClientExecPath)
+                                  .WithArguments(["auth", "--delete"])
+                                  .WithEnvironmentVariables(GetDefaultEnvironmentVariables())
+                                  .AddCommandToLog()
+                                  .WithValidation(CommandResultValidation.None)
+                                  .ExecuteBufferedAsync();
+            if (!result.StandardError.Contains("User data deleted"))
+            {
+                var logger = LogManager.GetLogger();
+                logger.Error($"[Legendary] Failed to sign out. Error: {result.StandardError}");
+            }
+        }
+    }
 }

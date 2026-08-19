@@ -57,7 +57,7 @@ namespace LegendaryLibraryNS;
                 var key = GetEncryptionKey(userInfoContent.Account_id);
                 if (key.Length != 32)
                 {
-                    return "";
+                    throw new CryptographicException("Invalid encryption key");
                 }
                 using var stream = new FileStream(filePath, FileMode.Open);
                 byte[] encryptedIv = new byte[16];
@@ -90,7 +90,8 @@ namespace LegendaryLibraryNS;
             catch (Exception ex)
             {
                 var logger = LogManager.GetLogger();
-                logger.Error(ex, "Can't decrypt tokens");
+                logger.Error(ex, "Failed to decrypt tokens.");
+                FileSystem.DeleteFileSafe(filePath);
                 return null;
             }
         }
@@ -147,12 +148,5 @@ namespace LegendaryLibraryNS;
                 File.WriteAllText(LegendaryLauncher.UserInfoPath, Serialization.ToJson(userInfo));
             }
         }
-
-        public static void Cleanup()
-        {
-            var userInfoContent = LegendaryLauncher.GetUserInfo();
-            Keyring.DeletePassword($"legendary", userInfoContent.Account_id);
-            FileSystem.DeleteFileSafe(Path.Combine(LegendaryLauncher.ConfigPath, $"{userInfoContent.Account_id.MD5()}.enc"));
-            FileSystem.DeleteFileSafe(LegendaryLauncher.UserInfoPath);
-        }
+        
     }

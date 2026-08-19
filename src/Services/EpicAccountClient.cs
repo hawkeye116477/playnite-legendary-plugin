@@ -62,7 +62,7 @@ public class EpicAccountClient
             @"https://{0}/library/api/public/items?includeMetadata=true&platform=Windows";
         const string catalogUrlMask = @"https://{0}/catalog/api/shared/namespace/";
         const string playtimeUrlMask = @"https://{0}/library/api/public/playtime/account/{1}/all";
-        
+
         oauthUrl = string.Format(oauthUrlMask, "account-public-service-prod03.ol.epicgames.com");
         accountUrl = string.Format(accountUrlMask, "account-public-service-prod03.ol.epicgames.com");
         catalogUrl = string.Format(catalogUrlMask, "catalog-public-service-prod06.ol.epicgames.com");
@@ -117,6 +117,8 @@ public class EpicAccountClient
         {
             return;
         }
+
+        await LegendaryLauncher.RemoveAllTokens();
 
         if (string.IsNullOrEmpty(authorizationCode))
         {
@@ -351,43 +353,56 @@ public class EpicAccountClient
     public OauthResponse? LoadTokens()
     {
         var newEncryptedTokensPath = "";
-            if (!LegendaryLauncher.GetUserInfo().Account_id.IsNullOrEmpty())
+        if (!LegendaryLauncher.GetUserInfo().Account_id.IsNullOrEmpty())
+        {
+            newEncryptedTokensPath = Path.Combine(LegendaryLauncher.ConfigPath, $"{LegendaryLauncher.GetUserInfo().Account_id.MD5()}.enc");
+        }
+
+        try
+        {
+            if (File.Exists(LegendaryLauncher.OldPluginEncryptedTokensPath))
             {
-                newEncryptedTokensPath = Path.Combine(LegendaryLauncher.ConfigPath, $"{LegendaryLauncher.GetUserInfo().Account_id.MD5()}.enc");
-            }
-            try
-            {
-                if (File.Exists(TokensPath))
+                try
                 {
-                    return Serialization.FromJson<OauthResponse>(FileSystem.ReadFileAsStringSafe(TokensPath));
-                }
-                else if (File.Exists(LegendaryLauncher.OldPluginEncryptedTokensPath))
-                {
-                    var decryptedTokens = Encryption.DecryptFromFile(LegendaryLauncher.OldPluginEncryptedTokensPath,
-                                                                      Encoding.UTF8,
-                                                                      WindowsIdentity.GetCurrent().User.Value);
                     logger.Debug("Migrating tokens to new encryption format...");
+                    var decryptedTokens = Encryption.DecryptFromFile(LegendaryLauncher.OldPluginEncryptedTokensPath,
+                        Encoding.UTF8,
+                        WindowsIdentity.GetCurrent().User.Value);
                     var tokenInfo = Serialization.FromJson<OauthResponse>(decryptedTokens);
-                    LegendaryEncryption.Encrypt(Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.Account_id.MD5()}.enc"), decryptedTokens);
-                    File.Delete(LegendaryLauncher.OldPluginEncryptedTokensPath);
+                    LegendaryEncryption.Encrypt(Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.Account_id.MD5()}.enc"),
+                        decryptedTokens);
+                    FileSystem.DeleteFileSafe(LegendaryLauncher.OldPluginEncryptedTokensPath);
                     return Serialization.FromJson<OauthResponse>(decryptedTokens);
                 }
-                else if (newEncryptedTokensPath != "" && File.Exists(newEncryptedTokensPath))
+                catch (Exception e)
                 {
-                    var decryptedTokens = LegendaryEncryption.Decrypt(newEncryptedTokensPath);
-                    if (!decryptedTokens.IsNullOrEmpty())
-                    {
-                        return Serialization.FromJson<OauthResponse>(LegendaryEncryption.Decrypt(newEncryptedTokensPath) ?? "");
-                    }
+                    logger.Error(e, "Failed to decrypt tokens.");
+                    FileSystem.DeleteFileSafe(LegendaryLauncher.OldPluginEncryptedTokensPath);
                 }
             }
-            catch (Exception e)
+            else if (newEncryptedTokensPath != "" && File.Exists(newEncryptedTokensPath))
             {
-                logger.Error(e, "Failed to load saved tokens.");
+                logger.Trace("Loading encrypted tokens...");
+                var decryptedTokens = LegendaryEncryption.Decrypt(newEncryptedTokensPath);
+                if (!decryptedTokens.IsNullOrEmpty())
+                {
+                    return Serialization.FromJson<OauthResponse>(decryptedTokens ?? "");
+                }
             }
-            return null;
+            else if (File.Exists(TokensPath))
+            {
+                logger.Trace("Loading non-encrypted tokens...");
+                return Serialization.FromJson<OauthResponse>(FileSystem.ReadFileAsStringSafe(TokensPath));
+            }
+        }
+        catch (Exception e)
+        {
+            logger.Error(e, "Failed to load saved tokens.");
+        }
+
+        return null;
     }
-    
+
     public async Task WriteTokens(string content)
     {
         if (!content.IsNullOrEmpty())
@@ -411,14 +426,10 @@ public class EpicAccountClient
             {
                 var tokenInfo = Serialization.FromJson<OauthResponse>(content);
                 LegendaryEncryption.Encrypt(Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.Account_id.MD5()}.enc"), content);
-                if (File.Exists(LegendaryLauncher.TokensPath))
-                {
-                    File.Delete(LegendaryLauncher.TokensPath);
-                }
             }
             else
             {
-                File.WriteAllText(LegendaryLauncher.TokensPath, content);
+                await File.WriteAllTextAsync(LegendaryLauncher.TokensPath, content);
             }
         }
     }
