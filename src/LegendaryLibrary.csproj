@@ -11,7 +11,7 @@
         <OutputPath>bin\$(Configuration)\</OutputPath>
         <Configurations>Release;Debug</Configurations>
         <IsPackable>false</IsPackable>
-        <Version>1.14.0.11</Version>
+        <Version>1.16.0.11</Version>
         <EnableDynamicLoading>true</EnableDynamicLoading>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
