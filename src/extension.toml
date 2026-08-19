@@ -10,3 +10,4 @@ library_icon = "Resources\\legendary_icon.ico"
 [[dependencies]]
 addon_id = "hawkeye116477.UDM"
 min_version = "1.0"
+is_optional = true
