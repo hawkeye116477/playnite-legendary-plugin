@@ -211,7 +211,7 @@ namespace System
             return Regex.IsMatch(str, @"^https?:\/\/", RegexOptions.IgnoreCase);
         }
 
-        public static bool IsUri(this string str)
+        public static bool IsUri(this string str, UriKind absolute)
         {
             if (string.IsNullOrWhiteSpace(str))
             {

@@ -283,7 +283,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                     }
                     var copyCmd = Cli.Wrap("cmd.exe")
                                      .WithArguments(copyCmdArgs);
-                    var proc = ProcessStarter.StartProcess("cmd.exe", copyCmd.Arguments, true);
+                    var proc = ProcessStarter.StartProcess("cmd.exe", copyCmd.Arguments, asAdmin: true);
                     await proc.WaitForExitAsync();
                 }
                 else

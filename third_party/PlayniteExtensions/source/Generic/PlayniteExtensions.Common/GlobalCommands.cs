@@ -73,7 +73,7 @@ namespace Playnite.Commands
                 throw new Exception("No URL was given.");
             }
 
-            if (!url.IsUri())
+            if (!url.IsUri(UriKind.Absolute))
             {
                 url = "http://" + url;
             }
