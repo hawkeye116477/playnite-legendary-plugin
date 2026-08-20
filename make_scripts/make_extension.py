@@ -5,6 +5,7 @@
 # pylint: disable=E1136
 """Pack extension"""
 import os
+from pathlib import Path
 import subprocess
 import shutil
 import datetime
@@ -37,7 +38,7 @@ if not os.path.isdir(playnitePath):
 toolbox = pj(playnitePath, "Toolbox.exe")
 scriptPath = os.path.dirname(os.path.realpath(__file__))
 mainPath = pn(scriptPath + "/..")
-compiledPath = pn(pj(mainPath, "src/bin/Release"))
+compiledPath = pn(pj(mainPath, "src/bin/Release/net10.0-windows"))
 releasesPath = pj(mainPath, "Releases")
 
 if not os.path.exists(releasesPath):
@@ -57,6 +58,10 @@ for root, dirs, files in os.walk(pj(compiledPath, "Localization")):
             shutil.rmtree(pj(root, folder))
             dirs.remove(folder)
 
+# Remove unecessary files
+for not_needed_file in Path(compiledPath).rglob("AdysTech.CredentialManager.resources.dll"):
+    folder = not_needed_file.parent
+    shutil.rmtree(folder)
 
 subprocess.run([pj(playnitePath, "Toolbox.exe"), "pack",
                compiledPath, releasesPath], check=True)
