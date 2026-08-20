@@ -12,8 +12,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using LegendaryLibraryNS.Services;
 using Playnite;
 
 namespace LegendaryLibraryNS;
@@ -278,10 +280,7 @@ public class LegendaryLauncher
 
     public static string OldPluginEncryptedTokensPath
     {
-        get
-        {
-            return Path.Combine(LegendaryLibrary.PlayniteApi.UserDataDir, "tokens_encrypted.json");
-        }
+        get { return Path.Combine(LegendaryLibrary.PlayniteApi.UserDataDir, "tokens_encrypted.json"); }
     }
 
     public static Dictionary<string, string?> GetDefaultEnvironmentVariables()
@@ -294,6 +293,7 @@ public class LegendaryLauncher
         {
             envDict.Add("LEGENDARY_CONFIG_PATH", ConfigPath);
         }
+
         return envDict;
     }
 
@@ -807,6 +807,7 @@ public class LegendaryLauncher
         {
             correctJson = false;
         }
+
         if (!File.Exists(cacheVersionFile) || !correctJson)
         {
             try
@@ -1090,9 +1091,11 @@ public class LegendaryLauncher
                 {
                     var latestTag = $"{versionInfoContent.Tag_name}/legendary";
                     string[] validLegendarySuffixes = { "x86_64.exe", "x64.exe", ".exe" };
-                    var newAsset = validLegendarySuffixes.Select(suffix => 
-                        versionInfoContent.Assets.FirstOrDefault(a => a.Browser_download_url.Contains(latestTag)
-                                                                      && a.Browser_download_url.EndsWith(suffix))).FirstOrDefault(a => a != null);
+                    var newAsset = validLegendarySuffixes.Select(suffix =>
+                                                              versionInfoContent.Assets.FirstOrDefault(a =>
+                                                                  a.Browser_download_url.Contains(latestTag)
+                                                                  && a.Browser_download_url.EndsWith(suffix)))
+                                                         .FirstOrDefault(a => a != null);
                     if (newAsset != null)
                     {
                         var appsToUpdate = new Dictionary<string, UpdateInfo>();
@@ -1151,7 +1154,6 @@ public class LegendaryLauncher
         }
     }
     
-    
     public static string UserInfoPath
     {
         get
@@ -1173,22 +1175,23 @@ public class LegendaryLauncher
                 {
                     userInfoJson = newUserInfoJson;
                 }
-
             }
         }
+
         return userInfoJson;
     }
-    
+
     public static async Task RemoveAllTokens()
     {
         var userInfoContent = LegendaryLauncher.GetUserInfo();
         if (!userInfoContent.Account_id.IsNullOrEmpty())
         {
             Keyring.DeletePassword($"legendary", userInfoContent.Account_id);
-            FileSystem.DeleteFileSafe(Path.Combine(LegendaryLauncher.ConfigPath, $"{userInfoContent.Account_id.MD5()}.enc")); 
+            FileSystem.DeleteFileSafe(Path.Combine(LegendaryLauncher.ConfigPath, $"{userInfoContent.Account_id.MD5()}.enc"));
         }
+
         FileSystem.DeleteFileSafe(LegendaryLauncher.UserInfoPath);
-        
+
         FileSystem.DeleteFileSafe(OldPluginEncryptedTokensPath);
         FileSystem.DeleteFileSafe(TokensPath);
         if (IsInstalled)
@@ -1205,5 +1208,78 @@ public class LegendaryLauncher
                 logger.Error($"[Legendary] Failed to sign out. Error: {result.StandardError}");
             }
         }
+    }
+
+    public static async Task<List<ImportableAchievements>> GetAchievements(
+        IReadOnlyCollection<Game> games, IPlayniteApi playniteApi, CancellationToken cancelToken)
+    {
+        var achievementsList = new List<ImportableAchievements>();
+        var logger = LogManager.GetLogger();
+        var clientApi = new EpicAccountClient(playniteApi);
+
+        if (!await clientApi.GetIsUserLoggedIn())
+        {
+            throw new Exception("User is not authenticated.");
+        }
+
+        if (!LegendaryLauncher.IsInstalled)
+        {
+            return achievementsList;
+        }
+
+        foreach (var game in games)
+        {
+            if (cancelToken.IsCancellationRequested)
+                break;
+            var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                                  .WithArguments(["achievements", game.LibraryGameId!, "--json", "--hidden"])
+                                  .WithEnvironmentVariables(LegendaryLauncher.GetDefaultEnvironmentVariables())
+                                  .AddCommandToLog()
+                                  .WithValidation(CommandResultValidation.None)
+                                  .ExecuteBufferedAsync(cancelToken);
+
+            if (result.ExitCode != 0)
+            {
+                logger.Error("[Legendary]" + result.StandardError);
+            }
+            else
+            {
+                if (!result.StandardOutput.IsNullOrEmpty() &&
+                    Serialization.TryFromJson(result.StandardOutput, out LegendaryAchievements? newLegendaryAchievements))
+                {
+                    if (newLegendaryAchievements != null)
+                    {
+                        var importableAchievements = new List<ImportableAchievement>();
+
+                        var allAchievements = new List<LegendaryAchievements.AchievementData>()
+                                             .Concat(newLegendaryAchievements.Uninitiated)
+                                             .Concat(newLegendaryAchievements.Completed)
+                                             .Concat(newLegendaryAchievements.Hidden)
+                                             .Concat(newLegendaryAchievements.In_progress);
+                        foreach (var achievementData in allAchievements)
+                        {
+                            var newAchievement =
+                                new ImportableAchievement(achievementData.Name, achievementData.Display_name)
+                                {
+                                    Description = achievementData.Description,
+                                    Hidden = achievementData.Hidden,
+                                    Progress = (int)achievementData.Progress,
+                                    Rarity = achievementData.Rarity.Percent,
+                                    LockedIcon = achievementData.Icon_link,
+                                    UnlockedIcon = achievementData.Icon_link,
+                                    UnlockedDate = achievementData.Unlock_date,
+                                    TrophyType = new ImportableGameAchievementTrophy(achievementData.Tier.Name,
+                                        achievementData.Tier.Name, null)
+                                };
+                            importableAchievements.Add(newAchievement);
+                        }
+
+                        achievementsList.Add(new ImportableAchievements(game.Id, importableAchievements));
+                    }
+                }
+            }
+        }
+
+        return achievementsList;
     }
 }

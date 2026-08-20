@@ -51,6 +51,10 @@ public class LegendaryLibrary : Plugin
             CanImportPlaySessions = false,
             HasCustomGameImport = true
         };
+        AchievementsSettings = new AchievementsSupport
+        {
+            SupportedLibraries = [PluginId],
+        };
     }
 
     public override async Task InitializeAsync(InitializeArgs args)
@@ -345,14 +349,18 @@ public class LegendaryLibrary : Plugin
 
         return allGames;
     }
-
+    
     public override async Task<List<Game>> ImportGamesAsync(ImportGamesArgs args)
     {
         var addedGames = new List<Game>();
         var allGames = await GetAllGames(args.CancelToken);
         foreach (var newGame in allGames)
         {
-            bool gameIsExcluded = args.Exclusions?.FirstOrDefault(g => g.GameId == newGame.GameId) == null;
+            bool gameIsExcluded = false;
+            if (args.Exclusions?.Count > 0 && args.Exclusions.FirstOrDefault(g => g.GameId == newGame.GameId) != null)
+            {
+                gameIsExcluded = true;
+            }
             if (gameIsExcluded)
             {
                 continue;
@@ -433,7 +441,7 @@ public class LegendaryLibrary : Plugin
                 {
                     existingGame.InstallSize = newGame.InstallSize;
                 }
-
+                
                 await PlayniteApi.Library.Games.UpdateAsync(existingGame);
             }
         }
@@ -445,7 +453,7 @@ public class LegendaryLibrary : Plugin
     {
         return Path.Combine(PlayniteApi.UserDataDir, dirName);
     }
-
+    
     public override async Task<List<InstallController>> GetInstallActionsAsync(GetInstallActionsArgs args)
     {
         if (args.Game.LibraryId != PluginId)
@@ -960,5 +968,16 @@ public class LegendaryLibrary : Plugin
         }
 
         return null;
+    }
+    
+    public override async Task<List<ImportableAchievements>> GetAchievementsAsync(GetAchievementsArgs args)
+    {
+        var legendaryGames = args.Games.Where(i => i.LibraryId == PluginId).ToList();
+        if (legendaryGames.Count > 0)
+        {
+            return await LegendaryLauncher.GetAchievements(legendaryGames, PlayniteApi, args.CancelToken);
+        }
+
+        return [];
     }
 }
