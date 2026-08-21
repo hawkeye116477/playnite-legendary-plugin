@@ -2,19 +2,20 @@
 using CliWrap.Buffered;
 using CommonPlugin;
 using LegendaryLibraryNS.Models;
-using Linguini.Shared.Types.Bundle;
 using Playnite;
 using Playnite.Common;
+using Playnite.WebViews;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
-using Playnite.WebViews;
 
 namespace LegendaryLibraryNS.Services;
 
@@ -33,6 +34,7 @@ public class EpicAccountClient
     private IPlayniteApi api;
     private string TokensPath { get; set; }
     private readonly string loginUrl = "https://www.epicgames.com/id/login?responseType=code";
+    private readonly string graphqlUrl = "https://launcher.store.epicgames.com/graphql";
 
     public static string AuthCodeUrl =
         "https://www.epicgames.com/id/api/redirect?clientId=34a02cf8f4414e29b15921876da36f9a&responseType=code";
@@ -48,6 +50,7 @@ public class EpicAccountClient
 
     private const string UserAgent =
         @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) EpicGamesLauncher/18.9.0-45233261+++Portal+Release-Live";
+
 
     private static readonly RetryHandler RetryHandler = new(new HttpClientHandler());
     private static readonly HttpClient HttpClient = new(RetryHandler);
@@ -432,5 +435,262 @@ public class EpicAccountClient
                 await File.WriteAllTextAsync(LegendaryLauncher.TokensPath, content);
             }
         }
+    }
+
+    public async Task<PlayerAchievementsResponse> GetPlayerAchievements(
+        string productId, OauthResponse tokens, CancellationToken cancelToken)
+    {
+        var playerAchievementsResponse = new PlayerAchievementsResponse();
+
+        var variables = new
+        {
+            EpicAccountId = tokens.Account_id,
+            ProductId = productId,
+        };
+
+        var query = @"
+query playerProfileAchievementsByProductId($epicAccountId: String!, $productId: String!) {
+  PlayerProfile {
+    playerProfile(epicAccountId: $epicAccountId) {
+      productAchievements(productId: $productId) {
+        ... on PlayerProductAchievementsResponseSuccess {
+          data {
+            playerAchievements {
+              playerAchievement {
+                achievementName
+                unlocked
+                unlockDate
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}";
+        var achievementsPayload = new
+        {
+            query,
+            variables,
+        };
+        var request = new HttpRequestMessage(HttpMethod.Post, graphqlUrl);
+        request.Headers.Add("User-Agent", UserAgent);
+        request.Headers.Add("Authorization", tokens.Token_type + " " + tokens.Access_token);
+        request.Headers.Add("Accept", "application/json");
+        request.Content = new StringContent(Serialization.ToJson(achievementsPayload), Encoding.UTF8, "application/json");
+        try
+        {
+            using var response = await HttpClient.SendAsync(request, cancelToken);
+            response.EnsureSuccessStatusCode();
+            var responseContent = await response.Content.ReadAsStringAsync(cancelToken);
+            if (!responseContent.IsNullOrEmpty())
+            {
+                if (Serialization.TryFromJson(responseContent, out PlayerAchievementsResponse? newPlayerAchievements))
+                {
+                    if (newPlayerAchievements != null)
+                    {
+                        playerAchievementsResponse = newPlayerAchievements;
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex);
+        }
+
+        return playerAchievementsResponse;
+    }
+
+    public async Task<AchievementsSchemaResponse> GetAchievementsSchema(
+        string sandboxId, OauthResponse tokens, CancellationToken cancelToken)
+    {
+        var achievementsSchemaResponse = new AchievementsSchemaResponse();
+
+        var variables = new
+        {
+            SandboxId = sandboxId,
+            Locale = "en-US"
+        };
+
+        var query = @"
+query Achievement($sandboxId: String!, $locale: String!) {
+  Achievement {
+    productAchievementsRecordBySandbox(sandboxId: $sandboxId, locale: $locale) {
+      productId
+      achievementSets {
+        achievementSetId
+        isBase
+        totalAchievements
+        totalXP
+      }
+      platinumRarity {
+        percent
+      }
+      achievements {
+        achievement {
+          name
+          hidden
+          isBase
+          unlockedDisplayName
+          lockedDisplayName
+          unlockedDescription
+          lockedDescription
+          unlockedIconId
+          lockedIconId
+          XP
+          flavorText
+          unlockedIconLink
+          lockedIconLink
+          tier {
+            name
+            hexColor
+            min
+            max
+          }
+          rarity {
+            percent
+          }
+        }
+      }
+    }
+  }
+}";
+        var achievementsPayload = new
+        {
+            query,
+            variables,
+        };
+
+        var request = new HttpRequestMessage(HttpMethod.Post, graphqlUrl);
+        request.Headers.Add("User-Agent", UserAgent);
+        request.Headers.Add("Authorization", tokens.Token_type + " " + tokens.Access_token);
+        request.Headers.Add("Accept", "application/json");
+        request.Content = new StringContent(Serialization.ToJson(achievementsPayload), Encoding.UTF8, "application/json");
+        try
+        {
+            using var response = await HttpClient.SendAsync(request, cancelToken);
+            response.EnsureSuccessStatusCode();
+            var responseContent = await response.Content.ReadAsStringAsync(cancelToken);
+            if (!responseContent.IsNullOrEmpty())
+            {
+                if (Serialization.TryFromJson(responseContent, out AchievementsSchemaResponse? newAchievementsSchema))
+                {
+                    if (newAchievementsSchema != null)
+                    {
+                        achievementsSchemaResponse = newAchievementsSchema;
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex);
+        }
+
+        return achievementsSchemaResponse;
+    }
+
+    public async Task<List<ImportableAchievement>> GetAchievements(string gameId, OauthResponse tokens, CancellationToken cancelToken)
+    {
+        var importableAchievements = new List<ImportableAchievement>();
+        var cacheDir = LegendaryLibrary.Instance.GetCachePath("catalogcache");
+        var cacheFile = $"{gameId}.json";
+        cacheFile = Path.Combine(cacheDir, cacheFile);
+        var newSandboxId = "";
+        if (File.Exists(cacheFile))
+        {
+            var cacheContent = await File.ReadAllTextAsync(cacheFile, cancelToken);
+            if (!cacheContent.IsNullOrEmpty())
+            {
+                if (Serialization.TryFromJson<Dictionary<string, CatalogItem>>(cacheContent, out var catalogItem))
+                {
+                    newSandboxId = catalogItem?.First().Value.Namespace;
+                }
+            }
+        }
+
+        if (newSandboxId.IsNullOrEmpty())
+        {
+            var assets = await GetLibraryItems();
+            var chosenAssets = assets.Where(a => a.AppName == gameId).ToList();
+            newSandboxId = chosenAssets.FirstOrDefault()?.Namespace;
+        }
+
+        if (newSandboxId.IsNullOrEmpty())
+        {
+            return importableAchievements;
+        }
+
+        var schema = await GetAchievementsSchema(newSandboxId, tokens, cancelToken);
+        var productId = schema.Data.Achievement.ProductAchievementsRecordBySandbox.ProductId;
+        if (productId.IsNullOrEmpty())
+        {
+            return importableAchievements;
+        }
+
+        var playerAchievementsResponse = await GetPlayerAchievements(productId, tokens, cancelToken);
+        var playerAchievements = playerAchievementsResponse.Data.PlayerProfile.PlayerProfileInfo.ProductAchievements.Data
+                                                           .PlayerAchievements;
+
+        var unlockedMap = playerAchievements.Where(x => !string.IsNullOrWhiteSpace(x.PlayerAchievement.AchievementName))
+                                            .ToDictionary(
+                                                 x => x.PlayerAchievement.AchievementName,
+                                                 x => x.PlayerAchievement,
+                                                 StringComparer.OrdinalIgnoreCase);
+        var allAchievements = schema.Data.Achievement.ProductAchievementsRecordBySandbox.Achievements;
+        if (allAchievements.Count <= 0)
+        {
+            return importableAchievements;
+        }
+
+        foreach (var achievement in allAchievements)
+        {
+            var achievementData = achievement.Achievement;
+            var unlockDate = "";
+            double progress = 0;
+
+            if (unlockedMap.TryGetValue(achievementData.Name, out var progressItem) && progressItem.Unlocked)
+            {
+                unlockDate = progressItem.UnlockDate;
+                progress = progressItem.Progress;
+            }
+
+            var description = achievementData.LockedDescription;
+            var displayName = achievementData.LockedDisplayName;
+            if (unlockDate != "")
+            {
+                description = achievementData.UnlockedDescription;
+                displayName = achievementData.UnlockedDisplayName;
+            }
+
+            double rarity = 100;
+            if (achievementData.Rarity != null)
+            {
+                rarity = achievementData.Rarity.Percent;
+            }
+
+            var newAchievement =
+                new ImportableAchievement(achievementData.Name, displayName)
+                {
+                    Description = description,
+                    Hidden = achievementData.Hidden,
+                    Progress = (int)progress,
+                    Rarity = rarity,
+                    LockedIcon = achievementData.LockedIconLink,
+                    UnlockedIcon = achievementData.UnlockedIconLink,
+                    TrophyType = new ImportableGameAchievementTrophy(achievementData.Tier?.Name ?? "",
+                        achievementData.Tier?.Name ?? "", null)
+                };
+            if (unlockDate != "")
+            {
+                newAchievement.UnlockedDate = DateTime.ParseExact(unlockDate, "yyyy-MM-ddTHH:mm:ss.fffK", CultureInfo.InvariantCulture,
+                    DateTimeStyles.AdjustToUniversal);
+            }
+
+            importableAchievements.Add(newAchievement);
+        }
+
+        return importableAchievements;
     }
 }

@@ -71,7 +71,8 @@ public class LegendaryLibrary : Plugin
 
     public override async Task PostInitializationAsync(PostInitializationArgs args)
     {
-        var result = await PlayniteApi.CallPluginAsync(new(UnifiedDownloadManagerSharedProperties.Id, UnifiedDownloadManagerSharedProperties.GetApi));
+        var result = await PlayniteApi.CallPluginAsync(new(UnifiedDownloadManagerSharedProperties.Id,
+            UnifiedDownloadManagerSharedProperties.GetApi));
         if (result?.Success == true && result.Value is IUnifiedDownloadManagerApi udmApi)
         {
             UnifiedDownloadManagerApi = udmApi;
@@ -83,8 +84,8 @@ public class LegendaryLibrary : Plugin
         if (args.CallId == UnifiedDownloadManagerSharedProperties.GetDownloadLogic)
         {
             return this.UnifiedDownloadLogic;
-
         }
+
         return null;
     }
 
@@ -214,6 +215,12 @@ public class LegendaryLibrary : Plugin
                 var cacheFile =
                     Paths.GetSafePathName(
                         $"{gameAsset.Namespace}_{gameAsset.CatalogItemId}_{gameAsset.BuildVersion}.json");
+                var appId = gameAsset.AppName;
+                if (!appId.IsNullOrEmpty())
+                {
+                    cacheFile = $"{appId}.json";
+                }
+
                 cacheFile = Path.Combine(cacheDir, cacheFile);
                 var catalogItem =
                     await accountApi.GetCatalogItem(gameAsset.Namespace, gameAsset.CatalogItemId, cacheFile);
@@ -349,7 +356,7 @@ public class LegendaryLibrary : Plugin
 
         return allGames;
     }
-    
+
     public override async Task<List<Game>> ImportGamesAsync(ImportGamesArgs args)
     {
         var addedGames = new List<Game>();
@@ -361,6 +368,7 @@ public class LegendaryLibrary : Plugin
             {
                 gameIsExcluded = true;
             }
+
             if (gameIsExcluded)
             {
                 continue;
@@ -441,7 +449,7 @@ public class LegendaryLibrary : Plugin
                 {
                     existingGame.InstallSize = newGame.InstallSize;
                 }
-                
+
                 await PlayniteApi.Library.Games.UpdateAsync(existingGame);
             }
         }
@@ -453,7 +461,7 @@ public class LegendaryLibrary : Plugin
     {
         return Path.Combine(PlayniteApi.UserDataDir, dirName);
     }
-    
+
     public override async Task<List<InstallController>> GetInstallActionsAsync(GetInstallActionsArgs args)
     {
         if (args.Game.LibraryId != PluginId)
@@ -555,6 +563,7 @@ public class LegendaryLibrary : Plugin
                     {
                         installedGamesIds.Add("eos-overlay");
                     }
+
                     LegendaryLauncher.ClearSpecificGamesCache(installedGamesIds);
                     globalSettings.NextGamesUpdateTime =
                         GetNextUpdateCheckTime(globalSettings.GamesUpdatePolicy);
@@ -969,15 +978,43 @@ public class LegendaryLibrary : Plugin
 
         return null;
     }
-    
+
     public override async Task<List<ImportableAchievements>> GetAchievementsAsync(GetAchievementsArgs args)
     {
-        var legendaryGames = args.Games.Where(i => i.LibraryId == PluginId).ToList();
-        if (legendaryGames.Count > 0)
+        var achievementsList = new List<ImportableAchievements>();
+        var clientApi = new EpicAccountClient(PlayniteApi);
+        var tokens = clientApi.LoadTokens();
+        if (!await clientApi.GetIsUserLoggedIn() || tokens == null)
         {
-            return await LegendaryLauncher.GetAchievements(legendaryGames, PlayniteApi, args.CancelToken);
+            throw new Exception("User is not authenticated.");
         }
 
-        return [];
+        var legendaryGames = args.Games.Where(i => i.LibraryId == PluginId).ToList();
+        if (legendaryGames.Count <= 0)
+        {
+            return achievementsList;
+        }
+
+        foreach (var game in legendaryGames)
+        {
+            if (args.CancelToken.IsCancellationRequested)
+            {
+                break;
+            }
+            try
+            {
+                var importableAchievements = await clientApi.GetAchievements(game.LibraryGameId, tokens, args.CancelToken);
+                if (importableAchievements.Count > 0)
+                {
+                    Logger.Info($"Found {importableAchievements.Count} achievements for {game.Name}.");
+                }
+                achievementsList.Add(new ImportableAchievements(game.Id, importableAchievements));
+            }
+            catch (Exception ex)
+            {
+                Logger.Debug(ex);
+            }
+        }
+        return achievementsList;
     }
 }
