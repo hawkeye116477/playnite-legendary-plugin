@@ -234,7 +234,7 @@ namespace LegendaryLibraryNS
                         "/R:3",
                         "/COPYALL",
                     };
-                    if (File.Exists(oldBinaryPath) && Path.GetFileName(oldBinaryPath) != newBinary)
+                    if (File.Exists(oldBinaryPath))
                     {
                         copyCmdArgs.AddRange(new List<string>()
                         {
@@ -254,11 +254,11 @@ namespace LegendaryLibraryNS
                 }
                 else
                 {
-                    File.Move(tempPath, finalPath);
-                    if (File.Exists(oldBinaryPath) && Path.GetFileName(oldBinaryPath) != newBinary)
+                    if (File.Exists(oldBinaryPath))
                     {
                         File.Delete(oldBinaryPath);
                     }
+                    File.Move(tempPath, finalPath);
                 }
             }
 
