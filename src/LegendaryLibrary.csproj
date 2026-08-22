@@ -55,10 +55,6 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationProvider" />
-    <Reference Include="UnifiedDownloadManagerApi, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\playnite-unifiedDownloadManager-plugin\src\api\bin\Release\UnifiedDownloadManagerApi.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup Label="compileInclude3p">
@@ -371,6 +367,9 @@
     </PackageReference>
     <PackageReference Include="System.Memory">
       <Version>4.5.4</Version>
+    </PackageReference>
+    <PackageReference Include="UnifiedDownloadManagerApi">
+      <Version>1.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
