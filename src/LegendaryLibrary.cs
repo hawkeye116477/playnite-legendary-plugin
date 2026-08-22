@@ -519,6 +519,7 @@ namespace LegendaryLibraryNS
                                     PlayniteApi.Notifications.Add(new NotificationMessage("LegendaryGamesUpdateCheckFail",
                                                                                           $"{Name} {Environment.NewLine}{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdateCheckFailMessage)}",
                                                                                           NotificationType.Error));
+                                    logger.Error("Failed to check for games updates");
                                 }
                             }
                         }
