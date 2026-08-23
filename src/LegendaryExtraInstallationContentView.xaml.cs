@@ -94,7 +94,7 @@ public partial class LegendaryExtraInstallationContentView
     {
         var selectedExtraContent = ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySdlInfo>>().ToList();
         var selectedDlCs = selectedExtraContent.Where(i => i.Value.Is_dlc).ToList();
-        var sdls = selectedExtraContent.Where(i => i.Value.Is_dlc == false).ToList();
+        var sdls = selectedExtraContent.Where(i => !i.Value.Is_dlc).ToList();
 
         var selectedSdls = new List<string>();
 

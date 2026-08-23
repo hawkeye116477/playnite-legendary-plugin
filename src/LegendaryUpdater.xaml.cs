@@ -75,7 +75,7 @@ public partial class LegendaryUpdater : UserControl
                 var updateCheckProgressOptions =
                     new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonCheckingForUpdates), false)
                         { IsIndeterminate = true };
-                await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(updateCheckProgressOptions, async (a) =>
+                await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(updateCheckProgressOptions, async a =>
                 {
                     LegendaryLauncher.ClearSpecificGamesCache(checkedGamesIds!);
                     var legendaryUpdateController = new LegendaryUpdateController();
