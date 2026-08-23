@@ -7,6 +7,7 @@ namespace LegendaryLibraryNS.Models
         public string Tag_name { get; set; }
         public string Html_url { get; set; }
         public List<Asset> Assets { get; set; }
+
         public class Asset
         {
             public long Size { get; set; }

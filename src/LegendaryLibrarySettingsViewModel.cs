@@ -27,16 +27,16 @@ namespace LegendaryLibraryNS
         public int ConnectionTimeout { get; set; } = 0;
         public bool EnableReordering { get; set; } = false;
         public ClearCacheTime AutoClearCache { get; set; } = ClearCacheTime.Never;
-        public long NextClearingTime { get; set; } = 0;
+        public long NextClearingTime { get; set; }
         public bool UnattendedInstall { get; set; } = false;
         public bool DownloadAllDlcs { get; set; } = false;
         public bool SyncPlaytime { get; set; } = LegendaryLauncher.DefaultPlaytimeSyncEnabled;
         public string SyncPlaytimeMachineId { get; set; } = System.Guid.NewGuid().ToString("N");
         public UpdatePolicy GamesUpdatePolicy { get; set; } = UpdatePolicy.Month;
-        public long NextGamesUpdateTime { get; set; } = 0;
+        public long NextGamesUpdateTime { get; set; }
         public bool AutoUpdateGames { get; set; } = false;
         public UpdatePolicy LauncherUpdatePolicy { get; set; } = UpdatePolicy.Never;
-        public long NextLauncherUpdateTime { get; set; } = 0;
+        public long NextLauncherUpdateTime { get; set; }
         public int LauncherUpdateRepo { get; set; } = 0;
     }
 
@@ -60,6 +60,7 @@ namespace LegendaryLibraryNS
                     Settings.NextClearingTime = 0;
                 }
             }
+
             if (EditingClone.GamesUpdatePolicy != Settings.GamesUpdatePolicy)
             {
                 if (Settings.GamesUpdatePolicy != UpdatePolicy.Never)
@@ -71,6 +72,7 @@ namespace LegendaryLibraryNS
                     Settings.NextGamesUpdateTime = 0;
                 }
             }
+
             if (EditingClone.LauncherUpdatePolicy != Settings.LauncherUpdatePolicy)
             {
                 if (Settings.LauncherUpdatePolicy != UpdatePolicy.Never)
@@ -82,6 +84,7 @@ namespace LegendaryLibraryNS
                     Settings.NextLauncherUpdateTime = 0;
                 }
             }
+
             base.EndEdit();
         }
     }

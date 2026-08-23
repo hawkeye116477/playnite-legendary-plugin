@@ -1,5 +1,4 @@
 ﻿using LegendaryLibraryNS.Models;
-using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using SIL.Secrets;
@@ -31,19 +30,19 @@ namespace LegendaryLibraryNS
             cipher.Key = finalEncryptionKey;
             cipher.GenerateIV();
 
-            using Aes ivCipher = Aes.Create();
+            using var ivCipher = Aes.Create();
             ivCipher.Key = finalEncryptionKey;
             ivCipher.Mode = CipherMode.ECB;
             ivCipher.Padding = PaddingMode.None;
 
-            using ICryptoTransform ivEncryptor = ivCipher.CreateEncryptor();
+            using var ivEncryptor = ivCipher.CreateEncryptor();
             var encryptedIv = ivEncryptor.TransformFinalBlock(cipher.IV, 0, cipher.IV.Length);
 
             var utfString = Encoding.UTF8.GetBytes(content);
-            using ICryptoTransform encryptor = cipher.CreateEncryptor();
+            using var encryptor = cipher.CreateEncryptor();
             var encryptedData = encryptor.TransformFinalBlock(utfString, 0, utfString.Length);
 
-            byte[] result = new byte[encryptedIv.Length + encryptedData.Length];
+            var result = new byte[encryptedIv.Length + encryptedData.Length];
             Buffer.BlockCopy(encryptedIv, 0, result, 0, encryptedIv.Length);
             Buffer.BlockCopy(encryptedData, 0, result, encryptedIv.Length, encryptedData.Length);
 
@@ -60,19 +59,20 @@ namespace LegendaryLibraryNS
                 {
                     throw new CryptographicException("Invalid encryption key");
                 }
+
                 using var stream = new FileStream(filePath, FileMode.Open);
-                byte[] encryptedIv = new byte[16];
+                var encryptedIv = new byte[16];
                 stream.Read(encryptedIv, 0, 16);
 
                 byte[] iv;
-                using Aes ivCipher = Aes.Create();
+                using var ivCipher = Aes.Create();
                 ivCipher.Key = key;
                 ivCipher.Mode = CipherMode.ECB;
                 ivCipher.Padding = PaddingMode.None;
-                using ICryptoTransform decryptor = ivCipher.CreateDecryptor();
+                using var decryptor = ivCipher.CreateDecryptor();
                 iv = decryptor.TransformFinalBlock(encryptedIv, 0, encryptedIv.Length);
 
-                byte[] encryptedData = new byte[stream.Length - 16];
+                var encryptedData = new byte[stream.Length - 16];
                 stream.Read(encryptedData, 0, encryptedData.Length);
 
                 using var cipher = Aes.Create();
@@ -83,8 +83,8 @@ namespace LegendaryLibraryNS
                 cipher.Key = key;
                 cipher.IV = iv;
 
-                using ICryptoTransform finalDecryptor = cipher.CreateDecryptor();
-                byte[] decryptedBytes = finalDecryptor.TransformFinalBlock(encryptedData, 0, encryptedData.Length);
+                using var finalDecryptor = cipher.CreateDecryptor();
+                var decryptedBytes = finalDecryptor.TransformFinalBlock(encryptedData, 0, encryptedData.Length);
                 var decryptedData = Encoding.UTF8.GetString(decryptedBytes);
                 return decryptedData;
             }
@@ -98,7 +98,7 @@ namespace LegendaryLibraryNS
 
         public static byte[] GetEncryptionKey(string userId)
         {
-            bool isKeyNull = false;
+            var isKeyNull = false;
             var key = "";
             try
             {
@@ -110,7 +110,7 @@ namespace LegendaryLibraryNS
             }
 
             // Migrate old key
-            if (isKeyNull == true) 
+            if (isKeyNull)
             {
                 try
                 {
@@ -132,7 +132,8 @@ namespace LegendaryLibraryNS
                 {
                     try
                     {
-                        key = Convert.ToBase64String(sha256.ComputeHash(Encoding.UTF8.GetBytes(userInfoContent.account_id + userInfoContent.key)));
+                        key = Convert.ToBase64String(
+                            sha256.ComputeHash(Encoding.UTF8.GetBytes(userInfoContent.account_id + userInfoContent.key)));
                     }
                     catch
                     {
@@ -144,6 +145,7 @@ namespace LegendaryLibraryNS
                     key = "";
                 }
             }
+
             return Convert.FromBase64String(key);
         }
 

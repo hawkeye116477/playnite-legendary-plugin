@@ -17,7 +17,7 @@ namespace LegendaryLibraryNS
             LegendaryMessagesSettingsModel messagesSettings = null;
             var dataDir = LegendaryLibrary.Instance.GetPluginUserDataPath();
             var dataFile = Path.Combine(dataDir, "messages.json");
-            bool correctJson = false;
+            var correctJson = false;
             if (File.Exists(dataFile))
             {
                 var content = FileSystem.ReadFileAsStringSafe(dataFile);
@@ -26,10 +26,12 @@ namespace LegendaryLibraryNS
                     correctJson = true;
                 }
             }
+
             if (!correctJson)
             {
-                messagesSettings = new LegendaryMessagesSettingsModel { };
+                messagesSettings = new LegendaryMessagesSettingsModel();
             }
+
             return messagesSettings;
         }
 

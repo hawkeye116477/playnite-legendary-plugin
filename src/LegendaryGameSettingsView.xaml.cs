@@ -46,6 +46,7 @@ namespace LegendaryLibraryNS
                     }
                 }
             }
+
             return gameSettings;
         }
 
@@ -57,36 +58,44 @@ namespace LegendaryLibraryNS
             {
                 newGameSettings.LaunchOffline = EnableOfflineModeChk.IsChecked;
             }
+
             newGameSettings.DisableGameVersionCheck = DisableGameUpdateCheckingChk.IsChecked;
             if (StartupArgumentsTxt.Text != "")
             {
                 newGameSettings.StartupArguments = CommonHelpers.SplitArguments(StartupArgumentsTxt.Text).ToList();
             }
+
             if (LanguageCodeTxt.Text != "")
             {
                 newGameSettings.LanguageCode = LanguageCodeTxt.Text;
             }
+
             if (SelectedAlternativeExeTxt.Text != "")
             {
                 newGameSettings.OverrideExe = SelectedAlternativeExeTxt.Text;
             }
+
             if (AutoSyncSavesChk.IsChecked != globalSettings.SyncGameSaves)
             {
                 newGameSettings.AutoSyncSaves = AutoSyncSavesChk.IsChecked;
             }
+
             if (SelectedSavePathTxt.Text != "")
             {
                 newGameSettings.CloudSaveFolder = SelectedSavePathTxt.Text;
             }
+
             if (AutoSyncPlaytimeChk.IsChecked != globalSettings.SyncPlaytime)
             {
                 newGameSettings.AutoSyncPlaytime = AutoSyncPlaytimeChk.IsChecked;
             }
+
             var oldGameSettings = LoadGameSettings(GameId);
             if (oldGameSettings.InstallPrerequisites)
             {
                 newGameSettings.InstallPrerequisites = true;
             }
+
             return newGameSettings;
         }
 
@@ -116,6 +125,7 @@ namespace LegendaryLibraryNS
             {
                 DisableGameUpdateCheckingChk.IsChecked = true;
             }
+
             AutoSyncSavesChk.IsChecked = globalSettings.SyncGameSaves;
             AutoSyncPlaytimeChk.IsChecked = globalSettings.SyncPlaytime;
             gameSettings = LoadGameSettings(GameId);
@@ -123,42 +133,48 @@ namespace LegendaryLibraryNS
             {
                 EnableOfflineModeChk.IsChecked = gameSettings.LaunchOffline;
             }
+
             if (gameSettings.DisableGameVersionCheck != null)
             {
                 DisableGameUpdateCheckingChk.IsChecked = gameSettings.DisableGameVersionCheck;
             }
+
             if (gameSettings.StartupArguments != null)
             {
                 StartupArgumentsTxt.Text = string.Join(" ",
-                  gameSettings.StartupArguments.Select(a =>
-                  {
-                      return a.Contains(" ") ? $"\"{a}\"" : a;
-                  }));
+                    gameSettings.StartupArguments.Select(a => { return a.Contains(" ") ? $"\"{a}\"" : a; }));
             }
+
             if (gameSettings.LanguageCode != null)
             {
                 LanguageCodeTxt.Text = gameSettings.LanguageCode;
             }
+
             if (gameSettings.OverrideExe != null)
             {
                 SelectedAlternativeExeTxt.Text = gameSettings.OverrideExe;
             }
+
             if (gameSettings.AutoSyncSaves != null)
             {
                 AutoSyncSavesChk.IsChecked = gameSettings.AutoSyncSaves;
             }
+
             if (!gameSettings.CloudSaveFolder.IsNullOrEmpty())
             {
                 SelectedSavePathTxt.Text = gameSettings.CloudSaveFolder;
             }
+
             if (!gameSettings.AutoSyncPlaytime != null)
             {
                 AutoSyncPlaytimeChk.IsChecked = gameSettings.AutoSyncPlaytime;
             }
+
             if (playniteAPI.ApplicationSettings.PlaytimeImportMode == PlaytimeImportMode.Never)
             {
                 AutoSyncPlaytimeChk.IsEnabled = false;
             }
+
             var appList = LegendaryLauncher.GetInstalledAppList();
             if (appList.ContainsKey(GameId))
             {
@@ -167,10 +183,11 @@ namespace LegendaryLibraryNS
                     EnableOfflineModeChk.IsEnabled = true;
                 }
             }
+
             var cloudSyncActions = new Dictionary<CloudSyncAction, string>
             {
                 { CloudSyncAction.Download, LocalizationManager.Instance.GetString(LOC.CommonDownload) },
-                { CloudSyncAction.Upload, LocalizationManager.Instance.GetString(LOC.CommonUpload) },
+                { CloudSyncAction.Upload, LocalizationManager.Instance.GetString(LOC.CommonUpload) }
             };
             ManualSyncSavesCBo.ItemsSource = cloudSyncActions;
             ManualSyncSavesCBo.SelectedIndex = 0;
@@ -183,7 +200,9 @@ namespace LegendaryLibraryNS
                 ChooseAlternativeExeBtn.Focusable = false;
                 SelectedSavePathTxt.Focusable = false;
                 ChooseSavePathBtn.Focusable = false;
-                var firstCheckBox = LogicalTreeHelper.GetChildren(ButtonsGrd).OfType<CheckBox>().FirstOrDefault(b => b.IsEnabled && b.IsVisible);
+                var firstCheckBox = LogicalTreeHelper.GetChildren(ButtonsGrd)
+                                                     .OfType<CheckBox>()
+                                                     .FirstOrDefault(b => b.IsEnabled && b.IsVisible);
                 if (firstCheckBox != null)
                 {
                     firstCheckBox.Focus();
@@ -203,7 +222,8 @@ namespace LegendaryLibraryNS
 
         private void ChooseAlternativeExeBtn_Click(object sender, RoutedEventArgs e)
         {
-            var file = playniteAPI.Dialogs.SelectFile($"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExecutableTitle)}|*.exe");
+            var file = playniteAPI.Dialogs.SelectFile(
+                $"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExecutableTitle)}|*.exe");
             if (file != "")
             {
                 if (!Game.InstallDirectory.IsNullOrEmpty())
@@ -219,6 +239,7 @@ namespace LegendaryLibraryNS
             {
                 cloudPath = LegendaryCloud.CalculateGameSavesPath(Game.Name, Game.GameId, Game.InstallDirectory, false);
             }
+
             if (!cloudPath.IsNullOrEmpty())
             {
                 SelectedSavePathTxt.Text = cloudPath;
@@ -238,17 +259,19 @@ namespace LegendaryLibraryNS
         {
             if (AutoSyncSavesChk.IsChecked == true)
             {
-                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonSyncGameSavesWarn), "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonSyncGameSavesWarn), "",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
         private void SyncSavesBtn_Click(object sender, RoutedEventArgs e)
         {
-            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonCloudSaveConfirm), LocalizationManager.Instance.GetString(LOC.CommonCloudSaves), MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonCloudSaveConfirm),
+                LocalizationManager.Instance.GetString(LOC.CommonCloudSaves), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
-                bool forceCloudSync = (bool)ForceCloudActionChk.IsChecked;
-                CloudSyncAction selectedCloudSyncAction = (CloudSyncAction)ManualSyncSavesCBo.SelectedValue;
+                var forceCloudSync = (bool)ForceCloudActionChk.IsChecked;
+                var selectedCloudSyncAction = (CloudSyncAction)ManualSyncSavesCBo.SelectedValue;
                 var selectedSavePath = SelectedSavePathTxt.Text;
                 if (selectedSavePath != "")
                 {
@@ -272,12 +295,15 @@ namespace LegendaryLibraryNS
             var newGameSettings = PrepareNewGameSettings();
             if (Serialization.ToJson(newGameSettings) != Serialization.ToJson(oldGameSettings))
             {
-                var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUnsavedChangesAskMessage), "", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                var result = playniteAPI.Dialogs.ShowMessage(
+                    LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUnsavedChangesAskMessage), "", MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
                     SaveGameSettings();
                 }
             }
+
             Window.GetWindow(this).Close();
         }
     }

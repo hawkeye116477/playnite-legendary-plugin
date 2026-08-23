@@ -41,14 +41,20 @@ namespace LegendaryLibraryNS.Services
         private IPlayniteAPI api;
         private string tokensPath;
         private readonly string loginUrl = "https://www.epicgames.com/id/login?responseType=code";
-        public static string authCodeUrl = "https://www.epicgames.com/id/api/redirect?clientId=34a02cf8f4414e29b15921876da36f9a&responseType=code";
+
+        public static string authCodeUrl =
+            "https://www.epicgames.com/id/api/redirect?clientId=34a02cf8f4414e29b15921876da36f9a&responseType=code";
+
         private readonly string oauthUrl = @"";
         private readonly string accountUrl = @"";
         private readonly string catalogUrl = @"";
         private readonly string playtimeUrl = @"";
         private readonly string libraryItemsUrl = @"";
         private const string authEncodedString = "MzRhMDJjZjhmNDQxNGUyOWIxNTkyMTg3NmRhMzZmOWE6ZGFhZmJjY2M3Mzc3NDUwMzlkZmZlNTNkOTRmYzc2Y2Y=";
-        private const string userAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) EpicGamesLauncher/18.9.0-45233261+++Portal+Release-Live";
+
+        private const string userAgent =
+            @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) EpicGamesLauncher/18.9.0-45233261+++Portal+Release-Live";
+
         public static readonly RetryHandler retryHandler = new RetryHandler(new HttpClientHandler());
         public static readonly HttpClient httpClient = new HttpClient(retryHandler);
 
@@ -78,7 +84,7 @@ namespace LegendaryLibraryNS.Services
         {
             if (!content.IsNullOrEmpty())
             {
-                bool useEncryptedTokens = true;
+                var useEncryptedTokens = true;
                 if (LegendaryLauncher.IsInstalled)
                 {
                     var versionCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
@@ -116,12 +122,12 @@ namespace LegendaryLibraryNS.Services
             var authorizationCode = "";
 
             using (var view = api.WebViews.CreateView(new WebViewSettings
-            {
-                WindowWidth = 580,
-                WindowHeight = 700,
-                // This is needed otherwise captcha won't pass
-                UserAgent = userAgent,
-            }))
+                   {
+                       WindowWidth = 580,
+                       WindowHeight = 700,
+                       // This is needed otherwise captcha won't pass
+                       UserAgent = userAgent
+                   }))
             {
                 view.LoadingChanged += async (s, e) =>
                 {
@@ -131,7 +137,8 @@ namespace LegendaryLibraryNS.Services
                     if (!pageText.IsNullOrEmpty() && pageText.Contains(@"localhost") && !e.IsLoading)
                     {
                         var source = await view.GetPageSourceAsync();
-                        var matches = Regex.Matches(source, @"localhost\/launcher\/authorized\?code=([a-zA-Z0-9]+)", RegexOptions.IgnoreCase);
+                        var matches = Regex.Matches(source, @"localhost\/launcher\/authorized\?code=([a-zA-Z0-9]+)",
+                            RegexOptions.IgnoreCase);
                         if (matches.Count > 0 && matches[0].Groups.Count > 1)
                         {
                             authorizationCode = matches[0].Groups[1].Value;
@@ -140,6 +147,7 @@ namespace LegendaryLibraryNS.Services
                                 loggedIn = true;
                             }
                         }
+
                         view.Close();
                     }
                 };
@@ -153,12 +161,14 @@ namespace LegendaryLibraryNS.Services
             {
                 return;
             }
+
             await LegendaryLauncher.RemoveAllTokens();
             if (string.IsNullOrEmpty(authorizationCode))
             {
                 logger.Error("Failed to get login exchange key for Epic account.");
                 return;
             }
+
             await AuthenticateUsingAuthCode(authorizationCode);
         }
 
@@ -184,7 +194,7 @@ namespace LegendaryLibraryNS.Services
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"Failed to authenticate with the Epic Games Store");
+                logger.Error(ex, "Failed to authenticate with the Epic Games Store");
             }
         }
 
@@ -199,6 +209,7 @@ namespace LegendaryLibraryNS.Services
                     username = tokens.displayName;
                 }
             }
+
             return username;
         }
 
@@ -229,6 +240,7 @@ namespace LegendaryLibraryNS.Services
                             {
                                 return false;
                             }
+
                             var account = await InvokeRequest<AccountResponse>(accountUrl + tokens.account_id, tokens);
                             return account.Item2.id == tokens.account_id;
                         }
@@ -239,6 +251,7 @@ namespace LegendaryLibraryNS.Services
                         }
                     }
                 }
+
                 logger.Error(ex, "Failed to validation Epic authentication.");
                 return false;
             }
@@ -255,7 +268,7 @@ namespace LegendaryLibraryNS.Services
             var assets = new List<Asset>();
             assets.AddRange(response.Item2.records);
 
-            string nextCursor = response.Item2.responseMetadata?.nextCursor;
+            var nextCursor = response.Item2.responseMetadata?.nextCursor;
             while (nextCursor != null)
             {
                 response = await InvokeRequest<LibraryItemsResponse>(
@@ -264,9 +277,11 @@ namespace LegendaryLibraryNS.Services
                 assets.AddRange(response.Item2.records);
                 nextCursor = response.Item2.responseMetadata.nextCursor;
             }
+
             var filteredAssets = assets.Where(asset => !asset.appName.IsNullOrEmpty()
                                                        && asset.sandboxType != "PRIVATE"
-                                                       && asset.@namespace != "ue").ToList();
+                                                       && asset.@namespace != "ue")
+                                       .ToList();
             return filteredAssets;
         }
 
@@ -301,7 +316,9 @@ namespace LegendaryLibraryNS.Services
             if (result == null)
             {
                 var url = string.Format("{0}/bulk/items?id={1}&country=US&locale=en-US&includeMainGameDetails=true", nameSpace, id);
-                var catalogResponse = InvokeRequest<Dictionary<string, CatalogItem>>(catalogUrl + url, LoadTokens()).GetAwaiter().GetResult();
+                var catalogResponse = InvokeRequest<Dictionary<string, CatalogItem>>(catalogUrl + url, LoadTokens())
+                                     .GetAwaiter()
+                                     .GetResult();
                 result = catalogResponse.Item2;
                 FileSystem.WriteStringToFile(cachePath, catalogResponse.Item1);
             }
@@ -310,10 +327,8 @@ namespace LegendaryLibraryNS.Services
             {
                 return catalogItem;
             }
-            else
-            {
-                throw new Exception($"Epic catalog item for {id} {nameSpace} not found.");
-            }
+
+            throw new Exception($"Epic catalog item for {id} {nameSpace} not found.");
         }
 
         private async Task<bool> RenewTokens(string refreshToken)
@@ -355,18 +370,16 @@ namespace LegendaryLibraryNS.Services
             {
                 throw new TokenException(error.errorCode);
             }
-            else
+
+            try
             {
-                try
-                {
-                    return new Tuple<string, T>(str, Serialization.FromJson<T>(str));
-                }
-                catch
-                {
-                    // For cases like #134, where the entire service is down and doesn't even return valid error messages.
-                    logger.Error(str);
-                    throw new Exception("Failed to get data from Epic service.");
-                }
+                return new Tuple<string, T>(str, Serialization.FromJson<T>(str));
+            }
+            catch
+            {
+                // For cases like #134, where the entire service is down and doesn't even return valid error messages.
+                logger.Error(str);
+                throw new Exception("Failed to get data from Epic service.");
             }
         }
 
@@ -375,8 +388,10 @@ namespace LegendaryLibraryNS.Services
             var newEncryptedTokensPath = "";
             if (!LegendaryLauncher.GetUserInfo().account_id.IsNullOrEmpty())
             {
-                newEncryptedTokensPath = Path.Combine(LegendaryLauncher.ConfigPath, $"{LegendaryLauncher.GetUserInfo().account_id.MD5()}.enc");
+                newEncryptedTokensPath =
+                    Path.Combine(LegendaryLauncher.ConfigPath, $"{LegendaryLauncher.GetUserInfo().account_id.MD5()}.enc");
             }
+
             try
             {
                 if (File.Exists(LegendaryLauncher.OldPluginEncryptedTokensPath))
@@ -385,10 +400,11 @@ namespace LegendaryLibraryNS.Services
                     {
                         logger.Debug("Migrating tokens to new encryption format...");
                         var decryptedTokens = Encryption.DecryptFromFile(LegendaryLauncher.OldPluginEncryptedTokensPath,
-                                                                         Encoding.UTF8,
-                                                                         WindowsIdentity.GetCurrent().User.Value);
+                            Encoding.UTF8,
+                            WindowsIdentity.GetCurrent().User.Value);
                         var tokenInfo = Serialization.FromJson<OauthResponse>(decryptedTokens);
-                        LegendaryEncryption.Encrypt(Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.account_id.MD5()}.enc"), decryptedTokens);
+                        LegendaryEncryption.Encrypt(Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.account_id.MD5()}.enc"),
+                            decryptedTokens);
                         FileSystem.DeleteFileSafe(LegendaryLauncher.OldPluginEncryptedTokensPath);
                         return Serialization.FromJson<OauthResponse>(decryptedTokens);
                     }
@@ -417,13 +433,17 @@ namespace LegendaryLibraryNS.Services
             {
                 logger.Error(e, "Failed to load saved tokens.");
             }
+
             return null;
         }
 
         public void UploadPlaytime(DateTime startTime, DateTime endTime, Game game, int attempts = 3)
         {
-            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonUploadingPlaytime, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }), false);
-            api.Dialogs.ActivateGlobalProgress(async (a) =>
+            var globalProgressOptions =
+                new GlobalProgressOptions(
+                    LocalizationManager.Instance.GetString(LOC.CommonUploadingPlaytime,
+                        new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }), false);
+            api.Dialogs.ActivateGlobalProgress(async a =>
             {
                 a.IsIndeterminate = true;
                 var userLoggedIn = await GetIsUserLoggedIn();
@@ -432,13 +452,14 @@ namespace LegendaryLibraryNS.Services
                     var userData = LoadTokens();
                     if (userData != null)
                     {
-                        var uri = $"https://library-service.live.use1a.on.epicgames.com/library/api/public/playtime/account/{userData.account_id}";
-                        PlaytimePayload playtimePayload = new PlaytimePayload
+                        var uri =
+                            $"https://library-service.live.use1a.on.epicgames.com/library/api/public/playtime/account/{userData.account_id}";
+                        var playtimePayload = new PlaytimePayload
                         {
                             artifactId = game.GameId,
                             machineId = LegendaryLibrary.GetSettings().SyncPlaytimeMachineId
                         };
-                        DateTime now = DateTime.UtcNow;
+                        var now = DateTime.UtcNow;
                         playtimePayload.endTime = endTime;
                         playtimePayload.startTime = startTime;
                         var playtimeJson = Serialization.ToJson(playtimePayload);
@@ -456,14 +477,15 @@ namespace LegendaryLibraryNS.Services
                         }
                         catch (Exception ex)
                         {
-                            api.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.CommonUploadPlaytimeError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }));
-                            logger.Error(ex, $"An error occured during uploading playtime to the cloud.");
+                            api.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.CommonUploadPlaytimeError,
+                                new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }));
+                            logger.Error(ex, "An error occured during uploading playtime to the cloud.");
                         }
                     }
                 }
                 else
                 {
-                    logger.Error($"Can't upload playtime, because user is not authenticated.");
+                    logger.Error("Can't upload playtime, because user is not authenticated.");
                     api.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedInError));
                 }
             }, globalProgressOptions);

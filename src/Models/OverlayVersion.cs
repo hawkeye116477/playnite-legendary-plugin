@@ -11,6 +11,5 @@
         {
             public string BuildVersion { get; set; }
         }
-
     }
 }

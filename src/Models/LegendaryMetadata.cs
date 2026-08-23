@@ -96,6 +96,5 @@ namespace LegendaryLibraryNS.Models
             public string id;
             public string[] platform;
         }
-
     }
 }

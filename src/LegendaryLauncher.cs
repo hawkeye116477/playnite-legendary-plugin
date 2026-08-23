@@ -1,9 +1,7 @@
 ﻿using CliWrap;
 using CliWrap.Buffered;
 using CommonPlugin;
-using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
-using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
 using Microsoft.Win32;
 using Playnite.Common;
@@ -16,7 +14,6 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,7 +24,9 @@ namespace LegendaryLibraryNS
     {
         private static readonly RetryHandler retryHandler = new RetryHandler(new HttpClientHandler());
         public static readonly HttpClient httpClient = new HttpClient(retryHandler);
-        public static string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Vivaldi/5.5.2805.50";
+
+        public static string userAgent =
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Vivaldi/5.5.2805.50";
 
         static LegendaryLauncher()
         {
@@ -38,24 +37,28 @@ namespace LegendaryLibraryNS
         {
             get
             {
-                Dictionary<int, string> LauncherUpdateSources = new Dictionary<int, string>();
-                string result = "";
+                var LauncherUpdateSources = new Dictionary<int, string>();
+                var result = "";
                 try
                 {
                     var thisAssembly = Assembly.GetExecutingAssembly();
-                    using Stream launcherUpdateSourceFile = thisAssembly.GetManifestResourceStream($"{typeof(LegendaryLibrary).Namespace}.LauncherUpdateSource.json");
+                    using var launcherUpdateSourceFile =
+                        thisAssembly.GetManifestResourceStream($"{typeof(LegendaryLibrary).Namespace}.LauncherUpdateSource.json");
                     using var reader = new StreamReader(launcherUpdateSourceFile);
                     result = reader.ReadToEnd();
                 }
                 catch (Exception ex)
                 {
                     var logger = LogManager.GetLogger();
-                    logger.Error(ex, $"An error occured during loading launcher update sources");
+                    logger.Error(ex, "An error occured during loading launcher update sources");
                 }
+
                 if (!result.IsNullOrWhiteSpace() && Serialization.TryFromJson(result, out List<string> savedRepoList))
                 {
-                    LauncherUpdateSources = savedRepoList.Select((value, index) => new { index, value }).ToDictionary(x => x.index, x => x.value);
+                    LauncherUpdateSources = savedRepoList.Select((value, index) => new { index, value })
+                                                         .ToDictionary(x => x.index, x => x.value);
                 }
+
                 return LauncherUpdateSources;
             }
         }
@@ -64,8 +67,10 @@ namespace LegendaryLibraryNS
         {
             get
             {
-                var legendaryConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".config", "legendary");
-                var heroicLegendaryConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "heroic", "legendaryConfig", "legendary");
+                var legendaryConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".config",
+                    "legendary");
+                var heroicLegendaryConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "heroic",
+                    "legendaryConfig", "legendary");
                 var originalLegendaryinstallListPath = Path.Combine(legendaryConfigPath, "installed.json");
                 var heroicLegendaryInstallListPath = Path.Combine(heroicLegendaryConfigPath, "installed.json");
                 if (File.Exists(heroicLegendaryInstallListPath))
@@ -82,11 +87,13 @@ namespace LegendaryLibraryNS
                         legendaryConfigPath = heroicLegendaryConfigPath;
                     }
                 }
+
                 var envLegendaryConfigPath = Environment.GetEnvironmentVariable("LEGENDARY_CONFIG_PATH");
                 if (!envLegendaryConfigPath.IsNullOrWhiteSpace() && Directory.Exists(envLegendaryConfigPath))
                 {
                     legendaryConfigPath = envLegendaryConfigPath;
                 }
+
                 Directory.CreateDirectory(legendaryConfigPath);
                 return legendaryConfigPath;
             }
@@ -105,19 +112,23 @@ namespace LegendaryLibraryNS
         {
             get
             {
-                var heroicPath = Path.GetDirectoryName(Programs.GetUnistallProgramsList().FirstOrDefault(p => p.DisplayName?.StartsWith("Heroic") == true
-                                                                                                              && p.Publisher == "Heroic Games Launcher")?.DisplayIcon.Split(',')[0]);
+                var heroicPath = Path.GetDirectoryName(Programs.GetUnistallProgramsList()
+                                                               .FirstOrDefault(p => p.DisplayName?.StartsWith("Heroic") == true
+                                                                                    && p.Publisher == "Heroic Games Launcher")
+                                                              ?.DisplayIcon.Split(',')[0]);
                 if (heroicPath.IsNullOrEmpty())
                 {
                     heroicPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                                                           @"Programs\heroic");
+                        @"Programs\heroic");
                 }
+
                 var heroicResourcesBasePath = Path.Combine(@$"{heroicPath}\resources\app.asar.unpacked\build\bin");
                 var path = Path.Combine(heroicResourcesBasePath, @"win32\");
                 if (!Directory.Exists(path))
                 {
                     path = Path.Combine(heroicResourcesBasePath, @"x64\win32\");
                 }
+
                 return path;
             }
         }
@@ -128,18 +139,23 @@ namespace LegendaryLibraryNS
             {
                 string[] validLegendaryBinaries = { "legendary_windows_x86_64.exe", "legendary_windows_x64.exe", "legendary.exe" };
                 var launcherPath = "";
-                string envPath = Environment.GetEnvironmentVariable("PATH")?
-                                            .Split(new char[] { Path.PathSeparator }, StringSplitOptions.RemoveEmptyEntries)
-                                            .Where(p => p.IndexOfAny(Path.GetInvalidPathChars()) < 0)
-                                            .SelectMany(pathEntry => validLegendaryBinaries.Select(legendaryBinary => Path.Combine(pathEntry.Trim(), legendaryBinary)))
-                                            .FirstOrDefault(File.Exists);
-                if (string.IsNullOrWhiteSpace(envPath) == false)
+                var envPath = Environment.GetEnvironmentVariable("PATH")
+ ?
+.Split(new[] { Path.PathSeparator }, StringSplitOptions.RemoveEmptyEntries)
+                                         .Where(p => p.IndexOfAny(Path.GetInvalidPathChars()) < 0)
+                                         .SelectMany(pathEntry =>
+                                              validLegendaryBinaries.Select(legendaryBinary =>
+                                                  Path.Combine(pathEntry.Trim(), legendaryBinary)))
+                                         .FirstOrDefault(File.Exists);
+                if (!string.IsNullOrWhiteSpace(envPath))
                 {
                     launcherPath = envPath;
                 }
                 else
                 {
-                    var launcherMatches = validLegendaryBinaries.Select(legendaryBinary => Path.Combine(HeroicLegendaryPath, legendaryBinary)).Where(File.Exists);
+                    var launcherMatches = validLegendaryBinaries
+                                         .Select(legendaryBinary => Path.Combine(HeroicLegendaryPath, legendaryBinary))
+                                         .Where(File.Exists);
                     if (launcherMatches.Count() == 0)
                     {
                         var pf64 = Environment.GetEnvironmentVariable("ProgramW6432");
@@ -147,25 +163,31 @@ namespace LegendaryLibraryNS
                         {
                             pf64 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
                         }
+
                         var launcherBasePath = Path.Combine(pf64, "Legendary");
-                        launcherMatches = validLegendaryBinaries.Select(legendaryBinary => Path.Combine(launcherBasePath, legendaryBinary)).Where(File.Exists);
+                        launcherMatches = validLegendaryBinaries.Select(legendaryBinary => Path.Combine(launcherBasePath, legendaryBinary))
+                                                                .Where(File.Exists);
                         if (launcherMatches.Count() == 0)
                         {
                             var playniteAPI = API.Instance;
                             launcherBasePath = Path.Combine(playniteAPI.Paths.ApplicationPath, "Legendary");
-                            launcherMatches = validLegendaryBinaries.Select(legendaryBinary => Path.Combine(launcherBasePath, legendaryBinary)).Where(File.Exists);
+                            launcherMatches = validLegendaryBinaries
+                                             .Select(legendaryBinary => Path.Combine(launcherBasePath, legendaryBinary))
+                                             .Where(File.Exists);
                         }
                     }
+
                     if (launcherMatches.Count() > 0)
                     {
                         launcherPath = launcherMatches.First();
                     }
                 }
+
                 var savedSettings = LegendaryLibrary.GetSettings();
                 if (savedSettings != null)
                 {
                     var savedLauncherPath = savedSettings.SelectedFullLauncherPath;
-                    var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory.ToString();
+                    var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory;
                     if (savedLauncherPath != "")
                     {
                         if (savedLauncherPath.Contains(playniteDirectoryVariable))
@@ -173,16 +195,19 @@ namespace LegendaryLibraryNS
                             var playniteAPI = API.Instance;
                             savedLauncherPath = savedLauncherPath.Replace(playniteDirectoryVariable, playniteAPI.Paths.ApplicationPath);
                         }
+
                         if (File.Exists(savedLauncherPath))
                         {
                             launcherPath = savedLauncherPath;
                         }
                     }
                 }
+
                 if (!File.Exists(launcherPath))
                 {
                     launcherPath = "";
                 }
+
                 return launcherPath;
             }
         }
@@ -204,9 +229,10 @@ namespace LegendaryLibraryNS
                 var playniteAPI = API.Instance;
                 if (playniteAPI.ApplicationInfo.IsPortable)
                 {
-                    var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory.ToString();
+                    var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory;
                     installPath = Path.Combine(playniteDirectoryVariable, "Games");
                 }
+
                 var savedSettings = LegendaryLibrary.GetSettings();
                 if (savedSettings != null)
                 {
@@ -216,6 +242,7 @@ namespace LegendaryLibraryNS
                         installPath = savedGamesInstallationPath;
                     }
                 }
+
                 return installPath;
             }
         }
@@ -230,6 +257,7 @@ namespace LegendaryLibraryNS
                 {
                     installed = true;
                 }
+
                 return installed;
             }
         }
@@ -238,17 +266,19 @@ namespace LegendaryLibraryNS
         {
             get
             {
-                bool enabled = false;
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Epic Games\EOS");
+                var enabled = false;
+                var key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Epic Games\EOS");
                 if (key?.GetValueNames().Contains("OverlayPath") == true)
                 {
                     enabled = true;
                 }
+
                 return enabled;
             }
         }
 
-        public static string Icon => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Resources\legendary_icon.ico");
+        public static string Icon =>
+            Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Resources\legendary_icon.ico");
 
         public static void StartClient()
         {
@@ -270,33 +300,25 @@ namespace LegendaryLibraryNS
                     list = nonEmptyList;
                 }
             }
+
             return list;
         }
 
-        public static string TokensPath
-        {
-            get
-            {
-                return Path.Combine(ConfigPath, "user.json");
-            }
-        }
+        public static string TokensPath => Path.Combine(ConfigPath, "user.json");
 
-        public static string OldPluginEncryptedTokensPath
-        {
-            get
-            {
-                return Path.Combine(LegendaryLibrary.Instance.GetPluginUserDataPath(), "tokens_encrypted.json");
-            }
-        }
+        public static string OldPluginEncryptedTokensPath =>
+            Path.Combine(LegendaryLibrary.Instance.GetPluginUserDataPath(), "tokens_encrypted.json");
 
         public static Dictionary<string, string> GetDefaultEnvironmentVariables()
         {
             var envDict = new Dictionary<string, string>();
-            var heroicLegendaryConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "heroic", "legendaryConfig", "legendary");
+            var heroicLegendaryConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "heroic",
+                "legendaryConfig", "legendary");
             if (ConfigPath == heroicLegendaryConfigPath)
             {
                 envDict.Add("LEGENDARY_CONFIG_PATH", ConfigPath);
             }
+
             return envDict;
         }
 
@@ -312,7 +334,8 @@ namespace LegendaryLibraryNS
                     File.Delete(cacheUpdateInfoFile);
                 }
             }
-            bool correctJson = false;
+
+            var correctJson = false;
             if (File.Exists(cacheUpdateInfoFile))
             {
                 var content = FileSystem.ReadFileAsStringSafe(cacheUpdateInfoFile);
@@ -348,39 +371,45 @@ namespace LegendaryLibraryNS
                                    .WithValidation(CommandResultValidation.None)
                                    .ExecuteBufferedAsync();
                 }
+
                 var errorMessage = cmd.StandardError;
                 if (errorMessage != "" && !errorMessage.Contains("up to date"))
                 {
                     double downloadSizeNumber = 0;
                     double installSizeNumber = 0;
-                    string downloadSizeUnit = "B";
-                    string installSizeUnit = "B";
-                    string[] lines = errorMessage.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                    var downloadSizeUnit = "B";
+                    var installSizeUnit = "B";
+                    var lines = errorMessage.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
                     foreach (var line in lines)
                     {
                         var downloadSizeText = "Download size:";
                         if (line.Contains(downloadSizeText))
                         {
-                            var downloadSizeSplittedString = line.Substring(line.IndexOf(downloadSizeText) + downloadSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            var downloadSizeSplittedString = line.Substring(line.IndexOf(downloadSizeText) + downloadSizeText.Length)
+                                                                 .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                             downloadSizeNumber = CommonHelpers.ToDouble(downloadSizeSplittedString[0]);
                             downloadSizeUnit = downloadSizeSplittedString[1];
                             updateInfo.Download_size = CommonHelpers.ToBytes(downloadSizeNumber, downloadSizeUnit);
                         }
+
                         var installSizeText = "Install size:";
                         if (line.Contains(installSizeText))
                         {
-                            var installSizeSplittedString = line.Substring(line.IndexOf(installSizeText) + installSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            var installSizeSplittedString = line.Substring(line.IndexOf(installSizeText) + installSizeText.Length)
+                                                                .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                             installSizeNumber = CommonHelpers.ToDouble(installSizeSplittedString[0]);
                             installSizeUnit = installSizeSplittedString[1];
                             updateInfo.Disk_size = CommonHelpers.ToBytes(installSizeNumber, installSizeUnit);
                         }
                     }
+
                     if (updateInfo.Download_size != 0 && updateInfo.Disk_size != 0)
                     {
                         if (!Directory.Exists(cacheUpdateInfoPath))
                         {
                             Directory.CreateDirectory(cacheUpdateInfoPath);
                         }
+
                         File.WriteAllText(cacheUpdateInfoFile, Serialization.ToJson(updateInfo));
                     }
                     else
@@ -390,6 +419,7 @@ namespace LegendaryLibraryNS
                     }
                 }
             }
+
             return updateInfo;
         }
 
@@ -414,6 +444,7 @@ namespace LegendaryLibraryNS
                     {
                         size.Download_size += tagDo.Size;
                     }
+
                     var tagDi = gameManifest.Manifest.Tag_disk_size.FirstOrDefault(t => t.Tag == tag);
                     if (tagDi != null)
                     {
@@ -421,6 +452,7 @@ namespace LegendaryLibraryNS
                     }
                 }
             }
+
             return size;
         }
 
@@ -435,7 +467,8 @@ namespace LegendaryLibraryNS
             return await CalculateGameSize(gameData, extraContent);
         }
 
-        public static async Task<LegendaryGameInfo.Rootobject> GetGameInfo(LegendaryGameInfo.Game installData, bool skipRefreshing = false, bool silently = false, bool forceRefreshCache = false)
+        public static async Task<LegendaryGameInfo.Rootobject> GetGameInfo(
+            LegendaryGameInfo.Game installData, bool skipRefreshing = false, bool silently = false, bool forceRefreshCache = false)
         {
             var gameID = installData.App_name;
             var manifest = new LegendaryGameInfo.Rootobject();
@@ -447,7 +480,8 @@ namespace LegendaryLibraryNS
             {
                 Directory.CreateDirectory(cacheInfoPath);
             }
-            bool correctJson = false;
+
+            var correctJson = false;
             if (File.Exists(cacheInfoFile))
             {
                 if (!skipRefreshing)
@@ -459,10 +493,12 @@ namespace LegendaryLibraryNS
                         {
                             File.Delete(metadataFile);
                         }
+
                         File.Delete(cacheInfoFile);
                     }
                 }
             }
+
             if (File.Exists(cacheInfoFile))
             {
                 var content = FileSystem.ReadFileAsStringSafe(cacheInfoFile);
@@ -475,6 +511,7 @@ namespace LegendaryLibraryNS
                     }
                 }
             }
+
             if (!correctJson)
             {
                 BufferedCommandResult result;
@@ -497,6 +534,7 @@ namespace LegendaryLibraryNS
                                       .WithValidation(CommandResultValidation.None)
                                       .ExecuteBufferedAsync();
                 }
+
                 var errorMessage = result.StandardError;
                 if (result.ExitCode != 0)
                 {
@@ -508,13 +546,23 @@ namespace LegendaryLibraryNS
                             || errorMessage.Contains("No saved credentials")
                             || errorMessage.Contains("Unauthorized"))
                         {
-                            playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteMetadataDownloadError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired) }), installData.Title);
+                            playniteAPI.Dialogs.ShowErrorMessage(
+                                LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteMetadataDownloadError,
+                                    new Dictionary<string, IFluentType>
+                                    {
+                                        ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired)
+                                    }), installData.Title);
                         }
                         else
                         {
-                            playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteMetadataDownloadError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonCheckLog) }), installData.Title);
+                            playniteAPI.Dialogs.ShowErrorMessage(
+                                LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteMetadataDownloadError,
+                                    new Dictionary<string, IFluentType>
+                                        { ["var0"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonCheckLog) }),
+                                installData.Title);
                         }
                     }
+
                     manifest.errorDisplayed = true;
                 }
                 else if (gameID == "eos-overlay")
@@ -522,25 +570,32 @@ namespace LegendaryLibraryNS
                     manifest.Game = new LegendaryGameInfo.Game
                     {
                         App_name = gameID,
-                        Title = LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS" })
+                        Title = LocalizationManager.Instance.GetString(LOC.CommonOverlay,
+                            new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS" })
                     };
                     manifest.Manifest = new LegendaryGameInfo.Manifest();
-                    string[] lines = result.StandardError.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                    var lines = result.StandardError.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
                     foreach (var line in lines)
                     {
                         var downloadSizeText = "Download size:";
                         if (line.Contains(downloadSizeText))
                         {
-                            var downloadSizeSplittedString = line.Substring(line.IndexOf(downloadSizeText) + downloadSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                            manifest.Manifest.Download_size = CommonHelpers.ToBytes(CommonHelpers.ToDouble(downloadSizeSplittedString[0]), downloadSizeSplittedString[1]);
+                            var downloadSizeSplittedString = line.Substring(line.IndexOf(downloadSizeText) + downloadSizeText.Length)
+                                                                 .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            manifest.Manifest.Download_size = CommonHelpers.ToBytes(CommonHelpers.ToDouble(downloadSizeSplittedString[0]),
+                                downloadSizeSplittedString[1]);
                         }
+
                         var installSizeText = "Install size:";
                         if (line.Contains(installSizeText))
                         {
-                            var installSizeSplittedString = line.Substring(line.IndexOf(installSizeText) + installSizeText.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                            manifest.Manifest.Disk_size = CommonHelpers.ToBytes(CommonHelpers.ToDouble(installSizeSplittedString[0]), installSizeSplittedString[1]);
+                            var installSizeSplittedString = line.Substring(line.IndexOf(installSizeText) + installSizeText.Length)
+                                                                .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            manifest.Manifest.Disk_size = CommonHelpers.ToBytes(CommonHelpers.ToDouble(installSizeSplittedString[0]),
+                                installSizeSplittedString[1]);
                         }
                     }
+
                     File.WriteAllText(cacheInfoFile, Serialization.ToJson(manifest));
                 }
                 else
@@ -549,23 +604,26 @@ namespace LegendaryLibraryNS
                     manifest = Serialization.FromJson<LegendaryGameInfo.Rootobject>(result.StandardOutput);
                 }
             }
+
             return manifest;
         }
 
-        public static async Task<Dictionary<string, LegendarySDLInfo>> GetExtraContentInfo(DownloadManagerData.Download installData, bool includeRequiredSdl = false)
+        public static async Task<Dictionary<string, LegendarySDLInfo>> GetExtraContentInfo(
+            DownloadManagerData.Download installData, bool includeRequiredSdl = false)
         {
             var logger = LogManager.GetLogger();
             var gameData = new LegendaryGameInfo.Game
             {
                 Title = installData.name,
-                App_name = installData.gameID,
+                App_name = installData.gameID
             };
             var manifest = await GetGameInfo(gameData);
-            Dictionary<string, LegendarySDLInfo> extraContentInfo = new Dictionary<string, LegendarySDLInfo>();
+            var extraContentInfo = new Dictionary<string, LegendarySDLInfo>();
             if (manifest.errorDisplayed)
             {
                 return extraContentInfo;
             }
+
             if (manifest.Manifest != null && manifest.Manifest.Install_tags.Count > 1)
             {
                 var cacheSDLPath = LegendaryLibrary.Instance.GetCachePath("sdlcache");
@@ -573,6 +631,7 @@ namespace LegendaryLibraryNS
                 {
                     Directory.CreateDirectory(cacheSDLPath);
                 }
+
                 var cacheSDLFile = Path.Combine(cacheSDLPath, installData.gameID + ".json");
                 string content = null;
                 if (File.Exists(cacheSDLFile))
@@ -582,6 +641,7 @@ namespace LegendaryLibraryNS
                         File.Delete(cacheSDLFile);
                     }
                 }
+
                 if (!File.Exists(cacheSDLFile))
                 {
                     try
@@ -593,6 +653,7 @@ namespace LegendaryLibraryNS
                         {
                             Directory.CreateDirectory(cacheSDLPath);
                         }
+
                         File.WriteAllText(cacheSDLFile, content);
                     }
                     catch (Exception ex)
@@ -604,7 +665,8 @@ namespace LegendaryLibraryNS
                 {
                     content = FileSystem.ReadFileAsStringSafe(cacheSDLFile);
                 }
-                bool correctSdlJson = false;
+
+                var correctSdlJson = false;
                 if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out extraContentInfo))
                 {
                     correctSdlJson = true;
@@ -617,6 +679,7 @@ namespace LegendaryLibraryNS
                 {
                     logger.Error($"An error occurred while reading SDL data for {installData.name}.");
                 }
+
                 if (!correctSdlJson)
                 {
                     extraContentInfo = new Dictionary<string, LegendarySDLInfo>();
@@ -638,12 +701,14 @@ namespace LegendaryLibraryNS
                         };
                         extraContentInfo.Add("__required", requiredSdl);
                     }
+
                     if (!includeRequiredSdl && extraContentInfo.ContainsKey("__required"))
                     {
                         extraContentInfo.Remove("__required");
                     }
                 }
             }
+
             if (manifest.Game != null && manifest.Game.Owned_dlc.Count > 0)
             {
                 foreach (var dlc in manifest.Game.Owned_dlc.OrderBy(obj => obj.Title))
@@ -666,13 +731,14 @@ namespace LegendaryLibraryNS
                     }
                 }
             }
+
             return extraContentInfo;
         }
 
         public static async Task<List<string>> GetRequiredSdlsTags(DownloadManagerData.Download installData)
         {
             var extraContentInfo = await GetExtraContentInfo(installData, true);
-            var sdls = extraContentInfo.Where(i => i.Value.Is_dlc == false).ToList();
+            var sdls = extraContentInfo.Where(i => !i.Value.Is_dlc).ToList();
             var requiredSdls = new List<string>();
             if (extraContentInfo.ContainsKey("__required"))
             {
@@ -681,6 +747,7 @@ namespace LegendaryLibraryNS
                     requiredSdls.AddMissing(tag);
                 }
             }
+
             return requiredSdls;
         }
 
@@ -701,6 +768,7 @@ namespace LegendaryLibraryNS
                     version = Regex.Match(versionCmd.StandardOutput, @"\d+(\.\d+)+").Value;
                 }
             }
+
             return version;
         }
 
@@ -713,11 +781,13 @@ namespace LegendaryLibraryNS
                 ShowNotInstalledError();
                 return newVersionInfoContent;
             }
+
             var cacheVersionPath = LegendaryLibrary.Instance.GetCachePath("infocache");
             if (!Directory.Exists(cacheVersionPath))
             {
                 Directory.CreateDirectory(cacheVersionPath);
             }
+
             var cacheVersionFile = Path.Combine(cacheVersionPath, "legendaryVersion.json");
             string content = null;
             if (File.Exists(cacheVersionFile))
@@ -727,7 +797,8 @@ namespace LegendaryLibraryNS
                     File.Delete(cacheVersionFile);
                 }
             }
-            bool correctJson = false;
+
+            var correctJson = false;
             if (File.Exists(cacheVersionFile))
             {
                 content = FileSystem.ReadFileAsStringSafe(cacheVersionFile);
@@ -740,11 +811,13 @@ namespace LegendaryLibraryNS
                     }
                 }
             }
+
             var repoOwner = GetUpdateSource();
             if (correctJson && !newVersionInfoContent.Html_url.Contains(repoOwner))
             {
                 correctJson = false;
             }
+
             if (!File.Exists(cacheVersionFile) || !correctJson)
             {
                 try
@@ -756,6 +829,7 @@ namespace LegendaryLibraryNS
                     {
                         Directory.CreateDirectory(cacheVersionPath);
                     }
+
                     File.WriteAllText(cacheVersionFile, content);
                     newVersionInfoContent = Serialization.FromJson<LauncherVersion>(content);
                 }
@@ -764,6 +838,7 @@ namespace LegendaryLibraryNS
                     logger.Error(ex, "An error occurred while downloading Legendary's version info.");
                 }
             }
+
             return newVersionInfoContent;
         }
 
@@ -791,6 +866,7 @@ namespace LegendaryLibraryNS
                 {
                     logger.Error($"Failed to get launcher path. Error: {ex.Message}");
                 }
+
                 return !string.IsNullOrEmpty(launcherPath) && File.Exists(launcherPath);
             }
         }
@@ -798,7 +874,7 @@ namespace LegendaryLibraryNS
         public static void ClearCache()
         {
             var logger = LogManager.GetLogger();
-            var cacheDirs = new List<string>()
+            var cacheDirs = new List<string>
             {
                 LegendaryLibrary.Instance.GetCachePath("catalogcache"),
                 LegendaryLibrary.Instance.GetCachePath("infocache"),
@@ -825,7 +901,7 @@ namespace LegendaryLibraryNS
         public static void ClearSpecificGamesCache(List<string> gameIds)
         {
             var logger = LogManager.GetLogger();
-            var cacheDirs = new List<string>()
+            var cacheDirs = new List<string>
             {
                 LegendaryLibrary.Instance.GetCachePath("infocache"),
                 LegendaryLibrary.Instance.GetCachePath("sdlcache"),
@@ -861,12 +937,14 @@ namespace LegendaryLibraryNS
             var options = new List<MessageBoxOption>
             {
                 new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteInstallGame)),
-                new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOkLabel)),
+                new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOkLabel))
             };
-            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonLauncherNotInstalled), "Legendary (Epic Games) library integration", MessageBoxImage.Error, options);
+            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonLauncherNotInstalled),
+                "Legendary (Epic Games) library integration", MessageBoxImage.Error, options);
             if (result == options[0])
             {
-                Playnite.Commands.GlobalCommands.NavigateUrl("https://github.com/hawkeye116477/playnite-legendary-plugin/wiki/Troubleshooting#legendary-launcher-is-not-installed");
+                Playnite.Commands.GlobalCommands.NavigateUrl(
+                    "https://github.com/hawkeye116477/playnite-legendary-plugin/wiki/Troubleshooting#legendary-launcher-is-not-installed");
             }
         }
 
@@ -880,6 +958,7 @@ namespace LegendaryLibraryNS
                 {
                     playtimeSyncEnabled = true;
                 }
+
                 return playtimeSyncEnabled;
             }
         }
@@ -892,6 +971,7 @@ namespace LegendaryLibraryNS
             {
                 installedInfo = installedAppList[gameId];
             }
+
             return installedInfo;
         }
 
@@ -917,23 +997,26 @@ namespace LegendaryLibraryNS
                     {
                         prereqName = prereq.name;
                     }
+
                     var prereqPath = "";
                     if (!prereq.path.IsNullOrEmpty())
                     {
                         prereqPath = prereq.path;
                     }
+
                     var prereqArgs = "";
                     if (!prereq.args.IsNullOrEmpty())
                     {
                         prereqArgs = prereq.args;
                     }
+
                     if (prereqPath != "")
                     {
                         try
                         {
                             ProcessStarter.StartProcessWait(Path.GetFullPath(Path.Combine(installedGameInfo.Install_path, prereqPath)),
-                                                            prereqArgs,
-                                                            "");
+                                prereqArgs,
+                                "");
                         }
                         catch (Exception ex)
                         {
@@ -941,6 +1024,7 @@ namespace LegendaryLibraryNS
                         }
                     }
                 }
+
                 gameSettings.InstallPrerequisites = false;
                 var commonHelpers = LegendaryLibrary.Instance.commonHelpers;
                 commonHelpers.SaveJsonSettingsToFile(gameSettings, "GamesSettings", gameId, true);
@@ -952,10 +1036,10 @@ namespace LegendaryLibraryNS
             var playniteAPI = API.Instance;
             var versionInfoContent = await GetVersionInfoContent();
             var newFixedTag = Regex.Replace(versionInfoContent.Tag_name, @"[^\d\.]", "");
-            if (versionInfoContent.Tag_name != null && Version.TryParse(newFixedTag, out Version newValidVersion))
+            if (versionInfoContent.Tag_name != null && Version.TryParse(newFixedTag, out var newValidVersion))
             {
                 var newVersion = newFixedTag;
-                var oldStringVersion = await LegendaryLauncher.GetLauncherVersion();
+                var oldStringVersion = await GetLauncherVersion();
                 var oldVersion = oldStringVersion;
                 if (oldVersion != newVersion)
                 {
@@ -963,9 +1047,14 @@ namespace LegendaryLibraryNS
                     {
                         new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.CommonViewChangelog)),
                         new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteInstallGame)),
-                        new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOkLabel)),
+                        new MessageBoxOption(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOkLabel))
                     };
-                    var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNewVersionAvailable, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)"Legendary Launcher", ["appVersion"] = (FluentString)newVersion.ToString() }), LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdaterWindowTitle), MessageBoxImage.Information, options);
+                    var result = playniteAPI.Dialogs.ShowMessage(
+                        LocalizationManager.Instance.GetString(LOC.CommonNewVersionAvailable,
+                            new Dictionary<string, IFluentType>
+                                { ["appName"] = (FluentString)"Legendary Launcher", ["appVersion"] = (FluentString)newVersion }),
+                        LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdaterWindowTitle), MessageBoxImage.Information,
+                        options);
                     if (result == options[0])
                     {
                         var changelogURL = versionInfoContent.Html_url;
@@ -975,9 +1064,11 @@ namespace LegendaryLibraryNS
                     {
                         var latestTag = $"{versionInfoContent.Tag_name}/legendary";
                         string[] validLegendarySuffixes = { "x86_64.exe", "x64.exe", ".exe" };
-                        var newAsset = validLegendarySuffixes.Select(suffix => 
-                        versionInfoContent.Assets.FirstOrDefault(a => a.Browser_download_url.Contains(latestTag)
-                                                                      && a.Browser_download_url.EndsWith(suffix))).FirstOrDefault(a => a != null);
+                        var newAsset = validLegendarySuffixes.Select(suffix =>
+                                                                  versionInfoContent.Assets.FirstOrDefault(a =>
+                                                                      a.Browser_download_url.Contains(latestTag)
+                                                                      && a.Browser_download_url.EndsWith(suffix)))
+                                                             .FirstOrDefault(a => a != null);
                         if (newAsset != null)
                         {
                             var appsToUpdate = new Dictionary<string, UpdateInfo>();
@@ -985,18 +1076,18 @@ namespace LegendaryLibraryNS
                             var updateInfo = new UpdateInfo
                             {
                                 Install_path = Path.GetDirectoryName(LauncherPath),
-                                Version = newVersion.ToString(),
+                                Version = newVersion,
                                 Download_size = newAsset.Size,
                                 Disk_size = newAsset.Size,
                                 Title = appTitle,
-                                Old_version = oldStringVersion,
+                                Old_version = oldStringVersion
                             };
                             appsToUpdate.Add("legendary-launcher", updateInfo);
                             if (appsToUpdate.Count > 0)
                             {
-                                Window window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
+                                var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
                                 {
-                                    ShowMaximizeButton = false,
+                                    ShowMaximizeButton = false
                                 });
                                 window.DataContext = appsToUpdate;
                                 window.Title = $"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExtensionsUpdates)}";
@@ -1022,7 +1113,8 @@ namespace LegendaryLibraryNS
             {
                 if (displayMessages)
                 {
-                    playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdateCheckFailMessage), "Legendary Launcher");
+                    playniteAPI.Dialogs.ShowErrorMessage(
+                        LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdateCheckFailMessage), "Legendary Launcher");
                 }
                 else
                 {
@@ -1052,25 +1144,27 @@ namespace LegendaryLibraryNS
                     userInfoJson = newUserInfoJson;
                 }
             }
+
             return userInfoJson;
         }
 
         public static async Task RemoveAllTokens()
         {
-            var userInfoContent = LegendaryLauncher.GetUserInfo();
+            var userInfoContent = GetUserInfo();
             if (!userInfoContent.account_id.IsNullOrEmpty())
             {
                 PasswordStore.DeletePassword($"legendary/{userInfoContent.account_id}", userInfoContent.account_id);
-                FileSystem.DeleteFileSafe(Path.Combine(LegendaryLauncher.ConfigPath, $"{userInfoContent.account_id.MD5()}.enc"));
+                FileSystem.DeleteFileSafe(Path.Combine(ConfigPath, $"{userInfoContent.account_id.MD5()}.enc"));
             }
-            FileSystem.DeleteFileSafe(LegendaryLauncher.UserInfoPath);
-            FileSystem.DeleteFileSafe(LegendaryLauncher.OldPluginEncryptedTokensPath);
-            FileSystem.DeleteFileSafe(LegendaryLauncher.TokensPath);
-            if (LegendaryLauncher.IsInstalled)
+
+            FileSystem.DeleteFileSafe(UserInfoPath);
+            FileSystem.DeleteFileSafe(OldPluginEncryptedTokensPath);
+            FileSystem.DeleteFileSafe(TokensPath);
+            if (IsInstalled)
             {
-                var result = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
+                var result = await Cli.Wrap(ClientExecPath)
                                       .WithArguments(new[] { "auth", "--delete" })
-                                      .WithEnvironmentVariables(LegendaryLauncher.GetDefaultEnvironmentVariables())
+                                      .WithEnvironmentVariables(GetDefaultEnvironmentVariables())
                                       .AddCommandToLog()
                                       .WithValidation(CommandResultValidation.None)
                                       .ExecuteBufferedAsync();

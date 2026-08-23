@@ -21,7 +21,7 @@ namespace LegendaryLibraryNS
 
         public override GameMetadata GetMetadata(Game game)
         {
-            var gameInfo = new GameMetadata() { Links = new List<Link>() };
+            var gameInfo = new GameMetadata { Links = new List<Link>() };
             var metadatafile = Path.Combine(LegendaryLauncher.ConfigPath, "metadata", game.GameId + ".json");
             if (File.Exists(metadatafile))
             {
@@ -30,18 +30,21 @@ namespace LegendaryLibraryNS
                 {
                     if (legendaryMetadata != null)
                     {
-                        gameInfo.Features = new HashSet<MetadataProperty>() { };
+                        gameInfo.Features = new HashSet<MetadataProperty>();
                         if (legendaryMetadata.metadata.customAttributes?.CloudSaveFolder != null)
                         {
                             gameInfo.Features.Add(new MetadataNameProperty(LocalizationManager.Instance.GetString(LOC.CommonCloudSaves)));
                         }
+
                         if (legendaryMetadata.metadata.mainGameItem != null)
                         {
                             gameInfo.Features.Add(new MetadataNameProperty(LocalizationManager.Instance.GetString(LOC.CommonExtraContent)));
                         }
+
                         if (legendaryMetadata.metadata.customAttributes?.CanRunOffline?.value == "true")
                         {
-                            gameInfo.Features.Add(new MetadataNameProperty(LocalizationManager.Instance.GetString(LOC.LegendaryOfflineMode)));
+                            gameInfo.Features.Add(
+                                new MetadataNameProperty(LocalizationManager.Instance.GetString(LOC.LegendaryOfflineMode)));
                         }
                     }
                 }

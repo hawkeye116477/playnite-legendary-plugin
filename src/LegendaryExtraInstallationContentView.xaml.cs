@@ -32,17 +32,19 @@ namespace LegendaryLibraryNS
         private async void LegendaryExtraInstallationContentUC_Loaded(object sender, RoutedEventArgs e)
         {
             CommonHelpers.SetControlBackground(this);
-            Dictionary<string, LegendarySDLInfo> extraContentInfo = await LegendaryLauncher.GetExtraContentInfo(ChosenGame);
+            var extraContentInfo = await LegendaryLauncher.GetExtraContentInfo(ChosenGame);
             var dlcs = extraContentInfo.Where(i => i.Value.Is_dlc).ToList();
-            var sdls = extraContentInfo.Where(i => i.Value.Is_dlc == false).ToList();
+            var sdls = extraContentInfo.Where(i => !i.Value.Is_dlc).ToList();
             if (dlcs.Count > 1)
             {
                 AllDlcsChk.Visibility = Visibility.Visible;
             }
+
             if (sdls.Count > 1)
             {
                 AllOrNothingChk.Visibility = Visibility.Visible;
             }
+
             if (extraContentInfo.Count > 0)
             {
                 ExtraContentLB.ItemsSource = extraContentInfo;
@@ -55,23 +57,25 @@ namespace LegendaryLibraryNS
                     {
                         var sdlInfo = new LegendarySDLInfo
                         {
-                            Is_dlc = true,
+                            Is_dlc = true
                         };
                         selectedExtraContent.Add(selectedDlc.Key, sdlInfo);
                     }
                 }
+
                 var selectedSdls = ChosenGame.downloadProperties.extraContent;
                 if (selectedSdls.Count > 0)
                 {
-                    foreach (var selectedSdl  in selectedSdls)
+                    foreach (var selectedSdl in selectedSdls)
                     {
                         var sdlInfo = new LegendarySDLInfo
                         {
-                            Is_dlc = false,
+                            Is_dlc = false
                         };
                         selectedExtraContent.Add(selectedSdl, sdlInfo);
                     }
                 }
+
                 if (selectedExtraContent.Count > 0)
                 {
                     foreach (var singleSelectedExtraContent in selectedExtraContent)
@@ -90,7 +94,7 @@ namespace LegendaryLibraryNS
         {
             var selectedExtraContent = ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySDLInfo>>().ToList();
             var selectedDLCs = selectedExtraContent.Where(i => i.Value.Is_dlc).ToList();
-            var sdls = selectedExtraContent.Where(i => i.Value.Is_dlc == false).ToList();
+            var sdls = selectedExtraContent.Where(i => !i.Value.Is_dlc).ToList();
 
             var selectedSdls = new List<string>();
 
@@ -101,6 +105,7 @@ namespace LegendaryLibraryNS
                     selectedSdls.AddMissing(sdl.Key);
                 }
             }
+
             ChosenGame.downloadProperties.selectedDlcs = new Dictionary<string, DownloadManagerData.Download>();
             if (selectedDLCs.Count > 0)
             {
@@ -114,7 +119,7 @@ namespace LegendaryLibraryNS
                     var dlcInstallData = new DownloadManagerData.Download
                     {
                         gameID = dlcData.App_name,
-                        name = dlcData.Title,
+                        name = dlcData.Title
                     };
                     ChosenGame.downloadProperties.selectedDlcs.Add(dlcData.App_name, dlcInstallData);
                 }
@@ -128,11 +133,12 @@ namespace LegendaryLibraryNS
                     selectedSdls.AddMissing(requiredTag);
                 }
             }
+
             ChosenGame.downloadProperties.extraContent = selectedSdls;
             var gameData = new LegendaryGameInfo.Game
             {
                 App_name = ChosenGame.gameID,
-                Title = ChosenGame.name,
+                Title = ChosenGame.name
             };
 
             if (AllOrNothingChk.IsChecked == true && selectedExtraContent.Count() != ExtraContentLB.Items.Count)
@@ -141,12 +147,14 @@ namespace LegendaryLibraryNS
                 AllOrNothingChk.IsChecked = false;
                 uncheckedByUser = true;
             }
+
             if (AllOrNothingChk.IsChecked == false && selectedExtraContent.Count() == ExtraContentLB.Items.Count)
             {
                 checkedByUser = false;
                 AllOrNothingChk.IsChecked = true;
                 checkedByUser = true;
             }
+
             var allDLCs = ExtraContentLB.Items.Cast<KeyValuePair<string, LegendarySDLInfo>>().Where(i => i.Value.Is_dlc).ToList();
             if (AllDlcsChk.IsChecked == true && selectedDLCs.Count() != allDLCs.Count)
             {
@@ -154,6 +162,7 @@ namespace LegendaryLibraryNS
                 AllDlcsChk.IsChecked = false;
                 uncheckedByUser = true;
             }
+
             if (AllDlcsChk.IsChecked == false && selectedDLCs.Count() == allDLCs.Count)
             {
                 checkedByUser = false;

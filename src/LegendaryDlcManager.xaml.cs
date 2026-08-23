@@ -9,7 +9,6 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,6 +48,7 @@ namespace LegendaryLibraryNS
                 CloseWindowTab.Visibility = Visibility.Visible;
                 AvailableDlcsTab.Focus();
             }
+
             CommonHelpers.SetControlBackground(this);
             await RefreshAll();
         }
@@ -97,12 +97,13 @@ namespace LegendaryLibraryNS
                             }
                         }
                     }
+
                     InstalledDlcsLB.ItemsSource = installedDLCs;
                     AvailableDlcsLB.ItemsSource = notInstalledDLCs;
 
                     if (!Game.InstallDirectory.IsNullOrEmpty())
                     {
-                        DriveInfo dDrive = new DriveInfo(Path.GetFullPath(Game.InstallDirectory));
+                        var dDrive = new DriveInfo(Path.GetFullPath(Game.InstallDirectory));
                         if (dDrive.IsReady)
                         {
                             availableFreeSpace = dDrive.AvailableFreeSpace;
@@ -110,6 +111,7 @@ namespace LegendaryLibraryNS
                             AfterInstallingTB.Text = CommonHelpers.FormatSize(availableFreeSpace);
                         }
                     }
+
                     var settings = LegendaryLibrary.GetSettings();
                     MaxWorkersNI.Value = settings.MaxWorkers.ToString();
                     MaxSharedMemoryNI.Value = settings.MaxSharedMemory.ToString();
@@ -119,6 +121,7 @@ namespace LegendaryLibraryNS
                         InstalledDlcsSP.Visibility = Visibility.Collapsed;
                         NoInstalledDlcsTB.Visibility = Visibility.Visible;
                     }
+
                     if (AvailableDlcsLB.Items.Count == 0)
                     {
                         BottomADGrd.Visibility = Visibility.Collapsed;
@@ -134,12 +137,14 @@ namespace LegendaryLibraryNS
                     InstalledDlcsTbI.Visibility = Visibility.Collapsed;
                 }
             }
+
             LoadingATB.Visibility = Visibility.Collapsed;
             LoadingITB.Visibility = Visibility.Collapsed;
             if (InstalledDlcsLB.Items.Count > 0)
             {
                 InstalledDlcsSP.Visibility = Visibility.Visible;
             }
+
             if (AvailableDlcsLB.Items.Count > 0)
             {
                 installedSdls = new List<string>();
@@ -150,15 +155,18 @@ namespace LegendaryLibraryNS
                         installedSdls = installedAppList[Game.GameId].Install_tags;
                     }
                 }
+
                 BottomADGrd.Visibility = Visibility.Visible;
                 TopADSP.Visibility = Visibility.Visible;
             }
+
             if (Game.InstallDirectory.IsNullOrEmpty())
             {
                 AvailableDlcsActionSP.Visibility = Visibility.Collapsed;
                 BottomADGrd.Visibility = Visibility.Collapsed;
                 AvailableDlcsAOBrd.Visibility = Visibility.Collapsed;
             }
+
             ReloadABtn.IsEnabled = true;
         }
 
@@ -168,21 +176,25 @@ namespace LegendaryLibraryNS
             if (InstalledDlcsLB.SelectedItems.Count == 1)
             {
                 var selectedDLC = (KeyValuePair<string, LegendaryGameInfo.Rootobject>)InstalledDlcsLB.SelectedItems[0];
-                result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonUninstallGameConfirm, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)selectedDLC.Value.Game.Title }),
-                                                         LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame),
-                                                         MessageBoxButton.YesNo,
-                                                         MessageBoxImage.Question);
+                result = playniteAPI.Dialogs.ShowMessage(
+                    LocalizationManager.Instance.GetString(LOC.CommonUninstallGameConfirm,
+                        new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)selectedDLC.Value.Game.Title }),
+                    LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame),
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
             }
             else
             {
                 result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonUninstallSelectedDlcs),
-                                                         LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame),
-                                                         MessageBoxButton.YesNo,
-                                                         MessageBoxImage.Question);
+                    LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame),
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
             }
+
             if (result == MessageBoxResult.Yes)
             {
-                foreach (var selectedDlc in InstalledDlcsLB.SelectedItems.Cast<KeyValuePair<string, LegendaryGameInfo.Rootobject>>().ToList())
+                foreach (var selectedDlc in InstalledDlcsLB.SelectedItems.Cast<KeyValuePair<string, LegendaryGameInfo.Rootobject>>()
+                                                           .ToList())
                 {
                     var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                        .WithArguments(new[] { "-y", "uninstall", selectedDlc.Key })
@@ -201,6 +213,7 @@ namespace LegendaryLibraryNS
                         notInstalledDLCs.Add(selectedDlc);
                     }
                 }
+
                 if (InstalledDlcsLB.Items.Count == 0)
                 {
                     InstalledDlcsSP.Visibility = Visibility.Collapsed;
@@ -218,24 +231,28 @@ namespace LegendaryLibraryNS
                 {
                     return;
                 }
+
                 var settings = LegendaryLibrary.GetSettings();
-                int maxWorkers = settings.MaxWorkers;
+                var maxWorkers = settings.MaxWorkers;
                 if (MaxWorkersNI.Value != "")
                 {
                     maxWorkers = int.Parse(MaxWorkersNI.Value);
                 }
-                int maxSharedMemory = settings.MaxSharedMemory;
+
+                var maxSharedMemory = settings.MaxSharedMemory;
                 if (MaxSharedMemoryNI.Value != "")
                 {
                     maxSharedMemory = int.Parse(MaxSharedMemoryNI.Value);
                 }
+
                 DlcManagerWindow.Close();
                 var tasks = new List<DownloadManagerData.Download>();
                 foreach (var selectedOption in AvailableDlcsLB.SelectedItems.Cast<KeyValuePair<string, LegendaryGameInfo.Rootobject>>())
                 {
-                    var wantedItem = LegendaryLibrary.Instance.pluginDownloadData.downloads.FirstOrDefault(item => item.gameID == selectedOption.Key);
+                    var wantedItem =
+                        LegendaryLibrary.Instance.pluginDownloadData.downloads.FirstOrDefault(item => item.gameID == selectedOption.Key);
 
-                    DownloadProperties downloadProperties = new DownloadProperties()
+                    var downloadProperties = new DownloadProperties
                     {
                         downloadAction = DownloadAction.Install,
                         enableReordering = (bool)ReorderingChk.IsChecked,
@@ -250,6 +267,7 @@ namespace LegendaryLibraryNS
                             downloadProperties.extraContent.AddMissing(installedSdl);
                         }
                     }
+
                     var downloadTask = new DownloadManagerData.Download
                     {
                         gameID = selectedOption.Key,
@@ -261,6 +279,7 @@ namespace LegendaryLibraryNS
                     downloadTask.installSizeNumber = dlcSize.Disk_size;
                     tasks.Add(downloadTask);
                 }
+
                 if (tasks.Count > 0)
                 {
                     var downloadLogic = (LegendaryDownloadLogic)LegendaryLibrary.Instance.UnifiedDownloadLogic;
@@ -275,6 +294,7 @@ namespace LegendaryLibraryNS
             {
                 return;
             }
+
             if (AvailableDlcsLB.SelectedIndex == -1)
             {
                 InstallBtn.IsEnabled = false;
@@ -283,10 +303,12 @@ namespace LegendaryLibraryNS
             {
                 InstallBtn.IsEnabled = true;
             }
+
             double initialDownloadSizeNumber = 0;
             double initialInstallSizeNumber = 0;
 
-            foreach (var selectedOption in AvailableDlcsLB.SelectedItems.Cast<KeyValuePair<string, LegendaryGameInfo.Rootobject>>().ToList())
+            foreach (var selectedOption in AvailableDlcsLB.SelectedItems.Cast<KeyValuePair<string, LegendaryGameInfo.Rootobject>>()
+                                                          .ToList())
             {
                 var dlcInstallData = new DownloadManagerData.Download
                 {
@@ -300,15 +322,17 @@ namespace LegendaryLibraryNS
                         dlcInstallData.downloadProperties.extraContent.AddMissing(installedSdl);
                     }
                 }
+
                 var dlcSize = await LegendaryLauncher.CalculateGameSize(dlcInstallData);
                 initialDownloadSizeNumber += dlcSize.Download_size;
                 initialInstallSizeNumber += dlcSize.Disk_size;
             }
+
             var downloadSize = CommonHelpers.FormatSize(initialDownloadSizeNumber);
             DownloadSizeTB.Text = downloadSize;
             var installSize = CommonHelpers.FormatSize(initialInstallSizeNumber);
             InstallSizeTB.Text = installSize;
-            double afterInstallSizeNumber = (double)(availableFreeSpace - initialInstallSizeNumber);
+            var afterInstallSizeNumber = availableFreeSpace - initialInstallSizeNumber;
             AfterInstallingTB.Text = CommonHelpers.FormatSize(afterInstallSizeNumber);
         }
 
@@ -367,7 +391,8 @@ namespace LegendaryLibraryNS
 
         private async void ReloadABtn_Click(object sender, RoutedEventArgs e)
         {
-            var result = MessageCheckBoxDialog.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonReload), LocalizationManager.Instance.GetString(LOC.CommonReloadConfirm), null, MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = MessageCheckBoxDialog.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonReload),
+                LocalizationManager.Instance.GetString(LOC.CommonReloadConfirm), null, MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result.Result)
             {
                 InstallBtn.IsEnabled = false;

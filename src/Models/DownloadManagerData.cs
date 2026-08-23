@@ -16,6 +16,7 @@ namespace LegendaryLibraryNS.Models
             public string fullInstallPath { get; set; }
 
             private double _downloadSizeNumber;
+
             [DontSerialize]
             public double downloadSizeNumber
             {
@@ -24,6 +25,7 @@ namespace LegendaryLibraryNS.Models
             }
 
             private double _installSizeNumber;
+
             [DontSerialize]
             public double installSizeNumber
             {
@@ -35,6 +37,7 @@ namespace LegendaryLibraryNS.Models
             public long addedTime { get; set; }
 
             private long _completedTime;
+
             [DontSerialize]
             public long completedTime
             {
@@ -43,6 +46,7 @@ namespace LegendaryLibraryNS.Models
             }
 
             private DownloadStatus _status;
+
             [DontSerialize]
             public DownloadStatus status
             {
@@ -51,6 +55,7 @@ namespace LegendaryLibraryNS.Models
             }
 
             private double _progress;
+
             [DontSerialize]
             public double progress
             {
@@ -59,12 +64,14 @@ namespace LegendaryLibraryNS.Models
             }
 
             private double _downloadedNumber;
+
             [DontSerialize]
             public double downloadedNumber
             {
                 get => _downloadedNumber;
                 set => SetValue(ref _downloadedNumber, value);
             }
+
             public DownloadProperties downloadProperties { get; set; } = new DownloadProperties();
             public bool? extraContentAvailable { get; set; } = null;
         }

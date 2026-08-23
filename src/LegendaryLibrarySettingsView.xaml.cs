@@ -15,10 +15,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -42,7 +40,8 @@ namespace LegendaryLibraryNS
 
         private void ChooseLauncherBtn_Click(object sender, RoutedEventArgs e)
         {
-            var file = playniteAPI.Dialogs.SelectFile($"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExecutableTitle)}|legendary*.exe");
+            var file = playniteAPI.Dialogs.SelectFile(
+                $"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExecutableTitle)}|legendary*.exe");
             if (file != "")
             {
                 SelectedLauncherPathTxt.Text = file;
@@ -61,7 +60,13 @@ namespace LegendaryLibraryNS
         private async void EOSOUninstallBtn_Click(object sender, RoutedEventArgs e)
         {
             var result = playniteAPI.Dialogs.ShowMessage(
-                LocalizationManager.Instance.GetString(LOC.CommonUninstallGameConfirm, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS"}) }), LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame), MessageBoxButton.YesNo, MessageBoxImage.Question);
+                LocalizationManager.Instance.GetString(LOC.CommonUninstallGameConfirm,
+                    new Dictionary<string, IFluentType>
+                    {
+                        ["gameTitle"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonOverlay,
+                            new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS" })
+                    }), LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame), MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
@@ -76,7 +81,12 @@ namespace LegendaryLibraryNS
                     EOSOUninstallBtn.Visibility = Visibility.Collapsed;
                     EOSOToggleBtn.Visibility = Visibility.Collapsed;
                     EOSOCheckForUpdatesBtn.Visibility = Visibility.Collapsed;
-                    playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonUninstallSuccess, new Dictionary<string, IFluentType> { ["appName"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS"}) }));
+                    playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonUninstallSuccess,
+                        new Dictionary<string, IFluentType>
+                        {
+                            ["appName"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonOverlay,
+                                new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS" })
+                        }));
                 }
             }
         }
@@ -87,9 +97,15 @@ namespace LegendaryLibraryNS
             {
                 ShowMaximizeButton = false
             });
-            window.Title = LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS"});
+            window.Title = LocalizationManager.Instance.GetString(LOC.CommonOverlay,
+                new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS" });
             var installProperties = new DownloadProperties { downloadAction = DownloadAction.Install };
-            var installData = new DownloadManagerData.Download { name = LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS"}), gameID = "eos-overlay", downloadProperties = installProperties };
+            var installData = new DownloadManagerData.Download
+            {
+                name = LocalizationManager.Instance.GetString(LOC.CommonOverlay,
+                    new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS" }),
+                gameID = "eos-overlay", downloadProperties = installProperties
+            };
             var installDataList = new List<DownloadManagerData.Download>
             {
                 installData
@@ -121,6 +137,7 @@ namespace LegendaryLibraryNS
             {
                 toggleCommand = "enable";
             }
+
             await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                      .WithArguments(new[] { "-y", "eos-overlay", toggleCommand })
                      .WithEnvironmentVariables(LegendaryLauncher.GetDefaultEnvironmentVariables())
@@ -132,6 +149,7 @@ namespace LegendaryLibraryNS
             {
                 toggleTxt = LOC.LegendaryDisable;
             }
+
             EOSOToggleBtn.Content = LocalizationManager.Instance.GetString(toggleTxt);
         }
 
@@ -205,6 +223,7 @@ namespace LegendaryLibraryNS
                     troubleshootingInformation.LauncherVersion = launcherVersion;
                     LauncherVersionTxt.Text = troubleshootingInformation.LauncherVersion;
                 }
+
                 LauncherBinaryTxt.Text = troubleshootingInformation.LauncherBinary;
                 if (troubleshootingInformation.LauncherBinary.Contains(LegendaryLauncher.HeroicLegendaryPath))
                 {
@@ -224,7 +243,8 @@ namespace LegendaryLibraryNS
             PluginVersionTxt.Text = troubleshootingInformation.PluginVersion;
             GamesInstallationPathTxt.Text = troubleshootingInformation.GamesInstallationPath;
             LogFilesPathTxt.Text = playniteAPI.Paths.ConfigurationPath;
-            ReportBugHyp.NavigateUri = new Uri($"https://github.com/hawkeye116477/playnite-legendary-plugin/issues/new?assignees=&labels=bug&projects=&template=bugs.yml&legendaryV={troubleshootingInformation.PluginVersion}&playniteV={troubleshootingInformation.PlayniteVersion}&launcherV={troubleshootingInformation.LauncherVersion}");
+            ReportBugHyp.NavigateUri = new Uri(
+                $"https://github.com/hawkeye116477/playnite-legendary-plugin/issues/new?assignees=&labels=bug&projects=&template=bugs.yml&legendaryV={troubleshootingInformation.PluginVersion}&playniteV={troubleshootingInformation.PlayniteVersion}&launcherV={troubleshootingInformation.LauncherVersion}");
 
             if (playniteAPI.ApplicationSettings.PlaytimeImportMode == PlaytimeImportMode.Never)
             {
@@ -234,7 +254,9 @@ namespace LegendaryLibraryNS
 
         private void ClearCacheBtn_Click(object sender, RoutedEventArgs e)
         {
-            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonClearCacheConfirm), LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteSettingsClearCacheTitle), MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonClearCacheConfirm),
+                LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteSettingsClearCacheTitle), MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 LegendaryLauncher.ClearCache();
@@ -245,7 +267,8 @@ namespace LegendaryLibraryNS
         {
             if (SyncGameSavesChk.IsChecked == true)
             {
-                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonSyncGameSavesWarn), "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonSyncGameSavesWarn), "",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -256,6 +279,7 @@ namespace LegendaryLibraryNS
                 LegendaryLauncher.ShowNotInstalledError();
                 return;
             }
+
             var clientApi = new EpicAccountClient(playniteAPI);
             var userLoggedIn = await clientApi.GetIsUserLoggedIn();
             if (!userLoggedIn)
@@ -263,17 +287,24 @@ namespace LegendaryLibraryNS
                 playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedInError));
                 return;
             }
-            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonMigrationConfirm), LocalizationManager.Instance.GetString(LOC.CommonMigrateGamesOriginal), MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonMigrationConfirm),
+                LocalizationManager.Instance.GetString(LOC.CommonMigrateGamesOriginal), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.No)
             {
                 return;
             }
-            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonMigratingGamesOriginal), false) { IsIndeterminate = false };
-            playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
+
+            var globalProgressOptions =
+                new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonMigratingGamesOriginal), false)
+                    { IsIndeterminate = false };
+            playniteAPI.Dialogs.ActivateGlobalProgress(async a =>
             {
                 using (playniteAPI.Database.BufferedUpdate())
                 {
-                    var gamesToMigrate = playniteAPI.Database.Games.Where(i => i.PluginId == Guid.Parse("00000002-DBD1-46C6-B5D0-B1BA559D10E4")).ToList();
+                    var gamesToMigrate = playniteAPI.Database.Games
+                                                    .Where(i => i.PluginId == Guid.Parse("00000002-DBD1-46C6-B5D0-B1BA559D10E4"))
+                                                    .ToList();
                     var migratedGames = new List<string>();
                     var notImportedGames = new List<string>();
                     if (gamesToMigrate.Count > 0)
@@ -284,7 +315,8 @@ namespace LegendaryLibraryNS
                         foreach (var game in gamesToMigrate.ToList())
                         {
                             iterator++;
-                            var alreadyExists = playniteAPI.Database.Games.FirstOrDefault(i => i.GameId == game.GameId && i.PluginId == LegendaryLibrary.Instance.Id);
+                            var alreadyExists = playniteAPI.Database.Games.FirstOrDefault(i =>
+                                i.GameId == game.GameId && i.PluginId == LegendaryLibrary.Instance.Id);
                             if (alreadyExists == null)
                             {
                                 game.PluginId = LegendaryLibrary.Instance.Id;
@@ -304,21 +336,27 @@ namespace LegendaryLibraryNS
                                         logger.Error("[Legendary] exit code: " + importCmd.ExitCode);
                                     }
                                 }
+
                                 playniteAPI.Database.Games.Update(game);
                                 migratedGames.Add(game.GameId);
                                 a.CurrentProgressValue = iterator;
                             }
                         }
+
                         a.CurrentProgressValue = gamesToMigrate.Count() + 1;
                         if (migratedGames.Count > 0)
                         {
-                            playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonMigrationCompleted), LocalizationManager.Instance.GetString(LOC.CommonMigrateGamesOriginal), MessageBoxButton.OK, MessageBoxImage.Information);
+                            playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonMigrationCompleted),
+                                LocalizationManager.Instance.GetString(LOC.CommonMigrateGamesOriginal), MessageBoxButton.OK,
+                                MessageBoxImage.Information);
                             logger.Info("Successfully migrated " + migratedGames.Count + " game(s) from Epic to Legendary.");
                         }
+
                         if (notImportedGames.Count > 0)
                         {
                             logger.Info(notImportedGames.Count + " game(s) probably needs to be imported or installed again.");
                         }
+
                         if (migratedGames.Count == 0 && notImportedGames.Count == 0)
                         {
                             playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.CommonMigrationNoGames));
@@ -377,21 +415,24 @@ namespace LegendaryLibraryNS
                     playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedInError), "");
                     logger.Error(ex, "Failed to authenticate user.");
                 }
+
                 UpdateAuthStatus();
             }
             else
             {
-                var answer = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonSignOutConfirm), LocalizationManager.Instance.GetString(LOC.CommonSignOut), MessageBoxButton.YesNo);
+                var answer = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonSignOutConfirm),
+                    LocalizationManager.Instance.GetString(LOC.CommonSignOut), MessageBoxButton.YesNo);
                 if (answer == MessageBoxResult.Yes)
                 {
                     using (var view = playniteAPI.WebViews.CreateView(new WebViewSettings
-                    {
-                        WindowWidth = 580,
-                        WindowHeight = 700,
-                    }))
+                           {
+                               WindowWidth = 580,
+                               WindowHeight = 700
+                           }))
                     {
                         view.DeleteDomainCookies(".epicgames.com");
                     }
+
                     await LegendaryLauncher.RemoveAllTokens();
                     UpdateAuthStatus();
                 }
@@ -410,7 +451,8 @@ namespace LegendaryLibraryNS
             var userLoggedIn = await clientApi.GetIsUserLoggedIn();
             if (userLoggedIn)
             {
-                AuthStatusTB.Text = LocalizationManager.Instance.GetString(LOC.CommonSignedInAs, new Dictionary<string, IFluentType> { ["userName"] = (FluentString)clientApi.GetUsername() });
+                AuthStatusTB.Text = LocalizationManager.Instance.GetString(LOC.CommonSignedInAs,
+                    new Dictionary<string, IFluentType> { ["userName"] = (FluentString)clientApi.GetUsername() });
                 LoginBtn.Content = LocalizationManager.Instance.GetString(LOC.CommonSignOut);
                 LoginBtn.IsChecked = true;
                 LoginAlternativeBtn.Visibility = Visibility.Collapsed;
@@ -422,6 +464,7 @@ namespace LegendaryLibraryNS
                 LoginBtn.IsChecked = false;
                 LoginAlternativeBtn.Visibility = Visibility.Visible;
             }
+
             LoginBtn.IsEnabled = true;
         }
 
@@ -451,7 +494,10 @@ namespace LegendaryLibraryNS
                 LegendaryLauncher.ShowNotInstalledError();
                 return;
             }
-            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.LegendaryContinueActivation, new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"Ubisoft" }), "", MessageBoxButton.YesNo);
+
+            var result = playniteAPI.Dialogs.ShowMessage(
+                LocalizationManager.Instance.GetString(LOC.LegendaryContinueActivation,
+                    new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"Ubisoft" }), "", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
                 await Cli.Wrap(LegendaryLauncher.ClientExecPath)
@@ -461,9 +507,9 @@ namespace LegendaryLibraryNS
                          .WithValidation(CommandResultValidation.None)
                          .ExecuteAsync();
 
-                bool warningDisplayed = false;
-                bool errorDisplayed = false;
-                bool successDisplayed = false;
+                var warningDisplayed = false;
+                var errorDisplayed = false;
+                var successDisplayed = false;
                 var errorBuffer = new StringBuilder();
                 var warningBuffer = new StringBuilder();
                 var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
@@ -471,33 +517,40 @@ namespace LegendaryLibraryNS
                              .WithArguments(new[] { "activate", "-U" })
                              .AddCommandToLog()
                              .WithValidation(CommandResultValidation.None);
-                await foreach (CommandEvent cmdEvent in cmd.ListenAsync())
+                await foreach (var cmdEvent in cmd.ListenAsync())
                 {
                     switch (cmdEvent)
                     {
                         case StartedCommandEvent started:
                             break;
                         case StandardErrorCommandEvent stdErr:
-                            var activatedTitlesMatch = Regex.Match(stdErr.Text, @"(\d+) titles have already been activated on your Ubisoft account");
+                            var activatedTitlesMatch = Regex.Match(stdErr.Text,
+                                @"(\d+) titles have already been activated on your Ubisoft account");
                             if (activatedTitlesMatch.Length >= 1)
                             {
                                 successDisplayed = true;
-                                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.LegendaryAllActivatedUbisoft, new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"Ubisoft" }));
+                                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.LegendaryAllActivatedUbisoft,
+                                    new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"Ubisoft" }));
                             }
+
                             if (stdErr.Text.Contains("Redeemed all"))
                             {
                                 successDisplayed = true;
-                                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.LegendaryGamesActivateSuccess, new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"Ubisoft" }));
+                                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.LegendaryGamesActivateSuccess,
+                                    new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"Ubisoft" }));
                             }
+
                             if (stdErr.Text.Contains("WARNING"))
                             {
                                 warningDisplayed = true;
                                 warningBuffer.AppendLine(stdErr.Text);
                             }
+
                             if (stdErr.Text.Contains("ERROR") || stdErr.Text.Contains("exceptions"))
                             {
-                                errorDisplayed = true; 
+                                errorDisplayed = true;
                             }
+
                             errorBuffer.AppendLine(stdErr.Text);
                             break;
                         case ExitedCommandEvent exited:
@@ -507,44 +560,68 @@ namespace LegendaryLibraryNS
                                 logger.Error($"[Legendary] {errorMessage}");
                                 if (errorMessage.Contains("No linked"))
                                 {
-                                    playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.LegendaryNoLinkedAccount, new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"Ubisoft" }));
+                                    playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(
+                                        LOC.LegendaryNoLinkedAccount,
+                                        new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"Ubisoft" }));
                                     ProcessStarter.StartUrl("https://www.epicgames.com/id/link/ubisoft");
                                 }
                                 else if (errorMessage.Contains("Failed to establish a new connection")
-                                    || errorMessage.Contains("Log in failed")
-                                    || errorMessage.Contains("Login failed")
-                                    || errorMessage.Contains("No saved credentials"))
+                                         || errorMessage.Contains("Log in failed")
+                                         || errorMessage.Contains("Login failed")
+                                         || errorMessage.Contains("No saved credentials"))
                                 {
-                                    playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.LegendaryGamesActivateFailure, new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"Ubisoft", ["reason"] = (FluentString)LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired) }));
+                                    playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(
+                                        LOC.LegendaryGamesActivateFailure,
+                                        new Dictionary<string, IFluentType>
+                                        {
+                                            ["companyAccount"] = (FluentString)"Ubisoft",
+                                            ["reason"] = (FluentString)LocalizationManager.Instance.GetString(
+                                                LOC.ThirdPartyPlayniteLoginRequired)
+                                        }));
                                 }
                                 else
                                 {
-                                    playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.LegendaryGamesActivateFailure, new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"Ubisoft", ["reason"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonCheckLog) }));
+                                    playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(
+                                        LOC.LegendaryGamesActivateFailure,
+                                        new Dictionary<string, IFluentType>
+                                        {
+                                            ["companyAccount"] = (FluentString)"Ubisoft",
+                                            ["reason"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonCheckLog)
+                                        }));
                                 }
                             }
+
                             if (warningDisplayed)
                             {
                                 var warningMessage = warningBuffer.ToString();
                                 logger.Warn($"[Legendary] {warningMessage}");
                                 if (!successDisplayed && !errorDisplayed)
                                 {
-                                    playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.LegendaryGamesActivateFailure, new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"Ubisoft", ["reason"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonCheckLog) }));
+                                    playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(
+                                        LOC.LegendaryGamesActivateFailure,
+                                        new Dictionary<string, IFluentType>
+                                        {
+                                            ["companyAccount"] = (FluentString)"Ubisoft",
+                                            ["reason"] = (FluentString)LocalizationManager.Instance.GetString(LOC.CommonCheckLog)
+                                        }));
                                 }
                             }
+
                             break;
                     }
                 }
             }
-
         }
 
         private void ActivateEaBtn_Click(object sender, RoutedEventArgs e)
         {
             if (!LegendaryLauncher.IsEaAppInstalled)
             {
-                playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteClientNotInstalledError, new Dictionary<string, IFluentType> { ["var0"] = (FluentString)"EA App" }));
+                playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteClientNotInstalledError,
+                    new Dictionary<string, IFluentType> { ["var0"] = (FluentString)"EA App" }));
                 return;
             }
+
             var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
             {
                 ShowMaximizeButton = false
@@ -578,18 +655,23 @@ namespace LegendaryLibraryNS
 
         private void EOSOCheckForUpdatesBtn_Click(object sender, RoutedEventArgs e)
         {
-            LegendaryUpdateController legendaryUpdateController = new LegendaryUpdateController();
+            var legendaryUpdateController = new LegendaryUpdateController();
             var gamesToUpdate = new Dictionary<string, UpdateInfo>();
-            GlobalProgressOptions updateCheckProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonCheckingForUpdates), false) { IsIndeterminate = true };
-            playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
-            {
-                gamesToUpdate = await legendaryUpdateController.CheckGameUpdates(LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS"}), "eos-overlay");
-            }, updateCheckProgressOptions);
+            var updateCheckProgressOptions =
+                new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonCheckingForUpdates), false)
+                    { IsIndeterminate = true };
+            playniteAPI.Dialogs.ActivateGlobalProgress(
+                async a =>
+                {
+                    gamesToUpdate = await legendaryUpdateController.CheckGameUpdates(
+                        LocalizationManager.Instance.GetString(LOC.CommonOverlay,
+                            new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS" }), "eos-overlay");
+                }, updateCheckProgressOptions);
             if (gamesToUpdate.Count > 0)
             {
-                Window window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
+                var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions
                 {
-                    ShowMaximizeButton = false,
+                    ShowMaximizeButton = false
                 });
                 window.DataContext = gamesToUpdate;
                 window.Title = $"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteExtensionsUpdates)}";
@@ -602,16 +684,20 @@ namespace LegendaryLibraryNS
             }
             else
             {
-                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNoUpdatesAvailable), LocalizationManager.Instance.GetString(LOC.CommonOverlay, new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS"}));
+                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonNoUpdatesAvailable),
+                    LocalizationManager.Instance.GetString(LOC.CommonOverlay,
+                        new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS" }));
             }
-
         }
 
         private void ImportUbisoftLauncherGamesChk_Click(object sender, RoutedEventArgs e)
         {
             if (ImportUbisoftLauncherGamesChk.IsChecked == true)
             {
-                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.LegendaryThirdPartyLauncherImportWarn, new Dictionary<string, IFluentType> { ["thirdPartyLauncherName"] = (FluentString)"Ubisoft Connect" }), "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                playniteAPI.Dialogs.ShowMessage(
+                    LocalizationManager.Instance.GetString(LOC.LegendaryThirdPartyLauncherImportWarn,
+                        new Dictionary<string, IFluentType> { ["thirdPartyLauncherName"] = (FluentString)"Ubisoft Connect" }), "",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -619,7 +705,10 @@ namespace LegendaryLibraryNS
         {
             if (ImportEALauncherGamesChk.IsChecked == true)
             {
-                playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.LegendaryThirdPartyLauncherImportWarn, new Dictionary<string, IFluentType> { ["thirdPartyLauncherName"] = (FluentString)"EA App" }), "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                playniteAPI.Dialogs.ShowMessage(
+                    LocalizationManager.Instance.GetString(LOC.LegendaryThirdPartyLauncherImportWarn,
+                        new Dictionary<string, IFluentType> { ["thirdPartyLauncherName"] = (FluentString)"EA App" }), "",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -628,15 +717,20 @@ namespace LegendaryLibraryNS
             var commonFluentArgs = new Dictionary<string, IFluentType>
             {
                 { "pluginShortName", (FluentString)"Epic" },
-                { "originalPluginShortName", (FluentString)"Legendary" },
+                { "originalPluginShortName", (FluentString)"Legendary" }
             };
-            var result = playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonMigrationConfirm, commonFluentArgs), LocalizationManager.Instance.GetString(LOC.CommonRevertMigrateGames), MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = playniteAPI.Dialogs.ShowMessage(
+                LocalizationManager.Instance.GetString(LOC.CommonMigrationConfirm, commonFluentArgs),
+                LocalizationManager.Instance.GetString(LOC.CommonRevertMigrateGames), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.No)
             {
                 return;
             }
-            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonRevertMigratingGames), false) { IsIndeterminate = false };
-            playniteAPI.Dialogs.ActivateGlobalProgress((a) =>
+
+            var globalProgressOptions =
+                new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonRevertMigratingGames), false)
+                    { IsIndeterminate = false };
+            playniteAPI.Dialogs.ActivateGlobalProgress(a =>
             {
                 using (playniteAPI.Database.BufferedUpdate())
                 {
@@ -650,7 +744,8 @@ namespace LegendaryLibraryNS
                         foreach (var game in gamesToMigrate.ToList())
                         {
                             iterator++;
-                            var alreadyExists = playniteAPI.Database.Games.FirstOrDefault(i => i.GameId == game.GameId && i.PluginId == LegendaryLibrary.Instance.Id);
+                            var alreadyExists = playniteAPI.Database.Games.FirstOrDefault(i =>
+                                i.GameId == game.GameId && i.PluginId == LegendaryLibrary.Instance.Id);
                             if (alreadyExists == null)
                             {
                                 game.PluginId = Guid.Parse("00000002-DBD1-46C6-B5D0-B1BA559D10E4");
@@ -659,12 +754,16 @@ namespace LegendaryLibraryNS
                                 a.CurrentProgressValue = iterator;
                             }
                         }
+
                         a.CurrentProgressValue = gamesToMigrate.Count() + 1;
                         if (migratedGames.Count > 0)
                         {
-                            playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonMigrationCompleted), LocalizationManager.Instance.GetString(LOC.CommonRevertMigrateGames), MessageBoxButton.OK, MessageBoxImage.Information);
+                            playniteAPI.Dialogs.ShowMessage(LocalizationManager.Instance.GetString(LOC.CommonMigrationCompleted),
+                                LocalizationManager.Instance.GetString(LOC.CommonRevertMigrateGames), MessageBoxButton.OK,
+                                MessageBoxImage.Information);
                             logger.Info($"Successfully migrated {migratedGames.Count} game(s) from Legendary to Epic.");
                         }
+
                         if (migratedGames.Count == 0)
                         {
                             playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.CommonMigrationNoGames));

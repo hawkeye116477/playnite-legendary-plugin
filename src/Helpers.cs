@@ -10,14 +10,15 @@ namespace LegendaryLibraryNS
         {
             get
             {
-                ObjectQuery wql = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher(wql);
-                ManagementObjectCollection results = searcher.Get();
-                double ram = 0.0;
+                var wql = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
+                var searcher = new ManagementObjectSearcher(wql);
+                var results = searcher.Get();
+                var ram = 0.0;
                 foreach (ManagementObject result in results)
                 {
                     ram = Convert.ToDouble(result["TotalVisibleMemorySize"].ToString().Replace("KB", ""));
                 }
+
                 ram = Math.Round(ram / 1024);
                 return Convert.ToInt32(ram);
             }
@@ -27,13 +28,14 @@ namespace LegendaryLibraryNS
         {
             try
             {
-                using FileStream inputStream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.None);
+                using var inputStream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.None);
                 inputStream.Close();
             }
             catch (Exception)
             {
                 return true;
             }
+
             return false;
         }
     }

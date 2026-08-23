@@ -57,6 +57,7 @@ namespace LegendaryLibraryNS
                     logger.Error(ex, "Failed to authenticate user.");
                     alternativeAuthWindow.DialogResult = false;
                 }
+
                 alternativeAuthWindow.Close();
             }
         }

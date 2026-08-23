@@ -5,23 +5,22 @@ using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
-using Playnite.Common;
 using Playnite.SDK;
-using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace LegendaryLibraryNS
 {
     public class LegendaryCloud
     {
-        internal static string CalculateGameSavesPath(string gameName, string gameID, string gameInstallDir, bool skipRefreshingMetadata = true)
+        internal static string CalculateGameSavesPath(
+            string gameName, string gameID, string gameInstallDir, bool skipRefreshingMetadata = true)
         {
-            string cloudSaveFolder = "";
+            var cloudSaveFolder = "";
             var playniteAPI = API.Instance;
-            GlobalProgressOptions metadataProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteProgressMetadata), false);
+            var metadataProgressOptions =
+                new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteProgressMetadata), false);
 
             var manifest = new LegendaryGameInfo.Rootobject();
             var gameData = new LegendaryGameInfo.Game
@@ -29,15 +28,15 @@ namespace LegendaryLibraryNS
                 Title = gameName,
                 App_name = gameID
             };
-            playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
-            {
-                manifest = await LegendaryLauncher.GetGameInfo(gameData, skipRefreshingMetadata);
-            }, metadataProgressOptions);
+            playniteAPI.Dialogs.ActivateGlobalProgress(
+                async a => { manifest = await LegendaryLauncher.GetGameInfo(gameData, skipRefreshingMetadata); },
+                metadataProgressOptions);
 
             if (manifest.Game != null)
             {
                 cloudSaveFolder = manifest.Game.Cloud_save_folder;
             }
+
             if (!cloudSaveFolder.IsNullOrEmpty())
             {
                 var clientApi = new EpicAccountClient(playniteAPI);
@@ -47,11 +46,14 @@ namespace LegendaryLibraryNS
                     var pathVariables = new Dictionary<string, string>
                     {
                         { "{installdir}", gameInstallDir },
-                        { "{epicid}",  userData.account_id },
-                        { "{appdata}",  Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) },
+                        { "{epicid}", userData.account_id },
+                        { "{appdata}", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) },
                         { "{userdir}", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) },
                         { "{userprofile}", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) },
-                        { "{usersavedgames}", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Saved Games") }
+                        {
+                            "{usersavedgames}",
+                            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Saved Games")
+                        }
                     };
                     foreach (var pathVar in pathVariables)
                     {
@@ -60,27 +62,33 @@ namespace LegendaryLibraryNS
                             cloudSaveFolder = cloudSaveFolder.Replace(pathVar.Key, pathVar.Value, StringComparison.OrdinalIgnoreCase);
                         }
                     }
+
                     cloudSaveFolder = Path.GetFullPath(cloudSaveFolder);
                 }
             }
+
             return cloudSaveFolder;
         }
 
 
-        internal static void SyncGameSaves(Playnite.SDK.Models.Game game, CloudSyncAction cloudSyncAction, bool force = false, bool manualSync = false, bool skipRefreshingMetadata = true, string cloudSaveFolder = "")
+        internal static void SyncGameSaves(
+            Playnite.SDK.Models.Game game, CloudSyncAction cloudSyncAction, bool force = false, bool manualSync = false,
+            bool skipRefreshingMetadata = true, string cloudSaveFolder = "")
         {
             var cloudSyncEnabled = LegendaryLibrary.GetSettings().SyncGameSaves;
             var gameSettings = LegendaryGameSettingsView.LoadGameSettings(game.GameId);
-            bool errorDisplayed = false;
-            bool loginErrorDisplayed = false;
+            var errorDisplayed = false;
+            var loginErrorDisplayed = false;
             if (gameSettings?.AutoSyncSaves != null)
             {
                 cloudSyncEnabled = (bool)gameSettings.AutoSyncSaves;
             }
+
             if (manualSync)
             {
                 cloudSyncEnabled = true;
             }
+
             if (cloudSyncEnabled)
             {
                 if (cloudSaveFolder == "")
@@ -101,19 +109,23 @@ namespace LegendaryLibraryNS
                             }
                         }
                     }
+
                     if (cloudSaveFolder == "" || !Directory.Exists(cloudSaveFolder))
                     {
                         cloudSaveFolder = CalculateGameSavesPath(game.Name, game.GameId, game.InstallDirectory, skipRefreshingMetadata);
                     }
                 }
+
                 if (cloudSaveFolder != null)
                 {
                     if (Directory.Exists(cloudSaveFolder))
                     {
                         var playniteAPI = API.Instance;
                         var logger = LogManager.GetLogger();
-                        GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonSyncing, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }), false);
-                        playniteAPI.Dialogs.ActivateGlobalProgress(async (a) =>
+                        var globalProgressOptions = new GlobalProgressOptions(
+                            LocalizationManager.Instance.GetString(LOC.CommonSyncing,
+                                new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }), false);
+                        playniteAPI.Dialogs.ActivateGlobalProgress(async a =>
                         {
                             a.ProgressMaxValue = 100;
                             a.CurrentProgressValue = 0;
@@ -124,6 +136,7 @@ namespace LegendaryLibraryNS
                             {
                                 skippedActivity = "--skip-download";
                             }
+
                             cloudArgs.Add(skippedActivity);
                             if (cloudSyncAction == CloudSyncAction.Download && force)
                             {
@@ -133,6 +146,7 @@ namespace LegendaryLibraryNS
                             {
                                 cloudArgs.Add("--force-upload");
                             }
+
                             cloudArgs.AddRange(new[] { "--save-path", cloudSaveFolder });
                             var cmd = Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                          .WithEnvironmentVariables(LegendaryLauncher.GetDefaultEnvironmentVariables())
@@ -147,15 +161,17 @@ namespace LegendaryLibraryNS
                                         break;
                                     case StandardErrorCommandEvent stdErr:
                                         var errorMessage = stdErr.Text;
-                                        if (errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") || errorMessage.Contains("Error"))
+                                        if (errorMessage.Contains("ERROR") || errorMessage.Contains("CRITICAL") ||
+                                            errorMessage.Contains("Error"))
                                         {
                                             if (errorMessage.Contains("Failed to establish a new connection")
-                                            || errorMessage.Contains("Log in failed")
-                                            || errorMessage.Contains("Login failed")
-                                            || errorMessage.Contains("No saved credentials"))
+                                                || errorMessage.Contains("Log in failed")
+                                                || errorMessage.Contains("Login failed")
+                                                || errorMessage.Contains("No saved credentials"))
                                             {
                                                 loginErrorDisplayed = true;
                                             }
+
                                             logger.Error($"[Legendary] {errorMessage}");
                                             errorDisplayed = true;
                                         }
@@ -165,8 +181,9 @@ namespace LegendaryLibraryNS
                                         }
                                         else
                                         {
-                                            logger.Debug("[Legendary] " + stdErr.ToString());
+                                            logger.Debug("[Legendary] " + stdErr);
                                         }
+
                                         break;
                                     case ExitedCommandEvent exited:
                                         a.CurrentProgressValue = 100;
@@ -174,15 +191,16 @@ namespace LegendaryLibraryNS
                                         {
                                             if (loginErrorDisplayed)
                                             {
-                                                playniteAPI.Dialogs.ShowErrorMessage($"{LocalizationManager.Instance.GetString(LOC.CommonSyncError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name })} {LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired)}.");
+                                                playniteAPI.Dialogs.ShowErrorMessage(
+                                                    $"{LocalizationManager.Instance.GetString(LOC.CommonSyncError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name })} {LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoginRequired)}.");
                                             }
                                             else
                                             {
-                                                playniteAPI.Dialogs.ShowErrorMessage($"{LocalizationManager.Instance.GetString(LOC.CommonSyncError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name })} {LocalizationManager.Instance.GetString(LOC.CommonCheckLog)}");
+                                                playniteAPI.Dialogs.ShowErrorMessage(
+                                                    $"{LocalizationManager.Instance.GetString(LOC.CommonSyncError, new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name })} {LocalizationManager.Instance.GetString(LOC.CommonCheckLog)}");
                                             }
                                         }
-                                        break;
-                                    default:
+
                                         break;
                                 }
                             }
