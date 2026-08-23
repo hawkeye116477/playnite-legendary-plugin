@@ -603,6 +603,7 @@ public class LegendaryLibrary : Plugin
                                 "LegendaryGamesUpdateCheckFail",
                                 $"{LibraryName} {Environment.NewLine}{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdateCheckFailMessage)}",
                                 NotificationSeverity.Error));
+                            Logger.Error("Failed to check for games updates");
                         }
                     }
                 }
