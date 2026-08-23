@@ -4,7 +4,7 @@ MIT License
 Copyright (c) 2020 Josef Nemec
 
 ----------------------------------------------------------------------------------------
-CliWrap - https://github.com/hawkeye116477/CliWrap
+CliWrap - https://github.com/hawkeye116477/CliWrap-net462
 MIT License
 Copyright (c) 2017-2025 Oleksii Holub
 
