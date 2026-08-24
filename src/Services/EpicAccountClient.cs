@@ -368,10 +368,13 @@ public class EpicAccountClient
                     logger.Debug("Migrating tokens to new encryption format...");
                     var decryptedTokens = Encryption.DecryptFromFile(LegendaryLauncher.OldPluginEncryptedTokensPath,
                         Encoding.UTF8,
-                        WindowsIdentity.GetCurrent().User.Value);
+                        WindowsIdentity.GetCurrent().User?.Value!);
                     var tokenInfo = Serialization.FromJson<OauthResponse>(decryptedTokens);
-                    LegendaryEncryption.Encrypt(Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.Account_id.MD5()}.enc"),
+                    if (tokenInfo != null)
+                    {
+                        LegendaryEncryption.Encrypt(Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.Account_id.MD5()}.enc"),
                         decryptedTokens);
+                    }
                     FileSystem.DeleteFileSafe(LegendaryLauncher.OldPluginEncryptedTokensPath);
                     return Serialization.FromJson<OauthResponse>(decryptedTokens);
                 }
@@ -426,7 +429,10 @@ public class EpicAccountClient
             if (useEncryptedTokens)
             {
                 var tokenInfo = Serialization.FromJson<OauthResponse>(content);
-                LegendaryEncryption.Encrypt(Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.Account_id.MD5()}.enc"), content);
+                if (tokenInfo != null)
+                {
+                    LegendaryEncryption.Encrypt(Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.Account_id.MD5()}.enc"), content);
+                }
             }
             else
             {

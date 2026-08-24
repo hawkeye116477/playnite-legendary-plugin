@@ -29,7 +29,7 @@ public class LegendaryLibrary : Plugin
     public DownloadManagerData PluginDownloadData { get; set; } = null!;
     public const string PluginId = "hawkeye116477.LegendaryLibrary";
 
-    public LegendaryLibrarySettings? Settings { get; set; }
+    public LegendaryLibrarySettings Settings { get; set; } = null!;
 
     public static IPlayniteApi PlayniteApi { get; private set; } = null!;
     private static readonly SpecImportableProperty PcSpecProperty = new("pc_windows");
@@ -133,11 +133,10 @@ public class LegendaryLibrary : Plugin
         commonHelpers.SaveJsonSettingsToFile(PluginDownloadData, "", "downloads", true);
     }
 
-    public static LegendaryLibrarySettings? GetSettings()
+    public static LegendaryLibrarySettings GetSettings()
     {
         return Instance.Settings;
     }
-
 
     private Dictionary<string, ImportableGame> GetInstalledGames()
     {
@@ -1078,7 +1077,7 @@ public class LegendaryLibrary : Plugin
 
             try
             {
-                var importableAchievements = await clientApi.GetAchievements(game.LibraryGameId, tokens, args.CancelToken);
+                var importableAchievements = await clientApi.GetAchievements(game.LibraryGameId!, tokens, args.CancelToken);
                 if (importableAchievements.Count > 0)
                 {
                     Logger.Info($"Found {importableAchievements.Count} achievements for {game.Name}.");

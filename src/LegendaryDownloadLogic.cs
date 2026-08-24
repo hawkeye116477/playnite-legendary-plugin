@@ -55,7 +55,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
             var result = await playniteApi.Dialogs.ShowMessageAsync(
                 LocalizationManager.Instance.GetString(LOC.CommonLauncherNotInstalled,
                     new Dictionary<string, IFluentType>
-                        { ["launcherName"] = (FluentString)"Unified Download Manager" }),
+                    { ["launcherName"] = (FluentString)"Unified Download Manager" }),
                 "Legendary (Epic Games) library integration", MessageBoxSeverity.Error, options, []);
             if (result == options[0])
             {
@@ -260,34 +260,41 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                 if (!await LegendaryLibrary.Instance.CommonHelpers.IsDirectoryWritable(
                         Path.GetDirectoryName(finalPathFs)!))
                 {
-                    var copyCmdArgs = new List<string?>
+                    var tempPathName = Path.GetDirectoryName(tempPath);
+                    var finalPathName = Path.GetDirectoryName(finalPath);
+                    if (tempPathName != null && finalPathName != null)
                     {
-                        "/c",
-                        "robocopy",
-                        Path.GetDirectoryName(tempPath),
-                        Path.GetDirectoryName(finalPath),
-                        newBinary,
-                        "/R:3",
-                        "/COPYALL",
-                    };
-                    if (File.Exists(oldBinaryPath))
-                    {
-                        copyCmdArgs.AddRange(new List<string>
+                        var copyCmdArgs = new List<string>
                         {
-                            "&",
-                            "if",
-                            "%errorlevel%",
-                            "LSS",
-                            "2",
-                            "del",
-                            oldBinaryPath,
-                        });
+                            "/c",
+                            "robocopy",
+                            tempPathName,
+                            finalPathName,
+                            newBinary,
+                            "/R:3",
+                            "/COPYALL",
+                        };
+                        if (File.Exists(oldBinaryPath))
+                        {
+                            copyCmdArgs.AddRange(new List<string>
+                            {
+                                "&",
+                                "if",
+                                "%errorlevel%",
+                                "LSS",
+                                "2",
+                                "del",
+                                oldBinaryPath,
+                            });
+                        }
+                        var copyCmd = Cli.Wrap("cmd.exe")
+                                         .WithArguments(copyCmdArgs);
+                        var proc = ProcessStarter.StartProcess("cmd.exe", copyCmd.Arguments, asAdmin: true);
+                        if (proc != null)
+                        {
+                            await proc.WaitForExitAsync();
+                        }
                     }
-
-                    var copyCmd = Cli.Wrap("cmd.exe")
-                                     .WithArguments(copyCmdArgs);
-                    var proc = ProcessStarter.StartProcess("cmd.exe", copyCmd.Arguments, asAdmin: true);
-                    await proc.WaitForExitAsync();
                 }
                 else
                 {
@@ -825,8 +832,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                                         var playtimeSyncEnabled = false;
                                         if (downloadProperties.DownloadAction == DownloadAction.Repair)
                                         {
-                                            playtimeSyncEnabled = LegendaryLibrary.GetSettings() is
-                                                { SyncPlaytime: true };
+                                            playtimeSyncEnabled = LegendaryLibrary.GetSettings() is { SyncPlaytime: true };
                                             var gameSettings =
                                                 LegendaryGameSettingsView.LoadGameSettings(game.LibraryGameId!);
                                             if (gameSettings.AutoSyncPlaytime != null)

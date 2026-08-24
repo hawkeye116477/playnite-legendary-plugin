@@ -975,13 +975,13 @@ public class LegendaryLauncher
     {
         get
         {
-            Dictionary<int, string> LauncherUpdateSources = new Dictionary<int, string>();
+            Dictionary<int, string> LauncherUpdateSources = [];
             string result = "";
             try
             {
                 var thisAssembly = Assembly.GetExecutingAssembly();
                 using Stream launcherUpdateSourceFile =
-                    thisAssembly.GetManifestResourceStream($"{typeof(LegendaryLibrary).Namespace}.LauncherUpdateSource.json");
+                    thisAssembly.GetManifestResourceStream($"{typeof(LegendaryLibrary).Namespace}.LauncherUpdateSource.json")!;
                 using var reader = new StreamReader(launcherUpdateSourceFile);
                 result = reader.ReadToEnd();
             }
@@ -991,10 +991,12 @@ public class LegendaryLauncher
                 logger.Error(ex, "An error occured during loading launcher update sources");
             }
 
-            if (!result.IsNullOrWhiteSpace() && Serialization.TryFromJson(result, out List<string> savedRepoList))
+            if (!result.IsNullOrWhiteSpace() && Serialization.TryFromJson(result, out List<string>? savedRepoList))
             {
-                LauncherUpdateSources =
-                    savedRepoList.Select((value, index) => new { index, value }).ToDictionary(x => x.index, x => x.value);
+                if (savedRepoList != null)
+                {
+                    LauncherUpdateSources = savedRepoList.Select((value, index) => new { index, value }).ToDictionary(x => x.index, x => x.value);
+                }
             }
 
             return LauncherUpdateSources;

@@ -14,6 +14,10 @@ public class LegendaryEncryption
     public static void Encrypt(string filePath, string content)
     {
         var tokenInfo = Serialization.FromJson<OauthResponse>(content);
+        if (tokenInfo == null)
+        {
+            return;
+        }
         var userInfoContent = new LegendaryUserInfo
         {
             Account_id = tokenInfo.Account_id,
