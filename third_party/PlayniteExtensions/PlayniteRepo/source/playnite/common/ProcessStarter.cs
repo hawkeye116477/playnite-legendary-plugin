@@ -2,12 +2,6 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Text.RegularExpressions;
-
-#if Vanara || PlayniteDeps
-using Vanara.PInvoke;
-using static Vanara.PInvoke.Kernel32;
-#endif
 
 namespace Playnite;
 
@@ -155,32 +149,4 @@ public static partial class ProcessStarter
         stdError = stderr;
         return proc.ExitCode;
     }
-
-#if Vanara || PlayniteDeps
-    public static uint ShellExecute(string cmdLine)
-    {
-        logger.Debug($"Executing shell command: {cmdLine}");
-
-        if (CreateProcess(
-                null,
-                new StringBuilder(cmdLine),
-                default,
-                default,
-                false,
-                CREATE_PROCESS.NORMAL_PRIORITY_CLASS,
-                default,
-                null,
-                STARTUPINFO.Default,
-                out var procInfo))
-        {
-            using (procInfo)
-                return procInfo.dwProcessId;
-        }
-        else
-        {
-            Win32Error.GetLastError().ThrowIfFailed();
-            return 0;
-        }
-    }
-#endif
 }

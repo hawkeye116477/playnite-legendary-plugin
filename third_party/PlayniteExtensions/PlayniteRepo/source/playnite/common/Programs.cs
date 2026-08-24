@@ -1,157 +1,233 @@
 ﻿using Microsoft.Win32;
+using System.IO;
+using System.Text.RegularExpressions;
+using ByteAether.Ulid;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Security.AccessControl;
-using System.Security.Principal;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
+using Playnite.Common;
 
-namespace Playnite.Common
+namespace Playnite;
+
+public class Program
 {
-    public class Program
-    {
-        public string Path { get; set; }
-        public string Arguments { get; set; }
-        public string Icon { get; set; }
-        public int IconIndex { get; set; }
-        public string WorkDir { get; set; }
-        public string Name { get; set; }
-        public string AppId { get; set; }
+    public string? Path { get; set; }
+    public string? Arguments { get; set; }
+    public string? Icon { get; set; }
+    public int IconIndex { get; set; }
+    public string? WorkDir { get; set; }
+    public string? Name { get; set; }
+    public string? AppId { get; set; }
+    public string OriginalParsedPath { get; }
 
-        public override string ToString()
-        {
-            return Name;
-        }
+    public Program(string parsedPath)
+    {
+        OriginalParsedPath = parsedPath;
     }
 
-    public class UninstallProgram
+    public override string? ToString()
     {
-        public string DisplayIcon { get; set; }
-        public string DisplayName { get; set; }
-        public string DisplayVersion { get; set; }
-        public string InstallLocation { get; set; }
-        public string Publisher { get; set; }
-        public string UninstallString { get; set; }
-        public string URLInfoAbout { get; set; }
-        public string RegistryKeyName { get; set; }
-        public string Path { get; set; }
+        return Name ?? base.ToString();
+    }
+}
 
-        public override string ToString()
-        {
-            return DisplayName ?? RegistryKeyName;
-        }
+public class UninstallProgram
+{
+    public string? DisplayIcon { get; set; }
+    public string? DisplayName { get; set; }
+    public string? DisplayVersion { get; set; }
+    public string? InstallLocation { get; set; }
+    public string? Publisher { get; set; }
+    public string? UninstallString { get; set; }
+    public string? URLInfoAbout { get; set; }
+    public string? RegistryKeyName { get; set; }
+    public string? Path { get; set; }
+
+    public override string? ToString()
+    {
+        return DisplayName ?? RegistryKeyName ?? base.ToString();
+    }
+}
+
+public static partial class Programs
+{
+    private static readonly string[] scanFileExclusionMasks =
+    [
+        "uninst",
+        "setup",
+        @"unins\d+",
+        "Config",
+        "DXSETUP",
+        @"vc_redist\.x64",
+        @"vc_redist\.x86",
+        @"^UnityCrashHandler32\.exe$",
+        @"^UnityCrashHandler64\.exe$",
+        @"^notification_helper\.exe$",
+        @"^python\.exe$",
+        @"^pythonw\.exe$",
+        @"^zsync\.exe$",
+        @"^zsyncmake\.exe$"
+    ];
+
+    private static readonly string[] shortcutsFolderExceptions =
+    [
+        @"\Accessibility\",
+        @"\Accessories\",
+        @"\Administrative Tools\",
+        @"\Maintenance\",
+        @"\StartUp\",
+        @"\Windows ",
+        @"\Microsoft ",
+    ];
+
+    private static readonly string[] shortcutsPathExceptions =
+    [
+        @"\system32\",
+        @"\windows\",
+    ];
+
+    private static readonly ILogger logger = LogManager.GetLogger();
+
+    public static readonly string[] ImportableFileExtensions = [".exe", ".bat", ".lnk", ".url"];
+    public static readonly string[] ImportableFileExtensionsPattern = ["*.exe", "*.bat", "*.lnk", "*.url"];
+
+    public static bool IsFileScanExcluded(string path)
+    {
+        return scanFileExclusionMasks.Any(a => Regex.IsMatch(path, a, RegexOptions.IgnoreCase));
     }
 
-    public partial class Programs
+    public static void CreateUrlShortcut(string url, string iconPath, string shortcutPath)
     {
-        private static readonly string[] scanFileExclusionMasks = new string[]
+        FileSystem.PrepareSaveFile(shortcutPath);
+        var content = """
+                      [InternetShortcut]
+                      IconIndex=0
+                      """;
+        if (!iconPath.IsNullOrEmpty())
         {
-            "uninst",
-            "setup",
-            @"unins\d+",
-            "Config",
-            "DXSETUP",
-            @"vc_redist\.x64",
-            @"vc_redist\.x86",
-            @"^UnityCrashHandler32\.exe$",
-            @"^UnityCrashHandler64\.exe$",
-            @"^notification_helper\.exe$",
-            @"^python\.exe$",
-            @"^pythonw\.exe$",
-            @"^zsync\.exe$",
-            @"^zsyncmake\.exe$"
-        };
-
-        private static ILogger logger = LogManager.GetLogger();
-
-        public static bool IsFileScanExcluded(string path)
-        {
-            return scanFileExclusionMasks.Any(a => Regex.IsMatch(path, a, RegexOptions.IgnoreCase));
+            content += Environment.NewLine + $"IconFile={iconPath}";
         }
 
-        public static void CreateUrlShortcut(string url, string iconPath, string shortcutPath)
+        content += Environment.NewLine + $"URL={url}";
+        File.WriteAllText(shortcutPath, content);
+    }
+
+    private static List<UninstallProgram> GetUninstallProgsFromView(RegistryView view)
+    {
+        var rootString = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\";
+        void SearchRoot(RegistryHive hive, List<UninstallProgram> programs)
         {
-            FileSystem.PrepareSaveFile(shortcutPath);
-            var content = @"[InternetShortcut]
-IconIndex=0";
-            if (!iconPath.IsNullOrEmpty())
+            using var root = RegistryKey.OpenBaseKey(hive, view);
+            var keyList = root.OpenSubKey(rootString);
+            if (keyList is null)
             {
-                content += Environment.NewLine + $"IconFile={iconPath}";
+                return;
             }
 
-            content += Environment.NewLine + $"URL={url}";
-            File.WriteAllText(shortcutPath, content);
-        }
-
-        private static List<UninstallProgram> GetUninstallProgsFromView(RegistryView view)
-        {
-            var rootString = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\";
-            void SearchRoot(RegistryHive hive, List<UninstallProgram> programs)
+            foreach (var key in keyList.GetSubKeyNames())
             {
-                using (var root = RegistryKey.OpenBaseKey(hive, view))
+                try
                 {
-                    var keyList = root.OpenSubKey(rootString);
-                    if (keyList == null)
+                    using var prog = root.OpenSubKey(rootString + key);
+                    if (prog is null)
                     {
-                        return;
+                        continue;
                     }
 
-                    foreach (var key in keyList.GetSubKeyNames())
+                    var program = new UninstallProgram()
                     {
-                        try
-                        {
-                            using (var prog = root.OpenSubKey(rootString + key))
-                            {
-                                if (prog == null)
-                                {
-                                    continue;
-                                }
+                        DisplayIcon = prog.GetValue("DisplayIcon")?.ToString(),
+                        DisplayVersion = prog.GetValue("DisplayVersion")?.ToString(),
+                        DisplayName = prog.GetValue("DisplayName")?.ToString(),
+                        InstallLocation = prog.GetValue("InstallLocation")?.ToString(),
+                        Publisher = prog.GetValue("Publisher")?.ToString(),
+                        UninstallString = prog.GetValue("UninstallString")?.ToString(),
+                        URLInfoAbout = prog.GetValue("URLInfoAbout")?.ToString(),
+                        Path = prog.GetValue("Path")?.ToString(),
+                        RegistryKeyName = key
+                    };
 
-                                var program = new UninstallProgram()
-                                {
-                                    DisplayIcon = prog.GetValue("DisplayIcon")?.ToString(),
-                                    DisplayVersion = prog.GetValue("DisplayVersion")?.ToString(),
-                                    DisplayName = prog.GetValue("DisplayName")?.ToString(),
-                                    InstallLocation = prog.GetValue("InstallLocation")?.ToString(),
-                                    Publisher = prog.GetValue("Publisher")?.ToString(),
-                                    UninstallString = prog.GetValue("UninstallString")?.ToString(),
-                                    URLInfoAbout = prog.GetValue("URLInfoAbout")?.ToString(),
-                                    Path = prog.GetValue("Path")?.ToString(),
-                                    RegistryKeyName = key
-                                };
-
-                                programs.Add(program);
-                            }
-                        }
-                        catch (System.Security.SecurityException e)
-                        {
-                            logger.Warn(e, $"Failed to read registry key {rootString + key}");
-                        }
-                    }
+                    programs.Add(program);
+                }
+                catch (System.Security.SecurityException e)
+                {
+                    logger.Warn(e, $"Failed to read registry key {rootString + key}");
                 }
             }
-
-            var progs = new List<UninstallProgram>();
-            SearchRoot(RegistryHive.LocalMachine, progs);
-            SearchRoot(RegistryHive.CurrentUser, progs);
-            return progs;
         }
 
-        public static List<UninstallProgram> GetUnistallProgramsList()
-        {
-            var progs = new List<UninstallProgram>();
+        var progs = new List<UninstallProgram>();
+        SearchRoot(RegistryHive.LocalMachine, progs);
+        SearchRoot(RegistryHive.CurrentUser, progs);
+        return progs;
+    }
 
-            if (Environment.Is64BitOperatingSystem)
+    public static List<UninstallProgram> GetUnistallProgramsList()
+    {
+        var progs = new List<UninstallProgram>();
+        progs.AddRange(GetUninstallProgsFromView(RegistryView.Registry64));
+        progs.AddRange(GetUninstallProgsFromView(RegistryView.Registry32));
+        return progs;
+    }
+
+    public static ImportableGame? ProgramToGame(this Program program)
+    {
+        if (program.Path.IsNullOrWhiteSpace())
+            return null;
+
+        var game = new ImportableGame(
+            program.Name ?? "uknown",
+            "Playnite",
+            program.AppId ?? Ulid.New().ToString())
+        {
+            InstallState = InstallState.Installed,
+            InstallDirectory = program.WorkDir.IsNullOrWhiteSpace() ? Path.GetDirectoryName(program.OriginalParsedPath) : program.WorkDir
+        };
+
+        if (!program.Icon.IsNullOrWhiteSpace())
+            game.MediaFiles = [new ImportableFile(BuiltInGameDataId.DesktopIcon, program.Icon)];
+
+        if (program.OriginalParsedPath.EndsWith(".url", StringComparison.OrdinalIgnoreCase))
+        {
+            game.Actions =
+            [
+                new UrlGameAction
+                {
+                    Url = program.Path,
+                    IsPlayAction = true,
+                    Name = game.Name
+                }
+            ];
+        }
+        else
+        {
+            var action = new FileGameAction
             {
-                progs.AddRange(GetUninstallProgsFromView(RegistryView.Registry64));
+                Path = program.Path.Replace(
+                        game.InstallDirectory?.EndWithDirSeparator() ?? "",
+                        ExpandableVariables.InstallationDirectory.EndWithDirSeparator(),
+                        StringComparison.OrdinalIgnoreCase),
+                WorkingDir = ExpandableVariables.InstallationDirectory,
+                Arguments = program.Arguments,
+                IsPlayAction = true,
+                Name = game.Name,
+                TrackingOptions = new GameTrackingOptions
+                {
+                    Mode = TrackingMode.Directory,
+                    TrackingValue = ExpandableVariables.InstallationDirectory
+                }
+            };
+
+            if (action.Path.Equals("explorer.exe", StringComparison.OrdinalIgnoreCase) &&
+                action.Arguments?.StartsWith("shell:AppsFolder", StringComparison.OrdinalIgnoreCase) == true)
+            {
+                action.TrackingOptions.Mode = TrackingMode.Directory;
+                action.TrackingOptions.TrackingValue = "{InstallDir}";
             }
 
-            progs.AddRange(GetUninstallProgsFromView(RegistryView.Registry32));
-            return progs;
+            game.Actions = [action];
         }
+
+        return game;
     }
 }
