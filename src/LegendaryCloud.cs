@@ -19,10 +19,11 @@ public class LegendaryCloud
 {
     private const string UserAgent =
         @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) EpicGamesLauncher/18.9.0-45233261+++Portal+Release-Live";
+
     private static readonly RetryHandler RetryHandler = new(new HttpClientHandler());
     private static readonly HttpClient HttpClient = new(RetryHandler);
     private ILogger logger = LogManager.GetLogger();
-    
+
     internal static async Task<string> CalculateGameSavesPath(
         string gameName, string gameId, string gameInstallDir, bool skipRefreshingMetadata = true)
     {
@@ -38,7 +39,7 @@ public class LegendaryCloud
             App_name = gameId
         };
         await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(metadataProgressOptions,
-            async (_) => { manifest = await LegendaryLauncher.GetGameInfo(gameData, skipRefreshingMetadata); });
+            async _ => { manifest = await LegendaryLauncher.GetGameInfo(gameData, skipRefreshingMetadata); });
 
         if (!string.IsNullOrEmpty(manifest.Game?.Cloud_save_folder))
         {
@@ -134,7 +135,7 @@ public class LegendaryCloud
                         LocalizationManager.Instance.GetString(LOC.CommonSyncing,
                             new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }), false);
 
-                    await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async (a) =>
+                    await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async a =>
                     {
                         a.SetCurrentProgressValue(100);
                         a.SetCurrentProgressValue(0);
@@ -218,7 +219,7 @@ public class LegendaryCloud
             }
         }
     }
-    
+
     public async Task UploadPlaytime(DateTime startTime, DateTime endTime, Game game, int attempts = 3)
     {
         var playniteApi = LegendaryLibrary.PlayniteApi;
@@ -226,7 +227,7 @@ public class LegendaryCloud
         var globalProgressOptions = new GlobalProgressOptions(
             LocalizationManager.Instance.GetString(LOC.CommonUploadingPlaytime,
                 new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }), false);
-        await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async (_) =>
+        await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async _ =>
         {
             var userLoggedIn = await clientApi.GetIsUserLoggedIn();
             if (userLoggedIn)
@@ -261,13 +262,13 @@ public class LegendaryCloud
                         await playniteApi.Dialogs.ShowErrorMessageAsync(LocalizationManager.Instance.GetString(
                             LOC.CommonUploadPlaytimeError,
                             new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }));
-                        logger.Error(ex, $"An error occured during uploading playtime to the cloud.");
+                        logger.Error(ex, "An error occured during uploading playtime to the cloud.");
                     }
                 }
             }
             else
             {
-                logger.Error($"Can't upload playtime, because user is not authenticated.");
+                logger.Error("Can't upload playtime, because user is not authenticated.");
                 await playniteApi.Dialogs.ShowErrorMessageAsync(
                     LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedInError));
             }

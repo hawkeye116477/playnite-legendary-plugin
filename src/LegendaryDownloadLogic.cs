@@ -218,8 +218,10 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
             var latestTag = $"{versionInfoContent.Tag_name}/legendary";
             string[] validLegendarySuffixes = { "x86_64.exe", "x64.exe", ".exe" };
             var newAsset = validLegendarySuffixes.Select(suffix =>
-                versionInfoContent.Assets.FirstOrDefault(a => a.Browser_download_url.Contains(latestTag)
-                                                              && a.Browser_download_url.EndsWith(suffix))).FirstOrDefault(a => a != null);
+                                                      versionInfoContent.Assets.FirstOrDefault(a =>
+                                                          a.Browser_download_url.Contains(latestTag)
+                                                          && a.Browser_download_url.EndsWith(suffix)))
+                                                 .FirstOrDefault(a => a != null);
             if (newAsset?.Browser_download_url != null)
             {
                 url = newAsset.Browser_download_url;
@@ -258,7 +260,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                 if (!await LegendaryLibrary.Instance.CommonHelpers.IsDirectoryWritable(
                         Path.GetDirectoryName(finalPathFs)!))
                 {
-                    var copyCmdArgs = new List<string?>()
+                    var copyCmdArgs = new List<string?>
                     {
                         "/c",
                         "robocopy",
@@ -270,7 +272,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                     };
                     if (File.Exists(oldBinaryPath))
                     {
-                        copyCmdArgs.AddRange(new List<string>()
+                        copyCmdArgs.AddRange(new List<string>
                         {
                             "&",
                             "if",
@@ -278,9 +280,10 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                             "LSS",
                             "2",
                             "del",
-                            {oldBinaryPath},
+                            oldBinaryPath,
                         });
                     }
+
                     var copyCmd = Cli.Wrap("cmd.exe")
                                      .WithArguments(copyCmdArgs);
                     var proc = ProcessStarter.StartProcess("cmd.exe", copyCmd.Arguments, asAdmin: true);
@@ -292,6 +295,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                     {
                         File.Delete(oldBinaryPath);
                     }
+
                     File.Move(tempPath, finalPath);
                 }
             }
@@ -531,6 +535,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
             {
                 installCommand.Add("--skip-sdl");
             }
+
             installCommand.Add("--skip-dlcs");
         }
 
@@ -965,7 +970,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                 }
                 else
                 {
-                    Logger.Warn(rex, $"Can't cleanup after cancellation. Please try removing files manually.");
+                    Logger.Warn(rex, "Can't cleanup after cancellation. Please try removing files manually.");
                     break;
                 }
             }

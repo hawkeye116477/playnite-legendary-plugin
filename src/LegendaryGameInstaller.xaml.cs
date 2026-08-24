@@ -420,7 +420,7 @@ public partial class LegendaryGameInstaller : UserControl
                 var extraContentInfo =
                     await LegendaryLauncher.GetExtraContentInfo(MultiInstallData[0]);
                 var dlcs = extraContentInfo.Where(i => i.Value.Is_dlc).ToList();
-                var sdls = extraContentInfo.Where(i => i.Value.Is_dlc == false).ToList();
+                var sdls = extraContentInfo.Where(i => !i.Value.Is_dlc).ToList();
                 if (dlcs.Count > 1)
                 {
                     AllDlcsChk.Visibility = Visibility.Visible;
@@ -668,7 +668,7 @@ public partial class LegendaryGameInstaller : UserControl
         var selectedExtraContent =
             ExtraContentLB.SelectedItems.Cast<KeyValuePair<string, LegendarySdlInfo>>().ToList();
         var selectedDlCs = selectedExtraContent.Where(i => i.Value.Is_dlc).ToList();
-        var sdls = selectedExtraContent.Where(i => i.Value.Is_dlc == false).ToList();
+        var sdls = selectedExtraContent.Where(i => !i.Value.Is_dlc).ToList();
 
         var selectedSdls = new List<string>();
 

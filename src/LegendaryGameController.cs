@@ -112,7 +112,7 @@ public class LegendaryUninstallController(Game game) : UninstallController("lege
             var notUninstalledGames = new List<Game>();
             var globalProgressOptions =
                 new GlobalProgressOptions($"{LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstalling)}... ", false);
-            await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async (a) =>
+            await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async a =>
             {
                 a.SetProgressMaxValue(games.Count);
 
@@ -291,7 +291,7 @@ public class LegendaryPlayController(Game game) : PlayController(game.LibraryGam
             var installProgressOptions =
                 new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonFinishingInstallation), false);
             await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(installProgressOptions,
-                async (a) => { LegendaryLauncher.CompleteGameInstallation(game.LibraryGameId!); });
+                async a => { LegendaryLauncher.CompleteGameInstallation(game.LibraryGameId!); });
         }
 
         if (gameSettings.LaunchOffline != null)
@@ -381,11 +381,9 @@ public class LegendaryPlayController(Game game) : PlayController(game.LibraryGam
                                     await Task.Delay(5000);
                                 }
                             }
-                            else
-                            {
-                                StartTracking(() => monitor.IsProcessRunning() > 0,
-                                    () => monitor.IsProcessRunning());
-                            }
+
+                            StartTracking(() => monitor.IsProcessRunning() > 0,
+                                () => monitor.IsProcessRunning());
                         }
                     }
 
@@ -773,7 +771,7 @@ public class LegendaryUpdateController
     {
         var appList = LegendaryLauncher.GetInstalledAppList();
         var gamesToUpdate = new Dictionary<string, UpdateInfo>();
-        foreach (var game in appList.Where(item => item.Value.Is_dlc == false).OrderBy(item => item.Value.Title))
+        foreach (var game in appList.Where(item => !item.Value.Is_dlc).OrderBy(item => item.Value.Title))
         {
             var gameId = game.Value.App_name;
             var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameId);
@@ -854,6 +852,7 @@ public class LegendaryUpdateController
                         logger.Warn($"No install path for {gameToUpdate.Value.Title}, skipping...");
                         continue;
                     }
+
                     updateTask.DownloadProperties.InstallPath = Directory.GetParent(gameToUpdate.Value.Install_path)?.FullName!;
                     updateTask.FullInstallPath = gameToUpdate.Value.Install_path;
                     if (installedAppList != null)
@@ -865,6 +864,7 @@ public class LegendaryUpdateController
                             {
                                 updateTask.DownloadProperties.ExtraContent = installedGameData.Install_tags;
                             }
+
                             var requiredTags = await LegendaryLauncher.GetRequiredSdlsTags(updateTask);
                             foreach (var requiredTag in requiredTags)
                             {
@@ -872,6 +872,7 @@ public class LegendaryUpdateController
                             }
                         }
                     }
+
                     updateTasks.Add(updateTask);
                 }
 

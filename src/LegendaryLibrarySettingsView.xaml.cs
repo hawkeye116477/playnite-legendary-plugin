@@ -229,7 +229,10 @@ public partial class LegendaryLibrarySettingsView
         Dictionary<PlayTimeImportMode, string> playTimeImportModes = new()
         {
             { PlayTimeImportMode.Always, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteSettingsPlaytimeImportModeAlways) },
-            { PlayTimeImportMode.NewImportsOnly, LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteSettingsPlaytimeImportModeNewImportsOnly) }
+            {
+                PlayTimeImportMode.NewImportsOnly,
+                LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteSettingsPlaytimeImportModeNewImportsOnly)
+            }
         };
         ImportPlaytimeCBo.ItemsSource = playTimeImportModes;
 
@@ -319,7 +322,7 @@ public partial class LegendaryLibrarySettingsView
         var globalProgressOptions =
             new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonMigratingGamesOriginal),
                 false) { IsIndeterminate = false };
-        await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async (a) =>
+        await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async a =>
         {
             var gamesToMigrate = playniteApi.Library.Games
                                             .Where(i => i.LibraryId == "Crow.EpicGames")
@@ -461,6 +464,7 @@ public partial class LegendaryLibrarySettingsView
                 {
                     await view.DeleteDomainCookiesAsync(".epicgames.com");
                 }
+
                 await LegendaryLauncher.RemoveAllTokens();
                 UpdateAuthStatus();
             }
@@ -482,7 +486,7 @@ public partial class LegendaryLibrarySettingsView
             AuthStatusTB.Text = LocalizationManager.Instance.GetString(LOC.CommonSignedInAs,
                 new Dictionary<string, IFluentType> { ["userName"] = (FluentString)clientApi.GetUsername() });
             LoginBtn.Content = LocalizationManager.Instance.GetString(LOC.CommonSignOut);
-            LoginBtn.IsChecked = true; 
+            LoginBtn.IsChecked = true;
             LoginAlternativeBtn.Visibility = Visibility.Collapsed;
         }
         else
@@ -682,7 +686,7 @@ public partial class LegendaryLibrarySettingsView
             new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonCheckingForUpdates), false)
                 { IsIndeterminate = true };
         await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(updateCheckProgressOptions,
-            async (a) =>
+            async a =>
             {
                 gamesToUpdate = await legendaryUpdateController.CheckGameUpdates(
                     LocalizationManager.Instance.GetString(LOC.CommonOverlay,
@@ -774,7 +778,7 @@ public partial class LegendaryLibrarySettingsView
         var globalProgressOptions =
             new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonRevertMigratingGames), false)
                 { IsIndeterminate = false };
-        await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async (a) =>
+        await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions, async a =>
         {
             var gamesToMigrate = playniteApi.Library.Games.Where(i => i.LibraryId == LegendaryLibrary.PluginId)
                                             .ToList();

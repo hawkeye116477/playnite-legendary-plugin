@@ -86,7 +86,7 @@ public class EpicAccountClient
             // This is needed otherwise captcha won't pass
             UserAgent = UserAgent
         });
-        view.LoadingChangedCallbackAsync = async (e) =>
+        view.LoadingChangedCallbackAsync = async e =>
         {
             var address = view.GetCurrentAddress();
             var pageText = await view.GetPageTextAsync();
@@ -109,7 +109,7 @@ public class EpicAccountClient
             }
         };
 
-        view.WebViewInitializedCallbackAsync = async (_) =>
+        view.WebViewInitializedCallbackAsync = async _ =>
         {
             await view.DeleteDomainCookiesAsync(".epicgames.com");
             view.Navigate(loginUrl);
@@ -155,7 +155,7 @@ public class EpicAccountClient
         }
         catch (Exception ex)
         {
-            logger.Error(ex, $"Failed to authenticate with the Epic Games Store");
+            logger.Error(ex, "Failed to authenticate with the Epic Games Store");
         }
     }
 
@@ -338,18 +338,16 @@ public class EpicAccountClient
         {
             throw new TokenException(error.ErrorCode);
         }
-        else
+
+        try
         {
-            try
-            {
-                return new Tuple<string, T>(str, Serialization.FromJson<T>(str)!);
-            }
-            catch
-            {
-                // For cases like #134, where the entire service is down and doesn't even return valid error messages.
-                logger.Error(str);
-                throw new Exception("Failed to get data from Epic service.");
-            }
+            return new Tuple<string, T>(str, Serialization.FromJson<T>(str)!);
+        }
+        catch
+        {
+            // For cases like #134, where the entire service is down and doesn't even return valid error messages.
+            logger.Error(str);
+            throw new Exception("Failed to get data from Epic service.");
         }
     }
 

@@ -49,7 +49,7 @@ public class LegendaryLibrary : Plugin
             ProvidesStoreMetadata = true,
             CanImportPlaytime = false,
             CanImportPlaySessions = false,
-            HasCustomGameImport = true
+            HasCustomGameImport = true,
         };
         AchievementsSettings = new AchievementsSupport
         {
@@ -83,7 +83,7 @@ public class LegendaryLibrary : Plugin
     {
         if (args.CallId == UnifiedDownloadManagerSharedProperties.GetDownloadLogic)
         {
-            return this.UnifiedDownloadLogic;
+            return UnifiedDownloadLogic;
         }
 
         return null;
@@ -357,6 +357,79 @@ public class LegendaryLibrary : Plugin
         return allGames;
     }
 
+    //public override async Task<List<ImportableGame>> GetGamesAsync(LibraryGetGamesArgs args)
+    //{
+    //    const string importErrorMessageId = $"{PluginId}_libImportError";
+    //    var allGames = new List<ImportableGame>();
+    //    var installedGames = new Dictionary<string, ImportableGame>();
+    //    Exception? importError = null;
+
+    //    if (Settings.ImportInstalledGames)
+    //    {
+    //        try
+    //        {
+    //            installedGames = GetInstalledGames();
+    //            Logger.Debug($"Found {installedGames.Count} installed Epic games.");
+    //            allGames.AddRange(installedGames.Values.ToList());
+    //        }
+    //        catch (Exception e)
+    //        {
+    //            Logger.Error(e, "Failed to import installed Epic games.");
+    //            importError = e;
+    //        }
+    //    }
+
+    //    if (Settings.ConnectAccount)
+    //    {
+    //        try
+    //        {
+    //            var libraryGames = await GetLibraryGames(args.CancelToken);
+    //            Logger.Debug($"Found {libraryGames.Count} library Epic games.");
+
+    //            if (!Settings.ImportUninstalledGames)
+    //            {
+    //                libraryGames = libraryGames.Where(lg => installedGames.ContainsKey(lg.Key)).ToDictionary();
+    //            }
+
+    //            foreach (var game in libraryGames)
+    //            {
+    //                if (installedGames.TryGetValue(game.Key, out var installed))
+    //                {
+    //                    installed.PlayTime = game.Value.PlayTime;
+    //                    installed.LastPlayedDate = game.Value.LastPlayedDate;
+    //                    installed.Name = game.Value.Name;
+    //                }
+    //                else
+    //                {
+    //                    allGames.Add(game.Value);
+    //                }
+    //            }
+    //        }
+    //        catch (Exception e)
+    //        {
+    //            Logger.Error(e, "Failed to import linked account Epic games details.");
+    //            importError = e;
+    //        }
+    //    }
+
+    //    if (importError != null)
+    //    {
+    //        PlayniteApi.Notifications.Add(new NotificationMessage(
+    //            importErrorMessageId,
+    //            LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLibraryImportError,
+    //                new Dictionary<string, IFluentType> { ["var0"] = (FluentString)LibraryName }) +
+    //            Environment.NewLine + importError.Message,
+    //            NotificationSeverity.Error,
+    //            async () => await PlayniteApi.MainView.OpenPluginSettingsAsync(LegendaryLibrary.PluginId)));
+    //    }
+    //    else
+    //    {
+    //        PlayniteApi.Notifications.Remove(importErrorMessageId);
+    //    }
+
+    //    return allGames;
+    //}
+
     public override async Task<List<Game>> ImportGamesAsync(ImportGamesArgs args)
     {
         var addedGames = new List<Game>();
@@ -513,7 +586,7 @@ public class LegendaryLibrary : Plugin
 
     public async Task<bool> StopDownloadManager(bool displayConfirm = false)
     {
-        var unifiedDownloadManagerApi = LegendaryLibrary.Instance.UnifiedDownloadManagerApi;
+        var unifiedDownloadManagerApi = Instance.UnifiedDownloadManagerApi;
         var allDownloads = unifiedDownloadManagerApi.Downloads;
         var runningAndQueuedDownloads = allDownloads?.Where(i =>
                                                           i.Status == UnifiedDownloadStatus.Running ||
@@ -730,7 +803,7 @@ public class LegendaryLibrary : Plugin
             {
                 menuItems.Add(new MenuItemImpl(
                     LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteCheckForUpdates),
-                    async (_) => { await legendaryGameMenuActions.OpenCheckForGamesUpdatesWindow(); },
+                    async _ => { await legendaryGameMenuActions.OpenCheckForGamesUpdatesWindow(); },
                     icon: CommonIcons.UpdateIcon
                 ));
             }
@@ -739,7 +812,7 @@ public class LegendaryLibrary : Plugin
                 menuItems.Add(
                     new MenuItemImpl(
                         LocalizationManager.Instance.GetString(LOC.CommonImportInstalledGame),
-                        async (_) => { await legendaryGameMenuActions.OpenImportGameWindow(); },
+                        async _ => { await legendaryGameMenuActions.OpenImportGameWindow(); },
                         icon: CommonIcons.ImportGameIcon)
                 );
             }
@@ -747,7 +820,7 @@ public class LegendaryLibrary : Plugin
             menuItems.Add(
                 new MenuItemImpl(
                     LocalizationManager.Instance.GetString(LOC.CommonManageDlcs),
-                    async (_) => { await legendaryGameMenuActions.OpenDlcManagerWindow(); },
+                    async _ => { await legendaryGameMenuActions.OpenDlcManagerWindow(); },
                     icon: CommonIcons.InstallIcon)
             );
 
@@ -755,7 +828,7 @@ public class LegendaryLibrary : Plugin
             {
                 menuItems.Add(new MenuItemImpl(
                     LocalizationManager.Instance.GetString(LOC.CommonMove),
-                    async (_) => { await legendaryGameMenuActions.OpenMoveGameWindow(); }
+                    async _ => { await legendaryGameMenuActions.OpenMoveGameWindow(); }
                   , icon: CommonIcons.MoveIcon)
                 );
             }
@@ -768,7 +841,7 @@ public class LegendaryLibrary : Plugin
             {
                 menuItems.Add(new MenuItemImpl(
                     LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteInstallGame),
-                    (_) =>
+                    _ =>
                     {
                         var installData = new List<DownloadManagerData.Download>();
                         foreach (var notInstalledLegendaryGame in notInstalledLegendaryGames)
@@ -792,7 +865,7 @@ public class LegendaryLibrary : Plugin
             {
                 menuItems.Add(new MenuItemImpl(
                     LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame),
-                    async (_) => { await LegendaryUninstallController.LaunchUninstaller(installedLegendaryGames); },
+                    async _ => { await LegendaryUninstallController.LaunchUninstaller(installedLegendaryGames); },
                     icon: CommonIcons.UninstallIcon
                 ));
             }
@@ -802,7 +875,7 @@ public class LegendaryLibrary : Plugin
         {
             menuItems.Add(new MenuItemImpl(
                 LocalizationManager.Instance.GetString(LOC.CommonRepair),
-                (_) =>
+                _ =>
                 {
                     var installData = new List<DownloadManagerData.Download>();
                     foreach (var game in installedLegendaryGames)
@@ -846,7 +919,7 @@ public class LegendaryLibrary : Plugin
         var items = new List<MenuItemImpl>
         {
             new(LocalizationManager.Instance.GetString(LOC.CommonCheckForGamesUpdatesButton),
-                async (_) =>
+                async _ =>
                 {
                     if (!LegendaryLauncher.IsInstalled)
                     {
@@ -861,7 +934,7 @@ public class LegendaryLibrary : Plugin
                             LocalizationManager.Instance.GetString(LOC.CommonCheckingForUpdates),
                             false) { IsIndeterminate = true };
                     await PlayniteApi.Dialogs.ShowAsyncBlockingProgressAsync(updateCheckProgressOptions,
-                        async (_) => { gamesUpdates = await legendaryUpdateController.CheckAllGamesUpdates(); }
+                        async _ => { gamesUpdates = await legendaryUpdateController.CheckAllGamesUpdates(); }
                     );
 
                     var checkedGames = new List<Game>();
@@ -912,7 +985,7 @@ public class LegendaryLibrary : Plugin
                 icon: CommonIcons.UpdateIcon
             ),
             new(LocalizationManager.Instance.GetString(LOC.CommonFinishInstallation),
-                async (_) =>
+                async _ =>
                 {
                     var installedAppList = LegendaryLauncher.GetInstalledAppList();
                     var gamesToCompleteInstall = new Dictionary<string, Installed>();
@@ -933,7 +1006,7 @@ public class LegendaryLibrary : Plugin
                                     LocalizationManager.Instance.GetString(LOC.CommonFinishingInstallation), false)
                                 { IsIndeterminate = false };
 
-                        await PlayniteApi.Dialogs.ShowBlockingProgressAsync(installProgressOptions, (progress) =>
+                        await PlayniteApi.Dialogs.ShowBlockingProgressAsync(installProgressOptions, progress =>
                             {
                                 progress.SetProgressMaxValue(gamesToCompleteInstall.Count);
                                 var current = 0;
@@ -1002,6 +1075,7 @@ public class LegendaryLibrary : Plugin
             {
                 break;
             }
+
             try
             {
                 var importableAchievements = await clientApi.GetAchievements(game.LibraryGameId, tokens, args.CancelToken);
@@ -1009,6 +1083,7 @@ public class LegendaryLibrary : Plugin
                 {
                     Logger.Info($"Found {importableAchievements.Count} achievements for {game.Name}.");
                 }
+
                 achievementsList.Add(new ImportableAchievements(game.Id, importableAchievements));
             }
             catch (Exception ex)
@@ -1016,6 +1091,7 @@ public class LegendaryLibrary : Plugin
                 Logger.Debug(ex);
             }
         }
+
         return achievementsList;
     }
 }

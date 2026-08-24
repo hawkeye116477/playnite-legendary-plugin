@@ -111,8 +111,9 @@ public class LegendaryLauncher
             var playniteApi = LegendaryLibrary.PlayniteApi;
             string[] validLegendaryBinaries = { "legendary_windows_x86_64.exe", "legendary_windows_x64.exe", "legendary.exe" };
             var launcherPath = "";
-            string? envPath = Environment.GetEnvironmentVariable("PATH")?
-                                         .Split([Path.PathSeparator], StringSplitOptions.RemoveEmptyEntries)
+            string? envPath = Environment.GetEnvironmentVariable("PATH")
+                                       ?
+                                      .Split([Path.PathSeparator], StringSplitOptions.RemoveEmptyEntries)
                                          .Where(p => p.IndexOfAny(Path.GetInvalidPathChars()) < 0)
                                          .SelectMany(pathEntry =>
                                               validLegendaryBinaries.Select(legendaryBinary =>
@@ -155,7 +156,7 @@ public class LegendaryLauncher
             if (savedSettings != null)
             {
                 var savedLauncherPath = savedSettings.SelectedFullLauncherPath;
-                var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory.ToString();
+                var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory;
                 if (savedLauncherPath != "")
                 {
                     if (savedLauncherPath.Contains(playniteDirectoryVariable))
@@ -987,7 +988,7 @@ public class LegendaryLauncher
             catch (Exception ex)
             {
                 var logger = LogManager.GetLogger();
-                logger.Error(ex, $"An error occured during loading launcher update sources");
+                logger.Error(ex, "An error occured during loading launcher update sources");
             }
 
             if (!result.IsNullOrWhiteSpace() && Serialization.TryFromJson(result, out List<string> savedRepoList))
@@ -1153,7 +1154,7 @@ public class LegendaryLauncher
             }
         }
     }
-    
+
     public static string UserInfoPath
     {
         get
@@ -1183,14 +1184,14 @@ public class LegendaryLauncher
 
     public static async Task RemoveAllTokens()
     {
-        var userInfoContent = LegendaryLauncher.GetUserInfo();
+        var userInfoContent = GetUserInfo();
         if (!userInfoContent.Account_id.IsNullOrEmpty())
         {
-            Keyring.DeletePassword($"legendary", userInfoContent.Account_id);
-            FileSystem.DeleteFileSafe(Path.Combine(LegendaryLauncher.ConfigPath, $"{userInfoContent.Account_id.MD5()}.enc"));
+            Keyring.DeletePassword("legendary", userInfoContent.Account_id);
+            FileSystem.DeleteFileSafe(Path.Combine(ConfigPath, $"{userInfoContent.Account_id.MD5()}.enc"));
         }
 
-        FileSystem.DeleteFileSafe(LegendaryLauncher.UserInfoPath);
+        FileSystem.DeleteFileSafe(UserInfoPath);
 
         FileSystem.DeleteFileSafe(OldPluginEncryptedTokensPath);
         FileSystem.DeleteFileSafe(TokensPath);

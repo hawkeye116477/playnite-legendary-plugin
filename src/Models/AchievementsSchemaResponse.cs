@@ -45,7 +45,7 @@ namespace LegendaryLibraryNS.Models
             public bool IsBase { get; set; }
             public string? AchievementSetId { get; set; }
             public string UnlockedDisplayName { get; set; } = "";
-            public string LockedDisplayName { get; set; }  = "";
+            public string LockedDisplayName { get; set; } = "";
             public string? UnlockedDescription { get; set; }
             public string? LockedDescription { get; set; }
             public string? UnlockedIconId { get; set; }
