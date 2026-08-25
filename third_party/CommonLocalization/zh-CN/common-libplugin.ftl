@@ -91,3 +91,6 @@ common-games-updates-underway = 正在下载来自 { $updatesSourceName } 的游
 common-instance-notice = 一次只能有一个 { $pluginShortName } 实例安装/导入/移动应用程序。您要暂停下载管理器任务以继续吗？
 common-reload = 重新加载
 common-reload-confirm = 您确定要重新加载数据吗？这可能会造成 { $updatesSourceName } 服务器拥堵。
+common-migrating-data = 正在迁移数据... 请稍候。
+common-finish-installation = 完成安装的游戏
+common-no-finish-needed = 没有未完成安装的游戏。

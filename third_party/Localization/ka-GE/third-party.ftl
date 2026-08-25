@@ -4,5 +4,4 @@
 ### https://github.com/JosefNemec/Playnite/tree/02fc1972a1f0c4b7e5f2bc2b91d8dfe643141965. 
 ### DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 ###
-third-party-playnite-filter-active-label = Filter Aktief
-third-party-playnite-filters = Filters
+third-party-playnite-filters = ფილტრები

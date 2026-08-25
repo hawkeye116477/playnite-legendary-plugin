@@ -176,7 +176,6 @@ public class LegendaryLibrary : Plugin
             {
                 Source = new IdImportableProperty("epic", "Epic"),
                 InstallState = InstallState.Installed,
-                //Version = app.Version,
                 InstallSize = (ulong)app.Install_size,
                 InstallDirectory = installLocation,
                 Platforms = [PcSpecProperty]

@@ -266,14 +266,6 @@ namespace System
         /// </summary>
         public const string CommonDownloaderPreferredCdn = "common-downloader-preferred-cdn";
         /// <summary>
-        /// Finish installation of games
-        /// </summary>
-        public const string CommonFinishInstallation = "common-finish-installation";
-        /// <summary>
-        /// No games requiring finishing installation.
-        /// </summary>
-        public const string CommonNoFinishNeeded = "common-no-finish-needed";
-        /// <summary>
         /// {$launcherName} Path
         /// </summary>
         public const string CommonLauncherCustomPath = "common-launcher-custom-path";
@@ -611,6 +603,14 @@ namespace System
         /// </summary>
         public const string CommonMigratingData = "common-migrating-data";
         /// <summary>
+        /// Finish installation of games
+        /// </summary>
+        public const string CommonFinishInstallation = "common-finish-installation";
+        /// <summary>
+        /// No games requiring finishing installation.
+        /// </summary>
+        public const string CommonNoFinishNeeded = "common-no-finish-needed";
+        /// <summary>
         /// Once a month
         /// </summary>
         public const string CommonOnceAMonth = "common-once-a-month";
@@ -654,6 +654,10 @@ namespace System
         /// Import
         /// </summary>
         public const string ThirdPartyPlayniteImportLabel = "third-party-playnite-import-label";
+        /// <summary>
+        /// Version
+        /// </summary>
+        public const string ThirdPartyPlayniteVersionLabel = "third-party-playnite-version-label";
         /// <summary>
         /// Install Size
         /// </summary>

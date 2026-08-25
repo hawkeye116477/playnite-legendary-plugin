@@ -1,14 +1,14 @@
-﻿using LegendaryLibraryNS.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using System.Windows;
+﻿using CommonPlugin;
+using CommonPlugin.Enums;
+using LegendaryLibraryNS.Enums;
+using LegendaryLibraryNS.Models;
 using Playnite;
 using Playnite.Common;
-using LegendaryLibraryNS.Enums;
-using CommonPlugin;
-using CommonPlugin.Enums;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Windows;
 using MessageBoxResult = Playnite.MessageBoxResult;
 
 namespace LegendaryLibraryNS;
@@ -173,6 +173,7 @@ public partial class LegendaryGameSettingsView
             AutoSyncPlaytimeChk.IsChecked = GameSettings.AutoSyncPlaytime;
         }
 
+        var version = "";
         var appList = LegendaryLauncher.GetInstalledAppList();
         if (appList.ContainsKey(GameId))
         {
@@ -180,6 +181,11 @@ public partial class LegendaryGameSettingsView
             {
                 EnableOfflineModeChk.IsEnabled = true;
             }
+            GameVersionTxt.Text = appList[Game.LibraryGameId!].Version;
+        }
+        else
+        {
+            VersionSP.Visibility = Visibility.Collapsed;
         }
 
         var cloudSyncActions = new Dictionary<CloudSyncAction, string>

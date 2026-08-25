@@ -22,8 +22,13 @@
     <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled"
                 HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
         <TabItem Header="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSettingsGeneralLabel}}">
-            <StackPanel Margin="10">
-                <Grid>
+            <StackPanel Margin="10,10,10,0">
+                <StackPanel Grid.Column="0" Grid.Row="2" Margin="0,0,8,8" Orientation="Horizontal" Name="VersionSP">
+                    <TextBlock Text="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteVersionLabel}}"
+                            VerticalAlignment="Center" HorizontalAlignment="Left" IsEnabled="False"/>
+                    <TextBox Name="GameVersionTxt" Margin="8,0,0,0" IsReadOnly="True"></TextBox>
+                </StackPanel>
+                <Grid Margin="0,5,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -37,11 +42,11 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <CheckBox Grid.Column="0" Grid.Row="0"
-                              Content="{common:Localize Key={x:Static system:LOC.LegendaryEnableOfflineMode}}"
-                              Margin="0,0,0,8" x:Name="EnableOfflineModeChk" IsEnabled="False" />
-                    <CheckBox Grid.Column="0" Grid.Row="1"
                               Content="{common:Localize Key={x:Static system:LOC.CommonDisableGameUpdateChecking}}"
                               Margin="0,0,0,8" x:Name="DisableGameUpdateCheckingChk" />
+                    <CheckBox Grid.Column="0" Grid.Row="1"
+                              Content="{common:Localize Key={x:Static system:LOC.LegendaryEnableOfflineMode}}"
+                              Margin="0,0,0,8" x:Name="EnableOfflineModeChk" IsEnabled="False" />
                     <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonStartupArguments}}"
                                Grid.Column="0"
                                Grid.Row="2" Margin="0,0,8,8" VerticalAlignment="Center" HorizontalAlignment="Left" />

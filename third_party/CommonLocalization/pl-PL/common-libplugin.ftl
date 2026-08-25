@@ -92,3 +92,5 @@ common-instance-notice = Tylko jedna instancja { $pluginShortName } może instal
 common-reload = Odśwież
 common-reload-confirm = Czy na pewno chcesz odświeżyć dane? To może spowodować trzęsienie ziemi w pobliżu serwerów { $updatesSourceName }.
 common-migrating-data = Migracja danych... Proszę czekać.
+common-finish-installation = Ukończ instalację gier
+common-no-finish-needed = Brak gier wymagających ukończenia instalacji.
