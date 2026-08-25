@@ -173,7 +173,6 @@ public partial class LegendaryGameSettingsView
             AutoSyncPlaytimeChk.IsChecked = GameSettings.AutoSyncPlaytime;
         }
 
-        var version = "";
         var appList = LegendaryLauncher.GetInstalledAppList();
         if (appList.ContainsKey(GameId))
         {
@@ -201,8 +200,7 @@ public partial class LegendaryGameSettingsView
             cloudPath = await LegendaryCloud.CalculateGameSavesPath(Game.Name, Game.LibraryGameId!, Game.InstallDirectory!);
             if (cloudPath.IsNullOrEmpty())
             {
-                CloudSavesSP.Visibility = Visibility.Collapsed;
-                CloudSavesNotSupportedTB.Visibility = Visibility.Visible;
+                CloudSavesSP.IsEnabled = false;
             }
         }));
     }

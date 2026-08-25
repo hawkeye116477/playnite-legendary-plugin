@@ -133,8 +133,6 @@
                                 HorizontalAlignment="Left" Margin="15,0,0,0" Click="SyncSavesBtn_Click" />
                     </StackPanel>
                 </StackPanel>
-                <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonCloudSavesNotSupported}}"
-                           Name="CloudSavesNotSupportedTB" Visibility="Collapsed" Margin="0,5,0,0" />
             </StackPanel>
         </TabItem>
     </TabControl>
