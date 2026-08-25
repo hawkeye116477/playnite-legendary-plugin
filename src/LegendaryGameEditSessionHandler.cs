@@ -25,7 +25,6 @@ namespace LegendaryLibraryNS
         public override async Task EndEditAsync(EndEditArgs args)
         {
             gameSettingsView?.Save();
-            await Task.CompletedTask;
         }
 
         public override bool GetHasUnsavedChanges(GetHasUnsavedChangesArgs args)

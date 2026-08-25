@@ -55,7 +55,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
             var result = await playniteApi.Dialogs.ShowMessageAsync(
                 LocalizationManager.Instance.GetString(LOC.CommonLauncherNotInstalled,
                     new Dictionary<string, IFluentType>
-                    { ["launcherName"] = (FluentString)"Unified Download Manager" }),
+                        { ["launcherName"] = (FluentString)"Unified Download Manager" }),
                 "Legendary (Epic Games) library integration", MessageBoxSeverity.Error, options, []);
             if (result == options[0])
             {
@@ -287,6 +287,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                                 oldBinaryPath,
                             });
                         }
+
                         var copyCmd = Cli.Wrap("cmd.exe")
                                          .WithArguments(copyCmdArgs);
                         var proc = ProcessStarter.StartProcess("cmd.exe", copyCmd.Arguments, asAdmin: true);
@@ -327,7 +328,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                 downloadTask.GracefulCts.Token);
             response.EnsureSuccessStatusCode();
 
-            using var networkStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+            await using var networkStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
 
             var bytesRead = 0;
             var totalNetWorkBytes = downloadedBytes;
@@ -338,16 +339,16 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
             var buffer = new byte[bufferSize];
             var fileMode = downloadedBytes > 0 ? FileMode.Append : FileMode.Create;
 
-            using (var tempFs = new FileStream(tempPath, fileMode, FileAccess.Write, FileShare.Read, bufferSize,
-                       FileOptions.Asynchronous))
+            await using (var tempFs = new FileStream(tempPath, fileMode, FileAccess.Write, FileShare.Read, bufferSize,
+                             FileOptions.Asynchronous))
             {
                 while ((bytesRead = await networkStream
-                                         .ReadAsync(buffer, 0, buffer.Length, downloadTask.GracefulCts.Token)
+                                         .ReadAsync(buffer, downloadTask.GracefulCts.Token)
                                          .ConfigureAwait(false)) > 0)
                 {
                     totalNetWorkBytes += bytesRead;
 
-                    await tempFs.WriteAsync(buffer, 0, bytesRead, downloadTask.GracefulCts.Token)
+                    await tempFs.WriteAsync(buffer.AsMemory(0, bytesRead), downloadTask.GracefulCts.Token)
                                 .ConfigureAwait(false);
 
                     totalDiskBytes += bytesRead;
@@ -383,9 +384,9 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                                 {
                                     var remaining = (totalSize - totalDiskBytes) /
                                                     downloadTask.DownloadSpeedBytes;
-                                    downloadTask.Eta = remaining < TimeSpan.MaxValue.TotalSeconds
-                                        ? TimeSpan.FromSeconds(remaining)
-                                        : TimeSpan.MaxValue;
+                                    downloadTask.Eta = remaining < TimeSpan.MaxValue.TotalSeconds ?
+                                        TimeSpan.FromSeconds(remaining) :
+                                        TimeSpan.MaxValue;
                                 }
                                 else
                                 {
@@ -481,7 +482,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                 installCommand.AddRange(["--base-path", downloadProperties.InstallPath]);
             }
 
-            if (settings != null && settings.PreferredCdn != "")
+            if (settings.PreferredCdn != "")
             {
                 installCommand.AddRange(["--preferred-cdn", settings.PreferredCdn]);
             }
@@ -528,10 +529,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
 
             if (downloadProperties.ExtraContent is { Count: > 0 })
             {
-                foreach (var singleSelectedContent in downloadProperties.ExtraContent)
-                {
-                    installCommand.Add("--install-tag=" + singleSelectedContent);
-                }
+                installCommand.AddRange(downloadProperties.ExtraContent.Select(singleSelectedContent => "--install-tag=" + singleSelectedContent));
 
                 if (downloadProperties.DownloadAction != DownloadAction.Install)
                 {
@@ -829,10 +827,9 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                                         //game.Version = installedGameInfo.Version;
                                         game.InstallSize = (ulong)installedGameInfo.Install_size;
                                         game.InstallState = InstallState.Installed;
-                                        var playtimeSyncEnabled = false;
                                         if (downloadProperties.DownloadAction == DownloadAction.Repair)
                                         {
-                                            playtimeSyncEnabled = LegendaryLibrary.GetSettings() is { SyncPlaytime: true };
+                                            var playtimeSyncEnabled = LegendaryLibrary.GetSettings() is { SyncPlaytime: true };
                                             var gameSettings =
                                                 LegendaryGameSettingsView.LoadGameSettings(game.LibraryGameId!);
                                             if (gameSettings.AutoSyncPlaytime != null)
