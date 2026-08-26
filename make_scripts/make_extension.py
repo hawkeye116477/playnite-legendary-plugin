@@ -5,16 +5,16 @@
 # pylint: disable=E1136
 """Pack extension"""
 import os
-from pathlib import Path
 import subprocess
 import shutil
 import datetime
 import hashlib
-import winreg
+# import winreg
 import xml.etree.ElementTree as ET
 import yaml
 import git
 import get_extension_version
+from platformdirs import user_downloads_dir
 
 class MyDumper(yaml.Dumper):
     """https://stackoverflow.com/a/39681672"""
@@ -26,19 +26,19 @@ class MyDumper(yaml.Dumper):
 pj = os.path.join
 pn = os.path.normpath
 
-playnitePath = pn(pj(os.path.expanduser('~'), r"scoop\apps\playnite\current"))
-if not os.path.isdir(playnitePath):
-    with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall') as key:
-        for i in range(0, winreg.QueryInfoKey(key)[0]):
-            with winreg.OpenKey(key, winreg.EnumKey(key, i)) as subkey:
-                if winreg.QueryValueEx(subkey, "DisplayName")[0] == "Playnite":
-                    playnitePath = pn(winreg.QueryValueEx(subkey, "InstallLocation")[0])
-                    break
+# playnitePath = pn(pj(os.path.expanduser('~'), r"scoop\apps\playnite\current"))
+# if not os.path.isdir(playnitePath):
+#     with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall') as key:
+#         for i in range(0, winreg.QueryInfoKey(key)[0]):
+#             with winreg.OpenKey(key, winreg.EnumKey(key, i)) as subkey:
+#                 if winreg.QueryValueEx(subkey, "DisplayName")[0] == "Playnite":
+#                     playnitePath = pn(winreg.QueryValueEx(subkey, "InstallLocation")[0])
+#                     break
 
-toolbox = pj(playnitePath, "Toolbox.exe")
+toolbox = pj(user_downloads_dir(), "Toolbox.exe")
 scriptPath = os.path.dirname(os.path.realpath(__file__))
 mainPath = pn(scriptPath + "/..")
-compiledPath = pn(pj(mainPath, "src/bin/Release/net10.0-windows"))
+compiledPath = pn(pj(mainPath, "src/plugin/bin/Release/net10.0-windows"))
 releasesPath = pj(mainPath, "Releases")
 
 if not os.path.exists(releasesPath):
@@ -58,18 +58,12 @@ for root, dirs, files in os.walk(pj(compiledPath, "Localization")):
             shutil.rmtree(pj(root, folder))
             dirs.remove(folder)
 
-# Remove unecessary files
-for not_needed_file in Path(compiledPath).rglob("AdysTech.CredentialManager.resources.dll"):
-    folder = not_needed_file.parent
-    shutil.rmtree(folder)
-
-subprocess.run([pj(playnitePath, "Toolbox.exe"), "pack",
-               compiledPath, releasesPath], check=True)
-
 version = get_extension_version.run()
 versionUnderline = version.replace(".", "_")
 extFile = pj(mainPath, "Releases", "LegendaryLibrary_" +
-             versionUnderline + ".pext")
+             versionUnderline + ".pext2")
+subprocess.run([toolbox, "pack",
+               compiledPath, extFile], check=True)
 checksumFilePath = pj(mainPath, "Releases",
                       "LegendaryLibrary_" + versionUnderline + ".pext.sha256")
 
@@ -81,43 +75,43 @@ if os.path.exists(extFile):
 
     with open(checksumFilePath, "a", encoding="utf-8") as checksumFile:
         checksumFile.write(checksumExt+"  "+os.path.basename(extFile))
-    print(f"Checksum: {checksumExt}")
+    print(f"\nChecksum: {checksumExt}")
 
-    with open(pj(mainPath, "changelog.txt"), "r", encoding="utf-8") as cf:
-        changelog = cf.readlines()
+    # with open(pj(mainPath, "changelog.txt"), "r", encoding="utf-8") as cf:
+    #     changelog = cf.readlines()
 
-    with open(pj(mainPath, "installer.yaml"), "r", encoding="utf-8") as file:
-        installerManifest = yaml.safe_load(file)
+    # with open(pj(mainPath, "installer.yaml"), "r", encoding="utf-8") as file:
+    #     installerManifest = yaml.safe_load(file)
 
-    newVersion = "true"
-    if installerManifest["Packages"] is not None:
-        for element in installerManifest["Packages"]:
-            if element["Version"] == version:
-                newVersion = "false"
-    else:
-        installerManifest["Packages"] = []
+    # newVersion = "true"
+    # if installerManifest["Packages"] is not None:
+    #     for element in installerManifest["Packages"]:
+    #         if element["Version"] == version:
+    #             newVersion = "false"
+    # else:
+    #     installerManifest["Packages"] = []
 
-    sdkVersion = ""
-    namespaces = {'msbuild': 'http://schemas.microsoft.com/developer/msbuild/2003'}
-    LegendaryProj = ET.parse(pj(mainPath, "src", "LegendaryLibrary.csproj"))
-    LegendaryProj_root = LegendaryProj.getroot()
+    # sdkVersion = ""
+    # namespaces = {'msbuild': 'http://schemas.microsoft.com/developer/msbuild/2003'}
+    # Proj = ET.parse(pj(mainPath, "src", "plugin", "LegendaryLibrary.csproj"))
+    # Proj_root = Proj.getroot()
     
-    for child in LegendaryProj_root.findall(".//msbuild:PackageReference", namespaces):
-        if child.get("Include") == "PlayniteSDK":
-            sdkVersion = child.find('msbuild:Version', namespaces).text
+    # for child in Proj.findall(".//msbuild:PackageReference", namespaces):
+    #     if child.get("Include") == "PlayniteSDK":
+    #         sdkVersion = child.find('msbuild:Version', namespaces).text
 
-    if newVersion == "true":
-        installerManifest["Packages"].insert(0, {
-            "Version": version,
-            "RequiredApiVersion": sdkVersion,
-            "ReleaseDate": datetime.date.today(),
-            "PackageUrl": f"https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/{version}/LegendaryLibrary_{versionUnderline}.pext",
-            "Changelog": [line.rstrip().replace("* ", "") for line in changelog]
-        })
+    # if newVersion == "true":
+    #     installerManifest["Packages"].insert(0, {
+    #         "Version": version,
+    #         "RequiredApiVersion": sdkVersion,
+    #         "ReleaseDate": datetime.date.today(),
+    #         "PackageUrl": f"https://github.com/hawkeye116477/playnite-legendary-plugin/releases/download/{version}/LegendaryLibrary_{versionUnderline}.pext",
+    #         "Changelog": [line.rstrip().replace("* ", "") for line in changelog]
+    #     })
 
-        with open(pj(mainPath, "installer.yaml"), "w", encoding="utf-8") as file:
-            yaml.dump(installerManifest, file,
-                      sort_keys=False, Dumper=MyDumper)
+    #     with open(pj(mainPath, "installer.yaml"), "w", encoding="utf-8") as file:
+    #         yaml.dump(installerManifest, file,
+    #                   sort_keys=False, Dumper=MyDumper)
 
-        git_repo = git.Repo(mainPath)
-        git_repo.create_tag(version)
+    git_repo = git.Repo(mainPath)
+    git_repo.create_tag(f"P11_{version}")
