@@ -299,7 +299,8 @@
                         <ComboBox x:Name="LauncherUpdateSourceCBo"
                                   SelectedValue="{Binding Settings.LauncherUpdateRepo}"
                                   VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Margin="8,0,0,0"
-                                  HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                  HorizontalAlignment="Left" VerticalAlignment="Center"
+                                  DisplayMemberPath="Value" SelectedValuePath="Key" />
                     </StackPanel>
                     <StackPanel Margin="0,10,0,0">
                         <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonCache}}" FontSize="18"
