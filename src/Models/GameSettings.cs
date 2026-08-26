@@ -1,16 +1,34 @@
 ﻿using System.Collections.Generic;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace LegendaryLibraryNS.Models;
 
-public class GameSettings
+public partial class GameSettings : ObservableObject
 {
-    public bool? LaunchOffline { get; set; }
-    public bool? DisableGameVersionCheck { get; set; }
-    public List<string>? StartupArguments { get; set; }
-    public string? LanguageCode { get; set; }
-    public string? OverrideExe { get; set; }
-    public bool? AutoSyncSaves { get; set; }
-    public string CloudSaveFolder { get; set; } = "";
-    public bool? AutoSyncPlaytime { get; set; }
-    public bool InstallPrerequisites { get; set; } = false;
+    [ObservableProperty]
+    public partial bool? LaunchOffline { get; set; }
+
+    [ObservableProperty]
+    public partial bool? DisableGameVersionCheck { get; set; }
+
+    [ObservableProperty]
+    public partial List<string>? StartupArguments { get; set; }
+
+    [ObservableProperty]
+    public partial string? LanguageCode { get; set; }
+
+    [ObservableProperty]
+    public partial string? OverrideExe { get; set; }
+
+    [ObservableProperty]
+    public partial bool? AutoSyncSaves { get; set; }
+
+    [ObservableProperty]
+    public partial string CloudSaveFolder { get; set; } = "";
+
+    [ObservableProperty]
+    public partial bool? AutoSyncPlaytime { get; set; }
+
+    [ObservableProperty]
+    public partial bool InstallPrerequisites { get; set; }
 }

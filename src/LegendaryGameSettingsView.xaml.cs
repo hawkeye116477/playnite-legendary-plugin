@@ -1,13 +1,9 @@
 ﻿using CommonPlugin;
 using CommonPlugin.Enums;
-using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
 using Playnite;
-using Playnite.Common;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Windows;
 using MessageBoxResult = Playnite.MessageBoxResult;
 
@@ -18,8 +14,8 @@ namespace LegendaryLibraryNS;
 /// </summary>
 public partial class LegendaryGameSettingsView
 {
-    private Game Game => (DataContext as Game)!;
-    public string GameId => Game.LibraryGameId!;
+    private LegendaryGameSettingsViewModel Vm => (DataContext as LegendaryGameSettingsViewModel)!;
+    private Game Game => Vm.Game;
     private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
     private string? cloudPath;
     public GameSettings? GameSettings;
@@ -31,155 +27,17 @@ public partial class LegendaryGameSettingsView
         InitializeComponent();
     }
 
-    public static GameSettings LoadGameSettings(string gameId)
-    {
-        var playniteApi = LegendaryLibrary.PlayniteApi;
-        var gameSettings = new GameSettings();
-        var gameSettingsFile = Path.Combine(playniteApi.UserDataDir, "GamesSettings", $"{gameId}.json");
-        if (File.Exists(gameSettingsFile))
-        {
-            if (Serialization.TryFromJson(FileSystem.ReadFileAsStringSafe(gameSettingsFile), out GameSettings? savedGameSettings))
-            {
-                if (savedGameSettings != null)
-                {
-                    gameSettings = savedGameSettings;
-                }
-            }
-        }
-
-        return gameSettings;
-    }
-
-    public GameSettings PrepareNewGameSettings()
-    {
-        var globalSettings = LegendaryLibrary.GetSettings();
-        var newGameSettings = new GameSettings();
-        if (EnableOfflineModeChk.IsChecked != globalSettings!.LaunchOffline)
-        {
-            newGameSettings.LaunchOffline = EnableOfflineModeChk.IsChecked;
-        }
-
-        var globalDisableUpdates = false;
-        if (globalSettings.GamesUpdatePolicy == UpdatePolicy.Never)
-        {
-            globalDisableUpdates = true;
-        }
-
-        if (DisableGameUpdateCheckingChk.IsChecked != globalDisableUpdates)
-        {
-            newGameSettings.DisableGameVersionCheck = DisableGameUpdateCheckingChk.IsChecked;
-        }
-
-        if (StartupArgumentsTxt.Text != "")
-        {
-            newGameSettings.StartupArguments = CommonHelpers.SplitArguments(StartupArgumentsTxt.Text).ToList();
-        }
-
-        if (LanguageCodeTxt.Text != "")
-        {
-            newGameSettings.LanguageCode = LanguageCodeTxt.Text;
-        }
-
-        if (SelectedAlternativeExeTxt.Text != "")
-        {
-            newGameSettings.OverrideExe = SelectedAlternativeExeTxt.Text;
-        }
-
-        if (AutoSyncSavesChk.IsChecked != globalSettings.SyncGameSaves)
-        {
-            newGameSettings.AutoSyncSaves = AutoSyncSavesChk.IsChecked;
-        }
-
-        if (SelectedSavePathTxt.Text != "")
-        {
-            newGameSettings.CloudSaveFolder = SelectedSavePathTxt.Text;
-        }
-
-        if (AutoSyncPlaytimeChk.IsChecked != globalSettings.SyncPlaytime)
-        {
-            newGameSettings.AutoSyncPlaytime = AutoSyncPlaytimeChk.IsChecked;
-        }
-
-        var oldGameSettings = LoadGameSettings(GameId);
-        if (oldGameSettings.InstallPrerequisites)
-        {
-            newGameSettings.InstallPrerequisites = true;
-        }
-
-        return newGameSettings;
-    }
-
-
-    public void Save()
-    {
-        var newGameSettings = PrepareNewGameSettings();
-        if (newGameSettings.GetType().GetProperties().Any(p => p.GetValue(newGameSettings) != null))
-        {
-            commonHelpers.SaveJsonSettingsToFile(newGameSettings, "GamesSettings", GameId, true);
-        }
-    }
-
     private void LegendaryGameSettingsViewUC_Loaded(object sender, RoutedEventArgs e)
     {
         commonHelpers.SetControlBackground(this);
-        var globalSettings = LegendaryLibrary.GetSettings();
-        EnableOfflineModeChk.IsChecked = globalSettings!.LaunchOffline;
-        if (globalSettings.GamesUpdatePolicy == UpdatePolicy.Never)
-        {
-            DisableGameUpdateCheckingChk.IsChecked = true;
-        }
-
-        AutoSyncSavesChk.IsChecked = globalSettings.SyncGameSaves;
-        AutoSyncPlaytimeChk.IsChecked = globalSettings.SyncPlaytime;
-        GameSettings = LoadGameSettings(GameId);
-        if (GameSettings.LaunchOffline != null)
-        {
-            EnableOfflineModeChk.IsChecked = GameSettings.LaunchOffline;
-        }
-
-        if (GameSettings.DisableGameVersionCheck != null)
-        {
-            DisableGameUpdateCheckingChk.IsChecked = GameSettings.DisableGameVersionCheck;
-        }
-
-        if (GameSettings.StartupArguments != null)
-        {
-            StartupArgumentsTxt.Text = string.Join(" ",
-                GameSettings.StartupArguments.Select(a => a.Contains(' ') ? $"\"{a}\"" : a));
-        }
-
-        if (GameSettings.LanguageCode != null)
-        {
-            LanguageCodeTxt.Text = GameSettings.LanguageCode;
-        }
-
-        if (GameSettings.OverrideExe != null)
-        {
-            SelectedAlternativeExeTxt.Text = GameSettings.OverrideExe;
-        }
-
-        if (GameSettings.AutoSyncSaves != null)
-        {
-            AutoSyncSavesChk.IsChecked = GameSettings.AutoSyncSaves;
-        }
-
-        if (!GameSettings.CloudSaveFolder.IsNullOrEmpty())
-        {
-            SelectedSavePathTxt.Text = GameSettings.CloudSaveFolder;
-        }
-
-        if (!GameSettings.AutoSyncPlaytime != null)
-        {
-            AutoSyncPlaytimeChk.IsChecked = GameSettings.AutoSyncPlaytime;
-        }
-
         var appList = LegendaryLauncher.GetInstalledAppList();
-        if (appList.ContainsKey(GameId))
+        if (appList.ContainsKey(Game.LibraryGameId!))
         {
             if (appList[Game.LibraryGameId!].Can_run_offline)
             {
                 EnableOfflineModeChk.IsEnabled = true;
             }
+
             GameVersionTxt.Text = appList[Game.LibraryGameId!].Version;
         }
         else

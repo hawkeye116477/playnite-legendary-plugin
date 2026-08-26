@@ -8,13 +8,14 @@ namespace LegendaryLibraryNS
 {
     public class LegendaryGameEditSessionHandler(Game game) : GameEditSessionHandler
     {
-        private LegendaryGameSettingsView? gameSettingsView;
+        private LegendaryGameSettingsViewModel? gameSettingsViewModel;
 
         public override async Task<List<GameEditSessionSection>> GetEditSectionsAsync(GetEditSectionsAsyncArgs args)
         {
-            gameSettingsView = new LegendaryGameSettingsView
+            gameSettingsViewModel = new LegendaryGameSettingsViewModel(game);
+            var gameSettingsView = new LegendaryGameSettingsView
             {
-                DataContext = game
+                DataContext = gameSettingsViewModel
             };
             return
             [
@@ -24,18 +25,18 @@ namespace LegendaryLibraryNS
 
         public override async Task EndEditAsync(EndEditArgs args)
         {
-            gameSettingsView?.Save();
+            gameSettingsViewModel?.Save();
         }
 
         public override bool GetHasUnsavedChanges(GetHasUnsavedChangesArgs args)
         {
-            if (gameSettingsView == null)
+            if (gameSettingsViewModel == null)
             {
                 return false;
             }
 
-            var oldGameSettings = LegendaryGameSettingsView.LoadGameSettings(game.LibraryGameId!);
-            var newGameSettings = gameSettingsView.PrepareNewGameSettings();
+            var oldGameSettings = LegendaryGameSettingsViewModel.LoadGameSettings(game.LibraryGameId!);
+            var newGameSettings = gameSettingsViewModel.PrepareNewGameSettings();
             return Serialization.ToJson(newGameSettings) != Serialization.ToJson(oldGameSettings);
         }
     }

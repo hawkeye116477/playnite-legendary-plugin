@@ -831,7 +831,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                                         {
                                             var playtimeSyncEnabled = LegendaryLibrary.GetSettings() is { SyncPlaytime: true };
                                             var gameSettings =
-                                                LegendaryGameSettingsView.LoadGameSettings(game.LibraryGameId!);
+                                                LegendaryGameSettingsViewModel.LoadGameSettings(game.LibraryGameId!);
                                             if (gameSettings.AutoSyncPlaytime != null)
                                             {
                                                 playtimeSyncEnabled = (bool)gameSettings.AutoSyncPlaytime;

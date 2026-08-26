@@ -86,7 +86,7 @@ public class LegendaryCloud
     {
         var playniteApi = LegendaryLibrary.PlayniteApi;
         var cloudSyncEnabled = LegendaryLibrary.GetSettings() is { SyncGameSaves: true };
-        var gameSettings = LegendaryGameSettingsView.LoadGameSettings(game.LibraryGameId!);
+        var gameSettings = LegendaryGameSettingsViewModel.LoadGameSettings(game.LibraryGameId!);
         var errorDisplayed = false;
         var loginErrorDisplayed = false;
         if (gameSettings.AutoSyncSaves != null)

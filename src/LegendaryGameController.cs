@@ -259,7 +259,7 @@ public class LegendaryPlayController(Game game) : PlayController(game.LibraryGam
         if (playtimeImportEnabled)
         {
             playtimeSyncEnabled = LegendaryLibrary.GetSettings() is { SyncPlaytime: true };
-            var gameSettings = LegendaryGameSettingsView.LoadGameSettings(game.LibraryGameId!);
+            var gameSettings = LegendaryGameSettingsViewModel.LoadGameSettings(game.LibraryGameId!);
             if (gameSettings.AutoSyncPlaytime != null)
             {
                 playtimeSyncEnabled = (bool)gameSettings.AutoSyncPlaytime;
@@ -284,7 +284,7 @@ public class LegendaryPlayController(Game game) : PlayController(game.LibraryGam
         playArgs.Add("--skip-version-check");
         var globalSettings = LegendaryLibrary.GetSettings();
         var offlineModeEnabled = globalSettings is { LaunchOffline: true };
-        var gameSettings = LegendaryGameSettingsView.LoadGameSettings(game.LibraryGameId!);
+        var gameSettings = LegendaryGameSettingsViewModel.LoadGameSettings(game.LibraryGameId!);
 
         if (gameSettings.InstallPrerequisites)
         {
@@ -774,7 +774,7 @@ public class LegendaryUpdateController
         foreach (var game in appList.Where(item => !item.Value.Is_dlc).OrderBy(item => item.Value.Title))
         {
             var gameId = game.Value.App_name;
-            var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameId);
+            var gameSettings = LegendaryGameSettingsViewModel.LoadGameSettings(gameId);
             var canUpdate = gameSettings.DisableGameVersionCheck != true;
             if (canUpdate)
             {

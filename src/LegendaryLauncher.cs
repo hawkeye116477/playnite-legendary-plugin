@@ -1011,7 +1011,7 @@ public class LegendaryLauncher
     public static void CompleteGameInstallation(string gameId)
     {
         var logger = LogManager.GetLogger();
-        var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameId);
+        var gameSettings = LegendaryGameSettingsViewModel.LoadGameSettings(gameId);
         var appList = GetInstalledAppList();
         if (appList.ContainsKey(gameId))
         {

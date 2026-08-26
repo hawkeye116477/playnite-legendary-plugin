@@ -455,7 +455,7 @@ public class LegendaryLibrary : Plugin
                 {
                     if (newGame.PlayTime != 0)
                     {
-                        var gameSettings = LegendaryGameSettingsView.LoadGameSettings(newGame.GameId);
+                        var gameSettings = LegendaryGameSettingsViewModel.LoadGameSettings(newGame.GameId);
                         var playtimeSyncEnabled = GetSettings() is { SyncPlaytime: true };
                         if (gameSettings.AutoSyncPlaytime != null)
                         {
@@ -491,7 +491,7 @@ public class LegendaryLibrary : Plugin
                     }
                 }
 
-                var gameSettings = LegendaryGameSettingsView.LoadGameSettings(existingGame.LibraryGameId!);
+                var gameSettings = LegendaryGameSettingsViewModel.LoadGameSettings(existingGame.LibraryGameId!);
                 var playtimeSyncEnabled = GetSettings() is { SyncPlaytime: true };
                 if (gameSettings.AutoSyncPlaytime != null)
                 {
@@ -941,7 +941,7 @@ public class LegendaryLibrary : Plugin
                     foreach (var game in appList.OrderBy(item => item.Value.Title))
                     {
                         var gameId = game.Value.App_name;
-                        var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameId);
+                        var gameSettings = LegendaryGameSettingsViewModel.LoadGameSettings(gameId);
                         var canUpdate = gameSettings.DisableGameVersionCheck != true;
 
                         if (canUpdate)
@@ -990,7 +990,7 @@ public class LegendaryLibrary : Plugin
 
                     foreach (var game in installedAppList)
                     {
-                        var gameSettings = LegendaryGameSettingsView.LoadGameSettings(game.Key);
+                        var gameSettings = LegendaryGameSettingsViewModel.LoadGameSettings(game.Key);
                         if (gameSettings.InstallPrerequisites)
                         {
                             gamesToCompleteInstall.Add(game.Key, game.Value);
