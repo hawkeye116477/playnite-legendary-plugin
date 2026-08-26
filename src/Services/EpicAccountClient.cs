@@ -670,6 +670,12 @@ query Achievement($sandboxId: String!, $locale: String!) {
                 displayName = achievementData.UnlockedDisplayName;
             }
 
+            if (achievementData.Hidden)
+            {
+                description = "";
+                displayName = "Hidden achievement";
+            }
+
             double rarity = 100;
             if (achievementData.Rarity != null)
             {
