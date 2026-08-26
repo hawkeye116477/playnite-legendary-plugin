@@ -12,10 +12,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using LegendaryLibraryNS.Services;
 using Playnite;
 
 namespace LegendaryLibraryNS;

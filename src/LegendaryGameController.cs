@@ -4,7 +4,6 @@ using CliWrap.EventStream;
 using CommonPlugin;
 using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
-using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
 using Playnite;
 using Playnite.Common;
@@ -17,7 +16,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using UnifiedDownloadManagerApiNS;
 
 namespace LegendaryLibraryNS;
 

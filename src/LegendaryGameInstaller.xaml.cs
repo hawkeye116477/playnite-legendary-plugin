@@ -13,7 +13,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using UnifiedDownloadManagerApiNS;
 using MessageBoxResult = Playnite.MessageBoxResult;
 
 namespace LegendaryLibraryNS;

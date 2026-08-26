@@ -1,6 +1,5 @@
 ﻿using CommonPlugin;
 using LegendaryLibraryNS.Services;
-using Playnite.Common;
 using Playnite;
 using System;
 using System.Diagnostics;

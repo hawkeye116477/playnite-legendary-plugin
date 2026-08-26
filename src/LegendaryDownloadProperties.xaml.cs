@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using UnifiedDownloadManagerApiNS;
 using UnifiedDownloadManagerApiNS.Models;
 
 namespace LegendaryLibraryNS;
