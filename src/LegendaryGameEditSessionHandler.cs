@@ -17,9 +17,14 @@ namespace LegendaryLibraryNS
             {
                 DataContext = gameSettingsViewModel
             };
+            var gameCloudSettingsView = new LegendaryGameSettingsCloudView()
+            {
+                DataContext = gameSettingsViewModel
+            };
             return
             [
-                new GameEditSessionSection(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameLaunching), gameSettingsView)
+                new GameEditSessionSection(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteGameLaunching), gameSettingsView),
+                new GameEditSessionSection(LocalizationManager.Instance.GetString(LOC.CommonCloud), gameCloudSettingsView)
             ];
         }
 
