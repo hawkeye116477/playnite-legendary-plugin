@@ -18,6 +18,7 @@ public class LegendaryEncryption
         {
             return;
         }
+
         var userInfoContent = new LegendaryUserInfo
         {
             Account_id = tokenInfo.Account_id,

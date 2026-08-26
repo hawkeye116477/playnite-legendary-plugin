@@ -995,7 +995,8 @@ public class LegendaryLauncher
             {
                 if (savedRepoList != null)
                 {
-                    LauncherUpdateSources = savedRepoList.Select((value, index) => new { index, value }).ToDictionary(x => x.index, x => x.value);
+                    LauncherUpdateSources = savedRepoList.Select((value, index) => new { index, value })
+                                                         .ToDictionary(x => x.index, x => x.value);
                 }
             }
 

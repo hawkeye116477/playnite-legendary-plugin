@@ -372,9 +372,11 @@ public class EpicAccountClient
                     var tokenInfo = Serialization.FromJson<OauthResponse>(decryptedTokens);
                     if (tokenInfo != null)
                     {
-                        LegendaryEncryption.Encrypt(Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.Account_id.MD5()}.enc"),
-                        decryptedTokens);
+                        LegendaryEncryption.Encrypt(
+                            Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.Account_id.MD5()}.enc"),
+                            decryptedTokens);
                     }
+
                     FileSystem.DeleteFileSafe(LegendaryLauncher.OldPluginEncryptedTokensPath);
                     return Serialization.FromJson<OauthResponse>(decryptedTokens);
                 }

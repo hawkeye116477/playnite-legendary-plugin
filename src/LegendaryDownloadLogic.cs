@@ -529,7 +529,8 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
 
             if (downloadProperties.ExtraContent is { Count: > 0 })
             {
-                installCommand.AddRange(downloadProperties.ExtraContent.Select(singleSelectedContent => "--install-tag=" + singleSelectedContent));
+                installCommand.AddRange(
+                    downloadProperties.ExtraContent.Select(singleSelectedContent => "--install-tag=" + singleSelectedContent));
 
                 if (downloadProperties.DownloadAction != DownloadAction.Install)
                 {
