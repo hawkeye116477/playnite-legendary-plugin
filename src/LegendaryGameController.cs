@@ -381,7 +381,7 @@ public class LegendaryPlayController(Game game) : PlayController(game.LibraryGam
                             }
 
                             StartTracking(() => monitor.IsProcessRunning() > 0,
-                                () => monitor.IsProcessRunning());
+                                monitor.IsProcessRunning);
                         }
                     }
 
@@ -718,7 +718,7 @@ public class LegendaryUpdateController
                                 var oldDlcInfo = installedAppList[dlc.App_name];
                                 var dlcData = new LegendaryGameInfo.Game
                                 {
-                                    Title = dlc.Title.RemoveTrademarks(),
+                                    Title = dlc.Title.RemoveMarks(),
                                     App_name = dlc.App_name
                                 };
                                 var newDlcInfo = await LegendaryLauncher.GetGameInfo(dlcData, false, true, forceRefreshCache);

@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Web;
 
 namespace System
 {
-    class CaseInsensitiveCharComparer : EqualityComparer<char>
+    public class CaseInsensitiveCharComparer : EqualityComparer<char>
     {
         public override bool Equals(char x, char y)
         {
@@ -20,40 +21,44 @@ namespace System
         }
     }
 
-    public static class StringExtensions
+    public static partial class StringExtensions
     {
-        private static readonly CultureInfo enUSCultInfo = new CultureInfo("en-US", false);
+        private static readonly CultureInfo enUSCultInfo = new("en-US", false);
         private const double defaultWinklerWeightThreshold = 0.7; //Winkler's paper used a default value of 0.7
         private const int winklerNumChars = 4; //Size of the prefix to be considered by the Winkler modification.
         private static readonly EqualityComparer<char> charCaseInsensitiveComparer = new CaseInsensitiveCharComparer();
 
-        public static string MD5(this string s)
-        {
-            var builder = new StringBuilder();
-            foreach (byte b in MD5Bytes(s))
-            {
-                builder.Append(b.ToString("x2").ToLower());
-            }
+        [GeneratedRegex(@"[™©®]")]
+        private static partial Regex RemoveMarksRegex();
 
-            return builder.ToString();
+        public static string GetMD5(this string s)
+        {
+            return Convert.ToHexStringLower(GetMD5Bytes(s));
         }
 
-        public static byte[] MD5Bytes(this string s)
+        public static byte[] GetMD5Bytes(this string s)
         {
-            using (var provider = System.Security.Cryptography.MD5.Create())
-            {
-                return provider.ComputeHash(Encoding.UTF8.GetBytes(s));
-            }
+            return Security.Cryptography.MD5.HashData(Encoding.UTF8.GetBytes(s));
         }
 
-        public static string RemoveTrademarks(this string str, string remplacement = "")
+        public static string GetSHA256(this string input)
+        {
+            return Convert.ToHexStringLower(GetSHA256Bytes(input));
+        }
+
+        public static byte[] GetSHA256Bytes(this string input)
+        {
+            return Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(input));
+        }
+
+        public static string RemoveMarks(this string str, string remplacement = "")
         {
             if (str.IsNullOrEmpty())
             {
                 return str;
             }
 
-            return Regex.Replace(str, @"[™©®]", remplacement);
+            return RemoveMarksRegex().Replace(str, remplacement);
         }
 
         public static string Format(this string source, params object[] args)
@@ -61,44 +66,17 @@ namespace System
             return string.Format(source, args);
         }
 
-        public static string TrimEndString(this string source, string value, StringComparison comp = StringComparison.Ordinal)
-        {
-            if (!source.EndsWith(value, comp))
-            {
-                return source;
-            }
-
-            return source.Remove(source.LastIndexOf(value, comp));
-        }
-
-        public static string ToTileCase(this string source, CultureInfo culture = null)
-        {
-            if (source.IsNullOrEmpty())
-            {
-                return source;
-            }
-
-            if (culture != null)
-            {
-                return culture.TextInfo.ToTitleCase(source);
-            }
-            else
-            {
-                return enUSCultInfo.TextInfo.ToTitleCase(source);
-            }
-        }
-
         public static bool IsStartOfStringAcronym(this string acronymStart, string input)
         {
             if (string.IsNullOrEmpty(input) || string.IsNullOrEmpty(acronymStart)
-                || acronymStart.Length < 2 || acronymStart.Length > input.Length)
+                                            || acronymStart.Length < 2 || acronymStart.Length > input.Length)
             {
                 return false;
             }
 
-            for (int i = 0; i < acronymStart.Length; i++)
+            foreach (var t in acronymStart)
             {
-                if (!char.IsLetterOrDigit(acronymStart[i]))
+                if (!char.IsLetterOrDigit(t))
                 {
                     return false;
                 }
@@ -137,6 +115,7 @@ namespace System
             {
                 return input;
             }
+
             return output;
         }
 
@@ -148,9 +127,9 @@ namespace System
             }
 
             var newName = name;
-            newName = newName.RemoveTrademarks();
-            newName = newName.Replace("_", " ");
-            newName = newName.Replace(".", " ");
+            newName = newName.RemoveMarks();
+            newName = newName.Replace('_', ' ');
+            newName = newName.Replace('.', ' ');
             newName = newName.Replace('’', '\'');
             newName = RemoveUnlessThatEmptiesTheString(newName, @"\[.*?\]");
             newName = RemoveUnlessThatEmptiesTheString(newName, @"\(.*?\)");
@@ -164,191 +143,97 @@ namespace System
             return newName.Trim();
         }
 
-        public static string GetSHA256Hash(this string input)
+        public static bool IsHttpUrl([NotNullWhen(true)] this string? str)
         {
-            using (var sha = System.Security.Cryptography.SHA256.Create())
+            if (string.IsNullOrWhiteSpace(str))
             {
-                var hash = sha.ComputeHash(Encoding.UTF8.GetBytes(input));
-                return BitConverter.ToString(hash).Replace("-", "");
+                return false;
             }
+
+            return str.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ||
+                   str.StartsWith("http://", StringComparison.OrdinalIgnoreCase);
         }
 
-        public static byte[] GetSHA256HashByte(this string input)
+        public static bool IsUri([NotNullWhen(true)] this string? str, UriKind kind)
         {
-            using (var sha = System.Security.Cryptography.SHA256.Create())
+            if (string.IsNullOrWhiteSpace(str))
             {
-                return sha.ComputeHash(Encoding.UTF8.GetBytes(input));
+                return false;
             }
+
+            return Uri.IsWellFormedUriString(str, kind);
         }
 
-        public static string GetPathWithoutAllExtensions(string path)
+        public static string UriCombine(this string baseUri, params string[] segments)
         {
-            if (string.IsNullOrEmpty(path))
+            if (baseUri.IsNullOrWhiteSpace())
             {
                 return string.Empty;
             }
 
-            return Regex.Replace(path, @"(\.[A-Za-z0-9]+)+$", "");
-        }
-
-        public static bool Contains(this string str, string value, StringComparison comparisonType)
-        {
-            return str?.IndexOf(value, 0, comparisonType) != -1;
-        }
-
-        public static bool ContainsAny(this string str, char[] chars)
-        {
-            return str?.IndexOfAny(chars) >= 0;
-        }
-
-        public static bool IsHttpUrl(this string str)
-        {
-            if (string.IsNullOrWhiteSpace(str))
+            if (segments.Length == 0)
             {
-                return false;
+                return baseUri;
             }
 
-            return Regex.IsMatch(str, @"^https?:\/\/", RegexOptions.IgnoreCase);
+            return segments.Aggregate(baseUri, (c, s) => $"{c.TrimEnd('/')}/{s.TrimStart('/')}");
         }
 
-        public static bool IsUri(this string str, UriKind absolute)
+        public static string UriAppendQuery(this string baseUri, string parameter, string value)
         {
-            if (string.IsNullOrWhiteSpace(str))
+            if (baseUri.IsNullOrWhiteSpace())
             {
-                return false;
+                return string.Empty;
             }
 
-            return Uri.IsWellFormedUriString(str, UriKind.Absolute);
-        }
-
-        public static string UrlEncode(this string str)
-        {
-            if (string.IsNullOrWhiteSpace(str))
+            if (baseUri.Contains('?', StringComparison.Ordinal))
             {
-                return str;
+                return baseUri.TrimEnd('&') + $"&{parameter}={value}";
             }
-
-            return HttpUtility.UrlPathEncode(str);
-        }
-
-        public static string UrlDecode(this string str)
-        {
-            if (string.IsNullOrWhiteSpace(str))
+            else
             {
-                return str;
+                return baseUri.TrimEnd('&') + $"?{parameter}={value}";
             }
-
-            return HttpUtility.UrlDecode(str);
         }
 
-        public static int GetLineCount(this string str)
+        public static int GetLineCount(this string? str)
         {
-            if (str == null)
+            if (str is null)
             {
                 return 0;
             }
             else
             {
-                return Regex.Matches(str, "\n").Count + 1;
+                return str.Count('\n') + 1;
             }
-        }
-
-        // Courtesy of https://stackoverflow.com/questions/6275980/string-replace-ignoring-case
-        public static string Replace(this string str, string oldValue, string @newValue, StringComparison comparisonType)
-        {
-            // Check inputs.
-            if (str == null)
-            {
-                // Same as original .NET C# string.Replace behavior.
-                throw new ArgumentNullException(nameof(str));
-            }
-            if (str.Length == 0)
-            {
-                // Same as original .NET C# string.Replace behavior.
-                return str;
-            }
-            if (oldValue == null)
-            {
-                // Same as original .NET C# string.Replace behavior.
-                throw new ArgumentNullException(nameof(oldValue));
-            }
-            if (oldValue.Length == 0)
-            {
-                // Same as original .NET C# string.Replace behavior.
-                throw new ArgumentException("String cannot be of zero length.");
-            }
-
-            // Prepare string builder for storing the processed string.
-            // Note: StringBuilder has a better performance than String by 30-40%.
-            StringBuilder resultStringBuilder = new StringBuilder(str.Length);
-
-            // Analyze the replacement: replace or remove.
-            bool isReplacementNullOrEmpty = string.IsNullOrEmpty(@newValue);
-
-            // Replace all values.
-            const int valueNotFound = -1;
-            int foundAt;
-            int startSearchFromIndex = 0;
-            while ((foundAt = str.IndexOf(oldValue, startSearchFromIndex, comparisonType)) != valueNotFound)
-            {
-                // Append all characters until the found replacement.
-                int @charsUntilReplacment = foundAt - startSearchFromIndex;
-                bool isNothingToAppend = @charsUntilReplacment == 0;
-                if (!isNothingToAppend)
-                {
-                    resultStringBuilder.Append(str, startSearchFromIndex, @charsUntilReplacment);
-                }
-
-                // Process the replacement.
-                if (!isReplacementNullOrEmpty)
-                {
-                    resultStringBuilder.Append(@newValue);
-                }
-
-                // Prepare start index for the next search.
-                // This needed to prevent infinite loop, otherwise method always start search
-                // from the start of the string. For example: if an oldValue == "EXAMPLE", newValue == "example"
-                // and comparisonType == "any ignore case" will conquer to replacing:
-                // "EXAMPLE" to "example" to "example" to "example" … infinite loop.
-                startSearchFromIndex = foundAt + oldValue.Length;
-                if (startSearchFromIndex == str.Length)
-                {
-                    // It is end of the input string: no more space for the next search.
-                    // The input string ends with a value that has already been replaced.
-                    // Therefore, the string builder with the result is complete and no further action is required.
-                    return resultStringBuilder.ToString();
-                }
-            }
-
-            // Append the last part to the result.
-            int @charsUntilStringEnd = str.Length - startSearchFromIndex;
-            resultStringBuilder.Append(str, startSearchFromIndex, @charsUntilStringEnd);
-            return resultStringBuilder.ToString();
         }
 
         public static string EndWithDirSeparator(this string source)
-        {
-            if (source.IsNullOrEmpty())
-            {
-                return source;
-            }
-
-            return source.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
-        }
-
-        public static string PrefixWithDirSeparator(this string source)
         {
             if (source.IsNullOrWhiteSpace())
             {
                 return source;
             }
 
-            if (source[0] == Path.DirectorySeparatorChar)
+            return source.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) + Path.DirectorySeparatorChar;
+        }
+
+        public static string TrimDirSeparator(this string source)
+        {
+            if (source.IsNullOrWhiteSpace())
+                return source;
+
+            return source.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+        }
+
+        public static string EndWithUriSeparator(this string source)
+        {
+            if (source.IsNullOrEmpty())
             {
                 return source;
             }
 
-            return Path.DirectorySeparatorChar + source;
+            return source.TrimEnd('/') + '/';
         }
 
         public static bool ContainsInvariantCulture(this string source, string value, CompareOptions compareOptions)
@@ -359,6 +244,27 @@ namespace System
         public static bool ContainsCurrentCulture(this string source, string value, CompareOptions compareOptions)
         {
             return CultureInfo.CurrentCulture.CompareInfo.IndexOf(source, value, compareOptions) >= 0;
+        }
+
+        public static string Multiply(this string source, int multiplier)
+        {
+            if (multiplier < 0)
+            {
+                throw new Exception("String multiplier has to have positive value.");
+            }
+
+            if (multiplier == 0 || source.Length == 0)
+            {
+                return string.Empty;
+            }
+
+            var sb = new StringBuilder(multiplier * source.Length);
+            for (int i = 0; i < multiplier; i++)
+            {
+                sb.Append(source);
+            }
+
+            return sb.ToString();
         }
 
         public static int GetLevenshteinDistanceIgnoreCase(this string source, string value)
@@ -430,12 +336,14 @@ namespace System
         }
 
         //Based on https://gist.github.com/ronnieoverby/2aa19724199df4ec8af6
-        public static double GetJaroWinklerSimilarityIgnoreCase(this string str, string str2, double winklerWeightThreshold = defaultWinklerWeightThreshold)
+        public static double GetJaroWinklerSimilarityIgnoreCase(
+            this string str, string str2, double winklerWeightThreshold = defaultWinklerWeightThreshold)
         {
             return GetJaroWinklerSimilarity(str, str2, charCaseInsensitiveComparer, winklerWeightThreshold);
         }
 
-        public static double GetJaroWinklerSimilarity(this string str, string str2, double winklerWeightThreshold = defaultWinklerWeightThreshold)
+        public static double GetJaroWinklerSimilarity(
+            this string str, string str2, double winklerWeightThreshold = defaultWinklerWeightThreshold)
         {
             return GetJaroWinklerSimilarity(str, str2, EqualityComparer<char>.Default, winklerWeightThreshold);
         }
@@ -450,7 +358,8 @@ namespace System
         /// <param name="comparer">Comparer used to determine character equality.</param>
         /// <param name="winklerWeightThreshold">The weight threshold is used to determine whether the similarity score is high enough to consider two strings as a match. Winkler's paper used a default value of 0.7.</param>
         /// <returns>Similarity between the specified strings.</returns>
-        public static double GetJaroWinklerSimilarity(this string str, string str2, IEqualityComparer<char> comparer, double winklerWeightThreshold = defaultWinklerWeightThreshold)
+        public static double GetJaroWinklerSimilarity(
+            this string str, string str2, IEqualityComparer<char> comparer, double winklerWeightThreshold = defaultWinklerWeightThreshold)
         {
             var lLen1 = str.Length;
             var lLen2 = str2.Length;
@@ -518,8 +427,8 @@ namespace System
             var lNumTransposed = lNumHalfTransposed / 2;
             double lNumCommonD = lNumCommon;
             var lWeight = (lNumCommonD / lLen1
-                            + lNumCommonD / lLen2
-                            + (lNumCommon - lNumTransposed) / lNumCommonD) / 3.0;
+                           + lNumCommonD / lLen2
+                           + (lNumCommon - lNumTransposed) / lNumCommonD) / 3.0;
 
             if (lWeight <= winklerWeightThreshold)
             {
@@ -539,6 +448,30 @@ namespace System
             }
 
             return lWeight + 0.1 * lPos * (1.0 - lWeight);
+        }
+
+        public static char ToUpper(this char source)
+        {
+            return char.ToUpper(source);
+        }
+
+        public static char ToLower(this char source)
+        {
+            return char.ToLower(source);
+        }
+
+        public static bool TryCreateStringFromUtf32(this int code, out string result)
+        {
+            try
+            {
+                result = char.ConvertFromUtf32(code);
+                return true;
+            }
+            catch
+            {
+                result = string.Empty;
+                return false;
+            }
         }
     }
 }

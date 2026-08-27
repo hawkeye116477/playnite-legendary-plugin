@@ -1,84 +1,43 @@
-﻿using Playnite.Common;
-using System;
-using System.Diagnostics;
-using System.IO;
+﻿using System;
 using CommunityToolkit.Mvvm.Input;
 
 namespace Playnite.Commands
 {
-    public static class GlobalCommands
+    public static class Commands
     {
-        private static ILogger logger = LogManager.GetLogger();
+        private static readonly ILogger logger = LogManager.GetLogger();
 
-        public static RelayCommand<object> NavigateUrlCommand
+        public static RelayCommand<object> OpenUrlCommand { get; } = new RelayCommand<object>(OpenUrl);
+
+        public static void OpenUrl(object? url)
         {
-            get => new RelayCommand<object>((url) =>
+            try
             {
-                try
+                if (url is WebLink link)
                 {
-                    NavigateUrl(url);
+                    ProcessStarter.StartUrl(link)?.Dispose();
                 }
-                catch (Exception e) when (!Debugger.IsAttached)
+                else if (url is ImportableWebLink importLink)
                 {
-                    logger.Error(e, "Failed to open url.");
+                    ProcessStarter.StartUrl(importLink.Url)?.Dispose();
                 }
-            });
-        }
-
-        public static RelayCommand<string> NavigateDirectoryCommand
-        {
-            get => new RelayCommand<string>((path) =>
-            {
-                try
+                else if (url is Uri uri)
                 {
-                    if (Directory.Exists(path))
-                    {
-                        Process.Start(path);
-                    }
+                    ProcessStarter.StartUrl(uri)?.Dispose();
                 }
-                catch (Exception e) when (!Debugger.IsAttached)
+                else if (url is string strUrl)
                 {
-                    logger.Error(e, "Failed to open directory.");
+                    ProcessStarter.StartUrl(strUrl)?.Dispose();
                 }
-            });
-        }
-
-        public static void NavigateUrl(object url)
-        {
-            if (url is string stringUrl)
-            {
-                NavigateUrl(stringUrl);
-            }
-            else if (url is Playnite.WebLink linkUrl)
-            {
-                if (linkUrl.Url != null)
+                else
                 {
-                    NavigateUrl(linkUrl.Url);
+                    throw new NotSupportedException("Unsupported URL type.");
                 }
             }
-            else if (url is Uri uriUrl)
+            catch (Exception e)
             {
-                NavigateUrl(uriUrl.OriginalString);
+                logger.Error(e, "Failed to open url.");
             }
-            else
-            {
-                throw new Exception("Unsupported URL format.");
-            }
-        }
-
-        public static void NavigateUrl(string url)
-        {
-            if (url.IsNullOrEmpty())
-            {
-                throw new Exception("No URL was given.");
-            }
-
-            if (!url.IsUri(UriKind.Absolute))
-            {
-                url = "http://" + url;
-            }
-
-            ProcessStarter.StartUrl(url);
         }
     }
 }

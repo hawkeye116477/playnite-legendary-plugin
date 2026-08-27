@@ -58,7 +58,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                 "Legendary (Epic Games) library integration", MessageBoxSeverity.Error, options, []);
             if (result == options[0])
             {
-                Playnite.Commands.GlobalCommands.NavigateUrl(
+                Playnite.Commands.Commands.OpenUrl(
                     "https://github.com/hawkeye116477/playnite-unifiedDownloadManager-plugin/releases");
             }
         }

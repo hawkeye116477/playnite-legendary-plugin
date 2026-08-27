@@ -82,11 +82,11 @@ public partial class LegendaryDlcManager
                     {
                         var dlcData = new LegendaryGameInfo.Game
                         {
-                            Title = dlc.Title.RemoveTrademarks(),
+                            Title = dlc.Title.RemoveMarks(),
                             App_name = dlc.App_name
                         };
                         var dlcInfo = await LegendaryLauncher.GetGameInfo(dlcData);
-                        dlcInfo.Game?.Title = dlcInfo.Game.Title.RemoveTrademarks();
+                        dlcInfo.Game?.Title = dlcInfo.Game.Title.RemoveMarks();
                         if (installedAppList.ContainsKey(dlc.App_name))
                         {
                             installedDlCs.Add(

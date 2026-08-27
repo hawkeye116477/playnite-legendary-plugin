@@ -406,7 +406,7 @@
                                    Grid.Row="7" Margin="0,8,0,0">
                             <Hyperlink
                                 NavigateUri="https://github.com/hawkeye116477/playnite-legendary-plugin/wiki/troubleshooting"
-                                Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                                Command="{x:Static pcmd:Commands.OpenUrlCommand}"
                                 CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
                                 <Run
                                     Text="{common:Localize Key={x:Static system:LOC.ThirdPartyEpicTroubleShootingIssues}}" />
@@ -416,7 +416,7 @@
                                    Grid.Row="8" Margin="0,8,0,0">
                             <Hyperlink
                                 Name="ReportBugHyp"
-                                Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                                Command="{x:Static pcmd:Commands.OpenUrlCommand}"
                                 CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
                                 <Run Text="{common:Localize Key={x:Static system:LOC.CommonReportBug}}" />
                             </Hyperlink>

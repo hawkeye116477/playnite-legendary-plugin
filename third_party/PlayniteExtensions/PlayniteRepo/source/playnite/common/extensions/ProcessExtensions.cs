@@ -1,60 +1,67 @@
-﻿using Playnite.Native;
-using System.Linq;
+﻿using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.RegularExpressions;
+using Windows.Wdk.System.Threading;
+using Windows.Win32.System.Threading;
+using Microsoft.Win32.SafeHandles;
+using PInvokeWdk = Windows.Wdk.PInvoke;
+using PInvokeWin32 = Windows.Win32.PInvoke;
 
 namespace System.Diagnostics
 {
     public static class ProcessExtensions
     {
-        public static bool TryGetMainModuleFileName(this Process process, out string fileName, int buffer = 1024)
+        extension(Process process)
         {
-            fileName = null;
-            var handle = Kernel32.OpenProcess(ProcessAccessFlags.QueryLimitedInformation, false, process.Id);
-            if (handle == IntPtr.Zero)
+            public bool TryGetMainModuleFileName(out string? fileName, int bufferSize = 1024)
             {
-                return false;
-            }
-
-            try
-            {
-                var fileNameBuilder = new StringBuilder(buffer);
-                uint bufferLength = (uint)fileNameBuilder.Capacity + 1;
-                var result = Kernel32.QueryFullProcessImageName(handle, 0, fileNameBuilder, ref bufferLength);
-                fileName = result ? fileNameBuilder.ToString() : null;
-                return result;
-            }
-            finally
-            {
-                Kernel32.CloseHandle(handle);
-            }
-        }
-
-        public static bool TryGetParentId(this Process process, out int processId)
-        {
-            processId = 0;
-            var handle = Kernel32.OpenProcess(ProcessAccessFlags.QueryLimitedInformation, false, process.Id);
-            if (handle == IntPtr.Zero)
-            {
-                return false;
-            }
-
-            try
-            {
-                var info = new PROCESS_BASIC_INFORMATION();
-                int status = Ntdll.NtQueryInformationProcess(handle, 0, ref info, Marshal.SizeOf(info), out var returnLength);
-                if (status != 0)
+                fileName = null;
+                var handle = PInvokeWin32.OpenProcess(PROCESS_ACCESS_RIGHTS.PROCESS_QUERY_LIMITED_INFORMATION, false, (uint)process.Id);
+                if (handle == IntPtr.Zero)
                 {
                     return false;
                 }
 
-                processId = info.InheritedFromUniqueProcessId.ToInt32();
-                return true;
+                try
+                {
+                    Span<char> buffer = stackalloc char[bufferSize];
+                    var bufferLength = (uint)buffer.Length;
+                    using var safeHandle = new SafeProcessHandle(handle, true);
+                    var result = PInvokeWin32.QueryFullProcessImageName(safeHandle, 0, buffer, ref bufferLength);
+                    fileName = result ? new string(buffer[..(int)bufferLength]) : null;
+                    return result;
+                }
+                finally
+                {
+                    PInvokeWin32.CloseHandle(handle);
+                }
             }
-            finally
+
+            public unsafe bool TryGetParentId(out int processId)
             {
-                Kernel32.CloseHandle(handle);
+                processId = 0;
+                var handle = PInvokeWin32.OpenProcess(PROCESS_ACCESS_RIGHTS.PROCESS_QUERY_LIMITED_INFORMATION, false, (uint)process.Id);
+                if (handle == IntPtr.Zero)
+                {
+                    return false;
+                }
+
+                try
+                {
+                    var info = default(PROCESS_BASIC_INFORMATION);
+                    int status = PInvokeWdk.NtQueryInformationProcess(handle, PROCESSINFOCLASS.ProcessBasicInformation, &info, (uint)Marshal.SizeOf(info), null);
+                    if (status != 0)
+                    {
+                        return false;
+                    }
+
+                    processId = (int)info.InheritedFromUniqueProcessId;
+                    return true;
+                }
+                finally
+                {
+                    PInvokeWin32.CloseHandle(handle);
+                }
             }
         }
 
@@ -62,14 +69,5 @@ namespace System.Diagnostics
         {
             return Process.GetProcesses().FirstOrDefault(a => Regex.IsMatch(a.ProcessName, processPattern, RegexOptions.IgnoreCase)) != null;
         }
-
-        // public static string GetCommandLine(this Process process)
-        // {
-        //     using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT CommandLine FROM Win32_Process WHERE ProcessId = " + process.Id))
-        //     using (ManagementObjectCollection objects = searcher.Get())
-        //     {
-        //         return objects.Cast<ManagementBaseObject>().SingleOrDefault()?["CommandLine"]?.ToString();
-        //     }
-        // }
     }
 }

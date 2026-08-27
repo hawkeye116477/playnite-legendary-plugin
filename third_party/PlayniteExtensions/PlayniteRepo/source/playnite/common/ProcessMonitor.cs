@@ -55,7 +55,7 @@ namespace Playnite.Common
     public class MonitorProcessNames
     {
         private readonly ILogger logger = LogManager.GetLogger();
-        private readonly List<string> procNames = [];
+        private readonly List<string>? procNames = [];
         private readonly List<string> procNamesNoExt = [];
 
         public MonitorProcessNames(string directory)
@@ -70,7 +70,7 @@ namespace Playnite.Common
                 logger.Error(e, $"Failed to get target path for a directory {directory}");
             }
 
-            if (FileSystem.DirectoryExists(dir))
+            if (Directory.Exists(dir))
             {
                 var executables = Directory.GetFiles(dir, "*.exe", SearchOption.AllDirectories);
                 procNames = executables.Select(a => Path.GetFileName(a)).ToList();
@@ -80,7 +80,7 @@ namespace Playnite.Common
 
         public bool IsTrackable()
         {
-            return procNames.Count > 0;
+            return procNames?.Count > 0;
         }
 
         public int IsProcessRunning()
@@ -89,9 +89,9 @@ namespace Playnite.Common
             {
                 if (process.TryGetMainModuleFileName(out var procPath))
                 {
-                    if (procNames.Contains(Path.GetFileName(procPath)))
+                    if (procNames != null && procPath != null && procNames.Contains(Path.GetFileName(procPath)))
                     {
-                        return process.Id; ;
+                        return process.Id;
                     }
                 }
                 else if (procNamesNoExt.Contains(process.ProcessName))
@@ -130,7 +130,7 @@ namespace Playnite.Common
                 return false;
             }
 
-            return FileSystem.DirectoryExists(dir);
+            return Directory.Exists(dir);
         }
 
         public int IsProcessRunning()
@@ -138,7 +138,8 @@ namespace Playnite.Common
             foreach (var process in Process.GetProcesses().Where(a => a.SessionId != 0))
             {
                 if (process.TryGetMainModuleFileName(out var procPath) &&
-                    procPath.IndexOf(dir, StringComparison.OrdinalIgnoreCase) >= 0)
+                    procPath != null &&
+                    procPath.Contains(dir, StringComparison.OrdinalIgnoreCase))
                 {
                     return process.Id;
                 }

@@ -181,7 +181,7 @@ public class LegendaryLibrary : Plugin
                 Platforms = [PcSpecProperty]
             };
 
-            game.Name = game.Name.RemoveTrademarks();
+            game.Name = game.Name.RemoveMarks();
             games.Add(game.GameId, game);
         }
 
@@ -211,7 +211,7 @@ public class LegendaryLibrary : Plugin
                 }
 
                 var cacheFile =
-                    Paths.GetSafePathName(
+                    Paths.GetSafeFileName(
                         $"{gameAsset.Namespace}_{gameAsset.CatalogItemId}_{gameAsset.BuildVersion}.json");
                 var appId = gameAsset.AppName;
                 if (!appId.IsNullOrEmpty())
@@ -263,7 +263,7 @@ public class LegendaryLibrary : Plugin
                     }
                 }
 
-                var newGame = new ImportableGame((catalogItem.Title ?? "").RemoveTrademarks(), PluginId,
+                var newGame = new ImportableGame((catalogItem.Title ?? "").RemoveMarks(), PluginId,
                     gameAsset.AppName)
                 {
                     Source = new IdImportableProperty("epic", "Epic"),

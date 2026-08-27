@@ -1,0 +1,9 @@
+OpenProcess
+QueryFullProcessImageName
+CloseHandle
+NtQueryInformationProcess
+PROCESS_BASIC_INFORMATION
+CreateFile
+GetFinalPathNameByHandle
+PathMatchSpecExW
+PMSF_*

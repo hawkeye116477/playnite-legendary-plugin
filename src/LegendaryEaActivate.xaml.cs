@@ -139,7 +139,7 @@ public partial class LegendaryEaActivate
                                     }
                                 }
 
-                                eaGame.App_title = eaGame.App_title.RemoveTrademarks();
+                                eaGame.App_title = eaGame.App_title.RemoveMarks();
                                 eaGamesOnly.Add(eaGame);
                                 if (!jediFound && eaGame.App_title.Contains("Star Wars"))
                                 {

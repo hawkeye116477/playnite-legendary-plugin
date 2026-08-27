@@ -264,7 +264,7 @@ public class EpicAccountClient
     public async Task<CatalogItem?> GetCatalogItem(string nameSpace, string id, string cachePath)
     {
         Dictionary<string, CatalogItem>? result = null;
-        if (!cachePath.IsNullOrEmpty() && FileSystem.FileExists(cachePath))
+        if (!cachePath.IsNullOrEmpty() && File.Exists(cachePath))
         {
             try
             {
@@ -356,7 +356,7 @@ public class EpicAccountClient
         var newEncryptedTokensPath = "";
         if (!LegendaryLauncher.GetUserInfo().Account_id.IsNullOrEmpty())
         {
-            newEncryptedTokensPath = Path.Combine(LegendaryLauncher.ConfigPath, $"{LegendaryLauncher.GetUserInfo().Account_id.MD5()}.enc");
+            newEncryptedTokensPath = Path.Combine(LegendaryLauncher.ConfigPath, $"{LegendaryLauncher.GetUserInfo().Account_id.GetMD5()}.enc");
         }
 
         try
@@ -373,7 +373,7 @@ public class EpicAccountClient
                     if (tokenInfo != null)
                     {
                         LegendaryEncryption.Encrypt(
-                            Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.Account_id.MD5()}.enc"),
+                            Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.Account_id.GetMD5()}.enc"),
                             decryptedTokens);
                     }
 
@@ -433,7 +433,7 @@ public class EpicAccountClient
                 var tokenInfo = Serialization.FromJson<OauthResponse>(content);
                 if (tokenInfo != null)
                 {
-                    LegendaryEncryption.Encrypt(Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.Account_id.MD5()}.enc"), content);
+                    LegendaryEncryption.Encrypt(Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.Account_id.GetMD5()}.enc"), content);
                 }
             }
             else

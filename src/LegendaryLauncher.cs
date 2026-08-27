@@ -84,7 +84,7 @@ public class LegendaryLauncher
             var heroicPath = Path.GetDirectoryName(Programs.GetUnistallProgramsList()
                                                            .FirstOrDefault(p => p.DisplayName?.StartsWith("Heroic") == true
                                                                                 && p.Publisher == "Heroic Games Launcher")
-                                                          ?.DisplayIcon.Split(',')[0]);
+                                                          ?.DisplayIcon?.Split(',')[0]);
             if (heroicPath.IsNullOrEmpty())
             {
                 heroicPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -488,7 +488,7 @@ public class LegendaryLauncher
             {
                 if (cachedManifest is { Manifest: not null, Game: not null })
                 {
-                    cachedManifest.Game.Title = cachedManifest.Game.Title.RemoveTrademarks();
+                    cachedManifest.Game.Title = cachedManifest.Game.Title.RemoveMarks();
                     manifest = cachedManifest;
                     correctJson = true;
                 }
@@ -705,7 +705,7 @@ public class LegendaryLauncher
                 {
                     var dlcInfo = new LegendarySdlInfo
                     {
-                        Name = dlc.Title.RemoveTrademarks(),
+                        Name = dlc.Title.RemoveMarks(),
                         Is_dlc = true,
                         BaseGameId = installData.GameId
                     };
@@ -938,7 +938,7 @@ public class LegendaryLauncher
             "Legendary (Epic Games) library integration", MessageBoxSeverity.Error, options, []);
         if (result == options[0])
         {
-            Playnite.Commands.GlobalCommands.NavigateUrl(
+            Playnite.Commands.Commands.OpenUrl(
                 "https://github.com/hawkeye116477/playnite-legendary-plugin/wiki/Troubleshooting#legendary-launcher-is-not-installed");
         }
     }
@@ -1087,7 +1087,7 @@ public class LegendaryLauncher
                 if (result == options[0])
                 {
                     var changelogUrl = versionInfoContent.Html_url;
-                    Playnite.Commands.GlobalCommands.NavigateUrl(changelogUrl);
+                    Playnite.Commands.Commands.OpenUrl(changelogUrl);
                 }
                 else if (result == options[1])
                 {
@@ -1189,7 +1189,7 @@ public class LegendaryLauncher
         if (!userInfoContent.Account_id.IsNullOrEmpty())
         {
             Keyring.DeletePassword("legendary", userInfoContent.Account_id);
-            FileSystem.DeleteFileSafe(Path.Combine(ConfigPath, $"{userInfoContent.Account_id.MD5()}.enc"));
+            FileSystem.DeleteFileSafe(Path.Combine(ConfigPath, $"{userInfoContent.Account_id.GetMD5()}.enc"));
         }
 
         FileSystem.DeleteFileSafe(UserInfoPath);

@@ -1,162 +1,60 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
-using Playnite.Native;
+using Windows.Win32.Storage.FileSystem;
+using PInvokeWin32 = Windows.Win32.PInvoke;
 
 namespace Playnite.Common
 {
-    public class Paths
+    public partial class Paths
     {
-        private const string longPathPrefix = @"\\?\";
-        private const string longPathUncPrefix = @"\\?\UNC\";
-        public static readonly char[] DirectorySeparators = ['\\', '/'];
+        private const string LongPathPrefix = @"\\?\";
+        private const string LongPathUncPrefix = @"\\?\UNC\";
+        private const int MaxPathLength = 32_767;
+        private static readonly char[] DirectorySeparators = [Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar];
 
-        public static string GetFinalPathName(string path)
-        {
-            var h = Kernel32.CreateFile(path,
-                0,
-                FileShare.ReadWrite | FileShare.Delete,
-                IntPtr.Zero,
-                FileMode.Open,
-                Fileapi.FILE_FLAG_BACKUP_SEMANTICS,
-                IntPtr.Zero);
-
-            if (path.StartsWith(@"\\"))
-            {
-                return path;
-            }
-
-            if (h == Winuser.INVALID_HANDLE_VALUE)
-            {
-                throw new Win32Exception();
-            }
-
-            try
-            {
-                var sb = new StringBuilder(1024);
-                var res = Kernel32.GetFinalPathNameByHandle(h, sb, 1024, 0);
-                if (res == 0)
-                {
-                    throw new Win32Exception();
-                }
-
-                var targetPath = sb.ToString();
-                if (targetPath.StartsWith(longPathUncPrefix))
-                {
-                    return targetPath.Replace(longPathUncPrefix, @"\\");
-                }
-                else
-                {
-                    return targetPath.Replace(longPathPrefix, string.Empty);
-                }
-            }
-            finally
-            {
-                Kernel32.CloseHandle(h);
-            }
-        }
-
-        public static bool IsValidFilePath(string path)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(path))
-                {
-                    return false;
-                }
-
-                if (string.IsNullOrEmpty(Path.GetExtension(path)))
-                {
-                    return false;
-                }
-
-                string? drive = Path.GetPathRoot(path);
-                if (!string.IsNullOrEmpty(drive) && !Directory.Exists(drive))
-                {
-                    return false;
-                }
-
-                return true;
-            }
-            catch
-            {
-                // Any of Path methods can throw exception in case that path is some weird string
-                return false;
-            }
-        }
+        [GeneratedRegex(@"^([a-zA-Z]:\\|\\\\)")]
+        private static partial Regex IsFullPathRegex();
 
         public static string FixSeparators(string path)
         {
             if (path.IsNullOrWhiteSpace())
-            {
                 return path;
-            }
 
-            char prev = default;
             var sb = new StringBuilder(path.Length);
-            for (int i = 0; i < path.Length; i++)
+            foreach (var t in path)
             {
-                var current = path[i];
-                if (current == Path.AltDirectorySeparatorChar)
-                {
-                    current = Path.DirectorySeparatorChar;
-                }
+                var chr = t;
+                if (chr == Path.AltDirectorySeparatorChar)
+                    chr = Path.DirectorySeparatorChar;
 
-                if (prev != current || current != Path.DirectorySeparatorChar ||
-                    (current == Path.DirectorySeparatorChar && prev != Path.DirectorySeparatorChar))
-                {
-                    prev = current;
-                    sb.Append(current);
+                if (chr == Path.DirectorySeparatorChar && sb.Length > 0 && sb[^1] == Path.DirectorySeparatorChar)
                     continue;
-                }
+
+                sb.Append(chr);
             }
 
-            if (path.StartsWith(@"\\"))
-            {
+            // For UNC and DOS device path support
+            if (path.StartsWith(@"\\", StringComparison.Ordinal))
                 sb.Insert(0, @"\");
-            }
 
             return sb.ToString();
         }
 
-        private static string Normalize(string path)
+        public static bool AreEqual(string? path1, string? path2)
         {
-            var formatted = path;
-            try
-            {
-                formatted = new Uri(path).LocalPath;
-            }
-            catch
-            {
-                // this shound't happen
-            }
-
-            return Path.GetFullPath(formatted).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar).ToUpperInvariant();
-        }
-
-        public static bool AreEqual(string path1, string path2)
-        {
-            if (string.IsNullOrEmpty(path1) && !string.IsNullOrEmpty(path2))
-            {
+            if (string.IsNullOrEmpty(path1) || string.IsNullOrEmpty(path2))
                 return false;
-            }
-
-            if (!string.IsNullOrEmpty(path1) && string.IsNullOrEmpty(path2))
-            {
-                return false;
-            }
-
-            // Empty string is not valid path, return false even when both are null
-            if (string.IsNullOrEmpty(path1) && string.IsNullOrEmpty(path2))
-            {
-                return false;
-            }
 
             try
             {
-                return Normalize(path1) == Normalize(path2);
+                path1 = Path.GetFullPath(path1).TrimEnd(DirectorySeparators);
+                path2 = Path.GetFullPath(path2).TrimEnd(DirectorySeparators);
+                return path1.Equals(path2, StringComparison.OrdinalIgnoreCase);
             }
             catch
             {
@@ -164,10 +62,23 @@ namespace Playnite.Common
             }
         }
 
-        public static string GetSafePathName(string filename)
+        public static string GetSafeFileName(string filename)
         {
-            var path = string.Join(" ", filename.Split(Path.GetInvalidFileNameChars()));
-            return Regex.Replace(path, @"\s+", " ").Trim();
+            if (filename.IsNullOrWhiteSpace())
+                return filename;
+
+            var invalid = Path.GetInvalidFileNameChars();
+            var sb = new StringBuilder(filename.Length);
+            foreach (var chr in filename)
+            {
+                if (char.IsWhiteSpace(chr) && sb.Length > 0 && char.IsWhiteSpace(sb[^1]))
+                    continue;
+
+                if (!invalid.Contains(chr))
+                    sb.Append(chr);
+            }
+
+            return sb.ToString().Trim();
         }
 
         public static bool IsFullPath(string path)
@@ -178,105 +89,76 @@ namespace Playnite.Common
             }
 
             // Don't use Path.IsPathRooted because it fails on paths starting with one backslash.
-            return Regex.IsMatch(path, @"^([a-zA-Z]:\\|\\\\)");
+            return IsFullPathRegex().IsMatch(path);
         }
 
         public static string GetCommonDirectory(string[] paths)
         {
-            int k = paths[0].Length;
-            for (int i = 1; i < paths.Length; i++)
+            var stop = paths.Min(a => a.Length);
+            if (stop == 0)
+                return string.Empty;
+
+            foreach (var path in paths)
             {
-                k = Math.Min(k, paths[i].Length);
-                for (int j = 0; j < k; j++)
+                for (var j = 0; j < stop; j++)
                 {
-                    if (paths[i][j] != paths[0][j])
+                    if (path[j] != paths[0][j])
                     {
-                        k = j;
-                        break;
+                        stop = j;
+                        goto cont;
                     }
                 }
             }
 
-            var common = paths[0].Substring(0, k);
+            cont:
+            var common = paths[0][..stop];
             if (common.Length == 0)
-            {
                 return string.Empty;
-            }
 
-            if (common[common.Length -1] == Path.DirectorySeparatorChar)
-            {
+            if (common[^1] == Path.DirectorySeparatorChar)
                 return common;
-            }
-            else
-            {
-                return common.Substring(0, common.LastIndexOf(Path.DirectorySeparatorChar) + 1);
-            }
+
+            return common.Substring(0, common.LastIndexOf(Path.DirectorySeparatorChar) + 1);
         }
 
-        public static bool MathcesFilePattern(string filePath, string pattern)
+        public static string GetPathWithoutFileExtension(string path)
         {
-            if (filePath.IsNullOrEmpty() || pattern.IsNullOrEmpty())
-            {
-                return false;
-            }
-
-            if (pattern.Contains(';'))
-            {
-                return Shlwapi.PathMatchSpecExW(filePath, pattern, MatchPatternFlags.Multiple) == 0;
-            }
-            else
-            {
-                return Shlwapi.PathMatchSpecExW(filePath, pattern, MatchPatternFlags.Normal) == 0;
-            }
+            return Path.Combine(Path.GetDirectoryName(path) ?? string.Empty, Path.GetFileNameWithoutExtension(path));
         }
 
-        public static string FixPathLength(string path, bool forcePrefix = false)
+        public static string GetFinalPathName(string path)
         {
-            if (path.IsNullOrWhiteSpace())
+            if (path.StartsWith(@"\\", StringComparison.Ordinal))
             {
                 return path;
             }
 
-            // Relative paths don't support long paths
-            // https://docs.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation?tabs=cmd
-            if (!Paths.IsFullPath(path))
+            using var file = PInvokeWin32.CreateFile(path,
+                0,
+                FILE_SHARE_MODE.FILE_SHARE_READ | FILE_SHARE_MODE.FILE_SHARE_WRITE | FILE_SHARE_MODE.FILE_SHARE_DELETE,
+                null,
+                FILE_CREATION_DISPOSITION.OPEN_EXISTING,
+                FILE_FLAGS_AND_ATTRIBUTES.FILE_FLAG_BACKUP_SEMANTICS,
+                null);
+
+            if (file.IsInvalid)
             {
-                return path;
+                throw new Win32Exception(Marshal.GetLastWin32Error());
             }
 
-            // While the MAX_PATH value is 260 characters, a lower value is used because
-            // methods can append "\" and string terminator characters to paths and
-            // make them surpass the limit
-            if ((path.Length >= 258 || forcePrefix) && !path.StartsWith(longPathPrefix))
+            Span<char> text = new char[MaxPathLength];
+            var res = PInvokeWin32.GetFinalPathNameByHandle(file, text, GETFINALPATHNAMEBYHANDLE_FLAGS.FILE_NAME_NORMALIZED);
+            if (res == 0)
             {
-                if (path.StartsWith(@"\\"))
-                {
-                    return longPathUncPrefix + path.Substring(2);
-                }
-                else
-                {
-                    return longPathPrefix + path;
-                }
+                throw new Win32Exception(Marshal.GetLastWin32Error());
             }
 
-            return path;
-        }
-
-        public static string TrimLongPathPrefix(string path)
-        {
-            if (path.IsNullOrWhiteSpace())
+            var targetPath = text[..(int)res].ToString();
+            if (targetPath.StartsWith(LongPathUncPrefix, StringComparison.Ordinal))
             {
-                return path;
+                return targetPath.Replace(LongPathUncPrefix, @"\\", StringComparison.Ordinal);
             }
-
-            if (path.StartsWith(longPathUncPrefix))
-            {
-                return path.Replace(longPathUncPrefix, @"\\");
-            }
-            else
-            {
-                return path.Replace(longPathPrefix, string.Empty);
-            }
+            return targetPath.Replace(LongPathPrefix, string.Empty, StringComparison.Ordinal);
         }
     }
 }

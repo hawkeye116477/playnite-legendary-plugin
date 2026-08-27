@@ -3,6 +3,14 @@ Playnite / Playnite.SDK - https://github.com/JosefNemec/Playnite
 MIT License
 Copyright (c) 2020 Josef Nemec
 
+
+----------------------------------------------------------------------------------------
+Microsoft.Windows.CsWin32 - https://github.com/microsoft/CsWin32
+The MIT License (MIT)
+Copyright (c) Microsoft Corporation
+All rights reserved.
+
+
 ----------------------------------------------------------------------------------------
 CliWrap - https://github.com/Tyrrrz/CliWrap
 MIT License

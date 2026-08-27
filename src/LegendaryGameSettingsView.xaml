@@ -57,7 +57,7 @@
             <Button x:Name="StartupArgumentsHelpBtn"
                     Grid.Column="2" Grid.Row="2" Margin="8,0,0,8" Content="&#xefca;"
                     FontFamily="{DynamicResource IcoFont}"
-                    Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                    Command="{x:Static pcmd:Commands.OpenUrlCommand}"
                     CommandParameter="https://github.com/hawkeye116477/playnite-legendary-plugin/wiki/Game-startup-arguments" />
             <TextBlock Text="{common:Localize Key={x:Static system:LOC.LegendaryLanguageCode}}"
                        Grid.Column="0"
