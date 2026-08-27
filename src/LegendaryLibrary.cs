@@ -531,7 +531,7 @@ public class LegendaryLibrary : Plugin
 
     public string GetCachePath(string dirName)
     {
-        return Path.Combine(PlayniteApi.UserDataDir, dirName);
+        return Path.Combine(PlayniteApi.UserDataDir, "cache", dirName);
     }
 
     public override async Task<List<InstallController>> GetInstallActionsAsync(GetInstallActionsArgs args)
