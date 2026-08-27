@@ -17,5 +17,5 @@ compiled_path = pj(src_path, "bin", "Release", "net10.0-windows", "LegendaryLibr
 
 def run():
     """Let's start"""
-    v = DotNetVersionInfo.GetVersionInfo(compiled_path).FileVersion.replace("-", ".")
+    v = DotNetVersionInfo.GetVersionInfo(compiled_path).ProductVersion.replace("-", ".")
     return v
