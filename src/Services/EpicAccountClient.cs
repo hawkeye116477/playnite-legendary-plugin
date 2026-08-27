@@ -388,7 +388,7 @@ public class EpicAccountClient
             }
             else if (newEncryptedTokensPath != "" && File.Exists(newEncryptedTokensPath))
             {
-                logger.Trace("Loading encrypted tokens...");
+                //logger.Trace("Loading encrypted tokens...");
                 var decryptedTokens = LegendaryEncryption.Decrypt(newEncryptedTokensPath);
                 if (!decryptedTokens.IsNullOrEmpty())
                 {
@@ -397,7 +397,7 @@ public class EpicAccountClient
             }
             else if (File.Exists(TokensPath))
             {
-                logger.Trace("Loading non-encrypted tokens...");
+                //logger.Trace("Loading non-encrypted tokens...");
                 return Serialization.FromJson<OauthResponse>(FileSystem.ReadFileAsStringSafe(TokensPath));
             }
         }
@@ -409,7 +409,7 @@ public class EpicAccountClient
         return null;
     }
 
-    public async Task WriteTokens(string content)
+    private async Task WriteTokens(string content)
     {
         if (!content.IsNullOrEmpty())
         {
@@ -417,7 +417,7 @@ public class EpicAccountClient
             if (LegendaryLauncher.IsInstalled)
             {
                 var versionCmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
-                                          .WithArguments(new[] { "-V" })
+                                          .WithArguments(["-V"])
                                           .WithEnvironmentVariables(LegendaryLauncher.GetDefaultEnvironmentVariables())
                                           .AddCommandToLog()
                                           .WithValidation(CommandResultValidation.None)
@@ -443,7 +443,7 @@ public class EpicAccountClient
         }
     }
 
-    public async Task<PlayerAchievementsResponse> GetPlayerAchievements(
+    private async Task<PlayerAchievementsResponse> GetPlayerAchievements(
         string productId, OauthResponse tokens, CancellationToken cancelToken)
     {
         var playerAchievementsResponse = new PlayerAchievementsResponse();
@@ -508,7 +508,7 @@ query playerProfileAchievementsByProductId($epicAccountId: String!, $productId: 
         return playerAchievementsResponse;
     }
 
-    public async Task<AchievementsSchemaResponse> GetAchievementsSchema(
+    private async Task<AchievementsSchemaResponse> GetAchievementsSchema(
         string sandboxId, OauthResponse tokens, CancellationToken cancelToken)
     {
         var achievementsSchemaResponse = new AchievementsSchemaResponse();
