@@ -38,7 +38,7 @@ pn = os.path.normpath
 toolbox = pj(user_downloads_dir(), "Toolbox.exe")
 scriptPath = os.path.dirname(os.path.realpath(__file__))
 mainPath = pn(scriptPath + "/..")
-compiledPath = pn(pj(mainPath, "src/plugin/bin/Release/net10.0-windows"))
+compiledPath = pn(pj(mainPath, "src/bin/Release/net10.0-windows"))
 releasesPath = pj(mainPath, "Releases")
 
 if not os.path.exists(releasesPath):
@@ -114,4 +114,5 @@ if os.path.exists(extFile):
     #                   sort_keys=False, Dumper=MyDumper)
 
     git_repo = git.Repo(mainPath)
+    version = version.replace(".2026", "-2026")
     git_repo.create_tag(f"P11_{version}")
