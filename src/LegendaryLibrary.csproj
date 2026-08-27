@@ -11,7 +11,9 @@
         <OutputPath>bin\$(Configuration)\</OutputPath>
         <Configurations>Release;Debug</Configurations>
         <IsPackable>false</IsPackable>
-        <Version>1.16.0.11</Version>
+        <VersionPrefix>2.0.0</VersionPrefix>
+        <VersionSuffix>$([System.DateTime]::UtcNow.ToString("yyyyMMdd"))</VersionSuffix>
+        <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
         <EnableDynamicLoading>true</EnableDynamicLoading>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>

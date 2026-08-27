@@ -10,7 +10,7 @@ public class LegendaryTroubleshootingInformation
         {
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
             var fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
-            return fvi.FileVersion;
+            return fvi.ProductVersion;
         }
     }
 
