@@ -42,7 +42,7 @@ public partial class LegendaryEaActivate
             return;
         }
 
-        var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("infocache");
+        var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("info");
         var cacheInfoFile = Path.Combine(cacheInfoPath, "_allEaGames.json");
         var eaGamesOnly = new List<LegendaryMetadata>();
         var correctJson = false;

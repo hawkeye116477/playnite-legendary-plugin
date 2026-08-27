@@ -191,7 +191,7 @@ public class LegendaryLibrary : Plugin
 
     private async Task<Dictionary<string, ImportableGame>> GetLibraryGames(CancellationToken cancelToken)
     {
-        var cacheDir = GetCachePath("catalogcache");
+        var cacheDir = GetCachePath("catalog");
         var games = new Dictionary<string, ImportableGame>();
         var accountApi = new EpicAccountClient(PlayniteApi);
 

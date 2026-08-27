@@ -202,7 +202,7 @@ public partial class LegendaryGameInstaller : UserControl
         MaxWorkersNI.Value = settings!.MaxWorkers.ToString();
         MaxSharedMemoryNI.Value = settings.MaxSharedMemory.ToString();
         UpdateSpaceInfo(installPath);
-        var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("infocache");
+        var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("info");
         if (!Directory.Exists(cacheInfoPath))
         {
             Directory.CreateDirectory(cacheInfoPath);

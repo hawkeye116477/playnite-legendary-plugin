@@ -299,7 +299,7 @@ public class LegendaryLauncher
     public static async Task<UpdateInfo> GetUpdateSizes(string gameId)
     {
         var updateInfo = new UpdateInfo();
-        var cacheUpdateInfoPath = LegendaryLibrary.Instance.GetCachePath("updateinfocache");
+        var cacheUpdateInfoPath = LegendaryLibrary.Instance.GetCachePath("updateinfo");
         var cacheUpdateInfoFile = Path.Combine(cacheUpdateInfoPath, gameId + ".json");
         if (File.Exists(cacheUpdateInfoFile))
         {
@@ -456,7 +456,7 @@ public class LegendaryLauncher
         var manifest = new LegendaryGameInfo.Rootobject();
         var playniteApi = LegendaryLibrary.PlayniteApi;
         var logger = LogManager.GetLogger();
-        var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("infocache");
+        var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("info");
         var cacheInfoFile = Path.Combine(cacheInfoPath, gameId + ".json");
         if (!Directory.Exists(cacheInfoPath))
         {
@@ -614,7 +614,7 @@ public class LegendaryLauncher
 
         if (manifest.Manifest is { Install_tags.Count: > 1 })
         {
-            var cacheSdlPath = LegendaryLibrary.Instance.GetCachePath("sdlcache");
+            var cacheSdlPath = LegendaryLibrary.Instance.GetCachePath("sdl");
             if (!Directory.Exists(cacheSdlPath))
             {
                 Directory.CreateDirectory(cacheSdlPath);
@@ -770,7 +770,7 @@ public class LegendaryLauncher
             return newVersionInfoContent;
         }
 
-        var cacheVersionPath = LegendaryLibrary.Instance.GetCachePath("infocache");
+        var cacheVersionPath = LegendaryLibrary.Instance.GetCachePath("info");
         if (!Directory.Exists(cacheVersionPath))
         {
             Directory.CreateDirectory(cacheVersionPath);
@@ -870,11 +870,7 @@ public class LegendaryLauncher
         var logger = LogManager.GetLogger();
         var cacheDirs = new List<string>
         {
-            LegendaryLibrary.Instance.GetCachePath("catalogcache"),
-            LegendaryLibrary.Instance.GetCachePath("infocache"),
-            LegendaryLibrary.Instance.GetCachePath("sdlcache"),
-            LegendaryLibrary.Instance.GetCachePath("updateinfocache"),
-            LegendaryLibrary.Instance.GetCachePath("achievementscache"),
+            Path.Combine(LegendaryLibrary.PlayniteApi.UserDataDir, "cache"),
             Path.Combine(ConfigPath, "metadata")
         };
         foreach (var cacheDir in cacheDirs)
@@ -898,9 +894,9 @@ public class LegendaryLauncher
         var logger = LogManager.GetLogger();
         var cacheDirs = new List<string>
         {
-            LegendaryLibrary.Instance.GetCachePath("infocache"),
-            LegendaryLibrary.Instance.GetCachePath("sdlcache"),
-            LegendaryLibrary.Instance.GetCachePath("updateinfocache"),
+            LegendaryLibrary.Instance.GetCachePath("info"),
+            LegendaryLibrary.Instance.GetCachePath("sdl"),
+            LegendaryLibrary.Instance.GetCachePath("updateinfo"),
             Path.Combine(ConfigPath, "metadata")
         };
 

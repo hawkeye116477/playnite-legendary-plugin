@@ -513,7 +513,7 @@ query playerProfileAchievementsByProductId($epicAccountId: String!, $productId: 
     {
         var achievementsSchemaResponse = new AchievementsSchemaResponse();
         
-        var cacheAchievementsPath = LegendaryLibrary.Instance.GetCachePath("achievementscache");
+        var cacheAchievementsPath = LegendaryLibrary.Instance.GetCachePath("achievements");
         Directory.CreateDirectory(cacheAchievementsPath);
         var cacheFile = Path.Combine(cacheAchievementsPath, $"schema_{sandboxId}.json");
         if (File.Exists(cacheFile))
@@ -631,7 +631,7 @@ query Achievement($sandboxId: String!, $locale: String!) {
     public async Task<List<ImportableAchievement>> GetAchievements(string gameId, OauthResponse tokens, CancellationToken cancelToken)
     {
         var importableAchievements = new List<ImportableAchievement>();
-        var cacheDir = LegendaryLibrary.Instance.GetCachePath("catalogcache");
+        var cacheDir = LegendaryLibrary.Instance.GetCachePath("catalog");
         var cacheFile = $"{gameId}.json";
         cacheFile = Path.Combine(cacheDir, cacheFile);
         var newSandboxId = "";
