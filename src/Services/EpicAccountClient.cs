@@ -512,6 +512,36 @@ query playerProfileAchievementsByProductId($epicAccountId: String!, $productId: 
         string sandboxId, OauthResponse tokens, CancellationToken cancelToken)
     {
         var achievementsSchemaResponse = new AchievementsSchemaResponse();
+        
+        var cacheAchievementsPath = LegendaryLibrary.Instance.GetCachePath("achievementscache");
+        Directory.CreateDirectory(cacheAchievementsPath);
+        var cacheFile = Path.Combine(cacheAchievementsPath, $"schema_{sandboxId}.json");
+        if (File.Exists(cacheFile))
+        {
+            if (File.GetLastWriteTime(cacheFile) < DateTime.Now.AddDays(-7))
+            {
+                File.Delete(cacheFile);
+            }
+        }
+        
+        var correctJson = false;
+        if (File.Exists(cacheFile))
+        {
+            var content = FileSystem.ReadFileAsStringSafe(cacheFile);
+            if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out AchievementsSchemaResponse? newSchemaResponse))
+            {
+                if (newSchemaResponse != null)
+                {
+                    achievementsSchemaResponse = newSchemaResponse;
+                    correctJson = true;
+                }
+            }
+        }
+
+        if (correctJson)
+        {
+            return achievementsSchemaResponse;
+        }
 
         var variables = new
         {
@@ -585,6 +615,7 @@ query Achievement($sandboxId: String!, $locale: String!) {
                     if (newAchievementsSchema != null)
                     {
                         achievementsSchemaResponse = newAchievementsSchema;
+                        await File.WriteAllTextAsync(cacheFile, responseContent, cancelToken);
                     }
                 }
             }

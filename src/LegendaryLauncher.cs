@@ -874,6 +874,7 @@ public class LegendaryLauncher
             LegendaryLibrary.Instance.GetCachePath("infocache"),
             LegendaryLibrary.Instance.GetCachePath("sdlcache"),
             LegendaryLibrary.Instance.GetCachePath("updateinfocache"),
+            LegendaryLibrary.Instance.GetCachePath("achievementscache"),
             Path.Combine(ConfigPath, "metadata")
         };
         foreach (var cacheDir in cacheDirs)
