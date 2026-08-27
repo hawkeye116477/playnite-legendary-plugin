@@ -5,16 +5,17 @@
 # pylint: disable=E1136
 """Pack extension"""
 import os
+from pathlib import Path
 import subprocess
 import shutil
-import datetime
+# import datetime
 import hashlib
 # import winreg
-import xml.etree.ElementTree as ET
+# import xml.etree.ElementTree as ET
 import yaml
 import git
-import get_extension_version
 from platformdirs import user_downloads_dir
+import get_extension_version
 
 class MyDumper(yaml.Dumper):
     """https://stackoverflow.com/a/39681672"""
@@ -57,6 +58,11 @@ for root, dirs, files in os.walk(pj(compiledPath, "Localization")):
         if not any(substring in folder for substring in active_languages):
             shutil.rmtree(pj(root, folder))
             dirs.remove(folder)
+
+# Remove unecessary files
+for not_needed_file in Path(compiledPath).rglob("AdysTech.CredentialManager.resources.dll"):
+    folder = not_needed_file.parent
+    shutil.rmtree(folder)
 
 version = get_extension_version.run()
 versionUnderline = version.replace(".", "_")
