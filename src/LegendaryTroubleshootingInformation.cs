@@ -1,10 +1,13 @@
-﻿namespace LegendaryLibraryNS;
+﻿using System;
+using System.Threading.Tasks;
 
-public class LegendaryTroubleshootingInformation
+namespace LegendaryLibraryNS;
+
+public static class LegendaryTroubleshootingInformation
 {
-    public string PlayniteVersion => LegendaryLibrary.PlayniteApi.AppInfo.ApplicationVersion.ToString();
+    public static string PlayniteVersion => LegendaryLibrary.PlayniteApi.AppInfo.ApplicationVersion.ToString();
 
-    public string? PluginVersion
+    public static string? PluginVersion
     {
         get
         {
@@ -14,7 +17,16 @@ public class LegendaryTroubleshootingInformation
         }
     }
 
-    public string LauncherVersion { get; set; } = "";
-    public string LauncherBinary => LegendaryLauncher.ClientExecPath;
-    public string GamesInstallationPath => LegendaryLauncher.GamesInstallationPath;
+    public static async Task<string> GetLauncherVersion()
+    {
+        var launcherVersion = await LegendaryLauncher.GetLauncherVersion();
+        if (launcherVersion.IsNullOrWhiteSpace())
+        { 
+            launcherVersion = "Not%20installed";
+        }
+        return launcherVersion;
+    }
+
+    public static string LauncherBinary => LegendaryLauncher.ClientExecPath;
+    public static string GamesInstallationPath => LegendaryLauncher.GamesInstallationPath;
 }

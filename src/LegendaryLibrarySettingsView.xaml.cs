@@ -28,7 +28,6 @@ public partial class LegendaryLibrarySettingsView
 {
     private ILogger logger = LogManager.GetLogger();
     private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
-    private LegendaryTroubleshootingInformation troubleshootingInformation = new();
 
     public LegendaryLibrarySettingsView()
     {
@@ -236,37 +235,33 @@ public partial class LegendaryLibrarySettingsView
 
         LauncherUpdateSourceCBo.ItemsSource = LegendaryLauncher.UpdateSources;
 
-        troubleshootingInformation = new LegendaryTroubleshootingInformation();
+        var launcherVersion = await LegendaryTroubleshootingInformation.GetLauncherVersion();
         if (LegendaryLauncher.IsInstalled)
         {
-            var launcherVersion = await LegendaryLauncher.GetLauncherVersion();
-            if (!launcherVersion.IsNullOrWhiteSpace())
+            if (!launcherVersion.IsNullOrEmpty())
             {
-                troubleshootingInformation.LauncherVersion = launcherVersion;
-                LauncherVersionTxt.Text = troubleshootingInformation.LauncherVersion;
+                LauncherVersionTxt.Text = launcherVersion;
+                LauncherBinaryTxt.Text = LegendaryTroubleshootingInformation.LauncherBinary;
             }
-
-            LauncherBinaryTxt.Text = troubleshootingInformation.LauncherBinary;
-            if (troubleshootingInformation.LauncherBinary.Contains(LegendaryLauncher.HeroicLegendaryPath))
+            if (LegendaryTroubleshootingInformation.LauncherBinary.Contains(LegendaryLauncher.HeroicLegendaryPath))
             {
                 CheckForLauncherUpdatesBtn.IsEnabled = false;
             }
         }
         else
         {
-            troubleshootingInformation.LauncherVersion = "Not%20installed";
             LauncherVersionTxt.Text = LocalizationManager.Instance.GetString(LOC.CommonLauncherNotInstalled);
             LauncherBinaryTxt.Text = LocalizationManager.Instance.GetString(LOC.CommonLauncherNotInstalled);
             CheckForLauncherUpdatesBtn.IsEnabled = false;
             OpenLauncherBinaryBtn.IsEnabled = false;
         }
 
-        PlayniteVersionTxt.Text = troubleshootingInformation.PlayniteVersion;
-        PluginVersionTxt.Text = troubleshootingInformation.PluginVersion ?? "";
-        GamesInstallationPathTxt.Text = troubleshootingInformation.GamesInstallationPath;
+        PlayniteVersionTxt.Text = LegendaryTroubleshootingInformation.PlayniteVersion;
+        PluginVersionTxt.Text = LegendaryTroubleshootingInformation.PluginVersion ?? "";
+        GamesInstallationPathTxt.Text = LegendaryTroubleshootingInformation.GamesInstallationPath;
         LogFilesPathTxt.Text = playniteApi.AppInfo.ConfigurationDirectory;
         ReportBugHyp.NavigateUri = new Uri(
-            $"https://github.com/hawkeye116477/playnite-legendary-plugin/issues/new?assignees=&labels=bug&projects=&template=bugs.yml&legendaryV={troubleshootingInformation.PluginVersion}&playniteV={troubleshootingInformation.PlayniteVersion}&launcherV={troubleshootingInformation.LauncherVersion}");
+            $"https://github.com/hawkeye116477/playnite-legendary-plugin/issues/new?assignees=&labels=bug&projects=&template=bugs.yml&legendaryV={LegendaryTroubleshootingInformation.PluginVersion}&playniteV={LegendaryTroubleshootingInformation.PlayniteVersion}&launcherV={launcherVersion}");
     }
 
     private async void ClearCacheBtn_Click(object sender, RoutedEventArgs e)
@@ -399,17 +394,25 @@ public partial class LegendaryLibrarySettingsView
         });
     }
 
-    private void CopyRawDataBtn_Click(object sender, RoutedEventArgs e)
+    private async void CopyRawDataBtn_Click(object sender, RoutedEventArgs e)
     {
-        var troubleshootingJson = Serialization.ToJson(troubleshootingInformation, true);
+        var troubleshootingInformationTxt = new
+        {
+            LegendaryTroubleshootingInformation.PlayniteVersion,
+            LegendaryTroubleshootingInformation.PluginVersion,
+            LauncherVersion = await LegendaryTroubleshootingInformation.GetLauncherVersion(),
+            LegendaryTroubleshootingInformation.LauncherBinary,
+            LegendaryTroubleshootingInformation.GamesInstallationPath,
+        };
+        var troubleshootingJson = Serialization.ToJson(troubleshootingInformationTxt, true);
         Clipboard.SetText(troubleshootingJson);
     }
 
     private async void OpenGamesInstallationPathBtn_Click(object sender, RoutedEventArgs e)
     {
-        if (Directory.Exists(troubleshootingInformation.GamesInstallationPath))
+        if (Directory.Exists(LegendaryTroubleshootingInformation.GamesInstallationPath))
         {
-            ProcessStarter.StartProcess("explorer.exe", troubleshootingInformation.GamesInstallationPath);
+            ProcessStarter.StartProcess("explorer.exe", LegendaryTroubleshootingInformation.GamesInstallationPath);
         }
         else
         {

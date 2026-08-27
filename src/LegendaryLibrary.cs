@@ -9,6 +9,7 @@ using Playnite.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1091,5 +1092,58 @@ public class LegendaryLibrary : Plugin
         }
 
         return achievementsList;
+    }
+
+    public override async Task<CollectDiagnosticDataArgsAsyncResult?> CollectDiagnosticDataArgsAsync(CollectDiagnosticDataArgs args)
+    {
+        var logsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Temp",
+            $"Playnite", PluginId, "Logs");
+        try
+        {
+            if (Directory.Exists(logsPath))
+            {
+                Directory.Delete(logsPath, true);
+            }
+        }
+        catch (Exception)
+        {
+            // ignored
+        }
+
+        Directory.CreateDirectory(logsPath);
+        var zipPath = Path.Combine(logsPath, $"{PluginId}.zip");
+        try
+        {
+            Directory.CreateDirectory(logsPath);
+            await File.WriteAllTextAsync(Path.Combine(logsPath, "Readme.txt"),
+                $"To report a bug, please fill form at: \n" +
+                $"<https://github.com/hawkeye116477/playnite-legendary-plugin/issues/new?assignees=&labels=bug&projects=&template=bugs.yml&legendaryV={LegendaryTroubleshootingInformation.PluginVersion}&playniteV={LegendaryTroubleshootingInformation.PlayniteVersion}&launcherV={await LegendaryTroubleshootingInformation.GetLauncherVersion()}> \n" +
+                $"and attach generated zip file.");
+
+            var pluginLogFiles = Directory.GetFiles(PlayniteApi.UserDataDir, "plugin*.log", SearchOption.TopDirectoryOnly);
+            var playniteLogFiles = Directory.GetFiles(PlayniteApi.AppInfo.ConfigurationDirectory, "playnite*.log",
+                SearchOption.TopDirectoryOnly);
+            var files = new List<string>();
+            files.AddRange(pluginLogFiles);
+            files.AddRange(playniteLogFiles);
+
+            await using var zipArchive = await ZipFile.OpenAsync(zipPath, ZipArchiveMode.Update);
+            foreach (var singleFile in files)
+            {
+                await using var source = new FileStream(singleFile, FileMode.Open, FileAccess.Read,
+                    FileShare.ReadWrite | FileShare.Delete);
+                await source.CopyToAsync(await zipArchive.CreateEntry(Path.GetFileName(singleFile)).OpenAsync());
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Debug(ex);
+        }
+
+        var newResults = new CollectDiagnosticDataArgsAsyncResult
+        {
+            ResultFile = zipPath
+        };
+        return newResults;
     }
 }
