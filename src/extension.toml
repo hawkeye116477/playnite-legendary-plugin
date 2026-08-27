@@ -6,6 +6,8 @@ module = "LegendaryLibrary.dll"
 icon = "Resources\\legendary_icon.ico"
 client_app_icon = "Resources\\legendary_icon.ico"
 library_icon = "Resources\\legendary_icon.ico"
+source_link = "https://github.com/hawkeye116477/playnite-legendary-plugin/tree/P11"
+help_link = "https://github.com/hawkeye116477/playnite-legendary-plugin/wiki"
 
 [[dependencies]]
 addon_id = "hawkeye116477.UDM"
