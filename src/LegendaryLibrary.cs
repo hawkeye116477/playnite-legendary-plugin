@@ -1068,6 +1068,7 @@ public class LegendaryLibrary : Plugin
             return achievementsList;
         }
 
+        int gamesWithAchievements = 0;
         foreach (var game in legendaryGames)
         {
             if (args.CancelToken.IsCancellationRequested)
@@ -1080,7 +1081,8 @@ public class LegendaryLibrary : Plugin
                 var importableAchievements = await clientApi.GetAchievements(game.LibraryGameId!, tokens, args.CancelToken);
                 if (importableAchievements.Count > 0)
                 {
-                    Logger.Info($"Found {importableAchievements.Count} achievements for {game.Name}.");
+                    gamesWithAchievements += 1;
+                    Logger.Debug($"Found {importableAchievements.Count} achievements for {game.Name}.");
                 }
 
                 achievementsList.Add(new ImportableAchievements(game.Id, importableAchievements));
@@ -1089,6 +1091,11 @@ public class LegendaryLibrary : Plugin
             {
                 Logger.Debug(ex);
             }
+        }
+
+        if (gamesWithAchievements > 1)
+        {
+            Logger.Debug($"Found {gamesWithAchievements} games with achievements.");
         }
 
         return achievementsList;
