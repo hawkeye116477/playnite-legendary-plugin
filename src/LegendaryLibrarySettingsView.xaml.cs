@@ -412,7 +412,7 @@ public partial class LegendaryLibrarySettingsView
     {
         if (Directory.Exists(LegendaryTroubleshootingInformation.GamesInstallationPath))
         {
-            ProcessStarter.StartProcess("explorer.exe", LegendaryTroubleshootingInformation.GamesInstallationPath);
+            ProcessStarter.StartProcess(LegendaryTroubleshootingInformation.GamesInstallationPath);
         }
         else
         {
@@ -676,7 +676,7 @@ public partial class LegendaryLibrarySettingsView
 
     private void OpenLogFilesPathBtn_Click(object sender, RoutedEventArgs e)
     {
-        ProcessStarter.StartProcess("explorer.exe", playniteApi.AppInfo.ConfigurationDirectory);
+        ProcessStarter.StartProcess(playniteApi.AppInfo.ConfigurationDirectory);
     }
 
     private async void EOSOCheckForUpdatesBtn_Click(object sender, RoutedEventArgs e)
