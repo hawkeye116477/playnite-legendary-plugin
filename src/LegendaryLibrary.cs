@@ -35,12 +35,13 @@ public class LegendaryLibrary : Plugin
     public static IPlayniteApi PlayniteApi { get; private set; } = null!;
     private static readonly SpecImportableProperty PcSpecProperty = new("pc_windows");
     public const string LibraryName = "Legendary (Epic)";
+    public const string ShortPluginName = "Legendary";
     public IUnifiedDownloadManagerApi UnifiedDownloadManagerApi { get; set; } = null!;
 
 
     public LegendaryLibrary()
     {
-        XamlId = "Legendary";
+        XamlId = ShortPluginName;
         LibrarySettings = new LibrarySupport
         {
             LibraryName = LibraryName,
@@ -575,8 +576,8 @@ public class LegendaryLibrary : Plugin
         LocalizationManager.Instance.SetLanguage(currentLanguage);
         var commonFluentArgs = new Dictionary<string, IFluentType>
         {
-            { "launcherName", (FluentString)"Legendary" },
-            { "pluginShortName", (FluentString)"Legendary" },
+            { "launcherName", (FluentString)ShortPluginName },
+            { "pluginShortName", (FluentString)ShortPluginName },
             { "originalPluginShortName", (FluentString)"Epic" },
             { "updatesSourceName", (FluentString)"Epic Games" }
         };
@@ -781,11 +782,19 @@ public class LegendaryLibrary : Plugin
         return clearingTime?.ToUnixTimeSeconds() ?? 0;
     }
 
+    public override ICollection<MenuItemDescriptor> GetGameMenuItemDescriptors(GetGameMenuItemDescriptorsArgs args)
+    {
+        return
+        [
+            new MenuItemDescriptor($"gameMenu.{PluginId}", ShortPluginName),
+        ];
+    }
+
     public override ICollection<MenuItemImpl> GetGameMenuItems(GetGameMenuItemsArgs args)
     {
         var menuItems = new List<MenuItemImpl>();
         var legendaryGames = args.Games.Where(i => i.LibraryId == PluginId).ToList();
-        if (legendaryGames.Count <= 0)
+        if (legendaryGames.Count <= 0 || args.ItemId != $"gameMenu.{PluginId}")
         {
             return menuItems;
         }
