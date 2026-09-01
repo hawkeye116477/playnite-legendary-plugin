@@ -793,8 +793,12 @@ public class LegendaryLibrary : Plugin
     public override ICollection<MenuItemImpl> GetGameMenuItems(GetGameMenuItemsArgs args)
     {
         var menuItems = new List<MenuItemImpl>();
+        if (args.ItemId != $"gameMenu.{PluginId}")
+        {
+            return menuItems;
+        }
         var legendaryGames = args.Games.Where(i => i.LibraryId == PluginId).ToList();
-        if (legendaryGames.Count <= 0 || args.ItemId != $"gameMenu.{PluginId}")
+        if (legendaryGames.Count <= 0)
         {
             return menuItems;
         }
