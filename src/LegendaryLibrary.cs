@@ -928,20 +928,21 @@ public class LegendaryLibrary : Plugin
         return menuItems;
     }
 
-    // public override ICollection<MenuItemDescriptor>? GetAppMenuItemDescriptors(GetAppMenuItemDescriptorsArgs args)
-    // {
-    //     return
-    //     [
-    //         new MenuItemDescriptor($"appMenu.{PluginId}.Items", ShortPluginName),
-    //     ];
-    // }
+    public override ICollection<MenuItemDescriptor>? GetAppMenuItemDescriptors(GetAppMenuItemDescriptorsArgs args)
+    {
+        return
+        [
+            new MenuItemDescriptor($"appMenu.{PluginId}.Items", ShortPluginName),
+        ];
+    }
 
     public override ICollection<MenuItemImpl> GetAppMenuItems(GetAppMenuItemsArgs args)
     {
         var menuItems = new List<MenuItemImpl>();
+        var childMenuItems = new List<MenuItemImpl>();
         if (args.ItemId == $"appMenu.{PluginId}.Items")
         {
-            menuItems.Add(new MenuItemImpl(LocalizationManager.Instance.GetString(LOC.CommonCheckForGamesUpdatesButton),
+            childMenuItems.Add(new MenuItemImpl(LocalizationManager.Instance.GetString(LOC.CommonCheckForGamesUpdatesButton),
                 async _ =>
                 {
                     if (!LegendaryLauncher.IsInstalled)
@@ -1008,7 +1009,7 @@ public class LegendaryLibrary : Plugin
                 },
                 icon: CommonIcons.UpdateIcon
             ));
-            menuItems.Add(new MenuItemImpl(LocalizationManager.Instance.GetString(LOC.CommonFinishInstallation),
+            childMenuItems.Add(new MenuItemImpl(LocalizationManager.Instance.GetString(LOC.CommonFinishInstallation),
                 async _ =>
                 {
                     var installedAppList = LegendaryLauncher.GetInstalledAppList();
@@ -1051,6 +1052,7 @@ public class LegendaryLibrary : Plugin
                             LocalizationManager.Instance.GetString(LOC.CommonNoFinishNeeded));
                     }
                 }, icon: CommonIcons.FinishInstallationIcon));
+            menuItems.Add(new MenuItemImpl(ShortPluginName, childMenuItems));
         }
         return menuItems;
     }
