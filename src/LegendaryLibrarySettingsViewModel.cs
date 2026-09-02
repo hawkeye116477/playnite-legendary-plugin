@@ -71,7 +71,7 @@ public partial class LegendaryLibrarySettings : ObservableObject
     public partial bool SyncPlaytime { get; set; } = LegendaryGames.DefaultPlaytimeSyncEnabled;
 
     [ObservableProperty]
-    public partial string SyncPlaytimeMachineId { get; set; } = Guid.NewGuid().ToString("N");
+    public partial string SyncPlaytimeMachineId { get; set; } = Guid.NewGuid().ToString();
 
     [ObservableProperty]
     public partial UpdatePolicy GamesUpdatePolicy { get; set; } = UpdatePolicy.Month;

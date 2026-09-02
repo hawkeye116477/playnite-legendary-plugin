@@ -8,6 +8,7 @@ using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
+using Microsoft.Win32;
 using Playnite;
 
 namespace LegendaryLibraryNS;
@@ -20,6 +21,32 @@ public class LegendaryCloud
     private static readonly RetryHandler RetryHandler = new(new HttpClientHandler());
     private static readonly HttpClient HttpClient = new(RetryHandler);
     private ILogger logger = LogManager.GetLogger();
+
+    private static string GetMachineGuid()
+    {
+        var machineGuid = "";
+        var root = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32);
+
+        try
+        {
+            using var cryptography = root.OpenSubKey(@"SOFTWARE\Microsoft\Cryptography");
+            if (cryptography != null)
+            {
+                machineGuid = Guid.Parse(cryptography.GetValue("MachineGuid")?.ToString() ?? "").ToString();
+            }
+        }
+        finally
+        {
+            root.Dispose();
+        }
+
+        if (machineGuid.IsNullOrEmpty())
+        {
+            machineGuid = LegendaryLibrary.GetSettings().SyncPlaytimeMachineId;
+        }
+
+        return machineGuid;
+    }
 
     internal static async Task<string> CalculateGameSavesPath(
         string gameName, string gameId, string gameInstallDir, bool skipRefreshingMetadata = true)
@@ -237,7 +264,7 @@ public class LegendaryCloud
                     var playtimePayload = new PlaytimePayload
                     {
                         ArtifactId = game.LibraryGameId!,
-                        MachineId = LegendaryLibrary.GetSettings()?.SyncPlaytimeMachineId,
+                        MachineId = GetMachineGuid(),
                         EndTime = endTime,
                         StartTime = startTime
                     };
