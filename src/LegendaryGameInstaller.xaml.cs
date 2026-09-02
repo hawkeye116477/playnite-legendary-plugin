@@ -1,4 +1,7 @@
-﻿using CliWrap;
+﻿using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using CliWrap;
 using CliWrap.Buffered;
 using CommonPlugin;
 using CommonPlugin.Enums;
@@ -6,13 +9,6 @@ using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
 using Playnite;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using MessageBoxResult = Playnite.MessageBoxResult;
 
 namespace LegendaryLibraryNS;
@@ -61,7 +57,7 @@ public partial class LegendaryGameInstaller : UserControl
         var installPath = SelectedGamePathTxt.Text;
         if (installPath == "")
         {
-            installPath = LegendaryLauncher.GamesInstallationPath;
+            installPath = LegendaryGames.InstallationPath;
         }
 
         var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory;
@@ -189,7 +185,7 @@ public partial class LegendaryGameInstaller : UserControl
         }
 
         var settings = LegendaryLibrary.GetSettings();
-        var installPath = LegendaryLauncher.GamesInstallationPath;
+        var installPath = LegendaryGames.InstallationPath;
         var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory;
         if (installPath.Contains(playniteDirectoryVariable))
         {
@@ -202,7 +198,7 @@ public partial class LegendaryGameInstaller : UserControl
         MaxWorkersNI.Value = settings!.MaxWorkers.ToString();
         MaxSharedMemoryNI.Value = settings.MaxSharedMemory.ToString();
         UpdateSpaceInfo(installPath);
-        var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("info");
+        var cacheInfoPath = LegendaryLibrary.GetCachePath("info");
         if (!Directory.Exists(cacheInfoPath))
         {
             Directory.CreateDirectory(cacheInfoPath);
@@ -913,7 +909,7 @@ public partial class LegendaryGameInstaller : UserControl
             AfterInstallingTB.Text = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoadingLabel);
 
             var gameIds = MultiInstallData.Select(g => g.GameId).ToList();
-            LegendaryLauncher.ClearSpecificGamesCache(gameIds);
+            LegendaryGames.ClearSpecificGamesCache(gameIds);
 
             await RefreshAll();
         }

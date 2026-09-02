@@ -1,4 +1,7 @@
-﻿using CliWrap;
+﻿using System.IO;
+using System.Net.Http;
+using System.Text;
+using CliWrap;
 using CliWrap.EventStream;
 using CommonPlugin;
 using CommonPlugin.Enums;
@@ -6,12 +9,6 @@ using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
 using Playnite;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LegendaryLibraryNS;
 

@@ -1,4 +1,10 @@
-﻿using CliWrap;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Controls;
+using CliWrap;
 using CliWrap.Buffered;
 using CliWrap.EventStream;
 using CommonPlugin;
@@ -7,17 +13,9 @@ using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Controls;
 using Playnite;
 using Playnite.WebViews;
+using MessageBoxResult = Playnite.MessageBoxResult;
 
 namespace LegendaryLibraryNS;
 
@@ -68,7 +66,7 @@ public partial class LegendaryLibrarySettingsView
                         new Dictionary<string, IFluentType> { ["overlayName"] = (FluentString)"EOS" })
                 }), LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame),
             MessageBoxButtons.YesNo, MessageBoxSeverity.Question);
-        if (result == Playnite.MessageBoxResult.Yes)
+        if (result == MessageBoxResult.Yes)
         {
             var cmd = await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                                .WithValidation(CommandResultValidation.None)
@@ -243,6 +241,7 @@ public partial class LegendaryLibrarySettingsView
                 LauncherVersionTxt.Text = launcherVersion;
                 LauncherBinaryTxt.Text = LegendaryTroubleshootingInformation.LauncherBinary;
             }
+
             if (LegendaryTroubleshootingInformation.LauncherBinary.Contains(LegendaryLauncher.HeroicLegendaryPath))
             {
                 CheckForLauncherUpdatesBtn.IsEnabled = false;
@@ -270,9 +269,9 @@ public partial class LegendaryLibrarySettingsView
             LocalizationManager.Instance.GetString(LOC.CommonClearCacheConfirm),
             LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteSettingsClearCacheTitle),
             MessageBoxButtons.YesNo, MessageBoxSeverity.Question);
-        if (result == Playnite.MessageBoxResult.Yes)
+        if (result == MessageBoxResult.Yes)
         {
-            LegendaryLauncher.ClearCache();
+            LegendaryGames.ClearCache();
         }
     }
 
@@ -307,7 +306,7 @@ public partial class LegendaryLibrarySettingsView
             LocalizationManager.Instance.GetString(LOC.CommonMigrationConfirm),
             LocalizationManager.Instance.GetString(LOC.CommonMigrateGamesOriginal), MessageBoxButtons.YesNo,
             MessageBoxSeverity.Question);
-        if (result == Playnite.MessageBoxResult.No)
+        if (result == MessageBoxResult.No)
         {
             return;
         }
@@ -455,7 +454,7 @@ public partial class LegendaryLibrarySettingsView
             var answer = await playniteApi.Dialogs.ShowMessageAsync(
                 LocalizationManager.Instance.GetString(LOC.CommonSignOutConfirm),
                 LocalizationManager.Instance.GetString(LOC.CommonSignOut), MessageBoxButtons.YesNo);
-            if (answer == Playnite.MessageBoxResult.Yes)
+            if (answer == MessageBoxResult.Yes)
             {
                 using (var view = playniteApi.WebView.CreateView(new WebViewSettings
                        {
@@ -513,7 +512,7 @@ public partial class LegendaryLibrarySettingsView
             LocalizationManager.Instance.GetString(LOC.LegendaryContinueActivation,
                 new Dictionary<string, IFluentType> { ["companyAccount"] = (FluentString)"Ubisoft" }), "",
             MessageBoxButtons.YesNo);
-        if (result == Playnite.MessageBoxResult.Yes)
+        if (result == MessageBoxResult.Yes)
         {
             await Cli.Wrap(LegendaryLauncher.ClientExecPath)
                      .WithArguments(["list", "-T", "--force-refresh"])
@@ -771,7 +770,7 @@ public partial class LegendaryLibrarySettingsView
             LocalizationManager.Instance.GetString(LOC.CommonMigrationConfirm, commonFluentArgs),
             LocalizationManager.Instance.GetString(LOC.CommonRevertMigrateGames), MessageBoxButtons.YesNo,
             MessageBoxSeverity.Question);
-        if (result == Playnite.MessageBoxResult.No)
+        if (result == MessageBoxResult.No)
         {
             return;
         }

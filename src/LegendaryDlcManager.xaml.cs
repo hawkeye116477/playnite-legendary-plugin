@@ -1,18 +1,14 @@
-﻿using CliWrap;
+﻿using System.Collections.ObjectModel;
+using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using CliWrap;
 using CliWrap.Buffered;
 using CommonPlugin;
 using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
 using Linguini.Shared.Types.Bundle;
 using Playnite;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using MessageBoxResult = Playnite.MessageBoxResult;
 
 namespace LegendaryLibraryNS;
@@ -413,7 +409,7 @@ public partial class LegendaryDlcManager
             DownloadSizeTB.Text = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoadingLabel);
 
             var gameIds = new List<string> { gameId };
-            LegendaryLauncher.ClearSpecificGamesCache(gameIds);
+            LegendaryGames.ClearSpecificGamesCache(gameIds);
 
             await RefreshAll();
         }

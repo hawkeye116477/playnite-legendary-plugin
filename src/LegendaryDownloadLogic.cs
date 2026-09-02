@@ -1,21 +1,20 @@
-﻿using CliWrap;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Windows;
+using CliWrap;
 using CliWrap.EventStream;
 using CommonPlugin;
 using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
+using Microsoft.Win32;
 using Playnite;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
+using Playnite.Commands;
 using UnifiedDownloadManagerApiNS;
 using UnifiedDownloadManagerApiNS.Interfaces;
 using UnifiedDownloadManagerApiNS.Models;
@@ -58,7 +57,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                 "Legendary (Epic Games) library integration", MessageBoxSeverity.Error, options, []);
             if (result == options[0])
             {
-                Playnite.Commands.Commands.OpenUrl(
+                Commands.OpenUrl(
                     "https://github.com/hawkeye116477/playnite-unifiedDownloadManager-plugin/releases");
             }
         }
@@ -215,7 +214,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
         if (!versionInfoContent.Tag_name.IsNullOrEmpty())
         {
             var latestTag = $"{versionInfoContent.Tag_name}/legendary";
-            string[] validLegendarySuffixes = { "x86_64.exe", "x64.exe", ".exe" };
+            string[] validLegendarySuffixes = ["x86_64.exe", "x64.exe", ".exe"];
             var newAsset = validLegendarySuffixes.Select(suffix =>
                                                       versionInfoContent.Assets.FirstOrDefault(a =>
                                                           a.Browser_download_url.Contains(latestTag)
@@ -319,7 +318,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
 
             if (downloadedBytes > 0)
             {
-                request.Headers.Range = new System.Net.Http.Headers.RangeHeaderValue(downloadedBytes, null);
+                request.Headers.Range = new RangeHeaderValue(downloadedBytes, null);
             }
 
             var speedStopwatch = Stopwatch.StartNew();
@@ -436,7 +435,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
         downloadTask.CompletedTime = now.ToUnixTimeSeconds();
     }
 
-    public async Task DownloadOtherThings(UnifiedDownload downloadTask)
+    private async Task DownloadOtherThings(UnifiedDownload downloadTask)
     {
         var gameId = downloadTask.GameId;
         var wantedUnifiedTask = downloadTask;
@@ -511,7 +510,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                 installCommand.Add("--ignore-free-space");
             }
 
-            if (settings != null && settings.ConnectionTimeout != 0)
+            if (settings.ConnectionTimeout != 0)
             {
                 installCommand.AddRange(["--dl-timeout", settings.ConnectionTimeout.ToString()]);
             }
@@ -854,11 +853,11 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
                                         try
                                         {
                                             using var regKey =
-                                                Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(
+                                                Registry.ClassesRoot.OpenSubKey(
                                                     "com.epicgames.launcher", false);
                                             if (regKey == null)
                                             {
-                                                Microsoft.Win32.Registry.CurrentUser.CreateSubKey(
+                                                Registry.CurrentUser.CreateSubKey(
                                                     @"Software\Classes\com.epicgames.launcher");
                                             }
                                         }

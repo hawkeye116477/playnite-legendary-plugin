@@ -1,11 +1,7 @@
-﻿using CommonPlugin;
+﻿using System.IO;
+using CommonPlugin;
 using LegendaryLibraryNS.Models;
-using Playnite.Common;
 using Playnite;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace LegendaryLibraryNS;
 

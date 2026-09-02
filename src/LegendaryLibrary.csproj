@@ -17,6 +17,7 @@
         <EnableDynamicLoading>true</EnableDynamicLoading>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
     <PropertyGroup>
         <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)/..'))=Dev:/playnite-legendary-plugin</PathMap>
@@ -31,23 +32,23 @@
     </PropertyGroup>
     <ItemGroup Label="compileInclude3p">
         <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\Converters\InvertedBoolenConverter.cs" Link="Shared\Playnite\Converters\InvertedBoolenConverter.cs"/>
-        <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\extensions\ProcessExtensions.cs" Link="Shared\Playnite\ProcessExtensions.cs" />
-        <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\extensions\StringExtensions.cs" Link="Shared\Playnite\StringExtensions.cs" />
-        <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\FileSystem.cs" Link="Shared\Playnite\FileSystem.cs" />
-        <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\Paths.cs" Link="Shared\Playnite\Paths.cs" />
-        <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\ProcessMonitor.cs" Link="Shared\Playnite\ProcessMonitor.cs" />
+        <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\extensions\ProcessExtensions.cs" Link="Shared\Playnite\ProcessExtensions.cs"/>
+        <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\extensions\StringExtensions.cs" Link="Shared\Playnite\StringExtensions.cs"/>
+        <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\FileSystem.cs" Link="Shared\Playnite\FileSystem.cs"/>
+        <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\Paths.cs" Link="Shared\Playnite\Paths.cs"/>
+        <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\ProcessMonitor.cs" Link="Shared\Playnite\ProcessMonitor.cs"/>
         <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\Programs.cs">
             <Link>Shared\Playnite\Programs.cs</Link>
         </Compile>
-        <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\ProcessStarter.cs" Link="Shared\Playnite\ProcessStarter.cs" />
-        <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\Playnite\Common\Xaml.cs" Link="Shared\Playnite\Xaml.cs" />
-        <Compile Include="..\third_party\PlayniteExtensions\source\Generic\PlayniteExtensions.Common\GlobalCommands.cs" Link="Shared\Playnite\GlobalCommands.cs" />
-        <Compile Include="..\third_party\playnite-common-plugin\src\CliWrapCommandExtensions.cs" Link="Shared\CliWrapCommandExtensions.cs" />
-        <Compile Include="..\third_party\playnite-common-plugin\src\CommonHelpers.cs" Link="Shared\CommonHelpers.cs" />
-        <Compile Include="..\third_party\playnite-common-plugin\src\Encryption.cs" Link="Shared\Encryption.cs" />
-        <Compile Include="..\third_party\playnite-common-plugin\src\Keyring.cs" Link="Shared\Keyring.cs" />
-        <Compile Include="..\third_party\playnite-common-plugin\src\LocalizationManager.cs" Link="Shared\LocalizationManager.cs" />
-        <Compile Include="..\third_party\playnite-common-plugin\src\LocalizeExtension.cs" Link="Shared\LocalizeExtension.cs" />
+        <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\playnite\common\ProcessStarter.cs" Link="Shared\Playnite\ProcessStarter.cs"/>
+        <Compile Include="..\third_party\PlayniteExtensions\PlayniteRepo\source\Playnite\Common\Xaml.cs" Link="Shared\Playnite\Xaml.cs"/>
+        <Compile Include="..\third_party\PlayniteExtensions\source\Generic\PlayniteExtensions.Common\GlobalCommands.cs" Link="Shared\Playnite\GlobalCommands.cs"/>
+        <Compile Include="..\third_party\playnite-common-plugin\src\CliWrapCommandExtensions.cs" Link="Shared\CliWrapCommandExtensions.cs"/>
+        <Compile Include="..\third_party\playnite-common-plugin\src\CommonHelpers.cs" Link="Shared\CommonHelpers.cs"/>
+        <Compile Include="..\third_party\playnite-common-plugin\src\Encryption.cs" Link="Shared\Encryption.cs"/>
+        <Compile Include="..\third_party\playnite-common-plugin\src\Keyring.cs" Link="Shared\Keyring.cs"/>
+        <Compile Include="..\third_party\playnite-common-plugin\src\LocalizationManager.cs" Link="Shared\LocalizationManager.cs"/>
+        <Compile Include="..\third_party\playnite-common-plugin\src\LocalizeExtension.cs" Link="Shared\LocalizeExtension.cs"/>
         <Page Include="..\third_party\playnite-common-plugin\src\NumericInput.xaml">
             <Link>Shared\NumericInput.xaml</Link>
             <SubType>Designer</SubType>
@@ -56,13 +57,13 @@
         <Compile Include="..\third_party\playnite-common-plugin\src\NumericInput.xaml.cs" Link="Shared\NumericInput.xaml.cs">
             <DependentUpon>NumericInput.xaml</DependentUpon>
         </Compile>
-        <Compile Include="..\third_party\playnite-common-plugin\src\RelativePath.cs" Link="Shared\RelativePath.cs" />
-        <Compile Include="..\third_party\playnite-common-plugin\src\RetryHandler.cs" Link="Shared\RetryHandler.cs" />
-        <Compile Include="..\third_party\playnite-common-plugin\src\Serialization.cs" Link="Shared\Serialization.cs" />
-        <Compile Include="..\third_party\playnite-common-plugin\src\Enums\ClearCacheTime.cs" Link="Shared\Enums\ClearCacheTime.cs" />
-        <Compile Include="..\third_party\playnite-common-plugin\src\Enums\CloudSyncAction.cs" Link="Shared\Enums\CloudSyncAction.cs" />
-        <Compile Include="..\third_party\playnite-common-plugin\src\Enums\DownloadAction.cs" Link="Shared\Enums\DownloadAction.cs" />
-        <Compile Include="..\third_party\playnite-common-plugin\src\Enums\DownloadStatus.cs" Link="Shared\Enums\DownloadStatus.cs" />
+        <Compile Include="..\third_party\playnite-common-plugin\src\RelativePath.cs" Link="Shared\RelativePath.cs"/>
+        <Compile Include="..\third_party\playnite-common-plugin\src\RetryHandler.cs" Link="Shared\RetryHandler.cs"/>
+        <Compile Include="..\third_party\playnite-common-plugin\src\Serialization.cs" Link="Shared\Serialization.cs"/>
+        <Compile Include="..\third_party\playnite-common-plugin\src\Enums\ClearCacheTime.cs" Link="Shared\Enums\ClearCacheTime.cs"/>
+        <Compile Include="..\third_party\playnite-common-plugin\src\Enums\CloudSyncAction.cs" Link="Shared\Enums\CloudSyncAction.cs"/>
+        <Compile Include="..\third_party\playnite-common-plugin\src\Enums\DownloadAction.cs" Link="Shared\Enums\DownloadAction.cs"/>
+        <Compile Include="..\third_party\playnite-common-plugin\src\Enums\DownloadStatus.cs" Link="Shared\Enums\DownloadStatus.cs"/>
         <None Include="..\third_party\playnite-common-plugin\src\Resources\FullScreenStyles.xaml">
             <Link>Shared\Resources\FullScreenStyles.xaml</Link>
             <SubType>Designer</SubType>
@@ -98,7 +99,7 @@
         </None>
     </ItemGroup>
     <ItemGroup>
-        <EmbeddedResource Include="LauncherUpdateSource.json" />
+        <EmbeddedResource Include="LauncherUpdateSource.json"/>
         <None Include="Resources\legendary_icon.ico">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
@@ -123,7 +124,7 @@
         </None>
     </ItemGroup>
     <ItemGroup>
-        <ApplicationDefinition Remove="App.xaml" />
+        <ApplicationDefinition Remove="App.xaml"/>
     </ItemGroup>
     <ItemGroup>
         <Content Include="..\ThirdPartyLicenses.txt">
@@ -132,15 +133,15 @@
         </Content>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="AdysTech.CredentialManager" Version="3.1.0" />
-        <PackageReference Include="ByteSize" Version="2.1.2" />
-        <PackageReference Include="CliWrap" Version="3.10.5" />
-        <PackageReference Include="Linguini.Bundle" Version="0.11.0" />
+        <PackageReference Include="AdysTech.CredentialManager" Version="3.1.0"/>
+        <PackageReference Include="ByteSize" Version="2.1.2"/>
+        <PackageReference Include="CliWrap" Version="3.10.5"/>
+        <PackageReference Include="Linguini.Bundle" Version="0.11.0"/>
         <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.321">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Playnite.SDK" Version="11.0.0-zeta10" />
+        <PackageReference Include="Playnite.SDK" Version="11.0.0-zeta10"/>
     </ItemGroup>
     <ItemGroup>
         <Reference Include="UnifiedDownloadManagerApi">

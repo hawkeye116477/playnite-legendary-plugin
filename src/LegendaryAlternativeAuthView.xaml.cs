@@ -1,9 +1,8 @@
-﻿using CommonPlugin;
+﻿using System.Diagnostics;
+using System.Windows;
+using CommonPlugin;
 using LegendaryLibraryNS.Services;
 using Playnite;
-using System;
-using System.Diagnostics;
-using System.Windows;
 
 namespace LegendaryLibraryNS;
 

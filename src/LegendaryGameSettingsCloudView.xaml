@@ -7,64 +7,64 @@
              xmlns:common="clr-namespace:CommonPlugin"
              xmlns:system="clr-namespace:System"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300" 
+             d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Type=local:LegendaryGameSettingsViewModel }"
              Initialized="LegendaryGameSettingsCloudView_OnInitialized">
-            <StackPanel Margin="10">
-                <CheckBox Name="AutoSyncPlaytimeChk"
-                          Content="{common:Localize Key={x:Static system:LOC.CommonSyncPlaytime}}"
-                          Margin="0,0,0,10" IsChecked="{Binding ChosenGameSettings.AutoSyncPlaytime}" />
-                <StackPanel x:Name="CloudSavesSP">
-                    <CheckBox Name="AutoSyncSavesChk"
-                              Content="{common:Localize Key={x:Static system:LOC.CommonAutoSyncSaves}}"
-                              Margin="0,0,0,10" Click="AutoSyncSavesChk_Click"
-                              IsChecked="{Binding ChosenGameSettings.AutoSyncSaves}" />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonSavePath}}"
-                                   Grid.Column="0" Grid.Row="1"
-                                   Margin="0,0,10,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        <TextBox x:Name="SelectedSavePathTxt" Grid.Row="1" Grid.Column="1" Margin="0,0,0,5"
-                                 VerticalAlignment="Center" HorizontalAlignment="Stretch"
-                                 Text="{Binding ChosenGameSettings.CloudSaveFolder}" />
-                        <Button Name="ChooseSavePathBtn"
-                                Margin="5,0,0,5" Content="&#xec5b;" FontFamily="{DynamicResource IcoFont}"
-                                Grid.Row="1" Grid.Column="2"
-                                ToolTip="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSelectDirectoryTooltip}}"
-                                VerticalAlignment="Center" Click="ChooseSavePathBtn_Click" />
-                        <Button Name="CalculatePathBtn" Margin="8,0,0,5" Grid.Row="1" Grid.Column="3"
-                                VerticalAlignment="Center" HorizontalAlignment="Left"
-                                Content="&#xef85;"
-                                ToolTip="{common:Localize Key={x:Static system:LOC.CommonCalculatePath}}"
-                                FontFamily="{DynamicResource IcoFont}" Click="CalculatePathBtn_Click" />
-                    </Grid>
-                    <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonManualSyncSaves}}"
-                               FontSize="15" Margin="0,10,10,2" VerticalAlignment="Center" />
-                    <Separator Margin="0,0,0,10" />
-                    <StackPanel Orientation="Horizontal">
-                        <ComboBox x:Name="ManualSyncSavesCBo" DisplayMemberPath="Value" SelectedValuePath="Key"
-                                  VerticalAlignment="Center" VerticalContentAlignment="Center"
-                                  HorizontalContentAlignment="Left" Margin="0,0,0,0" HorizontalAlignment="Left" />
-                        <CheckBox x:Name="ForceCloudActionChk" VerticalAlignment="Center"
-                                  VerticalContentAlignment="Center"
-                                  Content="{common:Localize Key={x:Static system:LOC.CommonForceAction}}"
-                                  Margin="15,0,0,0" />
-                        <Button x:Name="SyncSavesBtn"
-                                Content="{common:Localize Key={x:Static system:LOC.CommonSync}}"
-                                HorizontalAlignment="Left" Margin="15,0,0,0" Click="SyncSavesBtn_Click" />
-                    </StackPanel>
-                </StackPanel>
+    <StackPanel Margin="10">
+        <CheckBox Name="AutoSyncPlaytimeChk"
+                  Content="{common:Localize Key={x:Static system:LOC.CommonSyncPlaytime}}"
+                  Margin="0,0,0,10" IsChecked="{Binding ChosenGameSettings.AutoSyncPlaytime}" />
+        <StackPanel x:Name="CloudSavesSP">
+            <CheckBox Name="AutoSyncSavesChk"
+                      Content="{common:Localize Key={x:Static system:LOC.CommonAutoSyncSaves}}"
+                      Margin="0,0,0,10" Click="AutoSyncSavesChk_Click"
+                      IsChecked="{Binding ChosenGameSettings.AutoSyncSaves}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonSavePath}}"
+                           Grid.Column="0" Grid.Row="1"
+                           Margin="0,0,10,5" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                <TextBox x:Name="SelectedSavePathTxt" Grid.Row="1" Grid.Column="1" Margin="0,0,0,5"
+                         VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                         Text="{Binding ChosenGameSettings.CloudSaveFolder}" />
+                <Button Name="ChooseSavePathBtn"
+                        Margin="5,0,0,5" Content="&#xec5b;" FontFamily="{DynamicResource IcoFont}"
+                        Grid.Row="1" Grid.Column="2"
+                        ToolTip="{common:Localize Key={x:Static system:LOC.ThirdPartyPlayniteSelectDirectoryTooltip}}"
+                        VerticalAlignment="Center" Click="ChooseSavePathBtn_Click" />
+                <Button Name="CalculatePathBtn" Margin="8,0,0,5" Grid.Row="1" Grid.Column="3"
+                        VerticalAlignment="Center" HorizontalAlignment="Left"
+                        Content="&#xef85;"
+                        ToolTip="{common:Localize Key={x:Static system:LOC.CommonCalculatePath}}"
+                        FontFamily="{DynamicResource IcoFont}" Click="CalculatePathBtn_Click" />
+            </Grid>
+            <TextBlock Text="{common:Localize Key={x:Static system:LOC.CommonManualSyncSaves}}"
+                       FontSize="15" Margin="0,10,10,2" VerticalAlignment="Center" />
+            <Separator Margin="0,0,0,10" />
+            <StackPanel Orientation="Horizontal">
+                <ComboBox x:Name="ManualSyncSavesCBo" DisplayMemberPath="Value" SelectedValuePath="Key"
+                          VerticalAlignment="Center" VerticalContentAlignment="Center"
+                          HorizontalContentAlignment="Left" Margin="0,0,0,0" HorizontalAlignment="Left" />
+                <CheckBox x:Name="ForceCloudActionChk" VerticalAlignment="Center"
+                          VerticalContentAlignment="Center"
+                          Content="{common:Localize Key={x:Static system:LOC.CommonForceAction}}"
+                          Margin="15,0,0,0" />
+                <Button x:Name="SyncSavesBtn"
+                        Content="{common:Localize Key={x:Static system:LOC.CommonSync}}"
+                        HorizontalAlignment="Left" Margin="15,0,0,0" Click="SyncSavesBtn_Click" />
             </StackPanel>
+        </StackPanel>
+    </StackPanel>
 </UserControl>

@@ -1,7 +1,6 @@
-﻿using CommonPlugin.Enums;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
+using CommonPlugin.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace LegendaryLibraryNS.Models;

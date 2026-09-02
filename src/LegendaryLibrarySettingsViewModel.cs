@@ -1,12 +1,10 @@
-﻿using CommonPlugin;
+﻿using System.IO;
+using System.Windows;
+using CommonPlugin;
 using CommonPlugin.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LegendaryLibraryNS.Enums;
 using Playnite;
-using Playnite.Common;
-using System.IO;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace LegendaryLibraryNS;
 
@@ -70,10 +68,10 @@ public partial class LegendaryLibrarySettings : ObservableObject
     public partial bool DownloadAllDlcs { get; set; } = false;
 
     [ObservableProperty]
-    public partial bool SyncPlaytime { get; set; } = LegendaryLauncher.DefaultPlaytimeSyncEnabled;
+    public partial bool SyncPlaytime { get; set; } = LegendaryGames.DefaultPlaytimeSyncEnabled;
 
     [ObservableProperty]
-    public partial string SyncPlaytimeMachineId { get; set; } = System.Guid.NewGuid().ToString("N");
+    public partial string SyncPlaytimeMachineId { get; set; } = Guid.NewGuid().ToString("N");
 
     [ObservableProperty]
     public partial UpdatePolicy GamesUpdatePolicy { get; set; } = UpdatePolicy.Month;

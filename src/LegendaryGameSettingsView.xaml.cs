@@ -1,9 +1,7 @@
-﻿using CommonPlugin;
+﻿using System.Windows;
+using CommonPlugin;
 using LegendaryLibraryNS.Models;
 using Playnite;
-using System;
-using System.Collections.Generic;
-using System.Windows;
 
 namespace LegendaryLibraryNS;
 

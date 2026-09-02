@@ -1,18 +1,14 @@
-﻿using CliWrap;
+﻿using System.IO;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using CliWrap;
 using CliWrap.Buffered;
 using CliWrap.EventStream;
 using CommonPlugin;
 using LegendaryLibraryNS.Models;
 using Linguini.Shared.Types.Bundle;
-using Playnite.Common;
 using Playnite;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
 using MessageBoxResult = Playnite.MessageBoxResult;
 
 namespace LegendaryLibraryNS;
@@ -42,7 +38,7 @@ public partial class LegendaryEaActivate
             return;
         }
 
-        var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("info");
+        var cacheInfoPath = LegendaryLibrary.GetCachePath("info");
         var cacheInfoFile = Path.Combine(cacheInfoPath, "_allEaGames.json");
         var eaGamesOnly = new List<LegendaryMetadata>();
         var correctJson = false;

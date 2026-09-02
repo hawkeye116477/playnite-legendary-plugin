@@ -1,8 +1,5 @@
 ﻿using CommonPlugin;
 using Playnite;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace LegendaryLibraryNS
 {
@@ -17,7 +14,7 @@ namespace LegendaryLibraryNS
             {
                 DataContext = gameSettingsViewModel
             };
-            var gameCloudSettingsView = new LegendaryGameSettingsCloudView()
+            var gameCloudSettingsView = new LegendaryGameSettingsCloudView
             {
                 DataContext = gameSettingsViewModel
             };

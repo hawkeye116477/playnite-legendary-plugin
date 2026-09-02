@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using CommonPlugin;
@@ -16,12 +14,12 @@ public partial class LegendaryGameSettingsCloudView : UserControl
     private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
     private string? cloudPath;
     private ILogger logger = LogManager.GetLogger();
-    
+
     public LegendaryGameSettingsCloudView()
     {
         InitializeComponent();
     }
-    
+
     private async void CalculatePathBtn_Click(object sender, RoutedEventArgs e)
     {
         if (string.IsNullOrEmpty(cloudPath))

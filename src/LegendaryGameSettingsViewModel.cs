@@ -1,11 +1,9 @@
 using System.IO;
-using System.Linq;
 using CommonPlugin;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
 using Playnite;
-using Playnite.Common;
 
 namespace LegendaryLibraryNS;
 

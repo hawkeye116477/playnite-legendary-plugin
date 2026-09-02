@@ -1,20 +1,16 @@
-﻿using CliWrap;
+﻿using System.IO;
+using System.Net.Http;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Windows;
+using CliWrap;
 using CliWrap.Buffered;
 using CommonPlugin;
 using LegendaryLibraryNS.Models;
 using Linguini.Shared.Types.Bundle;
 using Microsoft.Win32;
-using Playnite.Common;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
 using Playnite;
+using Playnite.Commands;
 
 namespace LegendaryLibraryNS;
 
@@ -187,32 +183,6 @@ public class LegendaryLauncher
         }
     }
 
-    public static string GamesInstallationPath
-    {
-        get
-        {
-            var installPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-                "Games");
-            //var playniteApi = LegendaryLibrary.PlayniteApi;
-            // if (playniteApi.ApplicationInfo.IsPortable)
-            // {
-            //     var playniteDirectoryVariable = ExpandableVariables.PlayniteDirectory.ToString();
-            //     installPath = Path.Combine(playniteDirectoryVariable, "Games");
-            // }
-            var savedSettings = LegendaryLibrary.GetSettings();
-            if (savedSettings != null)
-            {
-                var savedGamesInstallationPath = savedSettings.GamesInstallationPath;
-                if (savedGamesInstallationPath != "")
-                {
-                    installPath = savedGamesInstallationPath;
-                }
-            }
-
-            return installPath;
-        }
-    }
-
     public static bool IsEosOverlayInstalled
     {
         get
@@ -242,9 +212,6 @@ public class LegendaryLauncher
             return enabled;
         }
     }
-
-    public static string Icon => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
-        @"Resources\legendary_icon.ico");
 
     public static void StartClient()
     {
@@ -277,10 +244,7 @@ public class LegendaryLauncher
 
     public static string TokensPath => Path.Combine(ConfigPath, "user.json");
 
-    public static string OldPluginEncryptedTokensPath
-    {
-        get { return Path.Combine(LegendaryLibrary.PlayniteApi.UserDataDir, "tokens_encrypted.json"); }
-    }
+    public static string OldPluginEncryptedTokensPath => Path.Combine(LegendaryLibrary.PlayniteApi.UserDataDir, "tokens_encrypted.json");
 
     public static Dictionary<string, string?> GetDefaultEnvironmentVariables()
     {
@@ -299,7 +263,7 @@ public class LegendaryLauncher
     public static async Task<UpdateInfo> GetUpdateSizes(string gameId)
     {
         var updateInfo = new UpdateInfo();
-        var cacheUpdateInfoPath = LegendaryLibrary.Instance.GetCachePath("updateinfo");
+        var cacheUpdateInfoPath = LegendaryLibrary.GetCachePath("updateinfo");
         var cacheUpdateInfoFile = Path.Combine(cacheUpdateInfoPath, gameId + ".json");
         if (File.Exists(cacheUpdateInfoFile))
         {
@@ -456,7 +420,7 @@ public class LegendaryLauncher
         var manifest = new LegendaryGameInfo.Rootobject();
         var playniteApi = LegendaryLibrary.PlayniteApi;
         var logger = LogManager.GetLogger();
-        var cacheInfoPath = LegendaryLibrary.Instance.GetCachePath("info");
+        var cacheInfoPath = LegendaryLibrary.GetCachePath("info");
         var cacheInfoFile = Path.Combine(cacheInfoPath, gameId + ".json");
         if (!Directory.Exists(cacheInfoPath))
         {
@@ -614,7 +578,7 @@ public class LegendaryLauncher
 
         if (manifest.Manifest is { Install_tags.Count: > 1 })
         {
-            var cacheSdlPath = LegendaryLibrary.Instance.GetCachePath("sdl");
+            var cacheSdlPath = LegendaryLibrary.GetCachePath("sdl");
             if (!Directory.Exists(cacheSdlPath))
             {
                 Directory.CreateDirectory(cacheSdlPath);
@@ -770,7 +734,7 @@ public class LegendaryLauncher
             return newVersionInfoContent;
         }
 
-        var cacheVersionPath = LegendaryLibrary.Instance.GetCachePath("info");
+        var cacheVersionPath = LegendaryLibrary.GetCachePath("info");
         if (!Directory.Exists(cacheVersionPath))
         {
             Directory.CreateDirectory(cacheVersionPath);
@@ -865,63 +829,6 @@ public class LegendaryLauncher
         }
     }
 
-    public static void ClearCache()
-    {
-        var logger = LogManager.GetLogger();
-        var cacheDirs = new List<string>
-        {
-            Path.Combine(LegendaryLibrary.PlayniteApi.UserDataDir, "cache"),
-            Path.Combine(ConfigPath, "metadata")
-        };
-        foreach (var cacheDir in cacheDirs)
-        {
-            try
-            {
-                if (Directory.Exists(cacheDir))
-                {
-                    Directory.Delete(cacheDir, true);
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, $"An error occured during removing {cacheDir} directory");
-            }
-        }
-    }
-
-    public static void ClearSpecificGamesCache(List<string> gameIds)
-    {
-        var logger = LogManager.GetLogger();
-        var cacheDirs = new List<string>
-        {
-            LegendaryLibrary.Instance.GetCachePath("info"),
-            LegendaryLibrary.Instance.GetCachePath("sdl"),
-            LegendaryLibrary.Instance.GetCachePath("updateinfo"),
-            Path.Combine(ConfigPath, "metadata")
-        };
-
-        foreach (var cacheDir in cacheDirs)
-        {
-            if (Directory.Exists(cacheDir))
-            {
-                foreach (var file in Directory.EnumerateFiles(cacheDir, "*", SearchOption.AllDirectories))
-                {
-                    try
-                    {
-                        if (gameIds.Any(gameId => file.Contains(gameId)))
-                        {
-                            File.Delete(file);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.Error(ex, $"An error occured during removing {file} file");
-                    }
-                }
-            }
-        }
-    }
-
     public static async Task ShowNotInstalledError()
     {
         var playniteApi = LegendaryLibrary.PlayniteApi;
@@ -935,35 +842,9 @@ public class LegendaryLauncher
             "Legendary (Epic Games) library integration", MessageBoxSeverity.Error, options, []);
         if (result == options[0])
         {
-            Playnite.Commands.Commands.OpenUrl(
+            Commands.OpenUrl(
                 "https://github.com/hawkeye116477/playnite-legendary-plugin/wiki/Troubleshooting#legendary-launcher-is-not-installed");
         }
-    }
-
-    public static bool DefaultPlaytimeSyncEnabled
-    {
-        get
-        {
-            var playniteApi = LegendaryLibrary.PlayniteApi;
-            var playtimeSyncEnabled = false;
-            // if (playniteApi.ApplicationSettings.PlaytimeImportMode != PlaytimeImportMode.Never)
-            // {
-            //     playtimeSyncEnabled = true;
-            // }
-            return playtimeSyncEnabled;
-        }
-    }
-
-    public static Installed GetInstalledInfo(string gameId)
-    {
-        var installedAppList = GetInstalledAppList();
-        var installedInfo = new Installed();
-        if (installedAppList.ContainsKey(gameId))
-        {
-            installedInfo = installedAppList[gameId];
-        }
-
-        return installedInfo;
     }
 
     public static Dictionary<int, string> UpdateSources
@@ -999,60 +880,9 @@ public class LegendaryLauncher
         }
     }
 
-    public static string GetUpdateSource()
+    private static string GetUpdateSource()
     {
         return UpdateSources[LegendaryLibrary.GetSettings().LauncherUpdateRepo];
-    }
-
-    public static void CompleteGameInstallation(string gameId)
-    {
-        var logger = LogManager.GetLogger();
-        var gameSettings = LegendaryGameSettingsViewModel.LoadGameSettings(gameId);
-        var appList = GetInstalledAppList();
-        if (appList.ContainsKey(gameId))
-        {
-            var installedGameInfo = appList[gameId];
-            if (installedGameInfo.Prereq_info != null)
-            {
-                var prereq = installedGameInfo.Prereq_info;
-                var prereqName = "";
-                if (!prereq.Name.IsNullOrEmpty())
-                {
-                    prereqName = prereq.Name;
-                }
-
-                var prereqPath = "";
-                if (!prereq.Path.IsNullOrEmpty())
-                {
-                    prereqPath = prereq.Path;
-                }
-
-                var prereqArgs = "";
-                if (!prereq.Args.IsNullOrEmpty())
-                {
-                    prereqArgs = prereq.Args;
-                }
-
-                if (prereqPath != "")
-                {
-                    try
-                    {
-                        ProcessStarter.StartProcessWait(
-                            Path.GetFullPath(Path.Combine(installedGameInfo.Install_path, prereqPath)),
-                            prereqArgs,
-                            "");
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.Error($"Failed to launch prerequisites executable. Error: {ex.Message}");
-                    }
-                }
-            }
-
-            gameSettings.InstallPrerequisites = false;
-            var commonHelpers = LegendaryLibrary.Instance.CommonHelpers;
-            commonHelpers.SaveJsonSettingsToFile(gameSettings, "GamesSettings", gameId, true);
-        }
     }
 
     public static async Task CheckForUpdates(bool displayMessages = true)
@@ -1084,7 +914,7 @@ public class LegendaryLauncher
                 if (result == options[0])
                 {
                     var changelogUrl = versionInfoContent.Html_url;
-                    Playnite.Commands.Commands.OpenUrl(changelogUrl);
+                    Commands.OpenUrl(changelogUrl);
                 }
                 else if (result == options[1])
                 {

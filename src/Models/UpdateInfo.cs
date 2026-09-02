@@ -8,5 +8,12 @@ public class UpdateInfo
     public string Install_path { get; set; } = "";
     public double Disk_size { get; set; } = 0;
     public double Download_size { get; set; } = 0;
-    public bool Success { get; set; } = true;
+    public UpdateStatus Status { get; set; } = UpdateStatus.Available;
+}
+
+public enum UpdateStatus
+{
+    Available,
+    NotAvailable,
+    Error,
 }

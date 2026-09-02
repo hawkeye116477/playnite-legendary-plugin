@@ -1,11 +1,9 @@
-using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using CommonPlugin;
 using LegendaryLibraryNS.Models;
 using Playnite;
-using Playnite.Common;
 
 namespace LegendaryLibraryNS;
 

@@ -1,5 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using System.Reflection;
 
 namespace LegendaryLibraryNS;
 
@@ -11,8 +11,8 @@ public static class LegendaryTroubleshootingInformation
     {
         get
         {
-            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            var fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
+            var assembly = Assembly.GetExecutingAssembly();
+            var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             return fvi.ProductVersion;
         }
     }
@@ -21,12 +21,13 @@ public static class LegendaryTroubleshootingInformation
     {
         var launcherVersion = await LegendaryLauncher.GetLauncherVersion();
         if (launcherVersion.IsNullOrWhiteSpace())
-        { 
+        {
             launcherVersion = "Not%20installed";
         }
+
         return launcherVersion;
     }
 
     public static string LauncherBinary => LegendaryLauncher.ClientExecPath;
-    public static string GamesInstallationPath => LegendaryLauncher.GamesInstallationPath;
+    public static string GamesInstallationPath => LegendaryGames.InstallationPath;
 }

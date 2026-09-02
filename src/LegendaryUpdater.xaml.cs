@@ -1,12 +1,9 @@
-﻿using CommonPlugin;
+﻿using System.Windows;
+using System.Windows.Controls;
+using CommonPlugin;
 using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
 using Playnite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace LegendaryLibraryNS;
 
@@ -17,18 +14,11 @@ public partial class LegendaryUpdater : UserControl
 {
     private Dictionary<string, UpdateInfo> updatesList = [];
     private readonly IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
-    private readonly List<Game> checkedGames = [];
     private CommonHelpers commonHelpers = LegendaryLibrary.Instance.CommonHelpers;
 
     public LegendaryUpdater()
     {
         InitializeComponent();
-    }
-
-    public LegendaryUpdater(List<Game> games)
-    {
-        InitializeComponent();
-        checkedGames = games;
     }
 
     private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -49,35 +39,38 @@ public partial class LegendaryUpdater : UserControl
         MaxSharedMemoryNI.Value = settings.MaxSharedMemory.ToString();
         ReorderingChk.IsChecked = settings.EnableReordering;
 
-        var successUpdates = updatesList.Where(i => i.Value.Success).ToDictionary(i => i.Key, i => i.Value);
+        var successUpdates = updatesList.Where(i => i.Value.Status == UpdateStatus.Available).ToDictionary(i => i.Key, i => i.Value);
 
-        if (updatesList.Count > 0 && successUpdates.Count == 0)
+        var checkedGames = updatesList.Where(i => i.Value.Status != UpdateStatus.Available)
+                                      .ToDictionary(i => i.Key, i => i.Value);
+        var failedGames = checkedGames.Any(i => i.Value.Status == UpdateStatus.Error);
+        if (checkedGames.Count > 0 && successUpdates.Count == 0)
         {
-            await playniteApi.Dialogs.ShowErrorMessageAsync(
-                LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdateCheckFailMessage), LegendaryLibrary.LibraryName);
-            Window.GetWindow(this)?.Close();
-            return;
-        }
+            var noUpdatesMessage = LocalizationManager.Instance.GetString(LOC.CommonNoUpdatesAvailable);
+            var noUpdatesSeverity = MessageBoxSeverity.Information;
+            if (failedGames)
+            {
+                noUpdatesMessage = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUpdateCheckFailMessage);
+                noUpdatesSeverity = MessageBoxSeverity.Error;
+            }
 
-        if (checkedGames.Count > 0 && updatesList.Count == 0)
-        {
             var options = new List<MessageBoxResponse>
             {
                 new(LocalizationManager.Instance.GetString(LOC.CommonReload)),
                 new(LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteOkLabel), true, true)
             };
             var result = await playniteApi.Dialogs.ShowMessageAsync(
-                LocalizationManager.Instance.GetString(LOC.CommonNoUpdatesAvailable), LegendaryLibrary.LibraryName,
-                MessageBoxSeverity.Information, options, []);
+                noUpdatesMessage, LegendaryLibrary.LibraryName,
+                noUpdatesSeverity, options, []);
             if (result == options[0])
             {
-                var checkedGamesIds = checkedGames.Select(g => g.LibraryGameId).ToList();
+                var checkedGamesIds = checkedGames.Select(g => g.Key).ToList();
                 var updateCheckProgressOptions =
                     new GlobalProgressOptions(LocalizationManager.Instance.GetString(LOC.CommonCheckingForUpdates), false)
                         { IsIndeterminate = true };
                 await playniteApi.Dialogs.ShowAsyncBlockingProgressAsync(updateCheckProgressOptions, async a =>
                 {
-                    LegendaryLauncher.ClearSpecificGamesCache(checkedGamesIds!);
+                    LegendaryGames.ClearSpecificGamesCache(checkedGamesIds!);
                     var legendaryUpdateController = new LegendaryUpdateController();
                     if (checkedGamesIds.Count > 1)
                     {
@@ -85,11 +78,11 @@ public partial class LegendaryUpdater : UserControl
                     }
                     else
                     {
-                        updatesList = await legendaryUpdateController.CheckGameUpdates(checkedGames[0].Name,
-                            checkedGames[0].LibraryGameId!);
+                        updatesList = await legendaryUpdateController.CheckGameUpdates(checkedGames.First().Value.Title,
+                            checkedGames.First().Key);
                     }
                 });
-                if (updatesList.Count == 0)
+                if (updatesList.All(i => i.Value.Status != UpdateStatus.Available))
                 {
                     await playniteApi.Dialogs.ShowMessageAsync(LocalizationManager.Instance.GetString(LOC.CommonNoUpdatesAvailable),
                         LegendaryLibrary.LibraryName);
@@ -112,7 +105,7 @@ public partial class LegendaryUpdater : UserControl
         DownloadSizeTB.Text = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoadingLabel);
         InstallSizeTB.Text = LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteLoadingLabel);
 
-        var successUpdates = updatesList.Where(i => i.Value.Success).ToDictionary(i => i.Key, i => i.Value);
+        var successUpdates = updatesList.Where(i => i.Value.Status == UpdateStatus.Available).ToDictionary(i => i.Key, i => i.Value);
         UpdatesLB.ItemsSource = successUpdates;
         UpdatesLB.SelectAll();
         if (updatesList.Count > 0)

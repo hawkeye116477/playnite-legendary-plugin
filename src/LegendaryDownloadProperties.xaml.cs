@@ -1,13 +1,10 @@
-﻿using CommonPlugin;
+﻿using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using CommonPlugin;
 using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
 using Playnite;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
 using UnifiedDownloadManagerApiNS.Models;
 
 namespace LegendaryLibraryNS;

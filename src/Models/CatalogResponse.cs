@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-// ReSharper disable UnassignedField.Global
+﻿// ReSharper disable UnassignedField.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace LegendaryLibraryNS.Models;

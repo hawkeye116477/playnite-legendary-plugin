@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LegendaryLibraryNS.Models;
+﻿namespace LegendaryLibraryNS.Models;
 
 public class OauthResponse
 {

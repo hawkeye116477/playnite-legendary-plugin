@@ -1,21 +1,15 @@
-﻿using CliWrap;
-using CliWrap.Buffered;
-using CommonPlugin;
-using LegendaryLibraryNS.Models;
-using Playnite;
-using Playnite.Common;
-using Playnite.WebViews;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
+using CliWrap;
+using CliWrap.Buffered;
+using CommonPlugin;
+using LegendaryLibraryNS.Models;
+using Playnite;
+using Playnite.WebViews;
 
 namespace LegendaryLibraryNS.Services;
 
@@ -356,7 +350,8 @@ public class EpicAccountClient
         var newEncryptedTokensPath = "";
         if (!LegendaryLauncher.GetUserInfo().Account_id.IsNullOrEmpty())
         {
-            newEncryptedTokensPath = Path.Combine(LegendaryLauncher.ConfigPath, $"{LegendaryLauncher.GetUserInfo().Account_id.GetMD5()}.enc");
+            newEncryptedTokensPath =
+                Path.Combine(LegendaryLauncher.ConfigPath, $"{LegendaryLauncher.GetUserInfo().Account_id.GetMD5()}.enc");
         }
 
         try
@@ -433,7 +428,8 @@ public class EpicAccountClient
                 var tokenInfo = Serialization.FromJson<OauthResponse>(content);
                 if (tokenInfo != null)
                 {
-                    LegendaryEncryption.Encrypt(Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.Account_id.GetMD5()}.enc"), content);
+                    LegendaryEncryption.Encrypt(Path.Combine(LegendaryLauncher.ConfigPath, $"{tokenInfo.Account_id.GetMD5()}.enc"),
+                        content);
                 }
             }
             else
@@ -512,8 +508,8 @@ query playerProfileAchievementsByProductId($epicAccountId: String!, $productId: 
         string sandboxId, OauthResponse tokens, CancellationToken cancelToken)
     {
         var achievementsSchemaResponse = new AchievementsSchemaResponse();
-        
-        var cacheAchievementsPath = LegendaryLibrary.Instance.GetCachePath("achievements");
+
+        var cacheAchievementsPath = LegendaryLibrary.GetCachePath("achievements");
         Directory.CreateDirectory(cacheAchievementsPath);
         var cacheFile = Path.Combine(cacheAchievementsPath, $"schema_{sandboxId}.json");
         if (File.Exists(cacheFile))
@@ -523,7 +519,7 @@ query playerProfileAchievementsByProductId($epicAccountId: String!, $productId: 
                 File.Delete(cacheFile);
             }
         }
-        
+
         var correctJson = false;
         if (File.Exists(cacheFile))
         {
@@ -631,7 +627,7 @@ query Achievement($sandboxId: String!, $locale: String!) {
     public async Task<List<ImportableAchievement>> GetAchievements(string gameId, OauthResponse tokens, CancellationToken cancelToken)
     {
         var importableAchievements = new List<ImportableAchievement>();
-        var cacheDir = LegendaryLibrary.Instance.GetCachePath("catalog");
+        var cacheDir = LegendaryLibrary.GetCachePath("catalog");
         var cacheFile = $"{gameId}.json";
         cacheFile = Path.Combine(cacheDir, cacheFile);
         var newSandboxId = "";

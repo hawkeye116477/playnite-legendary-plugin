@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace LegendaryLibraryNS.Models
+﻿namespace LegendaryLibraryNS.Models
 {
     public class AchievementSet
     {
