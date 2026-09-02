@@ -1,5 +1,6 @@
 using CommonPlugin;
 using CommonPlugin.Enums;
+using CommonPlugin.Resources;
 using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
@@ -14,7 +15,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using CommonPlugin.Resources;
 using UnifiedDownloadManagerApiNS;
 using UnifiedDownloadManagerApiNS.Interfaces;
 using UnifiedDownloadManagerApiNS.Models;
@@ -797,6 +797,7 @@ public class LegendaryLibrary : Plugin
         {
             return menuItems;
         }
+
         var legendaryGames = args.Games.Where(i => i.LibraryId == PluginId).ToList();
         if (legendaryGames.Count <= 0)
         {
@@ -896,7 +897,8 @@ public class LegendaryLibrary : Plugin
                             { DownloadAction = DownloadAction.Repair };
                         installData.Add(new DownloadManagerData.Download
                         {
-                            GameId = game.LibraryGameId!, Name = game.Name,
+                            GameId = game.LibraryGameId!,
+                            Name = game.Name,
                             DownloadProperties = installProperties
                         });
                     }
@@ -926,11 +928,20 @@ public class LegendaryLibrary : Plugin
         return menuItems;
     }
 
+    // public override ICollection<MenuItemDescriptor>? GetAppMenuItemDescriptors(GetAppMenuItemDescriptorsArgs args)
+    // {
+    //     return
+    //     [
+    //         new MenuItemDescriptor($"appMenu.{PluginId}.Items", ShortPluginName),
+    //     ];
+    // }
+
     public override ICollection<MenuItemImpl> GetAppMenuItems(GetAppMenuItemsArgs args)
     {
-        var items = new List<MenuItemImpl>
+        var menuItems = new List<MenuItemImpl>();
+        if (args.ItemId == $"appMenu.{PluginId}.Items")
         {
-            new(LocalizationManager.Instance.GetString(LOC.CommonCheckForGamesUpdatesButton),
+            menuItems.Add(new MenuItemImpl(LocalizationManager.Instance.GetString(LOC.CommonCheckForGamesUpdatesButton),
                 async _ =>
                 {
                     if (!LegendaryLauncher.IsInstalled)
@@ -943,8 +954,9 @@ public class LegendaryLibrary : Plugin
                     var legendaryUpdateController = new LegendaryUpdateController();
                     var updateCheckProgressOptions =
                         new GlobalProgressOptions(
-                            LocalizationManager.Instance.GetString(LOC.CommonCheckingForUpdates),
-                            false) { IsIndeterminate = true };
+                                LocalizationManager.Instance.GetString(LOC.CommonCheckingForUpdates),
+                                false)
+                            { IsIndeterminate = true };
                     await PlayniteApi.Dialogs.ShowAsyncBlockingProgressAsync(updateCheckProgressOptions,
                         async _ => { gamesUpdates = await legendaryUpdateController.CheckAllGamesUpdates(); }
                     );
@@ -995,8 +1007,8 @@ public class LegendaryLibrary : Plugin
                     window.ShowDialog();
                 },
                 icon: CommonIcons.UpdateIcon
-            ),
-            new(LocalizationManager.Instance.GetString(LOC.CommonFinishInstallation),
+            ));
+            menuItems.Add(new MenuItemImpl(LocalizationManager.Instance.GetString(LOC.CommonFinishInstallation),
                 async _ =>
                 {
                     var installedAppList = LegendaryLauncher.GetInstalledAppList();
@@ -1038,9 +1050,9 @@ public class LegendaryLibrary : Plugin
                         await PlayniteApi.Dialogs.ShowMessageAsync(
                             LocalizationManager.Instance.GetString(LOC.CommonNoFinishNeeded));
                     }
-                }, icon: CommonIcons.FinishInstallationIcon)
-        };
-        return items;
+                }, icon: CommonIcons.FinishInstallationIcon));
+        }
+        return menuItems;
     }
 
     public override async Task OpenClientAsync(OpenClientArgs args)
