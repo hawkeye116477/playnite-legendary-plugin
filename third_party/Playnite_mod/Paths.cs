@@ -1,14 +1,12 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using Windows.Win32.Storage.FileSystem;
 using PInvokeWin32 = Windows.Win32.PInvoke;
 
-namespace Playnite.Common
+namespace PlayniteMod
 {
     public partial class Paths
     {
@@ -138,8 +136,7 @@ namespace Playnite.Common
                 FILE_SHARE_MODE.FILE_SHARE_READ | FILE_SHARE_MODE.FILE_SHARE_WRITE | FILE_SHARE_MODE.FILE_SHARE_DELETE,
                 null,
                 FILE_CREATION_DISPOSITION.OPEN_EXISTING,
-                FILE_FLAGS_AND_ATTRIBUTES.FILE_FLAG_BACKUP_SEMANTICS,
-                null);
+                FILE_FLAGS_AND_ATTRIBUTES.FILE_FLAG_BACKUP_SEMANTICS);
 
             if (file.IsInvalid)
             {
@@ -158,6 +155,7 @@ namespace Playnite.Common
             {
                 return targetPath.Replace(LongPathUncPrefix, @"\\", StringComparison.Ordinal);
             }
+
             return targetPath.Replace(LongPathPrefix, string.Empty, StringComparison.Ordinal);
         }
     }

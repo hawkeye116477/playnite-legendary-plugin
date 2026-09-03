@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Markup;
+﻿using System.Windows.Markup;
 using Linguini.Shared.Types.Bundle;
 
 namespace CommonPlugin
@@ -10,7 +8,9 @@ namespace CommonPlugin
         public string? Key { get; set; }
         public string? Args { get; set; }
 
-        public LocalizeExtension() { }
+        public LocalizeExtension()
+        {
+        }
 
         public LocalizeExtension(string key)
         {
@@ -22,7 +22,7 @@ namespace CommonPlugin
             Key = key;
             Args = args;
         }
-        
+
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (string.IsNullOrEmpty(Key))

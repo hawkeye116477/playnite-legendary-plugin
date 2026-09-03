@@ -1,21 +1,19 @@
-﻿using Linguini.Bundle;
-using Linguini.Bundle.Builder;
-using Linguini.Shared.Types.Bundle;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Windows;
+using Linguini.Bundle;
+using Linguini.Bundle.Builder;
+using Linguini.Shared.Types.Bundle;
 using Playnite;
 
 namespace CommonPlugin
 {
     public class LocalizationManager
     {
-        private readonly ILogger logger = LogManager.GetLogger();
+        private readonly ILogger logger = LogManager.GetLogger<LocalizationManager>();
         public static LocalizationManager Instance { get; } = new LocalizationManager();
 
         private FluentBundle bundle = null!;
@@ -24,7 +22,7 @@ namespace CommonPlugin
 
         private LocalizationManager()
         {
-            if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
+            if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
                 SetLanguage(FallbackLanguage);
             }
@@ -41,6 +39,7 @@ namespace CommonPlugin
             {
                 builder.AddResourceOverriding(ReadFtl(language));
             }
+
             return builder;
         }
 
@@ -50,7 +49,7 @@ namespace CommonPlugin
             List<string> localizationSources;
             string? baseDir;
 
-            if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
+            if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
                 baseDir = Environment.CurrentDirectory;
                 var configPath = Path.Combine(baseDir, "LocalizationPathsForDesignMode.txt");
@@ -62,7 +61,6 @@ namespace CommonPlugin
                 {
                     localizationSources = ["Localization"];
                 }
-                
             }
             else
             {
@@ -94,6 +92,7 @@ namespace CommonPlugin
                     }
                 }
             }
+
             return combinedContent.ToString();
         }
 
@@ -118,6 +117,7 @@ namespace CommonPlugin
             {
                 finalArgs[arg.Key] = arg.Value;
             }
+
             if (args != null)
             {
                 foreach (var arg in args)
@@ -125,10 +125,12 @@ namespace CommonPlugin
                     finalArgs[arg.Key] = arg.Value;
                 }
             }
+
             if (!finalArgs.ContainsKey("count"))
             {
                 finalArgs["count"] = (FluentNumber)1;
             }
+
             bundle.TryGetAttrMessage(key, finalArgs, out var errors, out var message);
             return message ?? $"[[{key}]]";
         }

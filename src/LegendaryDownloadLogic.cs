@@ -25,7 +25,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
 {
     private static readonly RetryHandler RetryHandler = new(new HttpClientHandler());
     private static readonly HttpClient Client = new(RetryHandler);
-    private static readonly ILogger Logger = LogManager.GetLogger();
+    private static readonly ILogger Logger = LogManager.GetLogger<LegendaryDownloadLogic>();
     private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
 
     public static async Task WaitUntilLegendaryCloses()

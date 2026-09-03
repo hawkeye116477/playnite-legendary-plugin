@@ -29,29 +29,19 @@ for child in legendary_csproj.getroot():
                 include_tag = compile_items.get('Include')
                 if include_tag is not None:
                     needed_file = include_tag.replace("..\\third_party\\", "")
+                    needed_file = needed_file.replace("Playnite_mod", "playnite-common-plugin/third_party/Playnite_mod")
                     needed_file = pn(pj(main_path, "..", needed_file))
                     dst = os.path.relpath(os.path.dirname(needed_file), pj(main_path, ".."))
                     dst = pj(third_party_path, dst)
+                    if "Playnite_mod" in dst:
+                        dst = dst.replace(f"third_party{os.sep}Playnite_mod", "")
+                        dst = dst.replace("playnite-common-plugin", "Playnite_mod")
                     if not os.path.exists(dst):
                         os.makedirs(dst)
                     shutil.copy(needed_file, pj(dst, os.path.basename(needed_file)))
 
-shutil.copy(pj(main_path, "..", "PlayniteExtensions", "LICENSE.md"), pj(third_party_path, "PlayniteExtensions", "LICENSE.md"))
-shutil.copy(pj(main_path, "..", "PlayniteExtensions", "PlayniteRepo", "LICENSE.md"), pj(third_party_path, "PlayniteExtensions", "PlayniteRepo", "LICENSE.md"))
-
-with open(pj(third_party_path, "PlayniteExtensions", "SOURCE_INFO.txt"), "w", encoding="utf-8") as source_info:
-    git_repo = git.Repo(pj(main_path, "..", "PlayniteExtensions"), search_parent_directories=True)
-    source = git_repo.remotes.origin.url
-    source_info.write(f"Source: {source}\n")
-    commit = git_repo.head.object.hexsha
-    source_info.write(f"Commit: {commit}\n")
-
-with open(pj(third_party_path, "PlayniteExtensions", "PlayniteRepo", "SOURCE_INFO.txt"), "w", encoding="utf-8") as source_info:
-    git_repo = git.Repo(pj(main_path, "..", "PlayniteExtensions", "PlayniteRepo"), search_parent_directories=True)
-    source = git_repo.remotes.origin.url
-    source_info.write(f"Source: {source}\n")
-    commit = git_repo.head.object.hexsha
-    source_info.write(f"Commit: {commit}\n")
+shutil.copy(pj(main_path, "..", "playnite-common-plugin", "third_party", "Playnite_mod", "LICENSE.md"), pj(third_party_path, "Playnite_mod", "LICENSE.md"))
+shutil.copy(pj(main_path, "..", "playnite-common-plugin", "third_party", "Playnite_mod", "SOURCE_INFO.txt"), pj(third_party_path, "Playnite_mod", "SOURCE_INFO.txt"))
 
 with open(pj(third_party_path, "playnite-common-plugin", "SOURCE_INFO.txt"), "w", encoding="utf-8") as source_info:
     git_repo = git.Repo(pj(main_path, "..", "playnite-common-plugin"), search_parent_directories=True)

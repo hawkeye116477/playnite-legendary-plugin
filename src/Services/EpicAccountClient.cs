@@ -24,7 +24,7 @@ public class ApiRedirectResponse
 
 public class EpicAccountClient
 {
-    private ILogger logger = LogManager.GetLogger();
+    private ILogger logger = LogManager.GetLogger<EpicAccountClient>();
     private IPlayniteApi api;
     private string TokensPath { get; set; }
     private readonly string loginUrl = "https://www.epicgames.com/id/login?responseType=code";

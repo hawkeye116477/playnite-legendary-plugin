@@ -9,6 +9,7 @@ namespace LegendaryLibraryNS;
 
 public class LegendaryEncryption
 {
+    private static readonly ILogger Logger = LogManager.GetLogger<LegendaryEncryption>();
     public static void Encrypt(string filePath, string content)
     {
         var tokenInfo = Serialization.FromJson<OauthResponse>(content);
@@ -93,8 +94,7 @@ public class LegendaryEncryption
         }
         catch (Exception ex)
         {
-            var logger = LogManager.GetLogger();
-            logger.Error(ex, "Failed to decrypt tokens.");
+            Logger.Error(ex, "Failed to decrypt tokens.");
             FileSystem.DeleteFileSafe(filePath);
             return null;
         }

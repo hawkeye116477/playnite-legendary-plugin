@@ -18,7 +18,7 @@ namespace LegendaryLibraryNS;
 
 public class LegendaryLibrary : Plugin
 {
-    private static readonly ILogger Logger = LogManager.GetLogger();
+    private static readonly ILogger Logger = LogManager.GetLogger<LegendaryLibrary>();
     public static LegendaryLibrary Instance { get; private set; } = null!;
     public CommonHelpers CommonHelpers { get; set; } = null!;
     public LegendaryDownloadLogic UnifiedDownloadLogic { get; set; } = null!;

@@ -52,7 +52,7 @@ public class LegendaryInstallController(Game game) : InstallController("legendar
 public class LegendaryUninstallController(Game game) : UninstallController("legendary_uninstall",
     "Uninstall using Legendary client", game.LibraryGameId!)
 {
-    private static readonly ILogger Logger = LogManager.GetLogger();
+    private static readonly ILogger Logger = LogManager.GetLogger<LegendaryUninstallController>();
 
     public override async Task UninstallAsync(UninstallActionArgs args)
     {

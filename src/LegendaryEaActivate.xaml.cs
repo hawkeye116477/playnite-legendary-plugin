@@ -18,7 +18,7 @@ namespace LegendaryLibraryNS;
 /// </summary>
 public partial class LegendaryEaActivate
 {
-    private ILogger logger = LogManager.GetLogger();
+    private ILogger logger = LogManager.GetLogger<LegendaryEaActivate>();
     private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
     private readonly CommonHelpers commonHelpers = LegendaryLibrary.Instance.CommonHelpers;
 

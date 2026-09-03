@@ -16,7 +16,7 @@ public class LegendaryPlayController(Game game) : PlayController(game.LibraryGam
         new Dictionary<string, IFluentType> { ["var0"] = (FluentString)"Legendary" }))
 {
     private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
-    private static ILogger logger = LogManager.GetLogger();
+    private static ILogger logger = LogManager.GetLogger<LegendaryPlayController>();
     private CancellationTokenSource? watcherToken;
     private CancellationTokenSource? ubisoftWatcherToken;
 

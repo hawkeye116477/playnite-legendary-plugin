@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
-using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -33,22 +32,22 @@ namespace System
 
         public static string GetMD5(this string s)
         {
-            return Convert.ToHexStringLower(GetMD5Bytes(s));
+            return Convert.ToHexStringLower(s.GetMD5Bytes());
         }
 
         public static byte[] GetMD5Bytes(this string s)
         {
-            return Security.Cryptography.MD5.HashData(Encoding.UTF8.GetBytes(s));
+            return MD5.HashData(Encoding.UTF8.GetBytes(s));
         }
 
         public static string GetSHA256(this string input)
         {
-            return Convert.ToHexStringLower(GetSHA256Bytes(input));
+            return Convert.ToHexStringLower(input.GetSHA256Bytes());
         }
 
         public static byte[] GetSHA256Bytes(this string input)
         {
-            return Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(input));
+            return SHA256.HashData(Encoding.UTF8.GetBytes(input));
         }
 
         public static string RemoveMarks(this string str, string remplacement = "")
@@ -91,15 +90,13 @@ namespace System
                     {
                         return false;
                     }
-                    else
+
+                    acronymIndex++;
+                    // If the acronym index and acronym start length is the same
+                    // it means all the characters have been matched
+                    if (acronymIndex == acronymStart.Length)
                     {
-                        acronymIndex++;
-                        // If the acronym index and acronym start length is the same
-                        // it means all the characters have been matched
-                        if (acronymIndex == acronymStart.Length)
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
             }
@@ -190,10 +187,8 @@ namespace System
             {
                 return baseUri.TrimEnd('&') + $"&{parameter}={value}";
             }
-            else
-            {
-                return baseUri.TrimEnd('&') + $"?{parameter}={value}";
-            }
+
+            return baseUri.TrimEnd('&') + $"?{parameter}={value}";
         }
 
         public static int GetLineCount(this string? str)
@@ -202,10 +197,8 @@ namespace System
             {
                 return 0;
             }
-            else
-            {
-                return str.Count('\n') + 1;
-            }
+
+            return str.Count('\n') + 1;
         }
 
         public static string EndWithDirSeparator(this string source)
@@ -269,12 +262,12 @@ namespace System
 
         public static int GetLevenshteinDistanceIgnoreCase(this string source, string value)
         {
-            return GetLevenshteinDistance(source, value, charCaseInsensitiveComparer);
+            return source.GetLevenshteinDistance(value, charCaseInsensitiveComparer);
         }
 
         public static int GetLevenshteinDistance(this string source, string value)
         {
-            return GetLevenshteinDistance(source, value, EqualityComparer<char>.Default);
+            return source.GetLevenshteinDistance(value, EqualityComparer<char>.Default);
         }
 
         //From https://github.com/DanHarltey/Fastenshtein
@@ -339,13 +332,13 @@ namespace System
         public static double GetJaroWinklerSimilarityIgnoreCase(
             this string str, string str2, double winklerWeightThreshold = defaultWinklerWeightThreshold)
         {
-            return GetJaroWinklerSimilarity(str, str2, charCaseInsensitiveComparer, winklerWeightThreshold);
+            return str.GetJaroWinklerSimilarity(str2, charCaseInsensitiveComparer, winklerWeightThreshold);
         }
 
         public static double GetJaroWinklerSimilarity(
             this string str, string str2, double winklerWeightThreshold = defaultWinklerWeightThreshold)
         {
-            return GetJaroWinklerSimilarity(str, str2, EqualityComparer<char>.Default, winklerWeightThreshold);
+            return str.GetJaroWinklerSimilarity(str2, EqualityComparer<char>.Default, winklerWeightThreshold);
         }
 
         /// <summary>
@@ -472,6 +465,16 @@ namespace System
                 result = string.Empty;
                 return false;
             }
+        }
+
+        public static string TrimEndString(this string source, string value, StringComparison comp = StringComparison.Ordinal)
+        {
+            if (!source.EndsWith(value, comp))
+            {
+                return source;
+            }
+
+            return source.Remove(source.LastIndexOf(value, comp));
         }
     }
 }

@@ -16,6 +16,7 @@ namespace LegendaryLibraryNS;
 
 public class LegendaryLauncher
 {
+    private static readonly ILogger Logger = LogManager.GetLogger<LegendaryLauncher>();
     private static readonly RetryHandler RetryHandler = new(new HttpClientHandler());
     private static readonly HttpClient HttpClient = new(RetryHandler);
 
@@ -355,8 +356,7 @@ public class LegendaryLauncher
                 }
                 else
                 {
-                    var logger = LogManager.GetLogger();
-                    logger.Error("[Legendary]" + errorMessage);
+                    Logger.Error("[Legendary]" + errorMessage);
                 }
             }
         }
@@ -419,7 +419,6 @@ public class LegendaryLauncher
         var gameId = installData.App_name;
         var manifest = new LegendaryGameInfo.Rootobject();
         var playniteApi = LegendaryLibrary.PlayniteApi;
-        var logger = LogManager.GetLogger();
         var cacheInfoPath = LegendaryLibrary.GetCachePath("info");
         var cacheInfoFile = Path.Combine(cacheInfoPath, gameId + ".json");
         if (!Directory.Exists(cacheInfoPath))
@@ -485,7 +484,7 @@ public class LegendaryLauncher
             var errorMessage = result.StandardError;
             if (result.ExitCode != 0)
             {
-                logger.Error("[Legendary]" + result.StandardError);
+                Logger.Error("[Legendary]" + result.StandardError);
                 if (!silently)
                 {
                     if (errorMessage.Contains("Log in failed")
@@ -563,7 +562,6 @@ public class LegendaryLauncher
     public static async Task<Dictionary<string, LegendarySdlInfo>> GetExtraContentInfo(
         DownloadManagerData.Download installData, bool includeRequiredSdl = false)
     {
-        var logger = LogManager.GetLogger();
         var gameData = new LegendaryGameInfo.Game
         {
             Title = installData.Name,
@@ -611,7 +609,7 @@ public class LegendaryLauncher
                 }
                 catch (Exception ex)
                 {
-                    logger.Error(ex, $"An error occured during downloading sdl data for {installData.GameId}");
+                    Logger.Error(ex, $"An error occured during downloading sdl data for {installData.GameId}");
                 }
             }
             else
@@ -636,7 +634,7 @@ public class LegendaryLauncher
             }
             else
             {
-                logger.Error($"An error occurred while reading SDL data for {installData.Name}.");
+                Logger.Error($"An error occurred while reading SDL data for {installData.Name}.");
             }
 
             if (correctSdlJson)
@@ -727,7 +725,6 @@ public class LegendaryLauncher
     public static async Task<LauncherVersion> GetVersionInfoContent()
     {
         var newVersionInfoContent = new LauncherVersion();
-        var logger = LogManager.GetLogger();
         if (!IsInstalled)
         {
             await ShowNotInstalledError();
@@ -793,7 +790,7 @@ public class LegendaryLauncher
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "An error occurred while downloading Legendary's version info.");
+                Logger.Error(ex, "An error occurred while downloading Legendary's version info.");
             }
         }
 
@@ -804,7 +801,6 @@ public class LegendaryLauncher
     {
         get
         {
-            var logger = LogManager.GetLogger();
             var launcherPath = "";
             try
             {
@@ -822,7 +818,7 @@ public class LegendaryLauncher
             }
             catch (Exception ex)
             {
-                logger.Error($"Failed to get launcher path. Error: {ex.Message}");
+                Logger.Error($"Failed to get launcher path. Error: {ex.Message}");
             }
 
             return !string.IsNullOrEmpty(launcherPath) && File.Exists(launcherPath);
@@ -863,8 +859,7 @@ public class LegendaryLauncher
             }
             catch (Exception ex)
             {
-                var logger = LogManager.GetLogger();
-                logger.Error(ex, "An error occured during loading launcher update sources");
+                Logger.Error(ex, "An error occured during loading launcher update sources");
             }
 
             if (!result.IsNullOrWhiteSpace() && Serialization.TryFromJson(result, out List<string>? savedRepoList))
@@ -977,8 +972,7 @@ public class LegendaryLauncher
             }
             else
             {
-                var logger = LogManager.GetLogger();
-                logger.Error("An error occured during checking for Legendary launcher update");
+                Logger.Error("An error occured during checking for Legendary launcher update");
             }
         }
     }
@@ -1033,8 +1027,7 @@ public class LegendaryLauncher
                                   .ExecuteBufferedAsync();
             if (!result.StandardError.Contains("User data deleted"))
             {
-                var logger = LogManager.GetLogger();
-                logger.Error($"[Legendary] Failed to sign out. Error: {result.StandardError}");
+                Logger.Error($"[Legendary] Failed to sign out. Error: {result.StandardError}");
             }
         }
     }

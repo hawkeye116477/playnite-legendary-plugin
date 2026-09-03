@@ -24,7 +24,7 @@ namespace LegendaryLibraryNS;
 /// </summary>
 public partial class LegendaryLibrarySettingsView
 {
-    private ILogger logger = LogManager.GetLogger();
+    private ILogger logger = LogManager.GetLogger<LegendaryLibrarySettingsView>();
     private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
 
     public LegendaryLibrarySettingsView()

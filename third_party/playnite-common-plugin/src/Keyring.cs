@@ -16,7 +16,7 @@ public class Keyring
         var storedCredential = CredentialManager.GetCredentials(servicename + "/" + username);
         return storedCredential?.Password;
     }
-    
+
     public static void DeletePassword(string servicename, string username)
     {
         CredentialManager.RemoveCredentials(servicename + "/" + username);

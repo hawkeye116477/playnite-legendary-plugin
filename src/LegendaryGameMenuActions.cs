@@ -13,7 +13,7 @@ namespace LegendaryLibraryNS;
 
 public static class LegendaryGameMenuActions
 {
-    private static readonly ILogger Logger = LogManager.GetLogger();
+    private static readonly ILogger Logger = LogManager.GetLogger(typeof(LegendaryGameMenuActions));
     private static IPlayniteApi PlayniteApi { get; set; } = LegendaryLibrary.PlayniteApi;
 
     public static async Task OpenCheckForGamesUpdatesWindow(Game game)

@@ -1,15 +1,13 @@
 ﻿using Playnite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace CliWrap
 {
     internal static class CliWrapCommandExtensions
     {
+        private static readonly ILogger Logger = LogManager.GetLogger(typeof(CliWrapCommandExtensions));
+
         internal static Command AddCommandToLog(this Command command)
         {
-            var logger = LogManager.GetLogger();
             var allEnvironmentVariables = "";
             var sensitiveValues = new HashSet<string> { "secret", "password", "token", "user" };
 
@@ -39,9 +37,10 @@ namespace CliWrap
                     tokens[i + 1] = "***";
                 }
             }
+
             var safeArguments = string.Join(" ", tokens);
 
-            logger.Debug($"Executing command: {allEnvironmentVariables}{command.TargetFilePath} {safeArguments}");
+            Logger.Debug($"Executing command: {allEnvironmentVariables}{command.TargetFilePath} {safeArguments}");
             return command;
         }
     }

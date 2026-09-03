@@ -1,12 +1,11 @@
-﻿using Microsoft.Win32;
-using System.IO;
+﻿using System.IO;
+using System.Security;
 using System.Text.RegularExpressions;
 using ByteAether.Ulid;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Win32;
+using Playnite;
 
-namespace Playnite;
+namespace PlayniteMod;
 
 public class Program
 {
@@ -48,7 +47,7 @@ public class UninstallProgram
     }
 }
 
-public static partial class Programs
+public static class Programs
 {
     private static readonly string[] scanFileExclusionMasks =
     [
@@ -85,7 +84,7 @@ public static partial class Programs
         @"\windows\",
     ];
 
-    private static readonly ILogger logger = LogManager.GetLogger();
+    private static readonly ILogger Logger = LogManager.GetLogger(typeof(Programs));
 
     public static readonly string[] ImportableFileExtensions = [".exe", ".bat", ".lnk", ".url"];
     public static readonly string[] ImportableFileExtensionsPattern = ["*.exe", "*.bat", "*.lnk", "*.url"];
@@ -114,6 +113,7 @@ public static partial class Programs
     private static List<UninstallProgram> GetUninstallProgsFromView(RegistryView view)
     {
         var rootString = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\";
+
         void SearchRoot(RegistryHive hive, List<UninstallProgram> programs)
         {
             using var root = RegistryKey.OpenBaseKey(hive, view);
@@ -133,7 +133,7 @@ public static partial class Programs
                         continue;
                     }
 
-                    var program = new UninstallProgram()
+                    var program = new UninstallProgram
                     {
                         DisplayIcon = prog.GetValue("DisplayIcon")?.ToString(),
                         DisplayVersion = prog.GetValue("DisplayVersion")?.ToString(),
@@ -148,9 +148,9 @@ public static partial class Programs
 
                     programs.Add(program);
                 }
-                catch (System.Security.SecurityException e)
+                catch (SecurityException e)
                 {
-                    logger.Warn(e, $"Failed to read registry key {rootString + key}");
+                    Logger.Warn(e, $"Failed to read registry key {rootString + key}");
                 }
             }
         }
@@ -203,9 +203,9 @@ public static partial class Programs
             var action = new FileGameAction
             {
                 Path = program.Path.Replace(
-                        game.InstallDirectory?.EndWithDirSeparator() ?? "",
-                        ExpandableVariables.InstallationDirectory.EndWithDirSeparator(),
-                        StringComparison.OrdinalIgnoreCase),
+                    game.InstallDirectory?.EndWithDirSeparator() ?? "",
+                    ExpandableVariables.InstallationDirectory.EndWithDirSeparator(),
+                    StringComparison.OrdinalIgnoreCase),
                 WorkingDir = ExpandableVariables.InstallationDirectory,
                 Arguments = program.Arguments,
                 IsPlayAction = true,

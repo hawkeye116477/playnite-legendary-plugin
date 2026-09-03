@@ -1,11 +1,11 @@
-﻿using System;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
+using Playnite;
 
-namespace Playnite.Commands
+namespace PlayniteMod.Commands
 {
     public static class Commands
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
+        private static readonly ILogger Logger = LogManager.GetLogger(typeof(Commands));
 
         public static RelayCommand<object> OpenUrlCommand { get; } = new RelayCommand<object>(OpenUrl);
 
@@ -36,7 +36,7 @@ namespace Playnite.Commands
             }
             catch (Exception e)
             {
-                logger.Error(e, "Failed to open url.");
+                Logger.Error(e, "Failed to open url.");
             }
         }
     }

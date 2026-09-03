@@ -13,7 +13,7 @@ public partial class LegendaryGameSettingsCloudView : UserControl
     private Game Game => Vm.Game;
     private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
     private string? cloudPath;
-    private ILogger logger = LogManager.GetLogger();
+    private ILogger logger = LogManager.GetLogger<LegendaryGameSettingsCloudView>();
 
     public LegendaryGameSettingsCloudView()
     {

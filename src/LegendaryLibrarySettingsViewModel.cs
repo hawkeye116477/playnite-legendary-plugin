@@ -98,7 +98,7 @@ public partial class LegendaryLibrarySettings : ObservableObject
 [INotifyPropertyChanged]
 public partial class LegendaryLibrarySettingsViewModel(LegendaryLibrary plugin) : PluginSettingsHandler
 {
-    private static readonly ILogger Logger = LogManager.GetLogger();
+    private static readonly ILogger Logger = LogManager.GetLogger<LegendaryLibrarySettingsViewModel>();
 
     [ObservableProperty]
     public partial LegendaryLibrarySettings? Settings { get; set; } = null;

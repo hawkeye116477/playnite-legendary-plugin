@@ -22,7 +22,7 @@ public partial class LegendaryDlcManager
     private Game game = null!;
     private string gameId = null!;
     private static IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
-    private ILogger logger = LogManager.GetLogger();
+    private ILogger logger = LogManager.GetLogger<LegendaryDlcManager>();
     private Window DlcManagerWindow => Window.GetWindow(this)!;
     private ObservableCollection<KeyValuePair<string, LegendaryGameInfo.Rootobject>> installedDlCs = [];
     private ObservableCollection<KeyValuePair<string, LegendaryGameInfo.Rootobject>> notInstalledDlCs = [];

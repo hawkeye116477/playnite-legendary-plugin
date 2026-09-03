@@ -12,7 +12,7 @@ namespace LegendaryLibraryNS;
 public partial class LegendaryAlternativeAuthView
 {
     private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
-    private ILogger logger = LogManager.GetLogger();
+    private static readonly ILogger Logger = LogManager.GetLogger<LegendaryAlternativeAuthView>();
     private Window AlternativeAuthWindow => Window.GetWindow(this)!;
 
     public LegendaryAlternativeAuthView()
@@ -52,7 +52,7 @@ public partial class LegendaryAlternativeAuthView
             {
                 await playniteApi.Dialogs.ShowErrorMessageAsync(
                     LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedInError), "");
-                logger.Error(ex, "Failed to authenticate user.");
+                Logger.Error(ex, "Failed to authenticate user.");
                 AlternativeAuthWindow.DialogResult = false;
             }
 

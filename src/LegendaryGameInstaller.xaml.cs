@@ -18,7 +18,7 @@ namespace LegendaryLibraryNS;
 /// </summary>
 public partial class LegendaryGameInstaller : UserControl
 {
-    private ILogger logger = LogManager.GetLogger();
+    private ILogger logger = LogManager.GetLogger<LegendaryGameInstaller>();
     private readonly IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
     public double DownloadSizeNumber;
     public double InstallSizeNumber;

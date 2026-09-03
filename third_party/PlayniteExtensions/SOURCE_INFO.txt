@@ -1,2 +1,0 @@
-Source: https://github.com/JosefNemec/PlayniteExtensions.git, https://codeberg.org/CrowIsTaken/PlayniteExtensions
-Modified by hawkeye116477

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using Windows.Wdk.System.Threading;
 using Windows.Win32.System.Threading;
@@ -49,7 +48,8 @@ namespace System.Diagnostics
                 try
                 {
                     var info = default(PROCESS_BASIC_INFORMATION);
-                    int status = PInvokeWdk.NtQueryInformationProcess(handle, PROCESSINFOCLASS.ProcessBasicInformation, &info, (uint)Marshal.SizeOf(info), null);
+                    int status = PInvokeWdk.NtQueryInformationProcess(handle, PROCESSINFOCLASS.ProcessBasicInformation, &info,
+                        (uint)Marshal.SizeOf(info), null);
                     if (status != 0)
                     {
                         return false;
@@ -67,7 +67,8 @@ namespace System.Diagnostics
 
         public static bool IsRunning(string processPattern)
         {
-            return Process.GetProcesses().FirstOrDefault(a => Regex.IsMatch(a.ProcessName, processPattern, RegexOptions.IgnoreCase)) != null;
+            return Process.GetProcesses().FirstOrDefault(a => Regex.IsMatch(a.ProcessName, processPattern, RegexOptions.IgnoreCase)) !=
+                   null;
         }
     }
 }

@@ -20,7 +20,7 @@ public class LegendaryCloud
 
     private static readonly RetryHandler RetryHandler = new(new HttpClientHandler());
     private static readonly HttpClient HttpClient = new(RetryHandler);
-    private ILogger logger = LogManager.GetLogger();
+    private static readonly ILogger Logger = LogManager.GetLogger<LegendaryCloud>();
 
     private static string GetMachineGuid()
     {
@@ -154,7 +154,6 @@ public class LegendaryCloud
             {
                 if (Directory.Exists(cloudSaveFolder))
                 {
-                    var logger = LogManager.GetLogger();
                     var globalProgressOptions = new GlobalProgressOptions(
                         LocalizationManager.Instance.GetString(LOC.CommonSyncing,
                             new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }), false);
@@ -206,16 +205,16 @@ public class LegendaryCloud
                                             loginErrorDisplayed = true;
                                         }
 
-                                        logger.Error($"[Legendary] {errorMessage}");
+                                        Logger.Error($"[Legendary] {errorMessage}");
                                         errorDisplayed = true;
                                     }
                                     else if (errorMessage.Contains("WARNING"))
                                     {
-                                        logger.Warn($"[Legendary] {errorMessage}");
+                                        Logger.Warn($"[Legendary] {errorMessage}");
                                     }
                                     else
                                     {
-                                        logger.Debug("[Legendary] " + stdErr);
+                                        Logger.Debug("[Legendary] " + stdErr);
                                     }
 
                                     break;
@@ -286,13 +285,13 @@ public class LegendaryCloud
                         await playniteApi.Dialogs.ShowErrorMessageAsync(LocalizationManager.Instance.GetString(
                             LOC.CommonUploadPlaytimeError,
                             new Dictionary<string, IFluentType> { ["gameTitle"] = (FluentString)game.Name }));
-                        logger.Error(ex, "An error occured during uploading playtime to the cloud.");
+                        Logger.Error(ex, "An error occured during uploading playtime to the cloud.");
                     }
                 }
             }
             else
             {
-                logger.Error("Can't upload playtime, because user is not authenticated.");
+                Logger.Error("Can't upload playtime, because user is not authenticated.");
                 await playniteApi.Dialogs.ShowErrorMessageAsync(
                     LocalizationManager.Instance.GetString(LOC.ThirdPartyEpicNotLoggedInError));
             }

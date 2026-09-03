@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.IO;
+using Playnite;
 
-namespace Playnite.Common
+namespace PlayniteMod
 {
     public class MonitorProcess(Process process)
     {
@@ -54,7 +52,7 @@ namespace Playnite.Common
 
     public class MonitorProcessNames
     {
-        private readonly ILogger logger = LogManager.GetLogger();
+        private readonly ILogger logger = LogManager.GetLogger<MonitorProcessNames>();
         private readonly List<string>? procNames = [];
         private readonly List<string> procNamesNoExt = [];
 
@@ -106,7 +104,7 @@ namespace Playnite.Common
 
     public class MonitorDirectory
     {
-        private readonly ILogger logger = LogManager.GetLogger();
+        private readonly ILogger logger = LogManager.GetLogger<MonitorDirectory>();
         private readonly string dir;
 
         public MonitorDirectory(string directory)

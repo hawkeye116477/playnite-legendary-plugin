@@ -12,7 +12,7 @@ namespace LegendaryLibraryNS;
 public class LegendaryUpdateController
 {
     private IPlayniteApi playniteApi = LegendaryLibrary.PlayniteApi;
-    private static ILogger logger = LogManager.GetLogger();
+    private static ILogger logger = LogManager.GetLogger<LegendaryUpdateController>();
 
     public async Task<Dictionary<string, UpdateInfo>> CheckGameUpdates(string gameTitle, string gameId, bool forceRefreshCache = false)
     {

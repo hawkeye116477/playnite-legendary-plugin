@@ -9,7 +9,7 @@ namespace LegendaryLibraryNS;
 
 public static class LegendaryGames
 {
-    private static readonly ILogger Logger = LogManager.GetLogger();
+    private static readonly ILogger Logger = LogManager.GetLogger<LegendaryLibrary>();
     private const string PluginId = LegendaryLibrary.PluginId;
     private static readonly SpecImportableProperty PcSpecProperty = new("pc_windows");
     private static readonly IPlayniteApi PlayniteApi = LegendaryLibrary.PlayniteApi;
@@ -269,7 +269,6 @@ public static class LegendaryGames
 
     public static void CompleteGameInstallation(string gameId)
     {
-        var logger = LogManager.GetLogger();
         var gameSettings = LegendaryGameSettingsViewModel.LoadGameSettings(gameId);
         var appList = LegendaryLauncher.GetInstalledAppList();
         if (appList.TryGetValue(gameId, out var installedGameInfo))
@@ -300,7 +299,7 @@ public static class LegendaryGames
                     }
                     catch (Exception ex)
                     {
-                        logger.Error($"Failed to launch prerequisites executable. Error: {ex.Message}");
+                        Logger.Error($"Failed to launch prerequisites executable. Error: {ex.Message}");
                     }
                 }
             }
@@ -313,7 +312,6 @@ public static class LegendaryGames
 
     public static void ClearCache()
     {
-        var logger = LogManager.GetLogger();
         var cacheDirs = new List<string>
         {
             Path.Combine(LegendaryLibrary.PlayniteApi.UserDataDir, "cache"),
@@ -330,14 +328,13 @@ public static class LegendaryGames
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"An error occured during removing {cacheDir} directory");
+                Logger.Error(ex, $"An error occured during removing {cacheDir} directory");
             }
         }
     }
 
     public static void ClearSpecificGamesCache(List<string> gameIds)
     {
-        var logger = LogManager.GetLogger();
         var cacheDirs = new List<string>
         {
             LegendaryLibrary.GetCachePath("info"),
@@ -361,7 +358,7 @@ public static class LegendaryGames
                     }
                     catch (Exception ex)
                     {
-                        logger.Error(ex, $"An error occured during removing {file} file");
+                        Logger.Error(ex, $"An error occured during removing {file} file");
                     }
                 }
             }

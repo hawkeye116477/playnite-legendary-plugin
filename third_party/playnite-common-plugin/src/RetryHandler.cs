@@ -1,9 +1,5 @@
-﻿using Playnite;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Net.Http;
+using Playnite;
 
 namespace CommonPlugin
 {
@@ -11,9 +7,11 @@ namespace CommonPlugin
     {
         private readonly int maxRetries = 3;
         private readonly int baseDelayMs = 500;
-        private ILogger logger = LogManager.GetLogger();
+        private ILogger logger = LogManager.GetLogger<RetryHandler>();
 
-        public RetryHandler(HttpMessageHandler innerHandler) : base(innerHandler) { }
+        public RetryHandler(HttpMessageHandler innerHandler) : base(innerHandler)
+        {
+        }
 
         public RetryHandler(HttpMessageHandler innerHandler, int maxRetries, int baseDelayMs) : base(innerHandler)
         {
@@ -32,7 +30,7 @@ namespace CommonPlugin
             {
                 newRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
             }
-            
+
             foreach (var option in originalRequest.Options)
             {
                 newRequest.Options.TryAdd(option.Key, option.Value);
@@ -46,8 +44,10 @@ namespace CommonPlugin
                 {
                     newContent.Headers.TryAddWithoutValidation(contentHeader.Key, contentHeader.Value);
                 }
+
                 newRequest.Content = newContent;
             }
+
             return newRequest;
         }
 
@@ -65,8 +65,10 @@ namespace CommonPlugin
                     if ((int)response.StatusCode >= 500 && (int)response.StatusCode < 600)
                     {
                         var errorBody = await response.Content.ReadAsStringAsync(token);
-                        throw new HttpRequestException($"Server error: {(int)response.StatusCode} {response.ReasonPhrase}. Body: {errorBody}");
+                        throw new HttpRequestException(
+                            $"Server error: {(int)response.StatusCode} {response.ReasonPhrase}. Body: {errorBody}");
                     }
+
                     return response;
                 }
                 catch when (!token.IsCancellationRequested)
@@ -86,12 +88,13 @@ namespace CommonPlugin
 
             if (response == null)
             {
-                return new HttpResponseMessage()
+                return new HttpResponseMessage
                 {
                     ReasonPhrase = "Response was null",
                     RequestMessage = request
                 };
             }
+
             return response;
         }
     }
