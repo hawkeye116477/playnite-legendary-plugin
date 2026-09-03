@@ -552,19 +552,42 @@ public class LegendaryLibrary : Plugin
             return menuItems;
         }
 
-        var legendaryGames = args.Games.Where(i => i.LibraryId == PluginId).ToList();
-        if (legendaryGames.Count <= 0)
+        var pluginGames = args.Games.Where(i => i.LibraryId == PluginId).ToList();
+        if (pluginGames.Count <= 0)
         {
             return menuItems;
         }
-        
-        var installedLegendaryGames =
-            legendaryGames.Where(i => i.InstallState == InstallState.Installed).ToList();
 
-        if (legendaryGames.Count == 1)
+        var installedPluginGames =
+            pluginGames.Where(i => i.InstallState == InstallState.Installed).ToList();
+        var notInstalledPluginGames = pluginGames.Where(i => i.InstallState == InstallState.Uninstalled).ToList();
+
+        var game = pluginGames.First();
+        if (installedPluginGames.Count > 0)
         {
-            var game = legendaryGames.First();
-            if (game.InstallState == InstallState.Installed)
+            if (pluginGames.Count == 1)
+            {
+                menuItems.Add(new MenuItemImpl(
+                    LocalizationManager.Instance.GetString(LOC.CommonMove),
+                    async _ => { await LegendaryGameMenuActions.OpenMoveGameWindow(game); }
+                  , icon: CommonIcons.MoveIcon)
+                );
+            }
+            else
+            {
+                menuItems.Add(new MenuItemImpl(
+                    LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame),
+                    async _ => { await LegendaryUninstallController.LaunchUninstaller(installedPluginGames); },
+                    icon: CommonIcons.UninstallIcon
+                ));
+            }
+
+            menuItems.Add(new MenuItemImpl(
+                LocalizationManager.Instance.GetString(LOC.CommonRepair),
+                _ => { LegendaryGameMenuActions.OpenRepairWindow(installedPluginGames); },
+                icon: CommonIcons.RepairIcon
+            ));
+            if (pluginGames.Count == 1)
             {
                 menuItems.Add(new MenuItemImpl(
                     LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteCheckForUpdates),
@@ -572,7 +595,11 @@ public class LegendaryLibrary : Plugin
                     icon: CommonIcons.UpdateIcon
                 ));
             }
-            else if (game.InstallState == InstallState.Uninstalled)
+        }
+
+        if (notInstalledPluginGames.Count > 0)
+        {
+            if (pluginGames.Count == 1)
             {
                 menuItems.Add(
                     new MenuItemImpl(
@@ -581,59 +608,21 @@ public class LegendaryLibrary : Plugin
                         icon: CommonIcons.ImportGameIcon)
                 );
             }
-
-            menuItems.Add(
-                new MenuItemImpl(
-                    LocalizationManager.Instance.GetString(LOC.CommonManageDlcs),
-                    async _ => { await LegendaryGameMenuActions.OpenDlcManagerWindow(game); },
-                    icon: CommonIcons.InstallIcon)
-            );
-
-            if (game.InstallState == InstallState.Installed)
-            {
-                menuItems.Add(new MenuItemImpl(
-                    LocalizationManager.Instance.GetString(LOC.CommonMove),
-                    async _ => { await LegendaryGameMenuActions.OpenMoveGameWindow(game); }
-                  , icon: CommonIcons.MoveIcon)
-                );
-            }
-        }
-        else
-        {
-            var notInstalledLegendaryGames =
-                legendaryGames.Where(i => i.InstallState == InstallState.Uninstalled).ToList();
-            if (notInstalledLegendaryGames.Count > 0)
+            else
             {
                 menuItems.Add(new MenuItemImpl(
                     LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteInstallGame),
-                    _ =>
-                    {
-                        LegendaryGameMenuActions.OpenInstallerWindow(notInstalledLegendaryGames);
-                    }, icon: CommonIcons.InstallIcon
-                ));
-            }
-
-            if (installedLegendaryGames.Count > 0)
-            {
-                menuItems.Add(new MenuItemImpl(
-                    LocalizationManager.Instance.GetString(LOC.ThirdPartyPlayniteUninstallGame),
-                    async _ => { await LegendaryUninstallController.LaunchUninstaller(installedLegendaryGames); },
-                    icon: CommonIcons.UninstallIcon
+                    _ => { LegendaryGameMenuActions.OpenInstallerWindow(notInstalledPluginGames); }, icon: CommonIcons.InstallIcon
                 ));
             }
         }
 
-        if (installedLegendaryGames.Count > 0)
-        {
-            menuItems.Add(new MenuItemImpl(
-                LocalizationManager.Instance.GetString(LOC.CommonRepair),
-                _ =>
-                {
-                    LegendaryGameMenuActions.OpenRepairWindow(installedLegendaryGames);
-                }, 
-                icon: CommonIcons.RepairIcon
-            ));
-        }
+        menuItems.Add(
+            new MenuItemImpl(
+                LocalizationManager.Instance.GetString(LOC.CommonManageDlcs),
+                async _ => { await LegendaryGameMenuActions.OpenDlcManagerWindow(game); },
+                icon: CommonIcons.InstallIcon)
+        );
 
         return menuItems;
     }
@@ -671,7 +660,7 @@ public class LegendaryLibrary : Plugin
                     await PlayniteApi.Dialogs.ShowAsyncBlockingProgressAsync(updateCheckProgressOptions,
                         async _ => { gamesUpdates = await legendaryUpdateController.CheckAllGamesUpdates(); }
                     );
-                    
+
                     var window = PlayniteApi.CreateWindow(new WindowCreationOptions
                     {
                         ShowMaximizeButton = false
@@ -743,6 +732,7 @@ public class LegendaryLibrary : Plugin
         {
             await LegendaryLauncher.ShowNotInstalledError();
         }
+
         LegendaryLauncher.StartClient();
     }
 
