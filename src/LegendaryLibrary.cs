@@ -621,7 +621,7 @@ public class LegendaryLibrary : Plugin
             new MenuItemImpl(
                 LocalizationManager.Instance.GetString(LOC.CommonManageDlcs),
                 async _ => { await LegendaryGameMenuActions.OpenDlcManagerWindow(game); },
-                icon: CommonIcons.InstallIcon)
+                icon: CommonIcons.DlcsIcon)
         );
 
         return menuItems;
