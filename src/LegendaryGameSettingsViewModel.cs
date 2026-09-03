@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using LegendaryLibraryNS.Enums;
 using LegendaryLibraryNS.Models;
 using Playnite;
+using PlayniteMod;
 
 namespace LegendaryLibraryNS;
 

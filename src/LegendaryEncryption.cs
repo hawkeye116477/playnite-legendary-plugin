@@ -4,6 +4,7 @@ using System.Text;
 using CommonPlugin;
 using LegendaryLibraryNS.Models;
 using Playnite;
+using PlayniteMod;
 
 namespace LegendaryLibraryNS;
 

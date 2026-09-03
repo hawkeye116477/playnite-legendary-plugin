@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:common="clr-namespace:CommonPlugin"
              xmlns:system="clr-namespace:System"
-             xmlns:pcmd="clr-namespace:Playnite.Commands"
+             xmlns:pcmd="clr-namespace:PlayniteMod.Commands"
              xmlns:local="clr-namespace:LegendaryLibraryNS"
              mc:Ignorable="d"
              d:DesignHeight="550" d:DesignWidth="600" Loaded="LegendaryGameSettingsViewUC_Loaded"

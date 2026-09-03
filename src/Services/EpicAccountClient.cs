@@ -10,6 +10,7 @@ using CommonPlugin;
 using LegendaryLibraryNS.Models;
 using Playnite;
 using Playnite.WebViews;
+using PlayniteMod;
 
 namespace LegendaryLibraryNS.Services;
 

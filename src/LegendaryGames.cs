@@ -3,7 +3,7 @@ using CommonPlugin;
 using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
 using Playnite;
-using Playnite.Common;
+using PlayniteMod;
 
 namespace LegendaryLibraryNS;
 

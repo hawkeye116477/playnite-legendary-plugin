@@ -9,6 +9,7 @@ using CommonPlugin;
 using LegendaryLibraryNS.Models;
 using Linguini.Shared.Types.Bundle;
 using Playnite;
+using PlayniteMod;
 using MessageBoxResult = Playnite.MessageBoxResult;
 
 namespace LegendaryLibraryNS;

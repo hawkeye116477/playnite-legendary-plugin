@@ -9,6 +9,7 @@ using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
 using Playnite;
+using PlayniteMod;
 using UnifiedDownloadManagerApiNS;
 using UnifiedDownloadManagerApiNS.Interfaces;
 using UnifiedDownloadManagerApiNS.Models;

@@ -6,6 +6,7 @@ using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
 using Linguini.Shared.Types.Bundle;
 using Playnite;
+using PlayniteMod;
 
 namespace LegendaryLibraryNS;
 

@@ -10,7 +10,8 @@ using LegendaryLibraryNS.Models;
 using Linguini.Shared.Types.Bundle;
 using Microsoft.Win32;
 using Playnite;
-using Playnite.Commands;
+using PlayniteMod;
+using PlayniteMod.Commands;
 
 namespace LegendaryLibraryNS;
 

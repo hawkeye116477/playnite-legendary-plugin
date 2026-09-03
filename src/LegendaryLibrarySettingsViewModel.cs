@@ -5,6 +5,7 @@ using CommonPlugin.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LegendaryLibraryNS.Enums;
 using Playnite;
+using PlayniteMod;
 
 namespace LegendaryLibraryNS;
 

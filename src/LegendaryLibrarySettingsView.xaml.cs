@@ -15,6 +15,7 @@ using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
 using Playnite;
 using Playnite.WebViews;
+using PlayniteMod;
 using MessageBoxResult = Playnite.MessageBoxResult;
 
 namespace LegendaryLibraryNS;

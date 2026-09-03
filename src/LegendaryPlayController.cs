@@ -7,7 +7,7 @@ using CommonPlugin;
 using CommonPlugin.Enums;
 using Linguini.Shared.Types.Bundle;
 using Playnite;
-using Playnite.Common;
+using PlayniteMod;
 
 namespace LegendaryLibraryNS;
 

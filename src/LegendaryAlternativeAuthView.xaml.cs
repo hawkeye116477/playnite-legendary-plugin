@@ -3,6 +3,7 @@ using System.Windows;
 using CommonPlugin;
 using LegendaryLibraryNS.Services;
 using Playnite;
+using PlayniteMod;
 
 namespace LegendaryLibraryNS;
 

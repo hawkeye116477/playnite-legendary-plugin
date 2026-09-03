@@ -2,6 +2,7 @@
 using CommonPlugin;
 using LegendaryLibraryNS.Models;
 using Playnite;
+using PlayniteMod;
 
 namespace LegendaryLibraryNS;
 
