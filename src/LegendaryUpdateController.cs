@@ -120,6 +120,7 @@ public class LegendaryUpdateController
                     Title = gameTitle
                 });
             }
+
             return gamesToUpdate;
         }
 
@@ -202,6 +203,7 @@ public class LegendaryUpdateController
                 Title = gameTitle
             });
         }
+
         if (!gamesToUpdate.ContainsKey(gameId))
         {
             gamesToUpdate.Add(gameId, new UpdateInfo
@@ -259,75 +261,71 @@ public class LegendaryUpdateController
         var updateTasks = new List<DownloadManagerData.Download>();
         if (gamesToUpdate.Count > 0)
         {
-            var canUpdate = true;
-            if (canUpdate)
+            if (silently)
             {
-                if (silently)
+                playniteApi.Notifications.Add(new NotificationMessage("LegendaryGamesUpdates",
+                    LocalizationManager.Instance.GetString(LOC.CommonGamesUpdatesUnderway), NotificationSeverity.Info));
+            }
+
+            var installedAppList = LegendaryLauncher.GetInstalledAppList();
+            foreach (var gameToUpdate in gamesToUpdate)
+            {
+                var settings = LegendaryLibrary.GetSettings();
+                var newDownloadProperties = new DownloadProperties
                 {
-                    playniteApi.Notifications.Add(new NotificationMessage("LegendaryGamesUpdates",
-                        LocalizationManager.Instance.GetString(LOC.CommonGamesUpdatesUnderway), NotificationSeverity.Info));
+                    DownloadAction = DownloadAction.Update,
+                    EnableReordering = settings is { EnableReordering: true },
+                    MaxWorkers = settings!.MaxWorkers,
+                    MaxSharedMemory = settings.MaxSharedMemory
+                };
+                if (downloadProperties != null)
+                {
+                    newDownloadProperties = downloadProperties.GetClone();
                 }
 
-                var installedAppList = LegendaryLauncher.GetInstalledAppList();
-                foreach (var gameToUpdate in gamesToUpdate)
+                newDownloadProperties.InstallPath = gameToUpdate.Value.Install_path;
+
+                var updateTask = new DownloadManagerData.Download
                 {
-                    var settings = LegendaryLibrary.GetSettings();
-                    var newDownloadProperties = new DownloadProperties
-                    {
-                        DownloadAction = DownloadAction.Update,
-                        EnableReordering = settings is { EnableReordering: true },
-                        MaxWorkers = settings!.MaxWorkers,
-                        MaxSharedMemory = settings.MaxSharedMemory
-                    };
-                    if (downloadProperties != null)
-                    {
-                        newDownloadProperties = downloadProperties.GetClone();
-                    }
+                    GameId = gameToUpdate.Key,
+                    Name = gameToUpdate.Value.Title,
+                    DownloadSizeNumber = gameToUpdate.Value.Download_size,
+                    InstallSizeNumber = gameToUpdate.Value.Disk_size,
+                    DownloadProperties = newDownloadProperties
+                };
+                if (gameToUpdate.Value.Install_path.IsNullOrEmpty())
+                {
+                    logger.Warn($"No install path for {gameToUpdate.Value.Title}, skipping...");
+                    continue;
+                }
 
-                    newDownloadProperties.InstallPath = gameToUpdate.Value.Install_path;
-
-                    var updateTask = new DownloadManagerData.Download
+                updateTask.DownloadProperties.InstallPath = Directory.GetParent(gameToUpdate.Value.Install_path)?.FullName!;
+                updateTask.FullInstallPath = gameToUpdate.Value.Install_path;
+                if (installedAppList != null)
+                {
+                    if (installedAppList.ContainsKey(gameToUpdate.Key))
                     {
-                        GameId = gameToUpdate.Key,
-                        Name = gameToUpdate.Value.Title,
-                        DownloadSizeNumber = gameToUpdate.Value.Download_size,
-                        InstallSizeNumber = gameToUpdate.Value.Disk_size,
-                        DownloadProperties = newDownloadProperties
-                    };
-                    if (gameToUpdate.Value.Install_path.IsNullOrEmpty())
-                    {
-                        logger.Warn($"No install path for {gameToUpdate.Value.Title}, skipping...");
-                        continue;
-                    }
-
-                    updateTask.DownloadProperties.InstallPath = Directory.GetParent(gameToUpdate.Value.Install_path)?.FullName!;
-                    updateTask.FullInstallPath = gameToUpdate.Value.Install_path;
-                    if (installedAppList != null)
-                    {
-                        if (installedAppList.ContainsKey(gameToUpdate.Key))
+                        var installedGameData = installedAppList[gameToUpdate.Key];
+                        if (installedGameData.Install_tags.Count > 0)
                         {
-                            var installedGameData = installedAppList[gameToUpdate.Key];
-                            if (installedGameData.Install_tags.Count > 0)
-                            {
-                                updateTask.DownloadProperties.ExtraContent = installedGameData.Install_tags;
-                            }
+                            updateTask.DownloadProperties.ExtraContent = installedGameData.Install_tags;
+                        }
 
-                            var requiredTags = await LegendaryLauncher.GetRequiredSdlsTags(updateTask);
-                            foreach (var requiredTag in requiredTags)
-                            {
-                                updateTask.DownloadProperties.ExtraContent.AddMissing(requiredTag);
-                            }
+                        var requiredTags = await LegendaryLauncher.GetRequiredSdlsTags(updateTask);
+                        foreach (var requiredTag in requiredTags)
+                        {
+                            updateTask.DownloadProperties.ExtraContent.AddMissing(requiredTag);
                         }
                     }
-
-                    updateTasks.Add(updateTask);
                 }
 
-                if (updateTasks.Count > 0)
-                {
-                    var downloadLogic = (LegendaryDownloadLogic)LegendaryLibrary.Instance.UnifiedDownloadLogic;
-                    await downloadLogic.AddTasks(updateTasks, silently);
-                }
+                updateTasks.Add(updateTask);
+            }
+
+            if (updateTasks.Count > 0)
+            {
+                var downloadLogic = (LegendaryDownloadLogic)LegendaryLibrary.Instance.UnifiedDownloadLogic;
+                await downloadLogic.AddTasks(updateTasks, silently);
             }
         }
         else if (!silently)
