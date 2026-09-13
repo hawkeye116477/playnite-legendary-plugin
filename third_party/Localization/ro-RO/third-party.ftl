@@ -1,7 +1,7 @@
 ###
 ### Automatically generated via update_3p_localization.py script using files from 
-### https://github.com/JosefNemec/PlayniteExtensions/tree/3980301159b8d8909395225d1a81f02108ea47a7 and 
-### https://github.com/JosefNemec/Playnite/tree/02fc1972a1f0c4b7e5f2bc2b91d8dfe643141965. 
+### https://github.com/JosefNemec/PlayniteExtensions/tree/809eab47a2b3be92fad1017c6f4d92cfd7f421c6 and 
+### https://github.com/JosefNemec/Playnite/tree/76e475b671f2fbb13c8cfa2a1dd85720f39f2775. 
 ### DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 ###
 third-party-playnite-filter-active-label = Filtru activ
@@ -48,6 +48,11 @@ third-party-playnite-uninstall-game = Dezinstalați
 third-party-playnite-client-not-installed-error = Programul { $var0 } nu este instalat.
 third-party-playnite-dont-show-again-title = Nu mai afișa
 third-party-playnite-common-links-store-page = Pagina magazinului
+third-party-playnite-option-only-manually = Doar manual
+third-party-playnite-option-once-a-day = Zilnic
+third-party-playnite-option-once-a-week = Săptămânal
+third-party-playnite-open = Deschideți
+third-party-playnite-unsaved-changes-ask-message = Doriți să salvați modificările făcute?
 third-party-epic-settings-import-installed-label = Importați jocurile instalate
 third-party-epic-settings-import-uninstalled-label = Importanți jocurile neinstalate
 third-party-epic-settings-connect-account = Conectare cont
