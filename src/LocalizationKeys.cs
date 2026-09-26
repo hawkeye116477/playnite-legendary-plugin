@@ -266,10 +266,6 @@ namespace System
         /// </summary>
         public const string CommonUninstallSelectedDlcs = "common-uninstall-selected-dlcs";
         /// <summary>
-        /// Preferred CDN
-        /// </summary>
-        public const string CommonDownloaderPreferredCdn = "common-downloader-preferred-cdn";
-        /// <summary>
         /// {$launcherName} Path
         /// </summary>
         public const string CommonLauncherCustomPath = "common-launcher-custom-path";
