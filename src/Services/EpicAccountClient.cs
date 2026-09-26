@@ -456,7 +456,7 @@ namespace LegendaryLibraryNS.Services
                         var playtimePayload = new PlaytimePayload
                         {
                             artifactId = game.GameId,
-                            machineId = LegendaryLibrary.GetSettings().SyncPlaytimeMachineId
+                            machineId = Helpers.GetMachineGuid(),
                         };
                         var now = DateTime.UtcNow;
                         playtimePayload.endTime = endTime;

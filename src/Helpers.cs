@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.IO;
 using System.Management;
 
@@ -37,6 +38,32 @@ namespace LegendaryLibraryNS
             }
 
             return false;
+        }
+
+        public static string GetMachineGuid()
+        {
+            var machineGuid = "";
+            var root = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32);
+
+            try
+            {
+                using var cryptography = root.OpenSubKey(@"SOFTWARE\Microsoft\Cryptography");
+                if (cryptography != null)
+                {
+                    machineGuid = Guid.Parse(cryptography.GetValue("MachineGuid")?.ToString() ?? "").ToString();
+                }
+            }
+            finally
+            {
+                root.Dispose();
+            }
+
+            if (machineGuid.IsNullOrEmpty())
+            {
+                machineGuid = LegendaryLibrary.GetSettings().SyncPlaytimeMachineId;
+            }
+
+            return machineGuid;
         }
     }
 }
