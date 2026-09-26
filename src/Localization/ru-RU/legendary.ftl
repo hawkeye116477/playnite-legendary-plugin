@@ -41,3 +41,4 @@ legendary-game-import-failure = Не удалось импортировать �
 legendary-language-code = Язык (код в формате RFC 1766)
 legendary-check-all-dlcs = Проверить все DLC
 legendary-launcher-update-source = Источник обновления Legendary
+legendary-preferred-cdn = Предпочтительный CDN

@@ -41,3 +41,4 @@ legendary-game-import-failure = ゲームをインポートできませんでし
 legendary-language-code = 言語（RFC 1766 形式のコード）
 legendary-check-all-dlcs = すべての DLC を確認
 legendary-launcher-update-source = Legendary の更新元
+legendary-preferred-cdn = 優先する CDN

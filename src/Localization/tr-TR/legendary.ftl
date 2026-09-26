@@ -35,3 +35,4 @@ legendary-game-import-failure = Oyun içe aktarılamadı. Sebep: { $reason }.
 legendary-language-code = Dil (RFC 1766 biçiminde kod)
 legendary-check-all-dlcs = Tüm DLC içerikleri denetle
 legendary-launcher-update-source = Legendary güncelleme kaynağı
+legendary-preferred-cdn = Tercih Edilen CDN
