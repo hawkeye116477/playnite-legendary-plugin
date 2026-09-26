@@ -1,11 +1,11 @@
-﻿using LegendaryLibraryNS.Models;
-using Playnite.SDK;
-using Playnite.SDK.Data;
-using SIL.Secrets;
-using System;
+﻿using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using LegendaryLibraryNS.Models;
+using Playnite.SDK;
+using Playnite.SDK.Data;
+using SIL.Secrets;
 
 namespace LegendaryLibraryNS
 {

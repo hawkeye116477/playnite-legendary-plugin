@@ -1,4 +1,12 @@
-﻿using CliWrap;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using CliWrap;
 using CliWrap.Buffered;
 using CommonPlugin;
 using CommonPlugin.Enums;
@@ -7,13 +15,6 @@ using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
 using Playnite.SDK;
 using Playnite.SDK.Data;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using UnifiedDownloadManagerApiNS;
 
 namespace LegendaryLibraryNS
@@ -917,7 +918,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private void LegendaryGameInstallerUC_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void LegendaryGameInstallerUC_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             CommonControllerHelpers.UC_PreviewKeyDown(sender, e);
         }

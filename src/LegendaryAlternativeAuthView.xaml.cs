@@ -1,11 +1,11 @@
-﻿using CommonPlugin;
-using LegendaryLibraryNS.Services;
-using Playnite.Common;
-using Playnite.SDK;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using CommonPlugin;
+using LegendaryLibraryNS.Services;
+using Playnite.Common;
+using Playnite.SDK;
 
 namespace LegendaryLibraryNS
 {

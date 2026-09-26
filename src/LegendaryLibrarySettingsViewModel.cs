@@ -1,4 +1,5 @@
-﻿using CommonPlugin.Enums;
+﻿using System;
+using CommonPlugin.Enums;
 using LegendaryLibraryNS.Enums;
 using Playnite.SDK;
 
@@ -31,7 +32,7 @@ namespace LegendaryLibraryNS
         public bool UnattendedInstall { get; set; } = false;
         public bool DownloadAllDlcs { get; set; } = false;
         public bool SyncPlaytime { get; set; } = LegendaryLauncher.DefaultPlaytimeSyncEnabled;
-        public string SyncPlaytimeMachineId { get; set; } = System.Guid.NewGuid().ToString("N");
+        public string SyncPlaytimeMachineId { get; set; } = Guid.NewGuid().ToString("N");
         public UpdatePolicy GamesUpdatePolicy { get; set; } = UpdatePolicy.Month;
         public long NextGamesUpdateTime { get; set; }
         public bool AutoUpdateGames { get; set; } = false;

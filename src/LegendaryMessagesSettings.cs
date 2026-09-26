@@ -1,7 +1,7 @@
-﻿using Playnite.Common;
-using Playnite.SDK.Data;
-using System;
+﻿using System;
 using System.IO;
+using Playnite.Common;
+using Playnite.SDK.Data;
 
 namespace LegendaryLibraryNS
 {

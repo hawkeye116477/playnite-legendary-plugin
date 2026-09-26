@@ -1,6 +1,6 @@
-﻿using CommonPlugin.Enums;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using CommonPlugin.Enums;
 
 namespace LegendaryLibraryNS.Models
 {

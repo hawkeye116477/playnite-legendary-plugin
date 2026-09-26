@@ -1,12 +1,12 @@
-﻿using CommonPlugin;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using CommonPlugin;
 using LegendaryLibraryNS.Models;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
-using System;
-using System.Collections.Generic;
-using System.IO;
 
 namespace LegendaryLibraryNS
 {

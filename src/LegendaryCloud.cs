@@ -1,4 +1,7 @@
-﻿using CliWrap;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using CliWrap;
 using CliWrap.EventStream;
 using CommonPlugin;
 using CommonPlugin.Enums;
@@ -6,9 +9,7 @@ using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
 using Playnite.SDK;
-using System;
-using System.Collections.Generic;
-using System.IO;
+using Playnite.SDK.Models;
 
 namespace LegendaryLibraryNS
 {
@@ -72,7 +73,7 @@ namespace LegendaryLibraryNS
 
 
         internal static void SyncGameSaves(
-            Playnite.SDK.Models.Game game, CloudSyncAction cloudSyncAction, bool force = false, bool manualSync = false,
+            Game game, CloudSyncAction cloudSyncAction, bool force = false, bool manualSync = false,
             bool skipRefreshingMetadata = true, string cloudSaveFolder = "")
         {
             var cloudSyncEnabled = LegendaryLibrary.GetSettings().SyncGameSaves;

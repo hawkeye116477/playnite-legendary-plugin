@@ -1,10 +1,11 @@
-﻿using CommonPlugin;
-using LegendaryLibraryNS.Models;
-using Playnite.SDK;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using CommonPlugin;
+using LegendaryLibraryNS.Models;
+using Playnite.SDK;
 
 namespace LegendaryLibraryNS
 {
@@ -216,7 +217,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private void LegendaryExtraInstallationContentUC_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void LegendaryExtraInstallationContentUC_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             CommonControllerHelpers.UC_PreviewKeyDown(sender, e);
         }

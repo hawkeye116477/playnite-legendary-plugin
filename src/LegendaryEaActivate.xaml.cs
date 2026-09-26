@@ -1,4 +1,11 @@
-﻿using CliWrap;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using CliWrap;
 using CliWrap.Buffered;
 using CliWrap.EventStream;
 using CommonPlugin;
@@ -7,13 +14,6 @@ using Linguini.Shared.Types.Bundle;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace LegendaryLibraryNS
 {

@@ -1,4 +1,13 @@
-﻿using CliWrap;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Controls;
+using CliWrap;
 using CliWrap.Buffered;
 using CliWrap.EventStream;
 using CommonPlugin;
@@ -10,15 +19,6 @@ using Linguini.Shared.Types.Bundle;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace LegendaryLibraryNS
 {
@@ -338,6 +338,7 @@ namespace LegendaryLibraryNS
                                         logger.Error("[Legendary] exit code: " + importCmd.ExitCode);
                                     }
                                 }
+
                                 playniteAPI.Database.Games.Update(game);
                                 migratedGames += 1;
                                 a.CurrentProgressValue = iterator;
@@ -774,10 +775,12 @@ namespace LegendaryLibraryNS
                                 MessageBoxImage.Information);
                             logger.Info($"Successfully migrated {migratedGames} game(s) from Legendary to Epic.");
                         }
+
                         if (notMigratedGames > 0)
                         {
                             logger.Info($"{notMigratedGames} game(s) were skipped, cuz already exist at Epic plugin.");
                         }
+
                         if (migratedGames == 0)
                         {
                             playniteAPI.Dialogs.ShowErrorMessage(LocalizationManager.Instance.GetString(LOC.CommonMigrationNoGames));

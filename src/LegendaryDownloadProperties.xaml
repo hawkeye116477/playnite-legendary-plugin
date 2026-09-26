@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:LegendaryLibraryNS"
              xmlns:common="clr-namespace:CommonPlugin"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:system="clr-namespace:System"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="400" Name="LegendaryDownloadPropertiesUC"

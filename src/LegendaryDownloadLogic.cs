@@ -1,22 +1,26 @@
-﻿using CliWrap;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows;
+using CliWrap;
 using CliWrap.EventStream;
 using CommonPlugin;
 using CommonPlugin.Enums;
 using LegendaryLibraryNS.Models;
 using LegendaryLibraryNS.Services;
 using Linguini.Shared.Types.Bundle;
+using Microsoft.Win32;
+using Playnite.Commands;
 using Playnite.Common;
 using Playnite.SDK;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
+using Playnite.SDK.Models;
 using UnifiedDownloadManagerApiNS;
 using UnifiedDownloadManagerApiNS.Interfaces;
 using UnifiedDownloadManagerApiNS.Models;
@@ -57,7 +61,7 @@ namespace LegendaryLibraryNS
                     "Legendary (Epic Games) library integration", MessageBoxImage.Error, options);
                 if (result == options[0])
                 {
-                    Playnite.Commands.GlobalCommands.NavigateUrl("playnite://playnite/installaddon/UnifiedDownloadManager");
+                    GlobalCommands.NavigateUrl("playnite://playnite/installaddon/UnifiedDownloadManager");
                 }
             }
 
@@ -301,7 +305,7 @@ namespace LegendaryLibraryNS
 
             if (downloadedBytes > 0)
             {
-                request.Headers.Range = new System.Net.Http.Headers.RangeHeaderValue(downloadedBytes, null);
+                request.Headers.Range = new RangeHeaderValue(downloadedBytes, null);
             }
 
             var speedStopwatch = Stopwatch.StartNew();
@@ -360,9 +364,9 @@ namespace LegendaryLibraryNS
                                 if (downloadTask.downloadSpeedBytes > 0)
                                 {
                                     var remaining = (totalSize - totalDiskBytes) / downloadTask.downloadSpeedBytes;
-                                    downloadTask.eta = remaining < TimeSpan.MaxValue.TotalSeconds
-                                        ? TimeSpan.FromSeconds(remaining)
-                                        : TimeSpan.MaxValue;
+                                    downloadTask.eta = remaining < TimeSpan.MaxValue.TotalSeconds ?
+                                        TimeSpan.FromSeconds(remaining) :
+                                        TimeSpan.MaxValue;
                                 }
                                 else
                                 {
@@ -783,7 +787,7 @@ namespace LegendaryLibraryNS
                                     if (installedAppList.ContainsKey(gameID))
                                     {
                                         var installedGameInfo = installedAppList[gameID];
-                                        var game = new Playnite.SDK.Models.Game();
+                                        var game = new Game();
                                         if (!installedGameInfo.Is_dlc || !installedGameInfo.Executable.IsNullOrEmpty())
                                         {
                                             game = playniteAPI.Database.Games.FirstOrDefault(item =>
@@ -821,11 +825,11 @@ namespace LegendaryLibraryNS
                                             try
                                             {
                                                 using (var regKey =
-                                                       Microsoft.Win32.Registry.ClassesRoot.OpenSubKey("com.epicgames.launcher", false))
+                                                       Registry.ClassesRoot.OpenSubKey("com.epicgames.launcher", false))
                                                 {
                                                     if (regKey == null)
                                                     {
-                                                        Microsoft.Win32.Registry.CurrentUser.CreateSubKey(
+                                                        Registry.CurrentUser.CreateSubKey(
                                                             @"Software\Classes\com.epicgames.launcher");
                                                     }
                                                 }

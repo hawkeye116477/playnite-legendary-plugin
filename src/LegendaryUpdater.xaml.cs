@@ -1,12 +1,14 @@
-﻿using CommonPlugin;
-using CommonPlugin.Enums;
-using LegendaryLibraryNS.Models;
-using Playnite.SDK;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using CommonPlugin;
+using CommonPlugin.Enums;
+using LegendaryLibraryNS.Models;
+using Playnite.SDK;
+using Playnite.SDK.Models;
 
 namespace LegendaryLibraryNS
 {
@@ -17,14 +19,14 @@ namespace LegendaryLibraryNS
     {
         public Dictionary<string, UpdateInfo> UpdatesList;
         private IPlayniteAPI playniteAPI = API.Instance;
-        public List<Playnite.SDK.Models.Game> checkedGames = new List<Playnite.SDK.Models.Game>();
+        public List<Game> checkedGames = new List<Game>();
 
         public LegendaryUpdater()
         {
             InitializeComponent();
         }
 
-        public LegendaryUpdater(List<Playnite.SDK.Models.Game> games)
+        public LegendaryUpdater(List<Game> games)
         {
             InitializeComponent();
             checkedGames = games;
@@ -196,7 +198,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private void UserControl_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void UserControl_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             CommonControllerHelpers.UC_PreviewKeyDown(sender, e);
         }

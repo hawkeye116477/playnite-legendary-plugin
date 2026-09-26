@@ -1,17 +1,18 @@
-﻿using LegendaryLibraryNS.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Playnite.SDK.Data;
-using Playnite.Common;
-using Playnite.SDK;
-using Playnite.SDK.Models;
-using LegendaryLibraryNS.Enums;
+using System.Windows.Input;
 using CommonPlugin;
 using CommonPlugin.Enums;
+using LegendaryLibraryNS.Enums;
+using LegendaryLibraryNS.Models;
+using Playnite.Common;
+using Playnite.SDK;
+using Playnite.SDK.Data;
+using Playnite.SDK.Models;
 
 namespace LegendaryLibraryNS
 {
@@ -284,7 +285,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private void LegendaryGameSettingsViewUC_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void LegendaryGameSettingsViewUC_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             CommonControllerHelpers.UC_PreviewKeyDown(sender, e);
         }

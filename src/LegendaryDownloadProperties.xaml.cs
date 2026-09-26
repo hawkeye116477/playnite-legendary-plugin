@@ -1,13 +1,14 @@
-﻿using CommonPlugin;
-using CommonPlugin.Enums;
-using LegendaryLibraryNS.Models;
-using Playnite.SDK;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using CommonPlugin;
+using CommonPlugin.Enums;
+using LegendaryLibraryNS.Models;
+using Playnite.SDK;
 using UnifiedDownloadManagerApiNS;
 using UnifiedDownloadManagerApiNS.Models;
 
@@ -240,7 +241,7 @@ namespace LegendaryLibraryNS
             }
         }
 
-        private void LegendaryDownloadPropertiesUC_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void LegendaryDownloadPropertiesUC_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             CommonControllerHelpers.UC_PreviewKeyDown(sender, e);
         }

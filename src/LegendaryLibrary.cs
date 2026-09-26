@@ -1,4 +1,12 @@
-﻿using CliWrap;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using CliWrap;
 using CliWrap.Buffered;
 using CommonPlugin;
 using CommonPlugin.Enums;
@@ -12,14 +20,6 @@ using Playnite.SDK.Data;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
 using UnifiedDownloadManagerApiNS;
 using UnifiedDownloadManagerApiNS.Interfaces;
 using UnifiedDownloadManagerApiNS.Models;
@@ -678,9 +678,8 @@ namespace LegendaryLibraryNS
                                         if (importCmd.StandardError.Contains("has been imported"))
                                         {
                                             var installedAppList = LegendaryLauncher.GetInstalledAppList();
-                                            if (installedAppList.ContainsKey(game.GameId))
+                                            if (installedAppList.TryGetValue(game.GameId, out var installedGameInfo))
                                             {
-                                                var installedGameInfo = installedAppList[game.GameId];
                                                 game.InstallDirectory = installedGameInfo.Install_path;
                                                 game.Version = installedGameInfo.Version;
                                                 game.InstallSize = (ulong?)installedGameInfo.Install_size;

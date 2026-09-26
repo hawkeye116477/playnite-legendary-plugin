@@ -1,4 +1,6 @@
-﻿using Playnite.SDK;
+﻿using System.Diagnostics;
+using System.Reflection;
+using Playnite.SDK;
 
 namespace LegendaryLibraryNS
 {
@@ -17,8 +19,8 @@ namespace LegendaryLibraryNS
         {
             get
             {
-                var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-                var fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
+                var assembly = Assembly.GetExecutingAssembly();
+                var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
                 return fvi.FileVersion;
             }
         }

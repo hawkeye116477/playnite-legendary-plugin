@@ -1,14 +1,4 @@
-﻿using CliWrap;
-using CliWrap.Buffered;
-using CommonPlugin;
-using LegendaryLibraryNS.Models;
-using Linguini.Shared.Types.Bundle;
-using Microsoft.Win32;
-using Playnite.Common;
-using Playnite.SDK;
-using Playnite.SDK.Data;
-using SIL.Secrets;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,6 +7,17 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using CliWrap;
+using CliWrap.Buffered;
+using CommonPlugin;
+using LegendaryLibraryNS.Models;
+using Linguini.Shared.Types.Bundle;
+using Microsoft.Win32;
+using Playnite.Commands;
+using Playnite.Common;
+using Playnite.SDK;
+using Playnite.SDK.Data;
+using SIL.Secrets;
 
 namespace LegendaryLibraryNS
 {
@@ -139,9 +140,8 @@ namespace LegendaryLibraryNS
             {
                 string[] validLegendaryBinaries = { "legendary_windows_x86_64.exe", "legendary_windows_x64.exe", "legendary.exe" };
                 var launcherPath = "";
-                var envPath = Environment.GetEnvironmentVariable("PATH")
- ?
-.Split(new[] { Path.PathSeparator }, StringSplitOptions.RemoveEmptyEntries)
+                var envPath = Environment.GetEnvironmentVariable("PATH")?
+                                         .Split(new[] { Path.PathSeparator }, StringSplitOptions.RemoveEmptyEntries)
                                          .Where(p => p.IndexOfAny(Path.GetInvalidPathChars()) < 0)
                                          .SelectMany(pathEntry =>
                                               validLegendaryBinaries.Select(legendaryBinary =>
@@ -504,7 +504,7 @@ namespace LegendaryLibraryNS
                 var content = FileSystem.ReadFileAsStringSafe(cacheInfoFile);
                 if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out manifest))
                 {
-                    if (manifest != null && manifest.Manifest != null && manifest.Game != null)
+                    if (manifest is { Manifest: { }, Game: { } })
                     {
                         correctJson = true;
                         manifest.Game.Title = manifest.Game.Title.RemoveTrademarks();
@@ -702,7 +702,7 @@ namespace LegendaryLibraryNS
                         extraContentInfo.Add("__required", requiredSdl);
                     }
 
-                    if (!includeRequiredSdl && extraContentInfo.ContainsKey("__required"))
+                    if (!includeRequiredSdl)
                     {
                         extraContentInfo.Remove("__required");
                     }
@@ -740,9 +740,9 @@ namespace LegendaryLibraryNS
             var extraContentInfo = await GetExtraContentInfo(installData, true);
             var sdls = extraContentInfo.Where(i => !i.Value.Is_dlc).ToList();
             var requiredSdls = new List<string>();
-            if (extraContentInfo.ContainsKey("__required"))
+            if (extraContentInfo.TryGetValue("__required", out var extraValue))
             {
-                foreach (var tag in extraContentInfo["__required"].Tags)
+                foreach (var tag in extraValue.Tags)
                 {
                     requiredSdls.AddMissing(tag);
                 }
@@ -804,7 +804,7 @@ namespace LegendaryLibraryNS
                 content = FileSystem.ReadFileAsStringSafe(cacheVersionFile);
                 if (!content.IsNullOrWhiteSpace() && Serialization.TryFromJson(content, out LauncherVersion versionInfoContent))
                 {
-                    if (versionInfoContent != null && versionInfoContent.Html_url != null && versionInfoContent.Tag_name != null)
+                    if (versionInfoContent is { Html_url: { }, Tag_name: { } })
                     {
                         correctJson = true;
                         newVersionInfoContent = versionInfoContent;
@@ -850,16 +850,11 @@ namespace LegendaryLibraryNS
                 var launcherPath = "";
                 try
                 {
-                    using (var regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Electronic Arts\EA Desktop", false))
+                    using var regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Electronic Arts\EA Desktop", false);
+                    var launcherPathObj = regKey?.GetValue("ClientPath");
+                    if (launcherPathObj != null)
                     {
-                        if (regKey != null)
-                        {
-                            var launcherPathObj = regKey.GetValue("ClientPath");
-                            if (launcherPathObj != null)
-                            {
-                                launcherPath = launcherPathObj.ToString();
-                            }
-                        }
+                        launcherPath = launcherPathObj.ToString();
                     }
                 }
                 catch (Exception ex)
@@ -943,7 +938,7 @@ namespace LegendaryLibraryNS
                 "Legendary (Epic Games) library integration", MessageBoxImage.Error, options);
             if (result == options[0])
             {
-                Playnite.Commands.GlobalCommands.NavigateUrl(
+                GlobalCommands.NavigateUrl(
                     "https://github.com/hawkeye116477/playnite-legendary-plugin/wiki/Troubleshooting#legendary-launcher-is-not-installed");
             }
         }
@@ -953,11 +948,7 @@ namespace LegendaryLibraryNS
             get
             {
                 var playniteAPI = API.Instance;
-                var playtimeSyncEnabled = false;
-                if (playniteAPI.ApplicationSettings.PlaytimeImportMode != PlaytimeImportMode.Never)
-                {
-                    playtimeSyncEnabled = true;
-                }
+                var playtimeSyncEnabled = false || playniteAPI.ApplicationSettings.PlaytimeImportMode != PlaytimeImportMode.Never;
 
                 return playtimeSyncEnabled;
             }
@@ -967,15 +958,14 @@ namespace LegendaryLibraryNS
         {
             var installedAppList = GetInstalledAppList();
             var installedInfo = new Installed();
-            if (installedAppList.ContainsKey(gameId))
+            if (installedAppList.TryGetValue(gameId, out var installedInfoValue))
             {
-                installedInfo = installedAppList[gameId];
+                installedInfo = installedInfoValue;
             }
 
             return installedInfo;
         }
-
-
+        
         public static string GetUpdateSource()
         {
             return UpdateSources[LegendaryLibrary.GetSettings().LauncherUpdateRepo];
@@ -986,9 +976,8 @@ namespace LegendaryLibraryNS
             var logger = LogManager.GetLogger();
             var gameSettings = LegendaryGameSettingsView.LoadGameSettings(gameId);
             var appList = GetInstalledAppList();
-            if (appList.ContainsKey(gameId))
+            if (appList.TryGetValue(gameId, out var installedGameInfo))
             {
-                var installedGameInfo = appList[gameId];
                 if (installedGameInfo.Prereq_info != null)
                 {
                     var prereq = installedGameInfo.Prereq_info;
@@ -1058,7 +1047,7 @@ namespace LegendaryLibraryNS
                     if (result == options[0])
                     {
                         var changelogURL = versionInfoContent.Html_url;
-                        Playnite.Commands.GlobalCommands.NavigateUrl(changelogURL);
+                        GlobalCommands.NavigateUrl(changelogURL);
                     }
                     else if (result == options[1])
                     {

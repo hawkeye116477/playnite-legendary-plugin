@@ -1,7 +1,7 @@
-﻿using CommonPlugin.Enums;
-using Playnite.SDK.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using CommonPlugin.Enums;
+using Playnite.SDK.Data;
 
 namespace LegendaryLibraryNS.Models
 {
