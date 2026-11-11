@@ -875,7 +875,6 @@ namespace LegendaryLibraryNS
                 LegendaryLibrary.Instance.GetCachePath("infocache"),
                 LegendaryLibrary.Instance.GetCachePath("sdlcache"),
                 LegendaryLibrary.Instance.GetCachePath("updateinfocache"),
-                Path.Combine(ConfigPath, "metadata")
             };
             foreach (var cacheDir in cacheDirs)
             {
@@ -901,7 +900,6 @@ namespace LegendaryLibraryNS
                 LegendaryLibrary.Instance.GetCachePath("infocache"),
                 LegendaryLibrary.Instance.GetCachePath("sdlcache"),
                 LegendaryLibrary.Instance.GetCachePath("updateinfocache"),
-                Path.Combine(ConfigPath, "metadata")
             };
 
             foreach (var cacheDir in cacheDirs)
