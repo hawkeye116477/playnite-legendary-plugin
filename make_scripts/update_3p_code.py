@@ -17,8 +17,8 @@ main_path = pn(pj(script_path, ".."))
 third_party_path = pj(main_path, "third_party")
 src_path = pj(main_path, "src")
 
-if os.path.exists(pj(third_party_path, "PlayniteExtensions")):
-    shutil.rmtree(pj(third_party_path, "PlayniteExtensions"))
+if os.path.exists(pj(third_party_path, "Playnite_mod")):
+    shutil.rmtree(pj(third_party_path, "Playnite_mod"))
 
 legendary_csproj = ET.parse(pj(src_path, "LegendaryLibrary.csproj"))
 xml_ns = "{http://schemas.microsoft.com/developer/msbuild/2003}"

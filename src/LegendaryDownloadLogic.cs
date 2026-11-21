@@ -31,11 +31,15 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
 
     public static async Task WaitUntilLegendaryCloses()
     {
-        var installedLockPath = Path.Combine(LegendaryLauncher.ConfigPath, "installed.json.lock");
-        if (File.Exists(installedLockPath) && Helpers.IsFileLocked(installedLockPath))
+        while (true)
         {
-            await Task.Delay(1000);
-            await WaitUntilLegendaryCloses();
+            var installedLockPath = Path.Combine(LegendaryLauncher.ConfigPath, "installed.json.lock");
+            if (File.Exists(installedLockPath) && Helpers.IsFileLocked(installedLockPath))
+            {
+                await Task.Delay(1000);
+                continue;
+            }
+            break;
         }
     }
 
@@ -980,7 +984,7 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
         }
     }
 
-    public Task OnRemoveDownloadEntry(UnifiedDownload downloadTask)
+    public async Task OnRemoveDownloadEntry(UnifiedDownload downloadTask)
     {
         var matchingPluginTask =
             LegendaryLibrary.Instance.PluginDownloadData.Downloads.FirstOrDefault(t =>
@@ -990,8 +994,6 @@ public class LegendaryDownloadLogic : IUnifiedDownloadLogic
             LegendaryLibrary.Instance.PluginDownloadData.Downloads.Remove(matchingPluginTask);
             LegendaryLibrary.Instance.SaveDownloadData();
         }
-
-        return Task.CompletedTask;
     }
 
     public void OpenDownloadPropertiesWindow(UnifiedDownload selectedEntry)
