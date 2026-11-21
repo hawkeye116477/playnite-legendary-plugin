@@ -146,6 +146,7 @@ public class EpicAccountClient
             using var response = await HttpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
             var respContent = await response.Content.ReadAsStringAsync();
+            Directory.CreateDirectory(LegendaryLauncher.ConfigPath);
             await WriteTokens(respContent);
         }
         catch (Exception ex)
