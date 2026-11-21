@@ -34,3 +34,4 @@ legendary-enable = Habilitar
 legendary-game-import-failure = No se pudo importar el juego. Razón: { $reason }.
 legendary-language-code = Idioma (código en formato RFC 1766)
 legendary-check-all-dlcs = Marcar todos los contenidos descargables
+legendary-preferred-cdn = CDN preferido
