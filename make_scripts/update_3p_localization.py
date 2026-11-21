@@ -48,13 +48,23 @@ NSMAP = {None: xmlns,
         "sys": xmlns_sys,
         "x":  xmlns_x}
 
+def get_tree_url(source, commit):
+    tree = "tree"
+    if "codeberg" in source:
+        tree = "src/commit"
+    source = source.replace(".git", f"/{tree}/{commit}")
+    return source
+
 git_repo = git.Repo(
     pj(main_path, "..", "PlayniteExtensions"), search_parent_directories=True)
 commit = git_repo.head.object.hexsha
-source = git_repo.remotes.origin.url.replace(".git", f"/tree/{commit}")
+source = git_repo.remotes.origin.url
+source = get_tree_url(source, commit)
+
 Playnite_git_repo = git.Repo(pj(main_path, "..", "PlayniteExtensions", "PlayniteRepo"), search_parent_directories=True)
 commit2 = Playnite_git_repo.head.object.hexsha
-source2 = Playnite_git_repo.remotes.origin.url.replace(".git", f"/tree/{commit2}")
+source2 = Playnite_git_repo.remotes.origin.url
+source2 = get_tree_url(source2, commit2)
 
 FTL_script_path = pn(pj(main_path, '..', "playnite-common-plugin", "make_scripts", "convert_to_ftl.py"))
 spec = importlib.util.spec_from_file_location("convert_to_ftl", FTL_script_path)

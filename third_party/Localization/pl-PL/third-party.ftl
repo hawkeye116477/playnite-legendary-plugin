@@ -1,7 +1,7 @@
 ###
 ### Automatically generated via update_3p_localization.py script using files from 
-### https://codeberg.org/CrowIsTaken/PlayniteExtensions/tree/36b40c2b1e5dc3caf906495dd4905f5abe21a1a5 and 
-### https://codeberg.org/Playnite/Playnite/tree/6fbebc4e3183a67f85a30d9248312fee73bb0eee. 
+### https://codeberg.org/CrowIsTaken/PlayniteExtensions/src/commit/8da2ff8b666290c395c3072c544fd6e521252f9f and 
+### https://codeberg.org/Playnite/Playnite/src/commit/e2e6efcda311fea38fcd92f61c8ca90811d97f28. 
 ### DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 ###
 third-party-playnite-filter-active-label = Filtr aktywny
