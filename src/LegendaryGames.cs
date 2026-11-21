@@ -315,7 +315,6 @@ public static class LegendaryGames
         var cacheDirs = new List<string>
         {
             Path.Combine(LegendaryLibrary.PlayniteApi.UserDataDir, "cache"),
-            Path.Combine(LegendaryLauncher.ConfigPath, "metadata")
         };
         foreach (var cacheDir in cacheDirs)
         {
@@ -340,7 +339,6 @@ public static class LegendaryGames
             LegendaryLibrary.GetCachePath("info"),
             LegendaryLibrary.GetCachePath("sdl"),
             LegendaryLibrary.GetCachePath("updateinfo"),
-            Path.Combine(LegendaryLauncher.ConfigPath, "metadata")
         };
 
         foreach (var cacheDir in cacheDirs)
