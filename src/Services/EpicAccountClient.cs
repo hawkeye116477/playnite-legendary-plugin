@@ -97,7 +97,6 @@ namespace LegendaryLibraryNS.Services
                         useEncryptedTokens = false;
                     }
                 }
-
                 if (useEncryptedTokens)
                 {
                     var tokenInfo = Serialization.FromJson<OauthResponse>(content);
@@ -189,6 +188,7 @@ namespace LegendaryLibraryNS.Services
                 using var response = await httpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
                 var respContent = await response.Content.ReadAsStringAsync();
+                Directory.CreateDirectory(LegendaryLauncher.ConfigPath);
                 await WriteTokens(respContent);
             }
             catch (Exception ex)
