@@ -48,13 +48,25 @@ NSMAP = {None: xmlns,
         "sys": xmlns_sys,
         "x":  xmlns_x}
 
+def get_tree_url(source, commit):
+    tree = "tree"
+    if "codeberg" in source:
+        tree = "src/commit"
+    source = source.replace(".git", f"/{tree}/{commit}")
+    return source
+
 git_repo = git.Repo(
     pj(main_path, "..", "..", "PlayniteExtensions"), search_parent_directories=True)
 commit = git_repo.head.object.hexsha
-source = git_repo.remotes.origin.url.replace(".git", f"/tree/{commit}")
+source = git_repo.remotes.origin.url
+source = get_tree_url(source, commit)
+
+
 Playnite_git_repo = git.Repo(pj(main_path, "..", "..", "PlayniteExtensions", "PlayniteRepo"), search_parent_directories=True)
 commit2 = Playnite_git_repo.head.object.hexsha
-source2 = Playnite_git_repo.remotes.origin.url.replace(".git", f"/tree/{commit2}")
+source2 = Playnite_git_repo.remotes.origin.url
+source2 = get_tree_url(source2, commit2)
+
 
 FTL_script_path = pn(pj(main_path, '..', "playnite-common-plugin", "make_scripts", "convert_to_ftl.py"))
 spec = importlib.util.spec_from_file_location("convert_to_ftl", FTL_script_path)
@@ -67,11 +79,11 @@ for filename in os.listdir(pj(main_path, "..", "..", "PlayniteExtensions", "Play
     xml_doc = ET.ElementTree(xml_root)
 
     new_filename = filename
-    if filename not in ["LocSource.xaml", "LocalizationKeys.cs", "locstatus.json"]:
-        if filename == "en_US.xaml":
-            new_filename = "LocSource.xaml"
+    if filename not in ["LocalizationKeys.cs", "locstatus.json"]:
+        if filename == "LocSource.xaml":
+            new_filename = "en_US.xaml"
         playnite_loc = ET.parse(pj(main_path, "..", "..", "PlayniteExtensions",
-                                "PlayniteRepo", "source", "Playnite", "Localization", new_filename))
+                                "PlayniteRepo", "source", "Playnite", "Localization", filename))
         for child in playnite_loc.getroot():
             key = child.get(ET.QName(xmlns_x, "Key"))
             if key in playnite_loc_keys:
@@ -84,10 +96,9 @@ for filename in os.listdir(pj(main_path, "..", "..", "PlayniteExtensions", "Play
                 if key_text != "":
                     xml_root.append(new_key)
 
-    if filename not in ["LocSource.xaml", "LocalizationKeys.cs", "locstatus.json"]:
-        loc_sub_dir = filename.replace("_", "-").replace(".xaml", "")
+        loc_sub_dir = new_filename.replace("_", "-").replace(".xaml", "")
         epic_file_path = pj(main_path, "..", "..", "PlayniteExtensions",
-                            "source", "Libraries", "EpicLibrary", "Localization", filename)
+                            "source", "Libraries", "EpicLibrary", "Localization", new_filename)
         if os.path.isfile(epic_file_path):
             epic_loc = ET.parse(epic_file_path)
             for child in epic_loc.getroot():

@@ -1,7 +1,7 @@
 ###
 ### Automatically generated via update_3p_localization.py script using files from 
-### https://github.com/JosefNemec/PlayniteExtensions/tree/3980301159b8d8909395225d1a81f02108ea47a7 and 
-### https://github.com/JosefNemec/Playnite/tree/02fc1972a1f0c4b7e5f2bc2b91d8dfe643141965. 
+### https://codeberg.org/CrowIsTaken/PlayniteExtensions/src/commit/8da2ff8b666290c395c3072c544fd6e521252f9f and 
+### https://codeberg.org/Playnite/Playnite/src/commit/e2e6efcda311fea38fcd92f61c8ca90811d97f28. 
 ### DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 ###
 third-party-playnite-filter-active-label = Filtro Ativado
@@ -62,8 +62,10 @@ third-party-playnite-option-once-a-week = Uma vez por semana
 third-party-playnite-open = Abrir
 third-party-epic-settings-import-installed-label = Importar jogos instalados
 third-party-epic-settings-import-uninstalled-label = Importar jogos não instalados
+third-party-epic-settings-connect-account = Conectar conta
 third-party-epic-login-checking = A verificar estado da autenticação...
 third-party-epic-not-logged-in = Requer autenticação
 third-party-epic-not-logged-in-error = Falha ao autenticar utilizador.
 third-party-epic-authenticate-label = Autenticar
 third-party-epic-trouble-shooting-issues = Resolução de problemas
+third-party-epic-start-using-client = Comece a usar o { $var0 } cliente

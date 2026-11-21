@@ -1,7 +1,7 @@
 ###
 ### Automatically generated via update_3p_localization.py script using files from 
-### https://github.com/JosefNemec/PlayniteExtensions/tree/3980301159b8d8909395225d1a81f02108ea47a7 and 
-### https://github.com/JosefNemec/Playnite/tree/02fc1972a1f0c4b7e5f2bc2b91d8dfe643141965. 
+### https://codeberg.org/CrowIsTaken/PlayniteExtensions/src/commit/8da2ff8b666290c395c3072c544fd6e521252f9f and 
+### https://codeberg.org/Playnite/Playnite/src/commit/e2e6efcda311fea38fcd92f61c8ca90811d97f28. 
 ### DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 ###
 third-party-playnite-filter-active-label = Filtro activo
@@ -25,7 +25,7 @@ third-party-playnite-progress-metadata = Descargando metadatos…
 third-party-playnite-menu-restart-system = Reiniciar el sistema
 third-party-playnite-menu-shutdown-system = Apagar el sistema
 third-party-playnite-menu-suspend-system = Suspender el sistema
-third-party-playnite-menu-hibernate-system = Hibernar el sistema
+third-party-playnite-menu-hibernate-system = Hibernar sistema
 third-party-playnite-settings-general-label = General
 third-party-playnite-settings-advanced-label = Avanzado
 third-party-playnite-settings-clear-cache-title = ¿Limpiar cache?
@@ -39,13 +39,13 @@ third-party-playnite-game-name-title = Nombre
 third-party-playnite-game-install-dir-title = Directorio de instalación
 third-party-playnite-library-import-error = Error al importar los juegos de { $var0 }.
 third-party-playnite-metadata-download-error = Error al descargar los metadatos: { $var0 }
-third-party-playnite-download-error = Error de Descarga
+third-party-playnite-download-error = Error de descarga
 third-party-playnite-uninstalling = Desinstalando
 third-party-playnite-game-launching = Iniciando
 third-party-playnite-do-nothing = No hacer nada
 third-party-playnite-close = Cerrar
-third-party-playnite-updater-window-title = Actualización Disponible
-third-party-playnite-updater-install-update = Instalar Actualización
+third-party-playnite-updater-window-title = Actualización disponible
+third-party-playnite-updater-install-update = Descargar e instalar actualización
 third-party-playnite-check-for-updates = Comprobar actualizaciones
 third-party-playnite-update-check-fail-message = Error al comprobar actualizaciones.
 third-party-playnite-install-game = Instalar

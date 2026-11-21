@@ -1,7 +1,7 @@
 ###
 ### Automatically generated via update_3p_localization.py script using files from 
-### https://github.com/JosefNemec/PlayniteExtensions/tree/3980301159b8d8909395225d1a81f02108ea47a7 and 
-### https://github.com/JosefNemec/Playnite/tree/02fc1972a1f0c4b7e5f2bc2b91d8dfe643141965. 
+### https://codeberg.org/CrowIsTaken/PlayniteExtensions/src/commit/8da2ff8b666290c395c3072c544fd6e521252f9f and 
+### https://codeberg.org/Playnite/Playnite/src/commit/e2e6efcda311fea38fcd92f61c8ca90811d97f28. 
 ### DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 ###
 third-party-playnite-filter-active-label = التصفية نشطة
@@ -65,7 +65,7 @@ third-party-epic-settings-import-uninstalled-label = استيراد الألعا
 third-party-epic-settings-connect-account = ربط الحساب
 third-party-epic-login-checking = جاري التحقق من حالة المصادقة…
 third-party-epic-not-logged-in = يتطلب المصادقة
-third-party-epic-not-logged-in-error = فشل في مصادقة المستخدم.
+third-party-epic-not-logged-in-error = أخفقت مصادقة المستخدم
 third-party-epic-authenticate-label = مصادقة
-third-party-epic-trouble-shooting-issues = استكشاف الأخطاء وإصلاحها
-third-party-epic-start-using-client = بدء باستخدام { $var0 } عميل
+third-party-epic-trouble-shooting-issues = جاري استكشاف الأخطاء وإصلاحها
+third-party-epic-start-using-client = بدء استخدام عميل { $var0 }

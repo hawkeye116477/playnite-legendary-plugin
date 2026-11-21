@@ -1,7 +1,7 @@
 ###
 ### Automatically generated via update_3p_localization.py script using files from 
-### https://github.com/JosefNemec/PlayniteExtensions/tree/3980301159b8d8909395225d1a81f02108ea47a7 and 
-### https://github.com/JosefNemec/Playnite/tree/02fc1972a1f0c4b7e5f2bc2b91d8dfe643141965. 
+### https://codeberg.org/CrowIsTaken/PlayniteExtensions/src/commit/8da2ff8b666290c395c3072c544fd6e521252f9f and 
+### https://codeberg.org/Playnite/Playnite/src/commit/e2e6efcda311fea38fcd92f61c8ca90811d97f28. 
 ### DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 ###
 third-party-playnite-filter-active-label = Φίλτρο Ενεργό
@@ -63,9 +63,9 @@ third-party-playnite-open = Άνοιγμα
 third-party-epic-settings-import-installed-label = Εισαγωγή εγκατεστημένων παιχνιδιών
 third-party-epic-settings-import-uninstalled-label = Εισαγωγή μη εγκατεστημένων παιχνιδιών
 third-party-epic-settings-connect-account = Σύνδεση λογαριασμού
-third-party-epic-login-checking = Έλεγχος κατάστασης πιστοποίησης...
-third-party-epic-not-logged-in = Απαιτείται πιστοποίηση
-third-party-epic-not-logged-in-error = Αδυναμία πιστοποίησης του χρήστη
-third-party-epic-authenticate-label = Πιστοποίηση
+third-party-epic-login-checking = Έλεγχος κατάστασης ταυτοποίησης…
+third-party-epic-not-logged-in = Απαιτείται ταυτοποίηση
+third-party-epic-not-logged-in-error = Αδυναμία ταυτοποίησης του χρήστη
+third-party-epic-authenticate-label = Ταυτοποίηση
 third-party-epic-trouble-shooting-issues = Αντιμετώπιση προβλημάτων
 third-party-epic-start-using-client = Ξεκινήστε να χρησιμοποιείτε την εφαρμογή { $var0 }

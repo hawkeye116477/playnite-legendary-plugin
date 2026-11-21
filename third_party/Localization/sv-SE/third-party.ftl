@@ -1,7 +1,7 @@
 ###
 ### Automatically generated via update_3p_localization.py script using files from 
-### https://github.com/JosefNemec/PlayniteExtensions/tree/3980301159b8d8909395225d1a81f02108ea47a7 and 
-### https://github.com/JosefNemec/Playnite/tree/02fc1972a1f0c4b7e5f2bc2b91d8dfe643141965. 
+### https://codeberg.org/CrowIsTaken/PlayniteExtensions/src/commit/8da2ff8b666290c395c3072c544fd6e521252f9f and 
+### https://codeberg.org/Playnite/Playnite/src/commit/e2e6efcda311fea38fcd92f61c8ca90811d97f28. 
 ### DO NOT MODIFY, CUZ IT MIGHT BE OVERWRITTEN DURING NEXT RUN!
 ###
 third-party-playnite-filter-active-label = Filtret aktivt
@@ -56,3 +56,16 @@ third-party-playnite-common-links-store-page = Butikssida
 third-party-playnite-extensions-updates = Uppdateringar
 third-party-playnite-select-file-tooltip = Välj fil…
 third-party-playnite-select-directory-tooltip = Välj mapp…
+third-party-playnite-option-only-manually = Endast manuellt
+third-party-playnite-option-once-a-day = En gång om dagen
+third-party-playnite-option-once-a-week = En gång i veckan
+third-party-playnite-open = Öppna
+third-party-epic-settings-import-installed-label = Importera installerade spel
+third-party-epic-settings-import-uninstalled-label = Importera ej installerade spel
+third-party-epic-settings-connect-account = Anslut konto
+third-party-epic-login-checking = Kontrollerar autentiseringsstatus…
+third-party-epic-not-logged-in = Kräver autentisering
+third-party-epic-not-logged-in-error = Det gick inte att autentisera användaren.
+third-party-epic-authenticate-label = Autentisera
+third-party-epic-trouble-shooting-issues = Felsökning av problem
+third-party-epic-start-using-client = Börja använda { $var0 } klient
